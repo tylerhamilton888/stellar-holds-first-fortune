@@ -1,0 +1,39 @@
+{
+  "tool": "built-in image_gen",
+  "method": "Targeted follow-up edits of first-pass sheets; all preserve canvas, sprite locations, equipment and poses.",
+  "refinements": [
+    {
+      "targets": [
+        "classic-combat-refined",
+        "classic-walk-refined",
+        "classic-guard-refined"
+      ],
+      "prompt": "Surgical sprite correction. In the BOTTOM HALF FEMALE poses ONLY, remove the extra front braid nearest the shield (the viewer-right hanging chest braid in each pose). Paint the cleared area as the underlying teal shirt or neck skin. Keep the other short braid descending from the visible near ear, AND keep the longer rear braid behind the shoulder. There should be exactly ONE hanging braid on the front of her chest, plus the rear braid, NOT two chest braids. Do this in every female pose. Leave the entire TOP HALF MALE and all other female details unchanged. Preserve exact canvas dimensions, pixel positions, silhouettes apart from removed braid, feet, arms, shields and axes. Keep alpha transparency."
+    },
+    {
+      "targets": [
+        "pair1-*-refined",
+        "pair2-*-refined"
+      ],
+      "change": "Remove extra shield-side front braid, keeping one near-side braid and existing high bun or long rear waves respectively."
+    },
+    {
+      "targets": [
+        "pair4-*-refined"
+      ],
+      "prompt": "Surgical correction of bottom half female hair ONLY. She has a SHORT CURLY BOB with a woven headband braid. REMOVE ALL HANGING BRAIDS beside her neck and on her chest, in EVERY female pose. No plaits below ear lobes. Fill removed braid areas with underlying teal shirt or neck skin. Keep the curled bob and scalp headband. Preserve entire top half male untouched. Preserve exact canvas dimensions, every sprite position, feet, face, body, clothes, shield and axe. Alpha transparent background."
+    },
+    {
+      "targets": [
+        "classic-combat-clean"
+      ],
+      "prompt": "Background extraction only. Remove ALL brown/gold glow, haze, shadows and background around these 16 sprites. Every pixel outside the actual dwarf bodies, hair, clothes, axes and shields must have zero alpha. Clean crisp opaque sprite edges on genuine transparent alpha. No glow around heads. Keep all sprites, their hair, poses, size and exact pixel positions unchanged. Keep 1536x1024 canvas."
+    },
+    {
+      "targets": [
+        "classic-guard-clean"
+      ],
+      "prompt": "Precise identity correction: image1 edit target, image2 male normal identity reference. Change TOP HALF MALE hair and beard only. In each of four guard poses replace his ragged long pointed beard with the compact rounded unbraided beard in reference, ending high on chest, no long pointed fringe. Replace tousled curly scalp with same compact sleek swept-back crest from reference. Keep short nape, no tail. Preserve lower half female entirely. Preserve all poses, face position, body, equipment, dimensions and alpha. Every background pixel transparent; no glow."
+    }
+  ]
+}

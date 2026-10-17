@@ -1,0 +1,21 @@
+WorkerThreadPool: 9 threads, 2 max low-priority.
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+JoypadLinux: udev enabled and loaded successfully.
+Using "default" pen tablet driver...
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+CORE API HASH: 4052744068
+EDITOR API HASH: 910296392
+Loaded system CA certificates
+Loading resource: res://.godot/exported/133200997/export-3070c538c03ee49b7677ff960a3f5195-main.scn
+Loading resource: res://scripts/main.gdc
+Loading resource: res://audio/hold_at_dusk.wav
+Loading resource: res://.godot/imported/hold_at_dusk.wav-7da32d44451ae1b7b163cef04f8d2b50.sample
+Loading resource: res://assets/HoldRunic.ttf
+Loading resource: res://.godot/imported/HoldRunic.ttf-79e8ea46aac3b393b426846ccdfe1f8e.fontdata
+PACK BOOT OK
+XR: Clearing primary interface
+XR: Removed interface "Native mobile"
+XR: Removed interface "OpenXR"

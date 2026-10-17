@@ -1,0 +1,11 @@
+# Godot-generated cache; keep .uid and resource .import sidecars tracked.
+.godot/
+.export/
+export.cfg
+export_credentials.cfg
+# Local build/test output and editor state.
+/build/
+/test-results/
+*.log
+*.tmp
+.DS_Store
