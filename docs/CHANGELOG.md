@@ -1,0 +1,10 @@
+# Changelog
+Historical detail remains in DEVELOPMENT.md and versioned reviews. This is the concise current record.
+
+| Build/checkpoint | Date | Change / compatibility |
+|---|---|---|
+| 0.38.1 | 2026-10-17 session record | Overhead mining, opaque cave background, dialogue/quest layout, removal of Royal Stair office shortcut; legacy throne return repaired. |
+| 0.38.2 | 2026-10-17 | Removed repeated edge strips; room artwork fills width with floor anchor preserved. |
+| 0.39.0 | 2026-10-17 | Persistent mineral bearings, mineral selection, paused notebook, deterministic bonus sifting with mountain-local saved progress. Existing save schema retained. |
+| 0.39.1 | 2026-10-17 | Lower downward contact pose and footing-aware targeting; Shift retains precise cuts. Existing saves supported by unchanged schema. |
+| continuity-1 | 2026-10-17 | Documentation, isolated smoke runner, Git baseline/checkpoint and portable recovery. Gameplay version stays 0.39.1. No runtime scripts, assets, scenes, settings or save format changed. |

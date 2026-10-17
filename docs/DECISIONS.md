@@ -1,0 +1,15 @@
+# Decisions to preserve
+- Side-view granular 2D excavation is the accepted direction for this game. The separate first-person crafting prototype is not this project. Large deep-rendered blocks and platformer-like mine layouts were rejected because they weakened modular extraction and believable mountain structure.
+- Manual mining stays intrinsically fun alongside automation. Workers excavate actual reachable material; abstract free-resource timers are not a substitute.
+- Common resources remain useful for construction, provisions, repair, crafting and trade. Galaxy-scale economics must not make the early materials meaningless.
+- Use authored recurring NPCs/key scenes and reusable personality/event systems for procedural populations. Randomness must preserve flavor and coherent context.
+- Whole drawn character designs replace unreliable independent beard/head/limb assembly. Five designs per sex; unified hair/beard color. Portraits correspond to sprites without becoming sprites on legs. Rejected approaches caused floating beards, disconnected knees, color spill and changing silhouettes.
+- Equipment uses pose-aware grips and fixed length. Stretching a pick to a remote target is rejected. Hitboxes and visible contact must agree.
+- Dwarf women are feminine and unbearded. Procedural population is approximately 85% male-born. Occasional gender-specific flavor should retain broadly comparable challenge/reward.
+- First/family names remain distinct. The player begins as a forebear, not an established dynasty. Marriage/succession/Greatbeard rules are future work.
+- Basin travel goes through the map table; manual hold-to-mine walking is disabled. The old continuous route created awkward background transitions. Preserve legacy journey code unless a specific task justifies removal.
+- NPCs cannot be shown outside while requiring indoor interaction. Dialogue uses portrait/name/text and clear responses; quests belong to their actual hosts. Anniversary gifts remain separate secrets until the second completion invites the exchange.
+- Retreat normally requires a built return route. Rescue is a paid fallback. No stamina system. Supports interact with loose earth, not an arbitrary maintenance/collapse timer.
+- Original game assets only, with provenance. Existing user-provided music/SFX are part of the source. Engine/library licenses remain included. Ivar voicework is disabled pending better quality.
+- Simulate what materially affects play; world-scale abstraction and simulation granularity are unresolved. Do not implement planet-scale physical simulation by assumption.
+- Plain writing, no em dashes in new dialogue. Clearly mark unimplemented destinations/features WIP, distinct from progression locks.

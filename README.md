@@ -1,3 +1,5 @@
+> Development entry point: [docs/SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md), then [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md). Organization checkpoint: continuity-1; gameplay remains 0.39.1. Older notes below may describe superseded behavior.
+
 # The Stellar Holds: The First Fortune
 
 Original Godot 4.4.1 prototype, version 0.39.1. Windows x64.
