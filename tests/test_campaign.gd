@@ -71,7 +71,7 @@ func run():
  var before=game.geo.cells.duplicate()
  for i in 200:game.update_agents(.1)
  check(game.geo.cells==before,"hired claim crew cannot excavate employer mine")
- game.travel_road();var wood=game.state.count("wood");game.tool=2;game.player.x=275;game.hit_point=Vector2(275,380);game.hit_tree()
+ game.travel_road();var wood=game.state.count("wood");game.tool=2;game.player=Vector2(HoldForestry.X[1]-65,410);game.grounded=true;game.forest_target=HoldForestry.target(game,Vector2(HoldForestry.X[1],380));game.hit_point=game.forest_target.p;game.hit_tree()
  check(game.state.count("wood")==wood+2 and game.state.road_trees[1]==7,"visible road firs yield timber")
  game.travel_hold();wood=game.state.count("wood");game.hit_tree()
  check(game.state.count("wood")==wood,"no invisible trees can be chopped inside hold")

@@ -16,3 +16,8 @@ Export from the project root:
 godot --headless --path . --export-pack 'Windows Desktop' /absolute/output/FirstFortune.pck
 ```
 Use a separate staging directory with the established Windows Godot executable and launcher. Match engine 4.4.1; retain notices. Test the exported PCK and ZIP integrity. This infrastructure-only task does not require a new gameplay binary.
+
+## Pinewood (0.40.0)
+Run `--headless --path . --script res://tests/test_forestry40.gd` with isolated user data. It covers migration, all character designs/facings, invalid reach/tool/airborne contact, exact rewards, exhausted-target rejection, save/reload and basin round trip. `tests/capture_forestry40.gd -- --output=/absolute/review-directory` requires a graphics display and writes native captures. Use `--audio-driver Dummy` in a display-only CI environment. Keep existing test data isolated.
+
+`test_campaign.gd` now aims at the actual tree instead of the superseded x=275 fixture. `test_expedition25.gd` retains two obsolete continuous-travel expectations; see the release verification note. Do not re-enable manual mine/hold walking just to satisfy them.

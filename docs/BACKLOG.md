@@ -6,6 +6,7 @@
 - MINE-01: Player-test 0.39.1 downward/overhead cuts and tool contact. Done when both sexes can descend, widen and exit a shaft without awkward aiming or stretching.
 - MINE-02: Player-test sample bearings and sifting. Done when a new player can explain both actions, find a requested seam and see the bonus reach inventory.
 - OPEN-01: Complete a fresh opening through first commission and royal audience. Done when every quest/host/route is understandable and no scene/menu blocks progress.
+- WOOD-01: Player-test Pinewood 0.40.0. Fell a fir, recover its logs, reload, build with the timber and return by map. Confirm aiming, sound level and resource balance feel good.
 ## Near-term priorities
 - SAVE-01: Test a copy of a real older player save. Done when identity, inventory, excavation and quests survive documented migrations.
 - QA-01: Run the Windows launcher on Windows. Done when launch, audio, save/reload and mining are checked on the target platform.

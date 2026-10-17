@@ -13,3 +13,4 @@
 - Original game assets only, with provenance. Existing user-provided music/SFX are part of the source. Engine/library licenses remain included. Ivar voicework is disabled pending better quality.
 - Simulate what materially affects play; world-scale abstraction and simulation granularity are unresolved. Do not implement planet-scale physical simulation by assumption.
 - Plain writing, no em dashes in new dialogue. Clearly mark unimplemented destinations/features WIP, distinct from progression locks.
+- Pinewood is a finite, persistent timber coupe. Felling does not trigger automatic regrowth. Seven firs yield 16 timber from standing cuts plus 6 from fallen logs each; Orla remains a supply fallback. This is a local worksite, not yet procedural planetary forestry.

@@ -10,9 +10,10 @@ const JOURNEY=preload("res://scripts/journey.gd")
 const HUB_FLOOR=410.0
 const TOOL_NAMES=["Pickaxe","Shovel","Axe","Hammer"]
 const STATIONS=[{"x":225.0,"name":"Workers' quarters","panel":"home"},{"x":410.0,"name":"The Copper Kettle","panel":"tavern"},{"x":685.0,"name":"Orla's exchange","panel":"market"},{"x":970.0,"name":"Borin's forge","panel":"forge"},{"x":1205.0,"name":"Foreman's office","panel":"commission"},{"x":1465.0,"name":"Expedition map table","panel":"expedition"},{"x":1780.0,"name":"Survey office","panel":"research"},{"x":1945.0,"name":"The King's Gate","panel":"gate"}]
-const ROAD_STATIONS=[{"x":150.0,"name":"Return to Keldrath","panel":"gate"},{"x":900.0,"name":"Mountain survey terrace","panel":"charters"},{"x":1465.0,"name":"Road to your claim","panel":"travel_claim"}]
+const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinewood"}]
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
+var forest_view:Node2D
 var backdrop:Sprite2D
 var sprite_atlas:HoldSpriteAtlas
 var state=HoldState.new()
@@ -58,6 +59,7 @@ var talk_id="ivar"
 var talk_topic=""
 var talk_line=""
 var anniversary_host=""
+var forest_target:Dictionary={}
 var hit_cell=Vector2i.ZERO
 var hit_point=Vector2.ZERO
 var mining_buffer=0.0
@@ -108,6 +110,7 @@ func _ready():
  get_tree().auto_accept_quit=false
  backdrop=Sprite2D.new();backdrop.centered=false;backdrop.z_index=-10;add_child(backdrop)
  var atmosphere=ShaderMaterial.new();atmosphere.shader=load("res://scripts/atmosphere.gdshader");backdrop.material=atmosphere
+ forest_view=preload("res://scripts/forestry_view.gd").new();forest_view.host=self;forest_view.z_index=-5;add_child(forest_view)
  sprite_atlas=HoldSpriteAtlas.new();add_child(sprite_atlas)
  combat=HoldCombat.new(self);construction=HoldConstruction.new(self);mining_gun=HoldMiningGun.new(self)
  setup_inputs()
@@ -202,7 +205,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.39.1";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.40.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -290,6 +293,7 @@ func _process(dt):
  if playing:
   state.market_open=panel_id=="market"
   var completed=state.tick(dt)
+  HoldForestry.update(self,dt)
   var matter=HoldClaimStories.poll(state)
   if matter!="":notify("Claim business: "+matter+". M opens your ledger.");save_game()
   if completed!="":notify(completed);sound.effect("build")
@@ -574,13 +578,9 @@ func handle_mining(dt:float):
    face=strike_facing(hit_point)
   else:
    if zone!="road" or tool!=2:return
-   var nearest=-1;var distance=70.0
-   for i in state.road_trees.size():
-    var d=absf(player.x-tree_x(i))
-    if state.road_trees[i]>0 and d<distance:nearest=i;distance=d
-   if nearest<0:return
-   hit_point=Vector2(tree_x(nearest),380)
-   face=1 if hit_point.x>player.x else -1
+   forest_target=HoldForestry.target(self,get_global_mouse_position()+camera)
+   if forest_target.is_empty():return
+   hit_point=forest_target.p;face=forest_target.face
   swing_duration=.55 if prospecting and tool==1 else (.30 if tool==1 else (.43 if tool==3 else .38))
   sampling_strike=false
   mining_buffer=0; swing=swing_duration;swing_done=false;sound.effect("swing",-8)
@@ -635,16 +635,8 @@ func hit_terrain():
   for i in 3:particles.append({"p":hit_point,"v":Vector2(randf_range(-18,18),randf_range(-18,-6)),"life":.4,"c":HoldTerrainView.COLORS[kind],"size":randf_range(3,6),"dust":true})
 
 func hit_tree():
- if tool!=2 or zone!="road":return
- for i in state.road_trees.size():
-  var x=tree_x(i)
-  if absf(player.x-x)<70 and absf(hit_point.x-x)<1 and state.road_trees[i]>0:
-   HoldOnboarding.fact(state,"woodcut",2)
-   state.road_trees[i]-=1;state.add("wood",2);sound.effect("wood");impact_pause=.04;burst(Vector2(x,380),Color("b28b59"),10)
-   popups.append({"p":Vector2(x,335),"text":"+2 TIMBER","life":1.4})
-   if state.road_trees[i]==0:notify("Timber gathered. More can be purchased from Orla.")
-   return
-func tree_x(i:int)->float:return [40.0,275.0,550.0,1335.0,1960.0][i]
+ HoldForestry.strike(self,forest_target)
+func tree_x(i:int)->float:return HoldForestry.X[i]
 
 func update_agents(dt:float):
  var route_budget=1
@@ -738,6 +730,8 @@ func change_zone(z:String):
  notify("Find coal: aim at a bank + X for a bearing. K explains sampling and bonus ore from sifting. LMB: dig. V: build." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
  save_game()
 func interact():
+ if zone=="road" and room_id=="":
+  HoldForestry.interact(self);return
  if zone=="hub" and room_id=="" and state.active_site=="hold" and player.x<125:
   enter_west_gallery();return
  if zone=="hub" and room_id=="" and HoldAnniversary.ensure(state).complete and absf(player.x-535)<42:
@@ -817,10 +811,10 @@ func goal()->String:
 func update_hud():
  var place="KELDRATH"
  if zone=="approach":place="MOUNTAIN APPROACH"
- elif zone=="road":place="THE KING'S ROAD"
+ elif zone=="road":place="PINEWOOD"
  elif state.active_site=="claim":place=HoldOutpost.title(state).to_upper()
  if room_id!="":place=HoldInteriors.ROOMS[room_id].name.to_upper()
- hud.text=place+" / "+("DEEP WORKINGS" if zone=="mine" else ("KELDRATH" if zone=="approach" else "MOUNTAIN HOLD"))+"   %d CROWNS" % state.money
+ hud.text=place+" / "+("DEEP WORKINGS" if zone=="mine" else ("KELDRATH" if zone=="approach" else "TIMBER COUPE" if zone=="road" else "MOUNTAIN HOLD"))+"   %d CROWNS" % state.money
  status.text="IRON ORE %d   COPPER %d   COAL %d   CRYSTAL %d   TIMBER %d" % [state.count("iron_ore"),state.count("copper_ore"),state.count("coal"),state.count("crystal"),state.count("wood")]
  objectives.text=goal()
  if menu_paused or panel_id in ["pause","settings"]:footer.text="PAUSED — TAKE YOUR TIME   |   CLOSE TO RESUME"
@@ -830,6 +824,7 @@ func update_hud():
  elif zone=="hub" and room_id=="" and state.active_site=="hold" and player.x<125:footer.text="E  WEST GALLERY / EXPLORE KELDRATH     |     D  RETURN TO THE CONCOURSE"
  elif notice_time>0:footer.text=notice
  elif construction.selected!="":footer.text="BUILD: "+HoldConstruction.OPTIONS[construction.selected].name+"   LMB PLACE   1–4 CANCEL   V OPTIONS"
+ elif zone=="road":footer.text=HoldForestry.hint(self)
  elif zone=="approach":footer.text="HIGH TRAIL LOOKOUT   |   G BASIN MAP   E PLAN JOURNEY   A/D WALK"
  elif zone=="mine":footer.text="LMB ATTACK   RMB GUARD / PARRY   Q DODGE   F TOOLS   B GEAR" if combat.armed else "1–5 TOOLS   F WEAPON   B GEAR   Q DODGE   V BUILD   R RESCUE   N PEOPLE"
  else:
@@ -837,6 +832,8 @@ func update_hud():
   footer.text="E  "+nearest.name.to_upper()+"    |    A/D MOVE   I PACK   M CREW   F1 HELP" if absf(nearest.x-player.x)<95 else "A/D MOVE   E INTERACT   C CHARACTER   I PACK   M CREW   F1 HELP"
 
 func _draw():
+ forest_view.visible=playing and zone=="road" and room_id==""
+ if forest_view.visible:forest_view.queue_redraw()
  if not playing:draw_title();return
  draw_background()
  var offset=-camera
@@ -848,7 +845,7 @@ func _draw():
  elif room_id!="":HoldInteriors.draw(self,room_id,clock,state)
  elif zone=="hub":draw_hub()
  elif zone=="approach":JOURNEY.approach(self,clock)
- elif zone=="road":SCENERY.road(self,clock,state)
+ elif zone=="road":pass # Separate filtered scenery canvas; character art keeps its own sampling.
  elif zone=="claim":
   SCENERY.camp(self,clock,state,launch_time*launch_time*13 if launching else 0)
   HoldOutpostUI.draw_crew(self)
@@ -935,7 +932,7 @@ func draw_background():
   JOURNEY.backdrop(self,HALL,0,2120,global_camera,Rect2(),true)
   if 4000-global_camera.x<960:HoldMountain.background(self,geo,global_camera-Vector2(4000,0))
   return
- if room_id!="":backdrop.visible=false;return
+ if room_id!="" or zone=="road":backdrop.visible=false;return
  backdrop.visible=zone!="mine"
  if zone!="mine":
   var texture=HALL if zone=="hub" else (RIDGE if zone=="claim" else VALLEY)
@@ -1104,16 +1101,16 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- if id in ["pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes"]:menu_paused=true
+ if id in ["pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
  panel_id=id;panel.visible=true
  for child in panel.get_children():panel.remove_child(child);child.queue_free()
  var outer=VBoxContainer.new();outer.add_theme_constant_override("separation",9);panel.add_child(outer)
  var top=row(outer)
  if not menu_history.is_empty():small_button(top,"‹ Back",back_panel)
- var names={"build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
+ var names={"pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
  label(top,names.get(id,"Claim business" if id=="claim_stories" else id.to_upper()),22,Color("e9c586"))
  small_button(top,"Close ×",close_panel)
- if playing and id not in ["briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes"]:
+ if playing and id not in ["briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes","pinewood"]:
   var nav=row(outer)
   for entry in [["commission","Journal · J"],["inventory","Pack · I"],["equipment","Gear · B"],["roster","People · N"],["world_map","Map · G"],["help","Guide · F1"]]:
    var tab=small_button(nav,entry[1],func():open_panel(entry[0]));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -1136,6 +1133,7 @@ func open_panel(id:String,remember:bool=true):
   "briefing":briefing_panel()
   "commission":commission_panel()
   "charters":charters_panel()
+  "pinewood":HoldForestry.panel(self)
   "gate":world_map_panel()
   "world_map":world_map_panel()
   "basin_map":world_map_panel(true)
@@ -1600,10 +1598,10 @@ func travel_claim():
  flush_pickups();state.switch_site("claim",geo);zone="claim";player=Vector2(150,HUB_FLOOR);finish_travel()
 func finish_travel():
  ensure_mine_mouth()
- room_id="";swing=0;impact_pause=0;sound.set_context(zone);begin_transition("THE KING'S ROAD" if zone=="road" else ("YOUR MOUNTAIN" if zone=="claim" else "KELDRATH"))
+ room_id="";swing=0;impact_pause=0;sound.set_context(zone);begin_transition("PINEWOOD" if zone=="road" else ("YOUR MOUNTAIN" if zone=="claim" else "KELDRATH"))
  velocity=Vector2.ZERO;camera=Vector2(clampf(player.x-480,0,1040),0)
  particles.clear();popups.clear();close_panel();spawn_agents();save_game()
- notify("PINEWOOD: Axe [3] cuts marked firs. G opens the regional map." if zone=="road" else ("Welcome to "+HoldCampaign.claim(state.claim_id).name+". Founding stones are east." if zone=="claim" else "Keldrath's gates stand open to you."))
+ notify("PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: basin map." if zone=="road" else ("Welcome to "+HoldCampaign.claim(state.claim_id).name+". Founding stones are east." if zone=="claim" else "Keldrath's gates stand open to you."))
 
 func character_tint(p:Vector2)->Color:
  if room_id!="":return Color("ffe0b7") if room_id in ["home","forge","tavern"] else Color("d8e1d6")
@@ -1781,11 +1779,11 @@ func arrive_region(destination:String):
   return
  flush_pickups();state.switch_site("hold",geo)
  zone={"hold":"hub","trail":"approach","workings":"mine","forest":"road"}.get(destination,"hub")
- player={"hold":Vector2(1780,HUB_FLOOR),"trail":Vector2(1000,410),"workings":Vector2(95,392),"forest":Vector2(300,HUB_FLOOR)}[destination]
+ player={"hold":Vector2(1780,HUB_FLOOR),"trail":Vector2(1000,410),"workings":Vector2(95,392),"forest":Vector2(265,HUB_FLOOR)}[destination]
  room_id="";velocity=Vector2.ZERO;grounded=true;gait_clock=0;walking_pose=false;swing=0
  ensure_mine_mouth();camera=Vector2(player.x-480,player.y-360) if continuous_journey() else Vector2(clampf(player.x-480,0,1040),0)
  close_panel();sound.set_context(zone);particles.clear();popups.clear();spawn_agents();save_game()
- var arrival_hints={"forest":"PINEWOOD: Axe [3] • Cut marked firs for timber. G returns to regional travel.","workings":"OLD WORKINGS: Pick [1] • Hold left mouse on nearby coal. V: build a return route. Walk back to the mouth before using G.","hold":"KELDRATH: G explores the hold's galleries, stairs and lift. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: A sheltered lookout. G opens the basin map; choose Old Workings to enter the mountain."}
+ var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: basin map.","workings":"OLD WORKINGS: Pick [1] • Hold left mouse on nearby coal. V: build a return route. Walk back to the mouth before using G.","hold":"KELDRATH: G explores the hold's galleries, stairs and lift. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: A sheltered lookout. G opens the basin map; choose Old Workings to enter the mountain."}
  notify(arrival_hints.get(destination,"G opens regional travel."))
 
 

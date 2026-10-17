@@ -86,15 +86,7 @@ static func hall(n:Node2D,t:float,s:HoldState):
  for x in [510,840]:A.barrel(n,Vector2(x,410))
  platform(n)
 static func road(n:Node2D,t:float,s:HoldState):
- for i in 5:fir(n,Vector2([40,275,550,1335,1960][i],410),i,s.road_trees[i]<=0)
- # Survey terrace: physical brass map table and sighting instrument.
- A.rect(n,852,387,90,9,"ad9463")
- for x in [861,928]:A.rect(n,x,396,8,14,"647477")
- A.line(n,Vector2(996,410),Vector2(1011,363),"bda876",3);A.line(n,Vector2(1024,410),Vector2(1011,363),"bda876",3)
- A.line(n,Vector2(995,359),Vector2(1032,346),"7e999c",8);A.line(n,Vector2(995,357),Vector2(1032,344),"b7b899",2)
- for x in [150,1465]:
-  A.rect(n,x-7,364,14,46,"62757b");A.rune(n,Vector2(x,375),.6,Color("d3bb86"))
- platform(n,true)
+ HoldForestry.draw(n,t,s)
 static func camp(n:Node2D,t:float,s:HoldState,lift:float=0):
  # Your empty concession grows visibly into a workshop and powered freight stop.
  A.poly(n,[Vector2(65,410),Vector2(145,330),Vector2(230,410)],"6b776d")

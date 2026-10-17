@@ -1,10 +1,9 @@
 # Resume here
-- Gameplay: **0.39.1**. Organization checkpoint: **continuity-1**, Git tag `continuity-1`.
-- Current local checkout: `/workspace/scratch/dc3395c394d3/continuity44/stellar-holds`. Local execution storage is temporary; paths may disappear.
-- Persistent collection: **The Stellar Holds - Development**. Read `PROJECT_INDEX.md`; restore `Stellar-Holds-0.39.1-continuity-1.bundle` using RECOVERY.md. It includes complete project source/assets and Git baseline/history. Do not start from the older top-level `stellar-holds` directory.
-- Unchanged playable Windows release remains 0.39.1. Original source backup remains Library ID `libfile_663631733a748191afb26b65f5486949`, version 8; do not overwrite that baseline as part of recovery.
-- Milestone: a reliable first season and enjoyable mining. Latest downward digging and prospecting need user playtesting, not another feature expansion by default.
-- Read CURRENT_STATUS.md next; use ARCHITECTURE.md, DECISIONS.md and BACKLOG.md only as needed. Old development reports may describe superseded systems.
-- Known limits: Windows execution and real user-save migration unverified; teardown resource warnings; galactic play and family systems unfinished/WIP.
-- Safest next action: restore checkpoint, confirm Git state/version, then address the user's specific report with relevant tests. No gameplay changes were made during organization.
-- Approval: no remote configured. Obtain authorization before remote creation/push, destructive cleanup or replacing existing backups. Routine local fixes and checkpoints follow the user's task authorization.
+- Current build **0.40.0**, Git tag **pinewood-0.40.0**. Authoritative checkout: `/workspace/scratch/dc3395c394d3/continuity44/stellar-holds`. Do not use the older top-level project.
+- Persistent folder: **The Stellar Holds - Development**. Start with `PROJECT_INDEX.md`; restore `Stellar-Holds-0.40.0.bundle` or the matching source ZIP. Paths in execution storage may disappear.
+- Latest work: Pinewood replaced the old road/platform scenery with painted forest and a small logging shelter, seven interactive firs, full-size falls, fallen-log recovery, target progress, gentler contact-timed wood impacts, and a paused field board explaining uses/travel. Basin map access remains G. Internal zone ID stays `road`.
+- Relevant files: `scripts/forestry.gd`, `forestry_view.gd`, integration in `main.gd`/`state.gd`, `assets/pinewood-v40`. Other implemented systems are summarized in CURRENT_STATUS.md; read only task-relevant modules.
+- Saves keep schema 1. `road_trees` preserves existing cuts and gains two new trees; additive `forestry` stores log cuts/fall time/direction. Old stumps do not give fresh rewards. Cleared trees stay cleared; Orla sells extra timber. Back up a real save before migration checks.
+- Validation: forestry 53 checks, campaign 43, existing smoke 220 plus slot assertions; native visual review and exported PCK boot. Historical expedition25 has 194 pass and two obsolete manual-travel failures. Shutdown resource warnings persist. Windows execution, actual-speaker listening and real player-save migration remain unverified.
+- Next: user-test forestry aim/yield/audio, then continue downward mining/prospecting and the first-season loop. Planetary forestry, ships/galaxy and family simulation remain future; do not describe them as finished.
+- Resume safely: read CURRENT_STATUS.md, confirm Git status, preserve unrelated work and assets/UIDs, use isolated saves and focused regression/visual checks. Update status/changelog and save a verified new checkpoint after meaningful work. No remote is configured; no push or destructive cleanup is authorized. Prior 0.39.1/continuity-1 backups remain intact.

@@ -30,6 +30,7 @@ var claim_id:String=""
 var camp_stage:int=0
 var active_site:String="hold"
 var worlds:Dictionary={}
+var forestry:Dictionary={}
 var road_trees:Array=[8,8,8,8,8]
 var inventory:Dictionary={}
 var money:int=45
@@ -69,7 +70,7 @@ func save_audio_settings():
  for key in AUDIO_SETTINGS:cfg.set_value("audio",key,get(key))
  cfg.save("user://audio_settings.cfg")
 func reset(seed_number:int):
- region_travel={};hold_travel={};resident_visits={};outpost={}
+ region_travel={};hold_travel={};resident_visits={};outpost={};forestry={}
  ladders={};rescue_debt=0
  combat=HoldCombat.defaults();tracked_npc=""
  appearance=HoldAppearance.defaults();npc_appearances={};dynasty={}
@@ -141,7 +142,7 @@ func ensure_dynasty():
 func save_world(geo:Geology,zone:String,pos:Vector2)->bool:
  ensure_dynasty()
  HoldOutpost.ensure(self)
- var data={"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
+ var data={"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"forestry":forestry,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
  var f=FileAccess.open(save_path()+".tmp",FileAccess.WRITE)
  if not f:return false
  f.store_string(JSON.stringify(data));f.close()
@@ -161,7 +162,7 @@ func load_world(geo:Geology)->Dictionary:
  region_travel=d.get("region_travel",{})
  hold_travel=d.get("hold_travel",{})
  opening=int(d.get("opening",4));claim_id=str(d.get("claim_id","legacy"));camp_stage=int(d.get("camp_stage",3))
- active_site=str(d.get("active_site","claim"));worlds=d.get("worlds",{});road_trees=d.get("road_trees",[8,8,8,8,8])
+ active_site=str(d.get("active_site","claim"));worlds=d.get("worlds",{});road_trees=d.get("road_trees",[8,8,8,8,8]);forestry=d.get("forestry",{})
  ladders=d.get("ladders",{});rescue_debt=maxi(0,int(d.get("rescue_debt",0)))
  combat=HoldCombat.normalize(d.get("combat",{}));tracked_npc=str(d.get("tracked_npc",""))
  appearance=HoldAppearance.normalized(d.get("appearance",HoldAppearance.defaults()))

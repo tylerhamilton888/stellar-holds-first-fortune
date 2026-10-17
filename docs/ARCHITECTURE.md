@@ -8,6 +8,7 @@ Godot 4.4.1, GDScript, GL Compatibility. `project.godot` launches `main.tscn`, a
 | State, economy, progression | state.gd, data.gd, campaign.gd, industry.gd |
 | Excavation and generation | geology.gd, mountain.gd, legacy_geology.gd, world_style.gd |
 | Terrain rendering and discoveries | terrain_view.gd, world_details.gd, field_survey.gd |
+| Woodland gathering | forestry.gd (state/targets/cuts/draw), forestry_view.gd (separate filtered canvas); internal zone `road` maps to Pinewood |
 | Construction and danger | construction.gd, combat.gd, practice.gd, mining_gun.gd |
 | Crew and emerging stories | outpost.gd, outpost_ui.gd, frontier.gd, claim_stories.gd |
 | Opening and quests | onboarding.gd, conversation.gd, culture.gd, anniversary.gd, quest_markers.gd |
@@ -26,3 +27,5 @@ Geology uses 7-pixel cells; HoldMountain generates seeded surface, overburden, s
 
 ## Safe changes
 Read handoff/status, then relevant modules. Work from a clean checkpoint; preserve unknown fields and identifiers. Keep generation changes versioned. Test affected save/economy/terrain dependencies. Visually inspect art/contact/UI changes. Update status, backlog and changelog. See TESTING.md for commands and RECOVERY.md for backups.
+
+Pinewood keeps `road_trees` for compatibility and adds `forestry` dictionaries keyed by tree index: `logs`, `fell_at`, `direction`. `HoldForestry.ensure` extends five trees to seven without restoring existing cuts. Rendering never grows trees automatically. Trees occupy a rear cutting strip; the foreground walking lane stays clear. The artwork has a fixed ground anchor, avoiding background/footing drift.

@@ -1,8 +1,8 @@
-> Development entry point: [docs/SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md), then [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md). Organization checkpoint: continuity-1; gameplay remains 0.39.1. Older notes below may describe superseded behavior.
+> Development entry point: [docs/SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md), then [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md). Checkpoint: pinewood-0.40.0; gameplay 0.40.0. Older notes below may describe superseded behavior.
 
 # The Stellar Holds: The First Fortune
 
-Original Godot 4.4.1 prototype, version 0.39.1. Windows x64.
+Original Godot 4.4.1 prototype, version 0.40.0. Windows x64.
 
 ## Play on Windows — no separate Godot installation needed
 
@@ -17,12 +17,15 @@ Godot 4.4.1 Windows editor/runtime, bundled for convenience. The launcher runs
 The Windows launcher is supplied but has not been executed on Windows here.
 The game and packaged data were tested with Godot 4.4.1 on Linux.
 
-The editable project is supplied separately as `Stellar-Holds-0.39.1-Source.zip`.
-Extract that archive and import `Stellar-Holds-0.39.1-Source/project.godot` in Godot 4.4.1.
+The editable project is supplied separately as `Stellar-Holds-0.40.0-Source.zip`.
+Extract that archive and import `stellar-holds/project.godot` in Godot 4.4.1.
 Python is not required to play. Source art, material maps and the offline animation
 baker are included in the source archive.
 
-## Changes in 0.39.1
+## Changes in 0.40.0
+Pinewood now has painted forest scenery, seven marked firs and a field board. Equip axe [3], stand beside a trunk and hold LMB over it. Recover timber from fallen logs too. Each full fir yields 22 timber; existing cuts and recovered logs stay saved. G opens basin travel. No automatic regrowth; Orla remains a timber fallback.
+
+## Previous changes in 0.39.1
 
 - Removed the exchange artwork strips that were repeated on both sides of every standard indoor room. Each room now fills the width using its own artwork at a uniform scale, anchored to its painted floor. Hearth and instrument light positions follow the resized artwork.
 

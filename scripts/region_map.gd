@@ -37,7 +37,7 @@ var nodes={
  "hold":{"p":Vector2(300,680),"name":"Keldrath","art":3,"width":300.0,"detail":"Warm hearths, the forge and Ivar’s commissions."},
  "trail":{"p":Vector2(930,650),"name":"High Trail","art":6,"width":115.0,"detail":"A sheltered mountain lookout. Return to the basin map to choose your next stop."},
  "workings":{"p":Vector2(1300,475),"name":"Old Workings","art":4,"width":185.0,"detail":"Your first coal expedition. Every cut remains yours."},
- "forest":{"p":Vector2(335,1160),"name":"Pinewood","art":5,"width":180.0,"detail":"Cut marked firs with axe [3] for timber."},
+ "forest":{"p":Vector2(335,1160),"name":"Pinewood","art":5,"width":180.0,"detail":"Fell marked firs and chop fallen logs with axe [3]. Timber for ladders, supports and your claim."},
  "old_delving":{"p":Vector2(1730,355),"name":"Old Delving","art":4,"width":155.0,"detail":"Iron workings. Purchase its charter in Keldrath."},
  "copper_ridge":{"p":Vector2(2080,900),"name":"Copper Ridge","art":4,"width":175.0,"detail":"Copper-bearing slopes. A charter opens this claim."},
  "wayfarer":{"p":Vector2(1380,1240),"name":"Wayfarer’s Rise","art":7,"width":180.0,"detail":"A southern concession beside the caravan road."}}
