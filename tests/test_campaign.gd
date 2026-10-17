@@ -65,7 +65,7 @@ func run():
   game.open_panel(page);check(is_instance_valid(game.overworld) if page=="gate" else game.panel.visible,"opens campaign panel: "+page)
  game.state.opening=4;game.state.money=340;game.state.buy_charter("old_delving");game.travel_claim()
  check(game.zone=="claim" and game.state.active_site=="claim","travel reaches owned mountain")
- game.change_zone("mine");game.player=Vector2(150,370);game.interact()
+ game.change_zone("mine");game.player=Deepworks.center(Deepworks.ENTRY);game.interact()
  check(game.zone=="claim","claim mine exits to its own mountain")
  game.state.worker=true;game.state.add("food",6);game.spawn_agents();game.travel_hold()
  var before=game.geo.cells.duplicate()

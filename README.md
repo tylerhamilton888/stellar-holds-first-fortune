@@ -1,3 +1,6 @@
+# Current build: Deepworks 0.41.0
+Read docs/CURRENT_STATUS.md and docs/SESSION_HANDOFF.md. This is the integrated existing game; open project.godot with Godot 4.4.1.
+
 > Development entry point: [docs/SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md), then [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md). Checkpoint: pinewood-0.40.0; gameplay 0.40.0. Older notes below may describe superseded behavior.
 
 # The Stellar Holds: The First Fortune

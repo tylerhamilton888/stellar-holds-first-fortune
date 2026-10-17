@@ -13,6 +13,7 @@ const STATIONS=[{"x":225.0,"name":"Workers' quarters","panel":"home"},{"x":410.0
 const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinewood"}]
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
+var deep:DeepworksPlay
 var forest_view:Node2D
 var backdrop:Sprite2D
 var sprite_atlas:HoldSpriteAtlas
@@ -113,6 +114,7 @@ func _ready():
  forest_view=preload("res://scripts/forestry_view.gd").new();forest_view.host=self;forest_view.z_index=-5;add_child(forest_view)
  sprite_atlas=HoldSpriteAtlas.new();add_child(sprite_atlas)
  combat=HoldCombat.new(self);construction=HoldConstruction.new(self);mining_gun=HoldMiningGun.new(self)
+ deep=DeepworksPlay.new(self)
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
  setup_ui()
@@ -205,7 +207,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.40.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.41.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -219,13 +221,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  else:
   state.reset(randi_range(10000,99999));geo.generate_region(state.seed_value,0,Vector2i.ZERO);zone="hub";player=Vector2(150,HUB_FLOOR)
  if not custom_appearance.is_empty():state.appearance=HoldAppearance.normalized(custom_appearance)
- if load_saved and not geo.mountain.get("starter_depth25",false):
-  for y in range(0,150):
-   for x in Geology.W:
-    if geo.at(x,y)==7:geo.set_cell(Vector2i(x,y),2)
-  geo.mountain["starter_depth25"]=true
- ensure_mine_mouth()
- if load_saved and zone=="mine":settle_loaded_body()
+ if load_saved and zone=="mine":deep.enter(not state.deepworks_migrated)
  HoldOutpost.ensure(state)
  if not load_saved:HoldOnboarding.begin_fortune(state)
  else:HoldOnboarding.ensure(state)
@@ -234,11 +230,13 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  for i in 3:state.npc("visitor_"+str(i))
  HoldPaintedWalk.warm(combat.profile())
  velocity=Vector2.ZERO;camera=Vector2.ZERO;particles.clear();drops.clear();popups.clear()
+ if zone=="mine":camera=deep.camera_target()
  playing=true;launching=false;launch_time=0;autosave=0;close_panel()
  if is_instance_valid(title_ui):title_ui.queue_free()
  for n in [hud,status,objectives,footer]:n.visible=true
  state.load_audio_settings();apply_audio_settings();sound.set_context(zone);spawn_agents()
  notify("Welcome to Keldrath. Your first wages begin at the foreman's office.")
+ if state.deepworks_migrated:notify("Deepworks ready. Your original save was backed up; old terrain and structures remain archived. All supplies and progress are retained.")
  if load_saved and (state.region_travel.get("active",false) or (state.hold_travel.get("active",false) and zone=="hub")):open_panel.call_deferred("world_map")
  if not load_saved:
   save_game()
@@ -297,18 +295,20 @@ func _process(dt):
   var matter=HoldClaimStories.poll(state)
   if matter!="":notify("Claim business: "+matter+". M opens your ledger.");save_game()
   if completed!="":notify(completed);sound.effect("build")
-  combat.update(dt)
+  if zone!="mine":combat.update(dt)
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
-   move_player(dt)
-   if impact_pause>0:impact_pause=maxf(0,impact_pause-dt)
+   if zone=="mine":deep.move(dt);deep.mine(dt)
+   else:move_player(dt)
+   if zone=="mine":pass
+   elif impact_pause>0:impact_pause=maxf(0,impact_pause-dt)
    elif room_id=="" and not combat.armed and construction.selected=="":handle_mining(dt)
   elif transition_left>0:swing=0
   else:swing=0
   if panel_id!="" or launching or is_instance_valid(creator) or transition_left>0:
    jump_buffer=0;movement_remainder=0;jump_was_held=Input.is_action_pressed("jump")
-  if zone=="mine" or not agents.is_empty():geo.tick_materials(dt,body_bounds(player) if zone=="mine" else Rect2())
-  if geo.structure_dirty:construction.maintain()
-  update_agents(dt)
+  # Legacy terrain is retained verbatim; Deepworks owns active excavation.
+  # Archived side-view structures are not simulated or removed.
+  deep.agents(dt)
   update_effects(dt)
   autosave+=dt
   if autosave>45:save_game();autosave=0
@@ -318,6 +318,7 @@ func _process(dt):
     launching=false;state.launched=true;save_game();open_panel("victory")
   var desired=Vector2(clampf(player.x-480,0,1040),0) if zone!="mine" else Vector2(clampf(player.x-480,0,Geology.W*Geology.TILE-960),clampf(player.y-360,-180,Geology.H*Geology.TILE-470))
   if continuous_journey():desired=Vector2(clampf(player.x-480,-JOURNEY.offset(zone),Geology.W*Geology.TILE-960 if zone=="mine" else 2000),clampf(player.y-360,-180,Geology.H*Geology.TILE-470) if zone=="mine" else lerpf(-50.0,-68.0,smoothstep(1500.0,2000.0,player.x)) if zone=="approach" else 0)
+  if zone=="mine":desired=deep.camera_target()
   if room_id!="":desired=Vector2.ZERO
   camera=camera.lerp(desired,1-exp(-dt*7))
   shake_amount=move_toward(shake_amount,0,dt*14)
@@ -344,6 +345,7 @@ func _unhandled_input(e):
  if not playing and panel_id!="" and e.is_action_pressed("pause"):
   back_panel();get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
+ if deep.input(e):get_viewport().set_input_as_handled();return
  if panel_id=="" and e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT and e.pressed:mining_buffer=.16
  if panel_id=="" and e.is_action_pressed("jump") and not e.is_echo():jump_buffer=.12
  if panel_id=="" and e.is_action_released("jump") and velocity.y< -140:velocity.y=-140
@@ -715,6 +717,7 @@ func burst(p:Vector2,c:Color,num:int):
  for i in num:particles.append({"p":p,"v":Vector2(randf_range(-90,90),randf_range(-140,15)),"life":randf_range(.2,.65),"c":c.lightened(randf_range(0,.2)),"size":randf_range(2,4)})
 func notify(s:String):notice=s;notice_time=5.5
 func save_game():
+ if deep:deep.remember()
  remember_agents()
  # Flush attracted pickups so an immediate save cannot lose a broken tile's yield.
  for d in drops:state.add(d.item,d.count)
@@ -726,10 +729,12 @@ func change_zone(z:String):
  drops.clear();particles.clear();popups.clear();close_panel();zone=z;velocity=Vector2.ZERO
  player=Vector2(150,370) if z=="mine" else Vector2(1465,HUB_FLOOR)
  camera=Vector2.ZERO if z=="mine" else Vector2(985,0)
+ if z=="mine":deep.enter()
  begin_transition("THE LOWER WORKINGS" if z=="mine" else "BACK TO THE HOLD");sound.set_context(z)
- notify("Find coal: aim at a bank + X for a bearing. K explains sampling and bonus ore from sifting. LMB: dig. V: build." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
+ notify("DEEPWORKS: WASD move · Hold LMB dig · V carve stairs · E down / Shift+E up · X survey below." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
  save_game()
 func interact():
+ if zone=="mine":deep.use_stairs(Input.is_key_pressed(KEY_SHIFT));return
  if zone=="road" and room_id=="":
   HoldForestry.interact(self);return
  if zone=="hub" and room_id=="" and state.active_site=="hold" and player.x<125:
@@ -826,7 +831,7 @@ func update_hud():
  elif construction.selected!="":footer.text="BUILD: "+HoldConstruction.OPTIONS[construction.selected].name+"   LMB PLACE   1–4 CANCEL   V OPTIONS"
  elif zone=="road":footer.text=HoldForestry.hint(self)
  elif zone=="approach":footer.text="HIGH TRAIL LOOKOUT   |   G BASIN MAP   E PLAN JOURNEY   A/D WALK"
- elif zone=="mine":footer.text="LMB ATTACK   RMB GUARD / PARRY   Q DODGE   F TOOLS   B GEAR" if combat.armed else "1–5 TOOLS   F WEAPON   B GEAR   Q DODGE   V BUILD   R RESCUE   N PEOPLE"
+ elif zone=="mine":footer.text="HOLD LMB · EXCAVATE    V · STAIRS / LAMPS    X · SURVEY BELOW    I · PACK    M · CREW"
  else:
   var nearest=nearest_station()
   footer.text="E  "+nearest.name.to_upper()+"    |    A/D MOVE   I PACK   M CREW   F1 HELP" if absf(nearest.x-player.x)<95 else "A/D MOVE   E INTERACT   C CHARACTER   I PACK   M CREW   F1 HELP"
@@ -835,6 +840,7 @@ func _draw():
  forest_view.visible=playing and zone=="road" and room_id==""
  if forest_view.visible:forest_view.queue_redraw()
  if not playing:draw_title();return
+ if zone=="mine":deep.draw();return
  draw_background()
  var offset=-camera
  if shake_amount>0:offset+=Vector2(sin(clock*103),cos(clock*137))*shake_amount
@@ -1120,9 +1126,14 @@ func open_panel(id:String,remember:bool=true):
  menu_footer(outer)
  match id:
   "conversation":HoldConversation.panel(self)
-  "field_notes":HoldFieldSurvey.panel(self)
+  "field_notes":
+   if zone=="mine":deep.panel()
+   else:HoldFieldSurvey.panel(self)
   "equipment":combat.panel()
-  "construction":construction.panel()
+  "deepworks":deep.panel()
+  "construction":
+   if zone=="mine":deep.panel()
+   else:construction.panel()
   "rescue":
    label(panel_body,"EMERGENCY EXTRACTION",21,Color("edc98a"))
    label(panel_body,"Try stairs, ladders, or digging a return route first. The rescue crew charges %d crowns. Any amount you cannot pay becomes a debt deducted from future income." % rescue_cost(),17)
@@ -1736,20 +1747,22 @@ func perform_rescue(reason:String):
  var fee=rescue_cost();var paid=mini(state.money,fee);state.money-=paid;state.rescue_debt+=fee-paid
  flush_pickups();close_panel();player=Vector2(150,370);velocity=Vector2.ZERO;state.combat.health=65.0
  combat.reset_actions();combat.invulnerable=3;construction.selected=""
+ if zone=="mine":deep.enter()
  notify(reason+": %d crowns charged. Dig or build your way back next time." % fee);save_game()
 
 func _exit_tree():
  if combat:combat.g=null
  if construction:construction.g=null
+ if deep:deep.g=null
 
 func can_region_travel()->bool:
  if room_id!="" or state.opening==0:return false
- if zone=="mine":return player.x<180 and player.y<=410 and grounded
+ if zone=="mine":deep.ensure();return deep.world.entrance(player)
  return grounded and zone in ["hub","approach","road","claim"]
 func region_travel_hint()->String:
  if state.opening==0:return "Finish your introductions to Borin, Orla and Hedrik first. J lists who remains."
  if room_id!="":return "Leave the building by its left exit, then press G outside to set out."
- if zone=="mine":return "Walk back to the mine mouth before setting out. Build a return route with V; W/S climbs ladders."
+ if zone=="mine":return "Follow stairs up (Shift+E) to the Lamplight entrance before travelling. V carves connected stairs."
  if not grounded:return "Land on solid ground before setting out."
  return "Step onto the surface to begin regional travel."
 func enter_hold_destination(id:String):
@@ -1782,8 +1795,9 @@ func arrive_region(destination:String):
  player={"hold":Vector2(1780,HUB_FLOOR),"trail":Vector2(1000,410),"workings":Vector2(95,392),"forest":Vector2(265,HUB_FLOOR)}[destination]
  room_id="";velocity=Vector2.ZERO;grounded=true;gait_clock=0;walking_pose=false;swing=0
  ensure_mine_mouth();camera=Vector2(player.x-480,player.y-360) if continuous_journey() else Vector2(clampf(player.x-480,0,1040),0)
+ if zone=="mine":deep.enter()
  close_panel();sound.set_context(zone);particles.clear();popups.clear();spawn_agents();save_game()
- var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: basin map.","workings":"OLD WORKINGS: Pick [1] • Hold left mouse on nearby coal. V: build a return route. Walk back to the mouth before using G.","hold":"KELDRATH: G explores the hold's galleries, stairs and lift. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: A sheltered lookout. G opens the basin map; choose Old Workings to enter the mountain."}
+ var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: basin map.","workings":"DEEPWORKS: WASD move. Hold LMB to dig. V carves stairs; E down / Shift+E up. X surveys below. E at the entrance returns home.","hold":"KELDRATH: G explores the hold's galleries, stairs and lift. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: A sheltered lookout. G opens the basin map; choose Old Workings to enter the mountain."}
  notify(arrival_hints.get(destination,"G opens regional travel."))
 
 

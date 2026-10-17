@@ -1,3 +1,9 @@
-# Session handoff
-
-Read [docs/SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md), then [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md). The canonical handoff lives in docs.
+# Resume here
+- Current build **0.41.0**, checkpoint **deepworks-0.41.0**. Restore `Stellar-Holds-0.41.0.bundle` or matching source archive from **The Stellar Holds - Development**; start with `PROJECT_INDEX.md`. Local checkout: `/workspace/scratch/a447fc5d46ab/stellar-holds` (temporary).
+- Deepworks is integrated into the existing mine entry, not a separate launcher. New modules: `scripts/deepworks.gd` (seeded layers, stairs, geology, survey, routes), `scripts/deepworks_play.gd` (input, mining, crew, renderer). Narrow hooks in `main.gd`; additive save state in `state.gd`. Pinewood is untouched.
+- Five persistent depths per site; WASD, hold LMB, V stairs/lamps, E down, Shift+E up, X survey, T crew depth. Existing inventory/crafting/trade/steel/slagcaster and recruitment still apply. Crew use real ground routes and same-XY stairs.
+- Legacy loads first back up exact save bytes, then start deterministic new geology. Legacy cells/structures/site snapshots remain archived, not physically converted. Do not remove them or the migration backup. New layer damage, fixtures, discoveries, depth/position, links and crew assignments are saved.
+- Read CURRENT_STATUS.md and `testing/deepworks-0.41.0.md` for tests and boundaries. Native input and rendered captures supplement the model tests. Prior smoke/Pinewood/campaign tests pass. One campaign fixture was updated from old side-view entrance coordinates to `Deepworks.ENTRY`.
+- Still future: ramps/hoists, deeper streaming, fluids, dedicated eight-facing sprite art, porting legacy mine combat and constructed routes. Windows execution, real-player save migration and speaker listening are unverified; known shutdown warnings remain.
+- Pre-change checkpoint: **pre-deepworks-20261017**, commit `69ffe5131b23102f21788e36953ac00b8212cd5c`, verified full bundle. Previous 0.40.0/0.39.1 backups preserved. No remote was pushed or changed; clone origin is the local recovery bundle.
+- Next: user-test the Windows milestone; address concrete mining/crew/save issues before further expansion. Use isolated test saves, preserve original assets/UIDs, and update status/index with a verified new checkpoint.

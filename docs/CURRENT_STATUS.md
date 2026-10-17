@@ -1,41 +1,23 @@
 # Current status
-Updated **2026-10-18 UTC** (October 17 evening locally). Gameplay build **0.40.0**, checkpoint/tag **pinewood-0.40.0**. Current work: Pinewood timber gathering.
+Updated 2026-10-18 UTC. Build **0.41.0**, checkpoint **deepworks-0.41.0**.
 
-## Implemented
-- Pinewood: painted forest/camp background, seven marked firs, contact-timed chopping, full-size felling, fallen-log recovery, progress indicators, field board and basin travel. Old cuts survive; new `forestry` save dictionary records logs, fall times and direction. No automatic regrowth.
-- Native side-view Godot game with character creator, five designs per sex, portraits, names, three save slots and audio settings.
-- Guided arrival, introductions, commissions, royal audience, separate anniversary gift quests/cinematic, quest markers and NPC location tracking.
-- Hold floor map, interiors, basin travel and map-table expeditions. Persisted mountain excavation, ore/terrain drops, pick/shovel, steel requirement, dirt/water simulation and construction/return routes.
-- Survey bearings and mineral selection; dirt-sifting bonus with saved progress; lower downward strikes and footing-aware targeting.
-- Inventory, smelting/crafting, supply-sensitive trade, research, mountain claims, outpost recruitment/roles, physical crew mining, industrial upgrades and energy-fed mining gun.
-- Weapons/armor, attack/block/parry/dodge, practice and finite hostile salvage encounters. These are implemented; not all combat/content branches were rerun in this infrastructure task.
+## Current playable milestone
+Deepworks replaces the active side-view mine in the existing game. Both employer and claimed mines use independent deterministic worlds: five 80×64 geological layers, 40-unit cells, connected mineral seams, rock bands, natural caverns, crystal chambers, ruined survey works and two rare deep discoveries. Existing settlement/basin routes enter it directly.
 
-## Partial / future
-Ship construction and launch progression are scaffolding, not a finished interstellar game. Procedural address seeds and encounters are not full civilizations or galaxy simulation. Family names/dynasty metadata exist; marriage, descendants, succession and immortal Greatbeard play remain future. Personal skill XP is not an established completed system. Closed destinations must remain WIP.
+WASD / arrows move in eight directions without gravity. Hold LMB to excavate with pick/shovel; ordinary rock clears on one contact, iron/crystal resist, basalt needs steel. Material-specific original sounds, dust/debris, damage cracks and immediate inventory rewards are integrated. Original Dwarf art, grip overlays and stone textures are reused; new worksite/landmark details are code-authored.
 
-## Problems and uncertainty
-- Latest downward mining and prospecting still need user acceptance for feel/balance. No new gameplay blocker was reproduced in this task.
-- Title and integration-test shutdown report ObjectDB/resource-in-use warnings. Import and the other selected tests were clean. Do not describe this as a warning-free build.
-- Windows launcher and real historical player-save migration were not tested here. Synthetic save slots passed; legacy loading can regenerate old mountain metadata.
-- Historical docs/tests can be stale; use these current references and actual code first. Some visual harnesses contain absolute capture paths.
-- Repeated past risk areas: hair/skin recoloring, walk silhouettes, grip/head contact, NPC location parity and menu clarity. Preserve fixes; inspect affected views after relevant edits.
+V / F1 opens the mine board. Carve stairs while stationary for 1.2 seconds; E descends and Shift+E ascends at the same XY. All five depths can be connected. X / Tab / K previews the layer below. Work lamps cost timber/coal and persist. T assigns miners/automaton to the current depth; they physically walk excavated tunnels and connected stairs, respecting supplies and mineral priorities. M retains recruitment/industry. Slagcaster uses existing energy cells and slag recipes.
 
-## Objective and next three tasks
-Current milestone: a reliable first season with satisfying mining.
-1. Player-test 0.39.1 downward/overhead mining and return-route building (MINE-01).
-2. Player-test whether a newcomer understands and benefits from sampling/sifting (MINE-02).
-3. Complete a fresh opening plus a copied real-save reload on Windows (OPEN-01, SAVE-01, QA-01).
+## Preserved systems
+Pinewood 0.40.0 and its art/mechanics are unchanged. Settlement, characters, quests, inventory, economy, crafting, research, recruitment, industrial upgrades and save slots remain integrated. Legacy Geology, construction, and related tests remain in source for compatibility and recovery; active excavation now uses Deepworks.
 
-Unresolved: detailed family/immortality rules; galaxy simulation granularity and streaming; interstellar economy; progression balance after player feedback. Do not invent these as already decided.
+## Save compatibility
+Schema remains 1 with additive `deepworks[site]`: layers/cells/damage/seen/features/fixtures, links, depth/position, crew locations and assignments. Inventory rewards use the existing save inventory. Loading a legacy save first makes a uniquely named, byte-exact `.pre-deepworks-<time>.bak` beside it; loading aborts if backup fails. Legacy cells, structures, ladders and site snapshots remain archived in saves. **Old tunnel shapes and structures are not transplanted into the new perspective.** Their original save is recoverable in 0.40.0; new geology begins deterministically at the entrance. No prior project backup is overwritten.
 
-## Latest verification: 0.40.0
-Godot 4.4.1 Linux. Import and export passed. Forestry: 53 checks; campaign: 43 checks; existing smoke suite: 220 counted checks plus three-slot assertions. Native rendered arrival, both ends of coupe, axe/log contact, 12 fall stages and paused field board inspected. Exported PCK boot verified. Windows execution and listening on speakers remain unverified. See `testing/pinewood-0.40.0.md`.
+## Verification
+Godot 4.4.1 Linux: Deepworks flow/model checks, rendered mouse/key/button gameplay checks, Pinewood 53 checks, campaign 43 checks, and the prior smoke suite pass. Full results and limitations: `docs/testing/deepworks-0.41.0.md`. Native captures cover entrance, pick impact, excavation, lower-layer survey, geode, ruins, build board, Pinewood and both sexes at four tool-contact directions. PCK export and boot are release gates. Windows package includes the established 4.4.1 engine and launcher.
 
-Historical expedition25: 194 pass, 2 fail because it still requires continuous mine/trail walking, intentionally removed earlier. This is recorded, not called a clean suite. Existing shutdown resource warnings remain.
+## Boundaries / next work
+This is an integrated playable first Deepworks milestone, not the completed industrial-mine vision. Dedicated ramps/hoists, streaming beyond five layers, richer fluid simulation and new eight-facing character drawings remain future. Legacy mine-specific combat/hostile salvage is not ported into Deepworks; surface/training equipment systems remain. Older sample/sift mechanics are superseded inside Deepworks by below-layer surveying. Old constructed routes remain archived rather than recreated as working top-down structures. Those are explicit compatibility boundaries, not completed migrations.
 
-## Previous verification: continuity-1
-Godot **4.4.1**, Linux headless, isolated temporary user data. Import and title boot passed. Seven selected test scripts passed: integration smoke (10 checks), granular mining (36), controller (18), opening (13), outpost (67), industry (76), and three-slot save/reload assertions. Total: **220 counted checks plus save-slot assertions**, zero test failures. Teardown warnings noted above. Results: `docs/testing/continuity-1-smoke.json`.
-
-All **5,621** original source-archive files remain present. Only original README content changed (entry pointer); original runtime scripts/scenes/settings/assets/audio and existing tests are unchanged. Literal runtime preload/load references exist, and Godot import found no fatal reference/parse errors. Integrity record: `docs/testing/continuity-1-integrity.json`.
-
-Prior session: 0.39.1 downward suite 494 checks and contact screenshots; 0.39.0 survey/UI checks; six interiors visually checked for 0.38.2. Those visuals were not rerendered here because graphics were unchanged. This is a focused continuity audit, not exhaustive gameplay certification.
+Windows execution, a real user's historical save and speaker listening remain unverified. Existing ObjectDB/resource-in-use shutdown warnings remain. Do not label this exhaustive gameplay certification. Next: Windows player acceptance for aiming/feel, old-save recovery, long crew sessions and mineral-yield balance. Broader space/family/worldforging features remain future as before.

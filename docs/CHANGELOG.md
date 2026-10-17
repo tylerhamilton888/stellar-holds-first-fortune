@@ -10,3 +10,5 @@ Historical detail remains in DEVELOPMENT.md and versioned reviews. This is the c
 | continuity-1 | 2026-10-17 | Documentation, isolated smoke runner, Git baseline/checkpoint and portable recovery. Gameplay version stays 0.39.1. No runtime scripts, assets, scenes, settings or save format changed. |
 
 | 0.40.0 / pinewood-0.40.0 | 2026-10-18 UTC | Pinewood forest art and seven firs; two-stage timber recovery, grounded reach/aim checks, progress and saved logs; useful field board and map travel. Existing five tree-cut values retained, two new trees added. Additive forestry save field; schema remains 1. |
+
+| 0.41.0 / deepworks-0.41.0 | 2026-10-18 UTC | Integrated top-down, five-layer excavation; same-XY stairs, below-layer survey, connected veins/caverns, discoveries, lamps, physical multilevel crew and existing economy/slagcaster. Additive saves and mandatory legacy backup; old terrain/structures archived. Pinewood retained. |
