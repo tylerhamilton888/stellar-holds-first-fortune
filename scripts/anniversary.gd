@@ -152,10 +152,20 @@ static func panel(g):
  else:g.button(g.panel_body,"Back to my journal",func():g.open_panel("guidance"))
 
 # Painted sprites use measured alpha bounds, with animation and player-selected ornaments.
+const TEA_STATION=preload("res://assets/story-v44/tea-station.png")
 const TABLE=preload("res://assets/anniversary-v31/table.png")
 const KETTLE=preload("res://assets/anniversary-v31/kettle.png")
 static func station(n:Node2D,p:Vector2,t:float,table:bool=true,kettle:bool=true,motif:int=0,steam:bool=true):
  var x=p.x;var y=p.y
+ if table and kettle:
+  n.draw_texture_rect(TEA_STATION,Rect2(x-62,y-83,124,83),false)
+  if motif==1:A.poly(n,[Vector2(x-4,y-45),Vector2(x,y-50),Vector2(x+4,y-45)],"d2a875")
+  elif motif==2:A.rune(n,Vector2(x,y-47),.30,Color("d3ac69"))
+  if steam:
+   for i in 4:
+    var h=fposmod(t*13+i*9,30)
+    n.draw_arc(Vector2(x-14+sin(t+i)*3,y-63-h),3,PI*.4,PI*1.4,8,Color(.85,.9,.9,(1-h/30)*.3),1.2)
+  return
  if table:
   A.poly(n,[Vector2(x-50,y-1),Vector2(x-43,y-7),Vector2(x+44,y-7),Vector2(x+52,y)],Color(0,0,0,.25))
   n.draw_texture_rect(TABLE,Rect2(x-49,y-55.65,98,55.65),false)

@@ -1,3 +1,7 @@
+## After 0.44.0
+Next candidate: rough stone blocks → existing stockpile → mason’s bench → dressed building stone, with manual work then NPC delegation. Preserve basic rubble construction; see LIVING_WORKS_DESIGN.md.
+Player-test passages/quest wording, new anniversary pacing and room improvement feedback. Apply LIVING_WORKS_DESIGN.md to future specialist work: useful outcomes and earned delegation, no trivial XP loops. Brewing, NPC craft skill and optional precision/masterwork interactions are not yet implemented.
+
 ## After 0.43.1
 Visual/menu pass completed. Next: human player feedback on feel/readability, Windows execution and larger worker/room populations.
 

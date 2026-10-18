@@ -2,12 +2,12 @@ class_name HoldRoyalHall
 extends RefCounted
 const A=preload("res://scripts/art.gd")
 const ROOM=preload("res://assets/opening-v31/throne-room.png")
-const SPRITE=preload("res://assets/royal-v39/eirik.png")
+const SPRITE=preload("res://assets/royal-v44/eirik-enthroned.png")
 const LORD=preload("res://assets/opening-v31/lord-eirik.png")
 static func draw(n:Node2D,t:float,s,markers:bool=true):
  n.draw_texture_rect(ROOM,Rect2(0,-12,960,540),false)
- # A normal-scale world actor, with the painted royal portrait reserved for dialogue.
- n.draw_texture_rect_region(SPRITE,Rect2(590,275,103,135),Rect2(174,79,944,1237))
+ # Original seated actor and throne share one grounded silhouette on the dais.
+ n.draw_texture_rect(SPRITE,Rect2(566,234,145,174),false)
  for i in 4:
   var h=fposmod(t*10+i*13,35)
   A.rect(n,220+sin(t+i)*3,310-h,1,2,Color(1,.72,.32,(1-h/35)*.5))

@@ -138,20 +138,34 @@ func survey(p:Vector2)->Array:
  return found
 func link_key(c:Vector2i,z:int)->String:return str(z)+":"+key(c)
 func can_descend(c:Vector2i,z:int)->bool:return data.links.has(link_key(c,z))
-func carve_stairs(c:Vector2i)->String:
+func carve_stairs(c:Vector2i,kind:String="stair")->String:
  var z=depth()
+ if kind not in ["stair","ladder"]:return "Choose stairs or a timber ladder."
  if z>=data.layers.size()-1:return "The surveyed frontier ends here. Future delvings will extend this depth."
  if not walkable(c):return "Stand on clear excavated ground."
- if at(c,z+1)==0 and not walkable(c,z+1):return "Furniture blocks the landing below. Move it before carving stairs."
- if can_descend(c,z):return "Stairs already connect these two layers. E descends; Shift+E ascends."
- if at(c,z+1)==7 and not state.steel:return "Basalt below: research Tempered steel before carving this stair."
- # No resource reward from stair clearance; prevents shaft farming.
- for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:set_cell(c+d,0,z+1)
- data.links[link_key(c,z)]={"x":c.x,"y":c.y,"upper":z,"lower":z+1,"kind":"stair"}
- return "Stair carved to "+NAMES[z+1]+". E descends; Shift+E ascends."
+ if at(c,z+1)==8:return "The lower landing lies beyond the surveyed boundary."
+ if at(c,z+1)==0 and not walkable(c,z+1):return "Furniture blocks the landing below. Move it before building a passage."
+ var previous=data.links.get(link_key(c,z),{})
+ if not previous.is_empty() and (previous.get("kind","stair")==kind or kind=="ladder"):
+  return "A passage already connects these levels. E down; Shift+E up."
+ if at(c,z+1)==7 and not state.steel:return "Basalt below: forge a steel pick before opening this passage."
+ if kind=="ladder" and not state.pay({"wood":2}):return "A timber ladder needs 2 delivered timber."
+ # Ladder shafts clear one landing; stairs clear a wider crew/cart landing. No mining rewards.
+ var clearance=[Vector2i.ZERO] if kind=="ladder" else [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]
+ for d in clearance:
+  if at(c+d,z+1)!=8:set_cell(c+d,0,z+1)
+ var link=previous.duplicate(true)
+ link.merge({"x":c.x,"y":c.y,"upper":z,"lower":z+1,"kind":kind},true)
+ data.links[link_key(c,z)]=link
+ return ("Timber ladder fitted" if kind=="ladder" else "Stair carved")+" to "+NAMES[z+1]+". E down; Shift+E up."
 func traverse(c:Vector2i,up:bool)->bool:
  var z=depth();var upper=z-1 if up else z
  if upper<0 or upper>=data.layers.size()-1 or not can_descend(c,upper):return false
+ var link=data.links[link_key(c,upper)]
+ if not walkable(c,z-1 if up else z+1):return false
+ if not up:link.descended=true
+ elif link.get("descended",false) and not link.get("return_tested",false):
+  link.return_tested=true;HoldOnboarding.fact(state,"route_tested")
  data.depth=z-1 if up else z+1;data.position=[center(c).x,center(c).y];return true
 func entrance(p:Vector2)->bool:return depth()==0 and cell(p).distance_to(ENTRY)<2.2
 # Flood-fill only excavated ground. Returns a physically walkable route to a face or stair.

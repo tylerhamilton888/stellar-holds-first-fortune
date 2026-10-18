@@ -50,6 +50,8 @@ func impact():
  if job.is_empty():return
  var c:Vector2i=job.cell
  if Deepworks.center(c).distance_to(g.player)>115 or not w.visible(g.player,Deepworks.center(c)):return
+ var before={}
+ for id in model.data.rooms:before[id]=int(model.data.rooms[id].metrics.score)
  var result=""
  match job.mode:
   "furniture":
@@ -59,7 +61,16 @@ func impact():
    result=model.place(c,job.kind,occupied)
   "finish":result=model.finish(c,job.kind)
   "remove":result=model.remove(c)
- g.notify(result);g.sound.effect("build",-14);g.deep.pulse=.12;sparkle=.4;g.save_game()
+ var succeeded=result.ends_with("installed.") or result.ends_with("finished.") or result.begins_with("Dismantled carefully")
+ if succeeded:
+  var timber=job.kind in ["bench","bed","table","shelf","chair","timber"]
+  g.sound.effect("wood" if timber else ("metal" if job.kind in ["anvil","lamp","inlay"] else "stone"),-14)
+  g.deep.pulse=.12;sparkle=.4
+  for id in model.data.rooms:
+   var r=model.data.rooms[id];var gain=int(r.metrics.score)-int(before.get(id,0))
+   if gain>0:result+=" "+r.name+" quality +"+str(gain)+"."
+  g.save_game()
+ g.notify(result)
  # Each furniture/removal click is deliberate; finishes can be painted by holding.
  if job.mode!="finish":ready=false
 func interact()->bool:

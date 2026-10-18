@@ -8,10 +8,11 @@ func _initialize():call_deferred("run")
 func run():
  var g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);g.state.outpost.erase("onboarding");g.close_panel();g.state.opening=2
  for id in ["hedrik","orla"]:
-  HoldAnniversary.accept(g.state,id);HoldAnniversary.prepare(g.state,id,0)
+  HoldAnniversary.accept(g.state,id,true);HoldAnniversary.prepare(g.state,id,0,true)
   for k in HoldAnniversary.cost(0,id):g.state.add(k,20)
   HoldAnniversary.deliver(g.state,id,true)
  var money=g.state.money
+ g.room_id="market";g.player=Vector2(480,410)
  g.anniversary_scene=HoldAnniversaryScene.begin(g)
  check(is_instance_valid(g.anniversary_scene),"Scene starts")
  var time=g.state.elapsed;g._process(10)

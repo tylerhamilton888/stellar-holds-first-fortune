@@ -24,6 +24,7 @@ var reveal_clock=0.0
 var sparks:Array=[]
 var messages:Array=[]
 var stair_work=0.0
+var passage_kind="stair"
 func _init(game):g=game
 func ensure():
  if world==null or site!=g.state.active_site or world.data!=g.state.deepworks.get(g.state.active_site,{}):
@@ -45,10 +46,13 @@ func input(e:InputEvent)->bool:
  match e.keycode:
   KEY_E:
    use_stairs(e.shift_pressed);return true
-  KEY_V,KEY_F1:
+  KEY_V:
    g.open_panel("deepworks");return true
   KEY_X,KEY_TAB,KEY_K:
-   survey_open=not survey_open;return true
+   survey_open=not survey_open
+   if survey_open and world.depth()<world.data.layers.size()-1 and not world.data.get("survey_recorded",false):
+    world.data.survey_recorded=true;HoldOnboarding.fact(g.state,"sample");g.save_game()
+   return true
   KEY_O:
    g.open_panel("living");return true
   KEY_H:
@@ -71,6 +75,9 @@ func input(e:InputEvent)->bool:
 func use_stairs(up:bool):
  ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
  if not up and not world.can_descend(c,world.depth()) and works.interact():return
+ var link=world.data.links.get(world.link_key(c,old_depth-1 if up else old_depth),{})
+ if link.get("kind","stair")=="ladder" and not haul.cart().is_empty() and haul.cart().get("hitched",false):
+  g.notify("Park the wheelbarrow [C], or widen this ladder into stairs from its upper landing [V].");return
  if world.traverse(c,up):
   works.cancel()
   haul.stairs(Deepworks.center(c),old_depth)
@@ -87,7 +94,10 @@ func panel():
  g.label(g.panel_body,"WASD moves freely. Hold LMB against an exposed face to excavate. Ordinary rock breaks in one contact; metal and crystal resist. Pick [1], shovel [2], or your powered slagcaster [5].",16)
  g.label(g.panel_body,"Survey [X] shows the ground immediately beneath your feet. Stairs connect the exact same location on both levels and stay open permanently. E goes down, Shift+E goes up.",16)
  g.button(g.panel_body,"Carve descending stair · free · hold still for 1.2 seconds",func():
-  g.close_panel();stair_work=1.2;g.notify("Carving a safe stair landing… stay still."))
+  g.close_panel();passage_kind="stair";stair_work=1.2;g.notify("Carving a safe stair landing… stay still."))
+ g.button(g.panel_body,"Fit timber ladder shaft · 2 timber · bucket and Dwarfs only",func():
+  g.close_panel();passage_kind="ladder";stair_work=1.2;g.notify("Fitting an anchored ladder… stay still."))
+ g.label(g.panel_body,"Ladders make a compact one-tile shaft. Stairs open a wider landing for carts and MOTE-1. Carve stairs at a ladder’s upper landing to upgrade it. Descend and return to prove a safe route for Ivar.",16)
  g.button(g.panel_body,"Place warm work lamp · 1 timber + 1 coal",func():
   var k=Deepworks.key(Deepworks.cell(g.player))
   if world.layer().fixtures.has(k):g.notify("A lamp already stands here.")
@@ -127,10 +137,10 @@ func move(dt:float):
   if int(g.gait_clock*20)!=before and posmod(int(g.gait_clock*20),16) in [0,8]:g.sound.footstep("stone")
  else:g.gait_clock=0
  if stair_work>0:
-  if g.walking_pose:stair_work=0;g.notify("Stair carving cancelled. Stand still to carve.")
+  if g.walking_pose:stair_work=0;g.notify("Passage work cancelled. Stand still to finish.")
   else:
    stair_work-=dt
-   if stair_work<=0:g.notify(world.carve_stairs(Deepworks.cell(g.player)));g.sound.effect("build");g.save_game()
+   if stair_work<=0:g.notify(world.carve_stairs(Deepworks.cell(g.player),passage_kind));g.sound.effect("build");g.save_game()
  reveal_clock-=dt
  if reveal_clock<=0:
   reveal_clock=.13
@@ -225,7 +235,7 @@ func agents(dt:float):
    budget-=1;a.cool=.4
    var down=int(saved.assigned)>z;var upper=z if down else z-1;var best={}
    for link in world.data.links.values():
-    if int(link.upper)!=upper:continue
+    if int(link.upper)!=upper or (a.type=="bot" and link.get("kind","stair")=="ladder"):continue
     var dest=Vector2i(link.x,link.y);var route=world.route(c,z,"",dest)
     if route.is_empty():continue
     if best.is_empty() or route.path.size()<best.path.size():best=route;best.dest=dest

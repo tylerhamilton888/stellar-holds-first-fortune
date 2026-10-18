@@ -1,5 +1,12 @@
 # Current status
-Updated 2026-10-18 UTC. Build **0.43.1**, checkpoint **polish-0.43.1**.
+Updated 2026-10-18 UTC. Build **0.44.0**, checkpoint **routes-0.44.0**.
+
+## Routes, story art and meaningful labor — 0.44.0
+V offers a two-timber ladder shaft or carved stairs at matching XY across depths. Ladder landings occupy one lower tile; stairs open a cross-shaped landing. Upgrade ladders from above. Hitched carts and MOTE machines require stairs; Dwarfs and buckets can use ladders. Ivar's route lesson requires a descent and return; legacy built-route credit remains valid. X surveying below satisfies the geological lesson once per site. F1 opens full help again.
+
+Lord Eirik now sits on an original substantial throne. The anniversary has six consistent storybook compositions with expressive reactions, detailed carved oak and hammered copper gifts, selected inscription/motif captions and a matching permanent tea station. Existing local-host gates, choices, costs, skip/replay and once-only rewards remain.
+
+Living Works construction uses timber, stone or metal contact sounds and reports actual room-quality gains only after successful work. Existing physical placement, research/material quality, accessible workstations, staffed craft-time benefits and Brann's opportunity express meaningful labor without adding stamina, experience grinding or intermediate recipes. Brewing and broader specialist crafting remain future work. See LIVING_WORKS_DESIGN.md and PLAYTEST_GUIDE.md.
 
 ## Visual and menu polish — 0.43.1
 Compact, pinned Living Works tabs replace the long single menu. All nine furnishings fit in a three-column catalog; finishes show real costs and research locks. Room selection uses a dropdown, with construction markings visible only while planning. Research is grouped into Mining & Industry, Craftsmanship and Starflight; construction links open Craftsmanship directly.

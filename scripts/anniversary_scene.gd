@@ -1,8 +1,8 @@
 class_name HoldAnniversaryScene
 extends Node2D
 const A=preload("res://scripts/art.gd")
-const STORY_ART=preload("res://assets/story-v32/anniversary-poses.webp")
-const REACTIONS=preload("res://assets/story-v32/anniversary-reactions.webp")
+const STORY_ART=preload("res://assets/story-v44/anniversary-gifts.png")
+const REACTIONS=preload("res://assets/story-v44/anniversary-reactions.png")
 const LINES=[
  ["hedrik","Fifty years. We said nothing grand, Orla. So I made you a kettle."],
  ["orla","Hedrik. Is that a pressure regulator?"],
@@ -56,6 +56,8 @@ func show_line():
  age=0
  var line=LINES[step];speaker.text=game.state.npc(line[0]).name + (" (from the hall)" if line[0]=="brann" else "")
  caption.text=HoldCulture.render(game.state,line[1]);portrait.apply_profile(game.state.npc(line[0]))
+ if step==2:caption.text+=" Inside: “"+HoldAnniversary.INSCRIPTIONS[int(HoldAnniversary.gift(game.state,"hedrik").choice)]+"”"
+ if step==5:caption.text+=" The carving: "+HoldAnniversary.MOTIFS[int(HoldAnniversary.gift(game.state,"orla").choice)]+"."
  advance_button.text="Share a cup" if step==LINES.size()-1 else "Next ›"
 
 func advance():
@@ -89,28 +91,14 @@ func _process(dt):
 
 func _draw():
  A.draw_offset=Vector2.ZERO
- # One immutable environment plate for both shots. Architecture cannot drift.
- draw_texture_rect(game.HALL,Rect2(0,-110,960,540),false)
- A.rect(self,0,77,960,341,Color(.02,.05,.08,.30))
+ # Complete matched storybook plates keep characters, props and lighting in one illustration.
+ A.rect(self,0,77,960,341,Color("17232b"))
  var shot=shot_for_beat(step)
- draw_texture_rect_region(shot.texture,Rect2(0,98,960,320),shot.region)
- # These exact assets and dimensions are reused in every shot.
- # Actors may gesture, but no illustration gets to redraw or resize the furniture.
- if step>=3:draw_texture_rect(HoldAnniversary.TABLE,Rect2(355,298,250,142),false)
- # Hedrik presents the kettle on his open palm; it is set aside during Orla's reveal.
- # At the assembly cut it rests on the same tabletop used for every later beat.
- var joined=step>=10
- if step<3:draw_texture_rect(HoldAnniversary.KETTLE,Rect2(398,253,90,89),false)
- elif joined:
-  var settle=18.0*(1.0-smoothstep(0.0,.65,age)) if step==10 else 0.0
-  draw_texture_rect(HoldAnniversary.KETTLE,Rect2(435,213-settle,90,89),false)
- HoldCinematic.atmosphere(self,clock)
- if joined:
-  for i in 6:
-   var h=fposmod(clock*18+i*16,110)
-   var drift=-h*1.25 if step==11 else sin(clock+i)*4
-   var rise=h*.30 if step==11 else h*.65
-   draw_arc(Vector2(442+drift,242-rise),3+h*.035,PI*.4,PI*1.4,10,Color(.85,.90,.88,(1-h/110)*.24),1.6)
+ var size=shot.region.size;var scale=minf(960.0/size.x,341.0/size.y)
+ var dest=Rect2(Vector2(480,247.5)-size*scale*.5,size*scale)
+ draw_texture_rect_region(shot.texture,dest,shot.region)
+ # Subtle page frame; expressions and props carry the story without floating overlays.
+ draw_rect(Rect2(10,82,940,330),Color(.84,.66,.35,.35),false,1)
  if (step in [3,6,8,10,11,12] and age<.55) or clock<.65:
   var fade=age if step in [3,6,8,10,11,12] else clock
   A.rect(self,0,77,960,341,Color(.03,.06,.08,1-smoothstep(0.0,.55,fade)))
@@ -121,8 +109,8 @@ func _draw():
 
 # Explicit editorial mapping keeps dialogue, expressions and prop state together.
 func shot_for_beat(beat:int)->Dictionary:
- if beat in [8,9]:return {"texture":REACTIONS,"region":Rect2(0,0,1254,440),"id":"secrets"}
- if beat==11:return {"texture":REACTIONS,"region":Rect2(0,440,1254,395),"id":"steam"}
- if beat in [6,7,10]:return {"texture":REACTIONS,"region":Rect2(0,835,1254,419),"id":"admiring"}
+ if beat in [8,9]:return {"texture":REACTIONS,"region":Rect2(0,2,1254,463),"id":"secrets"}
+ if beat==11:return {"texture":REACTIONS,"region":Rect2(0,472,1254,386),"id":"steam"}
+ if beat==10:return {"texture":REACTIONS,"region":Rect2(0,866,1254,386),"id":"admiring"}
  var pose=0 if beat<3 else 1 if beat<12 else 2
- return {"texture":STORY_ART,"region":Rect2(0,pose*418,1254,418),"id":["kettle","table","toast"][pose]}
+ return {"texture":STORY_ART,"region":Rect2(0,pose*418+3,1254,412),"id":["kettle","table","toast"][pose]}

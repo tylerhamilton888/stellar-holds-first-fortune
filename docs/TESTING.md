@@ -1,3 +1,5 @@
+Current release evidence: [0.44.0 routes and story art](testing/routes-0.44.0.md). Player acceptance: [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md).
+
 ## Visual polish 0.43.1
 `tests/input_polish431.gd` verifies tabbed construction flow and viewport bounds. `tests/capture_ui431.gd` renders shared menus and unrelated areas. See testing/polish-0.43.1.md.
 

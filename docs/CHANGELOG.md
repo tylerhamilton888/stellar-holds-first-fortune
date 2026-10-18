@@ -1,3 +1,6 @@
+## 0.44.0 — Routes and stories worth keeping
+Real ladder shafts and cart-ready stairs, safe upgrades and round-trip quest proof; below-layer survey lesson with legacy credit retained. Enthroned Lord Eirik. Six expressive anniversary plates and matching tea station. Material-specific successful construction feedback with actual room-quality gains. Save-compatible, no recipe or stamina rewrite.
+
 ## 0.43.1 — Visual and menu polish
 Pinned Living Works tabs, complete furniture catalog, grouped research, concise current help, quieter mine HUD and planning-only room markings. Warmer lanterns and original floor/furniture details. Existing economy/saves unchanged.
 
