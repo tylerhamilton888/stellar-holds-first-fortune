@@ -140,6 +140,9 @@ static func npc_menu(g,parent:Node,id:String):
   if LESSONS[key].host==id and unlocked(s,key) and not q.done.has(key):
    g.small_button(parent,"Work: "+LESSONS[key].name,func():g.lesson_id=key;g.open_panel("lesson"))
 static func journal(g):
+ if g.zone=="mine":
+  g.label(g.panel_body,"BRANN’S STONEWORK · Turn a sound block into a lasting floor.",17)
+  g.button(g.panel_body,"Masonry lesson · quarry → stockpile → bench → build",func():g.deep.works.page="Masonry";g.open_panel("living"))
  var s=g.state;var q=ensure(s)
  if primary(s)!="":g.label(g.panel_body,primary(s),17)
  if q.stage==2:

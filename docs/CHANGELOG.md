@@ -1,3 +1,6 @@
+## 0.45.0 — A sound block, a lasting floor
+Integrated rough-block quarrying, physical stockpile/bench conversion, dressed-floor construction and Brann's practical lesson. Existing miners can take over fetching, dressing and returning stone through real routes; carried job materials survive reload/release. Original procedural chiseling/carrying/bench animation and new material/finish visuals. No stamina or mandatory recipe rewrite. Fix residual construction swing cancellation and refreshed Living Works menu bounds.
+
 ## 0.44.0 — Routes and stories worth keeping
 Real ladder shafts and cart-ready stairs, safe upgrades and round-trip quest proof; below-layer survey lesson with legacy credit retained. Enthroned Lord Eirik. Six expressive anniversary plates and matching tea station. Material-specific successful construction feedback with actual room-quality gains. Save-compatible, no recipe or stamina rewrite.
 

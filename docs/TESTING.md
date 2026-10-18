@@ -1,3 +1,5 @@
+Current release evidence: [0.45.0 masonry](testing/masonry-0.45.0.md).
+
 Current release evidence: [0.44.0 routes and story art](testing/routes-0.44.0.md). Player acceptance: [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md).
 
 ## Visual polish 0.43.1

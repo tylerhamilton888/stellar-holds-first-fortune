@@ -1,5 +1,8 @@
+## After 0.45.0
+Stone block → stockpile → mason's bench → dressed floor, teaching quest and NPC handover now ship. Player-test contact/carrying animation, supply-range clarity and blocked-route recovery. Extend to more dressed furnishings only after acceptance. Broader brewing and profession skills remain deferred.
+
 ## After 0.44.0
-Next candidate: rough stone blocks → existing stockpile → mason’s bench → dressed building stone, with manual work then NPC delegation. Preserve basic rubble construction; see LIVING_WORKS_DESIGN.md.
+Completed in 0.45.0: rough stone blocks → existing stockpile → mason’s bench → dressed building stone, with manual work then NPC delegation. Basic rubble construction preserved.
 Player-test passages/quest wording, new anniversary pacing and room improvement feedback. Apply LIVING_WORKS_DESIGN.md to future specialist work: useful outcomes and earned delegation, no trivial XP loops. Brewing, NPC craft skill and optional precision/masterwork interactions are not yet implemented.
 
 ## After 0.43.1

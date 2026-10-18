@@ -5,7 +5,7 @@ extends RefCounted
 const BUCKET=64
 const CART=320
 const CART_COST={"wood":6,"iron":2}
-const BULK=["stone","iron_ore","copper_ore","coal","iron_slag","copper_slag"]
+const BULK=["rough_block","dressed_stone","stone","iron_ore","copper_ore","coal","iron_slag","copper_slag"]
 var s
 var w:Deepworks
 var data:Dictionary

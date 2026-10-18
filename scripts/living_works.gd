@@ -3,6 +3,7 @@ extends RefCounted
 # One site-local spatial model. Existing inventory/research remain authoritative.
 const FUNCTIONS={"workshop":{"name":"Workshop","needs":["bench","anvil","lamp"]},"bedroom":{"name":"Bedroom","needs":["bed","lamp"]}}
 const FURNITURE={
+ "mason":{"name":"Mason’s bench","cost":{"wood":3,"stone":2},"tech":"","solid":true,"function":2,"comfort":0,"heritage":1},
  "bench":{"name":"Joiner's bench","cost":{"wood":4,"stone":2},"tech":"","solid":true,"function":2,"comfort":0,"heritage":0},
  "anvil":{"name":"Forge hearth & anvil","cost":{"iron":3,"stone":4},"tech":"","solid":true,"function":3,"comfort":0,"heritage":1},
  "bed":{"name":"Timber bed","cost":{"wood":4},"tech":"","solid":true,"function":0,"comfort":2,"heritage":0},
@@ -13,6 +14,7 @@ const FURNITURE={
  "chair":{"name":"Carved chair","cost":{"wood":3},"tech":"furnishings","solid":false,"function":0,"comfort":2,"heritage":1},
  "rune":{"name":"Ancestral pillar","cost":{"stone":5,"copper":1},"tech":"fine_masonry","solid":true,"function":0,"comfort":0,"heritage":3}}
 const FINISHES={
+ "ashlar":{"name":"Dressed stone floor","surface":"floor","cost":{"dressed_stone":1},"tech":"","craft":2},
  "timber":{"name":"Timber floor","surface":"floor","cost":{"wood":1},"tech":"","craft":1},
  "flags":{"name":"Flagstone floor","surface":"floor","cost":{"stone":1},"tech":"stoneworking","craft":1},
  "inlay":{"name":"Copper-inlaid floor","surface":"floor","cost":{"stone":2,"copper":1},"tech":"fine_masonry","craft":2},

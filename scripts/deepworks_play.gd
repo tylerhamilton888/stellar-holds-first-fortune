@@ -62,7 +62,10 @@ func input(e:InputEvent)->bool:
   KEY_C:
    g.notify(haul.toggle_cart(g.player));g.sound.effect("wood");g.save_game();return true
   KEY_U:
-   if e.shift_pressed:g.notify("Loaded %d units." % haul.load_pile(g.player));g.sound.effect("wood");g.save_game()
+   if e.shift_pressed:
+    var n=haul.load_pile(g.player);g.notify("Loaded %d units." % n);g.sound.effect("wood")
+    if n>0:works.masonry.transfer_from=g.player+Vector2(0,10);works.masonry.transfer_to=g.player+Vector2(0,-24);works.masonry.transfer_time=.45
+    g.save_game()
    else:unload()
    return true
   KEY_T:
@@ -149,7 +152,7 @@ func move(dt:float):
  haul.scavenge(g.player)
  remember()
 func mine(dt:float):
- ensure();pulse=maxf(0,pulse-dt);unload_flash=maxf(0,unload_flash-dt)
+ ensure();works.masonry.tick(dt);pulse=maxf(0,pulse-dt);unload_flash=maxf(0,unload_flash-dt)
  for i in range(rubble.size()-1,-1,-1):
   rubble[i].life-=dt
   if rubble[i].life<=0:rubble.remove_at(i)
@@ -243,6 +246,7 @@ func agents(dt:float):
    if best.path.is_empty():saved.depth=z+1 if down else z-1;a.target=Vector2i(-1,-1)
    else:a.path=best.path
    continue
+  if a.type=="worker" and works.masonry.worker(a,dt):continue
   if not room.is_empty():
    var stand=works.model.stand(room)
    if c==stand:
@@ -393,7 +397,7 @@ func draw():
    var profile=g.state.appearance.duplicate();profile.air_pose=0;profile.gait_time=g.gait_clock
    var frame=4 if strike_left<=IMPACT else 1
    var pose=p+Vector2(0,12)
-   if strike_left>0:
+   if strike_left>0 and works.mode!="dress":
     var palm=pose+HoldCharacterArt.work_hand(4,profile)*Vector2(g.face,1)
     # A short body lean keeps the original grip and full-size tool in contact.
     var delta=contact-palm
@@ -401,14 +405,16 @@ func draw():
     pose+=lean*clampf((swing_duration-strike_left)/(swing_duration-IMPACT),0,1)
    A.dwarf(g,pose,g.gait_clock,g.walking_pose and strike_left<=0,g.face,0,false,profile,(frame+.1)/8.0 if strike_left>0 else -1)
    g.draw_set_transform(offset)
+   if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
    draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
-   if strike_left>0:
+   if strike_left>0 and works.mode!="dress":
     var hand=pose+HoldCharacterArt.work_hand(frame,profile)*Vector2(g.face,1);var progress=1-strike_left/swing_duration
     var endpoint=contact if progress>=.50 and progress<=.68 else hand+(contact-hand).rotated(-g.face*(1-sin(progress*PI))*.95)
     if g.mining_gun.selected:g.draw_line(hand,contact,Color("c4f4e2"),3)
     else:
      HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,g.tool,offset,g.face,-1,1.0)
      HoldCharacterArt.draw_grip(g,pose+offset,frame,profile,g.face,offset,g.character_tint(p))
+     if works.mode in ["quarry","dress"]:works.masonry.chisel(p)
   else:
    var a=actor.agent
    if a.type=="bot":A.bot(g,p+Vector2(0,10),g.clock,a.work)
@@ -417,11 +423,21 @@ func draw():
     if a.work and not assigned.is_empty() and assigned.kind=="workshop":
      var f=posmod(int(g.clock*8),8);var pose=p+Vector2(0,12)
      A.dwarf(g,pose,g.clock,false,1,3,false,profile,(f+.1)/8.0)
-     HoldCharacterArt.draw_tool(g,pose+offset+HoldCharacterArt.work_hand(f,profile),pose+offset+HoldCharacterArt.work_end(f,profile,3),3,offset)
+     var hand=pose+HoldCharacterArt.work_hand(f,profile)
+     var endpoint=pose+HoldCharacterArt.work_end(f,profile,3)
+     if works.masonry.data.jobs.has(a.id):
+      var fixture=works.model.data.furniture.get(works.masonry.data.jobs[a.id].bench,{})
+      if not fixture.is_empty():
+       var point=Deepworks.center(Vector2i(fixture.x,fixture.y))+Vector2(0,17)
+       endpoint=point+Vector2(0,-absf(sin(g.clock*PI/.55))*22)
+       works.masonry.chisel(p,point)
+     if not works.masonry.data.jobs.has(a.id):HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,3,offset)
      HoldCharacterArt.draw_grip(g,pose+offset,f,profile,1,offset,g.character_tint(p))
     else:A.dwarf(g,p+Vector2(0,12),g.clock,not a.path.is_empty(),1,3,a.work,profile)
+    if works.masonry.data.jobs.has(a.id) and not a.work:works.masonry.carry(p,1,works.masonry.data.jobs[a.id].cargo)
     if works.model.data.assignments.has(a.id):A.text(g,p+Vector2(-35,-81),g.state.npc(a.id).first_name+" · "+works.model.data.folk[a.id].activity,10,Color("dfc695"))
  g.draw_set_transform(offset)
+ works.masonry.foreground()
  for s in sparks:
   var tint=Color(s.color,clampf(s.life*4,0,1))
   if int(s.get("kind",2))==6:g.draw_line(s.p,s.p+s.v.normalized()*s.size*2,tint,2)
@@ -554,6 +570,10 @@ func draw_haulage():
   for j in mini(22,3+int(sqrt(n)*2)):
    var q=p+Vector2(sin(j*2.4)*18,cos(j*1.7)*10)
    g.draw_colored_polygon(PackedVector2Array([q+Vector2(-6,3),q+Vector2(-2,-6-j%3),q+Vector2(6,2)]),tint.lightened((j%3)*.08))
+  if int(a.cargo.get("rough_block",0))>0:
+   for j in mini(3,int(a.cargo.rough_block)):HoldMasonry.block(g,p+Vector2(j*6-7,-j*6),false,.7)
+  if int(a.cargo.get("dressed_stone",0))>0:
+   for j in mini(4,int(a.cargo.dressed_stone)):HoldMasonry.block(g,p+Vector2(j%2*14-7,-j/2*8),true,.55)
   if a.marked:g.draw_rect(Rect2(p-Vector2(20,16),Vector2(40,32)),Color("b9a477"),false,1)
   A.text(g,p+Vector2(-14,27),str(n)+" units",10,Color("e1c997"))
  if not haul.cart().is_empty() and int(haul.cart().depth)==world.depth():

@@ -2,6 +2,8 @@ class_name HoldData
 extends RefCounted
 
 const ITEMS = {
+ "rough_block":{"name":"Rough stone block","price":3,"color":"829a9c"},
+ "dressed_stone":{"name":"Dressed stone","price":4,"color":"b4bda8"},
  "energy_cell":{"name":"Runic energy cell","price":30,"color":"7fdccd"},
  "iron_slag":{"name":"Iron slag","price":4,"color":"a88870"},
  "copper_slag":{"name":"Copper slag","price":5,"color":"c88963"},

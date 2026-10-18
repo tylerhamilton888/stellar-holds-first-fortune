@@ -208,7 +208,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.44.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.45.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -1229,11 +1229,13 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Create replacement for slot %d" % state.save_slot,func():open_creator(true))
    button(panel_body,"Keep my existing hold",close_panel)
 
+ if id=="living":panel.set_deferred("size",Vector2(720,452))
+
 func inventory_panel():
  var top=row(panel_body)
  label(top,"%d crowns  •  Shared storage" % state.money,18,Color("edc98a"))
  small_button(top,"Show all resources" if inventory_owned_only else "Show carried resources",func():inventory_owned_only=not inventory_owned_only;refresh_panel())
- label(panel_body,"Materials are available at every workbench. You do not need to move stacks between containers.",16)
+ label(panel_body,"Delivered supplies serve ordinary crafting and construction. Mason’s benches use rough blocks from nearby marked stockpiles.",16)
  var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",10);grid.add_theme_constant_override("v_separation",8);panel_body.add_child(grid)
  var count=0
  for k in HoldData.ITEMS:

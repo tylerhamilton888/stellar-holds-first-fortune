@@ -1,5 +1,9 @@
-# Try 0.44.0 — a focused 20–30 minute pass
+# Try 0.45.0 — a focused 20–30 minute pass
 Extract the entire Windows ZIP to a new folder and run PLAY-WINDOWS.bat. Keep your prior build and save backup. Expect the existing game, settlement and progression, with five persistent top-down mine depths and the Living Works. A fresh character still follows the opening; advanced rooms/crew require supplies and recruitment.
+
+Start the new lesson with **O → Masonry** underground (also linked from J). Chisel ordinary stone with held LMB; mark a 4×4 or larger room on Rooms; place the mason's bench (3 timber + 2 stored stone). Cache the block on walkable floor within three tiles, then choose Dress blocks and hold LMB over the bench. Shift+U loads finished stone; U at the entrance delivers it. Lay a dressed floor tile from Masonry and complete Brann's lesson. Later, in your claimed mountain, add the bench to a functional workshop and assign a recruited Dwarf. Watch him fetch a block, dress it and return output. Save during a carrying phase and verify conservation after reload.
+
+Ordinary stone remains usable for all previous basic recipes. Optional block reduction makes four ordinary stone; dressing makes two dressed stone, or three with Fine Masonry. The lesson credits previous work. No repeated bulk-production requirement or stamina bar.
 
 1. **Dig and explore.** Travel from the settlement to Old Workings or your claim. WASD/arrows move; hold LMB with pick [1]. Try diagonal movement, ordinary stone, ore and a cavern. Does impact match the target? Are minerals, cracks and open floor easy to read? X previews the layer below.
 2. **Prove a route.** V offers carved stairs or a ladder costing 2 stored timber. E descends; Shift+E ascends at the same landing. Return to satisfy Ivar's route lesson, then claim it normally. Park a wheelbarrow before using a ladder; upgrade from above to stairs for freight. Follow a vein into a second depth.
@@ -10,4 +14,4 @@ Extract the entire Windows ZIP to a new folder and run PLAY-WINDOWS.bat. Keep yo
 
 Most useful feedback: where work felt satisfying or tedious; unclear controls; menus obscuring action; awkward animation/contact; confusing quest instructions. For bugs, include version, screenshot, last few actions and expected versus actual behavior.
 
-Known scope: five depths, workshops/bedrooms, existing automation. No rails, brewing simulation or expanded craft skill system yet. Tested with Linux Godot 4.4.1 including exported game pack; the bundled Windows runtime needs your platform check. Audio events are tested, speaker balance needs listening.
+Known scope: five depths, workshops/bedrooms, existing automation. No rails, brewing simulation or expanded craft skill system yet. Masonry delegation is implemented; other specialist professions still use their existing systems. Tested with Linux Godot 4.4.1 including exported game pack; the bundled Windows runtime needs your platform check. Audio events are tested, speaker balance needs listening.
