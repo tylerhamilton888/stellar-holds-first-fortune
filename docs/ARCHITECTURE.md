@@ -32,3 +32,8 @@ Pinewood keeps `road_trees` for compatibility and adds `forestry` dictionaries k
 
 ### Cargo ownership (0.42)
 `DeepHaul` is the transfer boundary. Global state.hauling.bucket follows the player; site-local deepworks.haulage holds cart and piles at exact XY/depth. Manual extraction routes its yield to cargo; worker extraction delivers directly. Only depot transfer credits existing inventory. Terrain/grade supplies yields, never visual particles. Rendered contents read authoritative dictionaries. Future vehicles should use the same transfer API, with independent location/connectivity rather than a second economic balance.
+
+## Living Works (0.43)
+`LivingWorks` separates room geometry/function, surface finish, furnishing definitions/paid costs, inhabitants and metrics in per-site `deepworks.living`. `LivingPlay` drives actual hammer-contact mutations and canvas presentation. Deepworks walkability and BFS include solid furniture; outer aisles and all floor connectivity are validated. Physical lamp positions affect light. Actor, cart and stair occupancy prevent invalid placement. Up to 16 rooms, 4–9 tiles per axis, keep evaluation bounded.
+
+NPC room destinations use existing crew depth assignments and stair routing. Rest occupies the final quarter of a 120-second cycle; assigned work otherwise replaces mining. Production reads the best active staffed workshop, enabled miner role and persisted presence. Existing `state.tick` applies the capped factor to craft time only. Brann’s one-time opportunity and research use existing tech/resources/chronicle. Preferences live with the site; cross-site social simulation remains future.

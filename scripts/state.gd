@@ -127,7 +127,7 @@ func tick(dt:float)->String:
  if not market_open:
   for k in market:market[k]=move_toward(float(market[k]),0,dt*.025)
  if queue.is_empty():return ""
- queue[0].left-=dt*HoldOutpost.workshop_speed(self,dt)*HoldIndustry.production(self)
+ queue[0].left-=dt*HoldOutpost.workshop_speed(self,dt)*HoldIndustry.production(self)*LivingWorks.production(self)
  if queue[0].left<=0:
   var id=queue[0].id
   for k in HoldData.RECIPES[id].out:add(k,HoldData.RECIPES[id].out[k])

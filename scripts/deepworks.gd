@@ -67,9 +67,13 @@ func at(c:Vector2i,z:int=-1)->int:
 func set_cell(c:Vector2i,kind:int,z:int=-1):
  if c.x<1 or c.y<1 or c.x>=W-1 or c.y>=H-1:return
  layer(z).cells[c.y*W+c.x]=kind
+func walkable(c:Vector2i,z:int=-1)->bool:
+ if at(c,z)!=0:return false
+ var f=data.get("living",{}).get("furniture",{}).get(link_key(c,depth() if z<0 else z),{})
+ return not f.get("solid",false)
 func solid(p:Vector2,z:int=-1)->bool:
  for d in [Vector2(-10,-8),Vector2(10,-8),Vector2(-10,8),Vector2(10,8)]:
-  if at(cell(p+d),z)!=0:return true
+  if not walkable(cell(p+d),z):return true
  return false
 func visible(a:Vector2,b:Vector2,z:int=-1)->bool:
  var end=cell(b)
@@ -96,20 +100,23 @@ func yield_count(c:Vector2i,z:int=-1)->int:
  return [1,2,4][grade(c,z)] if at(c,z) in [3,4,5] else 1
 func grade_label(c:Vector2i,z:int=-1)->String:
  return ["LEAN", "BANDED", "RICH"][grade(c,z)] if at(c,z) in [3,4,5] else ""
-func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true)->Dictionary:
+func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:String="pick")->Dictionary:
  var k=at(c,z)
  if k in [0,8]:return {}
  if k==7 and not state.steel and not thermal:return {"blocked":true}
  var l=layer(z);var id=key(c)
- l.damage[id]=float(l.damage.get(id,0))+(10.0 if thermal else (2.0 if state.steel else 1.0))
+ var prior=float(l.damage.get(id,0))
+ var power=10.0 if thermal else (2.0 if state.steel else 1.0)
+ if method=="hammer" and not thermal:power=3.0 if prior>0 else .65
+ l.damage[id]=prior+power
  if l.damage[id]<resistance(k):return {"kind":k,"broken":false}
- var count=yield_count(c,z)
+ var count=yield_count(c,z)+(1 if method=="careful" and k in [3,4,5] else 0)
  set_cell(c,0,z);l.damage.erase(id)
  # A contact opens hairline fractures; neighbors never break or yield remotely.
  for d in DIRS:
   var n=c+d;var nk=at(n,z)
-  if nk in [2,3,4,7]:
-   var nid=key(n);l.damage[nid]=minf(resistance(nk)*.65,float(l.damage.get(nid,0))+.25)
+  if nk in [2,3,4,7] and method!="careful":
+   var nid=key(n);l.damage[nid]=minf(resistance(nk)*.65,float(l.damage.get(nid,0))+(.5 if method=="hammer" else .25))
  var item=HoldData.TILES[k].item
  if thermal:
   if k in [3,4]:item="iron_slag" if k==3 else "copper_slag"
@@ -134,7 +141,8 @@ func can_descend(c:Vector2i,z:int)->bool:return data.links.has(link_key(c,z))
 func carve_stairs(c:Vector2i)->String:
  var z=depth()
  if z>=data.layers.size()-1:return "The surveyed frontier ends here. Future delvings will extend this depth."
- if at(c)!=0:return "Stand on excavated ground."
+ if not walkable(c):return "Stand on clear excavated ground."
+ if at(c,z+1)==0 and not walkable(c,z+1):return "Furniture blocks the landing below. Move it before carving stairs."
  if can_descend(c,z):return "Stairs already connect these two layers. E descends; Shift+E ascends."
  if at(c,z+1)==7 and not state.steel:return "Basalt below: research Tempered steel before carving this stair."
  # No resource reward from stair clearance; prevents shaft farming.
@@ -154,7 +162,7 @@ func route(start:Vector2i,z:int,priority:String,destination:Vector2i=Vector2i(-1
   if destination==c:chosen={"stand":c,"target":Vector2i(-1,-1)};break
   for d in DIRS:
    var n=c+d;var kind=at(n,z)
-   if kind==0 and not prev.has(key(n)):prev[key(n)]=c;queue.append(n)
+   if kind==0 and walkable(n,z) and not prev.has(key(n)):prev[key(n)]=c;queue.append(n)
    elif destination.x<0 and kind not in [0,8] and (kind!=7 or state.steel):
     var candidate={"stand":c,"target":n}
     if HoldData.TILES[kind].item==priority:chosen=candidate;break

@@ -207,7 +207,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.42.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.43.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -1134,6 +1134,7 @@ func open_panel(id:String,remember:bool=true):
   "equipment":combat.panel()
   "deepworks":deep.panel()
   "haulage":deep.haulage_panel()
+  "living":deep.works.panel()
   "projects":deep.project_panel()
   "construction":
    if zone=="mine":deep.panel()
@@ -1355,7 +1356,7 @@ func research_panel():
  compact_person("eldric","The stars are mostly empty. An appalling waste of usable space.")
  label(panel_body,"Bring samples, funding and an unreasonable amount of confidence.",14)
  button(panel_body,"Mountain charters and surveys",func():open_panel("charters"))
- for id in ["extraction","metallurgy","automation","thermal","voidcraft"]:
+ for id in ["extraction","stoneworking","furnishings","fine_masonry","metallurgy","automation","thermal","voidcraft"]:
   var r=HoldData.RESEARCH[id]
   label(panel_body,r.name+("  [COMPLETE]" if state.tech.has(id) else ""),18,Color("9dd5c3"))
   label(panel_body,r.desc+"\n"+HoldData.cost_text(r.cost)+" / %d crowns" % r.money,14)

@@ -1,5 +1,5 @@
 # Decisions to preserve
-- Side-view granular 2D excavation is the accepted direction for this game. The separate first-person crafting prototype is not this project. Large deep-rendered blocks and platformer-like mine layouts were rejected because they weakened modular extraction and believable mountain structure.
+- Integrated top-down, eight-directional, multi-Z Deepworks supersedes the former side-view mine. Preserve connected physical passages, independent layer persistence and Pinewood’s separate gathering systems.
 - Manual mining stays intrinsically fun alongside automation. Workers excavate actual reachable material; abstract free-resource timers are not a substitute.
 - Common resources remain useful for construction, provisions, repair, crafting and trade. Galaxy-scale economics must not make the early materials meaningless.
 - Use authored recurring NPCs/key scenes and reusable personality/event systems for procedural populations. Randomness must preserve flavor and coherent context.

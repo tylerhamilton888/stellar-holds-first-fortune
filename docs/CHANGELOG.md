@@ -1,3 +1,6 @@
+## 0.43.0 — The Living Works
+Functional workshops/bedrooms, nine furnishings, seven finishes, three research capabilities, physical crew occupancy, capped room benefits, persistent preferences and Brann carving opportunity. Fracture hammer and selective extraction extend existing mining. Additive save compatibility and focused native tests.
+
 # Changelog
 Historical detail remains in DEVELOPMENT.md and versioned reviews. This is the concise current record.
 

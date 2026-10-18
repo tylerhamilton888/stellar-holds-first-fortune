@@ -1,3 +1,6 @@
+## After 0.43.0
+Player acceptance/Windows validation; room-board usability; optional tavern/storage types and brewing; richer schedules and habitat conditions. Rails/powered freight, surface habitats and larger society remain deferred. Do not describe flavor drink preferences as a brewing system.
+
 # Backlog
 ## Critical bugs
 - BUG-01: No new release-blocking gameplay defect established during organization; classify incoming reports by reproducible steps before changing code.

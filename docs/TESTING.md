@@ -1,3 +1,6 @@
+## Living Works
+Run `tests/test_living43.gd` headless and `tests/input_living43.gd` with native display, in isolated XDG_DATA_HOME. See testing/living-0.43.0.md for fixture scope and regression results.
+
 # Focused validation
 Run from a recovered checkout with Python 3 and Godot 4.4.1:
 ```sh
