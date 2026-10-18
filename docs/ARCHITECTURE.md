@@ -1,3 +1,10 @@
+# Hands of the Dwarf extension — 0.49.0
+handworks.gd is a small integrated physical-resource controller referenced by main, surface and Deepworks. Raw records live under state.hauling.hands and have exactly one owner: loose, carry, facility.raw or facility.job.raw. Movement transfers records, never copies them. Processing replaces a reserved record with its explicit yield in an existing-resource cargo dictionary. DeepHaul.transfer conserves processed output during pallet/pack transfers. Save serializes the same authoritative graph; processing progress and reservation survive interruption. Local context includes site/zone/Z; no remote input lookup. Distant raw records are data-only; rendering culls to nearby objects and never creates active rigid bodies.
+
+Player-build specs provide cost, allowed type, capacity and art. Facilities use real locations; recovery requires empty raw/input/output buffers. Hearthcraft floor safety checks facilities. Extending worker processing should use the same reservation/recipe fields, not a second independent resource generator. Existing workers/masonry remain on their functioning models until that integration is implemented.
+
+Raw artwork is centralized in raw_sprite(): one material texture and scale across all states. Empty station bases receive the actual job workpiece. Processing effects overlay that workpiece, and only completion changes it to output artwork.
+
 # Architecture
 ## Runtime and conventions
 Godot 4.4.1, GDScript, GL Compatibility. `project.godot` launches `main.tscn`, a Node2D attached to `scripts/main.gd`. Logical viewport 960×540, stretched to the window. There is no collection of independent level scenes or autoload-manager hierarchy: main owns state, input, movement, drawing and UI, with named helper classes and instantiated subsystems. Most UI is built programmatically. Preserve resource paths and `.uid`/`.import` sidecars.

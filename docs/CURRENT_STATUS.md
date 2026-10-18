@@ -1,3 +1,19 @@
+# Build 0.49.0 — Hands of the Dwarf
+Checkpoint `hands-0.49.0`.
+
+## Hands of the Dwarf: first playable stage — 0.49.0
+Player-built stonebreakers, sawbenches, stone/log stockpiles, processed-material pallets and handcarts are integrated into the existing game. Shift+B opens the workshop board; J links its practical checklist. Crafting spends real pack materials only after valid local placement. Homes, claim grounds, Pinewood and clear Deepworks floors accept equipment. Doors, stairs, other facilities and authored town buildings remain protected. House floor recovery checks the new facilities at their own Z.
+
+Some ordinary stone tiles deterministically release a persistent raw chunk instead of bucket stone. The actual felling stroke and subsequent trunk cuts in Pinewood release raw logs instead of duplicate pack timber. Other small yields and existing automation remain as before. Each raw record has one owner and retains its ID, kind, source and explicit yield: ground → shoulders → rack/cart → reserved station input → output. E lifts/deposits; Q drops; Shift+E withdraws. One substantial load initially; eight productive forestry/masonry credits unlock two shoulders. Handling/deposit loops award no experience.
+
+Hold E at a supplied stonebreaker or sawbench for three 0.42-second work strokes. Input can come from shoulders, the bench or a compatible local rack/cart within 150 world units and a clear route. Mid-job input and progress save safely. Stonebreaking has cracks/hammer contact, timber processing a reciprocating saw, with sound at the contact phase. Output remains in a local buffer or nearby pallet until collected into the existing inventory. Processed stone was used in a real house floor during native testing. No stamina or new intermediate-resource tax.
+
+Raw stockpiles show one visible object per stored record, including all 12 slots; processed pallets build up in 20-unit bundles with exact quantity readouts. Stockpiles have typed input limits (12 large loads); handcarts carry 8. E can gather nearby loose items into a cart in a batch and unload compatible cart cargo to a nearby rack. C pushes/parks. Carts stay in their local zone/depth on travel; shoulders travel with the Dwarf. Existing mine wheelbarrows and their stair navigation are retained separately. This first-stage general handcart does not yet travel through zone portals or Z links.
+
+Visual continuity is explicit: one raw_sprite renderer draws the SAME rock or log texture at the SAME scale on the ground, shoulders, rack, cart and workstation. Station bases are empty artwork; actual input is overlaid only when present. The fallen trunk shares the timber illustration. Hotbar labels distinguish carrying, pushing and working; conflicting local prompts quiet during labor. Original generated atlas and exact prompts are in assets/handworks-v49.
+
+This is a coherent A–C milestone, not completion of the full attached brief. Deferred: optional precision smithing/quality grades; complete Miner/Mason/Forester/Smith progression trees and blueprint unlocks; raw ore/geode/specimen processing; new station operation by workers; generic cart portal/Z navigation; craftable standalone forge/furnace blueprints. Existing forge, masonry bench, research, worker production, hauling and automation remain functional. Do not mark deferred work complete.
+
 # Build 0.48.0 — Clear tools, consistent Dwarfs
 Updated 2026-10-18 UTC. Checkpoint `readability-0.48.0`.
 

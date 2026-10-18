@@ -13,6 +13,7 @@ const STATIONS=[{"x":225.0,"name":"Workers' quarters","panel":"home"},{"x":410.0
 const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinewood"}]
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
+var handworks:HoldHandworks
 var hotbar:HoldHotbar
 var surface:HoldSurface
 var deep:DeepworksPlay
@@ -117,7 +118,7 @@ func _ready():
  forest_view=preload("res://scripts/forestry_view.gd").new();forest_view.host=self;forest_view.z_index=-5;add_child(forest_view)
  sprite_atlas=HoldSpriteAtlas.new();add_child(sprite_atlas)
  combat=HoldCombat.new(self);construction=HoldConstruction.new(self);mining_gun=HoldMiningGun.new(self)
- deep=DeepworksPlay.new(self);surface=HoldSurface.new(self)
+ deep=DeepworksPlay.new(self);surface=HoldSurface.new(self);handworks=HoldHandworks.new(self)
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
  setup_ui()
@@ -211,7 +212,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.48.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.49.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -304,6 +305,7 @@ func _process(dt):
   if completed!="":notify(completed);sound.effect("build")
   if zone!="mine" and not surface.active():combat.update(dt)
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
+   handworks.update(dt)
    if zone=="mine":deep.move(dt);deep.mine(dt)
    elif surface.active():surface.move(dt)
    else:move_player(dt)
@@ -354,6 +356,7 @@ func _unhandled_input(e):
  if not playing and panel_id!="" and e.is_action_pressed("pause"):
   back_panel();get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
+ if handworks.input(e):get_viewport().set_input_as_handled();return
  if hotbar.handle(e):get_viewport().set_input_as_handled();return
  if deep.input(e):get_viewport().set_input_as_handled();return
  if surface.input(e):get_viewport().set_input_as_handled();return
@@ -1129,7 +1132,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- if id in ["house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
+ if id in ["handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
  panel_id=id;panel.visible=true
  panel.position=Vector2(120,44) if id=="living" else Vector2(60,44)
  panel.size=Vector2(720,452) if id=="living" else Vector2(840,452)
@@ -1137,7 +1140,7 @@ func open_panel(id:String,remember:bool=true):
  var outer=VBoxContainer.new();outer.add_theme_constant_override("separation",9);panel.add_child(outer)
  var top=row(outer)
  if not menu_history.is_empty():small_button(top,"‹ Back",back_panel)
- var names={"wayfinding":"PATHS & DOORWAYS","storage":"YOUR STORAGE CHEST","house_build":"BUILD YOUR HEARTH","homestead":"YOUR HOMESTEAD","living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
+ var names={"handworks":"HANDS OF THE DWARF","wayfinding":"PATHS & DOORWAYS","storage":"YOUR STORAGE CHEST","house_build":"BUILD YOUR HEARTH","homestead":"YOUR HOMESTEAD","living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
  label(top,names.get(id,"Claim business" if id=="claim_stories" else id.to_upper()),22,Color("e9c586"))
  small_button(top,"Close ×",close_panel)
  if playing and id not in ["living","haulage","projects","deepworks","briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes","pinewood"]:
@@ -1177,6 +1180,7 @@ func open_panel(id:String,remember:bool=true):
   "basin_map":world_map_panel(true)
   "hold_lift":surface.lift_panel()
   "storage":surface.chest_panel()
+  "handworks":handworks.panel()
   "homestead":surface.home_panel()
   "house_build":surface.house.panel()
   "wayfinding":surface.guide_panel()
@@ -1437,6 +1441,7 @@ func ship_panel():
 func begin_launch():
  close_panel();zone="claim" if state.active_site=="claim" else "hub";player=Vector2(1660,HUB_FLOOR);launching=true;launch_time=0;sound.effect("crystal");notify("The sky is no longer the limit.")
 func help_panel():
+ button(panel_body,"Craft workstations & stockpiles · Shift+B",func():open_panel("handworks"))
  small_button(panel_body,"Build status · WIP areas & planned systems",func():open_panel("build_status"))
  label(panel_body,"WASD / arrows walk through local zones. E enters doors, uses stairs and opens nearby chests. The King’s Gate connects Hearthward to the High Trail, Old Workings, Pinewood and your claim. G lists directions; I opens your pack. Your charter includes a cottage and chest. O on your claim opens home improvements.",16)
  var tabs=row(panel_body)
@@ -1555,6 +1560,7 @@ func ivar_welcome_panel():
  label(panel_body,"Ivar’s advice",18)
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel():
+ button(panel_body,"Hands of the Dwarf · workshop lesson",func():open_panel("handworks"))
  if state.claim_id!="":
   label(panel_body,"YOUR OWN HEARTH · Build, furnish and climb your house. O opens plans on your claim.",16)
   small_button(panel_body,"House-building lesson & first-season work",func():open_panel("guidance"))

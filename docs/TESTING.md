@@ -1,3 +1,5 @@
+Current release: [Hands of the Dwarf 0.49.0](testing/handworks-0.49.0.md). Use native input_handworks49.gd and input_surface49.gd with isolated XDG saves.
+
 Current release evidence: [0.48.0 readability and animation](testing/readability-0.48.0.md). Native input/display required for tests/input_readability48.gd; isolate XDG_DATA_HOME.
 
 Current release evidence: [0.47.0 Hearthcraft and directional views](testing/hearthcraft-0.47.0.md). Native input tests require a display and isolated XDG_DATA_HOME.

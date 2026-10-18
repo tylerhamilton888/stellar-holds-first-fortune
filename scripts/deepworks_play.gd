@@ -204,7 +204,7 @@ func hit(c:Vector2i,thermal:bool=false):
  var color=ore_color(result.kind) if result.kind in [3,4,5,6] else color(result.kind,world.depth()).lightened(.25)
  for i in (15 if result.broken else 7):sparks.append({"p":contact,"v":Vector2.from_angle(randf()*TAU)*randf_range(30,140),"life":randf_range(.15,.5),"color":color,"kind":result.kind,"size":randf_range(2,5)})
  if result.broken:
-  var destination=haul.collect(result.item,result.count,g.player)
+  var destination="raw chunk · E to lift" if g.handworks.rock(result,c) else haul.collect(result.item,result.count,g.player)
   works.model.refresh()
   rubble.append({"p":Vector2(c)*40,"kind":result.kind,"life":.42})
   messages.append({"p":Deepworks.center(c),"text":"+%d %s · %s" % [result.count,HoldData.ITEMS[result.item].name,destination],"life":1.25})
@@ -390,15 +390,17 @@ func draw():
  var actors:Array=[]
  for a in g.agents:
   if int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
+ actors.append_array(g.handworks.objects())
  actors.append({"p":g.player,"player":true});actors.sort_custom(func(a,b):return a.p.y<b.p.y)
  for actor in actors:
   var p:Vector2=actor.p
   g.draw_set_transform(offset)
   g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
-  if actor.has("player"):
+  if actor.get("kind","")=="handwork":g.handworks.draw_object(actor)
+  elif actor.has("player"):
    var profile=g.state.appearance.duplicate();profile.air_pose=0;profile.gait_time=g.gait_clock
    var frame=0 if works.mode=="dress" else (4 if strike_left<=IMPACT else 1)
-   var pose=p+Vector2(0,12)
+   var pose=g.handworks.work_pose()+Vector2(0,12)
    if strike_left>0 and works.mode!="dress":
     var palm=pose+HoldDirectional.hand(profile,(contact-p).normalized(),.55)
     # A short body lean keeps the original grip and full-size tool in contact.
@@ -407,10 +409,14 @@ func draw():
     pose+=lean*clampf((swing_duration-strike_left)/(swing_duration-IMPACT),0,1)
    var facing_dir=(contact-p).normalized() if strike_left>0 else g.surface.direction
    var action=1-strike_left/swing_duration if strike_left>0 else -1.0
+   if g.handworks.working:
+    var station=g.handworks.facility()
+    if not station.is_empty() and not station.job.is_empty():facing_dir=(g.handworks.pos(station)-p).normalized();action=fmod(float(station.job.progress),.42)/.42
    HoldDirectional.draw(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,action)
    g.draw_set_transform(offset)
    if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
    if strike_left<=0:g.hotbar.held(g,pose,offset)
+   g.handworks.carried(pose)
    draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
    if strike_left>0 and works.mode!="dress":
     var hand=pose+HoldDirectional.hand(profile,facing_dir,action);var progress=1-strike_left/swing_duration
@@ -459,6 +465,7 @@ func draw():
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
  if survey_open and g.panel_id=="":draw_survey()
  works.hud()
+ g.handworks.overlay()
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.045,.06,.55))
 func lamp(p:Vector2):
  for r in [68,48,32,18]:g.draw_circle(p-Vector2(0,15),r,Color(1,.72,.35,.025))

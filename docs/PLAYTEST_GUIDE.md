@@ -1,3 +1,15 @@
+# Try 0.49.0 — build your own workshop
+Extract the entire Windows ZIP to a new directory and run PLAY-WINDOWS.bat. Keep older builds/save copies.
+
+1. Open **Shift+B**, or **J → Hands of the Dwarf**. Craft/place a stonebreaker (3 timber + 4 stone), sawbench (5 timber + 2 stone), stone stockpile (2 timber + 2 stone), timber rack (4 timber), materials pallet (3 timber) or handcart (6 timber + 2 iron). LMB places nearby; right click cancels. Use your claim, home, Pinewood or an excavated mine floor.
+2. Excavate ordinary stone until a raw chunk breaks free, or fell/cut a Pinewood tree to free a log. **E** lifts it; **Q** sets it down. It should look like the SAME material wherever you put it. Other small yields keep their existing handling.
+3. **E** at a compatible rack deposits it; **Shift+E** takes one back. Stone and timber racks accept their own types and hold 12 loads. Keep a rack within 150 world units of the matching station, with clear access.
+4. Stand at the stonebreaker/sawbench and **hold E**. Three short strokes process one input; continued holding repeats when supplied. Watch hammer contact, cracks and the saw stroke. **Shift+E** collects output. Nearby pallets receive output automatically, so collect there if the bench is empty.
+5. **E** at the cart loads shoulders and nearby loose material; **C** pushes/parks it. At a compatible rack, **E** unloads nearby cart cargo. Capacity 8. This general handcart currently stays in its zone/depth; unload or park before travel. Existing underground wheelbarrow stair support is unchanged.
+6. Eight productive forestry/masonry credits unlock two shoulder loads. Moving items around must not grant progress. Use finished stone/timber for existing crafting/building. Try saving with an unfinished station job, loose loads and filled racks; reload and check every quantity.
+
+This is the first playable physical-labor stage. Precision smithing, quality grades, full discipline trees, geode processing and worker operation of these NEW stations remain for the next stage. Existing town services and masonry workers remain available.
+
 # Try 0.48.0 — tools at a glance
 Extract the complete versioned Windows ZIP into a fresh folder and run PLAY-WINDOWS.bat. Existing saves are supported; keep previous build/save copies.
 

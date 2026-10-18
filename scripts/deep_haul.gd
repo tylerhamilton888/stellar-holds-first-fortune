@@ -11,7 +11,8 @@ var w:Deepworks
 var data:Dictionary
 func _init(state,world:Deepworks):
  s=state;w=world
- if s.hauling.is_empty():s.hauling={"bucket":{},"project":"cart"}
+ if not s.hauling.has("bucket"):s.hauling.bucket={}
+ if not s.hauling.has("project"):s.hauling.project="cart"
  if not w.data.has("haulage"):w.data.haulage={"cart":{},"piles":{}}
  data=w.data.haulage
 static func amount(cargo:Dictionary)->int:

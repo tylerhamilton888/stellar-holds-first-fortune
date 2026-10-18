@@ -1,3 +1,6 @@
+## After 0.49.0 — continue the attached Hands of the Dwarf brief
+Complete D/E: forgiving optional skilled smithing, output quality and full personal mastery paths distinct from technology. Complete F for new raw-resource facilities: shared NPC input reservations/hauling/processing, forge blueprints, cart transfer through legitimate portals/stairs, deterministic geological specimens. Retain the now-working A–C loops, one-owner resource invariant and shared raw material visuals. Existing automation is retained, not replaced.
+
 ## After 0.48.0
 Player-test the unified directional rig, shoulder seams, work timing and adaptive 1–0 hotbar. Further animation refinements should keep this one gameplay rig; do not restore legacy side/contact silhouettes. Separate practice-bay combat remains a future task. Food/water remain existing production supplies; no new eating/stamina system was added.
 

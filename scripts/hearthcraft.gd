@@ -37,6 +37,9 @@ func link_key(c:Vector2i,z:int)->String:return str(z)+"/"+key(c)
 func link_at(c:Vector2i,z:int)->bool:return data().get("links",{}).has(link_key(c,z))
 func on_floor(p:Vector2,z:int)->bool:return tiles(z).has(key(cell(p)))
 func occupied_at(c:Vector2i,z:int)->bool:
+ if g.handworks:
+  for f in g.handworks.data().facilities:
+   if f.area=="surface:claim:"+str(z) and center(c).distance_to(g.handworks.pos(f))<55:return true
  for list in [g.state.surface.chests.values(),g.state.surface.decor]:
   for o in list:
    if o.area=="claim" and int(o.get("z",0))==z and Vector2(o.x,o.y).distance_to(center(c))<38:return true
@@ -71,6 +74,9 @@ func walls(map:Dictionary)->Array:
  return result
 func obstacles()->Array:return walls(tiles()) if s.area=="claim" else []
 func occupied(c:Vector2i)->bool:
+ if g.handworks:
+  for f in g.handworks.data().facilities:
+   if g.handworks.local(f) and center(c).distance_to(g.handworks.pos(f))<55:return true
  var rect=Rect2(Vector2(c)*CELL,Vector2.ONE*CELL).grow(8)
  for o in g.state.surface.chests.values():
   if local(o) and rect.has_point(Vector2(o.x,o.y)):return true

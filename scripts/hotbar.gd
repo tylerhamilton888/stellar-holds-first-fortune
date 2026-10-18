@@ -18,7 +18,7 @@ func available()->bool:return g.playing and g.panel_id=="" and not is_instance_v
 func bar_y()->float:return 114.0 if (g.player-g.camera).y>360 else 385.0
 func slot_rect(i:int)->Rect2:return Rect2(230+i*50,bar_y()+24,46,51)
 func over()->bool:return available() and Rect2(224,bar_y(),512,80).has_point(g.get_global_mouse_position())
-func blocked_work()->bool:return item!="" or blocked or over()
+func blocked_work()->bool:return item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!=""
 func title(id:String)->String:
  if id.begins_with("tool:"):return g.TOOL_NAMES[clampi(int(id.get_slice(":",1)),0,3)]
  if id=="slagcaster":return "Slagcaster"
@@ -71,6 +71,8 @@ func _draw():
  var text="Holding · "+title(id)
  if id=="slagcaster":text+=" · %d charge" % int(g.state.outpost.get("gun_charge",0))
  elif not id.begins_with("tool:"):text+=" · %d in pack" % g.state.count(id)
+ var held=g.handworks.held_label()
+ if held!="":text=held
  draw_string(ThemeDB.fallback_font,Vector2(238,bar_y()+17),text,HORIZONTAL_ALIGNMENT_LEFT,480,13,Color("ead6ab"))
  for i in 10:
   var r=slot_rect(i);var key=str(d.slots[i]);var chosen=i==current
@@ -85,6 +87,7 @@ func _draw():
   var count="LOCK" if locked else (str(g.state.count(key)) if resource else "")
   draw_string(ThemeDB.fallback_font,r.position+Vector2(3,46),count,HORIZONTAL_ALIGNMENT_RIGHT,39,11,Color("cdded4"))
 func held(n:Node2D,p:Vector2,reset:Vector2):
+ if g.handworks.busy_hands():return
  if item=="":
   if g.mining_gun.selected:return
   var direction=g.surface.direction
