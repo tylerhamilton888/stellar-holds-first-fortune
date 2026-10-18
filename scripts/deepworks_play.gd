@@ -395,7 +395,7 @@ func draw():
   g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
   if actor.has("player"):
    var profile=g.state.appearance.duplicate();profile.air_pose=0;profile.gait_time=g.gait_clock
-   var frame=4 if strike_left<=IMPACT else 1
+   var frame=0 if works.mode=="dress" else (4 if strike_left<=IMPACT else 1)
    var pose=p+Vector2(0,12)
    if strike_left>0 and works.mode!="dress":
     var palm=pose+HoldCharacterArt.work_hand(4,profile)*Vector2(g.face,1)
@@ -421,16 +421,10 @@ func draw():
    else:
     var profile=g.state.npc(a.id);var assigned=works.model.destination(a.id)
     if a.work and not assigned.is_empty() and assigned.kind=="workshop":
-     var f=posmod(int(g.clock*8),8);var pose=p+Vector2(0,12)
+     var f=0 if works.masonry.data.jobs.has(a.id) else posmod(int(g.clock*8),8);var pose=p+Vector2(0,12)
      A.dwarf(g,pose,g.clock,false,1,3,false,profile,(f+.1)/8.0)
      var hand=pose+HoldCharacterArt.work_hand(f,profile)
      var endpoint=pose+HoldCharacterArt.work_end(f,profile,3)
-     if works.masonry.data.jobs.has(a.id):
-      var fixture=works.model.data.furniture.get(works.masonry.data.jobs[a.id].bench,{})
-      if not fixture.is_empty():
-       var point=Deepworks.center(Vector2i(fixture.x,fixture.y))+Vector2(0,17)
-       endpoint=point+Vector2(0,-absf(sin(g.clock*PI/.55))*22)
-       works.masonry.chisel(p,point)
      if not works.masonry.data.jobs.has(a.id):HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,3,offset)
      HoldCharacterArt.draw_grip(g,pose+offset,f,profile,1,offset,g.character_tint(p))
     else:A.dwarf(g,p+Vector2(0,12),g.clock,not a.path.is_empty(),1,3,a.work,profile)

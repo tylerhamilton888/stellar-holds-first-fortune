@@ -1,5 +1,10 @@
 # Current status
-Updated 2026-10-18 UTC. Build **0.45.0**, checkpoint **masonry-0.45.0**.
+Updated 2026-10-18 UTC. Build **0.45.1**, checkpoint **polish-0.45.1**.
+
+## Masonry visual pass — 0.45.1
+Compact original mason’s mallet replaces the full mining hammer at the bench. Its raised pose stays beside the face, the striking face meets the chisel cap at the material-contact phase, and worker sound/chips follow the saved job clock. Duplicate worker chisel rendering is removed. The bench has a bevelled slab, braced timber legs and iron fixings; partial dressing now reads the correct bench cell before the drawing offset. Existing menus remain bounded with fixed tabs and scrolling.
+
+Native input workflow: 12 passed; masonry model: 25 passed. Lift/contact/recovery captures and menu/worker views inspected. No save schema, costs, production time or yield changes. Windows execution and audible mixing remain human checks. See testing/polish-0.45.1.md.
 
 ## Meaningful stonework — 0.45.0
 A complete optional masonry loop is integrated into O → Masonry and the underground journal. Chisel a sound block from ordinary stone with three held contacts (basalt retains its forged-steel gate). Rough blocks enter existing bucket/cart/pile ownership. Place a mason's bench for 3 timber + 2 stone inside any designated room, then mark/cache masonry within three tiles on a reachable floor route. E at the bench opens its work choices. Three quick contacts convert one rough block into two dressed stone, or four ordinary stone; Fine Masonry raises dressed output to three. Output stays in the physical stockpile. Shift+U loads it; U at the entrance delivers it for construction.

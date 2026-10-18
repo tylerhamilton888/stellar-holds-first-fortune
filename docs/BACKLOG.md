@@ -1,3 +1,7 @@
+## After 0.45.1
+Compact original mason’s mallet replaces the full mining hammer at the bench. Its raised pose stays beside the face, the striking face meets the chisel cap at the material-contact phase, and worker sound/chips follow the saved job clock. Duplicate worker chisel rendering is removed. The bench has a bevelled slab, braced timber legs and iron fixings; partial dressing now reads the correct bench cell before the drawing offset. Existing menus remain bounded with fixed tabs and scrolling.
+Human checks remaining: Windows launcher, audible impact balance and subjective animation feel.
+
 ## After 0.45.0
 Stone block → stockpile → mason's bench → dressed floor, teaching quest and NPC handover now ship. Player-test contact/carrying animation, supply-range clarity and blocked-route recovery. Extend to more dressed furnishings only after acceptance. Broader brewing and profession skills remain deferred.
 

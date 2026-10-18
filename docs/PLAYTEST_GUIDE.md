@@ -1,3 +1,6 @@
+# Visual pass 0.45.1
+Try the masonry loop below. Check that the small mallet clears the face, meets the chisel, and that Brann’s work feels readable. O retains fixed tabs and a scrolling body. Production costs/yields, saves and controls are unchanged.
+
 # Try 0.45.0 — a focused 20–30 minute pass
 Extract the entire Windows ZIP to a new folder and run PLAY-WINDOWS.bat. Keep your prior build and save backup. Expect the existing game, settlement and progression, with five persistent top-down mine depths and the Living Works. A fresh character still follows the opening; advanced rooms/crew require supplies and recruitment.
 

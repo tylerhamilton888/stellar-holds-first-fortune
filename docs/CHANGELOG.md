@@ -1,3 +1,7 @@
+## 0.45.1 — Masonry visual pass
+Compact original mason’s mallet replaces the full mining hammer at the bench. Its raised pose stays beside the face, the striking face meets the chisel cap at the material-contact phase, and worker sound/chips follow the saved job clock. Duplicate worker chisel rendering is removed. The bench has a bevelled slab, braced timber legs and iron fixings; partial dressing now reads the correct bench cell before the drawing offset. Existing menus remain bounded with fixed tabs and scrolling.
+Human checks remaining: Windows launcher, audible impact balance and subjective animation feel.
+
 ## 0.45.0 — A sound block, a lasting floor
 Integrated rough-block quarrying, physical stockpile/bench conversion, dressed-floor construction and Brann's practical lesson. Existing miners can take over fetching, dressing and returning stone through real routes; carried job materials survive reload/release. Original procedural chiseling/carrying/bench animation and new material/finish visuals. No stamina or mandatory recipe rewrite. Fix residual construction swing cancellation and refreshed Living Works menu bounds.
 

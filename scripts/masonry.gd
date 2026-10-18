@@ -138,9 +138,9 @@ func worker(a:Dictionary,dt:float)->bool:
   if p.cargo.rough_block==0:p.cargo.erase("rough_block")
   job.cargo={"rough_block":1};job.phase="dress";job.time=0.0;works.data.folk[a.id].activity="Carrying a sound block"
  elif job.phase=="dress":
+  var previous=float(job.time)
   a.work=true;job.time+=dt;a.status="Dressing a sound block";works.data.folk[a.id].activity=a.status
-  if a.cool<=0:
-   a.cool=.55
+  if floori((float(job.time)-.55*.53125)/.55)>floori((previous-.55*.53125)/.55):
    if z==w.depth() and g.zone=="mine":g.sound.effect("stone",-26);flash=.35;flash_pos=Deepworks.center(Vector2i(f.x,f.y))+Vector2(0,17)
   if job.time>=2.0:
    job.cargo={"dressed_stone":3 if g.state.tech.has("fine_masonry") else 2};job.phase="return";works.data.folk[a.id].activity="Carrying dressed stone"
@@ -218,14 +218,25 @@ func foreground():
   var actors=[]
   if g.deep.works.mode=="dress" and g.deep.strike_left>0 and g.deep.target==Vector2i(f.x,f.y):actors.append({"p":g.player,"face":g.face,"profile":g.state.appearance,"phase":1-g.deep.strike_left/g.deep.swing_duration})
   for a in g.agents:
-   if a.work and data.jobs.get(a.id,{}).get("bench","")==w.link_key(Vector2i(f.x,f.y),w.depth()):actors.append({"p":a.p,"face":1,"profile":g.state.npc(a.id),"phase":fmod(g.clock,.55)/.55})
+   if a.work and data.jobs.get(a.id,{}).get("bench","")==w.link_key(Vector2i(f.x,f.y),w.depth()):actors.append({"p":a.p,"face":1,"profile":g.state.npc(a.id),"phase":fmod(float(data.jobs[a.id].time),.55)/.55})
   if actors.is_empty():continue
   g.deep.works.draw_furniture("mason",point)
   for a in actors:
    var contact=point+Vector2(0,17)
-   var hand=a.p+Vector2(a.face*12,-40)
-   var head=contact+Vector2(a.face*7,-absf(cos(a.phase*PI))*22)
-   chisel(a.p,contact)
-   g.draw_line(a.p+Vector2(a.face*7,-44),hand,Color("477b78"),7)
-   HoldCharacterArt.draw_tool(g,hand-g.camera,head-g.camera,3,-g.camera,a.face,-1,1.0)
-   g.draw_circle(hand,4,Color("e5b87e"))
+   var pose=a.p+Vector2(0,12)
+   var hand=pose+HoldCharacterArt.work_hand(0,a.profile)*Vector2(a.face,1)
+   # The small mallet lands on the chisel cap exactly when material/sound fires.
+   var phase=float(a.phase)
+   var lift=1.0-clampf(phase/.53125,0,1) if phase<=.53125 else clampf((phase-.62)/.38,0,1)
+   var cap=contact+Vector2(6,-9)
+   var head=cap+Vector2(a.face*30,-12)*lift
+   g.draw_line(contact,cap,Color("263b43"),5)
+   g.draw_line(contact,cap,Color("d8e0cf"),2)
+   g.draw_line(hand,head,Color("273239"),5)
+   g.draw_line(hand,head,Color("b68b51"),3)
+   # Squared hardwood head with iron bands; deliberately smaller than mining tools.
+   g.draw_rect(Rect2(head-Vector2(8,5),Vector2(16,10)),Color("28373c"))
+   g.draw_rect(Rect2(head-Vector2(7,4),Vector2(14,8)),Color("ae8754"))
+   g.draw_line(head+Vector2(-5,-4),head+Vector2(-5,4),Color("c2c5ad"),2)
+   g.draw_line(head+Vector2(5,-4),head+Vector2(5,4),Color("c2c5ad"),2)
+   HoldCharacterArt.draw_grip(g,pose-g.camera,0,a.profile,a.face,-g.camera,g.character_tint(a.p))
