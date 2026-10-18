@@ -1,3 +1,9 @@
+## 0.50.0 — Walkable Keldrath
+
+Animation follow-up: directional sprites now use 40 measured source bounds instead of equal atlas cells, preventing clipped hair/feet and neighboring-row fragments. Anatomical hair-color regions include warm shadow pigments while protecting skin, leather and brass. The drinking forearm overlay is narrower to prevent a tunic wedge crossing the beard. Native review covers all ten sculpts in four directions, multiple walking phases, smithing phases, tavern lift/sip/lower and the seated Lord. This refines the existing procedural rig; it is not a replacement with fully hand-drawn action frames.
+
+Rebuilt three wards with modular original architecture, connected stairs/lift and gate, eighteen ambient citizens, distinct workplaces and modular furnished interiors. Added a physically bounded trail bridge, measured collision/thresholds, safe old-save position migration and clearer UI/tracking. Preserved seated Eirik, services, quests, Deepworks, forestry, homes and industry. See testing/world-0.50.0.md.
+
 Tavern follow-up: original copper/brass tankard and oak/iron bucket sprites replace simple geometric props. Drinking uses a dedicated smooth lift/sip/lower arm override on the existing directional rig, correct facing/handle alignment, a foreground forearm and staggered guest timing. Empty buckets no longer draw; buckets with real cargo are hidden during active mining or shoulder/workstation carrying without altering their contents. Walking and existing work retain the unified procedural rig; this is not a full hand-drawn frame-animation replacement. Asset provenance and exact built-in imagegen prompts: assets/tavern-v492/PROMPTS.md.
 
 # Visual continuity — 0.49.2

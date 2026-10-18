@@ -101,7 +101,7 @@ static func ivar_options(g):
   choose(g,"I am "+s.appearance.first_name+" "+s.appearance.family_name+". I am ready to work.",func():
    q.stage=2;s.tracked_npc="borin";g.save_game();g.talk_line="Welcome to the shift, "+("sister" if s.appearance.gender else "brother")+". Borin checks the tools. Orla knows the routes. Hedrik will feed you. Meet all three, then bring eight coal from Old Workings. Sixty-five crowns when you return. The surplus is yours.";g.refresh_panel(),true)
  elif q.fresh and q.stage==4:
-  choose(g,"Show me the way to the King's hall",func():g.state.tracked_npc="eirik";g.save_game();g.close_panel();g.notify("Leave the office and take the Royal stairs in central Hearthward. E enters the King's hall in Crownward."),true)
+  choose(g,"Show me the way to the King's hall",func():g.state.tracked_npc="eirik";g.save_game();g.close_panel();g.notify("Leave the office and take the Royal stairs on the western terrace of Hearthward. E enters the King's hall in Crownward."),true)
  elif q.fresh and q.stage==5:
   choose(g,"What needs doing next?",func():
    q.stage=6;s.tracked_npc="ivar";g.save_game();g.talk_line="Sixteen stone and eight timber for the lift footings. Pinewood has straight firs. Follow the High Trail south from the King’s Gate. Borin and Eldric have useful lessons when you have a moment; listen for other work as you visit the hold.";g.refresh_panel(),true)

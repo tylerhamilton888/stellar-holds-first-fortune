@@ -156,7 +156,7 @@ static func journal(g):
   g.label(g.panel_body,"FIRST TRIP: Step outside. Walk to the King’s Gate on eastern Hearthward and press E. Follow the High Trail northeast to Old Workings and press E at the entrance. WASD or arrows move; G lists directions. Old Delving is a separate claim that needs a charter.",16)
   g.label(g.panel_body,"At the mine, 1 equips your pick. Hold left mouse on nearby coal to mine it. V builds stairs or ladder shafts. E descends, Shift+E returns through the same passage. Carry 8 coal back through the mine mouth, then walk the High Trail back to Keldrath (G lists directions). Enter with E and return to Ivar.",16)
  elif q.fresh and q.stage==4:
-  g.label(g.panel_body,"Your first wage is paid. Take the Royal stairs in central Hearthward to Crownward and enter the King's hall. Speak to Lord Eirik before taking the lift commission.",16)
+  g.label(g.panel_body,"Your first wage is paid. Take the Royal stairs on Hearthward’s western terrace to Crownward and enter the King's hall. Speak to Lord Eirik before taking the lift commission.",16)
  elif q.fresh and q.stage==5:
   g.label(g.panel_body,"Leave the throne room by its southern doorway, return to Ivar's desk and accept the lift commission. This opens the first-season lessons and local stories.",16)
  if side_stories(s):

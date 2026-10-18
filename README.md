@@ -1,3 +1,7 @@
+# Current build: 0.50.0 — Walkable Keldrath
+
+Open project.godot with Godot 4.4.1, or extract the complete versioned Windows build and run PLAY-WINDOWS.bat. Read docs/PLAYTEST_GUIDE.md and docs/CURRENT_STATUS.md. Recovery tag: world-0.50.0; earlier versions remain preserved.
+
 # Current milestone: 0.43.1 — The Living Works
 Integrated workshops, bedrooms and craftsmanship in the existing Deepworks. See docs/CURRENT_STATUS.md and docs/PROJECT_INDEX.md. O opens the works board underground.
 

@@ -15,7 +15,7 @@ func data()->Dictionary:
  return d
 func restore():select(clampi(int(data().get("selected",0)),0,9),false)
 func available()->bool:return g.playing and g.panel_id=="" and not is_instance_valid(g.creator) and not is_instance_valid(g.opening_scene) and not is_instance_valid(g.anniversary_scene)
-func bar_y()->float:return 114.0 if (g.player-g.camera).y>360 else 385.0
+func bar_y()->float:return 80.0 if (g.player-g.camera).y>430 else 414.0
 func slot_rect(i:int)->Rect2:return Rect2(230+i*50,bar_y()+24,46,51)
 func over()->bool:return available() and Rect2(224,bar_y(),512,80).has_point(g.get_global_mouse_position())
 func blocked_work()->bool:return item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!=""

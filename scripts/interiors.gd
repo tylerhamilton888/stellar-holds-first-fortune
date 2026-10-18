@@ -2,6 +2,7 @@ class_name HoldInteriors
 extends RefCounted
 const A=preload("res://scripts/art.gd")
 const ROOMS={
+ "practice":{"name":"The practice hall","host":"","action":"Review training","detail":"The safe sparring alcove beyond Borin’s forge."},
  "throne":{"name":"The King's Hall","host":"eirik","action":"Address Lord Eirik","detail":"Old kings in stone. A living lord on the dais."},
  "training":{"name":"Borin's practice bay","host":"","action":"Review your training","detail":"Padded blows, firm footing. Practice without wounds."},
  "home":{"name":"Workers' quarters","host":"","action":"Rest, wardrobe & supplies","detail":"A warm hearth. A borrowed room. A place to begin."},

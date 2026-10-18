@@ -169,6 +169,10 @@ func load_world(geo:Geology)->Dictionary:
   var backup=save_path()+".pre-homestead-"+str(Time.get_unix_time_from_system())+"-"+str(Time.get_ticks_usec())+".bak"
   while FileAccess.file_exists(backup):backup+=".bak"
   if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
+ if int(d.get("surface",{}).get("world_layout",0))<50:
+  var backup=save_path()+".pre-world-50-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  surface=d.get("surface",{})
  deepworks=d.get("deepworks",{})
  hauling=d.get("hauling",{})

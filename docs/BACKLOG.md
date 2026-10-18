@@ -1,3 +1,6 @@
+## After 0.50.0
+Player acceptance of Windows build, audio, wayfinding and collision. Extend ambient routes into richer schedules only without removing reliable quest/service access. Dedicated sparring remains the existing combat mode behind the new top-down practice hall. Retain labeled private homes; expansion into additional enterable residences is future work. Existing Hands of the Dwarf deferred work below remains open.
+
 0.49.2 follow-up: corrected tavern sip pose/mug facing and stray empty bucket; new original tankard/bucket. Full hand-drawn action atlases remain outside this targeted polish pass.
 
 0.49.2 completed: mine/workshop art continuity, corrected sprite bounds, shared old haulage artwork and illustrated catalog. Full mastery and new-station automation remain deferred.

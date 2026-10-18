@@ -1,3 +1,5 @@
+Current world release: 0.50.0. See testing/world-0.50.0.md and tests/input_world50.gd, collision_world50.gd, migration_world50.gd. Use isolated native data and inspect hitbox overlays.
+
 Tavern/container follow-up: input_tavern492.gd (7), bringing current focused checks to 51.
 
 Current release: 0.49.2; input_style492.gd (10), capture_style492.gd (2), rerun input_handworks49.gd (32). Evidence testing/style-0.49.2.md.

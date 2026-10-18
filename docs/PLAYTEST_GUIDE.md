@@ -1,3 +1,19 @@
+# Try 0.50.0 — a walkable Dwarven hold
+Extract the complete Windows ZIP into a new folder and run PLAY-WINDOWS.bat. Keep the old build. Existing saves receive a byte-for-byte pre-world backup before migration; an older ward position moves to a safe arrival, while your progress stays intact.
+
+1. Walk Hearthward with WASD/arrows. Find the Copper Kettle and exchange on the north street, Ivar's distinct copper-roof office southeast, and speak with passing citizens using E.
+2. Approach each door from its visible threshold. Try its side wall: it should stay solid and should not open the door. Inside, walk around furniture and leave through the south threshold.
+3. Use the western Royal stairs to Crownward. Find Eirik seated in his royal hall and Eldric in the survey office. Return by the same stairs. Try eastern Forge stairs, Borin's forge, the practice hall and the lift.
+4. Walk through King's Gate to the High Trail. Cross the wooden bridge in both directions; try walking into both rails and into the river away from the bridge. Feet should remain on the deck.
+5. Visit Old Workings, excavate, descend a real mine stair and return. Visit Pinewood and harvest. Bring supplies home, craft/sell, use your storage and existing workshops.
+6. Save in a ward, interior and your claim; reload and check location, inventory, storage and excavation. Check a working crew and automation assignment underground.
+
+1–0 selects tools/supplies; I opens your pack; J tracks quests; G gives directions without map travel. E uses nearby doors/people/landings. Shift+B crafts stations; O opens home building on the claim. The practice hall still uses the existing dedicated sparring exercise when you begin training.
+
+Please report the zone, exact doorway/object, direction of approach and a screenshot if something feels misaligned. Especially check Windows launch, sound levels, readable scenery beside your chosen Dwarf, and whether crowds/menus obscure movement.
+
+## Earlier feature guides
+
 Visit the Copper Kettle: watch Hedrik lift the detailed tankard, sip, and lower it while guests move on staggered timings. In the mine, an empty-handed Dwarf should have no stray bucket. Collected bulk cargo still has a container/HUD count; mining or shoulder loads suppress the conflicting bucket drawing without deleting cargo.
 
 # 0.49.2 — Visual consistency pass

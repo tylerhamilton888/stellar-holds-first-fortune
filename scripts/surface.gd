@@ -27,14 +27,19 @@ var route_hint=""
 var ground_cache={}
 var bed_bounds=Rect2i()
 var house
+var world
 
 func _init(game):
- g=game;house=HoldHearthcraft.new(self)
+ g=game;house=HoldHearthcraft.new(self);world=HoldWorldZones.new(self)
 func active()->bool:return g.playing and g.zone!="mine" and g.room_id!="training"
 func ensure():
  HoldForestry.ensure(g.state)
  if g.state.surface.is_empty():g.state.surface={"version":1,"area":"hearthward","positions":{},"chests":{},"homes":{},"decor":[],"facts":{}}
  var s=g.state.surface
+ if int(s.get("world_layout",0))<50:
+  s.legacy_positions=s.get("positions",{}).duplicate(true)
+  for id in ["hearthward","crownward","forgeward"]:s.get("positions",{}).erase(id)
+  s.world_layout=50
  for key in ["positions","chests","homes","facts"]:
   if not s.has(key):s[key]={}
  if not s.has("decor"):s.decor=[]
@@ -70,25 +75,28 @@ func restore():
   g.player=spawn(area)
  g.grounded=true;g.camera=camera_target();g.velocity=Vector2.ZERO
 func spawn(id:String)->Vector2:
- if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,590)
- return {"hearthward":Vector2(1180,720),"crownward":Vector2(724,680),"forgeward":Vector2(331,906),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
+ if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
+ return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
 func enter(id:String,at:Vector2=Vector2.INF):
  ensure()
  if id=="claim" and g.state.claim_id=="":g.open_panel("charters");return
  if id=="room:throne" and HoldOnboarding.ensure(g.state).fresh and HoldOnboarding.stage(g.state)<4:g.notify("Ivar's first-shift reference opens the royal audience.");return
  if id in ["trail","pinewood","claim"] and g.state.opening==0:g.notify(g.region_travel_hint());return
+ if g.room_id=="training":g.state.resident_visits.erase("borin")
+ world.speech=""
  remember();var old=area
  g.flush_pickups()
  var claim_site=id=="claim" or id.begins_with("home:") or (id.begins_with("room:") and g.state.active_site=="claim" and old=="claim")
  g.state.switch_site("claim" if claim_site else "hold",g.geo)
  if id.begins_with("room:") or id.begins_with("home:"):
   if not room():return_area=old
-  elif id!=old:return_area="claim" if claim_site else ("crownward" if id=="room:throne" else "forgeward" if id=="room:forge" else "hearthward")
+  elif id!=old:return_area="claim" if claim_site else ("crownward" if id in ["room:throne","room:research"] else "forgeward" if id in ["room:forge","room:practice"] else "hearthward")
  if old=="claim" and id!="claim":house.data().z=0
  area=id
  g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id=="trail" else "hub")
  g.room_id="home" if id.begins_with("home:") else id.trim_prefix("room:") if id.begins_with("room:") else ""
- g.player=spawn(id) if at==Vector2.INF else at
+ var landing=world.arrival(old,id) if at==Vector2.INF else at
+ g.player=spawn(id) if landing==Vector2.INF else landing
  if not walkable(g.player):g.player=spawn(id)
  g.velocity=Vector2.ZERO;g.grounded=true;g.walking_pose=false;g.gait_clock=0;g.swing=0;placing="";cut_clock=0;cut_target=-1;house.impact=0
  g.combat.armed=false;g.combat.reset_actions();g.construction.selected=""
@@ -106,18 +114,7 @@ func level()->int:return 0 if area=="crownward" else 2 if area=="forgeward" else
 func points()->Array:
  var result=[]
  if area in ["hearthward","crownward","forgeward"]:
-  for i in HoldDistrictMap.DOORS:
-   if int(i)/7!=level():continue
-   var d=HoldDistrictMap.DOORS[i];var action="room:"+d.id
-   if d.id=="concourse":action="anniversary"
-   elif d.id=="gate":action="trail"
-   elif d.id=="training":action="training"
-   result.append({"p":HoldFloorPlan.door(i),"name":d.name if d.id!="gate" else "King's Gate · High Trail","action":action})
-  result.append(spot(1636,878,"Hold lift","hold_lift"))
-  if level()==1:
-   result.append({"p":Vector2(724,637),"name":"Royal stairs · Crownward","action":"crownward"})
-   result.append({"p":Vector2(331,906),"name":"Forge stairs · Forgeward","action":"forgeward"})
-  else:result.append({"p":Vector2(724,637) if level()==0 else Vector2(331,906),"name":"Stairs · Hearthward","action":"hearthward"})
+  result=world.points()
  elif area=="trail":
   result=[spot(220,690,"Keldrath's gate","hearthward"),spot(950,300,"Old Workings · enter mine","mine"),spot(470,920,"Pinewood trail","pinewood"),spot(1650,700,"Your claim" if g.state.claim_id!="" else "Unclaimed mountain · charter required","claim")]
  elif area=="claim":
@@ -129,8 +126,8 @@ func points()->Array:
    result.append(spot(290,420,"Bed · rest and save","rest"));result.append(spot(735,515,"Homestead workbench","homestead"))
   else:
    var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
-   result.append(spot(620,410,HoldInteriors.ROOMS.get(g.room_id,{"action":"Rest and supplies"}).action,"talk:"+host if host!="" and g.state.active_site=="hold" else g.room_id))
-   if g.room_id=="forge":result.append(spot(740,490,"Practice bay","training"))
+   result.append(spot(620,410,HoldInteriors.ROOMS.get(g.room_id,{"action":"Rest and supplies"}).action,"talk:"+host if host!="" and g.state.active_site=="hold" else "training" if g.room_id=="practice" else g.room_id))
+   if g.room_id in ["forge","practice"]:result.append(spot(740,490,"Practice bay","training"))
    if g.room_id=="tavern":
     var guests=HoldNpcPresence.tavern_guests(g.state)
     for i in mini(3,guests.size()):result.append(spot(270+i*170,550,"Speak with "+g.state.npc(guests[i]).first_name,"talk:"+guests[i]))
@@ -151,8 +148,17 @@ func nearest()->Dictionary:
  var found={};var distance=78.0
  for p in points():
   var d=g.player.distance_to(p.p)
+  if (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
+  if p.action=="leave" and absf(g.player.x-p.p.x)>34:continue
+  if not clear_interaction(g.player,p.p):continue
   if d<distance:distance=d;found=p
  return found
+func clear_interaction(a:Vector2,b:Vector2)->bool:
+ for i in range(1,10):
+  var p=a.lerp(b,i/10.0)
+  for r in obstacles():
+   if not r.has_point(b) and r.has_point(p):return false
+ return true
 func use():
  var p=nearest()
  if p.is_empty():g.notify("Walk to a doorway, signpost, chest or workstation and press E.");return
@@ -170,6 +176,8 @@ func action(id:String):
  elif id=="rest":
   g.state.surface.facts.rest=true;g.save_game();g.sound.effect("door",-18);g.notify("A warm bed and a sound roof. Rested; fortune saved.")
  elif id=="training":g.enter_room("training")
+ elif id=="private":g.notify("Folk homes · private quarters. Meet the neighbors in the streets and tavern.")
+ elif id.begins_with("citizen:"):world.speak(int(id.trim_prefix("citizen:")))
  elif id.begins_with("talk:"):HoldConversation.start(g,id.trim_prefix("talk:"))
  elif id.begins_with("chest:"):selected_chest=id.trim_prefix("chest:");g.open_panel("storage")
  elif id=="pinewood_panel":g.open_panel("pinewood")
@@ -178,13 +186,15 @@ func action(id:String):
 func base_obstacles()->Array:
  var list=[]
  if area=="claim" and house.level()>0:return list
- if room():
-  list=[Rect2(185,260,185,160),Rect2(560,280,220,110)]
-  if g.room_id=="home":list=[Rect2(185,260,185,160),Rect2(580,230,180,125),Rect2(705,440,85,100)]
-  if g.room_id=="throne":list=[Rect2(560,285,200,100)]
-  if g.room_id=="tavern":list=[Rect2(230,270,540,105),Rect2(240,425,100,100),Rect2(420,425,100,100),Rect2(600,425,100,100)]
- elif area=="trail":list=[Rect2(65,210,300,390),Rect2(810,110,280,165)]
- elif area=="claim":list=[Rect2(340,240,320,170),Rect2(1150,120,260,190),Rect2(1250,540,240,170)]
+ if HoldWorldZones.ward(area):return world.obstacles()
+ if room():return world.room_obstacles()
+ if area=="trail":
+  for pair in [[Vector2(220,690),330.0],[Vector2(950,300),240.0]]:
+   for side in [-1,1]:list.append(Rect2(pair[0]+Vector2(side*pair[1]*.32-pair[1]*.14,-pair[1]*.34),Vector2(pair[1]*.28,pair[1]*.42)))
+  list.append_array([Rect2(1134,643,202,12),Rect2(1134,745,202,12)])
+ elif area=="claim":
+  list=[Rect2(346,265,308,155),Rect2(1255,630,230,110)]
+  for side in [-1,1]:list.append(Rect2(Vector2(1280,345)+Vector2(side*260*.32-260*.14,-260*.34),Vector2(260*.28,260*.42)))
  elif area=="pinewood":
   for i in TREES.size():
    if g.state.road_trees[i]>0:list.append(Rect2(TREES[i]-Vector2(17,24),Vector2(34,30)))
@@ -199,10 +209,12 @@ func obstacles()->Array:
  return list
 func walkable(p:Vector2)->bool:
  if area=="claim" and house.level()>0 and not house.on_floor(p,house.level()):return false
- if area in ["hearthward","crownward","forgeward"] and not HoldFloorPlan.walkable(p,level()):return false
+ if HoldWorldZones.ward(area):
+  if not Rect2(110,210,1660,780).has_point(p):return false
  elif room():
-  if not Rect2(180,355,600,280).has_point(p):return false
+  if not Rect2(175,290,610,345).has_point(p):return false
  elif not Rect2(90,210,1700,750).has_point(p):return false
+ if area=="trail" and p.x>1170 and p.x<1300 and (p.y<665 or p.y>735):return false
  for r in obstacles():
   if r.grow(10).has_point(p):return false
  return true
@@ -320,11 +332,11 @@ func lift_panel():
  g.label(g.panel_body,"THE HOLD LIFT",22,Color("edc98a"))
  for destination in ["crownward","hearthward","forgeward"]:
   var id=str(destination)
-  g.button(g.panel_body,NAMES[id],func():enter(id,Vector2(1636,878)))
+  g.button(g.panel_body,NAMES[id],func():enter(id,HoldWorldZones.LIFT+Vector2(0,30)))
 func guide_panel():
  g.label(g.panel_body,"FOLLOW THE PATHS",22,Color("edc98a"))
  g.label(g.panel_body,"Walk with WASD or arrows. Press E at doors, stairs, trail signs and workstations. You are here: "+label()+".",16)
- for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Royal stairs → Crownward (Z +1): Lord Eirik and the survey office.","Forge stairs → Forgeward (Z -1): Borin’s forge and practice bay.","King’s Gate → High Trail → Old Workings, Pinewood and your claim.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
+ for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Western Royal stairs → Crownward (Z +1): Lord Eirik and the survey office.","Eastern Forge stairs → Forgeward (Z -1): Borin’s forge and practice bay.","King’s Gate → High Trail → Old Workings, Pinewood and your claim.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
   g.label(g.panel_body,text,16)
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
@@ -364,12 +376,16 @@ func hud():
 func draw():
  var cam=g.camera.round();g.draw_set_transform(-cam)
  if area in ["hearthward","crownward","forgeward"]:
-  g.draw_texture_rect(HoldFloorPlan.PLATES[level()],Rect2(Vector2.ZERO,SIZE),false)
+  world.draw_ground()
  elif room():draw_room()
  else:draw_outdoors()
  if area=="claim" and house.level()>0:g.draw_rect(Rect2(Vector2.ZERO,SIZE),Color(.02,.06,.08,.5))
  house.floor_draw()
  var objects=[]
+ if HoldWorldZones.ward(area):
+  objects.append_array(world.buildings());objects.append_array(world.people());objects.append_array(world.landmarks())
+ if room():objects.append_array(world.room_objects())
+ if area in ["claim","trail"]:objects.append_array(world.exterior_objects())
  if area=="claim":
   for k in house.tiles():
    if house.tiles()[k].get("wall","")!="":objects.append({"p":house.center(house.coords(k))+Vector2(0,20),"kind":"wall","c":house.coords(k)})
@@ -388,14 +404,18 @@ func draw():
   for id in g.state.outpost.get("crew",{}):
    objects.append({"p":Vector2(1040+index*75,850),"kind":"npc","id":id});index+=1
  if area=="hearthward" and HoldAnniversary.ensure(g.state).complete:
-  g.draw_set_transform(-cam);HoldAnniversary.station(g,Vector2(1259,370),g.clock)
+  g.draw_set_transform(-cam);HoldAnniversary.station(g,HoldWorldZones.door(10),g.clock)
  if area=="pinewood":
   for i in TREES.size():objects.append({"p":TREES[i],"kind":"tree","i":i})
  objects.append_array(g.handworks.objects())
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.p.y<b.p.y)
  for o in objects:
   g.draw_set_transform(-cam)
-  if o.kind=="handwork":g.handworks.draw_object(o)
+  if o.kind=="building":world.draw_building(o)
+  elif o.kind=="landmark":world.draw_landmark(o)
+  elif o.kind=="furnishing":world.draw_furnishing(o)
+  elif o.kind=="citizen":world.draw_citizen(o)
+  elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
   elif o.kind=="npc":
    if o.id=="eirik":g.draw_texture_rect(HoldRoyalHall.SPRITE,Rect2(o.p-Vector2(57,125),Vector2(114,136)),false)
@@ -413,7 +433,7 @@ func draw():
  if area in ["hearthward","crownward","forgeward"]:
   for point in points():
    # Only the nearby door is captioned; the painted architecture stays readable.
-   if point.p.distance_to(g.player)<240:plaque(point.p+Vector2(0,-72),point.name)
+   if not point.action.begins_with("citizen:") and point.p.distance_to(g.player)<180 and point.p.distance_to(g.player)>78:plaque(point.p+Vector2(0,-72),point.name)
  else:
   for point in points():
    if point.action.begins_with("chest:") or point.action.begins_with("talk:") or point.action.begins_with("house:") or point.action in ["house_rest","house_up","house_down"]:continue
@@ -434,9 +454,11 @@ func draw():
   for i in HoldDistrictMap.DOORS:
    if HoldDistrictMap.DOORS[i].id==target:
     var here=int(i)/7==level()
-    var dest=HoldFloorPlan.door(i) if here else (Vector2(724,637) if int(i)/7==0 else Vector2(331,906))
+    var dest=HoldWorldZones.door(i) if here else (HoldWorldZones.ROYAL if level()==0 or (level()==1 and int(i)/7==0) else HoldWorldZones.FORGE)
     var screen=(dest-cam).clamp(Vector2(130,105),Vector2(830,445))
+    if dest.distance_to(g.player)<180:continue
     plaque(screen,g.state.npc(g.state.tracked_npc).first_name+" · "+("door" if here else "take stairs"))
+ world.speech_overlay()
  g.handworks.overlay()
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.04,.055,.48))
 func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
@@ -490,26 +512,10 @@ func furniture(p:Vector2,kind:String):
  prop(p,index,64 if kind.begins_with("chest") else 82 if kind=="table" else 64)
  if kind=="lamp":
   for r in [85,60,35]:g.draw_circle(p-Vector2(0,32),r,Color(1,.7,.3,.035))
-func building(p:Vector2,width:float,title:String,roof:Color):
- var rect=Rect2(p-Vector2(width/2,180),Vector2(width,165))
- g.draw_rect(Rect2(rect.position+Vector2(12,18),rect.size),Color(0,0,0,.23))
- g.draw_rect(rect,Color("646e6b"))
- for y in range(int(rect.position.y+65),int(p.y-15),22):
-  g.draw_line(Vector2(rect.position.x,y),Vector2(rect.end.x,y),Color("414e50"),2)
-  for x in range(int(rect.position.x+posmod(y,2)*20),int(rect.end.x),42):g.draw_line(Vector2(x,y),Vector2(x,y+20),Color("4c5959"),1)
- var poly=PackedVector2Array([p+Vector2(-width/2-18,-100),p+Vector2(-width/2+12,-200),p+Vector2(width/2-12,-200),p+Vector2(width/2+18,-100)])
- g.draw_colored_polygon(poly,roof)
- for y in [-180,-158,-136,-114]:g.draw_line(p+Vector2(-width/2+8,y),p+Vector2(width/2-8,y),roof.darkened(.25),3)
- g.draw_line(p+Vector2(-width/2-18,-99),p+Vector2(width/2+18,-99),Color("c6ae7d"),6)
- g.draw_rect(Rect2(p+Vector2(-26,-76),Vector2(52,68)),Color("273c40"));g.draw_rect(Rect2(p+Vector2(-20,-70),Vector2(40,60)),Color("85603c"))
- g.draw_circle(p+Vector2(12,-38),3,Color("ecc67e"))
- for x in [-width*.31,width*.31]:
-  g.draw_rect(Rect2(p+Vector2(x-16,-78),Vector2(32,35)),Color("c6ae7d"));g.draw_rect(Rect2(p+Vector2(x-12,-74),Vector2(24,27)),Color("e7ba6b"));g.draw_line(p+Vector2(x,-74),p+Vector2(x,-47),Color("6f5940"),3)
- g.draw_rect(Rect2(p+Vector2(-35,-12),Vector2(70,15)),Color("abb09b"))
- plaque(p+Vector2(0,-220),title)
 func draw_outdoors():
- g.draw_texture_rect(MEADOW,Rect2(Vector2.ZERO,SIZE),false,Color("a4b2a2"))
- var roads=[PackedVector2Array([Vector2(170,790),Vector2(500,690),Vector2(960,690),Vector2(1650,790)]),PackedVector2Array([Vector2(500,690),Vector2(500,440)]),PackedVector2Array([Vector2(960,690),Vector2(1280,345)])] if area=="claim" else [PackedVector2Array([Vector2(180,650),Vector2(700,690),Vector2(1100,600),Vector2(1650,700)]),PackedVector2Array([Vector2(700,690),Vector2(950,300)]),PackedVector2Array([Vector2(700,690),Vector2(470,920)])]
+ world.tile(2,Rect2(Vector2.ZERO,SIZE),200,Color("adb99e"))
+ for edge in [Rect2(0,0,1880,200),Rect2(0,200,80,880),Rect2(1800,200,80,880),Rect2(0,970,1880,110)]:world.tile(3,edge,180,Color("bac1ae"))
+ var roads=[PackedVector2Array([Vector2(170,790),Vector2(500,690),Vector2(960,690),Vector2(1650,790)]),PackedVector2Array([Vector2(500,690),Vector2(500,440)]),PackedVector2Array([Vector2(960,690),Vector2(1280,345)])] if area=="claim" else [PackedVector2Array([Vector2(180,650),Vector2(700,690),Vector2(1100,700),Vector2(1650,700)]),PackedVector2Array([Vector2(700,690),Vector2(950,300)]),PackedVector2Array([Vector2(700,690),Vector2(470,920)])]
  if not ground_cache.has(area):
   var img=Image.create(940,540,false,Image.FORMAT_RGBA8)
   var noise=FastNoiseLite.new();noise.seed=g.state.seed_value;noise.frequency=.023
@@ -523,16 +529,15 @@ func draw_outdoors():
      var color=Color("8e7955").lerp(Color("bcaa7d"),.4+n*.25+grain*.22)
      color.a=1-smoothstep(24+n*9,48+n*11,dist);img.set_pixel(x,y,color)
   ground_cache[area]=ImageTexture.create_from_image(img)
+ if area=="trail":world.draw_river()
  g.draw_texture_rect(ground_cache[area],Rect2(Vector2.ZERO,SIZE),false)
+ if area=="trail":world.draw_bridge()
  for i in 8:scenery(Vector2(120+i*245,245+sin(i)*30),1,330)
  if area=="claim":
   var upgraded=int(g.state.surface.homes[g.state.claim_id].level)>0
-  scenery(Vector2(500,470),7 if upgraded else 5,395)
-  scenery(Vector2(1370,770),5,290)
-  scenery(Vector2(1280,390),4,340);furniture(Vector2(740,780),"table")
+  furniture(Vector2(740,780),"table")
   prop(Vector2(395,560),4,120);prop(Vector2(595,560),4,120)
   for i in 4:prop(Vector2(880+i*42,695),5,40)
- elif area=="trail":scenery(Vector2(220,660),3,430);scenery(Vector2(950,340),4,330)
  elif area=="pinewood":
   for i in 9:
    var p=Vector2(170+i*190,250+sin(i)*30);g.draw_texture_rect(FIR,Rect2(p-Vector2(90,210),Vector2(180,230)),false,Color("8ca291"))
@@ -563,17 +568,5 @@ func draw_fir(p:Vector2,i:int):
   g.draw_rect(Rect2(p-Vector2(18,10),Vector2(36,18)),Color("896446"))
   if HoldForestry.logs(g.state,i)>0:g.handworks.sprite(7,p+Vector2(0,9),85)
 func draw_room():
- g.draw_rect(Rect2(Vector2.ZERO,ROOM_SIZE),Color("142a32"))
- var index={"home":0,"tavern":1,"forge":2,"market":3,"commission":4,"research":5,"throne":5}.get(g.room_id,0)
- var cell=Vector2(INTERIORS.get_width()/3.0,INTERIORS.get_height()/2.0)
- if g.room_id=="throne":g.draw_texture_rect(ROYAL,Rect2(105,205,750,430),false)
- else:g.draw_texture_rect_region(INTERIORS,Rect2(105,205,750,430),Rect2(Vector2(index%3,index/3)*cell,cell))
- if area.begins_with("home:"):
-  var upgraded=int(g.state.surface.homes[g.state.claim_id].level)>0
-  if upgraded:
-   for r in [18,32,48]:g.draw_circle(Vector2(640,314),r,Color(1,.55,.18,.025+.008*sin(g.clock*5)))
-  else:g.draw_rect(Rect2(602,296,75,42),Color(.1,.16,.16,.55))
- # Living flames and warm lamp pools are subtle overlays, not baked animation.
- if g.room_id in ["home","tavern","forge"]:
-  var fire=Vector2(630,325) if g.room_id!="forge" else Vector2(345,320)
-  for r in [35,65,95]:g.draw_circle(fire,r,Color(1,.66,.26,.017+.004*sin(g.clock*4)))
+ world.draw_room_floor()
+ return
