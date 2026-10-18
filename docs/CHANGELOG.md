@@ -12,3 +12,5 @@ Historical detail remains in DEVELOPMENT.md and versioned reviews. This is the c
 | 0.40.0 / pinewood-0.40.0 | 2026-10-18 UTC | Pinewood forest art and seven firs; two-stage timber recovery, grounded reach/aim checks, progress and saved logs; useful field board and map travel. Existing five tree-cut values retained, two new trees added. Additive forestry save field; schema remains 1. |
 
 | 0.41.0 / deepworks-0.41.0 | 2026-10-18 UTC | Integrated top-down, five-layer excavation; same-XY stairs, below-layer survey, connected veins/caverns, discoveries, lamps, physical multilevel crew and existing economy/slagcaster. Additive saves and mandatory legacy backup; old terrain/structures archived. Pinewood retained. |
+
+| 0.42.0 / weight-0.42.0 | 2026-10-18 UTC | Physical fracture/breakup, conserved bucket/cart/pile transfers, actual movable wheelbarrow, graded ores and new iron lenses, existing-cost project ledger. Additive cargo saves; preexisting inventory/terrain unchanged. Crews retain delivery advantage. Rails deferred. |

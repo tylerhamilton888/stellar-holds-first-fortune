@@ -32,6 +32,10 @@ static func generate(seed_number:int)->Dictionary:
     for v in 5:
      var axis=13+v*13+sin(y*.12+v+offset)*3+z*1.2
      if absf(x-axis)<(1.4 if v%2==0 else .85):kind=[5,3,4,3,6][v]
+    # Iron lenses swell around the same dipping seam on successive depths.
+    var axis=26+sin(y*.12+1+offset)*3+z*1.2
+    var lens=pow((y-(28+z*.6))/8.0,2)+pow((x-axis)/4.5,2)
+    if lens<1.0:kind=3
     if x<1 or y<1 or x>=W-1 or y>=H-1:kind=8
     cells.append(kind)
   var features:Array=[]
@@ -81,20 +85,37 @@ func target(origin:Vector2,aim:Vector2,reach:float=88)->Vector2i:
   if at(c)!=0:return c if at(c)!=8 else Vector2i(-1,-1)
  return Vector2i(-1,-1)
 func resistance(kind:int)->float:return {1:1.0,2:1.0,3:2.0,4:1.5,5:1.0,6:3.0,7:4.0}.get(kind,1.0)
-func strike(c:Vector2i,z:int=-1,thermal:bool=false)->Dictionary:
+# Grade is derived from seed and position: old excavations are never regenerated.
+func grade(c:Vector2i,z:int=-1)->int:
+ var level=depth() if z<0 else z
+ if at(c,level) not in [3,4,5]:return 1
+ var phase=float(int(data.seed)%997)*.01
+ var value=sin(c.y*.17+phase+level*.21)+cos(c.x*.22-level*.19)
+ return 2 if value>.55 else (0 if value<-.65 else 1)
+func yield_count(c:Vector2i,z:int=-1)->int:
+ return [1,2,4][grade(c,z)] if at(c,z) in [3,4,5] else 1
+func grade_label(c:Vector2i,z:int=-1)->String:
+ return ["LEAN", "BANDED", "RICH"][grade(c,z)] if at(c,z) in [3,4,5] else ""
+func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true)->Dictionary:
  var k=at(c,z)
  if k in [0,8]:return {}
  if k==7 and not state.steel and not thermal:return {"blocked":true}
  var l=layer(z);var id=key(c)
  l.damage[id]=float(l.damage.get(id,0))+(10.0 if thermal else (2.0 if state.steel else 1.0))
  if l.damage[id]<resistance(k):return {"kind":k,"broken":false}
+ var count=yield_count(c,z)
  set_cell(c,0,z);l.damage.erase(id)
+ # A contact opens hairline fractures; neighbors never break or yield remotely.
+ for d in DIRS:
+  var n=c+d;var nk=at(n,z)
+  if nk in [2,3,4,7]:
+   var nid=key(n);l.damage[nid]=minf(resistance(nk)*.65,float(l.damage.get(nid,0))+.25)
  var item=HoldData.TILES[k].item
- var count=2 if k in [3,4,5] else 1
  if thermal:
   if k in [3,4]:item="iron_slag" if k==3 else "copper_slag"
   if k==5:count=0
- state.add(item,count);state.mined+=1
+ if deliver:state.add(item,count)
+ state.mined+=1
  if k==6 and not state.discovered:state.discovered=true;state.money+=40
  return {"kind":k,"broken":true,"item":item,"count":count}
 func survey(p:Vector2)->Array:

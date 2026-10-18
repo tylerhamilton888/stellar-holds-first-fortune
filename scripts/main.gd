@@ -207,7 +207,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.41.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.42.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -220,6 +220,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={}):
   zone=d.zone;player=d.pos
  else:
   state.reset(randi_range(10000,99999));geo.generate_region(state.seed_value,0,Vector2i.ZERO);zone="hub";player=Vector2(150,HUB_FLOOR)
+ deep.world=null;deep.haul=null
  if not custom_appearance.is_empty():state.appearance=HoldAppearance.normalized(custom_appearance)
  if load_saved and zone=="mine":deep.enter(not state.deepworks_migrated)
  HoldOutpost.ensure(state)
@@ -724,6 +725,7 @@ func save_game():
  drops.clear()
  if not state.save_world(geo,zone,exterior_position if room_id!="" else player):notify("Save failed. Check disk permissions.")
 func change_zone(z:String):
+ if zone=="mine" and z!="mine":deep.depart()
  room_id="";swing=0;impact_pause=0
  for d in drops:state.add(d.item,d.count)
  drops.clear();particles.clear();popups.clear();close_panel();zone=z;velocity=Vector2.ZERO
@@ -1131,6 +1133,8 @@ func open_panel(id:String,remember:bool=true):
    else:HoldFieldSurvey.panel(self)
   "equipment":combat.panel()
   "deepworks":deep.panel()
+  "haulage":deep.haulage_panel()
+  "projects":deep.project_panel()
   "construction":
    if zone=="mine":deep.panel()
    else:construction.panel()
@@ -1597,6 +1601,7 @@ func camp_panel():
  b.disabled=not nearby or not state.afford(c.cost,int(c.money))
  label(panel_body,"Mine your own seams. Cut marked firs in Pinewood. Keldrath's forge and survey office remain available while you build.",14)
 func flush_pickups():
+ if zone=="mine":deep.depart()
  remember_agents()
  for d in drops:state.add(d.item,d.count)
  drops.clear()

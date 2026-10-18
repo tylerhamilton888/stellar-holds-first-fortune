@@ -4,6 +4,11 @@ const STONE=preload("res://assets/actors-v11/slate.png")
 const A=preload("res://scripts/art.gd")
 var g
 var world:Deepworks
+var haul:DeepHaul
+var rubble:Array=[]
+var unload_flash=0.0
+const SWING=.32
+const IMPACT=.15
 var site=""
 var survey_open=false
 var pulse=0.0
@@ -11,6 +16,7 @@ var contact=Vector2.ZERO
 var target=Vector2i(-1,-1)
 var strike_left=0.0
 var struck=false
+var contact_hold=0.0
 var reveal_clock=0.0
 var sparks:Array=[]
 var messages:Array=[]
@@ -18,13 +24,13 @@ var stair_work=0.0
 func _init(game):g=game
 func ensure():
  if world==null or site!=g.state.active_site or world.data!=g.state.deepworks.get(g.state.active_site,{}):
-  site=g.state.active_site;world=Deepworks.new(g.state)
+  site=g.state.active_site;world=Deepworks.new(g.state);haul=DeepHaul.new(g.state,world)
 func enter(resume:bool=false):
  ensure()
- if not resume:world.data.depth=0;world.data.position=[Deepworks.center(Deepworks.ENTRY).x,Deepworks.center(Deepworks.ENTRY).y]
+ if not resume:haul.park();world.data.depth=0;world.data.position=[Deepworks.center(Deepworks.ENTRY).x,Deepworks.center(Deepworks.ENTRY).y]
  g.player=Vector2(world.data.position[0],world.data.position[1]);g.grounded=true
  if world.solid(g.player):g.player=Deepworks.center(Deepworks.ENTRY);world.data.depth=0
- g.velocity=Vector2.ZERO;g.camera=camera_target();g.combat.armed=false;g.combat.reset_actions();g.construction.selected="";strike_left=0
+ g.velocity=Vector2.ZERO;g.camera=camera_target();g.combat.armed=false;g.combat.reset_actions();g.construction.selected="";strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear()
  world.survey(g.player)
 func remember():
  ensure()
@@ -38,6 +44,16 @@ func input(e:InputEvent)->bool:
    g.open_panel("deepworks");return true
   KEY_X,KEY_TAB,KEY_K:
    survey_open=not survey_open;return true
+  KEY_H:
+   g.open_panel("haulage");return true
+  KEY_L:
+   g.open_panel("projects");return true
+  KEY_C:
+   g.notify(haul.toggle_cart(g.player));g.sound.effect("wood");g.save_game();return true
+  KEY_U:
+   if e.shift_pressed:g.notify("Loaded %d units." % haul.load_pile(g.player));g.sound.effect("wood");g.save_game()
+   else:unload()
+   return true
   KEY_T:
    assign_crew();return true
   KEY_F,KEY_Q,KEY_P:
@@ -46,12 +62,14 @@ func input(e:InputEvent)->bool:
    g.open_panel("rescue");return true
  return false
 func use_stairs(up:bool):
- ensure();var c=Deepworks.cell(g.player)
+ ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
  if world.traverse(c,up):
-  g.player=Deepworks.center(c);g.velocity=Vector2.ZERO;strike_left=0;sparks.clear();messages.clear();pulse=0
+  haul.stairs(Deepworks.center(c),old_depth)
+  g.player=Deepworks.center(c);g.velocity=Vector2.ZERO;strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear();pulse=0
   g.begin_transition("DEPTH %d · %s" % [world.depth()+1,Deepworks.NAMES[world.depth()].to_upper()]);g.sound.effect("door",-16)
   world.survey(g.player);g.save_game();return
  if world.entrance(g.player):
+  unload();haul.park()
   if g.state.active_site=="hold":g.open_panel("basin_map")
   else:g.change_zone("claim")
  else:g.notify("Stand on stairs: E down / Shift+E up. V carves stairs beneath your feet.")
@@ -69,6 +87,8 @@ func panel():
   g.close_panel())
  g.button(g.panel_body,"Assign mining crew to this depth [T]",func():assign_crew();g.close_panel())
  g.label(g.panel_body,"Crew walk excavated tunnels and use connected stairs. Their existing mineral priorities, provisions, coal and industrial unlocks still apply. M manages recruitment and priorities. Basalt needs Tempered steel. Lamps illuminate work areas.",16)
+ g.button(g.panel_body,"Haulage [H] · bucket / wheelbarrow / stockpiles",func():g.open_panel("haulage"))
+ g.button(g.panel_body,"Project ledger [L]",func():g.open_panel("projects"))
  g.label(g.panel_body,"Discoveries: "+(", ".join(world.data.discoveries) if not world.data.discoveries.is_empty() else "Follow seams into untouched rock."),16)
 func assign_crew():
  ensure()
@@ -105,18 +125,24 @@ func move(dt:float):
  if reveal_clock<=0:
   reveal_clock=.13
   for name in world.survey(g.player):g.notify("DISCOVERY · "+name);g.sound.effect("crystal",-12)
+ haul.follow(g.player)
+ haul.scavenge(g.player)
  remember()
 func mine(dt:float):
- ensure();pulse=maxf(0,pulse-dt)
+ ensure();pulse=maxf(0,pulse-dt);unload_flash=maxf(0,unload_flash-dt)
+ for i in range(rubble.size()-1,-1,-1):
+  rubble[i].life-=dt
+  if rubble[i].life<=0:rubble.remove_at(i)
  for i in range(sparks.size()-1,-1,-1):
   sparks[i].life-=dt;sparks[i].p+=sparks[i].v*dt;sparks[i].v*=exp(-dt*4)
   if sparks[i].life<=0:sparks.remove_at(i)
  for i in range(messages.size()-1,-1,-1):
   messages[i].life-=dt;messages[i].p.y-=dt*20
   if messages[i].life<=0:messages.remove_at(i)
+ if contact_hold>0:contact_hold=maxf(0,contact_hold-dt);return
  if strike_left>0:
   strike_left=maxf(0,strike_left-dt)
-  if strike_left<=.14 and not struck:
+  if strike_left<=IMPACT and not struck:
    struck=true
    if target.x>=0 and contact.distance_to(g.player)<(200 if g.mining_gun.selected else 112) and world.visible(g.player,contact):hit(target,g.mining_gun.selected)
   return
@@ -133,7 +159,7 @@ func mine(dt:float):
   contact=g.player+(Deepworks.center(target)-g.player).normalized()*i
   if Deepworks.cell(contact)==target:break
  g.face=1 if contact.x>=g.player.x else -1
- strike_left=.28;struck=false;g.sound.effect("swing",-20)
+ strike_left=SWING;struck=false;g.sound.effect("swing",-20)
 func hit(c:Vector2i,thermal:bool=false):
  if thermal:
   if not g.state.outpost.get("mining_gun",false):return
@@ -142,14 +168,16 @@ func hit(c:Vector2i,thermal:bool=false):
    if not g.state.pay({"energy_cell":1}):g.notify("No energy cells. Craft cells at a powered forge.");return
    charge=24 if maxi(HoldIndustry.tier(g.state),HoldIndustry.tier(g.state,"hold"))>=2 else 16
   g.state.outpost.gun_charge=charge-1;g.sound.effect("thermal_pulse",-12)
- var result=world.strike(c,-1,thermal)
+ var result=world.strike(c,-1,thermal,false)
  if result.is_empty():return
  if result.has("blocked"):g.notify("Hard basalt: research Tempered steel at the survey office.");return
- g.sound.impact(result.kind,result.broken);pulse=.14
- var color=ore_color(result.kind) if result.kind in [3,4,5,6] else Color("adada3")
- for i in (15 if result.broken else 7):sparks.append({"p":contact,"v":Vector2.from_angle(randf()*TAU)*randf_range(30,140),"life":randf_range(.15,.5),"color":color,"size":randf_range(2,5)})
+ g.sound.impact(result.kind,result.broken);pulse=.14;contact_hold=.035
+ var color=ore_color(result.kind) if result.kind in [3,4,5,6] else color(result.kind,world.depth()).lightened(.25)
+ for i in (15 if result.broken else 7):sparks.append({"p":contact,"v":Vector2.from_angle(randf()*TAU)*randf_range(30,140),"life":randf_range(.15,.5),"color":color,"kind":result.kind,"size":randf_range(2,5)})
  if result.broken:
-  messages.append({"p":Deepworks.center(c),"text":"+%d %s" % [result.count,HoldData.ITEMS[result.item].name],"life":1.25})
+  var destination=haul.collect(result.item,result.count,g.player)
+  rubble.append({"p":Vector2(c)*40,"kind":result.kind,"life":.42})
+  messages.append({"p":Deepworks.center(c),"text":"+%d %s · %s" % [result.count,HoldData.ITEMS[result.item].name,destination],"life":1.25})
   for name in world.survey(g.player):g.notify("DISCOVERY · "+name);g.sound.effect("crystal",-12)
 func agents(dt:float):
  ensure()
@@ -208,7 +236,9 @@ func color(k:int,z:int)->Color:
 func draw():
  ensure();g.backdrop.visible=false
  g.draw_set_transform(Vector2.ZERO);g.draw_rect(Rect2(0,0,960,540),Color("101b24"))
- var offset=-g.camera.round();A.draw_offset=offset;g.draw_set_transform(offset)
+ var offset=-g.camera.round()
+ if g.state.shake and pulse>0:offset+=Vector2(sin(g.clock*85),cos(g.clock*63))*pulse*12
+ A.draw_offset=offset;g.draw_set_transform(offset)
  var z=world.depth();var l=world.layer();var start=Deepworks.cell(g.camera)-Vector2i.ONE
  var aim=world.target(g.player,g.get_global_mouse_position()+g.camera,180 if g.mining_gun.selected else 78)
  for y in range(maxi(0,start.y),mini(Deepworks.H,start.y+17)):
@@ -250,7 +280,7 @@ func draw():
     if explored and world.at(c+Vector2i.RIGHT)==0:g.draw_line(p+Vector2(39,5),p+Vector2(39,34),base.darkened(.38),3)
     if k in [3,4,5,6]:
      var oc=ore_color(k).darkened(1-light)
-     for j in 4:
+     for j in [2,4,7][world.grade(c)]:
       var q=p+Vector2(9+(h+j*7)%24,9+(h/9+j*7)%20)
       var points=PackedVector2Array([q+Vector2(-3,1),q+Vector2(0,-7 if k==6 else -3),q+Vector2(4,0),q+Vector2(2,5)])
       g.draw_colored_polygon(points,oc);g.draw_line(q+Vector2(0,-4),q+Vector2(0,3),oc.lightened(.3),1)
@@ -258,6 +288,14 @@ func draw():
      var q=p+Vector2(20,18);g.draw_polyline(PackedVector2Array([q+Vector2(-12,-10),q,q+Vector2(-5,13),q+Vector2(4,16)]),Color("16242c"),2)
      g.draw_line(q,q+Vector2(12,-6),Color("16242c"),2)
     if c==aim and g.panel_id=="":g.draw_rect(r.grow(-1),Color("efd395"),false,2)
+ # Large angular fragments briefly keep the broken face's volume before settling.
+ for rock in rubble:
+  var progress=1.0-rock.life/.42
+  for j in 6:
+   var q=rock.p+Vector2(8+j%3*12,8+j/3*18)+Vector2(j%3-1,j/3)*progress*14
+   var size=(9.0+j%2*3)*(1-progress*.8)
+   var tint=ore_color(rock.kind) if rock.kind in [3,4,5,6] and j%2==0 else color(rock.kind,z)
+   g.draw_colored_polygon(PackedVector2Array([q+Vector2(-size,-size*.5),q+Vector2(size*.1,-size),q+Vector2(size,size*.2),q+Vector2(size*.2,size*.7)]),Color(tint,minf(1,rock.life*5)))
  # Geological landmarks are discovered through line of sight, never through solid rock.
  for f in l.features:
   if not f.found:continue
@@ -292,6 +330,7 @@ func draw():
   lamp(entry+Vector2(-58,0));lamp(entry+Vector2(58,0))
   draw_worksite(entry)
   A.text(g,entry+Vector2(-64,-93),"KELDRATH ↑",15,Color("edcd8a"));A.text(g,entry+Vector2(-65,53),"E · RETURN HOME",12,Color("b9cbc0"))
+ draw_haulage()
  var actors:Array=[]
  for a in g.agents:
   if int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
@@ -302,19 +341,20 @@ func draw():
   g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
   if actor.has("player"):
    var profile=g.state.appearance.duplicate();profile.air_pose=0;profile.gait_time=g.gait_clock
-   var frame=4 if strike_left<=.15 else 1
+   var frame=4 if strike_left<=IMPACT else 1
    var pose=p+Vector2(0,12)
    if strike_left>0:
     var palm=pose+HoldCharacterArt.work_hand(4,profile)*Vector2(g.face,1)
     # A short body lean keeps the original grip and full-size tool in contact.
     var delta=contact-palm
     var lean=delta-delta.normalized()*[36.0,40.0,35.0,33.0][g.tool]
-    pose+=lean*clampf((.28-strike_left)/.12,0,1)
+    pose+=lean*clampf((SWING-strike_left)/(SWING-IMPACT),0,1)
    A.dwarf(g,pose,g.gait_clock,g.walking_pose and strike_left<=0,g.face,0,false,profile,(frame+.1)/8.0 if strike_left>0 else -1)
    g.draw_set_transform(offset)
+   draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
    if strike_left>0:
-    var hand=pose+HoldCharacterArt.work_hand(frame,profile)*Vector2(g.face,1);var progress=1-strike_left/.28
-    var endpoint=contact if progress>=.46 and progress<=.65 else hand+(contact-hand).rotated(-g.face*(1-sin(progress*PI))*.95)
+    var hand=pose+HoldCharacterArt.work_hand(frame,profile)*Vector2(g.face,1);var progress=1-strike_left/SWING
+    var endpoint=contact if progress>=.50 and progress<=.68 else hand+(contact-hand).rotated(-g.face*(1-sin(progress*PI))*.95)
     if g.mining_gun.selected:g.draw_line(hand,contact,Color("c4f4e2"),3)
     else:
      HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,g.tool,offset,g.face,-1,1.0)
@@ -324,18 +364,26 @@ func draw():
    if a.type=="bot":A.bot(g,p+Vector2(0,10),g.clock,a.work)
    else:A.dwarf(g,p+Vector2(0,12),g.clock,not a.path.is_empty(),1,3,a.work,g.state.npc(a.id))
  g.draw_set_transform(offset)
- for s in sparks:g.draw_rect(Rect2(s.p,Vector2.ONE*s.size),Color(s.color,clampf(s.life*4,0,1)))
+ for s in sparks:
+  var tint=Color(s.color,clampf(s.life*4,0,1))
+  if int(s.get("kind",2))==6:g.draw_line(s.p,s.p+s.v.normalized()*s.size*2,tint,2)
+  elif int(s.get("kind",2))==1:g.draw_circle(s.p,s.size*1.8,Color(tint,.24*clampf(s.life*4,0,1)))
+  else:g.draw_rect(Rect2(s.p,Vector2.ONE*s.size),tint)
  for m in messages:A.text(g,m.p,m.text,13,Color(1,.88,.62,minf(1,m.life)))
  if pulse>0:g.draw_arc(contact,4+(1-pulse/.14)*17,0,TAU,12,Color(1,.9,.7,pulse*5),2)
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
  g.draw_rect(Rect2(0,0,960,74),Color("0e202c"));g.draw_line(Vector2(24,73),Vector2(936,73),Color("63756c"))
  g.draw_rect(Rect2(0,438,960,60),Color(.04,.09,.12,.88));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"));g.draw_rect(Rect2(18,80,610,25),Color(.035,.08,.12,.82))
  A.text(g,Vector2(24,456),"DEPTH %d / %d · %s" % [z+1,world.data.layers.size(),Deepworks.NAMES[z].to_upper()],16,Color("eac98b"))
- A.text(g,Vector2(24,480),"WASD  MOVE    LMB  DIG    E / SHIFT+E  STAIRS    V  BUILD    X  SURVEY    T  CREW",12,Color("b9d0c8"))
+ A.text(g,Vector2(24,480),"WASD MOVE   LMB DIG   E STAIRS   V BUILD   X SURVEY   H HAUL   U UNLOAD   C CART   L GOAL",12,Color("b9d0c8"))
  if aim.x>=0:
-  var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=HoldData.TILES[k].name
+  var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=world.grade_label(aim)+" "+HoldData.TILES[k].name
   A.text(g,Vector2(700,453),name,14,ore_color(k));g.draw_rect(Rect2(700,464,210,5),Color("2b414a"));g.draw_rect(Rect2(700,464,210*d/world.resistance(k),5),Color("cbb57e"))
  A.text(g,Vector2(700,487),g.mining_gun.status() if g.mining_gun.selected else ("STEEL PICK" if g.state.steel else "1 PICK / 2 SHOVEL"),11,Color("a9c3bb"))
+ A.text(g,Vector2(24,124),"BUCKET %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   CART %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"IN HAND" if haul.cart().hitched else "PARKED D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else "   H · HAULAGE"],13,Color("e3c993"))
+ var goal=haul.project();var missing=0
+ for item in goal.cost:missing+=maxi(0,int(goal.cost[item])-g.state.count(item))
+ A.text(g,Vector2(24,143),"L · "+goal.name+" · "+("materials delivered" if missing==0 else "%d units still needed in stores" % missing),12,Color("b9d0c8"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
  if survey_open:draw_survey()
 func lamp(p:Vector2):
@@ -377,12 +425,105 @@ func draw_worksite(entry:Vector2):
   g.draw_rect(Rect2(p,Vector2(24,22)),Color("806747"))
   g.draw_rect(Rect2(p+Vector2(3,3),Vector2(18,16)),Color("a08a61"),false,2)
   g.draw_line(p+Vector2(3,4),p+Vector2(20,18),Color("b39a6a"),2)
- # Empty ore tub waits beside the first coal face.
- var tub=entry+Vector2(104,48)
- g.draw_rect(Rect2(tub+Vector2(-17,8),Vector2(36,6)),Color("1b292c"))
- for x in [-10,12]:g.draw_circle(tub+Vector2(x,13),5,Color("24333a"))
- g.draw_colored_polygon(PackedVector2Array([tub+Vector2(-20,-9),tub+Vector2(21,-9),tub+Vector2(15,11),tub+Vector2(-15,11)]),Color("6d7d7d"))
- g.draw_rect(Rect2(tub+Vector2(-18,-10),Vector2(37,6)),Color("293b42"))
- g.draw_line(tub+Vector2(-18,-9),tub+Vector2(19,-9),Color("bac5b9"),2)
 
 func camera_target()->Vector2:return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-290,0,Deepworks.H*40-540))
+
+func unload():
+ if g.zone!="mine":g.notify("Deliver cargo at the mine entrance.");return
+ ensure();g.notify(haul.unload(g.player));unload_flash=.8;g.sound.effect("build");g.save_game()
+func depart():
+ ensure()
+ if world.entrance(g.player):haul.unload(g.player)
+ haul.park()
+func haulage_panel():
+ ensure()
+ if g.zone!="mine":
+  g.label(g.panel_body,"Enter the Deepworks to handle containers. Your bucket retains: "+DeepHaul.contents(haul.bucket()),16)
+  return
+ g.label(g.panel_body,"BUCKET · %d / %d units" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET],20)
+ g.label(g.panel_body,DeepHaul.contents(haul.bucket()),16)
+ g.label(g.panel_body,"U: unload / cache · Shift+U: load piles · C: take / park cart. Overflow stays safe.",14)
+ g.button(g.panel_body,"Unload [U]",func():unload();g.open_panel("haulage",false))
+ if haul.cart().is_empty():
+  g.button(g.panel_body,"Build wheelbarrow here · 6 timber + 2 iron · 320 units",func():
+   if g.zone!="mine":g.notify("Build your wheelbarrow inside the mine.")
+   elif haul.build_cart(g.player):g.notify("Wheelbarrow ready. C takes or parks it; nearby mining loads it.");g.sound.effect("build");g.save_game()
+   else:g.notify("Needs 6 timber and 2 iron ingots in stores.")
+   g.open_panel("haulage",false))
+ else:
+  var cart=haul.cart()
+  g.label(g.panel_body,"WHEELBARROW · %d / %d · depth %d · (%d, %d)" % [DeepHaul.amount(cart.cargo),DeepHaul.CART,int(cart.depth)+1,cart.x/40,cart.y/40],20)
+  g.label(g.panel_body,DeepHaul.contents(cart.cargo),16)
+  g.button(g.panel_body,"Take / park wheelbarrow [C]",func():g.notify(haul.toggle_cart(g.player));g.save_game();g.close_panel())
+  g.button(g.panel_body,"Tip nearby wheelbarrow into local stockpile",func():g.notify("Cached %d units." % haul.cache_cart(g.player));g.save_game();g.open_panel("haulage",false))
+ g.button(g.panel_body,"Load nearby stockpiles into cart / bucket",func():g.notify("Loaded %d units." % haul.load_pile(g.player));g.save_game();g.open_panel("haulage",false))
+ for a in haul.data.piles.values():
+  if DeepHaul.amount(a.cargo)>0:g.label(g.panel_body,"Pile · D%d (%d, %d) · %s" % [int(a.depth)+1,a.x,a.y,DeepHaul.contents(a.cargo)],14)
+ g.label(g.panel_body,"Stores use the existing inventory and recipes. Entrance deliveries are available to forge, construction and trade. Returning home unloads your bucket and a nearby cart. Crews retain their provisioned delivery service. Parked equipment stays at its recorded location.",16)
+ g.button(g.panel_body,"Project ledger [L]",func():g.open_panel("projects"))
+func project_panel():
+ ensure();var project=haul.project()
+ g.label(g.panel_body,"TRACKING · "+project.name,20)
+ for item in project.cost:
+  var need=int(project.cost[item]);var have=g.state.count(item)
+  g.label(g.panel_body,"%s · %d / %d stored · %d in field · %d shortage" % [HoldData.ITEMS[item].name,have,need,haul.in_field(item),maxi(0,need-have)],16)
+ if project.money>0:g.label(g.panel_body,"Crowns · %d / %d" % [g.state.money,project.money],16)
+ g.label(g.panel_body,"Field cargo becomes usable on delivery. Tracking does not reserve or spend supplies. Existing research and workshop prerequisites still apply.",16)
+ var choices=g.row(g.panel_body)
+ for goal in [["cart","Wheelbarrow"],["iron","Iron"],["steel","Steel"],["assembly","Drive assembly"]]:
+  g.small_button(choices,"Track · "+goal[1],func():g.state.hauling.project=goal[0];g.save_game();g.open_panel("projects",false))
+ g.button(g.panel_body,"Open existing workshop / project",func():g.open_panel(project.panel))
+func draw_bucket(p:Vector2,cargo:Dictionary,capacity:int):
+ var fill=clampf(float(DeepHaul.amount(cargo))/capacity,0,1)
+ g.draw_arc(p+Vector2(0,-7),8,PI,TAU,10,Color("c0b18c"),2)
+ g.draw_colored_polygon(PackedVector2Array([p+Vector2(-9,-7),p+Vector2(9,-7),p+Vector2(6,8),p+Vector2(-6,8)]),Color("746247"))
+ g.draw_line(p+Vector2(-8,2),p+Vector2(8,2),Color("b6a782"),2)
+ if fill>0:
+  var tint=Color(HoldData.ITEMS[cargo.keys()[0]].color)
+  g.draw_rect(Rect2(p+Vector2(-6,6-12*fill),Vector2(12,12*fill)),tint)
+ g.draw_line(p+Vector2(-9,-7),p+Vector2(9,-7),Color("dec694"),2)
+func draw_haulage():
+ for a in haul.data.piles.values():
+  if int(a.depth)!=world.depth() or DeepHaul.amount(a.cargo)==0:continue
+  var p=Deepworks.center(Vector2i(a.x,a.y))+Vector2(0,18)
+  if not world.layer().seen.has(Deepworks.key(Vector2i(a.x,a.y))):continue
+  var n=DeepHaul.amount(a.cargo);var tint=Color(HoldData.ITEMS[a.cargo.keys()[0]].color)
+  for j in mini(22,3+int(sqrt(n)*2)):
+   var q=p+Vector2(sin(j*2.4)*18,cos(j*1.7)*10)
+   g.draw_colored_polygon(PackedVector2Array([q+Vector2(-6,3),q+Vector2(-2,-6-j%3),q+Vector2(6,2)]),tint.lightened((j%3)*.08))
+  if a.marked:g.draw_rect(Rect2(p-Vector2(20,16),Vector2(40,32)),Color("b9a477"),false,1)
+  A.text(g,p+Vector2(-14,27),str(n)+" units",10,Color("e1c997"))
+ if not haul.cart().is_empty() and int(haul.cart().depth)==world.depth():
+  var cart=haul.cart();var p=haul.cart_pos()+Vector2(28,10) if cart.hitched else haul.cart_pos()
+  var fill=float(DeepHaul.amount(cart.cargo))/DeepHaul.CART
+  g.draw_circle(p+Vector2(20,9),8,Color("1a292e"));g.draw_circle(p+Vector2(20,9),5,Color("ab9471"));g.draw_circle(p+Vector2(20,9),2,Color("263c43"))
+  for y in [-9,7]:g.draw_line(p+Vector2(-37,y),p+Vector2(17,y),Color("aa8759"),3)
+  g.draw_colored_polygon(PackedVector2Array([p+Vector2(-23,-16),p+Vector2(23,-16),p+Vector2(15,7),p+Vector2(-17,7)]),Color("826b4d"))
+  g.draw_rect(Rect2(p+Vector2(-20,-15),Vector2(40,8)),Color("293c41"))
+  if fill>0:
+   var tint=Color(HoldData.ITEMS[cart.cargo.keys()[0]].color)
+   for j in maxi(1,int(fill*12)):
+    var q=p+Vector2(-16+j%6*6,-10-j/6*5)
+    g.draw_colored_polygon(PackedVector2Array([q+Vector2(-4,3),q+Vector2(0,-5),q+Vector2(5,3)]),tint.lightened(j%3*.08))
+  g.draw_line(p+Vector2(-23,-16),p+Vector2(23,-16),Color("d5b57c"),2)
+  for y in [-3,3]:g.draw_line(p+Vector2(-18,y),p+Vector2(17,y),Color("51432f"),1)
+  for x in [-14,12]:
+   g.draw_line(p+Vector2(x,-7),p+Vector2(x,5),Color("a9a58b"),2)
+   g.draw_circle(p+Vector2(x,-4),1,Color("ded3ad"))
+  var beneath=haul.data.piles.get(haul.pile_id(Deepworks.cell(haul.cart_pos())),{})
+  if DeepHaul.amount(beneath.get("cargo",{}))==0:A.text(g,p+Vector2(-24,29),"%d / 320" % DeepHaul.amount(cart.cargo),10,Color("ecd39e"))
+ if world.depth()==0:
+  var p=Deepworks.center(Deepworks.ENTRY)+Vector2(-112,-18)
+  g.draw_rect(Rect2(p-Vector2(27,21),Vector2(54,36)),Color("65553f"))
+  for y in [-12,-3,6]:g.draw_line(p+Vector2(-25,y),p+Vector2(25,y),Color("a18b64"),2)
+  for x in [-22,22]:g.draw_line(p+Vector2(x,-20),p+Vector2(x,14),Color("b3aa8e"),3)
+  var stock=0;var largest=0;var stock_tint=Color("9aa59e")
+  for item in DeepHaul.BULK:
+   var n=g.state.count(item);stock+=n
+   if n>largest:largest=n;stock_tint=Color(HoldData.ITEMS[item].color)
+  for j in mini(18,stock):
+   var q=p+Vector2(-22+j%6*8,-8-j/6*6)
+   g.draw_colored_polygon(PackedVector2Array([q+Vector2(-5,3),q+Vector2(0,-5),q+Vector2(6,3)]),stock_tint.lightened(j%3*.06))
+  A.text(g,p+Vector2(-40,32),"U · HOLD STORES",10,Color("e3c58f"))
+  if unload_flash>0:
+   for j in 10:g.draw_circle(p+Vector2(sin(j)*28,-(1-unload_flash)*35-j%3*7),2,Color(1,.85,.55,unload_flash))

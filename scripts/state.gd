@@ -31,6 +31,7 @@ var camp_stage:int=0
 var active_site:String="hold"
 var worlds:Dictionary={}
 var forestry:Dictionary={}
+var hauling:Dictionary={}
 var deepworks:Dictionary={}
 var deepworks_migrated=false
 var road_trees:Array=[8,8,8,8,8]
@@ -72,7 +73,7 @@ func save_audio_settings():
  for key in AUDIO_SETTINGS:cfg.set_value("audio",key,get(key))
  cfg.save("user://audio_settings.cfg")
 func reset(seed_number:int):
- region_travel={};hold_travel={};resident_visits={};outpost={};forestry={};deepworks={};deepworks_migrated=false
+ region_travel={};hold_travel={};resident_visits={};outpost={};forestry={};hauling={};deepworks={};deepworks_migrated=false
  ladders={};rescue_debt=0
  combat=HoldCombat.defaults();tracked_npc=""
  appearance=HoldAppearance.defaults();npc_appearances={};dynasty={}
@@ -144,7 +145,7 @@ func ensure_dynasty():
 func save_world(geo:Geology,zone:String,pos:Vector2)->bool:
  ensure_dynasty()
  HoldOutpost.ensure(self)
- var data={"deepworks":deepworks,"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"forestry":forestry,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
+ var data={"hauling":hauling,"deepworks":deepworks,"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"forestry":forestry,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
  var f=FileAccess.open(save_path()+".tmp",FileAccess.WRITE)
  if not f:return false
  f.store_string(JSON.stringify(data));f.close()
@@ -163,6 +164,7 @@ func load_world(geo:Geology)->Dictionary:
   var backup=save_path()+".pre-deepworks-"+str(Time.get_unix_time_from_system())+".bak"
   if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  deepworks=d.get("deepworks",{})
+ hauling=d.get("hauling",{})
  for k in ["inventory","money","tech","queue","market","steel","worker","automaton","priority","ship_stage","launched","contract","bargain","hospitality","elapsed","mined","seed_value","trees","discovered","agents_enabled","volume","music_volume","ambience_volume","effects_volume","footsteps_volume","dialogue_volume","shake"]:
   if d.has(k):set(k,d[k])
  # Earlier saves already owned their claim; do not re-lock their progression.

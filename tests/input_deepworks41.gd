@@ -17,11 +17,11 @@ func run():
  print("AIM ",g.get_global_mouse_position()+g.camera)
  var mb=InputEventMouseButton.new();mb.button_index=MOUSE_BUTTON_LEFT;mb.position=motion.position;mb.pressed=true;Input.parse_input_event(mb)
  await process_frame
- var before=g.state.count("coal")
+ var before=g.deep.haul.in_field("coal")
  for i in 120:
   g._process(1.0/60);await process_frame
  mb.pressed=false;Input.parse_input_event(mb);await process_frame
- check(g.state.count("coal")>before,"Real held mouse input excavates and collects coal in main game loop")
+ check(g.deep.haul.in_field("coal")>before,"Real held mouse input excavates and collects coal in main game loop")
  var count=g.state.mined
  for i in 60:g._process(1.0/60)
  check(g.state.mined==count,"Releasing button stops continuous mining")
@@ -44,5 +44,28 @@ func run():
  check(g.deep.world.depth()==0,"Shift-interact key returns to connected upper landing")
  g.transition_left=0;g.transition_shade.visible=false;g.save_game();var position=g.player;g.start_game(true);g.close_panel()
  check(g.player.distance_to(position)<.001,"Live-input session restores its exact position")
+ g.transition_left=0;g.transition_shade.visible=false
+ g.state.add("iron",2);g.state.add("wood",6)
+ e.keycode=KEY_H;e.shift_pressed=false;g._unhandled_input(e)
+ check(g.panel_id=="haulage","Haulage key opens equipment board in existing game")
+ buttons=g.panel_body.find_children("*","Button",true,false)
+ for b in buttons:
+  if b.text.begins_with("Build wheelbarrow"):b.pressed.emit();break
+ check(not g.deep.haul.cart().is_empty(),"Actual construction button creates positioned wheelbarrow")
+ g.close_panel();e.keycode=KEY_C;g._unhandled_input(e)
+ old=g.player;Input.action_press("left")
+ for i in 8:g._process(1.0/60)
+ Input.action_release("left")
+ check(g.deep.haul.cart().hitched and g.deep.haul.cart_pos().distance_to(g.player)<1 and g.player!=old,"Cart key and movement carry actual equipment with the dwarf")
+ e.keycode=KEY_U;g._unhandled_input(e)
+ check(g.deep.haul.bucket().is_empty() and g.state.count("coal")>0,"Unload key delivers mined bucket to existing stores")
+ e.keycode=KEY_L;g._unhandled_input(e)
+ check(g.panel_id=="projects","Project ledger opens from mining controls")
+ buttons=g.panel_body.find_children("*","Button",true,false)
+ for b in buttons:
+  if b.text=="Track · Steel":b.pressed.emit();break
+ check(g.state.hauling.project=="steel","Ledger button selects the intended existing goal")
+ g.close_panel();g.save_game();g.start_game(true);g.close_panel()
+ check(g.deep.haul.cart().hitched and g.state.hauling.project=="steel","Live hauling and goal selection persist after reload")
  print("DEEPWORKS INPUT: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)

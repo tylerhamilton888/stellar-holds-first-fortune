@@ -1,11 +1,11 @@
-# Current build: Deepworks 0.41.0
+# Current build: The Weight of the Mountain 0.42.0
 Read docs/CURRENT_STATUS.md and docs/SESSION_HANDOFF.md. This is the integrated existing game; open project.godot with Godot 4.4.1.
 
-> Development entry point: [docs/SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md), then [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md). Checkpoint: pinewood-0.40.0; gameplay 0.40.0. Older notes below may describe superseded behavior.
+> Development entry point: [docs/SESSION_HANDOFF.md](docs/SESSION_HANDOFF.md), then [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md). Checkpoint: weight-0.42.0; gameplay 0.42.0. Older notes below may describe superseded behavior.
 
 # The Stellar Holds: The First Fortune
 
-Original Godot 4.4.1 prototype, version 0.40.0. Windows x64.
+Original Godot 4.4.1 game, version 0.42.0. Windows x64.
 
 ## Play on Windows — no separate Godot installation needed
 
@@ -20,10 +20,13 @@ Godot 4.4.1 Windows editor/runtime, bundled for convenience. The launcher runs
 The Windows launcher is supplied but has not been executed on Windows here.
 The game and packaged data were tested with Godot 4.4.1 on Linux.
 
-The editable project is supplied separately as `Stellar-Holds-0.40.0-Source.zip`.
+The editable project is supplied separately as `Stellar-Holds-0.42.0-Source.zip`.
 Extract that archive and import `stellar-holds/project.godot` in Godot 4.4.1.
 Python is not required to play. Source art, material maps and the offline animation
 baker are included in the source archive.
+
+## Changes in 0.42.0
+Deepworks now has physical breakup, graded ore, a 64-unit bucket and a positioned 320-unit wheelbarrow. H opens haulage, C takes/parks the cart, U delivers or caches bulk, Shift+U loads piles, L tracks a project. Overflow is saved. Deliver at the entrance to use ore in existing crafting and trade. Crews keep their delivery service. Five-depth mining, stairs and survey remain integrated; Pinewood is unchanged. Rails are the next milestone. Read current status for compatibility limits.
 
 ## Changes in 0.40.0
 Pinewood now has painted forest scenery, seven marked firs and a field board. Equip axe [3], stand beside a trunk and hold LMB over it. Recover timber from fallen logs too. Each full fir yields 22 timber; existing cuts and recovered logs stay saved. G opens basin travel. No automatic regrowth; Orla remains a timber fallback.

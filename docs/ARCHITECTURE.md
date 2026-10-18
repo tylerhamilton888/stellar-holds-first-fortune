@@ -29,3 +29,6 @@ Geology uses 7-pixel cells; HoldMountain generates seeded surface, overburden, s
 Read handoff/status, then relevant modules. Work from a clean checkpoint; preserve unknown fields and identifiers. Keep generation changes versioned. Test affected save/economy/terrain dependencies. Visually inspect art/contact/UI changes. Update status, backlog and changelog. See TESTING.md for commands and RECOVERY.md for backups.
 
 Pinewood keeps `road_trees` for compatibility and adds `forestry` dictionaries keyed by tree index: `logs`, `fell_at`, `direction`. `HoldForestry.ensure` extends five trees to seven without restoring existing cuts. Rendering never grows trees automatically. Trees occupy a rear cutting strip; the foreground walking lane stays clear. The artwork has a fixed ground anchor, avoiding background/footing drift.
+
+### Cargo ownership (0.42)
+`DeepHaul` is the transfer boundary. Global state.hauling.bucket follows the player; site-local deepworks.haulage holds cart and piles at exact XY/depth. Manual extraction routes its yield to cargo; worker extraction delivers directly. Only depot transfer credits existing inventory. Terrain/grade supplies yields, never visual particles. Rendered contents read authoritative dictionaries. Future vehicles should use the same transfer API, with independent location/connectivity rather than a second economic balance.
