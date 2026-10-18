@@ -1,3 +1,13 @@
+# Try 0.48.0 — tools at a glance
+Extract the complete versioned Windows ZIP into a fresh folder and run PLAY-WINDOWS.bat. Existing saves are supported; keep previous build/save copies.
+
+1. Walk in all eight directions, then stop. The same Dwarf should remain visible, with no old sideways silhouette appearing. Try your saved sculpt and colors.
+2. Press **1–4** for pickaxe, shovel, axe and hammer. The gold slot, Holding label and visible tool should agree. **5** remains locked until the slagcaster is fabricated.
+3. Press **6–0**, or click any slot. Supplies show their actual pack quantities. Open **I**, use a resource's “Pin to bar…” selector, then return to play and select that slot. Empty supplies stay visible but dim. Supplies are used at existing stations/chests/trade counters, not consumed by clicking the ground.
+4. Hold LMB at a nearby mine wall with the pick, or at a Pinewood tree with the axe. Watch anticipation/contact/recovery and check that the Dwarf keeps the same appearance. Select a supply to stop tool work. Click the bar and confirm nothing is excavated behind it.
+5. Walk near the bottom of the view: the bar should move above you. Open menus: it should hide. Visit Borin, a mason and the throne; check tool contact, continued work and the seated Lord.
+6. Save, quit and reload. Pinned items, selection and counts should survive. Deposit materials in a chest: the bar must show only what remains in your pack.
+
 # Try 0.47.0 — build a home, then climb onto its roof
 Extract the full Windows ZIP to a new folder and run PLAY-WINDOWS.bat. Keep your previous release/save copies.
 

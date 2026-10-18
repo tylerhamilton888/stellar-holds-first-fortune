@@ -29,6 +29,10 @@ static func barrel(n:Node2D,p:Vector2):
  HoldItemArt.draw(n,Rect2(p+Vector2(-12,-30),Vector2(25,30)),11)
 static func dwarf(n:Node2D,p:Vector2,t:float,walking:bool=false,face:int=1,variant:int=0,working:bool=false,profile:Dictionary={},action:float=-1):
  var appearance=profile if not profile.is_empty() else HoldAppearance.defaults()
+ if n.get("surface")!=null and (n.surface.active() or n.zone=="mine"):
+  var cycle=action if action>=0 else (fposmod(t,1.2)/1.2 if working else -1.0)
+  HoldDirectional.draw(n,p+draw_offset,appearance,Vector2(face,.45),walking,t,n.character_scale(),draw_offset,cycle)
+  return
  var tint=n.character_tint(p) if n.has_method("character_tint") else Color.WHITE
  HoldSpriteAtlas.paint(n,p+draw_offset,t,walking,face,appearance,working,draw_offset,action,tint,n.character_scale() if n.has_method("character_scale") else 1.0)
 static func bot(n:Node2D,p:Vector2,t:float,working:bool=false):

@@ -328,7 +328,7 @@ func guide_panel():
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
  HoldForestry.ensure(g.state)
- if g.tool!=2 or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):cut_clock=0;cut_target=-1;return
+ if g.hotbar.blocked_work() or g.tool!=2 or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):cut_clock=0;cut_target=-1;return
  var aim=g.get_global_mouse_position()+g.camera;var best=-1;var dist=80.0
  for i in TREES.size():
   if g.state.road_trees[i]<=0 and HoldForestry.logs(g.state,i)<=0:continue
@@ -436,24 +436,26 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
  var cam=g.camera.round()
  g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,19,Color(0,0,0,.3))
  var look=profile.duplicate();look.air_pose=0
- # Original complete character drawings retain wardrobe, beard and silhouette.
- if p==g.player and cut_target<0:
-  HoldDirectional.draw(g,p-cam,look,direction,walking,time,.85,-cam)
- else:HoldCharacterArt.draw_sprite(g,p-cam,time,walking,face,look,false,-cam,false,.85,Color("eff0dc"))
+ var aim=direction if p==g.player else Vector2(face,.45)
+ var action=-1.0
+ if p==g.player and cut_target>=0:aim=(TREES[cut_target]-p).normalized();action=clampf(cut_clock/.36,0,1)
+ elif p==g.player and house.impact>0:aim=(house.contact-p).normalized();action=1-house.impact/.24
+ HoldDirectional.draw(g,p-cam,look,aim,walking,time,.85,-cam,action)
  g.draw_set_transform(-cam)
  if p==g.player and house.impact>0:
-  var hand=p+Vector2(g.face*17,-29);var contact=house.contact-Vector2(0,5)
+  var hand=p+HoldDirectional.hand(look,aim,action,.85);var contact=house.contact-Vector2(0,5)
   var phase=1-house.impact/.24;var end=hand+(contact-hand).limit_length(43).rotated(-g.face*(1-phase)*.7)
   HoldCharacterArt.draw_tool(g,hand-cam,end-cam,1,-cam,g.face,-1,.7)
   for i in 5:g.draw_circle(contact+Vector2.from_angle(i*1.3)*phase*18,1.5,Color("c9bb92"))
  if p==g.player and area=="pinewood" and cut_target>=0:
-  var hand=p+HoldCharacterArt.carry_hand(0,look)*Vector2(face,1)*.85
+  var hand=p+HoldDirectional.hand(look,aim,action,.85)
   var target=TREES[cut_target]-Vector2(0,18)
   var end=hand+(target-hand).normalized()*35
   end=hand+(end-hand).rotated(-face*(1-clampf(cut_clock/.36,0,1))*.8)
   HoldCharacterArt.draw_tool(g,hand-cam,end-cam,2,-cam,face,-1,.9)
   if cut_flash>0:
    for i in 7:g.draw_circle(target+Vector2.from_angle(i*.9)*(8+( .16-cut_flash)*90),2,Color("d7b079"))
+ if p==g.player and action<0:g.hotbar.held(g,p,-cam)
 func plaque(p:Vector2,text:String):
  var width=ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+18
  var style=StyleBoxFlat.new();style.bg_color=Color(.06,.13,.16,.9);style.border_color=Color("9b885e");style.set_border_width_all(1);style.set_corner_radius_all(3)

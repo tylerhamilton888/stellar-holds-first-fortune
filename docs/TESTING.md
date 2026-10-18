@@ -1,3 +1,5 @@
+Current release evidence: [0.48.0 readability and animation](testing/readability-0.48.0.md). Native input/display required for tests/input_readability48.gd; isolate XDG_DATA_HOME.
+
 Current release evidence: [0.47.0 Hearthcraft and directional views](testing/hearthcraft-0.47.0.md). Native input tests require a display and isolated XDG_DATA_HOME.
 
 Current release evidence: [0.46.0 walkable zones and home](testing/homestead-0.46.0.md). Native display required for input_homestead46.gd; keep isolated XDG_DATA_HOME.

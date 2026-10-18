@@ -28,13 +28,11 @@ static func smith(n:Node2D,p:Vector2,t:float,lit:bool):
  A.rect(n,contact.x-6*zoom,contact.y-zoom,12*zoom,zoom,"e4a66b" if lit else "909b9a")
  A.dwarf(n,p,t,false,facing,0,false,profile,(frame+.1)/8.0 if frame>=0 else -1.0)
  if frame<0:return
- var hand=HoldCharacterArt.work_hand(frame,profile)*Vector2(facing,1)
- var end=HoldCharacterArt.work_end(frame,profile,3)*Vector2(facing,1)
- var tr=Transform2D(0,Vector2.ONE*zoom,0,p+offset)*HoldCharacterArt.tool_transform(hand,end,3,facing)
- n.draw_set_transform_matrix(tr)
- n.draw_texture_rect_region(HoldItemArt.SHEET,Rect2(-HoldCharacterArt.TOOL_GRIPS[3],HoldItemArt.REGIONS[3].size),HoldItemArt.REGIONS[3])
- n.draw_set_transform(offset)
- HoldCharacterArt.draw_grip(n,p+offset,frame,profile,facing,offset,Color.WHITE,false,zoom)
+ var action=(frame+.1)/8.0
+ var hand=p+HoldDirectional.hand(profile,Vector2(facing,.45),action,zoom)
+ var head=contact if frame==4 else contact+Vector2(-14,-32)*absf(.5-action)*2
+ HoldCharacterArt.draw_tool(n,hand+offset,head+offset,3,offset,facing,-1,zoom)
+ n.draw_circle(hand,2.5*zoom,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
  if frame==4:
   var a=fposmod(t,.2)/.2
   for i in 3:
@@ -52,11 +50,11 @@ static func social(n:Node2D,p:Vector2,t:float,facing:int,profile:Dictionary,drin
  A.dwarf(n,p,t,false,facing,0,false,profile,-1.0 if resting else (frame+.1)/8.0)
  var zoom=n.character_scale() if n.has_method("character_scale") else 1.0
  var offset=A.draw_offset
- var hand=HoldCharacterArt.carry_hand(0,profile) if resting else HoldCharacterArt.work_hand(frame,profile)
+ var hand=HoldDirectional.hand(profile,Vector2(1,.45),-1 if resting else (frame+.1)/8.0)
  n.draw_set_transform(p+offset,0,Vector2(facing,1)*zoom)
  var x=hand.x-17;var y=hand.y-10
  A.rect(n,x-1,y-1,14,17,"332c29");A.rect(n,x,y,12,15,"815331");A.rect(n,x+2,y+2,5,11,"bf8a51");A.rect(n,x+3,y+3,2,9,"d8a76a");A.rect(n,x,y,12,2,"ead1a0")
  n.draw_arc(Vector2(x+15,y+8),3,-PI*.5,PI*.5,8,Color("d7b781"),2)
  A.rect(n,x+3,y+4,3,5,"947447")
  n.draw_set_transform(offset)
- HoldCharacterArt.draw_grip(n,p+offset,frame,profile,facing,offset,Color.WHITE,resting,zoom)
+ n.draw_circle(p+hand*Vector2(facing,1)*zoom,2.5*zoom,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))

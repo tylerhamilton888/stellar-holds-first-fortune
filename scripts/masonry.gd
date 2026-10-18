@@ -224,7 +224,7 @@ func foreground():
   for a in actors:
    var contact=point+Vector2(0,17)
    var pose=a.p+Vector2(0,12)
-   var hand=pose+HoldCharacterArt.work_hand(0,a.profile)*Vector2(a.face,1)
+   var hand=pose+HoldDirectional.hand(a.profile,Vector2(a.face,.45),float(a.phase))
    # The small mallet lands on the chisel cap exactly when material/sound fires.
    var phase=float(a.phase)
    var lift=1.0-clampf(phase/.53125,0,1) if phase<=.53125 else clampf((phase-.62)/.38,0,1)
@@ -239,4 +239,4 @@ func foreground():
    g.draw_rect(Rect2(head-Vector2(7,4),Vector2(14,8)),Color("ae8754"))
    g.draw_line(head+Vector2(-5,-4),head+Vector2(-5,4),Color("c2c5ad"),2)
    g.draw_line(head+Vector2(5,-4),head+Vector2(5,4),Color("c2c5ad"),2)
-   HoldCharacterArt.draw_grip(g,pose-g.camera,0,a.profile,a.face,-g.camera,g.character_tint(a.p))
+   g.draw_circle(hand,2.5,Color(HoldAppearance.SKIN_COLORS[a.profile.get("skin",0)]))

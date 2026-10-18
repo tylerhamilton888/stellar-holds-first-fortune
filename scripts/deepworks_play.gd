@@ -171,6 +171,7 @@ func mine(dt:float):
    if not works.pending.is_empty():works.impact()
    elif target.x>=0 and contact.distance_to(g.player)<(200 if g.mining_gun.selected else 112) and world.visible(g.player,contact):hit(target,g.mining_gun.selected)
   return
+ if g.hotbar.blocked_work():return
  if works.mode!="":works.begin();return
  if stair_work>0:return
  if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and g.mining_buffer<=0:return
@@ -399,24 +400,25 @@ func draw():
    var frame=0 if works.mode=="dress" else (4 if strike_left<=IMPACT else 1)
    var pose=p+Vector2(0,12)
    if strike_left>0 and works.mode!="dress":
-    var palm=pose+HoldCharacterArt.work_hand(4,profile)*Vector2(g.face,1)
+    var palm=pose+HoldDirectional.hand(profile,(contact-p).normalized(),.55)
     # A short body lean keeps the original grip and full-size tool in contact.
     var delta=contact-palm
     var lean=delta-delta.normalized()*[36.0,40.0,35.0,33.0][g.tool]
     pose+=lean*clampf((swing_duration-strike_left)/(swing_duration-IMPACT),0,1)
-   if strike_left<=0 and int(haul.bucket().get("rough_block",0))+int(haul.bucket().get("dressed_stone",0))==0:
-    HoldDirectional.draw(g,pose+offset,profile,g.surface.direction,g.walking_pose,g.gait_clock,1.0,offset)
-   else:A.dwarf(g,pose,g.gait_clock,g.walking_pose and strike_left<=0,g.face,0,false,profile,(frame+.1)/8.0 if strike_left>0 else -1)
+   var facing_dir=(contact-p).normalized() if strike_left>0 else g.surface.direction
+   var action=1-strike_left/swing_duration if strike_left>0 else -1.0
+   HoldDirectional.draw(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,action)
    g.draw_set_transform(offset)
    if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
+   if strike_left<=0:g.hotbar.held(g,pose,offset)
    draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
    if strike_left>0 and works.mode!="dress":
-    var hand=pose+HoldCharacterArt.work_hand(frame,profile)*Vector2(g.face,1);var progress=1-strike_left/swing_duration
+    var hand=pose+HoldDirectional.hand(profile,facing_dir,action);var progress=1-strike_left/swing_duration
     var endpoint=contact if progress>=.50 and progress<=.68 else hand+(contact-hand).rotated(-g.face*(1-sin(progress*PI))*.95)
     if g.mining_gun.selected:g.draw_line(hand,contact,Color("c4f4e2"),3)
     else:
      HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,g.tool,offset,g.face,-1,1.0)
-     HoldCharacterArt.draw_grip(g,pose+offset,frame,profile,g.face,offset,g.character_tint(p))
+     g.draw_circle(hand,2.5,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
      if works.mode in ["quarry","dress"]:works.masonry.chisel(p)
   else:
    var a=actor.agent
@@ -426,10 +428,10 @@ func draw():
     if a.work and not assigned.is_empty() and assigned.kind=="workshop":
      var f=0 if works.masonry.data.jobs.has(a.id) else posmod(int(g.clock*8),8);var pose=p+Vector2(0,12)
      A.dwarf(g,pose,g.clock,false,1,3,false,profile,(f+.1)/8.0)
-     var hand=pose+HoldCharacterArt.work_hand(f,profile)
+     var hand=pose+HoldDirectional.hand(profile,Vector2(1,.45),(f+.1)/8.0)
      var endpoint=pose+HoldCharacterArt.work_end(f,profile,3)
      if not works.masonry.data.jobs.has(a.id):HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,3,offset)
-     HoldCharacterArt.draw_grip(g,pose+offset,f,profile,1,offset,g.character_tint(p))
+     g.draw_circle(hand,2.5,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
     else:A.dwarf(g,p+Vector2(0,12),g.clock,not a.path.is_empty(),1,3,a.work,profile)
     if works.masonry.data.jobs.has(a.id) and not a.work:works.masonry.carry(p,1,works.masonry.data.jobs[a.id].cargo)
     if works.model.data.assignments.has(a.id):A.text(g,p+Vector2(-35,-81),g.state.npc(a.id).first_name+" · "+works.model.data.folk[a.id].activity,10,Color("dfc695"))

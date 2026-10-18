@@ -187,7 +187,7 @@ func cost_text(cost:Dictionary)->String:
  return " + ".join(list)
 func update(dt:float):
  impact=maxf(0,impact-dt);timer=maxf(0,timer-dt)
- if s.placing.begins_with("house:") and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and timer<=0:
+ if s.placing.begins_with("house:") and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and timer<=0 and not g.hotbar.over() and not g.hotbar.blocked:
   timer=.18;build(g.get_global_mouse_position()+g.camera,s.placing.trim_prefix("house:"))
 func points()->Array:
  var list=[]

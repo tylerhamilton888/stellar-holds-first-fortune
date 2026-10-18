@@ -1,3 +1,6 @@
+## After 0.48.0
+Player-test the unified directional rig, shoulder seams, work timing and adaptive 1–0 hotbar. Further animation refinements should keep this one gameplay rig; do not restore legacy side/contact silhouettes. Separate practice-bay combat remains a future task. Food/water remain existing production supplies; no new eating/stamina system was added.
+
 ## After 0.47.0
 Playtest house scale, material costs, multilevel building ergonomics and directional movement. Buildings support five storeys plus their roof deck, with construction access protected during recovery. Further work: fully authored directional work/combat cycles, freeform city modification, surface worker building jobs and unified house/mine excavation coordinates. Practice bay remains legacy combat. No implied completion of these systems.
 

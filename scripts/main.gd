@@ -13,6 +13,7 @@ const STATIONS=[{"x":225.0,"name":"Workers' quarters","panel":"home"},{"x":410.0
 const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinewood"}]
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
+var hotbar:HoldHotbar
 var surface:HoldSurface
 var deep:DeepworksPlay
 var forest_view:Node2D
@@ -120,6 +121,7 @@ func _ready():
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
  setup_ui()
+ hotbar=HoldHotbar.new();hotbar.g=self;ui.add_child(hotbar)
  state.load_audio_settings();apply_audio_settings()
  geo.generate(27419)
  show_title()
@@ -209,7 +211,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.47.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.48.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -242,6 +244,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  notify("Welcome to Keldrath. Your first wages begin at the foreman's office.")
  if state.deepworks_migrated:notify("Deepworks ready. Your original save was backed up; old terrain and structures remain archived. All supplies and progress are retained.")
  state.region_travel.active=false;state.hold_travel.active=false
+ hotbar.restore()
  if not load_saved:
   save_game()
   if capture_mode=="" and not skip_arrival:opening_scene=HoldOpeningScene.begin(self,"arrival")
@@ -351,6 +354,7 @@ func _unhandled_input(e):
  if not playing and panel_id!="" and e.is_action_pressed("pause"):
   back_panel();get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
+ if hotbar.handle(e):get_viewport().set_input_as_handled();return
  if deep.input(e):get_viewport().set_input_as_handled();return
  if surface.input(e):get_viewport().set_input_as_handled();return
  if panel_id=="" and e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT and e.pressed:mining_buffer=.16
@@ -359,15 +363,13 @@ func _unhandled_input(e):
  if e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT and e.pressed and panel_id=="" and construction.selected!="":
   construction.place(construction.target());get_viewport().set_input_as_handled();return
  if e is InputEventKey and e.pressed and not e.echo:
-  if panel_id=="" and e.keycode in [KEY_1,KEY_2,KEY_3,KEY_4]:mining_gun.selected=false;tool=e.keycode-KEY_1;swing=0;impact_pause=0;combat.armed=false;combat.reset_actions();construction.selected=""
-  if panel_id=="" and e.keycode==KEY_5:mining_gun.equip()
   if e.is_action_pressed("pause"):
    if panel_id!="":back_panel()
    else:open_panel("pause")
   elif e.keycode==KEY_K:toggle_panel("field_notes")
   elif e.keycode==KEY_X and panel_id=="":begin_field_sample()
   elif e.keycode==KEY_P and panel_id=="":
-   mining_gun.selected=false;prospecting=not prospecting;tool=1;combat.armed=false;combat.reset_actions();construction.selected=""
+   hotbar.select(1,false);mining_gun.selected=false;prospecting=not prospecting;tool=1;combat.armed=false;combat.reset_actions();construction.selected=""
    notify("Sifting ON: hold LMB on dirt near ore. 16 grains = 1 bonus ore. K explains; P turns off." if prospecting else "Normal digging.")
   elif e.keycode==KEY_V:toggle_panel("construction")
   elif e.keycode==KEY_B:toggle_panel("equipment")
@@ -724,6 +726,7 @@ func burst(p:Vector2,c:Color,num:int):
  for i in num:particles.append({"p":p,"v":Vector2(randf_range(-90,90),randf_range(-140,15)),"life":randf_range(.2,.65),"c":c.lightened(randf_range(0,.2)),"size":randf_range(2,4)})
 func notify(s:String):notice=s;notice_time=5.5
 func save_game():
+ if hotbar and playing:hotbar.data().selected=hotbar.selected()
  if surface:surface.remember()
  if deep:deep.remember()
  remember_agents()
@@ -851,6 +854,7 @@ func update_hud():
   footer.text="E  "+nearest.name.to_upper()+"    |    A/D MOVE   I PACK   M CREW   F1 HELP" if absf(nearest.x-player.x)<95 else "A/D MOVE   E INTERACT   C CHARACTER   I PACK   M CREW   F1 HELP"
 
  if surface and surface.active():surface.hud()
+ status.visible=false
 
 func _draw():
  forest_view.visible=playing and zone=="road" and room_id=="" and not surface.active()
@@ -1261,9 +1265,15 @@ func inventory_panel():
   count+=1
   var card=section(grid,"");card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
   var r=row(card);HoldItemArt.icon(r,k);label(r,HoldData.ITEMS[k].name,16)
+  var bind=OptionButton.new();bind.add_item("Pin to bar…")
+  for slot in range(5,10):bind.add_item("Slot "+str((slot+1)%10))
+  r.add_child(bind);bind.item_selected.connect(func(index):
+   if index>0:hotbar.assign(k,index+4);bind.select(0))
   var amount=label(r,str(state.count(k)),18,Color("edc98a"));amount.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;amount.size_flags_horizontal=0;amount.custom_minimum_size.x=38
  if count==0:label(panel_body,"Your pack is empty. Dig loose earth or stone to gather your first materials.",16)
  label(panel_body,"1 Pickaxe  •  2 Shovel  •  3 Axe  •  4 Hammer
+5 Slagcaster (when unlocked) • 6–0 pinned supplies. Click a slot or press its number.
+Pin carried resources using the selectors above; quantities always come from your pack.
 Open Gear above to change weapons or armor.",16,Color("b4c9c4"))
 func resume_adventure():
  if not menu_history.is_empty() and menu_history[-1].id=="ivar_welcome":back_panel()
