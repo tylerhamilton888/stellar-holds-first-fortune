@@ -1,3 +1,6 @@
+## After 0.52.0
+Player-test the new arrival escort, bed/chest objectives, gait, hand grips and directional cargo at normal speed. Windows launcher and audible balance remain acceptance checks. Further authored directional work/pushing poses and dedicated top-down sparring remain follow-up. Retain the now-tested introductory quest/save continuity and collision-checked route. Do not reopen the world layout or labor systems merely to refine a pose. Cross-zone wagon travel and raw-station/farm automation remain deferred.
+
 ## After 0.51.0
 Player acceptance of work contacts, carry silhouettes, Windows launch and audio. Refine the short gait cycles, additional directional work/haul poses and remaining older prop styles beside the gold-standard Dwarfs. Implement general cart/wagon portal and Z navigation with cargo conservation before claiming cross-zone logistics. Raw-workstation/farm NPC operation, more crop/fish species and broader schedules remain future work. Preserve the existing verified mining and industry automation.
 

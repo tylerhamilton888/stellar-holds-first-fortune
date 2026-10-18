@@ -213,7 +213,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.51.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.52.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}
@@ -251,9 +251,12 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  if not load_saved:
   save_game()
   if capture_mode=="" and not skip_arrival:opening_scene=HoldOpeningScene.begin(self,"arrival")
-  else:HoldOnboarding.arrived(state)
+  else:
+   HoldOnboarding.arrived(state)
+   HoldOnboarding.ensure(state).escort_pending=false;HoldOnboarding.ensure(state).settle_required=false
  elif not HoldOnboarding.ensure(state).arrival_seen:
   opening_scene=HoldOpeningScene.begin(self,"arrival")
+ elif HoldOnboarding.ensure(state).get("escort_pending",false):opening_scene=HoldArrivalEscort.start(self)
 
 func spawn_agents():
  var previous=agents.duplicate()

@@ -36,7 +36,7 @@ func _ready():
    ["A NAME OF YOUR OWN",("Your father called you his daughter when he said goodbye. Then he shook your hand as he would another working dwarf." if female else "Your father clasped your shoulder at the gate. 'Earn your supper, son. Write before your mother sends me after you.'")],
    ["BENEATH THE OLD KINGS","Stone kings watch the road. Freight cables whisper overhead. Behind the gates, a thousand hearths share the heat of machines older than your grandparents."],
    ["YOUR FIRST MORNING","No one here knows "+name+" "+game.state.appearance.family_name+" yet. You have forty-five crowns, a borrowed room, and a place to ask for work."],
-   ["THE GATE STEWARD","'New for the lower shift? Ivar keeps the office beside the pithead. West along the concourse. Give him your name, and mind the freight cages.'"]]
+   ["THE GATE STEWARD","'New for the lower shift? Ivar is waiting inside the gate. He'll show you to your room before you start. Welcome to Keldrath.'"]]
  else:
   lines=[
    ["IVAR DEEPMEASURE",HoldCulture.render(game.state,"'{player:Subject} brought back sound coal and kept the route clear, my lord. I have counted {player:object} home.'")],
@@ -80,6 +80,7 @@ func finish():
  game.velocity=Vector2.ZERO;game.grounded=true;game.jump_buffer=0;game.movement_remainder=0;game.jump_was_held=Input.is_action_pressed("jump")
  game.surface.enter("hearthward",Vector2(1580,405)) if mode=="arrival" else game.surface.enter("room:throne",Vector2(480,440))
  game.opening_scene=null;game.sound.set_context("hub");game.save_game();layer.queue_free()
+ if mode=="arrival":game.opening_scene=HoldArrivalEscort.start(game)
 func _input(e):
  if e is InputEventKey:
   if e.pressed and not e.echo:

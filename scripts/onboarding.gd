@@ -7,7 +7,7 @@ static func ensure(s)->Dictionary:
   s.outpost.onboarding={"fresh":false,"stage":7,"arrival_seen":true,"combat":true,"met":{},"facts":{},"accepted":{},"done":{}}
  return s.outpost.onboarding
 static func begin_fortune(s):
- var q=ensure(s);q.fresh=true;q.stage=0;q.arrival_seen=false;q.combat=false
+ var q=ensure(s);q.fresh=true;q.stage=0;q.arrival_seen=false;q.combat=false;q.escort_pending=true;q.settle_required=true
 static func stage(s)->int:return int(ensure(s).stage)
 static func side_stories(s)->bool:return s.opening>=2 and (not ensure(s).fresh or stage(s)>=6)
 static func combat_ready(s)->bool:return bool(ensure(s).combat)
@@ -17,6 +17,18 @@ static func arrived(s):
  var q=ensure(s)
  if q.stage==0:q.stage=1
  q.arrival_seen=true;s.tracked_npc="ivar"
+static func settling(s)->bool:
+ var q=ensure(s)
+ return q.fresh and q.get("settle_required",false) and not q.get("settled",false)
+static func settle(g,task:String):
+ var q=ensure(g.state)
+ if not settling(g.state):return
+ q["settle_"+task]=true
+ if q.get("settle_bed",false) and q.get("settle_chest",false):
+  q.settled=true;q.stage=2;g.state.tracked_npc="borin"
+  g.notify("Settled in. Meet Borin, Orla and Hedrik when you are ready. J keeps your directions.")
+  g.sound.effect("quest",-14)
+ g.save_game()
 static func audience(s)->bool:
  var q=ensure(s)
  if q.stage!=4:return false
@@ -47,6 +59,7 @@ static func introduce(s,id:String)->bool:
  return true
 static func primary(s)->String:
  var q=ensure(s)
+ if settling(s):return "A PLACE TO BEGIN: Rest at your bed and check your chest. E interacts · J: journal"
  if not q.fresh or q.stage>=7:return ""
  if q.stage==6 and s.opening<4:return "IVAR: "+HoldCampaign.JOBS[s.opening-1].name+" | J: requirements and lessons"
  return {0:"ARRIVAL: Your first morning in Keldrath.",1:"FIRST MORNING: Introduce yourself to Ivar. Follow the marker. J: journal",2:"FACES OF THE HOLD: Meet Borin, Orla and Hedrik. J: journal",3:"FIRST SHIFT: Bring 8 coal to Ivar. King’s Gate → High Trail → Old Workings. J: journal",4:"A ROYAL SUMMONS: King's hall, Crownward. Take the Royal stairs from Hearthward.",5:"USEFUL HANDS: Return to Ivar for your next commission.",6:"REPAIR THE HOLD: Ivar has paid work. J also lists lessons and local stories."}.get(int(q.stage),"")
@@ -149,6 +162,11 @@ static func journal(g):
   g.button(g.panel_body,"Masonry lesson · quarry → stockpile → bench → build",func():g.deep.works.page="Masonry";g.open_panel("living"))
  var s=g.state;var q=ensure(s)
  if primary(s)!="":g.label(g.panel_body,primary(s),17)
+ if settling(s):
+  g.label(g.panel_body,"IVAR · A PLACE TO BEGIN",20,Color("edc98a"))
+  g.label(g.panel_body,"Your borrowed quarters are on Hearthward's northwestern street. Rest at the bed on the left and check the chest beside the table. Walk with WASD or arrows; E interacts. I shows your pack. Nothing needs to be spent or put away to finish settling in.",16)
+  for task in ["bed","chest"]:g.label(g.panel_body,("✓ " if q.get("settle_"+task,false) else "○ ")+("Rest at your bed" if task=="bed" else "Check your storage chest"),16)
+  g.label(g.panel_body,"Then meet Borin in Forgeward (eastern stairs), Orla at the exchange on the north street, and Hedrik at the Copper Kettle next door. Your room and chest remain yours after you obtain a mountain charter.",15)
  if q.stage==2:
   for id in ["borin","orla","hedrik"]:
    g.button(g.panel_body,("Met " if q.met.has(id) else "Find ")+s.npc(id).name,func():s.tracked_npc=id;g.save_game();g.close_panel())

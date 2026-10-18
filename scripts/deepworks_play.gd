@@ -140,9 +140,7 @@ func move(dt:float):
  g.grounded=true;g.walking_pose=g.player.distance_to(old)>.01
  if absf(axis.x)>.05:g.face=1 if axis.x>0 else -1
  if g.walking_pose:
-  var before=int(g.gait_clock*20);g.gait_clock+=dt
-  if int(g.gait_clock*20)!=before and posmod(int(g.gait_clock*20),16) in [0,8]:g.sound.footstep("stone")
- else:g.gait_clock=0
+  HoldDrawnLocomotion.advance(g,g.player.distance_to(old),"stone")
  if stair_work>0:
   if g.walking_pose:stair_work=0;g.notify("Passage work cancelled. Stand still to finish.")
   else:
@@ -191,7 +189,7 @@ func mine(dt:float):
  var reach=15.0 if contact.y>g.player.y and absf(contact.y-g.player.y)>absf(contact.x-g.player.x)*1.35 else 40.0
  if not g.mining_gun.selected and contact.distance_to(g.player)>reach+2 and Input.get_vector("left","right","up","down")==Vector2.ZERO:
   var approach=(contact-g.player).normalized();var next=g.player+approach*minf(185*dt,contact.distance_to(g.player)-reach)
-  if not world.solid(next):g.player=next;g.surface.direction=approach;g.walking_pose=true;g.gait_clock+=dt;return
+  if not world.solid(next):HoldDrawnLocomotion.advance(g,g.player.distance_to(next),"stone");g.player=next;g.surface.direction=approach;g.walking_pose=true;return
  g.face=1 if contact.x>=g.player.x else -1
  mining_method="hammer" if g.tool==3 else ("careful" if Input.is_key_pressed(KEY_SHIFT) else "pick")
  swing_duration=.44 if mining_method=="careful" else SWING
@@ -238,6 +236,7 @@ func agents(dt:float):
    var next:Vector2=a.p.move_toward(a.path[0],100*dt)
    if world.solid(next,z):a.path=[];a.target=Vector2i(-1,-1)
    else:
+    a.facing=(next-a.p).normalized();a.gait=float(a.get("gait",0))+next.distance_to(a.p)/185.0
     a.p=next;saved.x=next.x;saved.y=next.y;a.status="Walking depth "+str(z+1)
     if next.distance_to(a.path[0])<1:a.path.pop_front()
    continue
@@ -280,10 +279,11 @@ func agents(dt:float):
    if route.is_empty():a.status="Open a tunnel to more deposits";a.cool=1.5;continue
    a.target=route.target;a.path=route.path;continue
   if a.p.distance_to(Deepworks.center(a.target))>65:a.target=Vector2i(-1,-1);continue
-  a.work=true;a.status="Mining depth %d" % (z+1)
+  a.work=true;a.facing=(Deepworks.center(a.target)-a.p).normalized();a.status="Mining depth %d" % (z+1)
   if a.cool<=0:
    a.cool=.6 if a.type=="worker" else .4
    if a.type=="worker":a.cool/=1.0+HoldClaimStories.trust(g.state,a.id)+works.model.morale_bonus(a.id)
+   a.swing=a.cool
    var result=world.strike(a.target,z)
    if result.get("broken",false):
     a.fuel-=1
@@ -455,7 +455,6 @@ func draw():
      animation="saw" if station.kind=="saw" else "hammer"
    elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
    elif g.handworks.pushing():animation="push"
-   if animation=="" and not g.walking_pose and not g.mining_gun.selected and g.hotbar.item=="":animation=["pick","shovel","axe","hammer"][g.tool];action=0
    HoldDrawnAnimation.paint(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,animation,action)
    g.draw_set_transform(offset)
    if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
@@ -471,7 +470,9 @@ func draw():
     if a.work and not assigned.is_empty() and assigned.kind=="workshop":
      var phase=fposmod(g.clock,.8)/.8
      HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,Vector2(1,.45),false,g.clock,1.0,offset,"hammer",phase)
-    else:A.dwarf(g,p+Vector2(0,12),g.clock,not a.path.is_empty(),1,3,a.work,profile)
+    else:
+     var phase=fposmod(1.5-float(a.cool)/maxf(.1,float(a.get("swing",.6))),1.0)
+     HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,a.get("facing",Vector2.DOWN),not a.path.is_empty(),float(a.get("gait",0)),1.0,offset,"pick" if a.work else "",phase)
     if works.masonry.data.jobs.has(a.id) and not a.work:works.masonry.carry(p,1,works.masonry.data.jobs[a.id].cargo)
     if works.model.data.assignments.has(a.id):A.text(g,p+Vector2(-35,-81),g.state.npc(a.id).first_name+" · "+works.model.data.folk[a.id].activity,10,Color("dfc695"))
  g.draw_set_transform(offset)

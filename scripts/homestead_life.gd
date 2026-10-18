@@ -85,7 +85,7 @@ func update(dt:float):
  if not waypoints.is_empty():
   var target:Vector2=waypoints[0];var next=g.player.move_toward(target,185*dt)
   if not g.surface.walkable(next):cancel();g.notify("Keep a clear working space beside your garden bed.");return
-  g.surface.direction=(target-g.player).normalized();g.player=next;g.walking_pose=true;g.gait_clock+=dt;moving=true
+  g.surface.direction=(target-g.player).normalized();HoldDrawnLocomotion.advance(g,g.player.distance_to(next),"stone");g.player=next;g.walking_pose=true;moving=true
   if g.player.distance_to(target)<2:waypoints.pop_front()
   return
  if bed_id>=0:

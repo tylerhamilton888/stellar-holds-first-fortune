@@ -1,3 +1,20 @@
+# A Place to Begin — 0.52.0
+Updated 2026-10-18 UTC. Recovery tag `labor-0.52.0`; baseline `pre-animation-0.52.0` / `labor-0.51.0` at `c02adc0bf08c34b064a1ba21f1108a00579c7f17`. The baseline full-history bundle was verified before edits. Prior tags, archives, original assets and save formats remain. No remote was changed or pushed.
+
+New fortunes retain the illustrated arrival, then meet Ivar at King's Gate in the actual top-down hold. He leads the player along clear streets to the existing northwestern workers' quarters, explains the wards and local routes, walks inside, identifies the bed and personal chest, and departs through the door. Dialogue advances with Space/Enter or the button; Esc skips the walk safely. The camera follows the two actors; gameplay prompts and held tools stay out of the scene.
+
+The first objective is now to rest at the bed and check the chest, in either order. This unlocks the existing Borin/Orla/Hedrik introductions, then the coal commission. No supplies must be spent or stored to complete orientation. The borrowed chest persists independently of the claim cottage and cannot be dismantled. Pending escort and settle flags live under existing `outpost.onboarding`; a save interrupted during the walk resumes it. Existing progressed saves without these flags retain their stage, pack and world.
+
+Movement uses drawn contact/pass/recovery leg keys registered to drawn torsos, with fresh side/rear walking bodies and four-view single/two-shoulder cargo poses. Customized heads and hair remain intact. Gait and footsteps follow actual distance, including work approaches; blocked movement plants the feet. Idle returns to a planted stance with the selected tool held at a measured hand socket. Clothes share a consistent palette across standing, walking, carrying and work. Carrying while moving stops the pickup pose; dropping one of two loads keeps the remaining load supported. NPC miners face their path and mining target. The legacy `locomotion.gd` and its UID are preserved; new playback is `drawn_locomotion.gd`.
+
+Validation: 143 gameplay/model assertions across the current native suite, plus identity/work/sip/Lord visual review and exported-pack boot. See `testing/animation-0.52.0.md` for exact coverage and evidence. Native Linux Godot 4.4.1 validation; Windows execution, audio balance and subjective feel remain player acceptance checks.
+
+Recovery is a full playable Windows ZIP plus an incremental source ZIP and incremental Git bundle. Source/Git recovery REQUIRES the preserved 0.51.0 baseline; `Stellar-Holds-0.52.0-Recovery.txt` gives exact restoration commands and hashes. This avoids duplicating the large unchanged history. Earlier backups are not overwritten.
+
+Remaining boundaries: there are four authored viewing families mirrored for eight-way movement, not eight separately drawn work cycles. Side working stances remain for some benches, timber and cart pushing. The dedicated practice bay retains its existing combat system. General handcarts/wagons remain local to a zone/depth; the existing mine wheelbarrow uses connected stairs. New raw-station/farm NPC jobs and further farming/fishing species remain deferred. This pass is a reviewed playable improvement, not a claim that every historical asset is final.
+
+## Earlier milestones
+
 # Dwarven labor and drawn poses — 0.51.0
 Updated 2026-10-19 UTC. Recovery checkpoint `labor-0.51.0`; baseline `pre-animation-0.51.0` preserves 0.50.0 (`728e05dfdeb8b2f360b01ac5a2e1b039c9be1955`). Its full-history bundle was verified before mining changes. Earlier tags, archives and original assets remain intact. No remote was changed or pushed.
 

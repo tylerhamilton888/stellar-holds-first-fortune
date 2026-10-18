@@ -4,6 +4,9 @@ static func panel(g):
  var s=g.state;var q=HoldOnboarding.ensure(s)
  g.label(g.panel_body,"IVAR DEEPMEASURE",22,Color("edc98a"))
  var local=HoldOnboarding.local(g,"ivar")
+ if HoldOnboarding.settling(s):
+  g.label(g.panel_body,"'Put your feet up first. Your bed and storage chest are in the workers’ quarters on the northwestern street. Then introduce yourself to Borin, Orla and Hedrik.'",17)
+  g.button(g.panel_body,"Review settling in",func():g.open_panel("guidance"));return
  match int(q.stage):
   0,1:
    g.label(g.panel_body,"Ivar looks up from a ledger thick with coal dust. 'Newly of age, are you? Give me your name. You need a shift, and I need someone who listens before swinging a pick.'",17)
@@ -14,7 +17,7 @@ static func panel(g):
    b.disabled=not local
    if not local:g.label(g.panel_body,"Visit Ivar's office beside the pithead. Follow his location marker and press E at the door.",15)
   2:
-   g.label(g.panel_body,"'Meet the people you will be relying on. Borin's forge is next door. Orla's exchange and the Copper Kettle are farther west. Introduce yourself properly.'",17)
+   g.label(g.panel_body,"'Meet the people you will be relying on. Borin's forge is down the eastern stairs in Forgeward. Orla's exchange and the Copper Kettle are on Hearthward's north street. Introduce yourself properly.'",17)
    for id in ["borin","orla","hedrik"]:
     g.button(g.panel_body,("Met: " if q.met.has(id) else "Find: ")+s.npc(id).name,func():s.tracked_npc=id;g.save_game();g.close_panel())
    g.label(g.panel_body,"After all three introductions, your coal commission begins. Step outside and press G for regional travel. Walk northeast to Old Workings, then press E to enter. J keeps the route and mining controls.",16)

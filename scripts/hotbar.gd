@@ -96,7 +96,7 @@ func held(n:Node2D,p:Vector2,reset:Vector2):
   var hand=p+HoldDrawnAnimation.grip(g.state.appearance,direction,g.gait_clock,g.walking_pose,scale)
   HoldCharacterArt.draw_tool(n,hand+reset,hand+reset+Vector2((-10 if direction.x<-.3 else 10),-23)*scale,g.tool,reset,(-1 if direction.x<-.3 else 1),-1,scale*.8)
   n.draw_set_transform(reset)
-  if g.walking_pose:HoldDrawnAnimation.grip_foreground(n,p,g.state.appearance,direction,g.gait_clock,scale,reset)
+  HoldDrawnAnimation.grip_foreground(n,p,g.state.appearance,direction,g.gait_clock,scale,reset,g.walking_pose)
   return
  if g.state.count(item)<=0:return
  HoldItemArt.draw(n,Rect2(p+Vector2(-10,-40),Vector2(20,20)),HoldItemArt.item_index(item),HoldItemArt.tint(item))

@@ -45,6 +45,8 @@ func ensure():
  for key in ["positions","chests","homes","facts"]:
   if not s.has(key):s[key]={}
  if not s.has("decor"):s.decor=[]
+ if not s.chests.has("keldrath:quarters"):
+  s.chests["keldrath:quarters"]={"area":"room:home","x":650.0,"y":420.0,"items":{},"fixed":true}
  if g.state.claim_id!="" and not s.homes.has(g.state.claim_id):
   s.homes[g.state.claim_id]={"level":0,"lesson":false}
   var id="claim:"+g.state.claim_id+":starter"
@@ -124,8 +126,8 @@ func points()->Array:
  elif area=="pinewood":result=[spot(180,650,"High Trail","trail"),spot(300,790,"Woodcutter's field board","pinewood_panel")]
  elif room():
   result=[spot(480,620,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
-  if area.begins_with("home:"):
-   result.append(spot(290,420,"Bed · rest and save","rest"));result.append(spot(735,515,"Homestead workbench","homestead"))
+  if area.begins_with("home:") or area=="room:home":
+   result.append(spot(290,420,"Bed · rest and save","rest"));result.append(spot(735,515,"Wardrobe & supplies" if area=="room:home" else "Homestead workbench","home" if area=="room:home" else "homestead"))
   else:
    var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
    result.append(spot(620,410,HoldInteriors.ROOMS.get(g.room_id,{"action":"Rest and supplies"}).action,"talk:"+host if host!="" and g.state.active_site=="hold" else "training" if g.room_id=="practice" else g.room_id))
@@ -176,12 +178,17 @@ func action(id:String):
   for d in g.state.surface.decor:
    if house.local(d) and d.kind=="bed" and g.player.distance_to(Vector2(d.x,d.y))<85:house.rest(Vector2(d.x,d.y));break
  elif id=="rest":
-  g.state.surface.facts.rest=true;g.save_game();g.sound.effect("door",-18);g.notify("A warm bed and a sound roof. Rested; fortune saved.")
+  g.state.surface.facts.rest=true
+  if area=="room:home":HoldOnboarding.settle(g,"bed")
+  g.save_game();g.sound.effect("door",-18);g.notify("A warm bed and a sound roof. Rested; fortune saved.")
  elif id=="training":g.enter_room("training")
  elif id=="private":g.notify("Folk homes · private quarters. Meet the neighbors in the streets and tavern.")
  elif id.begins_with("citizen:"):world.speak(int(id.trim_prefix("citizen:")))
  elif id.begins_with("talk:"):HoldConversation.start(g,id.trim_prefix("talk:"))
- elif id.begins_with("chest:"):selected_chest=id.trim_prefix("chest:");g.open_panel("storage")
+ elif id.begins_with("chest:"):
+  selected_chest=id.trim_prefix("chest:")
+  if selected_chest=="keldrath:quarters":HoldOnboarding.settle(g,"chest")
+  g.open_panel("storage")
  elif id=="pinewood_panel":g.open_panel("pinewood")
  elif id in ["homestead","camp","ship","home","forge","anniversary","hold_lift"]:g.open_panel(id)
  else:enter(id)
@@ -234,8 +241,7 @@ func move(dt:float):
  g.velocity=(g.player-before)/maxf(dt,.001);g.grounded=true;g.walking_pose=g.velocity.length()>1
  if absf(input.x)>.1:g.face=1 if input.x>0 else -1
  if g.walking_pose:
-  g.gait_clock+=dt;foot+=dt
-  if foot>.38:g.sound.footstep("wood" if room() else "stone");foot=0
+  HoldDrawnLocomotion.advance(g,g.player.distance_to(before),"wood" if room() else "stone")
  cut_flash=maxf(0,cut_flash-dt)
  if area=="pinewood":chop(dt)
  house.update(dt)
@@ -284,6 +290,7 @@ func transfer(item:String,n:int,deposit:bool)->int:
  g.state.surface.facts.storage=true;g.save_game();return moved
 func recover_chest()->bool:
  var c=g.state.surface.chests.get(selected_chest,{})
+ if c.get("fixed",false):g.notify("This chest belongs to your borrowed quarters. Its contents are yours.");return false
  if c.is_empty() or not house.local(c) or g.player.distance_to(Vector2(c.x,c.y))>85:return false
  for value in c.items.values():
   if int(value)>0:g.notify("Empty the chest before taking it apart.");return false
@@ -306,7 +313,7 @@ func chest_panel():
  g.small_button(row,"Take all",func():
   for k in c.items.keys():transfer(k,int(c.items[k]),false)
   g.open_panel("storage",false))
- g.small_button(g.panel_body,"Dismantle empty chest · recover 4 timber",recover_chest)
+ if not c.get("fixed",false):g.small_button(g.panel_body,"Dismantle empty chest · recover 4 timber",recover_chest)
  for item in HoldData.ITEMS:
   if g.state.count(item)+int(c.items.get(item,0))==0:continue
   var key=str(item);var line=g.row(g.panel_body);HoldItemArt.icon(line,key)
@@ -360,7 +367,7 @@ func chop(dt:float):
  if Input.get_vector("left","right","up","down")==Vector2.ZERO and g.player.distance_to(stance)>3:
   var step=g.player.move_toward(stance,185*dt)
   if walkable(step):
-   direction=(stance-g.player).normalized();g.player=step;g.walking_pose=true;g.gait_clock+=dt;cut_approach=true;cut_clock=0;cut_struck=false;return
+   direction=(stance-g.player).normalized();HoldDrawnLocomotion.advance(g,g.player.distance_to(step),"wood");g.player=step;g.walking_pose=true;cut_approach=true;cut_clock=0;cut_struck=false;return
  cut_clock+=dt
  if cut_clock>=.36:cut_clock=fmod(cut_clock,.36);cut_struck=false
  if cut_clock<.18 or cut_struck:return
@@ -421,6 +428,7 @@ func draw():
   for i in TREES.size():objects.append({"p":TREES[i],"kind":"tree","i":i})
  objects.append_array(g.handworks.objects())
  objects.append_array(g.fieldwork.objects())
+ if g.opening_scene is HoldArrivalEscort:objects.append({"p":g.opening_scene.guide,"kind":"escort"})
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.p.y<b.p.y)
  for o in objects:
   g.draw_set_transform(-cam)
@@ -428,6 +436,7 @@ func draw():
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":world.draw_furnishing(o)
   elif o.kind=="citizen":world.draw_citizen(o)
+  elif o.kind=="escort":g.opening_scene.draw_guide()
   elif o.kind=="garden":g.fieldwork.draw_bed(o.bed)
   elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
@@ -448,6 +457,8 @@ func draw():
    HoldDrawnAnimation.work_foreground(g,g.player,g.state.appearance,(g.handworks.pos(station)-g.player).normalized(),.85,-cam,"saw" if station.kind=="saw" else "hammer",fmod(float(station.job.progress),.42)/.42)
  g.draw_set_transform(-cam)
  house.roof_draw()
+ if g.opening_scene is HoldArrivalEscort:
+  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area in ["hearthward","crownward","forgeward"]:
   for point in points():
    # Only the nearby door is captioned; the painted architecture stays readable.
@@ -501,12 +512,11 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
    var station=g.handworks.facility();animation="saw" if not station.is_empty() and station.kind=="saw" else "hammer"
   elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
   elif g.handworks.pushing():animation="push"
- if is_player and animation=="" and not walking and not g.mining_gun.selected and g.hotbar.item=="":animation=["pick","shovel","axe","hammer"][g.tool];action=0
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
  g.draw_set_transform(-cam)
  if is_player:
-  if action<0 and animation=="":g.hotbar.held(g,p,-cam)
+  if action<0 and animation=="" and not g.opening_scene is HoldArrivalEscort:g.hotbar.held(g,p,-cam)
   g.handworks.carried(p)
   if cut_flash>0 and cut_target>=0:
    var target=TREES[cut_target]-Vector2(0,18)

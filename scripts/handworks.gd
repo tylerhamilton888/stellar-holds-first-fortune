@@ -126,7 +126,7 @@ func deposit(f:Dictionary)->int:
   for k in OUTPUTS:
    var incoming={k:g.state.count(k)};var n=DeepHaul.transfer(incoming,f.cargo,200)
    g.state.add(k,-n);moved+=n
- if moved>0:lift=.3;data().facts.stockpile=true;g.sound.effect("wood",-15)
+ if moved>0:lift=0;data().facts.stockpile=true;g.sound.effect("wood",-15)
  return moved
 func withdraw(f:Dictionary)->int:
  var moved=0
@@ -138,6 +138,7 @@ func drop()->bool:
  if d.carry.is_empty():return false
  var r=d.carry.pop_back();r.area=context();r.x=g.player.x;r.y=g.player.y+8;d.loose.append(r);lift=.35
  if d.carry.is_empty():setting_down=r.duplicate(true)
+ else:lift=0.0 # Keep the remaining load supported; do not replay its pickup.
  g.save_game();return true
 func input(e:InputEvent)->bool:
  if not g.playing or g.panel_id!="" or g.room_id=="training":return false
@@ -186,7 +187,8 @@ func begin(f:Dictionary)->bool:
  return false
 func update(dt:float):
  lift=maxf(0,lift-dt);working=false;approaching=false
- if lift<=0 or Input.get_vector("left","right","up","down")!=Vector2.ZERO:setting_down={}
+ if Input.get_vector("left","right","up","down")!=Vector2.ZERO:lift=0.0
+ if lift<=0:setting_down={}
  if not g.playing or g.panel_id!="" or g.room_id=="training":return
  var d=data()
  for f in d.facilities:
@@ -200,7 +202,7 @@ func update(dt:float):
  var side=-1 if g.player.x<=f.x else 1
  var stance=pos(f)+Vector2(side*(48 if f.kind=="breaker" else 42),-45 if f.kind=="breaker" else -22)
  if g.player.distance_to(stance)>3 and clear_line(g.player,stance):
-  var before_pos=g.player;g.player=g.player.move_toward(stance,185*dt);g.walking_pose=true;g.gait_clock+=dt;g.surface.direction=(stance-before_pos).normalized();approaching=true;return
+  var before_pos=g.player;g.player=g.player.move_toward(stance,185*dt);g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(stance-before_pos).normalized();approaching=true;return
  working=true;active_id=f.id
  var before=float(f.job.progress)
  f.job.progress=before+dt

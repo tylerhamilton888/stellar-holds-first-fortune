@@ -84,6 +84,10 @@ static func head(profile:Dictionary,row:int)->Texture2D:
   for x in width:
    if exterior[y*width+x]:img.set_pixel(x,y,Color.TRANSPARENT)
  var tex=ImageTexture.create_from_image(img);heads[key]=tex;return tex
+static func cloth_pixel(c:Color,p:Dictionary,idle:bool=false)->Color:
+ # Keep one costume palette across atlases with different painted base shades.
+ var target=HoldAppearance.cloth(p)
+ return Color.from_hsv(target.h,clampf(target.s*c.s/(.46 if idle else .82),0,1),clampf(target.v*c.v/(.39 if idle else .50),0,1),c.a)
 static func frame_texture(p:Dictionary,sheet:String,index:int)->Texture2D:
  var key=sheet+str(index)+"/"+str(p.cloth_color)+"/"+str(p.skin)
  if textures.has(key):return textures[key]
@@ -100,7 +104,7 @@ static func frame_texture(p:Dictionary,sheet:String,index:int)->Texture2D:
   for x in img.get_width():
    var c=img.get_pixel(x,y)
    if c.a<.05:continue
-   if c.h>.43 and c.h<.62 and c.s>.2:c=HoldCharacterArt.recolor(c,HoldAppearance.cloth(p),Color("407e83"))
+   if c.h>.43 and c.h<.62 and c.s>.2:c=cloth_pixel(c,p,sheet=="idle")
    elif c.h>.025 and c.h<.09 and c.v>.68 and c.s<.72:c=HoldCharacterArt.recolor(c,Color(HoldAppearance.SKIN_COLORS[p.skin]),Color("f3d6bc"))
    img.set_pixel(x,y,c)
  var tex=ImageTexture.create_from_image(img);textures[key]=tex;return tex
@@ -152,9 +156,12 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  var sy=52.0/(baseline-rest_neck.y)
  var sx=sy
  if sheet.ends_with("walk"):sx*=1.15
+ if sheet=="idle":sx*=1.20
  return {"sheet":sheet,"index":index,"rect":r,"neck":neck,"root":Vector2(neck.x,baseline),"scale":Vector2(sx,sy),"view":view,"frame":f,"head_y":(neck.y-baseline)*sy+52}
 static func paint(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0.0):
- var p=HoldAppearance.normalized(profile);var a=descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
+ var p=HoldAppearance.normalized(profile)
+ if HoldDrawnLocomotion.paint(n,at,p,d,walking,time,zoom,reset,action):return
+ var a=descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
  n.draw_set_transform(at,0,Vector2(flip,1)*zoom)
  var r:Rect2i=a.rect;var scale:Vector2=a.scale;var root:Vector2=a.root
  var rect=Rect2((Vector2(r.position)-root)*scale,Vector2(r.size)*scale)
@@ -171,11 +178,15 @@ const PALMS=[
  [Vector2(305,135),Vector2(634,135),Vector2(1013,135),Vector2(1403,133),Vector2(300,376),Vector2(665,361),Vector2(1016,379),Vector2(1418,374),Vector2(314,622),Vector2(668,612),Vector2(1031,625),Vector2(1417,620),Vector2(307,862),Vector2(663,854),Vector2(1031,873),Vector2(1417,862)],
  [Vector2(288,148),Vector2(589,133),Vector2(979,132),Vector2(1335,138),Vector2(289,366),Vector2(601,353),Vector2(962,367),Vector2(1343,350),Vector2(298,603),Vector2(610,600),Vector2(973,602),Vector2(1346,602),Vector2(306,837),Vector2(615,831),Vector2(973,841),Vector2(1350,838)]]
 static func grip(profile:Dictionary,d:Vector2,time:float,walking:bool,zoom:float=1)->Vector2:
- var p=HoldAppearance.normalized(profile);var a=descriptor(p,d,walking,time,"",0)
- var palm:Vector2=PALMS[p.gender][a.index] if walking else a.neck+Vector2(95,105)
+ var p=HoldAppearance.normalized(profile)
+ if walking:return HoldDrawnLocomotion.grip(p,d,time)*Vector2(-1 if d.x<-.3 else 1,1)*zoom
+ var a=descriptor(p,d,false,time,"",0)
+ var palm:Vector2=a.neck+Vector2(130,240)
  return (palm-a.root)*a.scale*Vector2(-1 if d.x<-.3 else 1,1)*zoom
-static func grip_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2):
- var p=HoldAppearance.normalized(profile);var a=descriptor(p,d,true,time,"",0);var palm:Vector2=PALMS[p.gender][a.index]
+static func grip_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2,walking:bool=true):
+ var p=HoldAppearance.normalized(profile)
+ if walking:HoldDrawnLocomotion.grip_front(n,at,p,d,time,zoom,reset);return
+ var a=descriptor(p,d,false,time,"",0);var palm:Vector2=a.neck+Vector2(130,240)
  var source=Rect2(palm-Vector2(a.rect.position)-Vector2(14,15),Vector2(28,30))
  var destination=Rect2((palm-Vector2(14,15)-a.root)*a.scale,Vector2(28,30)*a.scale)
  n.draw_set_transform(at+reset,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)

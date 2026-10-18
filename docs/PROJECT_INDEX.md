@@ -1,18 +1,18 @@
 # Authoritative project index
-Updated 2026-10-19 UTC. Build **0.51.0**, recovery checkpoint **labor-0.51.0**. Art authority: ART_DIRECTION.md.
+Updated 2026-10-18 UTC. Build **0.52.0**, recovery tag **labor-0.52.0**. Art authority: ART_DIRECTION.md.
 
-Collection: The Stellar Holds - Development. Restore versioned artifacts if the temporary checkout is unavailable.
+Collection: The Stellar Holds - Development.
 
 | Artifact | Purpose |
 |---|---|
-| Stellar-Holds-First-Fortune-0.51.0-Windows.zip | Playable integrated game; extract completely and run PLAY-WINDOWS.bat. |
-| Stellar-Holds-0.51.0-Source.zip.part1 / part2 | Complete source/assets/tests/docs. Join parts as explained in Recovery.txt. |
-| Stellar-Holds-0.51.0.bundle.part1 / part2 | Full Git history and all prior recovery tags. Join before cloning. |
-| Stellar-Holds-0.51.0-Docs.zip | Documentation and native review evidence. |
-| Stellar-Holds-0.51.0-Recovery.txt | Reassembly, checksums, restoration and rollback instructions. |
-| SESSION_HANDOFF.md | Current implementation and known limitations. |
-| PLAYTEST_GUIDE.md | Practical player test route. |
+| Stellar-Holds-First-Fortune-0.52.0-Windows.zip | Full playable game; extract completely and run PLAY-WINDOWS.bat. No previous build required. |
+| Stellar-Holds-0.52.0-Source-Update.zip | Changed source/assets/tests/docs. Extract over the preserved 0.51.0 source folder. Not standalone. |
+| Stellar-Holds-0.52.0-Incremental.bundle | Git changes/tag since labor-0.51.0. Requires the 0.51.0 full-history bundle. |
+| Stellar-Holds-0.52.0-Docs.zip | Current documentation and native .52 review evidence. |
+| Stellar-Holds-0.52.0-Recovery.txt | Baseline requirements, exact restore commands, checksums and rollback. |
+| SESSION_HANDOFF.md | Current implementation and honest limitations. |
+| PLAYTEST_GUIDE.md | Player route, starting with Ivar's escort and settling in. |
 
-This pass adds drawn work/handling bodies, continuous mine strata, matched workshop/cargo props, an earned 24-load freight wagon, and optional persistent fishing/gardening. Existing top-down zones, houses/Z levels, quests, mining, inventory, industry and automation remain integrated. Four-frame gait refinement, new raw-workstation automation and general wagon travel across portals/depths remain follow-up work. See CURRENT_STATUS.md and testing/labor-0.51.0.md for precise verification boundaries.
+The new arrival tour uses actual streets and quarters, then feeds into the existing first-shift quests. Drawn gait, directional cargo, held-tool grips and costume consistency are refined. Existing mines, Pinewood, workshops, farming/fishing, automation and saves remain integrated. Read CURRENT_STATUS.md and testing/animation-0.52.0.md for verified scope.
 
-Earlier releases remain unchanged, including 0.50.0 Walkable Keldrath. `pre-animation-0.51.0` retains its exact source checkpoint. No remote was changed or pushed. Rollback uses the older build and its untouched backup save.
+Preserved baseline: Stellar-Holds-0.51.0-Source.zip.part1 / part2 and Stellar-Holds-0.51.0.bundle.part1 / part2; join using its Recovery.txt. The .52 recovery package deliberately stores only changed source/history. Earlier releases remain unchanged. `pre-animation-0.52.0` preserves c02adc0bf08c34b064a1ba21f1108a00579c7f17. No remote was changed or pushed.

@@ -100,7 +100,7 @@ func speak(index:int):
 func draw_citizen(c:Dictionary):
  var cam=g.camera.round()
  g.draw_set_transform(c.p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,17,Color(0,0,0,.25))
- HoldDirectional.draw(g,c.p-cam,c.profile,c.aim,c.walking,c.time,.85,-cam)
+ HoldDirectional.draw(g,c.p-cam,c.profile,c.aim,c.walking,c.time*62.0/185.0,.85,-cam)
  g.draw_set_transform(-cam)
 func draw_ground():
  g.draw_rect(Rect2(0,0,1880,1080),Color("28393b"))

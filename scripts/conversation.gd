@@ -55,6 +55,7 @@ static func choose(g,text:String,fn:Callable,quest:bool=false)->Button:
 static func greeting(g,id:String)->String:
  if g.talk_line!="":return g.talk_line
  var stage=HoldOnboarding.stage(g.state)
+ if id=="ivar" and HoldOnboarding.settling(g.state):return "Your room is waiting on the northwestern street. Rest your feet and check the chest. There is time enough for introductions afterwards."
  if id=="ivar":return {1:"Newly of age, are you? Give me your name. You need a shift, and I need someone who listens before swinging a pick.",2:"Meet the folk who will keep you fed, supplied and properly equipped. Then we can begin.",3:"Eight coal for Borin. Keep the surplus. How did you fare?",4:"Sound coal and a safe return. I have sent your name to the Lord. He will hear you now.",5:"A fine room, isn't it? I prefer ceilings I can inspect without a telescope. Now, about those lift footings."}.get(stage,"Good to see you back. What have you brought me?")
  if id=="eirik":return "Ivar speaks well of your first shift. Come closer, "+g.state.appearance.first_name+"." if stage==4 else "A good hold is built by useful hands. What is on your mind?"
  return {"orla":"Come in. Mind the manifests. What can I do for you?","hedrik":"A seat, a supper, or a little company? There is room for all three.","borin":"Set your pack down clear of the bellows. What needs doing?","eldric":"Ah, a visitor with mud on the boots. Always more promising than one with a clean theory."}.get(id,HoldOutpost.line(g.state,id) if HoldOutpost.has_member(g.state,id) else "Good to see another face about the hold. How goes your day?")
@@ -97,7 +98,9 @@ static func panel(g):
  choose(g,"Good fortune. I'll leave you to it.",g.close_panel)
 static func ivar_options(g):
  var s=g.state;var q=HoldOnboarding.ensure(s)
- if q.fresh and q.stage in [0,1]:
+ if HoldOnboarding.settling(s):
+  choose(g,"Remind me what to do",func():g.open_panel("guidance"),true)
+ elif q.fresh and q.stage in [0,1]:
   choose(g,"I am "+s.appearance.first_name+" "+s.appearance.family_name+". I am ready to work.",func():
    q.stage=2;s.tracked_npc="borin";g.save_game();g.talk_line="Welcome to the shift, "+("sister" if s.appearance.gender else "brother")+". Borin checks the tools. Orla knows the routes. Hedrik will feed you. Meet all three, then bring eight coal from Old Workings. Sixty-five crowns when you return. The surplus is yours.";g.refresh_panel(),true)
  elif q.fresh and q.stage==4:
