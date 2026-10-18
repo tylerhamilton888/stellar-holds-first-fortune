@@ -1,3 +1,6 @@
+# 0.49.1 — Rock faces that fracture
+Enter the mine and look for varied slab, wedge and angular rock faces. Hold LMB on a harder vein: cracks widen and edges chip before breakthrough. Save partway through and reload to retain damage. Ordinary stone still breaks quickly; it does not require extra clicks to display every damage stage. Hammer-induced nearby fractures use the same visuals. Existing movement, targeting, yield and stockpile workflow remain.
+
 # Try 0.49.0 — build your own workshop
 Extract the entire Windows ZIP to a new directory and run PLAY-WINDOWS.bat. Keep older builds/save copies.
 

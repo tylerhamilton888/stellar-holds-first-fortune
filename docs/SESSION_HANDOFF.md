@@ -1,3 +1,6 @@
+# Resume here — 0.49.1
+Latest tag `fracture-0.49.1`; verified baseline `pre-fracture-0.49.1` preserves `hands-0.49.0`. Mine rendering only: `DeepworksPlay.rock_outline()` chooses four deterministic silhouettes; `rock_face()` draws original slate with facets and three saved-damage bands. Actual cell collision, resistance, yields and damage persistence unchanged. Tests: `input_fracture491.gd` native held input, damage/reload, disappearance and four captures. Full source, Windows, docs and verified full-history bundle are versioned 0.49.1. Windows execution/audio remain user checks. Earlier Hands scope/deferred work below remains accurate.
+
 # Resume here — 0.49.0
 - Latest checkpoint `hands-0.49.0`; pre-change tag `pre-hands-0.49.0` preserves 0.48.0 / 1424b80ea02f1eba91eab95782b4183d160c0ff9. Its full-history bundle was verified before edits. No remote changes or prior-backup deletion.
 - Godot 4.4.1 project /workspace/scratch/a447fc5d46ab/stellar-holds. Read AGENTS.md, CURRENT_STATUS.md, testing/handworks-0.49.0.md and HANDS_OF_THE_DWARF_BRIEF.md (the user's complete request).

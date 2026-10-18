@@ -286,6 +286,44 @@ static func ore_color(k:int)->Color:return {3:Color("d9aa7e"),4:Color("f2a566"),
 func color(k:int,z:int)->Color:
  if k==0:return [Color("343e40"),Color("413d3c"),Color("293d43"),Color("393c4c"),Color("303e49")][z%5]
  return {1:Color("807059"),2:Color("64777e"),7:Color("424e65"),3:Color("65737b"),4:Color("756c64"),5:Color("475663"),6:Color("456c75"),8:Color("27313b")}.get(k,Color("63767a"))
+# The grid remains authoritative; only the exposed rock silhouette changes.
+# Shape and fracture paths are derived from the world seed, never from frame RNG.
+func rock_outline(c:Vector2i,damage:float=0.0)->PackedVector2Array:
+ var h=posmod(c.x*731+c.y*337+int(world.data.seed),997)
+ var a=3+h%7;var b=4+(h/7)%6
+ var points=PackedVector2Array([Vector2(a,1),Vector2(28+h%7,0),Vector2(39,b),Vector2(40,25+h%7),Vector2(32,38),Vector2(b,39),Vector2(0,30-h%6),Vector2(1,9+h%5)])
+ match h%4:
+  1:points=PackedVector2Array([Vector2(2,6),Vector2(27,1),Vector2(39,11),Vector2(37,32),Vector2(25,39),Vector2(4,36),Vector2(0,24),Vector2(1,15)])
+  2:points=PackedVector2Array([Vector2(10,0),Vector2(35,3),Vector2(40,15),Vector2(35,28),Vector2(28,40),Vector2(9,37),Vector2(1,26),Vector2(3,9)])
+  3:points=PackedVector2Array([Vector2(4,3),Vector2(24,0),Vector2(38,7),Vector2(40,29),Vector2(34,36),Vector2(13,40),Vector2(0,32),Vector2(2,16)])
+ if damage>=.3:points[2]+=Vector2(-3,3);points.insert(3,Vector2(35,17+h%5))
+ if damage>=.65:points[0]+=Vector2(3,4);points[points.size()-2]+=Vector2(4,-3)
+ return points
+func rock_face(c:Vector2i,k:int,base:Color,damage:float):
+ var p=Vector2(c)*Deepworks.TILE;var h=posmod(c.x*731+c.y*337+int(world.data.seed),997)
+ var points=rock_outline(c,damage);var uv=PackedVector2Array();var poly=PackedVector2Array()
+ for v in points:
+  poly.append(p+v);uv.append((Vector2(posmod(c.x*80,1200),posmod(c.y*80,1200))+v*2)/Vector2(STONE.get_size()))
+ g.draw_colored_polygon(poly,base)
+ g.draw_polygon(poly,PackedColorArray([Color(base.r*2.1,base.g*2.1,base.b*2.1,1)]),uv,STONE)
+ var center=p+Vector2(16+h%9,15+h%7)
+ # Broad lit facets and an undercut edge make each face read as a substantial lump.
+ for j in [0,3,5]:
+  var a=poly[j];var b=poly[(j+1)%poly.size()]
+  g.draw_colored_polygon(PackedVector2Array([a,b,center]),Color(1,1,1,.07) if j==0 else Color(0,0,0,.10 if j==3 else .05))
+  g.draw_line(a,b,base.lightened(.23) if j==0 else base.darkened(.35),1.5)
+ if damage<=0:return
+ var stage=1 if damage<.3 else (2 if damage<.65 else 3)
+ var joints=[Vector2(-14,-9),Vector2(15,-5),Vector2(-5,19),Vector2(14,14)]
+ for j in stage+1:
+  var end=center+joints[(j+h)%4];var bend=center.lerp(end,.53)+Vector2(3 if h%2 else -3,2)
+  var path=PackedVector2Array([center,end.lerp(bend,.85),end])
+  g.draw_polyline(path,base.darkened(.72),1.2+stage*.55)
+  g.draw_line(bend+Vector2(1,-1),end+Vector2(1,-1),base.lightened(.22),.8)
+ if stage>=2:
+  for j in stage:
+   var q=p+Vector2(5+j*12,36+(j%2)*2)
+   g.draw_colored_polygon(PackedVector2Array([q,q+Vector2(3,-4),q+Vector2(6,0),q+Vector2(2,3)]),base.lightened(.18))
 func draw():
  ensure();g.backdrop.visible=false
  g.draw_set_transform(Vector2.ZERO);g.draw_rect(Rect2(0,0,960,540),Color("101b24"))
@@ -326,23 +364,23 @@ func draw():
     if world.at(c+Vector2i.UP)!=0:g.draw_rect(Rect2(p,Vector2(40,9)),Color(0,0,0,.28))
     if world.at(c+Vector2i.LEFT)!=0:g.draw_rect(Rect2(p,Vector2(7,40)),Color(0,0,0,.18))
    else:
-    # Reuse the game's original stone artwork in continuous world-space, without tile seams.
-    g.draw_texture_rect_region(STONE,r,texture_rect,Color(base.r*2.1,base.g*2.1,base.b*2.1,1))
-    if world.at(c+Vector2i.UP)==0:g.draw_line(p+Vector2(0,1),p+Vector2(40,1),base.lightened(.25),2)
-    if world.at(c+Vector2i.LEFT)==0:g.draw_line(p+Vector2(1,0),p+Vector2(1,40),base.lightened(.15),2)
-    if explored and world.at(c+Vector2i.DOWN)==0:
-     g.draw_rect(Rect2(p+Vector2(0,30),Vector2(40,10)),base.darkened(.35));g.draw_line(p+Vector2(2,30),p+Vector2(37,30),base.lightened(.23),2)
-    if explored and world.at(c+Vector2i.RIGHT)==0:g.draw_line(p+Vector2(39,5),p+Vector2(39,34),base.darkened(.38),3)
+    var damage=clampf(float(l.damage.get(id,0))/world.resistance(k),0,.99)
+    # Dark connected bedrock under the faceted faces preserves readable solid boundaries.
+    var exposed=false
+    for side in Deepworks.DIRS:
+     if world.at(c+side)==0:exposed=true;break
+    g.draw_rect(r,color(0,z).darkened(1-light) if exposed else base.darkened(.28))
+    rock_face(c,k,base,damage)
     if k in [3,4,5,6]:
      var oc=ore_color(k).darkened(1-light)
      for j in [2,4,7][world.grade(c)]:
       var q=p+Vector2(9+(h+j*7)%24,9+(h/9+j*7)%20)
       var points=PackedVector2Array([q+Vector2(-3,1),q+Vector2(0,-7 if k==6 else -3),q+Vector2(4,0),q+Vector2(2,5)])
       g.draw_colored_polygon(points,oc);g.draw_line(q+Vector2(0,-4),q+Vector2(0,3),oc.lightened(.3),1)
-    if l.damage.has(id):
-     var q=p+Vector2(20,18);g.draw_polyline(PackedVector2Array([q+Vector2(-12,-10),q,q+Vector2(-5,13),q+Vector2(4,16)]),Color("16242c"),2)
-     g.draw_line(q,q+Vector2(12,-6),Color("16242c"),2)
-    if c==aim and g.panel_id=="":g.draw_rect(r.grow(-1),Color("efd395"),false,2)
+    if c==aim and g.panel_id=="":
+     var outline=rock_outline(c,damage)
+     for j in outline.size():outline[j]+=p
+     outline.append(outline[0]);g.draw_polyline(outline,Color("efd395"),1.5)
  # Large angular fragments briefly keep the broken face's volume before settling.
  for rock in rubble:
   var progress=1.0-rock.life/.42

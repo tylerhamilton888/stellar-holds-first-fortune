@@ -1,3 +1,5 @@
+0.49.1 completed: irregular mine faces and saved-damage-driven chips/fractures. Deeper physical simulation is not introduced; existing Hands deferred work remains.
+
 ## After 0.49.0 — continue the attached Hands of the Dwarf brief
 Complete D/E: forgiving optional skilled smithing, output quality and full personal mastery paths distinct from technology. Complete F for new raw-resource facilities: shared NPC input reservations/hauling/processing, forge blueprints, cart transfer through legitimate portals/stairs, deterministic geological specimens. Retain the now-working A–C loops, one-owner resource invariant and shared raw material visuals. Existing automation is retained, not replaced.
 

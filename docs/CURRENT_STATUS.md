@@ -1,3 +1,8 @@
+# Mine rock forms — 0.49.1
+Four seed-stable, irregular rock-face silhouettes replace square face outlines. Original slate texture, mineral colors and geology remain. Broad facets, undercut edges, chipped outlines and three damage bands reflect the existing saved damage/resistance ratio. Hairlines widen into branching fractures and loosened edge chips; existing particles and settling fragments complete breakthrough. Target highlighting follows the rock outline.
+
+No added strikes, resistance changes, resource changes or save migration. Ordinary stone stays quick; surviving hard faces and adjacent fracture damage show the intermediate states. The navigation/collision grid remains unchanged beneath the irregular artwork. Canonical loose chunks, shoulder cargo and workshop/stockpile artwork remain shared.
+
 # Build 0.49.0 — Hands of the Dwarf
 Checkpoint `hands-0.49.0`.
 
