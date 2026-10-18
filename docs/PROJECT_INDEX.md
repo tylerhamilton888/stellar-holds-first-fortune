@@ -1,5 +1,7 @@
+Art direction: [ART_DIRECTION.md](ART_DIRECTION.md) — current in-world Dwarf models are the benchmark; portrait/cutscene treatment may vary.
+
 # Authoritative project index
-Updated 2026-10-18 UTC. Gameplay **0.49.2**, checkpoint **style-0.49.2**.
+Updated 2026-10-18 UTC. Gameplay **0.49.2**, checkpoint **style-0.49.2-final**.
 
 Collection: **The Stellar Holds - Development**. Restore versioned artifacts if the temporary checkout `/workspace/scratch/a447fc5d46ab/stellar-holds` is unavailable.
 

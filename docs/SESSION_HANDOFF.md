@@ -1,3 +1,5 @@
+Art-direction authority: current in-world Dwarf models are the gold standard; see ART_DIRECTION.md. Portraits/cutscenes may vary. Final recovery tag `style-0.49.2-final` includes this user direction; `style-0.49.2` preserves the tested code checkpoint.
+
 Tavern follow-up: original copper/brass tankard and oak/iron bucket sprites replace simple geometric props. Drinking uses a dedicated smooth lift/sip/lower arm override on the existing directional rig, correct facing/handle alignment, a foreground forearm and staggered guest timing. Empty buckets no longer draw; buckets with real cargo are hidden during active mining or shoulder/workstation carrying without altering their contents. Walking and existing work retain the unified procedural rig; this is not a full hand-drawn frame-animation replacement. Asset provenance and exact built-in imagegen prompts: assets/tavern-v492/PROMPTS.md.
 
 # Resume here — 0.49.2
