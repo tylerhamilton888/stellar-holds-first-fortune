@@ -11,7 +11,15 @@ func settle():g.transition_left=0;g.transition_shade.visible=false;g.close_panel
 func key(k:int):
  var e=InputEventKey.new();e.keycode=k;e.pressed=true;g._unhandled_input(e)
 func button(prefix:String):
- for b in g.panel_body.find_children("*","Button",true,false):
+ var page=""
+ if prefix.begins_with("Designate") or prefix.begins_with("Assign"):page="Rooms"
+ elif prefix.begins_with("Invite"):page="Folk"
+ elif prefix.begins_with("Flagstone"):page="Finishes"
+ elif prefix.begins_with("Joiner") or prefix.begins_with("Forge hearth") or prefix.begins_with("Warm lantern"):page="Furnish"
+ if page!="" and g.deep.works.page!=page:
+  for tab in g.panel.find_children("*","Button",true,false):
+   if tab.text.begins_with(page):tab.pressed.emit();break
+ for b in g.panel.find_children("*","Button",true,false):
   if b.text.begins_with(prefix):b.pressed.emit();return
  push_error("Missing button "+prefix);failed+=1
 func frames(n:int):

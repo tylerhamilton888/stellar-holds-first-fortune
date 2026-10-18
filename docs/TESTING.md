@@ -1,3 +1,6 @@
+## Visual polish 0.43.1
+`tests/input_polish431.gd` verifies tabbed construction flow and viewport bounds. `tests/capture_ui431.gd` renders shared menus and unrelated areas. See testing/polish-0.43.1.md.
+
 ## Living Works
 Run `tests/test_living43.gd` headless and `tests/input_living43.gd` with native display, in isolated XDG_DATA_HOME. See testing/living-0.43.0.md for fixture scope and regression results.
 

@@ -421,22 +421,22 @@ func draw():
  if pulse>0:g.draw_arc(contact,4+(1-pulse/.14)*17,0,TAU,12,Color(1,.9,.7,pulse*5),2)
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
  g.draw_rect(Rect2(0,0,960,74),Color("0e202c"));g.draw_line(Vector2(24,73),Vector2(936,73),Color("63756c"))
- g.draw_rect(Rect2(0,438,960,60),Color(.04,.09,.12,.88));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"));g.draw_rect(Rect2(18,80,610,25),Color(.035,.08,.12,.82))
- A.text(g,Vector2(24,456),"DEPTH %d / %d · %s" % [z+1,world.data.layers.size(),Deepworks.NAMES[z].to_upper()],16,Color("eac98b"))
- A.text(g,Vector2(24,480),"WASD MOVE   LMB DIG   E STAIRS   V BUILD   X SURVEY   H HAUL   U UNLOAD   C CART   L GOAL",12,Color("b9d0c8"))
- if aim.x>=0:
+ g.draw_rect(Rect2(0,462,960,36),Color(.04,.09,.12,.9));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"))
+ A.text(g,Vector2(24,485),"DEPTH %d / %d · %s" % [z+1,world.data.layers.size(),Deepworks.NAMES[z]],14,Color("eac98b"))
+ var tool_name="Slagcaster" if g.mining_gun.selected else ["Pick","Shovel","Axe","Hammer"][clampi(g.tool,0,3)]
+ if aim.x>=0 and g.panel_id=="":
   var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=world.grade_label(aim)+" "+HoldData.TILES[k].name
-  A.text(g,Vector2(700,453),name,14,ore_color(k));g.draw_rect(Rect2(700,464,210,5),Color("2b414a"));g.draw_rect(Rect2(700,464,210*d/world.resistance(k),5),Color("cbb57e"))
- A.text(g,Vector2(700,487),g.mining_gun.status() if g.mining_gun.selected else ("4 FRACTURE HAMMER" if g.tool==3 else ("STEEL PICK" if g.state.steel else "1 PICK / 2 SHOVEL")),11,Color("a9c3bb"))
- A.text(g,Vector2(24,124),"BUCKET %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   CART %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"IN HAND" if haul.cart().hitched else "PARKED D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else "   H · HAULAGE"],13,Color("e3c993"))
- var goal=haul.project();var missing=0
- for item in goal.cost:missing+=maxi(0,int(goal.cost[item])-g.state.count(item))
- A.text(g,Vector2(24,143),"L · "+goal.name+" · "+("materials delivered" if missing==0 else "%d units still needed in stores" % missing),12,Color("b9d0c8"))
+  A.text(g,Vector2(680,480),tool_name+" · "+name,12,ore_color(k));g.draw_rect(Rect2(680,487,250,3),Color("2b414a"));g.draw_rect(Rect2(680,487,250*d/world.resistance(k),3),Color("cbb57e"))
+ elif g.panel_id=="":A.text(g,Vector2(680,485),tool_name+" · 1–4 change tool",12,Color("b9d0c8"))
+ if g.panel_id=="":
+  g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
+  A.text(g,Vector2(30,99),"H · Bucket %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
- if survey_open:draw_survey()
+ if survey_open and g.panel_id=="":draw_survey()
  works.hud()
+ if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.045,.06,.55))
 func lamp(p:Vector2):
- for r in [40,28,16]:g.draw_circle(p-Vector2(0,15),r,Color(1,.7,.3,.025))
+ for r in [68,48,32,18]:g.draw_circle(p-Vector2(0,15),r,Color(1,.72,.35,.025))
  g.draw_line(p+Vector2(0,8),p-Vector2(0,23),Color("796a4c"),4)
  g.draw_rect(Rect2(p-Vector2(5,26),Vector2(10,13)),Color("e9b76d"));g.draw_rect(Rect2(p-Vector2(3,24),Vector2(6,8)),Color("ffedb5"))
 func draw_survey():

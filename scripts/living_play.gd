@@ -10,6 +10,7 @@ var corner=Vector2i(-1,-1)
 var pending:Dictionary={}
 var ready=false
 var selected_room=""
+var page="Rooms"
 var sparkle=0.0
 func _init(game,world:Deepworks):g=game;w=world;model=LivingWorks.new(g.state,w)
 func cancel():
@@ -69,15 +70,31 @@ func interact()->bool:
    g.open_panel("forge");return true
  return false
 func panel():
- model.refresh();g.label(g.panel_body,"THE LIVING WORKS",21)
- g.label(g.panel_body,"Excavate a 4 x 4 to 9 x 9 chamber. Designate two corners, then fit it out. O returns here; right mouse cancels placement. Hold Shift with the pick for selective ore extraction; hammer [4] breaks fractured faces efficiently.",15)
+ model.refresh()
+ var tabs=g.row(g.menu_scroll.get_parent());g.menu_scroll.get_parent().move_child(tabs,g.menu_scroll.get_index())
+ for name in ["Rooms","Furnish","Finishes","Folk"]:
+  var tab=g.small_button(tabs,name+(" •" if name=="Folk" and model.data.opportunity=="offered" else ""),func():page=name;g.open_panel("living",false))
+  tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=page==name
+ match page:
+  "Rooms":rooms_panel()
+  "Furnish":catalog(false)
+  "Finishes":catalog(true)
+  "Folk":folk_panel()
+func rooms_panel():
+ g.label(g.panel_body,"Carve out a home",20,Color("edc98a"))
+ g.label(g.panel_body,"Clear a 4 × 4 to 9 × 9 chamber, then choose its two corners.",14)
  var line=g.row(g.panel_body)
  for id in LivingWorks.FUNCTIONS:g.small_button(line,"Designate "+LivingWorks.FUNCTIONS[id].name,func():choose("room",id))
  var here=model.at(Deepworks.cell(g.player))
  if selected_room=="" and not here.is_empty():selected_room=here.id
  if not model.data.rooms.has(selected_room) and not model.data.rooms.is_empty():selected_room=model.data.rooms.keys()[0]
- for r in model.data.rooms.values():
-  g.button(g.panel_body,"%s · D%d · quality %d · %s" % [r.name,int(r.depth)+1,r.metrics.score,"FUNCTIONAL" if r.metrics.active else "needs furnishings"],func():selected_room=r.id;g.open_panel("living",false))
+ if not model.data.rooms.is_empty():
+  var selector=OptionButton.new();selector.custom_minimum_size.y=36;g.panel_body.add_child(selector)
+  var ids=model.data.rooms.keys()
+  for id in ids:
+   var r=model.data.rooms[id];selector.add_item("%s · Depth %d · Quality %d" % [r.name,int(r.depth)+1,r.metrics.score])
+  selector.selected=ids.find(selected_room)
+  selector.item_selected.connect(func(index):selected_room=ids[index];g.open_panel("living",false))
  if model.data.rooms.has(selected_room):
   var room=model.data.rooms[selected_room];var q=room.metrics
   g.label(g.panel_body,room.name+" · "+("Ready to use" if q.active else "Needs: "+", ".join(q.missing)),18)
@@ -85,24 +102,28 @@ func panel():
   for a in g.agents:
    if a.type!="worker":continue
    var id=str(a.id)
-   g.button(g.panel_body,"Assign "+g.state.npc(id).name+" to "+room.name,func():g.notify(model.assign(id,selected_room));g.save_game();g.open_panel("living",false))
+   g.small_button(g.panel_body,"Assign "+g.state.npc(id).name+" to "+room.name,func():g.notify(model.assign(id,selected_room));g.save_game();g.open_panel("living",false))
   if g.agents.is_empty():g.label(g.panel_body,"Recruit a mining Dwarf at your claimed mountain, then assign a workshop or berth here. The employer's crew is not yours to relocate.",14)
- g.label(g.panel_body,"FURNISH · costs use delivered supplies",18)
- for id in LivingWorks.FURNITURE:
-  var def=LivingWorks.FURNITURE[id];var b=g.button(g.panel_body,def.name+" · "+HoldData.cost_text(def.cost)+( "" if model.unlocked(def) else " · research required"),func():choose("furniture",id))
-  b.disabled=not model.unlocked(def)
- g.button(g.panel_body,"Dismantle furnishing · recover its materials",func():choose("remove",""))
- g.label(g.panel_body,"FINISH · per tile · rough surfaces remain useful",18)
- for id in LivingWorks.FINISHES:
-  var def=LivingWorks.FINISHES[id];var b=g.button(g.panel_body,def.name+" · "+("handwork only" if def.cost.is_empty() else HoldData.cost_text(def.cost))+("" if model.unlocked(def) else " · locked"),func():choose("finish",id))
-  b.disabled=not model.unlocked(def)
- g.button(g.panel_body,"Research construction capabilities",func():g.open_panel("research"))
+func catalog(finishes:bool):
+ g.label(g.panel_body,"Shape the stone" if finishes else "Made for Dwarven hands",20,Color("edc98a"))
+ g.label(g.panel_body,"Choose a finish, then hold LMB to apply it. Costs are per tile." if finishes else "Choose a furnishing, then place it with a hammer strike. Costs use delivered supplies.",14)
+ var grid=GridContainer.new();grid.columns=3;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",7);g.panel_body.add_child(grid)
+ var definitions=LivingWorks.FINISHES if finishes else LivingWorks.FURNITURE
+ for id in definitions:
+  var def=definitions[id];var unlocked=model.unlocked(def)
+  var cost="Handwork only" if def.cost.is_empty() else HoldData.cost_text(def.cost)
+  var b=g.small_button(grid,def.name+"\n"+(cost if unlocked else "Requires "+str(HoldData.RESEARCH.get(def.tech,{}).get("name","Brann's carving"))),func():choose("finish" if finishes else "furniture",id))
+  b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.custom_minimum_size.y=48;b.add_theme_font_size_override("font_size",14)
+  b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.tooltip_text=def.name+" · "+cost;b.disabled=not unlocked
+ if finishes:g.small_button(g.panel_body,"Research construction capabilities",func():g.research_tab=1;g.open_panel("research"))
+ else:g.small_button(g.panel_body,"Dismantle furnishing · recover its materials",func():choose("remove",""))
+func folk_panel():
  g.label(g.panel_body,"THE FOLK",18)
  for id in model.data.assignments:
   var f=model.data.folk[id]
-  g.label(g.panel_body,g.state.npc(id).name+" · "+f.activity+" · morale +"+str(f.morale)+"\n"+f.preference.interest+". Favors "+f.preference.style+"; enjoys "+f.preference.drink+".",14)
+  g.label(g.panel_body,g.state.npc(id).name+" · "+f.activity+" · morale +"+str(int(f.morale))+"\n"+f.preference.interest+". Favors "+f.preference.style+"; enjoys "+f.preference.drink+".",14)
   g.button(g.panel_body,"Release "+g.state.npc(id).name+" to existing mining duties",func():model.data.assignments.erase(id);g.save_game();g.open_panel("living",false))
- g.label(g.panel_body,"A staffed, usable workshop gives up to 10% production speed. Only the best staffed room counts. A comfortable berth supports modest morale and mining rhythm. Dwarfs use real routes; unreachable rooms give no staffed benefit. No mandatory sleep or daily upkeep chores.",14)
+ g.label(g.panel_body,"Best staffed workshop: up to +10% crafting speed. Comfortable bedrooms improve morale. Unreachable rooms give no staffed benefit.",14)
  if model.data.opportunity!="":
   g.label(g.panel_body,"BRANN · A MARK WORTH LEAVING",18,Color("eac487"))
   if model.data.opportunity=="complete":g.label(g.panel_body,"The Rivethand knotwork is yours. Brann's two machine parts are in stores.",15)
@@ -113,13 +134,18 @@ func panel():
     g.open_panel("living",false))
    b.disabled=not model.opportunity_ready()
 func hud():
+ if g.panel_id!="":return
  var room=model.at(Deepworks.cell(g.player))
- if not room.is_empty():A.text(g,Vector2(24,165),"O · "+room.name+(" · E AT BENCH" if room.kind=="workshop" and room.metrics.active else "")+" · QUALITY %d · %s" % [room.metrics.score,"FUNCTIONAL" if room.metrics.active else "FURNISH TO ACTIVATE"],12,Color("e5c695"))
- else:A.text(g,Vector2(24,165),"O · LIVING WORKS · ROOMS / FURNISHINGS",12,Color("c8c7b0"))
+ if not room.is_empty():
+  g.draw_style_box(chip(),Rect2(20,109,365,28))
+  A.text(g,Vector2(30,128),"O · %s · %s" % [room.name,"Quality %d" % room.metrics.score if room.metrics.active else "Needs furnishings"],12,Color("e5c695"))
  if mode!="":
-  g.draw_rect(Rect2(235,390,490,34),Color("172b32"))
-  A.text(g,Vector2(248,412),"%s · %s · RIGHT MOUSE CANCEL" % [mode.to_upper(),selected.to_upper()],13,Color("edc489"))
- if model.data.opportunity=="offered":A.text(g,Vector2(24,184),"BRANN HAS AN IDEA · O: THE FOLK",12,Color("eac487"))
+  g.draw_style_box(chip(),Rect2(230,392,500,37))
+  var title=LivingWorks.FUNCTIONS.get(selected,{}).get("name",selected) if mode=="room" else (LivingWorks.FURNITURE if mode=="furniture" else LivingWorks.FINISHES).get(selected,{}).get("name","Dismantle")
+  A.text(g,Vector2(244,416),str(title)+" · LMB work · Right mouse cancel",13,Color("edc489"))
+func chip()->StyleBoxFlat:
+ var style=StyleBoxFlat.new();style.bg_color=Color(.055,.12,.15,.92);style.set_corner_radius_all(5)
+ style.border_color=Color(.55,.48,.31,.65);style.set_border_width_all(1);return style
 func lamps()->Array:
  var result=[]
  for f in model.data.furniture.values():
@@ -143,11 +169,11 @@ func draw():
   if kind=="timber":
    for j in 4:
     g.draw_line(p+Vector2(j*10,0),p+Vector2(j*10,40),Color("4c4638").darkened(1-light),1)
-    g.draw_line(p+Vector2(j*10+3,6),p+Vector2(j*10+4,31),Color("b39a6a").darkened(1-light),1)
+    g.draw_line(p+Vector2(j*10+3,6),p+Vector2(j*10+4,17+posmod(c.x+c.y+j,12)),Color("b39a6a").darkened(1-light),1)
   else:
    for j in 2:
     var y=j*20;g.draw_line(p+Vector2(0,y),p+Vector2(40,y),Color("354b52"),1)
-    g.draw_line(p+Vector2(10+j*20,y),p+Vector2(10+j*20,y+20),Color("354b52"),1)
+    g.draw_line(p+Vector2(10+posmod(c.y+j,2)*20,y),p+Vector2(10+posmod(c.y+j,2)*20,y+20),Color("354b52"),1)
    g.draw_line(p+Vector2(2,2),p+Vector2(37,2),base.lightened(.15).darkened(1-light),1)
   for j in 7:
    var fleck=p+Vector2(posmod(c.x*13+j*17,36)+2,posmod(c.y*19+j*7,36)+2)
@@ -161,8 +187,9 @@ func draw():
  for r in model.data.rooms.values():
   if int(r.depth)!=z:continue
   var rect=Rect2(r.x*40+2,r.y*40+2,r.w*40-4,r.h*40-4)
-  g.draw_rect(rect,Color(.8,.69,.43,.35),false,1)
-  A.text(g,rect.position+Vector2(5,14),r.name.to_upper(),10,Color("d2bb8e"))
+  if mode!="" or g.panel_id=="living":
+   g.draw_rect(rect,Color(.8,.69,.43,.35),false,1)
+   A.text(g,rect.position+Vector2(5,14),r.name.to_upper(),10,Color("d2bb8e"))
  for f in model.data.furniture.values():
   if int(f.depth)==z:draw_furniture(f.kind,Deepworks.center(Vector2i(f.x,f.y)))
  if mode!="":
@@ -183,11 +210,16 @@ func draw_furniture(kind:String,p:Vector2):
    g.draw_rect(Rect2(p-Vector2(11,12),Vector2(22,27)),Color("457d79"))
    g.draw_rect(Rect2(p-Vector2(10,15),Vector2(20,9)),Color("dbcf9e"))
    g.draw_line(p+Vector2(-11,2),p+Vector2(11,2),Color("d7bb80"),2)
+   for j in 4:g.draw_line(p+Vector2(-9+j*6,1),p+Vector2(-9+j*6,13),Color("689c91"),1)
    for x in [-14,14]:g.draw_line(p+Vector2(x,-20),p+Vector2(x,19),rim,3)
   "bench","table":
    for x in [-13,13]:g.draw_line(p+Vector2(x,-9),p+Vector2(x,14),wood.darkened(.25),4)
    g.draw_rect(Rect2(p-Vector2(17,13),Vector2(34,22)),wood);g.draw_rect(Rect2(p-Vector2(17,13),Vector2(34,4)),rim)
    for y in [-5,3]:g.draw_line(p+Vector2(-15,y),p+Vector2(15,y),wood.darkened(.3),1)
+   for x in [-14,14]:
+    for y in [-10,6]:g.draw_circle(p+Vector2(x,y),1,Color("dec79a"))
+   if kind=="table":
+    g.draw_circle(p+Vector2(8,-3),4,Color("bea76f"));g.draw_circle(p+Vector2(8,-3),2,Color("3c3430"))
    if kind=="bench":
     g.draw_line(p+Vector2(-9,-8),p+Vector2(5,3),rim,3);g.draw_rect(Rect2(p+Vector2(1,-1),Vector2(10,4)),iron.lightened(.25))
     g.draw_rect(Rect2(p+Vector2(8,-12),Vector2(7,9)),iron)

@@ -1,4 +1,4 @@
-# Current milestone: 0.43.0 — The Living Works
+# Current milestone: 0.43.1 — The Living Works
 Integrated workshops, bedrooms and craftsmanship in the existing Deepworks. See docs/CURRENT_STATUS.md and docs/PROJECT_INDEX.md. O opens the works board underground.
 
 # Current build: The Weight of the Mountain 0.42.0

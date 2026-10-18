@@ -83,6 +83,7 @@ var gear_tab="weapon"
 var help_tab=0
 var trade_tab="sell"
 var forge_tab=0
+var research_tab=0
 var panel_body:VBoxContainer
 var hud:Label
 var footer:Label
@@ -207,7 +208,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.43.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.43.1";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -824,6 +825,8 @@ func update_hud():
  hud.text=place+" / "+("DEEP WORKINGS" if zone=="mine" else ("KELDRATH" if zone=="approach" else "TIMBER COUPE" if zone=="road" else "MOUNTAIN HOLD"))+"   %d CROWNS" % state.money
  status.text="IRON ORE %d   COPPER %d   COAL %d   CRYSTAL %d   TIMBER %d" % [state.count("iron_ore"),state.count("copper_ore"),state.count("coal"),state.count("crystal"),state.count("wood")]
  objectives.text=goal()
+ objectives.visible=zone!="mine" and playing
+ for item in [hud,status,footer]:item.visible=playing and not (zone=="mine" and panel_id!="")
  if menu_paused or panel_id in ["pause","settings"]:footer.text="PAUSED — TAKE YOUR TIME   |   CLOSE TO RESUME"
  elif panel_id!="":footer.text="ESC  BACK / CLOSE     |     "+("PRODUCTION CONTINUES" if not state.queue.is_empty() else "YOUR HOLD, YOUR FORTUNE")
  elif room_id!="":
@@ -833,7 +836,7 @@ func update_hud():
  elif construction.selected!="":footer.text="BUILD: "+HoldConstruction.OPTIONS[construction.selected].name+"   LMB PLACE   1–4 CANCEL   V OPTIONS"
  elif zone=="road":footer.text=HoldForestry.hint(self)
  elif zone=="approach":footer.text="HIGH TRAIL LOOKOUT   |   G BASIN MAP   E PLAN JOURNEY   A/D WALK"
- elif zone=="mine":footer.text="HOLD LMB · EXCAVATE    V · STAIRS / LAMPS    X · SURVEY BELOW    I · PACK    M · CREW"
+ elif zone=="mine":footer.text="WASD move   LMB mine   E interact   O rooms   H haulage   X survey   F1 help"
  else:
   var nearest=nearest_station()
   footer.text="E  "+nearest.name.to_upper()+"    |    A/D MOVE   I PACK   M CREW   F1 HELP" if absf(nearest.x-player.x)<95 else "A/D MOVE   E INTERACT   C CHARACTER   I PACK   M CREW   F1 HELP"
@@ -1111,14 +1114,16 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  if id in ["pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
  panel_id=id;panel.visible=true
+ panel.position=Vector2(120,44) if id=="living" else Vector2(60,44)
+ panel.size=Vector2(720,452) if id=="living" else Vector2(840,452)
  for child in panel.get_children():panel.remove_child(child);child.queue_free()
  var outer=VBoxContainer.new();outer.add_theme_constant_override("separation",9);panel.add_child(outer)
  var top=row(outer)
  if not menu_history.is_empty():small_button(top,"‹ Back",back_panel)
- var names={"pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
+ var names={"living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
  label(top,names.get(id,"Claim business" if id=="claim_stories" else id.to_upper()),22,Color("e9c586"))
  small_button(top,"Close ×",close_panel)
- if playing and id not in ["briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes","pinewood"]:
+ if playing and id not in ["living","haulage","projects","deepworks","briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes","pinewood"]:
   var nav=row(outer)
   for entry in [["commission","Journal · J"],["inventory","Pack · I"],["equipment","Gear · B"],["roster","People · N"],["world_map","Map · G"],["help","Guide · F1"]]:
    var tab=small_button(nav,entry[1],func():open_panel(entry[0]));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -1353,19 +1358,25 @@ func forge_panel():
   label(panel_body,"Steel pick: "+("Owned" if state.steel else ("Ready to forge" if state.tech.has("extraction") else "Research Tempered steel"))+"\nMOTE-1: "+("Built" if state.automaton else ("Ready to build" if state.tech.has("automation") else "Research Clockwork industry")),16)
  label(panel_body,"Timber feeds provisions and construction. Water fills canteens and cools your future drive.",14,Color("9ac4ba"))
 func research_panel():
- compact_person("eldric","The stars are mostly empty. An appalling waste of usable space.")
- label(panel_body,"Bring samples, funding and an unreasonable amount of confidence.",14)
- button(panel_body,"Mountain charters and surveys",func():open_panel("charters"))
- for id in ["extraction","stoneworking","furnishings","fine_masonry","metallurgy","automation","thermal","voidcraft"]:
-  var r=HoldData.RESEARCH[id]
-  label(panel_body,r.name+("  [COMPLETE]" if state.tech.has(id) else ""),18,Color("9dd5c3"))
-  label(panel_body,r.desc+"\n"+HoldData.cost_text(r.cost)+" / %d crowns" % r.money,14)
+ compact_person("eldric","Bring samples, funding and a little ambition.")
+ var tabs=row(panel_body)
+ for i in 3:
+  var tab=small_button(tabs,["Mining & industry","Craftsmanship","Starflight"][i],func():research_tab=i;open_panel("research",false))
+  tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=research_tab==i
+ var groups=[["extraction","metallurgy","automation","thermal"],["stoneworking","furnishings","fine_masonry"],["voidcraft"]]
+ for id in groups[research_tab]:
+  var r=HoldData.RESEARCH[id];var card=section(panel_body,"");var line=row(card)
+  var text=VBoxContainer.new();text.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(text)
+  label(text,r.name+(" · Complete" if state.tech.has(id) else ""),18,Color("9dd5c3"))
+  label(text,r.desc,14)
   if not state.tech.has(id):
-   label(panel_body,("First research "+HoldData.RESEARCH[r.requires].name) if r.requires!="" and not state.tech.has(r.requires) else requirements(r.cost,r.money),16,Color("b4c9c4"))
-   var b=button(panel_body,"Research "+r.name,func():
+   label(text,HoldData.cost_text(r.cost)+" / %d crowns" % r.money,14,Color("dfc795"))
+   var b=small_button(line,"Research",func():
     if state.research(id):sound.effect("crystal");notify("New capability unlocked: "+r.name);save_game();refresh_panel())
    b.disabled=not state.afford(r.cost,r.money) or (r.requires!="" and not state.tech.has(r.requires))
- label(panel_body,"Basalt begins deeper down. Aether crystals can also be found in upper seams. First discovery earns a 40-crown survey bounty.",14)
+   b.tooltip_text=("First research "+HoldData.RESEARCH[r.requires].name) if r.requires!="" and not state.tech.has(r.requires) else requirements(r.cost,r.money)
+   if b.disabled:label(text,b.tooltip_text,14,Color("b4c9c4"))
+ small_button(panel_body,"Mountain charters and surveys",func():open_panel("charters"))
 func management_panel():
  HoldOutpostUI.panel(self)
 func ship_panel():
@@ -1407,9 +1418,7 @@ func help_panel():
   [["Your first shift","Meet Ivar and introduce yourself to Borin, Orla and Hedrik. Press G on the surface, walk to Old Workings on the map, and press E to enter. Mine 8 coal. Return to Ivar's office for 65 crowns; keep your surplus."],["Move & explore","A / D or arrows: walk  •  Space: jump  •  E: interact
 J: work journal  •  N: people and location tracking
 I: resources  •  B: weapons and armor"],["What comes next?","Your first coal delivery earns an audience with the Lord. Return to Ivar for the lift commission and new lessons. Finish all three commissions to earn a reference, buy a mountain charter, and hire a founding crew as you build your workshop and freight beacon."]],
-  [["Choose the right tool","1 Pickaxe: rock and ore  •  2 Shovel: loose dirt and water
-3 Axe: marked fir trees  •  4 Hammer: hold construction
-Hold left mouse toward nearby material. Aim below your boots to chip a shaft wide enough to descend. Shift disables this assistance and trims a single grain. P toggles dirt prospecting. X chips a field sample; K opens your saved bearings."],["Plan your way back","V opens stairs, platforms, ladders and roof supports. Point within reach and click to place. W / S climbs a placed ladder. 1–4 cancels placement. Supports catch loose earth without a maintenance timer."],["Getting home","Walk back through the entrance. If you are truly stuck, R previews a paid rescue. Unpaid rescue costs become debt against future earnings. There is no fall damage."]],
+  [["Dig comfortably","WASD / arrows move in eight directions underground. Hold LMB with pick [1] for rock or shovel [2] for dirt. Hammer [4] exploits existing cracks; Shift + pick extracts ore selectively. Axe [3] is for Pinewood timber."],["Connect the depths","V opens stairs and lamps. Carve stairs on clear floor; E descends, Shift + E ascends at that same location. X surveys the layer below. T assigns crew depth. Return through the entrance to deliver cargo and leave."],["Build your hold","O opens Rooms, Furnish, Finishes and Folk. Designate excavated floor, then place furniture or apply finishes with LMB. Right mouse cancels. H manages hauling; C takes/parks the cart, U unloads and Shift + U loads piles. L opens the project ledger. Delivered supplies fund crafting and construction."]],
   [["Draw your weapon","F switches between your weapon and tools. Left mouse attacks; hold right mouse to guard. Press guard just before an impact to parry, then counterattack. Q dodges. There is no stamina."],["Prepare for an expedition","B opens gear. Borin introduces the starter axe and shield in his safe practice bay after the lift repair and return-route lesson. Hostile encounters unlock when you report your training. Forge upgrades at Borin's workbench; equipped armor changes your appearance. Guns consume cartridges."],["Choose your fights","Cleared encounters stay cleared. Enemies drop useful salvage. Rest outside the mine to heal. Defeat triggers paid rescue, so prepare an escape route."]],
   [["Craft, trade, grow","The forge reserves materials when you queue a job; completed items enter shared storage automatically. Production continues while browsing ordinary menus. Sell surplus at Orla's exchange; contracts or tavern hospitality unlock bargaining."],["Save & pause","F5 saves. Escape opens pause or goes back through menus. Losing window focus pauses the world until you resume. Auto-save runs every 45 seconds and on major purchases or travel. Three separate save slots; a new fortune asks before replacing the selected slot."],["Comfort & controls","Use Sound & comfort from the pause menu for music, ambience, effects and camera shake. Tab moves focus; Enter activates a button. Given and family names are separate. There is no hunger timer: provisions fuel your worker."]]
  ]

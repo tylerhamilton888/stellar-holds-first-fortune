@@ -1,3 +1,6 @@
+## 0.43.1 — Visual and menu polish
+Pinned Living Works tabs, complete furniture catalog, grouped research, concise current help, quieter mine HUD and planning-only room markings. Warmer lanterns and original floor/furniture details. Existing economy/saves unchanged.
+
 ## 0.43.0 — The Living Works
 Functional workshops/bedrooms, nine furnishings, seven finishes, three research capabilities, physical crew occupancy, capped room benefits, persistent preferences and Brann carving opportunity. Fracture hammer and selective extraction extend existing mining. Additive save compatibility and focused native tests.
 
