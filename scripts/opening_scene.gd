@@ -78,6 +78,7 @@ func finish():
   HoldOnboarding.audience(game.state);game.room_id="throne";game.player=Vector2(470,410);game.camera=Vector2.ZERO
   game.notify("Return to Ivar. Your next commission will open more work around the hold.")
  game.velocity=Vector2.ZERO;game.grounded=true;game.jump_buffer=0;game.movement_remainder=0;game.jump_was_held=Input.is_action_pressed("jump")
+ game.surface.enter("hearthward",Vector2(1580,405)) if mode=="arrival" else game.surface.enter("room:throne",Vector2(480,440))
  game.opening_scene=null;game.sound.set_context("hub");game.save_game();layer.queue_free()
 func _input(e):
  if e is InputEventKey:

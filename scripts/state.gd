@@ -36,6 +36,7 @@ var deepworks:Dictionary={}
 var deepworks_migrated=false
 var road_trees:Array=[8,8,8,8,8]
 var inventory:Dictionary={}
+var surface:Dictionary={}
 var money:int=45
 var tech:Dictionary={}
 var queue:Array=[]
@@ -78,6 +79,7 @@ func reset(seed_number:int):
  combat=HoldCombat.defaults();tracked_npc=""
  appearance=HoldAppearance.defaults();npc_appearances={};dynasty={}
  opening=0;claim_id="";camp_stage=0;active_site="hold";worlds={};road_trees=[8,8,8,8,8]
+ surface={}
  inventory={"wood":8,"food":6,"water":6}
  money=45
  tech={};queue=[];market={};steel=false;worker=false;automaton=false
@@ -145,7 +147,7 @@ func ensure_dynasty():
 func save_world(geo:Geology,zone:String,pos:Vector2)->bool:
  ensure_dynasty()
  HoldOutpost.ensure(self)
- var data={"hauling":hauling,"deepworks":deepworks,"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"forestry":forestry,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
+ var data={"surface":surface,"hauling":hauling,"deepworks":deepworks,"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"forestry":forestry,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
  var f=FileAccess.open(save_path()+".tmp",FileAccess.WRITE)
  if not f:return false
  f.store_string(JSON.stringify(data));f.close()
@@ -163,6 +165,11 @@ func load_world(geo:Geology)->Dictionary:
  if deepworks_migrated:
   var backup=save_path()+".pre-deepworks-"+str(Time.get_unix_time_from_system())+".bak"
   if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
+ if not d.has("surface"):
+  var backup=save_path()+".pre-homestead-"+str(Time.get_unix_time_from_system())+"-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
+ surface=d.get("surface",{})
  deepworks=d.get("deepworks",{})
  hauling=d.get("hauling",{})
  for k in ["inventory","money","tech","queue","market","steel","worker","automaton","priority","ship_stage","launched","contract","bargain","hospitality","elapsed","mined","seed_value","trees","discovered","agents_enabled","volume","music_volume","ambience_volume","effects_volume","footsteps_volume","dialogue_volume","shake"]:

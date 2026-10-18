@@ -1,3 +1,6 @@
+## After 0.46.0
+Playtest the walkable hold/trail/claim loop and local chest ownership on Windows. Expand directional sprites and homestead building variety after feedback. Retained practice bay remains a future top-down combat task. Do not introduce compulsory processing chains or stamina grind.
+
 ## After 0.45.1
 Compact original mason’s mallet replaces the full mining hammer at the bench. Its raised pose stays beside the face, the striking face meets the chisel cap at the material-contact phase, and worker sound/chips follow the saved job clock. Duplicate worker chisel rendering is removed. The bench has a bevelled slab, braced timber legs and iron fixings; partial dressing now reads the correct bench cell before the drawing offset. Existing menus remain bounded with fixed tabs and scrolling.
 Human checks remaining: Windows launcher, audible impact balance and subjective animation feel.

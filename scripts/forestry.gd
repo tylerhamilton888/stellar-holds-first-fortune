@@ -68,7 +68,7 @@ static func strike(n,selected:Dictionary)->bool:
  return true
 
 static func update(n,dt:float):
- if n.zone!="road":return
+ if n.zone!="road" or (n.get("surface")!=null and n.surface.active()):return
  ensure(n.state)
  for i in X.size():
   var age=fall_age(n.state,i)

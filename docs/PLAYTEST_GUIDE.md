@@ -1,3 +1,15 @@
+# Try 0.46.0 — your hold, trail and home
+Extract the whole Windows ZIP into a new folder and run PLAY-WINDOWS.bat. Keep your earlier build. Old saves receive a separate backup before the new location data is added.
+
+1. Start or load normally. Walk with WASD/arrows; press E near a doorway or person. Follow J introductions through real buildings. Check the Lord on his throne and Borin working in the forge.
+2. Use the stairs and lift between the three hold wards. G gives directions. Walk out through the King's Gate to the High Trail; follow its north branch to the public mine, south branch to Pinewood and east branch toward your claim.
+3. In the mine, excavate, create a real lower passage and return along your route. Existing mining, masonry, containers and workers retain their controls. In Pinewood equip the axe and hold LMB at a reachable trunk/log; check the falling tree and gathering rhythm.
+4. Acquire your claim through the existing charter progression, or visit your existing claim. Your cottage and first chest are ready. Enter the home, use E at the bed, then E at the chest. Store timber and compare Pack/Chest counts. Close it, walk away and reopen; items should remain there.
+5. O in your home/yard opens the homestead board. Place another chest (4 timber), or table/lamp (3 timber + 2 stone); choose clear nearby floor. Right-click cancels. Improve the cottage for 12 timber + 8 stone. Costs use carried supplies, so withdraw what you need first.
+6. Return to a shop/forge and sell/craft from your pack. Save inside your home, reload and check location, decorations, chest contents and existing mine progress. In an established save, check your crew and masonry handover still work.
+
+Aim to judge whether doors are easy to find, movement feels comfortable, the character fits the rooms, and menus stay readable while scrolling. The new home is a starter cottage with an upgrade and placeable furnishings; freeform house construction is not included yet. Eight-direction walking currently retains the original left/right-facing Dwarf animation style. The sparring practice bay still uses its older mechanics.
+
 # Visual pass 0.45.1
 Try the masonry loop below. Check that the small mallet clears the face, meets the chisel, and that Brann’s work feels readable. O retains fixed tabs and a scrolling body. Production costs/yields, saves and controls are unchanged.
 

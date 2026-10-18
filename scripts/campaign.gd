@@ -3,7 +3,7 @@ extends RefCounted
 
 const JOBS=[
  {"name":"A cold hearth", "cost":{"coal":8}, "pay":65, "story":"A fall in the lower workings cut off the furnace supply. Bring eight coal from the old gallery. Borin can relight the communal forge; you keep every other stone you uncover.", "result":"Borin rekindles the hearth. Amber light returns to the forge, and the evening shift resumes."},
- {"name":"The weight of the mountain", "cost":{"stone":16,"wood":8}, "pay":95, "story":"The lift's stone footings and timber braces need replacing. Bring sixteen stone and eight timber. Use G outside to walk to Pinewood on the basin map. Press E to enter, then cut marked firs with your axe [3].", "result":"New braces settle under the mountain's weight. The freight cage is moving again."},
+ {"name":"The weight of the mountain", "cost":{"stone":16,"wood":8}, "pay":95, "story":"The lift's stone footings and timber braces need replacing. Bring sixteen stone and eight timber. Walk through the King’s Gate and follow the High Trail south to Pinewood. Press E at its trail sign, then cut marked firs with your axe [3].", "result":"New braces settle under the mountain's weight. The freight cage is moving again."},
  {"name":"Copper in the veins", "cost":{"iron":5,"copper":3}, "pay":135, "story":"Forge five iron and three copper ingots for the aether conduit housings. Two ore and one coal make an ingot. These conduits power the hold's freight machinery, not magic without a cost.", "result":"The aether conduits glow. Lord Eirik signs your reference: reliable hands, sound judgment, a charter earned."}
 ]
 const CLAIMS=[

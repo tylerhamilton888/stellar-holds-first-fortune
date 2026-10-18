@@ -103,7 +103,7 @@ static func panel(g):
   g.label(g.panel_body,"Their masterwork kettle and carved table now warm the concourse outside the Copper Kettle. A small gift, made properly.",17)
   g.label(g.panel_body,'Inside the lid: “'+INSCRIPTIONS[int(gift(s,"hedrik").choice)]+'”',16)
   g.label(g.panel_body,"Carving: "+MOTIFS[int(gift(s,"orla").choice)]+". Matching commemorative mugs stay at the table.",15)
-  var here=s.active_site=="hold" and g.zone=="hub" and g.room_id=="" and absf(g.player.x-535)<100
+  var here=s.active_site=="hold" and g.zone=="hub" and g.room_id=="" and g.surface.area=="hearthward" and g.player.distance_to(Vector2(1259,370))<100
   var wait=maxi(0,int(ceil((float(q.refill_at)-s.elapsed)/60.0)))
   var b=g.button(g.panel_body,"Fill your expedition flask • +2 provisions" if wait==0 else "Fresh brew in %d minutes of play" % wait,func():
    if refill(s):g.save_game();g.notify("Hot tea and a wrapped bite for the trail. +2 provisions.");g.refresh_panel())

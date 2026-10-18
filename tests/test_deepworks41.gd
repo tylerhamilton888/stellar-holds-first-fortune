@@ -79,7 +79,7 @@ func run():
  check(Deepworks.cell(g.player)==Vector2i(feature.x,feature.y),"Reload restores underground position")
  check(w.layer().fixtures.get(Deepworks.key(Deepworks.cell(g.player)),"")=="lamp" and float(w.layer().damage.get("20,20",0))==1.0,"Built fixtures and partial mining damage survive reload")
  tunnel(Deepworks.ENTRY);g.deep.use_stairs(false)
- check(g.panel_id=="basin_map","Entrance interaction opens existing return travel")
+ check(g.zone=="approach" and g.surface.area=="trail","Entrance interaction returns to the connected High Trail")
  g.close_panel();g.grounded=true;g.arrive_region("hold");reset_transition()
  check(g.zone=="hub","Return to existing settlement via basin")
  check(g.state.craft("iron"),"Collected ore/coal use existing smelting recipe")

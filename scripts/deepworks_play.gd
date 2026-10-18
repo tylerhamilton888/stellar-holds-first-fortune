@@ -89,7 +89,7 @@ func use_stairs(up:bool):
   world.survey(g.player);g.save_game();return
  if world.entrance(g.player):
   unload();haul.park()
-  if g.state.active_site=="hold":g.open_panel("basin_map")
+  if g.state.active_site=="hold":g.surface.enter("trail",Vector2(950,345))
   else:g.change_zone("claim")
  else:g.notify("Stand on stairs: E down / Shift+E up. V carves stairs beneath your feet.")
 func panel():

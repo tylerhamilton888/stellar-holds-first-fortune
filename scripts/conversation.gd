@@ -3,7 +3,7 @@ extends RefCounted
 const SERVICES={"ivar":["Review paid commissions","commission"],"orla":["Show me your wares","market"],"hedrik":["Food, drink and the hiring bench","tavern"],"borin":["Tools, smelting and equipment","forge"],"eldric":["Research and mountain charters","research"]}
 const TOPICS={
  "ivar":[["How is the hold treating you?","I have worked three shifts under three lords. The stone is much the same. The paperwork gets thicker. Still, I know every name on this ledger. That is worth staying for."],["Any advice before I head below?","Put your way home in before you need it. Stairs, timber, a lamp where the passage turns. A full pack is poor company at the bottom of a shaft."]],
- "orla":[["How did you and Hedrik meet?","He delivered six crates of cups. Five arrived intact. He stayed to mend the sixth and somehow never quite finished leaving."],["Where can I find timber?","Pinewood. Use the expedition table and follow the basin road to the forest. Take an axe. Borin's spare lengths will get you started, but they won't build a hold."]],
+ "orla":[["How did you and Hedrik meet?","He delivered six crates of cups. Five arrived intact. He stayed to mend the sixth and somehow never quite finished leaving."],["Where can I find timber?","Pinewood. Leave by the King’s Gate and follow the High Trail south to the forest. Take an axe. Borin's spare lengths will get you started, but they won't build a hold."]],
  "hedrik":[["What is the house specialty?","Stew you can stand a spoon in, bread you can still bite, and tea with no business being that strong. Orla says the last one is a personal failing."],["Does everyone gather here?","Sooner or later. A mug is cheaper than a message runner, and considerably better at getting the truth out of someone."]],
  "borin":[["What are you working on?","A pump coupling. Whoever fitted the last one had great faith in optimism and very little in a measuring rule."],["What makes a good pick?","The temper, the haft, and the hand holding it. Keep the head seated. Replace a split handle before it teaches you why."]],
  "eldric":[["What lies beyond these mountains?","More mountains, for a start. Then seas. Then worlds with their own inconvenient geology. The first survey instrument aboard your ship should be a good notebook."],["What do the blue conduits do?","Carry the load that fire cannot. The old runes keep the current orderly. Science tells us how much; craft makes sure the answer holds under pressure."]],
@@ -13,6 +13,10 @@ static func local(g,id:String)->bool:
  if HoldNpcPresence.HOMES.has(id):return HoldOnboarding.local(g,id)
  if id.begins_with("visitor_"):return g.zone=="hub" and g.room_id=="" and g.player.distance_to(g.visitor_position(int(id.trim_prefix("visitor_"))))<75
  if g.room_id=="tavern":return HoldNpcPresence.tavern_guests(g.state).has(id)
+ if g.zone=="claim" and g.surface.active():
+  for p in g.surface.points():
+   if p.action=="talk:"+id:return g.player.distance_to(p.p)<85
+  return false
  if g.zone=="claim":return g.state.outpost.get("crew",{}).has(id) and g.player.distance_to(HoldOutpostUI.position(g.state,id))<75
  return false
 static func start(g,id:String):
@@ -97,10 +101,10 @@ static func ivar_options(g):
   choose(g,"I am "+s.appearance.first_name+" "+s.appearance.family_name+". I am ready to work.",func():
    q.stage=2;s.tracked_npc="borin";g.save_game();g.talk_line="Welcome to the shift, "+("sister" if s.appearance.gender else "brother")+". Borin checks the tools. Orla knows the routes. Hedrik will feed you. Meet all three, then bring eight coal from Old Workings. Sixty-five crowns when you return. The surplus is yours.";g.refresh_panel(),true)
  elif q.fresh and q.stage==4:
-  choose(g,"Mark the King's hall on my map",func():g.state.tracked_npc="eirik";g.save_game();g.close_panel();g.notify("Leave the office, then G: Crownward, King's hall. Use the gallery stairs or hold lift."),true)
+  choose(g,"Show me the way to the King's hall",func():g.state.tracked_npc="eirik";g.save_game();g.close_panel();g.notify("Leave the office and take the Royal stairs in central Hearthward. E enters the King's hall in Crownward."),true)
  elif q.fresh and q.stage==5:
   choose(g,"What needs doing next?",func():
-   q.stage=6;s.tracked_npc="ivar";g.save_game();g.talk_line="Sixteen stone and eight timber for the lift footings. Pinewood has straight firs. Use the expedition table to find the road. Borin and Eldric have useful lessons when you have a moment; listen for other work as you visit the hold.";g.refresh_panel(),true)
+   q.stage=6;s.tracked_npc="ivar";g.save_game();g.talk_line="Sixteen stone and eight timber for the lift footings. Pinewood has straight firs. Follow the High Trail south from the King’s Gate. Borin and Eldric have useful lessons when you have a moment; listen for other work as you visit the hold.";g.refresh_panel(),true)
  elif HoldOnboarding.commission_allowed(s) and s.opening in [1,2,3]:
   var job=HoldCampaign.JOBS[s.opening-1]
   choose(g,"Commission: "+job.name,func():g.open_panel("commission"),true)
