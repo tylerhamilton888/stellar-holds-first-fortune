@@ -2,7 +2,7 @@ class_name DeepworksPlay
 extends RefCounted
 const BUCKET_ART=preload("res://assets/tavern-v492/mining-bucket.png")
 var bucket_texture:AtlasTexture
-const STONE=preload("res://assets/actors-v11/slate.png")
+const STONE=preload("res://assets/animation-v51/geology.png")
 const A=preload("res://scripts/art.gd")
 var g
 var world:Deepworks
@@ -126,6 +126,7 @@ func crew_entry(agent:Dictionary)->Dictionary:
  if not world.data.crew.has(agent.id):world.data.crew[agent.id]={"depth":0,"assigned":0,"x":Deepworks.center(Deepworks.ENTRY).x,"y":Deepworks.center(Deepworks.ENTRY).y}
  return world.data.crew[agent.id]
 func move(dt:float):
+ if g.handworks.approaching:return
  ensure();var axis=Input.get_vector("left","right","up","down")
  if axis!=Vector2.ZERO:g.surface.direction=axis
  var speed=185.0
@@ -139,7 +140,7 @@ func move(dt:float):
  g.grounded=true;g.walking_pose=g.player.distance_to(old)>.01
  if absf(axis.x)>.05:g.face=1 if axis.x>0 else -1
  if g.walking_pose:
-  var before=int(g.gait_clock*20);g.gait_clock+=g.player.distance_to(old)/80.0
+  var before=int(g.gait_clock*20);g.gait_clock+=dt
   if int(g.gait_clock*20)!=before and posmod(int(g.gait_clock*20),16) in [0,8]:g.sound.footstep("stone")
  else:g.gait_clock=0
  if stair_work>0:
@@ -182,11 +183,15 @@ func mine(dt:float):
  var aim=g.get_global_mouse_position()+g.camera
  target=world.target(g.player,aim,180 if g.mining_gun.selected else 78)
  if target.x<0:return
- # Contact is the first actual wall surface; pick head ends here at impact.
+ # The collision surface is authoritative; short automatic approach closes tool reach.
  contact=g.player
  for i in range(1,190):
   contact=g.player+(Deepworks.center(target)-g.player).normalized()*i
   if Deepworks.cell(contact)==target:break
+ var reach=15.0 if contact.y>g.player.y and absf(contact.y-g.player.y)>absf(contact.x-g.player.x)*1.35 else 40.0
+ if not g.mining_gun.selected and contact.distance_to(g.player)>reach+2 and Input.get_vector("left","right","up","down")==Vector2.ZERO:
+  var approach=(contact-g.player).normalized();var next=g.player+approach*minf(185*dt,contact.distance_to(g.player)-reach)
+  if not world.solid(next):g.player=next;g.surface.direction=approach;g.walking_pose=true;g.gait_clock+=dt;return
  g.face=1 if contact.x>=g.player.x else -1
  mining_method="hammer" if g.tool==3 else ("careful" if Input.is_key_pressed(KEY_SHIFT) else "pick")
  swing_duration=.44 if mining_method=="careful" else SWING
@@ -349,30 +354,35 @@ func draw():
    if not explored:light=.22
    var base=color(k,z).lightened((sin(x*.4+y*.2)*.035+.035) if k==0 else float(h%5)/100).darkened(1-light)
    g.draw_rect(r,base)
-   var texture_rect=Rect2(posmod(x*80,1200),posmod(y*80,1200),80,80)
+   var texture_rect=Rect2(posmod(x*40,600),posmod(y*40,600),40,40)
    if not explored:
-    g.draw_texture_rect_region(STONE,r,texture_rect,Color(.23,.29,.34,1))
+    g.draw_texture_rect_region(STONE,r,texture_rect,Color(.16,.20,.24,1))
     continue
    if k==0:
-    g.draw_texture_rect_region(STONE,r,texture_rect,Color(.7,.8,.8,.17))
-    for j in 16:
-     var q=p+Vector2((h+j*17)%39,(h/7+j*11)%39)
-     g.draw_line(q,q+Vector2(2+j%3,1),base.lightened(.025+(j%3)*.012),1)
-    if h%7==0:
-     var q=p+Vector2(12,21)
-     g.draw_colored_polygon(PackedVector2Array([q,q+Vector2(5,-3),q+Vector2(11,1),q+Vector2(8,5),q+Vector2(2,4)]),base.lightened(.12))
-     g.draw_line(q+Vector2(1,-1),q+Vector2(6,-2),base.lightened(.23),1)
-    if h%11==0:g.draw_polyline(PackedVector2Array([p+Vector2(3,3),p+Vector2(12,11),p+Vector2(10,19),p+Vector2(21,28)]),base.darkened(.22),1)
-    if world.at(c+Vector2i.UP)!=0:g.draw_rect(Rect2(p,Vector2(40,9)),Color(0,0,0,.28))
-    if world.at(c+Vector2i.LEFT)!=0:g.draw_rect(Rect2(p,Vector2(7,40)),Color(0,0,0,.18))
+    g.draw_texture_rect_region(STONE,r,Rect2(texture_rect.position+Vector2(0,627),texture_rect.size),Color(.48,.54,.56,1).darkened(1-light))
+    if world.at(c+Vector2i.UP)!=0:g.draw_rect(Rect2(p,Vector2(40,8)),Color(0,0,0,.22))
+    if world.at(c+Vector2i.LEFT)!=0:g.draw_rect(Rect2(p,Vector2(5,40)),Color(0,0,0,.15))
    else:
     var damage=clampf(float(l.damage.get(id,0))/world.resistance(k),0,.99)
-    # Dark connected bedrock under the faceted faces preserves readable solid boundaries.
-    var exposed=false
-    for side in Deepworks.DIRS:
-     if world.at(c+side)==0:exposed=true;break
-    g.draw_rect(r,color(0,z).darkened(1-light) if exposed else base.darkened(.28))
-    rock_face(c,k,base,damage)
+    # World-space strata are contiguous across solid cells. Only exposed boundaries
+    # receive a cut edge; an unexcavated mountain never becomes a field of boulders.
+    var source=texture_rect
+    if z>=3:source.position+=Vector2(627,627)
+    g.draw_texture_rect_region(STONE,r,source,Color(.64,.74,.79,1).darkened(1-light))
+    if world.at(c+Vector2i.DOWN)==0:
+     var edge=Rect2(p+Vector2(0,22),Vector2(40,18))
+     g.draw_texture_rect_region(STONE,edge,Rect2(Vector2(627+posmod(x*40,600),posmod(y*18,600)),Vector2(40,18)),Color(.59,.65,.68,1).darkened(1-light))
+     g.draw_line(p+Vector2(0,22),p+Vector2(40,22),base.lightened(.27),1.5)
+     g.draw_line(p+Vector2(0,40),p+Vector2(40,40),Color("131e25"),2)
+    for side in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP]:
+     if world.at(c+side)==0:
+      var a=p+Vector2(40 if side==Vector2i.RIGHT else 0,0)
+      var b=a+(Vector2(40,0) if side==Vector2i.UP else Vector2(0,40))
+      g.draw_line(a,b,base.lightened(.22),2)
+    if damage>0:
+     var crack=PackedVector2Array([p+Vector2(9,3),p+Vector2(20,14),p+Vector2(15,22),p+Vector2(28,35)])
+     g.draw_polyline(crack,Color("17242c"),1+damage*3)
+     if damage>.4:g.draw_polyline(PackedVector2Array([p+Vector2(20,14),p+Vector2(30,13),p+Vector2(38,6)]),Color("17242c"),1+damage*2)
     if k in [3,4,5,6]:
      var oc=ore_color(k).darkened(1-light)
      for j in [2,4,7][world.grade(c)]:
@@ -380,9 +390,8 @@ func draw():
       var points=PackedVector2Array([q+Vector2(-3,1),q+Vector2(0,-7 if k==6 else -3),q+Vector2(4,0),q+Vector2(2,5)])
       g.draw_colored_polygon(points,oc);g.draw_line(q+Vector2(0,-4),q+Vector2(0,3),oc.lightened(.3),1)
     if c==aim and g.panel_id=="":
-     var outline=rock_outline(c,damage)
-     for j in outline.size():outline[j]+=p
-     outline.append(outline[0]);g.draw_polyline(outline,Color("efd395"),1.5)
+     # Target uses the actual collision footprint, not an unrelated round prop.
+     g.draw_rect(r.grow(-2),Color("efd395"),false,1.5)
  # Large angular fragments briefly keep the broken face's volume before settling.
  for rock in rubble:
   var progress=1.0-rock.life/.42
@@ -395,26 +404,19 @@ func draw():
  for f in l.features:
   if not f.found:continue
   var p=Deepworks.center(Vector2i(f.x,f.y))
-  if f.type==0:
-   for j in 5:g.draw_arc(p+Vector2(j*17-34,sin(j)*15),20+j*3,0,TAU,20,Color(.3,.55,.63,.24),2)
-  elif f.type==1:
-   for j in 7:
-    var q=p+Vector2(cos(j*1.9)*60,sin(j*1.9)*36)
-    g.draw_colored_polygon(PackedVector2Array([q+Vector2(-9,8),q+Vector2(-4,-14-j*2),q+Vector2(5,-20-j*2),q+Vector2(12,5)]),Color("7dcfcb"))
-    g.draw_line(q+Vector2(2,-16-j*2),q+Vector2(2,6),Color("c5f3df"),2)
+  if f.type in [0,1]:
+   g.surface.world.detail(3,p+Vector2(0,20),110 if f.type==1 else 78)
   else:
-   for j in 4:
-    var q=p+Vector2(j%2*70-35,j/2*70-35)
-    g.draw_rect(Rect2(q-Vector2(12,10),Vector2(24,24)),Color("617779"));g.draw_rect(Rect2(q-Vector2(9,12),Vector2(18,18)),Color("99a69b"))
-    g.draw_line(q+Vector2(-3,-7),q+Vector2(4,1),Color("d8ba75"),2)
-   A.text(g,p+Vector2(-60,70),"THE OATH STILL HOLDS",10,Color("a5b4a7"))
+   for j in 3:
+    var q=p+Vector2((j-1)*55,(j%2)*25)
+    g.surface.world.detail(4,q,48,70)
+   A.text(g,p+Vector2(-60,55),"THE OATH STILL HOLDS",10,Color("b9b4a0"))
  for link in world.data.links.values():
   if z not in [int(link.upper),int(link.lower)]:continue
   var c=Vector2i(link.x,link.y)
   if not l.seen.has(Deepworks.key(c)):continue
   var p=Vector2(c)*40
-  g.draw_rect(Rect2(p+Vector2(4,3),Vector2(32,34)),Color("172630"))
-  for j in 6:g.draw_rect(Rect2(p+Vector2(6+j*.7,5+j*5),Vector2(28-j*1.4,3)),Color("ad9b7c").darkened(j*.08))
+  g.surface.world.detail(5,p+Vector2(20,39),40,38)
   A.text(g,p+Vector2(-4,-70),"E ↓" if z==int(link.upper) else "⇧ E ↑",12,Color("efd395"))
  for id in l.fixtures:
   var xy=id.split(",");lamp(Deepworks.center(Vector2i(int(xy[0]),int(xy[1]))))
@@ -442,45 +444,33 @@ func draw():
   if actor.get("kind","")=="handwork":g.handworks.draw_object(actor)
   elif actor.has("player"):
    var profile=g.state.appearance.duplicate();profile.air_pose=0;profile.gait_time=g.gait_clock
-   var frame=0 if works.mode=="dress" else (4 if strike_left<=IMPACT else 1)
    var pose=g.handworks.work_pose()+Vector2(0,12)
-   if strike_left>0 and works.mode!="dress":
-    var palm=pose+HoldDirectional.hand(profile,(contact-p).normalized(),.55)
-    # A short body lean keeps the original grip and full-size tool in contact.
-    var delta=contact-palm
-    var lean=delta-delta.normalized()*[36.0,40.0,35.0,33.0][g.tool]
-    pose+=lean*clampf((swing_duration-strike_left)/(swing_duration-IMPACT),0,1)
    var facing_dir=(contact-p).normalized() if strike_left>0 else g.surface.direction
-   var action=1-strike_left/swing_duration if strike_left>0 else -1.0
+   var action=1-strike_left/swing_duration if strike_left>0 else 0.0
+   var animation=["pick","shovel","axe","hammer"][g.tool] if strike_left>0 else ""
    if g.handworks.working:
     var station=g.handworks.facility()
-    if not station.is_empty() and not station.job.is_empty():facing_dir=(g.handworks.pos(station)-p).normalized();action=fmod(float(station.job.progress),.42)/.42
-   HoldDirectional.draw(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,action)
+    if not station.is_empty() and not station.job.is_empty():
+     facing_dir=(g.handworks.pos(station)-p).normalized();action=fmod(float(station.job.progress),.42)/.42
+     animation="saw" if station.kind=="saw" else "hammer"
+   elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
+   elif g.handworks.pushing():animation="push"
+   if animation=="" and not g.walking_pose and not g.mining_gun.selected and g.hotbar.item=="":animation=["pick","shovel","axe","hammer"][g.tool];action=0
+   HoldDrawnAnimation.paint(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,animation,action)
    g.draw_set_transform(offset)
    if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
-   if strike_left<=0:g.hotbar.held(g,pose,offset)
+   if animation=="":g.hotbar.held(g,pose,offset)
    g.handworks.carried(pose)
    if bucket_visible():draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
-   if strike_left>0 and works.mode!="dress":
-    var hand=pose+HoldDirectional.hand(profile,facing_dir,action);var progress=1-strike_left/swing_duration
-    var endpoint=contact if progress>=.50 and progress<=.68 else hand+(contact-hand).rotated(-g.face*(1-sin(progress*PI))*.95)
-    if g.mining_gun.selected:g.draw_line(hand,contact,Color("c4f4e2"),3)
-    else:
-     HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,g.tool,offset,g.face,-1,1.0)
-     g.draw_circle(hand,2.5,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
-     if works.mode in ["quarry","dress"]:works.masonry.chisel(p)
+   if strike_left>0 and g.mining_gun.selected:g.draw_line(pose+Vector2(24,-30),contact,Color("c4f4e2"),3)
   else:
    var a=actor.agent
    if a.type=="bot":A.bot(g,p+Vector2(0,10),g.clock,a.work)
    else:
     var profile=g.state.npc(a.id);var assigned=works.model.destination(a.id)
     if a.work and not assigned.is_empty() and assigned.kind=="workshop":
-     var f=0 if works.masonry.data.jobs.has(a.id) else posmod(int(g.clock*8),8);var pose=p+Vector2(0,12)
-     A.dwarf(g,pose,g.clock,false,1,3,false,profile,(f+.1)/8.0)
-     var hand=pose+HoldDirectional.hand(profile,Vector2(1,.45),(f+.1)/8.0)
-     var endpoint=pose+HoldCharacterArt.work_end(f,profile,3)
-     if not works.masonry.data.jobs.has(a.id):HoldCharacterArt.draw_tool(g,hand+offset,endpoint+offset,3,offset)
-     g.draw_circle(hand,2.5,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
+     var phase=fposmod(g.clock,.8)/.8
+     HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,Vector2(1,.45),false,g.clock,1.0,offset,"hammer",phase)
     else:A.dwarf(g,p+Vector2(0,12),g.clock,not a.path.is_empty(),1,3,a.work,profile)
     if works.masonry.data.jobs.has(a.id) and not a.work:works.masonry.carry(p,1,works.masonry.data.jobs[a.id].cargo)
     if works.model.data.assignments.has(a.id):A.text(g,p+Vector2(-35,-81),g.state.npc(a.id).first_name+" · "+works.model.data.folk[a.id].activity,10,Color("dfc695"))
@@ -631,7 +621,8 @@ func draw_haulage():
   A.text(g,p+Vector2(-18,18),str(DeepHaul.amount(a.cargo))+" units",10,Color("e1c997"))
  if not haul.cart().is_empty() and int(haul.cart().depth)==world.depth():
   var cart=haul.cart();var p=haul.cart_pos()+Vector2(28,10) if cart.hitched else haul.cart_pos()
-  g.handworks.sprite(5,p,90);cargo_art(cart.cargo,p+Vector2(15,-28))
+  if not cart.hitched:
+   g.handworks.sprite(5,p,90);cargo_art(cart.cargo,p+Vector2(15,-28))
   A.text(g,p+Vector2(-24,23),"%d / 320" % DeepHaul.amount(cart.cargo),10,Color("ecd39e"))
  if world.depth()==0:
   var p=Deepworks.center(Deepworks.ENTRY)+Vector2(-112,-18)

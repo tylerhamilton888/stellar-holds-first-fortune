@@ -74,6 +74,9 @@ func walls(map:Dictionary)->Array:
  return result
 func obstacles()->Array:return walls(tiles()) if s.area=="claim" else []
 func occupied(c:Vector2i)->bool:
+ if g.fieldwork:
+  for b in g.fieldwork.data().beds:
+   if g.fieldwork.local(b) and center(c).distance_to(g.fieldwork.pos(b))<55:return true
  if g.handworks:
   for f in g.handworks.data().facilities:
    if g.handworks.local(f) and center(c).distance_to(g.handworks.pos(f))<55:return true

@@ -105,24 +105,19 @@ func draw_citizen(c:Dictionary):
 func draw_ground():
  g.draw_rect(Rect2(0,0,1880,1080),Color("28393b"))
  tile(0,Rect2(80,180,1720,840),160,Color("aab5ae") if s.area=="forgeward" else Color("d3d4bd"))
- # Visible parapets match the navigation envelope; no invisible courtyard edges.
- for y in range(180,1020,60):
-  for x in [80,1775]:
-   s.house.material(3,Rect2(x,y,25,60))
-   g.draw_line(Vector2(x,y),Vector2(x,y+60),Color("b5b295"),3)
- for x in range(80,1800,80):
-  s.house.material(3,Rect2(x,995,80,25))
-  g.draw_line(Vector2(x,995),Vector2(x+80,995),Color("b5b295"),3)
- # Inlaid processional streets and a circular civic plaza make the hold legible.
- for x in [215,1648]:
-  g.draw_line(Vector2(x,220),Vector2(x,995),Color("b6a078"),5)
- for y in [520,740,980]:g.draw_line(Vector2(115,y),Vector2(1770,y),Color("b6a078"),4)
- g.draw_arc(Vector2(970,635),125,0,TAU,64,Color("b7a27e"),7)
- g.draw_arc(Vector2(970,635),115,0,TAU,64,Color("3e5453"),3)
- # Buttressed perimeter is scenery, beyond the navigation boundary.
- for x in range(80,1840,160):
-  g.draw_style_box(stone_style(Color("53635f")),Rect2(x,120,151,65))
-  g.draw_style_box(stone_style(Color("889080")),Rect2(x+7,110,137,18))
+ # The hold opens onto a deep mountain terrace, bounded by substantial masonry.
+ # Broad shadow and coping follow the collision envelope, without thin repeated strips.
+ for x in range(90,1780,170):
+  detail(2,Vector2(x+85,206),176,70)
+  detail(2,Vector2(x+85,1040),176,70)
+ for side in [80,1780]:
+  g.draw_rect(Rect2(side-12,207,30,790),Color("28383b"))
+  g.draw_line(Vector2(side,208),Vector2(side,995),Color("8a9384"),8)
+  g.draw_line(Vector2(side+5,208),Vector2(side+5,995),Color("c0b793"),2)
+  for y in [330,580,830]:detail(4,Vector2(side,y),58,90)
+ for y in [520,740,980]:
+  g.draw_line(Vector2(115,y),Vector2(1770,y),Color("6d786a"),3)
+ g.draw_arc(Vector2(970,635),125,0,TAU,64,Color("a39170"),4)
  for p in [Vector2(180,450),Vector2(1700,450),Vector2(680,800),Vector2(1130,820)]:s.furniture(p,"lamp")
 func stone_style(color:Color)->StyleBoxFlat:
  if styles.has(color):return styles[color]
@@ -158,8 +153,8 @@ func draw_landmark(o:Dictionary):image_at(LANDMARKS,LAND_RECTS[o.art],LAND_ANCHO
 func room_objects()->Array:
  var result=[];var id=g.room_id
  if id=="tavern":
-  result.append(furn(0,460,365,300))
-  for x in [270,440,610]:result.append(furn(4,x,510,150))
+  result.append(furn(0,400,350,190))
+  for x in [270,440,610]:result.append(furn(4,x,495,94))
  elif id in ["forge","practice"]:result=[furn(1,330,390,245),furn(2,685,350,130)]
  elif id=="market":result=[furn(5,400,385,280),furn(3,710,340,100)]
  elif id in ["commission","research"]:result=[furn(2,620,365,175),furn(3,270,365,130),furn(3,420,365,130)]
@@ -171,9 +166,7 @@ func room_obstacles()->Array:
  for o in room_objects():result.append(furn_footprint(o))
  if g.room_id=="home":result.append(Rect2(264,343,52,82))
  if g.room_id=="forge":
-  var contact=Vector2(620,410)+HoldCharacterArt.work_end(4,g.state.npc("borin"),3)*Vector2(-1,1)*.85
-  var h=410-contact.y;var w=h*563.0/560.0
-  result.append(Rect2(contact.x-w*.70,395,w,15))
+  result.append(Rect2(558,425,48,28))
  if g.room_id=="throne":
   result.append(Rect2(565,295,110,85))
   for x in [350,710]:result.append(Rect2(x-5,435,42,18))
@@ -183,6 +176,10 @@ func furn_footprint(o:Dictionary)->Rect2:
  var depth=o.width*(.22 if o.art==3 else .35)
  return Rect2(o.p-Vector2(o.width*.46,depth),Vector2(o.width*.92,depth-5))
 func draw_furnishing(o:Dictionary):
+ if o.art==0:
+  detail(0,o.p,o.width,o.width*.47);return
+ if o.art==4:
+  detail(1,o.p,o.width,o.width*.60);return
  var r=FURN_RECTS[o.art]
  image_at(FURNISHINGS,r,Vector2(r.get_center().x,r.end.y),o.p,o.width)
 func draw_room_floor():
@@ -256,3 +253,10 @@ func speech_overlay():
  var r=Rect2(28,87,410,26+lines.size()*20)
  g.draw_style_box(stone_style(Color("18373c")),r)
  for i in lines.size():HoldSurface.A.text(g,r.position+Vector2(13,24+i*20),lines[i],14,Color("e4d4b0"))
+
+const DETAILS=preload("res://assets/animation-v51/environment.png")
+const DETAIL_RECTS=[Rect2(46,170,468,249),Rect2(562,95,349,331),Rect2(968,156,528,255),Rect2(46,524,424,411),Rect2(530,488,406,460),Rect2(996,596,509,319)]
+func detail(index:int,p:Vector2,width:float,height:float=-1):
+ var r=DETAIL_RECTS[index]
+ if height<0:height=width*r.size.y/r.size.x
+ g.draw_texture_rect_region(DETAILS,Rect2(p-Vector2(width/2,height),Vector2(width,height)),r)

@@ -20,45 +20,28 @@ static func struck_between(before:float,after:float)->bool:
  return false
 
 static func smith(n:Node2D,p:Vector2,t:float,lit:bool):
- var profile=n.state.npc("borin");var facing=-1
- var zoom=n.character_scale() if n.has_method("character_scale") else 1.0
- var offset=A.draw_offset;var frame=smith_frame(t) if lit else -1
- var contact=p+HoldCharacterArt.work_end(4,profile,3)*Vector2(facing,1)*zoom
- # Anvil and billet share the actual hammer contact, including the interior's scale.
- var height=p.y-contact.y;var width=height*563.0/560.0
- n.draw_texture_rect(ANVIL,Rect2(contact.x-width*.70,contact.y,width,height),false)
+ var profile=n.state.npc("borin");var zoom=n.character_scale();var offset=A.draw_offset
+ var f=smith_frame(t) if lit else -1
+ var phase=(f+.1)/8.0 if f>=0 else 0.0
+ var contact=p+Vector2(-47,-8)*zoom
+ HoldDrawnAnimation.paint(n,p+offset,profile,Vector2(-1,.45),false,t,zoom,offset,"hammer",phase)
+ n.draw_texture_rect(ANVIL,Rect2(contact.x-25*zoom,contact.y,51*zoom,50*zoom),false)
  A.rect(n,contact.x-6*zoom,contact.y-zoom,12*zoom,zoom,"e4a66b" if lit else "909b9a")
- A.dwarf(n,p,t,false,facing,0,false,profile,(frame+.1)/8.0 if frame>=0 else -1.0)
- if frame<0:return
- var action=(frame+.1)/8.0
- var hand=p+HoldDirectional.hand(profile,Vector2(facing,.45),action,zoom)
- var head=contact if frame==4 else contact+Vector2(-14,-32)*absf(.5-action)*2
- HoldCharacterArt.draw_tool(n,hand+offset,head+offset,3,offset,facing,-1,zoom)
- n.draw_circle(hand,2.5*zoom,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
- if frame==4:
-  var a=fposmod(t,.2)/.2
+ if f==4:
   for i in 3:
-   var q=contact+Vector2((i-1)*9*a,-sin(a*PI)*7)*zoom
-   A.line(n,q,q+Vector2(i-1,-2)*zoom,Color(1,.75,.38,(1-a)*.7),zoom)
+   var q=contact+Vector2((i-1)*7,-4)*zoom
+   A.line(n,q,q+Vector2(i-1,-3)*zoom,Color("e8ba6f"),zoom)
 
 static func sip_amount(t:float)->float:
  var phase=fposmod(t,22.0)
  if phase<12 or phase>=18:return 0.0
  return smoothstep(12.0,14.0,phase) if phase<14 else (1.0 if phase<16 else 1.0-smoothstep(16.0,18.0,phase))
 static func social(n:Node2D,p:Vector2,t:float,facing:int,profile:Dictionary,drinking:bool):
- if not drinking:
-  A.dwarf(n,p,t,false,facing,0,false,profile);return
- var sip=sip_amount(t);var angle=sip*2.4
- var zoom=n.character_scale() if n.has_method("character_scale") else 1.0
- var offset=A.draw_offset
- HoldDirectional.draw(n,p+offset,profile,Vector2(facing,.45),false,t,zoom,offset,-1,angle)
- var hand=HoldDirectional.hand(profile,Vector2(1,.45),-1,1.0,angle)
- if tankard_texture==null:
-  tankard_texture=AtlasTexture.new();tankard_texture.atlas=TANKARD;tankard_texture.region=TANKARD.get_image().get_used_rect()
- # Grip stays anchored through a dedicated lift, sip pause and gentle lowering.
- var grip=p+hand*Vector2(facing,1)*zoom
- n.draw_set_transform(grip+offset,.12*sip*facing,Vector2(-facing,1)*zoom)
- var width=18.0;var height=width*tankard_texture.get_height()/tankard_texture.get_width()
- n.draw_texture_rect(tankard_texture,Rect2(Vector2(-15,-8),Vector2(width,height)),false)
- n.draw_circle(Vector2.ZERO,2.2,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
- n.draw_set_transform(offset)
+ if not drinking:A.dwarf(n,p,t,false,facing,0,false,profile);return
+ var t22=fposmod(t,22.0)
+ var frame=0
+ if t22>=12 and t22<13:frame=1
+ elif t22>=13 and t22<16:frame=2
+ elif t22>=16 and t22<17:frame=1
+ elif t22>=17 and t22<18:frame=3
+ HoldDrawnAnimation.paint(n,p+A.draw_offset,profile,Vector2(facing,.45),false,t,n.character_scale(),A.draw_offset,"drink",frame)

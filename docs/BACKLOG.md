@@ -1,3 +1,6 @@
+## After 0.51.0
+Player acceptance of work contacts, carry silhouettes, Windows launch and audio. Refine the short gait cycles, additional directional work/haul poses and remaining older prop styles beside the gold-standard Dwarfs. Implement general cart/wagon portal and Z navigation with cargo conservation before claiming cross-zone logistics. Raw-workstation/farm NPC operation, more crop/fish species and broader schedules remain future work. Preserve the existing verified mining and industry automation.
+
 ## After 0.50.0
 Player acceptance of Windows build, audio, wayfinding and collision. Extend ambient routes into richer schedules only without removing reliable quest/service access. Dedicated sparring remains the existing combat mode behind the new top-down practice hall. Retain labeled private homes; expansion into additional enterable residences is future work. Existing Hands of the Dwarf deferred work below remains open.
 

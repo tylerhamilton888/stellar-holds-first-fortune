@@ -1,20 +1,18 @@
-Art direction: [ART_DIRECTION.md](ART_DIRECTION.md) — current in-world Dwarf models are the benchmark; portrait/cutscene treatment may vary.
-
 # Authoritative project index
-Updated 2026-10-18 UTC. Gameplay **0.50.0**, checkpoint **world-0.50.0**.
+Updated 2026-10-19 UTC. Build **0.51.0**, recovery checkpoint **labor-0.51.0**. Art authority: ART_DIRECTION.md.
 
-Collection: **The Stellar Holds - Development**. Restore versioned artifacts if the temporary checkout `/workspace/scratch/a447fc5d46ab/stellar-holds` is unavailable.
+Collection: The Stellar Holds - Development. Restore versioned artifacts if the temporary checkout is unavailable.
 
 | Artifact | Purpose |
 |---|---|
-| `Stellar-Holds-First-Fortune-0.50.0-Windows.zip` | Walkable Keldrath, connected top-down zones, citizens and modular interiors, with tested doors, stairs and bridge collision. Extract entirely, run PLAY-WINDOWS.bat. |
-| `Stellar-Holds-0.50.0-Source.zip` | Full source/assets/tests/docs; open project.godot in Godot 4.4.1. |
-| `Stellar-Holds-0.50.0.bundle` | Full Git recovery history, including pre-change checkpoints. |
-| `Stellar-Holds-0.50.0-Docs.zip` | Documentation, visual evidence and release verification. |
-| `SESSION_HANDOFF.md` | Current resumption notes, also in source docs. |
+| Stellar-Holds-First-Fortune-0.51.0-Windows.zip | Playable integrated game; extract completely and run PLAY-WINDOWS.bat. |
+| Stellar-Holds-0.51.0-Source.zip.part1 / part2 | Complete source/assets/tests/docs. Join parts as explained in Recovery.txt. |
+| Stellar-Holds-0.51.0.bundle.part1 / part2 | Full Git history and all prior recovery tags. Join before cloning. |
+| Stellar-Holds-0.51.0-Docs.zip | Documentation and native review evidence. |
+| Stellar-Holds-0.51.0-Recovery.txt | Reassembly, checksums, restoration and rollback instructions. |
+| SESSION_HANDOFF.md | Current implementation and known limitations. |
+| PLAYTEST_GUIDE.md | Practical player test route. |
 
-Visual follow-up: measured directional sprite bounds, hair/shadow palette continuity, cleaner sipping forearm, detailed tankards and consistent mine/workshop props.
+This pass adds drawn work/handling bodies, continuous mine strata, matched workshop/cargo props, an earned 24-load freight wagon, and optional persistent fishing/gardening. Existing top-down zones, houses/Z levels, quests, mining, inventory, industry and automation remain integrated. Four-frame gait refinement, new raw-workstation automation and general wagon travel across portals/depths remain follow-up work. See CURRENT_STATUS.md and testing/labor-0.51.0.md for precise verification boundaries.
 
-Current milestone: player-built physical workshops, raw stone/timber ownership, carrying, quantity-representative stockpiles and short hold-E processing. Full Hands of the Dwarf quality/mastery/new-station automation remain deferred. Earlier milestones: freeform multilevel houses with real roof access, same-XY stairs/ladders, per-floor furniture/storage, building lesson and directional Dwarf locomotion. Connected walkable zones and existing progression remain. The complete optional stonework loop, physical stockpiles, teaching quest and worker handover remain integrated. See PLAYTEST_GUIDE.md. Existing foundation: functional physical workshops/bedrooms, furniture, masonry, three research capabilities, conservative staffed-room benefits and Brann's optional carving opportunity. Existing Deepworks and hauling remain. See CURRENT_STATUS.md for limits; Windows execution remains unverified on this Linux host.
-
-Previous **0.46.0 walkable zones**, **0.45.1 masonry polish**, **0.45.0 masonry**, **0.44.0 routes/story art**, **0.43.1 visual polish**, **0.43.0 Living Works**, **0.42.0 Weight of the Mountain**, **0.41.0 Deepworks**, **0.40.0 Pinewood** and older backups remain unchanged. Pre-living tag `pre-living-20261018` preserves ac97dc983e623543f385aa3e7794057ae16b6152. No remote changed or pushed. Rollback requires matching prior game and prior save copies.
+Earlier releases remain unchanged, including 0.50.0 Walkable Keldrath. `pre-animation-0.51.0` retains its exact source checkpoint. No remote was changed or pushed. Rollback uses the older build and its untouched backup save.

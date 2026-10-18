@@ -2,6 +2,9 @@ class_name HoldData
 extends RefCounted
 
 const ITEMS = {
+ "river_fish":{"name":"River trout","price":6,"color":"83c9bf"},
+ "turnip":{"name":"Turnip","price":4,"color":"bd81bb"},
+ "turnip_seed":{"name":"Turnip seed","price":1,"color":"c6ad78"},
  "rough_block":{"name":"Rough stone block","price":3,"color":"829a9c"},
  "dressed_stone":{"name":"Dressed stone","price":4,"color":"b4bda8"},
  "energy_cell":{"name":"Runic energy cell","price":30,"color":"7fdccd"},
@@ -24,6 +27,8 @@ const ITEMS = {
  "assembly": {"name":"Drive assembly", "price":95, "color":"a6dfc7"}
 }
 const RECIPES = {
+ "trout_supper":{"name":"Roast trout provisions","cost":{"river_fish":1,"wood":1},"out":{"food":3},"time":3.0,"tech":""},
+ "turnip_stew":{"name":"Turnip stew provisions","cost":{"turnip":2,"water":1},"out":{"food":3},"time":3.0,"tech":""},
  "energy_cell":{"name":"Charge 3 runic cells","cost":{"crystal":1,"copper":1,"coal":2},"out":{"energy_cell":3},"time":6.0,"tech":"thermal"},
  "iron_slag":{"name":"Quench iron slag","cost":{"iron_slag":2,"water":1},"out":{"iron":1},"time":2.0,"tech":"thermal"},
  "copper_slag":{"name":"Quench copper slag","cost":{"copper_slag":2,"water":1},"out":{"copper":1},"time":2.0,"tech":"thermal"},

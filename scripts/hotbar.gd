@@ -18,7 +18,7 @@ func available()->bool:return g.playing and g.panel_id=="" and not is_instance_v
 func bar_y()->float:return 80.0 if (g.player-g.camera).y>430 else 414.0
 func slot_rect(i:int)->Rect2:return Rect2(230+i*50,bar_y()+24,46,51)
 func over()->bool:return available() and Rect2(224,bar_y(),512,80).has_point(g.get_global_mouse_position())
-func blocked_work()->bool:return item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!=""
+func blocked_work()->bool:return item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!="" or g.fieldwork.placing or g.fieldwork.action!="" or not g.handworks.setting_down.is_empty()
 func title(id:String)->String:
  if id.begins_with("tool:"):return g.TOOL_NAMES[clampi(int(id.get_slice(":",1)),0,3)]
  if id=="slagcaster":return "Slagcaster"
@@ -73,6 +73,7 @@ func _draw():
  elif not id.begins_with("tool:"):text+=" · %d in pack" % g.state.count(id)
  var held=g.handworks.held_label()
  if held!="":text=held
+ if g.fieldwork.action!="":text=g.fieldwork.held_label()
  draw_string(ThemeDB.fallback_font,Vector2(238,bar_y()+17),text,HORIZONTAL_ALIGNMENT_LEFT,480,13,Color("ead6ab"))
  for i in 10:
   var r=slot_rect(i);var key=str(d.slots[i]);var chosen=i==current
@@ -87,13 +88,15 @@ func _draw():
   var count="LOCK" if locked else (str(g.state.count(key)) if resource else "")
   draw_string(ThemeDB.fallback_font,r.position+Vector2(3,46),count,HORIZONTAL_ALIGNMENT_RIGHT,39,11,Color("cdded4"))
 func held(n:Node2D,p:Vector2,reset:Vector2):
- if g.handworks.busy_hands():return
+ if g.handworks.busy_hands() or g.fieldwork.action!="":return
  if item=="":
   if g.mining_gun.selected:return
   var direction=g.surface.direction
   var scale=g.character_scale()
-  var hand=p+HoldDirectional.hand(g.state.appearance,direction,-1,scale)
-  HoldCharacterArt.draw_tool(n,hand+reset,hand+reset+Vector2(10,-23)*scale,g.tool,reset,1,-1,scale*.7)
+  var hand=p+HoldDrawnAnimation.grip(g.state.appearance,direction,g.gait_clock,g.walking_pose,scale)
+  HoldCharacterArt.draw_tool(n,hand+reset,hand+reset+Vector2((-10 if direction.x<-.3 else 10),-23)*scale,g.tool,reset,(-1 if direction.x<-.3 else 1),-1,scale*.8)
+  n.draw_set_transform(reset)
+  if g.walking_pose:HoldDrawnAnimation.grip_foreground(n,p,g.state.appearance,direction,g.gait_clock,scale,reset)
   return
  if g.state.count(item)<=0:return
  HoldItemArt.draw(n,Rect2(p+Vector2(-10,-40),Vector2(20,20)),HoldItemArt.item_index(item),HoldItemArt.tint(item))

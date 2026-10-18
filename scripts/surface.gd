@@ -22,6 +22,8 @@ var direction=Vector2.DOWN
 var foot=0.0
 var cut_clock=0.0
 var cut_target=-1
+var cut_struck=false
+var cut_approach=false
 var cut_flash=0.0
 var route_hint=""
 var ground_cache={}
@@ -202,6 +204,7 @@ func base_obstacles()->Array:
 func obstacles()->Array:
  var list=base_obstacles()
  list.append_array(house.obstacles())
+ if g.fieldwork:list.append_array(g.fieldwork.obstacles())
  for c in g.state.surface.chests.values():
   if house.local(c):list.append(Rect2(Vector2(c.x,c.y)-Vector2(20,24),Vector2(40,26)))
  for d in g.state.surface.decor:
@@ -219,6 +222,7 @@ func walkable(p:Vector2)->bool:
   if r.grow(10).has_point(p):return false
  return true
 func move(dt:float):
+ if g.handworks.approaching or g.fieldwork.moving:return
  var input=Input.get_vector("left","right","up","down")
  if input!=Vector2.ZERO:direction=input
  var delta=input*185*dt
@@ -310,6 +314,7 @@ func chest_panel():
   g.small_button(line,"Store 10",func():transfer(key,10,true);g.open_panel("storage",false))
   g.small_button(line,"Take 10",func():transfer(key,10,false);g.open_panel("storage",false))
 func home_panel():
+ g.button(g.panel_body,"River & Root · fishing and gardening",func():g.open_panel("fieldwork"))
  g.button(g.panel_body,"Craft workstations & stockpiles · Shift+B",func():g.open_panel("handworks"))
  ensure();g.label(g.panel_body,"A HEARTH OF YOUR OWN",22,Color("edc98a"))
  if g.state.claim_id=="":g.label(g.panel_body,"Your mountain charter includes a starter cottage and a storage chest.");return
@@ -340,6 +345,7 @@ func guide_panel():
   g.label(g.panel_body,text,16)
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
+ cut_approach=false
  HoldForestry.ensure(g.state)
  if g.hotbar.blocked_work() or g.tool!=2 or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):cut_clock=0;cut_target=-1;return
  var aim=g.get_global_mouse_position()+g.camera;var best=-1;var dist=80.0
@@ -348,11 +354,17 @@ func chop(dt:float):
   var d=aim.distance_to(TREES[i]-Vector2(0,25))
   if d<dist and g.player.distance_to(TREES[i])<105:dist=d;best=i
  if best<0:cut_clock=0;return
- if best!=cut_target:cut_clock=0;cut_target=best
+ if best!=cut_target:cut_clock=0;cut_target=best;cut_struck=false
  g.face=1 if TREES[best].x>g.player.x else -1
+ var stance=TREES[best]+Vector2(-g.face*42,-15)
+ if Input.get_vector("left","right","up","down")==Vector2.ZERO and g.player.distance_to(stance)>3:
+  var step=g.player.move_toward(stance,185*dt)
+  if walkable(step):
+   direction=(stance-g.player).normalized();g.player=step;g.walking_pose=true;g.gait_clock+=dt;cut_approach=true;cut_clock=0;cut_struck=false;return
  cut_clock+=dt
- if cut_clock<.36:return
- cut_clock-=.36;cut_flash=.16
+ if cut_clock>=.36:cut_clock=fmod(cut_clock,.36);cut_struck=false
+ if cut_clock<.18 or cut_struck:return
+ cut_struck=true;cut_flash=.16
  var is_log=g.state.road_trees[best]<=0
  if is_log:
   if HoldForestry.fall_age(g.state,best)<HoldForestry.FALL_TIME:return
@@ -408,6 +420,7 @@ func draw():
  if area=="pinewood":
   for i in TREES.size():objects.append({"p":TREES[i],"kind":"tree","i":i})
  objects.append_array(g.handworks.objects())
+ objects.append_array(g.fieldwork.objects())
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.p.y<b.p.y)
  for o in objects:
   g.draw_set_transform(-cam)
@@ -415,6 +428,7 @@ func draw():
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":world.draw_furnishing(o)
   elif o.kind=="citizen":world.draw_citizen(o)
+  elif o.kind=="garden":g.fieldwork.draw_bed(o.bed)
   elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
   elif o.kind=="npc":
@@ -428,6 +442,10 @@ func draw():
   elif o.kind=="wall":house.wall_draw(o.c)
   elif o.kind=="tree":draw_fir(o.p,int(o.i))
   else:furniture(o.p,o.kind)
+ if g.handworks.working:
+  var station=g.handworks.facility()
+  if not station.is_empty() and not station.job.is_empty():
+   HoldDrawnAnimation.work_foreground(g,g.player,g.state.appearance,(g.handworks.pos(station)-g.player).normalized(),.85,-cam,"saw" if station.kind=="saw" else "hammer",fmod(float(station.job.progress),.42)/.42)
  g.draw_set_transform(-cam)
  house.roof_draw()
  if area in ["hearthward","crownward","forgeward"]:
@@ -460,6 +478,7 @@ func draw():
     plaque(screen,g.state.npc(g.state.tracked_npc).first_name+" · "+("door" if here else "take stairs"))
  world.speech_overlay()
  g.handworks.overlay()
+ g.fieldwork.draw()
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.04,.055,.48))
 func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
  var is_player=p==g.player
@@ -469,29 +488,29 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
  var look=profile.duplicate();look.air_pose=0
  var aim=direction if is_player else Vector2(face,.45)
  var action=-1.0
- if is_player and cut_target>=0:aim=(TREES[cut_target]-p).normalized();action=clampf(cut_clock/.36,0,1)
+ if is_player and cut_target>=0 and not cut_approach:aim=(TREES[cut_target]-p).normalized();action=clampf(cut_clock/.36,0,1)
  elif is_player and house.impact>0:aim=(house.contact-p).normalized();action=1-house.impact/.24
  if is_player and g.handworks.working:
   var station=g.handworks.facility()
   if not station.is_empty() and not station.job.is_empty():aim=(g.handworks.pos(station)-p).normalized();action=fmod(float(station.job.progress),.42)/.42
- HoldDirectional.draw(g,p-cam,look,aim,walking,time,.85,-cam,action)
- g.draw_set_transform(-cam)
- if is_player and house.impact>0:
-  var hand=p+HoldDirectional.hand(look,aim,action,.85);var contact=house.contact-Vector2(0,5)
-  var phase=1-house.impact/.24;var end=hand+(contact-hand).limit_length(43).rotated(-g.face*(1-phase)*.7)
-  HoldCharacterArt.draw_tool(g,hand-cam,end-cam,1,-cam,g.face,-1,.7)
-  for i in 5:g.draw_circle(contact+Vector2.from_angle(i*1.3)*phase*18,1.5,Color("c9bb92"))
- if is_player and area=="pinewood" and cut_target>=0:
-  var hand=p+HoldDirectional.hand(look,aim,action,.85)
-  var target=TREES[cut_target]-Vector2(0,18)
-  var end=hand+(target-hand).normalized()*35
-  end=hand+(end-hand).rotated(-face*(1-clampf(cut_clock/.36,0,1))*.8)
-  HoldCharacterArt.draw_tool(g,hand-cam,end-cam,2,-cam,face,-1,.9)
-  if cut_flash>0:
-   for i in 7:g.draw_circle(target+Vector2.from_angle(i*.9)*(8+( .16-cut_flash)*90),2,Color("d7b079"))
+ var animation=""
  if is_player:
-  if action<0:g.hotbar.held(g,p,-cam)
+  if cut_target>=0 and not cut_approach:animation="axe"
+  elif house.impact>0:animation="hammer"
+  elif g.handworks.working:
+   var station=g.handworks.facility();animation="saw" if not station.is_empty() and station.kind=="saw" else "hammer"
+  elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
+  elif g.handworks.pushing():animation="push"
+ if is_player and animation=="" and not walking and not g.mining_gun.selected and g.hotbar.item=="":animation=["pick","shovel","axe","hammer"][g.tool];action=0
+ if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
+ HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
+ g.draw_set_transform(-cam)
+ if is_player:
+  if action<0 and animation=="":g.hotbar.held(g,p,-cam)
   g.handworks.carried(p)
+  if cut_flash>0 and cut_target>=0:
+   var target=TREES[cut_target]-Vector2(0,18)
+   for i in 7:g.draw_circle(target+Vector2.from_angle(i*.9)*(8+(.16-cut_flash)*90),2,Color("d7b079"))
 func plaque(p:Vector2,text:String):
  var width=ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+18
  var style=StyleBoxFlat.new();style.bg_color=Color(.06,.13,.16,.9);style.border_color=Color("9b885e");style.set_border_width_all(1);style.set_corner_radius_all(3)

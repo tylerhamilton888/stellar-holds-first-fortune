@@ -2,21 +2,24 @@ class_name HoldHandworks
 extends RefCounted
 # Raw records have exactly one owner: ground, shoulders, a rack or a vehicle.
 # Processed output uses existing resource dictionaries and DeepHaul.transfer.
-const ART=preload("res://assets/handworks-v49/workshop-empty.png")
+const ART=preload("res://assets/animation-v51/workshop.png")
 const SPECS={
  "breaker":{"name":"Stonebreaker","cost":{"wood":3,"stone":4},"art":0,"accept":"stone","capacity":4},
  "saw":{"name":"Sawbench","cost":{"wood":5,"stone":2},"art":1,"accept":"log","capacity":4},
  "stone_pile":{"name":"Stone stockpile","cost":{"wood":2,"stone":2},"art":2,"accept":"stone","capacity":12},
  "timber_pile":{"name":"Timber stockpile","cost":{"wood":4},"art":3,"accept":"log","capacity":12},
  "store":{"name":"Materials pallet","cost":{"wood":3},"art":4,"accept":"processed","capacity":200},
+ "wagon":{"name":"Freight wagon","cost":{"wood":12,"iron":4},"art":9,"accept":"all","capacity":24},
  "cart":{"name":"Handcart","cost":{"wood":6,"iron":2},"art":5,"accept":"all","capacity":8}}
 const OUTPUTS=["stone","wood","dressed_stone","iron_ore","copper_ore","coal","crystal"]
 var g
 var placing=""
 var active_id=""
 var working=false
+var approaching=false
 var last_beat=-1
 var lift=0.0
+var setting_down:Dictionary={}
 var textures={}
 func _init(game):g=game
 func data()->Dictionary:
@@ -26,22 +29,21 @@ func context()->String:
  if g.zone=="mine":return "mine:"+g.state.active_site+":"+str(g.deep.world.depth())
  return "surface:"+g.surface.area+":"+str(g.surface.house.level() if g.surface.area=="claim" else 0)
 func local(o:Dictionary)->bool:return o.get("area","")==context()
+func vehicle(f:Dictionary)->bool:return f.get("kind","") in ["cart","wagon"]
 func pos(o:Dictionary)->Vector2:return Vector2(o.x,o.y)
 func busy_hands()->bool:
- if working or not data().carry.is_empty():return true
+ if working or not data().carry.is_empty() or not setting_down.is_empty():return true
  var cart=nearby_cart()
  return not cart.is_empty() and cart.hitched
-func work_pose()->Vector2:
- if not working:return g.player
- var f=facility()
- return g.player+(pos(f)-g.player).normalized()*20 if not f.is_empty() else g.player
+func work_pose()->Vector2:return g.player
 func held_label()->String:
+ if not setting_down.is_empty():return "Setting down · "+str(setting_down.kind)
  if working:
   var f=facility()
   if not f.is_empty():return "Working · "+SPECS[f.kind].name
  if not data().carry.is_empty():return "Carrying · "+("stone chunk" if data().carry[0].kind=="stone" else "raw log")+" · %d / %d" % [data().carry.size(),capacity()]
  var cart=nearby_cart()
- return "Pushing · Handcart · %d / 8 loads" % cart.raw.size() if not cart.is_empty() and cart.hitched else ""
+ return "Pushing · %s · %d / %d loads" % [SPECS[cart.kind].name,cart.raw.size(),SPECS[cart.kind].capacity] if not cart.is_empty() and cart.hitched else ""
 func capacity()->int:return 2 if int(data().skills.mason)+int(data().skills.forester)>=8 else 1
 func award(path:String):data().skills[path]=int(data().skills.get(path,0))+1
 func spawn(kind:String,p:Vector2,units:int,source:String=""):
@@ -67,13 +69,13 @@ func closest(list:Array,radius:float=78)->Dictionary:
 func facility()->Dictionary:
  var fixed=[]
  for f in data().facilities:
-  if f.kind!="cart" or not f.hitched:fixed.append(f)
+  if not vehicle(f) or not f.hitched:fixed.append(f)
  var f=closest(fixed,90)
  return closest(data().facilities,90) if f.is_empty() else f
 func nearby_cart()->Dictionary:
  var carts=[]
  for f in data().facilities:
-  if f.kind=="cart":carts.append(f)
+  if vehicle(f):carts.append(f)
  return closest(carts,100)
 func can_place(p:Vector2)->bool:
  if g.player.distance_to(p)>140:return false
@@ -97,6 +99,7 @@ func can_place(p:Vector2)->bool:
   if local(f) and pos(f).distance_to(p)<80:return false
  return clear_line(g.player,p)
 func build(kind:String,p:Vector2)->bool:
+ if kind=="wagon" and capacity()<2:g.notify("Freight wagon plans unlock with Strong Shoulders: eight productive masonry/forestry jobs.");return false
  p=(p/20).round()*20
  if not SPECS.has(kind) or not can_place(p):g.notify("Choose clear floor nearby, away from doors, stairs and other furniture.");return false
  if not g.state.pay(SPECS[kind].cost):g.notify("Bring the construction materials in your pack.");return false
@@ -110,9 +113,9 @@ func deposit(f:Dictionary)->int:
  for i in range(carry.size()-1,-1,-1):
   if f.raw.size()>=SPECS[f.kind].capacity or not accepts(f,carry[i]):continue
   f.raw.append(carry.pop_at(i));moved+=1
- if f.kind=="cart":
+ if vehicle(f):
   for r in data().loose.duplicate():
-   if f.raw.size()>=SPECS.cart.capacity:break
+   if f.raw.size()>=SPECS[f.kind].capacity:break
    if local(r) and pos(r).distance_to(pos(f))<90 and clear_line(pos(r),pos(f)):data().loose.erase(r);f.raw.append(r);moved+=1
  elif f.kind in ["stone_pile","timber_pile"]:
   var cart=nearby_cart()
@@ -128,12 +131,14 @@ func deposit(f:Dictionary)->int:
 func withdraw(f:Dictionary)->int:
  var moved=0
  if not f.cargo.is_empty():moved=DeepHaul.transfer(f.cargo,g.state.inventory)
- elif not f.raw.is_empty() and data().carry.size()<capacity():data().carry.append(f.raw.pop_back());moved=1;lift=.3
+ elif not f.raw.is_empty() and data().carry.size()<capacity():data().carry.append(f.raw.pop_back());setting_down={};moved=1;lift=.35
  return moved
 func drop()->bool:
  var d=data()
  if d.carry.is_empty():return false
- var r=d.carry.pop_back();r.area=context();r.x=g.player.x;r.y=g.player.y+8;d.loose.append(r);lift=.3;g.save_game();return true
+ var r=d.carry.pop_back();r.area=context();r.x=g.player.x;r.y=g.player.y+8;d.loose.append(r);lift=.35
+ if d.carry.is_empty():setting_down=r.duplicate(true)
+ g.save_game();return true
 func input(e:InputEvent)->bool:
  if not g.playing or g.panel_id!="" or g.room_id=="training":return false
  if e is InputEventKey and e.pressed and not e.echo:
@@ -141,11 +146,17 @@ func input(e:InputEvent)->bool:
   if e.keycode==KEY_Q and drop():return true
   if e.keycode==KEY_C:
    var f=nearby_cart()
-   if not f.is_empty() and f.kind=="cart":f.hitched=not f.hitched;g.save_game();return true
+   if not f.is_empty() and vehicle(f):
+    if not data().carry.is_empty():g.notify("Set your shoulder load down before taking the handles.");return true
+    f.hitched=not f.hitched
+    if not f.hitched:
+     var parked=g.player+Vector2(-45 if g.surface.direction.x<-.3 else 45,10)
+     if clear_line(g.player,parked):f.x=parked.x;f.y=parked.y
+    g.save_game();return true
   if e.keycode==KEY_E:
    var f=facility();var raw=closest(data().loose,65)
    if not raw.is_empty() and not e.shift_pressed and data().carry.size()<capacity() and (f.is_empty() or g.player.distance_to(pos(raw))+15<g.player.distance_to(pos(f))):
-    data().loose.erase(raw);data().carry.append(raw);lift=.35;data().facts.lift=true;g.save_game();return true
+    data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;g.save_game();return true
    if not f.is_empty():
     if e.shift_pressed:withdraw(f)
     elif f.kind in ["breaker","saw"]:active_id=f.id;begin(f)
@@ -153,7 +164,7 @@ func input(e:InputEvent)->bool:
     g.save_game();return true
    if not raw.is_empty():
     if data().carry.size()>=capacity():g.notify("Shoulders full. Q sets one down; E deposits at a rack.");return true
-    data().loose.erase(raw);data().carry.append(raw);lift=.35;data().facts.lift=true;g.sound.effect("stone_0",-18);g.save_game();return true
+    data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;g.sound.effect("stone_0",-18);g.save_game();return true
  if e is InputEventMouseButton and e.pressed and placing!="":
   if e.button_index==MOUSE_BUTTON_RIGHT:placing="";return true
   if e.button_index==MOUSE_BUTTON_LEFT and not g.hotbar.over():
@@ -161,11 +172,12 @@ func input(e:InputEvent)->bool:
    return true
  return false
 func begin(f:Dictionary)->bool:
+ g.surface.house.impact=0;g.surface.cut_target=-1;g.surface.cut_clock=0
  if not f.job.is_empty():return true
  if DeepHaul.amount(f.cargo)>=180:g.notify("Output full. Shift+E collects finished materials.");return false
  var inputs=[data().carry,f.raw]
  for stock in data().facilities:
-  if local(stock) and stock.kind in ["stone_pile","timber_pile","cart"] and pos(stock).distance_to(pos(f))<150 and clear_line(pos(stock),pos(f)):inputs.append(stock.raw)
+  if local(stock) and stock.kind in ["stone_pile","timber_pile","cart","wagon"] and pos(stock).distance_to(pos(f))<150 and clear_line(pos(stock),pos(f)):inputs.append(stock.raw)
  for cargo in inputs:
   for i in cargo.size():
    if accepts(f,cargo[i]):
@@ -173,17 +185,22 @@ func begin(f:Dictionary)->bool:
  if active_id!=f.id:g.notify("Bring a raw "+("stone chunk" if f.kind=="breaker" else "log")+" on your shoulder or in a rack within 150 units.")
  return false
 func update(dt:float):
- lift=maxf(0,lift-dt);working=false
+ lift=maxf(0,lift-dt);working=false;approaching=false
+ if lift<=0 or Input.get_vector("left","right","up","down")!=Vector2.ZERO:setting_down={}
  if not g.playing or g.panel_id!="" or g.room_id=="training":return
  var d=data()
  for f in d.facilities:
-  if f.kind=="cart" and f.hitched:
+  if vehicle(f) and f.hitched:
    # Never teleport abandoned equipment across a map or ladder.
    if not local(f) or pos(f).distance_to(g.player)>145:f.hitched=false
-   else:f.x=g.player.x-24;f.y=g.player.y+14
+   else:f.x=g.player.x;f.y=g.player.y
  var f=facility()
  if f.is_empty() or f.kind not in ["breaker","saw"] or not Input.is_action_pressed("interact") or Input.get_vector("left","right","up","down")!=Vector2.ZERO:return
  if not begin(f):return
+ var side=-1 if g.player.x<=f.x else 1
+ var stance=pos(f)+Vector2(side*(48 if f.kind=="breaker" else 42),-45 if f.kind=="breaker" else -22)
+ if g.player.distance_to(stance)>3 and clear_line(g.player,stance):
+  var before_pos=g.player;g.player=g.player.move_toward(stance,185*dt);g.walking_pose=true;g.gait_clock+=dt;g.surface.direction=(stance-before_pos).normalized();approaching=true;return
  working=true;active_id=f.id
  var before=float(f.job.progress)
  f.job.progress=before+dt
@@ -227,7 +244,9 @@ func texture(index:int)->Texture2D:
  # The painted objects slightly cross mathematical thirds; explicit atlas bounds
  # avoid drawing fragments of the neighboring row above an otherwise empty rack.
  var regions=[Rect2i(35,30,430,330),Rect2i(540,40,460,325),Rect2i(1030,20,490,340),Rect2i(0,360,490,335),Rect2i(525,390,485,305),Rect2i(1030,365,495,335),Rect2i(80,700,390,315),Rect2i(530,700,480,310),Rect2i(1060,705,440,310)]
- var img=ART.get_image().get_region(regions[index]);var cell=img.get_size();var lo=cell;var hi=Vector2i.ZERO
+ if index==9:
+  var tex=ImageTexture.create_from_image(preload("res://assets/animation-v51/field-tools.png").get_image().get_region(HoldDrawnAnimation.bounds("field-tools",5)));textures[index]=tex;return tex
+ var img=(preload("res://assets/animation-v51/homestead-props.png").get_image().get_region(HoldDrawnAnimation.bounds("homestead-props",index-6)) if index in [6,7,8] else ART.get_image().get_region(HoldDrawnAnimation.bounds("workshop",index)));var cell=img.get_size();var lo=cell;var hi=Vector2i.ZERO
  for y in img.get_height():
   for x in img.get_width():
    if img.get_pixel(x,y).a>.3:lo=lo.min(Vector2i(x,y));hi=hi.max(Vector2i(x,y))
@@ -238,21 +257,30 @@ func sprite(index:int,p:Vector2,width:float,alpha:float=1.0):
 func objects()->Array:
  var list=[]
  for o in data().loose:
-  if local(o) and pos(o).distance_to(g.player)<900:list.append({"p":pos(o),"kind":"handwork","raw":o})
+  if local(o) and int(o.id)!=int(setting_down.get("id",-1)) and pos(o).distance_to(g.player)<900:list.append({"p":pos(o),"kind":"handwork","raw":o})
  for f in data().facilities:
   if local(f) and pos(f).distance_to(g.player)<900:list.append({"p":pos(f),"kind":"handwork","facility":f})
  return list
 func raw_sprite(raw:Dictionary,p:Vector2):
  sprite(7 if raw.kind=="log" else 6,p,40)
+func vehicle_loads(f:Dictionary,p:Vector2):
+ # Pack lengthwise into the bed, two rows per tier; never build a tall icon tower.
+ # Every raw record still contributes one matching stone/log silhouette.
+ for i in f.raw.size():
+  var col=i%4;var row=int(i/4)%2;var tier=int(i/8)
+  var at=p+Vector2(7+(col-1.5)*16,-34+row*8-tier*7)
+  sprite(7 if f.raw[i].kind=="log" else 6,at,27)
 func draw_object(o:Dictionary):
  if o.has("raw"):raw_sprite(o.raw,o.p);return
- var f=o.facility;sprite(SPECS[f.kind].art,o.p,90 if f.kind in ["breaker","saw","cart"] else 82)
+ var f=o.facility
+ if vehicle(f) and f.hitched:return
+ sprite(SPECS[f.kind].art,o.p,110 if f.kind=="wagon" else 90 if f.kind in ["breaker","saw","cart"] else 82)
  # Every large raw record has a visible counterpart, including a full 12-load rack.
- for i in f.raw.size():
+ if vehicle(f):vehicle_loads(f,o.p)
+ for i in (0 if vehicle(f) else f.raw.size()):
   var row=0 if i<4 else (1 if i<8 else (2 if i<11 else 3))
   var col=i if i<4 else (i-4 if i<8 else (i-8 if i<11 else 0))
   var at=o.p+Vector2((col-1.5)*17 if row<2 else ((col-1)*17 if row==2 else 0),-10-row*8)
-  if f.kind=="cart":at=o.p+Vector2(2+(i%4)*9,-28-int(i/4)*10)
   raw_sprite(f.raw[i],at)
  # Processed units aggregate in bundles of twenty; quantities remain exact in cargo.
  var bundle=0
@@ -262,7 +290,7 @@ func draw_object(o:Dictionary):
    if item in ["stone","dressed_stone"]:sprite(8,at,30)
    else:HoldItemArt.draw(g,Rect2(at-Vector2(15,24),Vector2(30,24)),HoldItemArt.item_index(item),HoldItemArt.tint(item))
    bundle+=1
- if g.player.distance_to(o.p)<200 and f.kind in ["stone_pile","timber_pile","store","cart"]:
+ if g.player.distance_to(o.p)<200 and f.kind in ["stone_pile","timber_pile","store","cart","wagon"]:
   var count=DeepHaul.amount(f.cargo) if f.kind=="store" else f.raw.size()
   HoldArt.text(g,o.p+Vector2(-22,16),"%d / %d" % [count,SPECS[f.kind].capacity],11,Color("f1d8a0"))
  if not f.job.is_empty():
@@ -271,30 +299,30 @@ func draw_object(o:Dictionary):
   var tip=o.p+Vector2(0,-48)
   if f.kind=="breaker":
    for i in int(float(f.job.progress)/.42):g.draw_line(tip+Vector2(-8+i*7,-10),tip+Vector2(3+i*4,8),Color("354049"),1.5)
-  var palm=work_pose()+(Vector2(0,12) if g.zone=="mine" else Vector2.ZERO)+HoldDirectional.hand(g.state.appearance,(o.p-g.player).normalized(),phase,g.character_scale())
-  if working and active_id==f.id:
-   var end=tip if phase>.42 and phase<.7 else tip+Vector2(-12,-25)*(1-sin(phase*PI))
-   if f.kind=="saw":
-    g.draw_line(tip+Vector2(-25+sin(phase*TAU)*8,0),tip+Vector2(25+sin(phase*TAU)*8,0),Color("ccd4cb"),5)
-    g.draw_line(palm,tip+Vector2(20+sin(phase*TAU)*8,0),HoldAppearance.cloth(g.state.appearance),6)
-   else:HoldCharacterArt.draw_tool(g,palm-g.camera,end-g.camera,3,-g.camera,g.face,-1,.7)
-   if phase>.45 and phase<.7:
-    for i in 5:g.draw_circle(tip+Vector2.from_angle(i*1.2)*phase*19,1.5,Color("c8ad7c"))
+  if working and active_id==f.id and phase>.45 and phase<.7:
+   for i in 5:g.draw_circle(tip+Vector2.from_angle(i*1.2)*phase*19,1.5,Color("c8ad7c"))
   g.draw_rect(Rect2(o.p+Vector2(-30,4),Vector2(60,3)),Color("1d3038"));g.draw_rect(Rect2(o.p+Vector2(-30,4),Vector2(60*float(f.job.progress)/1.26,3)),Color("e8c27d"))
+func pushing()->bool:
+ var f=nearby_cart()
+ if not f.is_empty() and f.hitched and data().carry.is_empty():return true
+ return g.zone=="mine" and g.deep.world!=null and not g.deep.haul.cart().is_empty() and g.deep.haul.cart().hitched and data().carry.is_empty()
+func carry_action()->String:
+ var cargo=data().carry
+ if cargo.is_empty():return "lift_"+str(setting_down.kind) if not setting_down.is_empty() else ""
+ if cargo.size()>1:return "double_"+(cargo[0].kind if cargo[0].kind==cargo[1].kind else "mixed")
+ return ("lift_" if lift>0 else "carry_")+str(cargo[0].kind)
+func carry_phase()->float:return clampf(lift/.35 if not setting_down.is_empty() else 1-lift/.35,0,1)
 func carried(p:Vector2):
- for cart in data().facilities:
-  if local(cart) and cart.kind=="cart" and cart.hitched:
-   for side in [-1,1]:
-    var hand=pos(cart)+Vector2(-17+side*10,-8)
-    g.draw_line(p+Vector2(side*14,-30),hand,HoldAppearance.cloth(g.state.appearance),6)
-    g.draw_circle(hand,3,Color(HoldAppearance.SKIN_COLORS[g.state.appearance.get("skin",0)]))
- var carry=data().carry
- for i in carry.size():
-  var side=-1 if i==0 else 1
-  var at=p+Vector2(side*19,-43-sin(lift/.35*PI)*10)
-  raw_sprite(carry[i],at)
-  g.draw_line(p+Vector2(side*16,-32),at+Vector2(0,-8),HoldAppearance.cloth(g.state.appearance),7)
-  g.draw_circle(at+Vector2(0,-8),3,Color(HoldAppearance.SKIN_COLORS[g.state.appearance.get("skin",0)]))
+ if not pushing():return
+ var facing=-1 if g.surface.direction.x<-.3 else 1
+ var f=nearby_cart();var cart_type="cart"
+ if not f.is_empty() and f.hitched:cart_type=f.kind
+ g.draw_set_transform(p-g.camera.round(),0,Vector2(facing,1)*g.character_scale())
+ sprite(9 if cart_type=="wagon" else 5,Vector2(49,12),110 if cart_type=="wagon" else 90)
+ if not f.is_empty() and f.hitched:
+  vehicle_loads(f,Vector2(49,12))
+ elif g.zone=="mine":g.deep.cargo_art(g.deep.haul.cart().cargo,Vector2(55,-20))
+ g.draw_set_transform(-g.camera.round())
 func overlay():
  if g.panel_id!="":return
  g.draw_set_transform(-g.camera)
