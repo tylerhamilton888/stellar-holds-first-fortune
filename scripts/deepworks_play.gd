@@ -125,6 +125,7 @@ func crew_entry(agent:Dictionary)->Dictionary:
  return world.data.crew[agent.id]
 func move(dt:float):
  ensure();var axis=Input.get_vector("left","right","up","down")
+ if axis!=Vector2.ZERO:g.surface.direction=axis
  var speed=185.0
  g.velocity=axis*speed;var old=g.player
  for i in maxi(1,int(ceil(dt*120))):
@@ -403,7 +404,9 @@ func draw():
     var delta=contact-palm
     var lean=delta-delta.normalized()*[36.0,40.0,35.0,33.0][g.tool]
     pose+=lean*clampf((swing_duration-strike_left)/(swing_duration-IMPACT),0,1)
-   A.dwarf(g,pose,g.gait_clock,g.walking_pose and strike_left<=0,g.face,0,false,profile,(frame+.1)/8.0 if strike_left>0 else -1)
+   if strike_left<=0 and int(haul.bucket().get("rough_block",0))+int(haul.bucket().get("dressed_stone",0))==0:
+    HoldDirectional.draw(g,pose+offset,profile,g.surface.direction,g.walking_pose,g.gait_clock,1.0,offset)
+   else:A.dwarf(g,pose,g.gait_clock,g.walking_pose and strike_left<=0,g.face,0,false,profile,(frame+.1)/8.0 if strike_left>0 else -1)
    g.draw_set_transform(offset)
    if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
    draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)

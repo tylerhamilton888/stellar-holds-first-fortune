@@ -1,3 +1,17 @@
+# Try 0.47.0 — build a home, then climb onto its roof
+Extract the full Windows ZIP to a new folder and run PLAY-WINDOWS.bat. Keep your previous release/save copies.
+
+1. Walk north, south and diagonally in Keldrath. Look for the face/backpack changing with direction and grounded stepping. Your existing sculpt/palette is preserved. Visit Ivar, the forge and the throne via actual doors; use Royal/Forge stairs or the lift between labeled wards. G lists directions; J keeps your work journal.
+2. Reach your owned claim through the High Trail. O → Build a house opens the construction catalog. Bring carried supplies: each stone floor costs 1 stone, oak floor 1 timber; wall/window 2 stone + 1 timber; door 3 timber; roof 1 timber; stairs 4 timber + 2 stone; ladder 3 timber.
+3. In clear ground, lay a footprint of your own shape. Hold LMB and sweep over tiles; right-click cancels. A 6×6 footprint leaves a comfortable 4×4 interior after perimeter walls. Keep a door in the perimeter. E opens/closes it. Steps and existing entrances stay protected.
+4. Cover the footprint with roofs. Place a bed (5 timber + 2 stone) and chest from O. Rest with E beside the bed in an enclosed roofed room. The practical lesson in O/J records actual work.
+5. Build stairs on a clear interior floor. Stand on the landing and press E: you should arrive on the actual roof at the same XY, labeled Z+1. Walk on it; the edge blocks unsupported movement. Build walls here or a ladder onward, then expand a supported upper floor. Ground plus four upper storeys and their roof deck are supported.
+6. Place an upstairs chest. Materials inside it must be independent of any chest directly below. Save upstairs, reload and check your Z, position, furnishings, contents and passages. Shift+E descends the same landing; E climbs when both directions are available.
+7. Recover a roof or wall with O → Recover top piece. Occupied floors, contents and established upper-storey access are protected. Clear the upper storey before recovering its passage. Paid materials return once; no empty-click duplication.
+8. Revisit your mine, cargo/piles and masonry worker. Mining still uses E deeper / Shift+E up toward daylight. Craft and sell with carried resources. Original town quests and Pinewood remain available.
+
+Judge the building footprint/character scale, roof visibility, stair clarity, material costs and menu scrolling. The starter cottage remains while you build. Keldrath is an authored protected set of walkable districts; its architecture is not freely demolishable. New view art supports directional locomotion; specialized mining/carrying/combat contact poses retain the original animation drawings. Practice-bay combat is still the older implementation.
+
 # Try 0.46.0 — your hold, trail and home
 Extract the whole Windows ZIP into a new folder and run PLAY-WINDOWS.bat. Keep your earlier build. Old saves receive a separate backup before the new location data is added.
 

@@ -140,6 +140,10 @@ static func npc_menu(g,parent:Node,id:String):
   if LESSONS[key].host==id and unlocked(s,key) and not q.done.has(key):
    g.small_button(parent,"Work: "+LESSONS[key].name,func():g.lesson_id=key;g.open_panel("lesson"))
 static func journal(g):
+ if g.state.claim_id!="":
+  g.surface.house.lesson()
+  g.label(g.panel_body,"Return to your claim and press O → Build a house. Materials come from your carried pack; withdraw stored supplies first.",14)
+  if g.surface.area=="claim" and g.surface.active():g.small_button(g.panel_body,"Open house building plans",func():g.open_panel("house_build"))
  if g.zone=="mine":
   g.label(g.panel_body,"BRANN’S STONEWORK · Turn a sound block into a lasting floor.",17)
   g.button(g.panel_body,"Masonry lesson · quarry → stockpile → bench → build",func():g.deep.works.page="Masonry";g.open_panel("living"))
@@ -150,7 +154,7 @@ static func journal(g):
    g.button(g.panel_body,("Met " if q.met.has(id) else "Find ")+s.npc(id).name,func():s.tracked_npc=id;g.save_game();g.close_panel())
  if q.fresh and q.stage==3:
   g.label(g.panel_body,"FIRST TRIP: Step outside. Walk to the King’s Gate on eastern Hearthward and press E. Follow the High Trail northeast to Old Workings and press E at the entrance. WASD or arrows move; G lists directions. Old Delving is a separate claim that needs a charter.",16)
-  g.label(g.panel_body,"At the mine, 1 equips your pick. Hold left mouse on nearby coal to mine it. V builds stairs or ladder shafts. E descends, Shift+E returns through the same passage. Carry 8 coal back through the mine mouth, then use G to walk to Keldrath. Enter with E and return to Ivar.",16)
+  g.label(g.panel_body,"At the mine, 1 equips your pick. Hold left mouse on nearby coal to mine it. V builds stairs or ladder shafts. E descends, Shift+E returns through the same passage. Carry 8 coal back through the mine mouth, then walk the High Trail back to Keldrath (G lists directions). Enter with E and return to Ivar.",16)
  elif q.fresh and q.stage==4:
   g.label(g.panel_body,"Your first wage is paid. Take the Royal stairs in central Hearthward to Crownward and enter the King's hall. Speak to Lord Eirik before taking the lift commission.",16)
  elif q.fresh and q.stage==5:
@@ -195,8 +199,8 @@ static func lesson_panel(g):
    if complete(s,id,local(g,host)):g.save_game();g.sound.effect("quest",-10);g.notify("Work completed: "+task.name);g.refresh_panel(),true)
   b.disabled=not p.ready or not local(g,host)
  if not nearby:HoldConversation.choose(g,"Track "+s.npc(host).first_name,func():s.tracked_npc=host;g.save_game();g.close_panel())
- var destination={"charter":"charters","crew":"manage","workshop":"manage","industry":"forge","slagcaster":"forge","keel":"ship","timber":"world_map","route":"construction","smelt":"forge","sample":"field_notes","research":"research","pick":"forge","freight":"market","salvage":"equipment"}.get(id,"")
- if destination!="":HoldConversation.choose(g,"Review "+{"manage":"outpost","forge":"forge services","world_map":"hold map","construction":"building plans","field_notes":"field notebook","equipment":"equipment"}.get(destination,destination.replace("_"," ")),func():
+ var destination={"charter":"charters","crew":"manage","workshop":"manage","industry":"forge","slagcaster":"forge","keel":"ship","timber":"wayfinding","route":"construction","smelt":"forge","sample":"field_notes","research":"research","pick":"forge","freight":"market","salvage":"equipment"}.get(id,"")
+ if destination!="":HoldConversation.choose(g,"Review "+{"manage":"outpost","forge":"forge services","wayfinding":"trail directions","construction":"building plans","field_notes":"field notebook","equipment":"equipment"}.get(destination,destination.replace("_"," ")),func():
   if id=="pick":g.forge_tab=2
   if id in ["industry","slagcaster"]:g.forge_tab=3
   if id=="crew":g.outpost_tab=2

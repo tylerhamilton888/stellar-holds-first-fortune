@@ -209,7 +209,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.46.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="ORIGINAL FRONTIER PROTOTYPE  /  0.47.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
@@ -775,7 +775,7 @@ func interact():
  if zone=="mine":
   if state.active_site=="hold":
    if can_region_travel():open_panel("basin_map")
-   else:notify("Return to the entrance map board to set out. V builds your way back.")
+   else:notify("Return to the mine entrance to set out. V builds your way back.")
    return
   if player.distance_to(Vector2(150,370))<110:change_zone("claim")
   else:notify("Build a return route with V. R requests paid emergency extraction.")
@@ -791,7 +791,7 @@ func interact():
    else:notify(region_travel_hint())
   elif closest.panel=="mine":
    if state.opening==0:open_panel("briefing")
-   elif zone=="hub":notify("Press G to explore Keldrath. Leave by the King's Gate on Hearthward, then walk to Old Workings on the basin map.")
+   elif zone=="hub":notify("Press G to explore Keldrath. Leave by the King's Gate on Hearthward, then walk to Old Workings along the High Trail.")
    else:change_zone("mine")
   elif closest.panel=="gate" and zone=="hub":
    if can_region_travel():open_panel("basin_map")
@@ -1125,7 +1125,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- if id in ["wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
+ if id in ["house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
  panel_id=id;panel.visible=true
  panel.position=Vector2(120,44) if id=="living" else Vector2(60,44)
  panel.size=Vector2(720,452) if id=="living" else Vector2(840,452)
@@ -1133,7 +1133,7 @@ func open_panel(id:String,remember:bool=true):
  var outer=VBoxContainer.new();outer.add_theme_constant_override("separation",9);panel.add_child(outer)
  var top=row(outer)
  if not menu_history.is_empty():small_button(top,"‹ Back",back_panel)
- var names={"wayfinding":"PATHS & DOORWAYS","storage":"YOUR STORAGE CHEST","homestead":"YOUR HOMESTEAD","living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
+ var names={"wayfinding":"PATHS & DOORWAYS","storage":"YOUR STORAGE CHEST","house_build":"BUILD YOUR HEARTH","homestead":"YOUR HOMESTEAD","living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
  label(top,names.get(id,"Claim business" if id=="claim_stories" else id.to_upper()),22,Color("e9c586"))
  small_button(top,"Close ×",close_panel)
  if playing and id not in ["living","haulage","projects","deepworks","briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes","pinewood"]:
@@ -1174,6 +1174,7 @@ func open_panel(id:String,remember:bool=true):
   "hold_lift":surface.lift_panel()
   "storage":surface.chest_panel()
   "homestead":surface.home_panel()
+  "house_build":surface.house.panel()
   "wayfinding":surface.guide_panel()
   "camp":camp_panel()
   "home":
@@ -1336,7 +1337,7 @@ func forge_panel():
  if state.opening<2:
   label(panel_body,"The lower hearth is cold. Deliver 8 coal to Ivar at the foreman's office; the first commission will relight it.",17)
   button(panel_body,"Open work journal",func():open_panel("commission"));return
- label(panel_body,"Jobs use materials now; finished items go straight into shared storage.",16,Color("b4c9c4"))
+ label(panel_body,"Jobs use materials now; finished items go straight into your carried supplies.",16,Color("b4c9c4"))
  var tabs=row(panel_body)
  for i in 4:
   var b=small_button(tabs,["Smelting","Crafting","Tools","Industry"][i],func():forge_tab=i;open_panel("forge",false));b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -1544,6 +1545,9 @@ func ivar_welcome_panel():
  label(panel_body,"Ivar’s advice",18)
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel():
+ if state.claim_id!="":
+  label(panel_body,"YOUR OWN HEARTH · Build, furnish and climb your house. O opens plans on your claim.",16)
+  small_button(panel_body,"House-building lesson & first-season work",func():open_panel("guidance"))
  var q=HoldOnboarding.ensure(state);var nearby=HoldConversation.local(self,"ivar")
  if q.fresh and q.stage in [0,1,2,4,5]:
   if nearby:
@@ -1649,7 +1653,7 @@ func finish_travel():
  room_id="";swing=0;impact_pause=0;sound.set_context(zone);begin_transition("PINEWOOD" if zone=="road" else ("YOUR MOUNTAIN" if zone=="claim" else "KELDRATH"))
  velocity=Vector2.ZERO;camera=Vector2(clampf(player.x-480,0,1040),0)
  particles.clear();popups.clear();close_panel();spawn_agents();save_game()
- notify("PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: basin map." if zone=="road" else ("Welcome to "+HoldCampaign.claim(state.claim_id).name+". Founding stones are east." if zone=="claim" else "Keldrath's gates stand open to you."))
+ notify("PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: trail directions." if zone=="road" else ("Welcome to "+HoldCampaign.claim(state.claim_id).name+". Founding stones are east." if zone=="claim" else "Keldrath's gates stand open to you."))
 
 func character_tint(p:Vector2)->Color:
  if room_id!="":return Color("ffe0b7") if room_id in ["home","forge","tavern"] else Color("d8e1d6")
@@ -1780,7 +1784,7 @@ func draw_tracking():
   var delta=target.p-player;text=("← " if delta.x<0 else "→ ")+state.npc(state.tracked_npc).name+" · "+str(int(absf(delta.x)/7))+" paces"
   var marker=target.p-camera+Vector2(0,-92);marker.x=clampf(marker.x,25,935);marker.y=clampf(marker.y,150,420)
   A.poly(self,[marker+Vector2(-6,-8),marker+Vector2(6,-8),marker],"d6c28c")
- elif target.zone=="hub" and zone in ["mine","approach"]:text="Return to the entrance map board · "+state.npc(state.tracked_npc).name
+ elif target.zone=="hub" and zone in ["mine","approach"]:text="Return to the mine entrance · "+state.npc(state.tracked_npc).name
  A.rect(self,18,111,680,24,Color(.035,.08,.12,.88));A.text(self,Vector2(25,128),text,14,Color("e2cfa1"))
 
 func rescue_cost()->int:return maxi(25,int(ceil(state.money*.2)))
@@ -1840,8 +1844,8 @@ func arrive_region(destination:String):
  ensure_mine_mouth();camera=Vector2(player.x-480,player.y-360) if continuous_journey() else Vector2(clampf(player.x-480,0,1040),0)
  if zone=="mine":deep.enter()
  close_panel();sound.set_context(zone);particles.clear();popups.clear();spawn_agents();save_game()
- var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: basin map.","workings":"DEEPWORKS: WASD move. Hold LMB to dig. V carves stairs; E down / Shift+E up. X surveys below. E at the entrance returns home.","hold":"KELDRATH: G explores the hold's galleries, stairs and lift. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: A sheltered lookout. G opens the basin map; choose Old Workings to enter the mountain."}
- notify(arrival_hints.get(destination,"G opens regional travel."))
+ var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: trail directions.","workings":"DEEPWORKS: WASD move. Hold LMB to dig. V carves stairs; E down / Shift+E up. X surveys below. E at the entrance returns home.","hold":"KELDRATH: Walk the galleries; E uses stairs, lift and doors. G lists directions. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: Walk north to Old Workings, south to Pinewood or east to your claim. E uses each entrance; G lists directions."}
+ notify(arrival_hints.get(destination,"G lists directions; walk to a doorway and press E."))
 
 
 func save_slots_panel():

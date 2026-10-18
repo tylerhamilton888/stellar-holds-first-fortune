@@ -1,3 +1,6 @@
+## After 0.47.0
+Playtest house scale, material costs, multilevel building ergonomics and directional movement. Buildings support five storeys plus their roof deck, with construction access protected during recovery. Further work: fully authored directional work/combat cycles, freeform city modification, surface worker building jobs and unified house/mine excavation coordinates. Practice bay remains legacy combat. No implied completion of these systems.
+
 ## After 0.46.0
 Playtest the walkable hold/trail/claim loop and local chest ownership on Windows. Expand directional sprites and homestead building variety after feedback. Retained practice bay remains a future top-down combat task. Do not introduce compulsory processing chains or stamina grind.
 
