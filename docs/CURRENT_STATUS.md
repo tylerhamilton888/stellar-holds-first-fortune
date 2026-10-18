@@ -1,3 +1,10 @@
+Tavern follow-up: original copper/brass tankard and oak/iron bucket sprites replace simple geometric props. Drinking uses a dedicated smooth lift/sip/lower arm override on the existing directional rig, correct facing/handle alignment, a foreground forearm and staggered guest timing. Empty buckets no longer draw; buckets with real cargo are hidden during active mining or shoulder/workstation carrying without altering their contents. Walking and existing work retain the unified procedural rig; this is not a full hand-drawn frame-animation replacement. Asset provenance and exact built-in imagegen prompts: assets/tavern-v492/PROMPTS.md.
+
+# Visual continuity — 0.49.2
+Mine face detail now uses the same original stone artwork as carried raw chunks, with four irregular silhouettes and saved-damage fracture bands. Corrected workshop atlas slice bounds remove neighboring-object fragments; original PNGs remain intact. Mine haulage carts, ground stockpiles and entrance stores reuse workshop art and existing resource icons instead of flat triangle cargo. Quantity and ownership rules are unchanged. Entrance beams/treads use the home's oak/stone textures, with matching storage chests and lantern props.
+
+Shift+B now presents six illustrated equipment cards in the established teal/gold palette. All six craft buttons fit without scrolling; detailed advice, recovery and the lesson remain below. Removed duplicate menu navigation and prototype wording from the title credit. These are targeted mining/workshop visual improvements, not a claim of replacing every historical visual in the whole game. Deferred gameplay remains deferred.
+
 # Mine rock forms — 0.49.1
 Four seed-stable, irregular rock-face silhouettes replace square face outlines. Original slate texture, mineral colors and geology remain. Broad facets, undercut edges, chipped outlines and three damage bands reflect the existing saved damage/resistance ratio. Hairlines widen into branching fractures and loosened edge chips; existing particles and settling fragments complete breakthrough. Target highlighting follows the rock outline.
 

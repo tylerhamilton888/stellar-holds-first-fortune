@@ -1,3 +1,7 @@
+0.49.2 follow-up: corrected tavern sip pose/mug facing and stray empty bucket; new original tankard/bucket. Full hand-drawn action atlases remain outside this targeted polish pass.
+
+0.49.2 completed: mine/workshop art continuity, corrected sprite bounds, shared old haulage artwork and illustrated catalog. Full mastery and new-station automation remain deferred.
+
 0.49.1 completed: irregular mine faces and saved-damage-driven chips/fractures. Deeper physical simulation is not introduced; existing Hands deferred work remains.
 
 ## After 0.49.0 — continue the attached Hands of the Dwarf brief

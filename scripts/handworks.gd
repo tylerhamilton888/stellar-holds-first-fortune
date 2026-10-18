@@ -205,11 +205,18 @@ func cancel_job(f:Dictionary):
  if f.raw.size()>=SPECS[f.kind].capacity:g.notify("Make room in the station before returning its unfinished input.");return
  f.raw.append(f.job.raw);f.job={};g.save_game();g.open_panel("handworks",false)
 func panel():
- var d=data();g.label(g.panel_body,"YOUR WORKSHOP · BUILD IT WHERE YOU WORK",20,Color("edc98a"))
- g.label(g.panel_body,"Shift+B opens this board. Place equipment in your claim, home, Pinewood or a clear mine floor. Town workshops remain available. E lifts/deposits; Q puts down; Shift+E withdraws; C pushes or parks a handcart. E at a cart gathers nearby loose loads in a batch; E at a rack unloads a nearby cart. Hold E at a bench to process.",15)
- g.label(g.panel_body,"Some solid stone faces release full chunks; logs from cuts in Pinewood. Keep input racks and output pallets within 150 units of a bench, with a clear floor route. Work takes three short strokes. Outputs remain at the bench/pallet until collected.",15)
+ var d=data()
+ g.label(g.panel_body,"E lift / deliver · Q set down · Shift+E collect · C push cart",15,Color("a7dac5"))
+ g.label(g.panel_body,"Craft here, then place nearby. Hold E at a supplied bench to work.",15)
+ var grid=GridContainer.new();grid.columns=3;grid.add_theme_constant_override("h_separation",10);grid.add_theme_constant_override("v_separation",8);g.panel_body.add_child(grid)
  for kind in SPECS:
-  var id=str(kind);g.button(g.panel_body,"Craft & place "+SPECS[id].name+" · "+HoldData.cost_text(SPECS[id].cost),func():placing=id;g.close_panel();g.notify("LMB places nearby; right click cancels. Materials charged only on valid placement."))
+  var id=str(kind);var card=g.section(grid,SPECS[id].name);card.custom_minimum_size.x=220;card.add_theme_constant_override("separation",3)
+  card.get_child(0).add_theme_font_size_override("font_size",16)
+  var frame=card.get_parent().get_theme_stylebox("panel").duplicate();frame.set_content_margin_all(8);card.get_parent().add_theme_stylebox_override("panel",frame)
+  var icon=TextureRect.new();icon.texture=texture(SPECS[id].art);icon.custom_minimum_size=Vector2(200,36);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;card.add_child(icon)
+  g.label(card,HoldData.cost_text(SPECS[id].cost),13,Color("edc98a"))
+  g.small_button(card,"Craft & place",func():placing=id;g.close_panel();g.notify("LMB places nearby; right click cancels. Materials charged only on valid placement."))
+ g.label(g.panel_body,"Keep input racks and output pallets close to the bench, with a clear path. Work takes three short strokes. Collect finished materials into your pack before building or trading.",14)
  g.small_button(g.panel_body,"Recover empty equipment · full material refund",recover)
  var f=facility()
  if not f.is_empty() and not f.job.is_empty():g.small_button(g.panel_body,"Return unfinished input to this station",func():cancel_job(f))
@@ -217,8 +224,10 @@ func panel():
  for step in [["build","Craft and place a station or stockpile"],["extract","Free a raw chunk or log"],["lift","Lift it with E; Q sets it down"],["stockpile","Deliver it to a suitable rack"],["process","Hold E at the matching bench; collect with Shift+E"]]:g.label(g.panel_body,("✓ " if d.facts.get(step[0],false) else "○ ")+step[1],15)
 func texture(index:int)->Texture2D:
  if textures.has(index):return textures[index]
- var source=ART.get_image();var cell=Vector2i(source.get_width()/3,source.get_height()/3)
- var img=source.get_region(Rect2i(Vector2i(index%3,index/3)*cell,cell));var lo=cell;var hi=Vector2i.ZERO
+ # The painted objects slightly cross mathematical thirds; explicit atlas bounds
+ # avoid drawing fragments of the neighboring row above an otherwise empty rack.
+ var regions=[Rect2i(35,30,430,330),Rect2i(540,40,460,325),Rect2i(1030,20,490,340),Rect2i(0,360,490,335),Rect2i(525,390,485,305),Rect2i(1030,365,495,335),Rect2i(80,700,390,315),Rect2i(530,700,480,310),Rect2i(1060,705,440,310)]
+ var img=ART.get_image().get_region(regions[index]);var cell=img.get_size();var lo=cell;var hi=Vector2i.ZERO
  for y in img.get_height():
   for x in img.get_width():
    if img.get_pixel(x,y).a>.3:lo=lo.min(Vector2i(x,y));hi=hi.max(Vector2i(x,y))

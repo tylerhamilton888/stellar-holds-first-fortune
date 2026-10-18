@@ -1,3 +1,7 @@
+Tavern/container follow-up: input_tavern492.gd (7), bringing current focused checks to 51.
+
+Current release: 0.49.2; input_style492.gd (10), capture_style492.gd (2), rerun input_handworks49.gd (32). Evidence testing/style-0.49.2.md.
+
 Current release: 0.49.1; native tests/input_fracture491.gd and docs/testing/fracture-0.49.1.md.
 
 Current release: [Hands of the Dwarf 0.49.0](testing/handworks-0.49.0.md). Use native input_handworks49.gd and input_surface49.gd with isolated XDG saves.

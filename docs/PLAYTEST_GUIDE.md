@@ -1,3 +1,8 @@
+Visit the Copper Kettle: watch Hedrik lift the detailed tankard, sip, and lower it while guests move on staggered timings. In the mine, an empty-handed Dwarf should have no stray bucket. Collected bulk cargo still has a container/HUD count; mining or shoulder loads suppress the conflicting bucket drawing without deleting cargo.
+
+# 0.49.2 — Visual consistency pass
+Shift+B shows six illustrated craft choices together. Check that empty benches/racks have no stray fragments, and carrying/depositing/workbench input use the same stone/log artwork. Mine faces, old mine carts/stockpiles and entrance fittings now share the established material/prop art. Mining resistance, yields and crafting costs are unchanged. See the 0.49.1 fracture checks below.
+
 # 0.49.1 — Rock faces that fracture
 Enter the mine and look for varied slab, wedge and angular rock faces. Hold LMB on a harder vein: cracks widen and edges chip before breakthrough. Save partway through and reload to retain damage. Ordinary stone still breaks quickly; it does not require extra clicks to display every damage stage. Hammer-induced nearby fractures use the same visuals. Existing movement, targeting, yield and stockpile workflow remain.
 

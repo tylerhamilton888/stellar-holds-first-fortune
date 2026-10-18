@@ -1,5 +1,7 @@
 class_name DeepworksPlay
 extends RefCounted
+const BUCKET_ART=preload("res://assets/tavern-v492/mining-bucket.png")
+var bucket_texture:AtlasTexture
 const STONE=preload("res://assets/actors-v11/slate.png")
 const A=preload("res://scripts/art.gd")
 var g
@@ -303,9 +305,9 @@ func rock_face(c:Vector2i,k:int,base:Color,damage:float):
  var p=Vector2(c)*Deepworks.TILE;var h=posmod(c.x*731+c.y*337+int(world.data.seed),997)
  var points=rock_outline(c,damage);var uv=PackedVector2Array();var poly=PackedVector2Array()
  for v in points:
-  poly.append(p+v);uv.append((Vector2(posmod(c.x*80,1200),posmod(c.y*80,1200))+v*2)/Vector2(STONE.get_size()))
+  poly.append(p+v);uv.append(Vector2(.16,.12)+v/40.0*Vector2(.68,.72))
  g.draw_colored_polygon(poly,base)
- g.draw_polygon(poly,PackedColorArray([Color(base.r*2.1,base.g*2.1,base.b*2.1,1)]),uv,STONE)
+ g.draw_polygon(poly,PackedColorArray([Color(base.r*1.65,base.g*1.65,base.b*1.65,1)]),uv,g.handworks.texture(6))
  var center=p+Vector2(16+h%9,15+h%7)
  # Broad lit facets and an undercut edge make each face read as a substantial lump.
  for j in [0,3,5]:
@@ -418,8 +420,11 @@ func draw():
   var xy=id.split(",");lamp(Deepworks.center(Vector2i(int(xy[0]),int(xy[1]))))
  if z==0:
   var entry=Deepworks.center(Deepworks.ENTRY)
-  g.draw_rect(Rect2(entry-Vector2(46,32),Vector2(92,64)),Color("4e5146"))
-  for j in 5:g.draw_line(entry+Vector2(-42,-25+j*12),entry+Vector2(42,-25+j*12),Color("9a8460"),3)
+  g.draw_rect(Rect2(entry-Vector2(46,32),Vector2(92,64)),Color("1d292e"))
+  for j in 5:
+   var tread=Rect2(entry+Vector2(-42,-29+j*12),Vector2(84,9))
+   g.surface.house.material(0,tread,Color(.72+j*.04,.74+j*.04,.72+j*.04))
+   g.draw_line(tread.position+Vector2(0,9),tread.end,Color("b2b5a6"),1)
   lamp(entry+Vector2(-58,0));lamp(entry+Vector2(58,0))
   draw_worksite(entry)
   A.text(g,entry+Vector2(-64,-93),"KELDRATH ↑",15,Color("edcd8a"));A.text(g,entry+Vector2(-65,53),"E · RETURN HOME",12,Color("b9cbc0"))
@@ -455,7 +460,7 @@ func draw():
    if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
    if strike_left<=0:g.hotbar.held(g,pose,offset)
    g.handworks.carried(pose)
-   draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
+   if bucket_visible():draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
    if strike_left>0 and works.mode!="dress":
     var hand=pose+HoldDirectional.hand(profile,facing_dir,action);var progress=1-strike_left/swing_duration
     var endpoint=contact if progress>=.50 and progress<=.68 else hand+(contact-hand).rotated(-g.face*(1-sin(progress*PI))*.95)
@@ -507,8 +512,7 @@ func draw():
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.045,.06,.55))
 func lamp(p:Vector2):
  for r in [68,48,32,18]:g.draw_circle(p-Vector2(0,15),r,Color(1,.72,.35,.025))
- g.draw_line(p+Vector2(0,8),p-Vector2(0,23),Color("796a4c"),4)
- g.draw_rect(Rect2(p-Vector2(5,26),Vector2(10,13)),Color("e9b76d"));g.draw_rect(Rect2(p-Vector2(3,24),Vector2(6,8)),Color("ffedb5"))
+ g.surface.prop(p+Vector2(0,12),3,42)
 func draw_survey():
  var z=world.depth();var c=Deepworks.cell(g.player)
  g.draw_rect(Rect2(708,112,228,270),Color("142934"));g.draw_rect(Rect2(708,112,228,270),Color("a58c5e"),false,1)
@@ -527,11 +531,15 @@ func draw_worksite(entry:Vector2):
  for side in [-1,1]:
   var p=entry+Vector2(side*76,-65)
   g.draw_rect(Rect2(p,Vector2(12,55)),Color("3c3027"))
-  g.draw_rect(Rect2(p+Vector2(2,1),Vector2(7,51)),Color("97794f"))
+  g.surface.house.material(1,Rect2(p+Vector2(1,1),Vector2(10,53)))
+  for yy in [4,41]:
+   g.draw_rect(Rect2(p+Vector2(0,yy),Vector2(12,7)),Color("495252"));g.draw_circle(p+Vector2(6,yy+3),1.5,Color("d4b779"))
   for j in 3:g.draw_line(p+Vector2(4,6+j*15),p+Vector2(8,16+j*15),Color("5a4836"),1)
   g.draw_circle(p+Vector2(6,7),2,Color("b8aba0"))
  g.draw_rect(Rect2(entry+Vector2(-78,-78),Vector2(166,15)),Color("45382c"))
- g.draw_rect(Rect2(entry+Vector2(-76,-76),Vector2(162,8)),Color("a48858"))
+ g.surface.house.material(1,Rect2(entry+Vector2(-76,-76),Vector2(162,11)))
+ for xx in [-70,70]:
+  g.draw_rect(Rect2(entry+Vector2(xx,-77),Vector2(8,14)),Color("495252"));g.draw_circle(entry+Vector2(xx+4,-70),2,Color("d4b779"))
  for j in 8:
   var y=entry.y+75+j*12
   var c=Deepworks.cell(Vector2(entry.x,y))
@@ -540,10 +548,8 @@ func draw_worksite(entry:Vector2):
    for side in [-1,1]:g.draw_line(Vector2(entry.x+side*13,y-6),Vector2(entry.x+side*13,y+6),Color("9ca9a6"),2)
  for j in 3:
   var p=entry+Vector2(-126+j%2*27,28+j/2*27)
-  g.draw_rect(Rect2(p+Vector2(3,5),Vector2(25,23)),Color(0,0,0,.3))
-  g.draw_rect(Rect2(p,Vector2(24,22)),Color("806747"))
-  g.draw_rect(Rect2(p+Vector2(3,3),Vector2(18,16)),Color("a08a61"),false,2)
-  g.draw_line(p+Vector2(3,4),p+Vector2(20,18),Color("b39a6a"),2)
+  g.surface.prop(p+Vector2(14,23),0,36)
+
 
 func camera_target()->Vector2:return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-290,0,Deepworks.H*40-540))
 
@@ -596,61 +602,44 @@ func project_panel():
  for goal in [["bench","Workbench"],["anvil","Forge"],["rune","Ancestral pillar"],["stoneworking","Stoneworking"]]:
   g.small_button(building_choices,"Track · "+goal[1],func():g.state.hauling.project=goal[0];g.save_game();g.open_panel("projects",false))
  g.button(g.panel_body,"Open existing workshop / project",func():g.open_panel(project.panel))
+func bucket_visible()->bool:
+ return DeepHaul.amount(haul.bucket())>0 and strike_left<=0 and not g.handworks.busy_hands()
 func draw_bucket(p:Vector2,cargo:Dictionary,capacity:int):
- var fill=clampf(float(DeepHaul.amount(cargo))/capacity,0,1)
- g.draw_arc(p+Vector2(0,-7),8,PI,TAU,10,Color("c0b18c"),2)
- g.draw_colored_polygon(PackedVector2Array([p+Vector2(-9,-7),p+Vector2(9,-7),p+Vector2(6,8),p+Vector2(-6,8)]),Color("746247"))
- g.draw_line(p+Vector2(-8,2),p+Vector2(8,2),Color("b6a782"),2)
- if fill>0:
-  var tint=Color(HoldData.ITEMS[cargo.keys()[0]].color)
-  g.draw_rect(Rect2(p+Vector2(-6,6-12*fill),Vector2(12,12*fill)),tint)
- g.draw_line(p+Vector2(-9,-7),p+Vector2(9,-7),Color("dec694"),2)
+ if bucket_texture==null:
+  bucket_texture=AtlasTexture.new();bucket_texture.atlas=BUCKET_ART;bucket_texture.region=BUCKET_ART.get_image().get_used_rect()
+ g.draw_texture_rect(bucket_texture,Rect2(p-Vector2(11,24),Vector2(22,32)),false)
+ if DeepHaul.amount(cargo)>0:
+  var item=str(cargo.keys()[0]);var width=8.0+clampf(float(DeepHaul.amount(cargo))/capacity,0,1)*5
+  if item in ["stone","rough_block","dressed_stone"]:g.handworks.sprite(6 if item=="rough_block" else 8,p+Vector2(0,-7),width)
+  else:HoldItemArt.draw(g,Rect2(p-Vector2(width/2,15),Vector2(width,8)),HoldItemArt.item_index(item),HoldItemArt.tint(item))
+func cargo_art(cargo:Dictionary,p:Vector2,limit:int=8):
+ var slot=0
+ for item in cargo:
+  for j in mini(limit-slot,ceili(float(cargo[item])/20.0)):
+   var at=p+Vector2((slot%3-1)*13,-int(slot/3)*8)
+   if item in ["stone","dressed_stone"]:g.handworks.sprite(8,at,25)
+   elif item=="rough_block":g.handworks.sprite(6,at,27)
+   else:HoldItemArt.draw(g,Rect2(at-Vector2(12,22),Vector2(24,22)),HoldItemArt.item_index(item),HoldItemArt.tint(item))
+   slot+=1
+  if slot>=limit:break
 func draw_haulage():
  for a in haul.data.piles.values():
   if int(a.depth)!=world.depth() or DeepHaul.amount(a.cargo)==0:continue
   var p=Deepworks.center(Vector2i(a.x,a.y))+Vector2(0,18)
   if not world.layer().seen.has(Deepworks.key(Vector2i(a.x,a.y))):continue
-  var n=DeepHaul.amount(a.cargo);var tint=Color(HoldData.ITEMS[a.cargo.keys()[0]].color)
-  for j in mini(22,3+int(sqrt(n)*2)):
-   var q=p+Vector2(sin(j*2.4)*18,cos(j*1.7)*10)
-   g.draw_colored_polygon(PackedVector2Array([q+Vector2(-6,3),q+Vector2(-2,-6-j%3),q+Vector2(6,2)]),tint.lightened((j%3)*.08))
-  if int(a.cargo.get("rough_block",0))>0:
-   for j in mini(3,int(a.cargo.rough_block)):HoldMasonry.block(g,p+Vector2(j*6-7,-j*6),false,.7)
-  if int(a.cargo.get("dressed_stone",0))>0:
-   for j in mini(4,int(a.cargo.dressed_stone)):HoldMasonry.block(g,p+Vector2(j%2*14-7,-j/2*8),true,.55)
-  if a.marked:g.draw_rect(Rect2(p-Vector2(20,16),Vector2(40,32)),Color("b9a477"),false,1)
-  A.text(g,p+Vector2(-14,27),str(n)+" units",10,Color("e1c997"))
+  g.handworks.sprite(2,p,58);cargo_art(a.cargo,p+Vector2(0,-10))
+  A.text(g,p+Vector2(-18,18),str(DeepHaul.amount(a.cargo))+" units",10,Color("e1c997"))
  if not haul.cart().is_empty() and int(haul.cart().depth)==world.depth():
   var cart=haul.cart();var p=haul.cart_pos()+Vector2(28,10) if cart.hitched else haul.cart_pos()
-  var fill=float(DeepHaul.amount(cart.cargo))/DeepHaul.CART
-  g.draw_circle(p+Vector2(20,9),8,Color("1a292e"));g.draw_circle(p+Vector2(20,9),5,Color("ab9471"));g.draw_circle(p+Vector2(20,9),2,Color("263c43"))
-  for y in [-9,7]:g.draw_line(p+Vector2(-37,y),p+Vector2(17,y),Color("aa8759"),3)
-  g.draw_colored_polygon(PackedVector2Array([p+Vector2(-23,-16),p+Vector2(23,-16),p+Vector2(15,7),p+Vector2(-17,7)]),Color("826b4d"))
-  g.draw_rect(Rect2(p+Vector2(-20,-15),Vector2(40,8)),Color("293c41"))
-  if fill>0:
-   var tint=Color(HoldData.ITEMS[cart.cargo.keys()[0]].color)
-   for j in maxi(1,int(fill*12)):
-    var q=p+Vector2(-16+j%6*6,-10-j/6*5)
-    g.draw_colored_polygon(PackedVector2Array([q+Vector2(-4,3),q+Vector2(0,-5),q+Vector2(5,3)]),tint.lightened(j%3*.08))
-  g.draw_line(p+Vector2(-23,-16),p+Vector2(23,-16),Color("d5b57c"),2)
-  for y in [-3,3]:g.draw_line(p+Vector2(-18,y),p+Vector2(17,y),Color("51432f"),1)
-  for x in [-14,12]:
-   g.draw_line(p+Vector2(x,-7),p+Vector2(x,5),Color("a9a58b"),2)
-   g.draw_circle(p+Vector2(x,-4),1,Color("ded3ad"))
-  var beneath=haul.data.piles.get(haul.pile_id(Deepworks.cell(haul.cart_pos())),{})
-  if DeepHaul.amount(beneath.get("cargo",{}))==0:A.text(g,p+Vector2(-24,29),"%d / 320" % DeepHaul.amount(cart.cargo),10,Color("ecd39e"))
+  g.handworks.sprite(5,p,90);cargo_art(cart.cargo,p+Vector2(15,-28))
+  A.text(g,p+Vector2(-24,23),"%d / 320" % DeepHaul.amount(cart.cargo),10,Color("ecd39e"))
  if world.depth()==0:
   var p=Deepworks.center(Deepworks.ENTRY)+Vector2(-112,-18)
-  g.draw_rect(Rect2(p-Vector2(27,21),Vector2(54,36)),Color("65553f"))
-  for y in [-12,-3,6]:g.draw_line(p+Vector2(-25,y),p+Vector2(25,y),Color("a18b64"),2)
-  for x in [-22,22]:g.draw_line(p+Vector2(x,-20),p+Vector2(x,14),Color("b3aa8e"),3)
-  var stock=0;var largest=0;var stock_tint=Color("9aa59e")
+  g.handworks.sprite(2,p,82)
+  var cargo={}
   for item in DeepHaul.BULK:
-   var n=g.state.count(item);stock+=n
-   if n>largest:largest=n;stock_tint=Color(HoldData.ITEMS[item].color)
-  for j in mini(18,stock):
-   var q=p+Vector2(-22+j%6*8,-8-j/6*6)
-   g.draw_colored_polygon(PackedVector2Array([q+Vector2(-5,3),q+Vector2(0,-5),q+Vector2(6,3)]),stock_tint.lightened(j%3*.06))
-  A.text(g,p+Vector2(-40,32),"U · HOLD STORES",10,Color("e3c58f"))
+   if g.state.count(item)>0:cargo[item]=g.state.count(item)
+  cargo_art(cargo,p+Vector2(0,-10))
+  A.text(g,p+Vector2(-40,25),"U · HOLD STORES",10,Color("e3c58f"))
   if unload_flash>0:
    for j in 10:g.draw_circle(p+Vector2(sin(j)*28,-(1-unload_flash)*35-j%3*7),2,Color(1,.85,.55,unload_flash))

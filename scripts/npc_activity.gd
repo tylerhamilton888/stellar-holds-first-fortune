@@ -1,6 +1,8 @@
 class_name HoldNpcActivity
 extends RefCounted
 const A=preload("res://scripts/art.gd")
+const TANKARD=preload("res://assets/tavern-v492/tankard.png")
+static var tankard_texture:AtlasTexture
 const ANVIL=preload("res://assets/anniversary-v31/anvil.png")
 
 static func smith_frame(t:float)->int:
@@ -39,22 +41,24 @@ static func smith(n:Node2D,p:Vector2,t:float,lit:bool):
    var q=contact+Vector2((i-1)*9*a,-sin(a*PI)*7)*zoom
    A.line(n,q,q+Vector2(i-1,-2)*zoom,Color(1,.75,.38,(1-a)*.7),zoom)
 
-static func social(n:Node2D,p:Vector2,t:float,facing:int,profile:Dictionary,drinking:bool):
+static func sip_amount(t:float)->float:
  var phase=fposmod(t,22.0)
+ if phase<12 or phase>=18:return 0.0
+ return smoothstep(12.0,14.0,phase) if phase<14 else (1.0 if phase<16 else 1.0-smoothstep(16.0,18.0,phase))
+static func social(n:Node2D,p:Vector2,t:float,facing:int,profile:Dictionary,drinking:bool):
  if not drinking:
   A.dwarf(n,p,t,false,facing,0,false,profile);return
- # Existing complete-body raised-hand poses retain the same face, hair and feet.
- # The mug is attached to the palm and the original fingers are drawn over its handle.
- var resting=phase<12 or phase>18
- var frame=1 if phase>13 and phase<16.5 else 0
- A.dwarf(n,p,t,false,facing,0,false,profile,-1.0 if resting else (frame+.1)/8.0)
+ var sip=sip_amount(t);var angle=sip*2.4
  var zoom=n.character_scale() if n.has_method("character_scale") else 1.0
  var offset=A.draw_offset
- var hand=HoldDirectional.hand(profile,Vector2(1,.45),-1 if resting else (frame+.1)/8.0)
- n.draw_set_transform(p+offset,0,Vector2(facing,1)*zoom)
- var x=hand.x-17;var y=hand.y-10
- A.rect(n,x-1,y-1,14,17,"332c29");A.rect(n,x,y,12,15,"815331");A.rect(n,x+2,y+2,5,11,"bf8a51");A.rect(n,x+3,y+3,2,9,"d8a76a");A.rect(n,x,y,12,2,"ead1a0")
- n.draw_arc(Vector2(x+15,y+8),3,-PI*.5,PI*.5,8,Color("d7b781"),2)
- A.rect(n,x+3,y+4,3,5,"947447")
+ HoldDirectional.draw(n,p+offset,profile,Vector2(facing,.45),false,t,zoom,offset,-1,angle)
+ var hand=HoldDirectional.hand(profile,Vector2(1,.45),-1,1.0,angle)
+ if tankard_texture==null:
+  tankard_texture=AtlasTexture.new();tankard_texture.atlas=TANKARD;tankard_texture.region=TANKARD.get_image().get_used_rect()
+ # Grip stays anchored through a dedicated lift, sip pause and gentle lowering.
+ var grip=p+hand*Vector2(facing,1)*zoom
+ n.draw_set_transform(grip+offset,.12*sip*facing,Vector2(-facing,1)*zoom)
+ var width=18.0;var height=width*tankard_texture.get_height()/tankard_texture.get_width()
+ n.draw_texture_rect(tankard_texture,Rect2(Vector2(-15,-8),Vector2(width,height)),false)
+ n.draw_circle(Vector2.ZERO,2.2,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))
  n.draw_set_transform(offset)
- n.draw_circle(p+hand*Vector2(facing,1)*zoom,2.5*zoom,Color(HoldAppearance.SKIN_COLORS[profile.get("skin",0)]))

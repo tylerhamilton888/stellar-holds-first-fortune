@@ -402,7 +402,7 @@ func draw():
    elif o.id=="borin" and g.room_id=="forge":
     A.draw_offset=-cam;HoldNpcActivity.smith(g,o.p,g.clock,g.state.opening>=2);A.draw_offset=Vector2.ZERO
    elif g.room_id=="tavern":
-    A.draw_offset=-cam;HoldNpcActivity.social(g,o.p,g.clock,-1,g.state.npc(o.id),true);A.draw_offset=Vector2.ZERO
+    A.draw_offset=-cam;HoldNpcActivity.social(g,o.p,g.clock+(0 if o.id=="hedrik" else posmod(hash(o.id),11)),-1,g.state.npc(o.id),true);A.draw_offset=Vector2.ZERO
    else:actor(o.p,g.state.npc(o.id),false,-1,g.clock)
    g.draw_set_transform(-cam);A.text(g,o.p+Vector2(-30,-140 if o.id=="eirik" else -90),g.state.npc(o.id).first_name,12,Color("e8ce93"))
   elif o.kind=="wall":house.wall_draw(o.c)

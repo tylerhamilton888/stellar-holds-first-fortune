@@ -37,16 +37,16 @@ static func arm_angle(action:float)->float:
  # Anticipation, decisive contact, then a short recovery; contacts follow gameplay clocks.
  if action<.5:return lerpf(-1.65,-.65,action/.5)
  return lerpf(-.65,0.0,(action-.5)/.5)
-static func hand(profile:Dictionary,direction:Vector2,action:float=-1,scale:float=1.0)->Vector2:
+static func hand(profile:Dictionary,direction:Vector2,action:float=-1,scale:float=1.0,arm_override:float=NAN)->Vector2:
  var tex=texture(profile,view(direction));var w=79.0*tex.get_width()/tex.get_height()
  var shoulder=Vector2(w*.25,-79*.58)
- var palm=Vector2(w*.14,79*.27).rotated(arm_angle(action))
+ var palm=Vector2(w*.14,79*.27).rotated(arm_angle(action) if is_nan(arm_override) else arm_override)
  return (shoulder+palm)*Vector2(-1 if direction.x<-.3 else 1,1)*scale
 static func piece(n:Node2D,tex:Texture2D,points:Array,h:float,w:float):
  var vertices=PackedVector2Array();var uv=PackedVector2Array()
  for v in points:vertices.append(Vector2((v.x-.5)*w,(v.y-1)*h));uv.append(v)
  n.draw_polygon(vertices,PackedColorArray([Color.WHITE]),uv,tex)
-static func draw(n:Node2D,p:Vector2,profile:Dictionary,direction:Vector2,walking:bool,time:float,scale:float=1.0,reset:Vector2=Vector2.ZERO,action:float=-1):
+static func draw(n:Node2D,p:Vector2,profile:Dictionary,direction:Vector2,walking:bool,time:float,scale:float=1.0,reset:Vector2=Vector2.ZERO,action:float=-1,arm_override:float=NAN):
  var tex=texture(profile,view(direction));var size=Vector2(tex.get_size());var h=79.0*scale;var w=h*size.x/size.y
  var phase=time*TAU*2.6;var step=sin(phase) if walking else 0.0
  var bob=absf(step)*1.1*scale if walking else 0.0
@@ -62,10 +62,16 @@ static func draw(n:Node2D,p:Vector2,profile:Dictionary,direction:Vector2,walking
  for side in 2:
   var pivot=Vector2((.25 if side==0 else .75)*w-w/2,-h*.58)
   var angle=arm_angle(action)*(1 if side==1 else -.35) if action>=0 else step*.075*(1 if side==0 else -1)
+  if not is_nan(arm_override):angle=arm_override if side==1 else 0.0
   var transform=Transform2D(0,Vector2(flip,1),0,root)*Transform2D(0,pivot)*Transform2D(angle,Vector2.ZERO)*Transform2D(0,-pivot)
   n.draw_set_transform_matrix(transform)
   var x0=0.0 if side==0 else .73;var x1=.27 if side==0 else 1.0
   piece(n,tex,[Vector2(x0,.30),Vector2(x1,.30),Vector2(x1,.79),Vector2(x0,.79)],h,w)
  n.draw_set_transform(root,0,Vector2(flip,1))
  piece(n,tex,[Vector2(0,0),Vector2(1,0),Vector2(1,.30),Vector2(.73,.30),Vector2(.73,.70),Vector2(1,.79),Vector2(0,.79),Vector2(.27,.70),Vector2(.27,.30),Vector2(0,.30)],h,w)
+ # A lifted drinking forearm must pass in front of the beard/tunic, not vanish behind it.
+ if not is_nan(arm_override) and arm_override>.1:
+  var pivot=Vector2(w*.25,-h*.58)
+  n.draw_set_transform_matrix(Transform2D(0,Vector2(flip,1),0,root)*Transform2D(0,pivot)*Transform2D(arm_override,Vector2.ZERO)*Transform2D(0,-pivot))
+  piece(n,tex,[Vector2(.73,.30),Vector2(1,.30),Vector2(1,.79),Vector2(.73,.79)],h,w)
  n.draw_set_transform(reset)

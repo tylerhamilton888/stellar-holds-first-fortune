@@ -15,3 +15,5 @@ Edit this original 3x3 sprite atlas minimally. ONLY change the first two objects
 `HoldHandworks.raw_sprite` draws one cached texture per material at the same 40-pixel width on the ground, shoulders, stockpiles, cart and active station. A raw record retains its ID, kind, units and source across transfers. The station image itself is empty. Completed output changes representation only when the recipe completes. The fallen source trunk uses the same timber illustration at its larger uncut size. Body animation reuses the established directional Dwarf rig.
 
 Raw racks render all stored records (capacity 12), carts all 8; processed cargo builds up in bundles of 20 with exact numerical readouts.
+
+0.49.2: explicit runtime atlas bounds correct cross-row bleed without editing original images. Mine face surfaces sample the canonical raw stone texture, with geological tints and saved-damage fractures. Old mine haulage bases share this atlas; processed cargo uses existing item art.
