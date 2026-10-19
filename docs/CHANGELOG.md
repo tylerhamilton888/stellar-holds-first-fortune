@@ -1,3 +1,9 @@
+# 0.55.1 — Stable, solid cave landmarks
+- Fixed JSON numeric-type mismatch turning crystals into oath pillars after load.
+- Shared visual anchors/collision bases; actor depth sorting; movement, crew, reach and placement respect landmarks.
+- Exact old-save backup, same-depth local recovery, preserved old stair/equipment coordinates.
+- 235 completed source/exported checks and native visual review; see testing/landmarks-0.55.1.md.
+
 # 0.55.0 — Working the Mountain
 More substantial planted excavation and persistent fracture stages; physical ore/stone loads integrated with existing Handworks; full-yield field dressing; rack/cart batch gathering; mineral-aware stonebreaking and powered bench processing; useful lamps/supports, stronger Miner handling and controlled section work; continuous-lode notes. Fixed bench focus/stance and loose-cargo passage priority. Updated existing quest guidance. Exact pre-.55 save backup, 146 passing final checks, native visual review and new verified recovery artifacts. See testing/mining-0.55.0.md for scope and limitations.
 

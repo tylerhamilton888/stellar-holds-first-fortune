@@ -36,7 +36,8 @@ func enter(resume:bool=false):
  if not resume:haul.park();world.data.depth=0;world.data.position=[Deepworks.center(Deepworks.ENTRY).x,Deepworks.center(Deepworks.ENTRY).y]
  works.cancel()
  g.player=Vector2(world.data.position[0],world.data.position[1]);g.grounded=true
- if world.solid(g.player):g.player=Deepworks.center(Deepworks.ENTRY);world.data.depth=0
+ g.player=world.safe_position(g.player)
+ world.data.position=[g.player.x,g.player.y]
  g.velocity=Vector2.ZERO;g.camera=camera_target();g.combat.armed=false;g.combat.reset_actions();g.construction.selected="";strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear()
  world.survey(g.player)
 func remember():
@@ -443,17 +444,13 @@ func draw():
    var size=(9.0+j%2*3)*(1-progress*.8)
    var tint=ore_color(rock.kind) if rock.kind in [3,4,5,6] and j%2==0 else color(rock.kind,z)
    g.draw_colored_polygon(PackedVector2Array([q+Vector2(-size,-size*.5),q+Vector2(size*.1,-size),q+Vector2(size,size*.2),q+Vector2(size*.2,size*.7)]),Color(tint,minf(1,rock.life*5)))
- # Geological landmarks are discovered through line of sight, never through solid rock.
+ # Inscriptions lie on the floor; landmark bodies join the actor depth sort below.
  for f in l.features:
-  if not f.found:continue
-  var p=Deepworks.center(Vector2i(f.x,f.y))
-  if f.type in [0,1]:
-   g.surface.world.detail(3,p+Vector2(0,20),110 if f.type==1 else 78)
-  else:
-   for j in 3:
-    var q=p+Vector2((j-1)*55,(j%2)*25)
-    g.surface.world.detail(4,q,48,70)
-   A.text(g,p+Vector2(-60,55),"THE OATH STILL HOLDS",10,Color("b9b4a0"))
+  if f.found and Deepworks.landmark_type(f)==2:
+   var x=0.0;var y=-INF;var count=0
+   for part in world.landmarks():
+    if is_same(part.feature,f):x+=part.p.x;y=maxf(y,part.p.y);count+=1
+   if count>0:A.text(g,Vector2(x/count-60,y+30),"THE OATH STILL HOLDS",10,Color("b9b4a0"))
  for link in world.data.links.values():
   if z not in [int(link.upper),int(link.lower)]:continue
   var c=Vector2i(link.x,link.y)
@@ -476,6 +473,9 @@ func draw():
  works.draw()
  draw_haulage()
  var actors:Array=[]
+ for part in world.landmarks():
+  if part.feature.found:
+   var actor=part.duplicate();actor.p=part.base;actor.anchor=part.p;actors.append(actor)
  for a in g.agents:
   if int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
  actors.append_array(g.fight.objects())
@@ -484,6 +484,8 @@ func draw():
  for actor in actors:
   var p:Vector2=actor.p
   g.draw_set_transform(offset)
+  if actor.get("kind","")=="landmark":
+   g.surface.world.detail(int(actor.art),actor.anchor,float(actor.width),float(actor.height));continue
   g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
   if actor.get("kind","")=="fighter":g.fight.draw_enemy(actor.enemy)
   elif actor.get("kind","")=="handwork":g.handworks.draw_object(actor)

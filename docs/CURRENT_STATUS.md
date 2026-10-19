@@ -1,10 +1,6 @@
-# Current playable build — 0.55.0
-2026-10-19 UTC. Recovery checkpoint: `mining-0.55.0`; previous .54 preserved.
+# Current playable build — 0.55.1
+2026-10-19 UTC. Checkpoint `landmarks-0.55.1`; .55 remains recoverable.
 
-Deepworks excavation is more deliberate, with saved fracture stages and responsive movement cancellation. Rock and minerals produce substantial, consistently drawn raw loads. Field dressing keeps prospecting convenient; nearby racks, stonebreakers, pallets and carts reward a developed worksite. Lamps, existing support pillars, steel equipment and Miner practice improve recovery, fracture control and transport. Natural lode notes track development across the original Z levels.
+Cave landmarks retain their visual identity after reload, have shared visible/physical bases, and sort correctly around the Dwarf. Movement, crew routing, tool reach and placement respect those bases. Legacy save backup, local player recovery and nearby landmark adjustment protect old progress and matching stair locations. Terrain and the .55 mining economy are unchanged.
 
-Existing Pinewood, crafting, quests, inventories, industrial automation and crew routes remain integrated. Older saves receive an exact pre-.55 backup before autosave; no terrain regeneration. Bench focus/approach and cargo-on-stair interaction were corrected during native testing.
-
-146 final checks passed: 132 source plus 14 exported-pack. Visual review covered mining contacts, fracture stages, physical ore, bench work, hauling and naturally developed galleries. Full package checks and limits are in testing/mining-0.55.0.md. Windows execution/audio and the subjective 10–15 minute worksite goal need player acceptance. Existing teardown resource warnings remain; raw-workstation NPC operation is still future work.
-
-See SESSION_HANDOFF.md for implementation entry points, PLAYTEST_GUIDE.md for the short acceptance route, and PROJECT_INDEX.md for recovery artifacts.
+235 completed checks passed, including 60 checks on the final exported PCK. Reload captures match pixel-for-pixel; source and exported visuals inspected. See `testing/landmarks-0.55.1.md` for actual scope, bounded legacy correction and remaining limitations. Windows/audio/Defender are unverified. New antivirus signatures were unavailable (HTTP 403); no fresh scan result is claimed.

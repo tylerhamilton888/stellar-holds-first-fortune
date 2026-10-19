@@ -1,3 +1,6 @@
+# Current build: 0.55.1 — Cave landmark repair
+Read docs/SESSION_HANDOFF.md and docs/testing/landmarks-0.55.1.md for current status. Earlier release notes below are historical.
+
 # Current build: 0.53.1 — Standard Windows release
 
 Open project.godot with Godot 4.4.1, or extract the complete Windows build and run FirstFortune.exe. Read docs/PLAYTEST_GUIDE.md and docs/CURRENT_STATUS.md. Recovery tag: packaging-0.53.1; prior versions remain preserved.

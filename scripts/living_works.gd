@@ -71,6 +71,7 @@ func place(c:Vector2i,kind:String,occupied:Array=[])->String:
  if not FURNITURE.has(kind):return "Unknown furnishing."
  var def=FURNITURE[kind];var r=at(c);var key=id_at(c)
  if r.is_empty() or w.at(c)!=0:return "Place furnishings on floor inside a designated room."
+ if w.landmark_solid(Deepworks.center(c),-1,Vector2(20,20)):return "Keep the landmark base clear."
  if not unlocked(def):return "Research "+HoldData.RESEARCH[def.tech].name+" first."
  if data.furniture.has(key) or w.layer().fixtures.has(Deepworks.key(c)):return "There is already a furnishing or work lamp here."
  if w.can_descend(c,w.depth()) or (w.depth()>0 and w.can_descend(c,w.depth()-1)):return "Keep stair landings clear."

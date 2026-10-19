@@ -1,3 +1,8 @@
+## After 0.55.1
+- Resolved cave landmark reload identity, missing base collision and actor depth sorting.
+- For unusually dense legacy sites where no nearby landmark relocation fits, inspect the preserved pre-551 save rather than regenerating terrain.
+- Retain existing .55 backlog below. Windows/audio and Defender acceptance remain unverified.
+
 ## After 0.55.0
 - Player acceptance of the 10–15 minute site-development goal: excavation weight, mineral value, field-versus-bench convenience, hauling and sound. Tune from actual feedback; preserve 150-unit/s unladen travel and one-owner material records.
 - Existing miners/automation remain functional. Raw-workstation NPC operation and dedicated industrial hauling jobs are still deferred; do not claim those are implemented.

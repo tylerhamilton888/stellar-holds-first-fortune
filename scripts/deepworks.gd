@@ -10,10 +10,13 @@ const DIRS=[Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]
 const NAMES=["Lamplight Galleries","Copperfold","The Rootless Sea","King's Forgotten Works","The Aether Heart"]
 var data:Dictionary
 var state
+var landmark_cache:Array=[]
+const FEET=Vector2(10,8)
 func _init(s):
  state=s
  if not s.deepworks.has(s.active_site):s.deepworks[s.active_site]=generate(s.seed_value+(7919 if s.active_site=="claim" else 0))
  data=s.deepworks[s.active_site]
+ rebuild_landmarks()
 static func key(c:Vector2i)->String:return "%d,%d" % [c.x,c.y]
 static func cell(p:Vector2)->Vector2i:return Vector2i(floor(p.x/TILE),floor(p.y/TILE))
 static func center(c:Vector2i)->Vector2:return (Vector2(c)+Vector2.ONE*.5)*TILE
@@ -67,25 +70,112 @@ func at(c:Vector2i,z:int=-1)->int:
 func set_cell(c:Vector2i,kind:int,z:int=-1):
  if c.x<1 or c.y<1 or c.x>=W-1 or c.y>=H-1:return
  layer(z).cells[c.y*W+c.x]=kind
-func walkable(c:Vector2i,z:int=-1)->bool:
+# Landmark type, drawn anchor and physical base share one definition. JSON numbers
+# are floats after loading; never use raw Variant membership to select artwork.
+static func landmark_type(f:Dictionary)->int:return int(f.get("type",0))
+func rebuild_landmarks():
+ landmark_cache.clear()
+ for z in data.layers.size():
+  var parts:Array=[]
+  for f in layer(z).features:
+   f.type=landmark_type(f)
+   var origin=center(Vector2i(int(f.x),int(f.y)))
+   var anchors:Array=f.get("anchors",[])
+   var count=3 if f.type==2 else 1
+   for j in count:
+    var p=origin+(Vector2((j-1)*55,(j%2)*25) if f.type==2 else Vector2(0,20))
+    if anchors.size()==count:p=Vector2(anchors[j][0],anchors[j][1])
+    var width=48.0 if f.type==2 else 110.0 if f.type==1 else 78.0
+    var height=70.0 if f.type==2 else width*411.0/424.0
+    parts.append({"kind":"landmark","p":p,"art":4 if f.type==2 else 3,"width":width,"height":height,"feature":f,
+     "base":p-Vector2(0,height*.17),"radius":Vector2(width*.44,height*.16)})
+  # Preserve construction in old saves: shift an overlapping landmark as a whole
+  # to nearby open cavern floor, then save its anchors. Never move player property.
+  var reserved:Array=[]
+  for link in data.links.values():
+   if z in [int(link.upper),int(link.lower)]:reserved.append({"p":center(Vector2i(int(link.x),int(link.y))),"half":Vector2(30,30)})
+  for f in data.get("living",{}).get("furniture",{}).values():
+   if int(f.depth)==z:reserved.append({"p":center(Vector2i(int(f.x),int(f.y))),"half":Vector2(23,23)})
+  for f in state.hauling.get("hands",{}).get("facilities",[]):
+   if f.get("area","")=="mine:"+state.active_site+":"+str(z):reserved.append({"p":Vector2(f.x,f.y),"half":Vector2(55,42)})
+  for f in layer(z).features:
+   var group:Array=[]
+   for part in parts:
+    if is_same(part.feature,f):group.append(part)
+   if not landmark_conflict(group,Vector2.ZERO,reserved,z):continue
+   var shift=Vector2.ZERO
+   for radius in range(20,321,20):
+    for i in 32:
+     var offset=Vector2.from_angle(i*TAU/32.0)*radius
+     if not landmark_conflict(group,offset,reserved,z):shift=offset;break
+    if shift!=Vector2.ZERO:break
+   if shift!=Vector2.ZERO:
+    f.anchors=[]
+    for part in group:
+     part.p+=shift;part.base+=shift;f.anchors.append([part.p.x,part.p.y])
+  landmark_cache.append(parts)
+func landmark_conflict(parts:Array,offset:Vector2,reserved:Array,z:int)->bool:
+ for part in parts:
+  var moved=part.duplicate();moved.base+=offset
+  for occupied in reserved:
+   if base_overlaps(moved,occupied.p,occupied.half):return true
+  # Check the base's extents, not the tall decorative silhouette.
+  for direction in [Vector2.ZERO,Vector2.LEFT,Vector2.RIGHT,Vector2.UP,Vector2.DOWN]:
+   if at(cell(moved.base+direction*moved.radius),z)!=0:return true
+ return false
+func landmarks(z:int=-1)->Array:return landmark_cache[depth() if z<0 else z]
+static func base_overlaps(part:Dictionary,p:Vector2,half:Vector2=FEET)->bool:
+ # Rectangle/ellipse intersection, including edge contacts rather than just corners.
+ var delta:Vector2=(part.base-p).abs()-half
+ delta=Vector2(maxf(0,delta.x),maxf(0,delta.y))/part.radius
+ return delta.length_squared()<1.0
+func landmark_solid(p:Vector2,z:int=-1,half:Vector2=FEET)->bool:
+ for part in landmarks(z):
+  if base_overlaps(part,p,half):return true
+ return false
+func terrain_walkable(c:Vector2i,z:int=-1)->bool:
  if at(c,z)!=0:return false
  var f=data.get("living",{}).get("furniture",{}).get(link_key(c,depth() if z<0 else z),{})
  return not f.get("solid",false)
-func solid(p:Vector2,z:int=-1)->bool:
+func walkable(c:Vector2i,z:int=-1)->bool:
+ return terrain_walkable(c,z) and not landmark_solid(center(c),z)
+func terrain_solid(p:Vector2,z:int=-1)->bool:
  for d in [Vector2(-10,-8),Vector2(10,-8),Vector2(-10,8),Vector2(10,8)]:
-  if not walkable(cell(p+d),z):return true
+  if not terrain_walkable(cell(p+d),z):return true
  return false
-func visible(a:Vector2,b:Vector2,z:int=-1)->bool:
+func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or landmark_solid(p,z)
+func clear_step(a:Vector2,b:Vector2,z:int=-1)->bool:
+ for i in range(1,9):
+  if solid(a.lerp(b,i/8.0),z):return false
+ return true
+func safe_position(p:Vector2,z:int=-1)->Vector2:
+ if not solid(p,z):return p
+ # Old saves could stand inside decorative landmarks. Resolve locally on the same
+ # floor, without crossing rock walls or changing excavations, depth or equipment.
+ for radius in range(4,165,4):
+  for i in 32:
+   var q=p+Vector2.from_angle(i*TAU/32.0)*radius
+   if solid(q,z):continue
+   var clear=true
+   for step in range(1,17):
+    if terrain_solid(p.lerp(q,step/16.0),z):clear=false;break
+   if clear:return q
+ return p
+func visible(a:Vector2,b:Vector2,z:int=-1,block_landmarks:bool=true)->bool:
  var end=cell(b)
  for i in range(0,int(a.distance_to(b)),8):
-  var c=cell(a.move_toward(b,i))
+  var sample=a.move_toward(b,i)
+  var c=cell(sample)
   if c!=end and at(c,z)!=0:return false
+  if block_landmarks and landmark_solid(sample,z,Vector2.ZERO):return false
  return true
 func target(origin:Vector2,aim:Vector2,reach:float=88)->Vector2i:
  var delta=aim-origin
  if delta.length()<1:return Vector2i(-1,-1)
  for i in range(1,int(minf(reach,delta.length()))+1,2):
-  var c=cell(origin+delta.normalized()*i)
+  var sample=origin+delta.normalized()*i
+  if landmark_solid(sample,-1,Vector2.ZERO):return Vector2i(-1,-1)
+  var c=cell(sample)
   if at(c)!=0:return c if at(c)!=8 else Vector2i(-1,-1)
  return Vector2i(-1,-1)
 func resistance(kind:int)->float:return {1:1.0,2:3.6,3:4.8,4:4.2,5:2.8,6:6.0,7:8.0}.get(kind,1.0)
@@ -161,9 +251,13 @@ func survey(p:Vector2)->Array:
  for y in range(c.y-9,c.y+10):
   for x in range(c.x-9,c.x+10):
    var t=Vector2i(x,y)
-   if center(t).distance_to(p)<350 and visible(p,center(t)):l.seen[key(t)]=true
+   if center(t).distance_to(p)<350 and visible(p,center(t),-1,false):l.seen[key(t)]=true
  for f in l.features:
-  if not f.found and l.seen.has(key(Vector2i(f.x,f.y))):
+  if f.found:continue
+  var revealed=false
+  for part in landmarks():
+   if is_same(part.feature,f) and p.distance_to(part.base)<350 and visible(p,part.base,-1,false):revealed=true;break
+  if revealed:
    f.found=true;data.discoveries.append(f.name);found.append(f.name)
    if f.get("rare",false):state.add("crystal",3);state.add("scrap",4)
  return found
@@ -175,7 +269,7 @@ func carve_stairs(c:Vector2i,kind:String="stair")->String:
  if z>=data.layers.size()-1:return "The surveyed frontier ends here. Future delvings will extend this depth."
  if not walkable(c):return "Stand on clear excavated ground."
  if at(c,z+1)==8:return "The lower landing lies beyond the surveyed boundary."
- if at(c,z+1)==0 and not walkable(c,z+1):return "Furniture blocks the landing below. Move it before building a passage."
+ if at(c,z+1)==0 and not walkable(c,z+1):return "A landmark or furnishing blocks the landing below. Choose clear ground."
  var previous=data.links.get(link_key(c,z),{})
  if not previous.is_empty() and (previous.get("kind","stair")==kind or kind=="ladder"):
   return "A passage already connects these levels. E down; Shift+E up."
@@ -207,7 +301,7 @@ func route(start:Vector2i,z:int,priority:String,destination:Vector2i=Vector2i(-1
   if destination==c:chosen={"stand":c,"target":Vector2i(-1,-1)};break
   for d in DIRS:
    var n=c+d;var kind=at(n,z)
-   if kind==0 and walkable(n,z) and not prev.has(key(n)):prev[key(n)]=c;queue.append(n)
+   if kind==0 and walkable(n,z) and not prev.has(key(n)) and clear_step(center(c),center(n),z):prev[key(n)]=c;queue.append(n)
    elif destination.x<0 and kind not in [0,8] and (kind!=7 or state.steel):
     var candidate={"stand":c,"target":n}
     if HoldData.TILES[kind].item==priority:chosen=candidate;break

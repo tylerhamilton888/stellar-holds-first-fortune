@@ -1,3 +1,6 @@
+# Cave repair check — 0.55.1
+Load your existing save, find a crystal or oath refuge, and note its depth/location. Save and Continue: it should remain the same landmark. Walk around its base and behind it; the base should be solid while the tall art draws in front of you. Existing stair landings should still return to the same coordinates. Older saves are backed up automatically before load. Continue with the established mining route below.
+
 # 0.55.0 — Try one promising mining site
 Extract the complete Windows ZIP and run FirstFortune.exe beside FirstFortune.pck. Continue keeps your existing progress; the first upgraded load makes a separate `.pre-mining-55-*.bak`. Keep that file if returning to an older build.
 

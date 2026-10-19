@@ -1,3 +1,6 @@
+# Current release: 0.55.1
+See [cave landmark verification](testing/landmarks-0.55.1.md). Run `tests/landmarks551.gd` natively; `tests/pack551.gd` is a self-contained external harness for the exported PCK. Require the completion marker, not just exit code zero. Isolate saves; run native displays sequentially. Compare reload pixels and inspect front/behind overlap.
+
 # Current release: 0.55.0
 Read [mining refinement verification](testing/mining-0.55.0.md). Use isolated data for `tests/mining55.gd`, `handworks55.gd`, `site55.gd`, `test_deepworks55.gd` and external `pack55.gd`. Native tests must run sequentially with separate X displays/saves. Historical two-contact assertions describe old balance and are not current acceptance gates. The fieldwork fixture uses full-duration authored strokes; bench tests allow approach travel before measuring work.
 
