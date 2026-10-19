@@ -1,8 +1,20 @@
+# Palette correction — source pigment coverage
+
+2026-10-19 · checkpoint **palette-fix58**, following `whole-integration-wip-58`. The user correctly reported residual purple in the previous delivered preview. The earlier statement that the palette had been fully verified was too strong.
+
+The source filter in `scripts/whole_frames.gd` used hue .67–.95 and saturation >.10, missing red-violet shadows and muted highlights. It also recolored after reducing the image, allowing source purple to mix into edge pixels. The correction recognizes the reserved pigment by red/blue excess over green, softly resolves mixed fringe pixels, prevents warm/grey fringe blends from producing mauve, and resolves source colors before resizing. Original painted PNGs and saved palettes are unchanged. This is a renderer correction, not a paint-over of the preview.
+
+Native evidence: `testing/palette-fix58/hair-palette.png`, `all-colors-0.png`, `all-colors-1.png` and `animation/`. Automated native audit: 2,576 full-resolution frame/color combinations, no marker-color failures; all 2,464 active core/utility/handling/equipped frames across fourteen identities checked in iron grey, plus all eight natural palettes on each front idle. 103,482 skin/clothing/leather/metal control pixels remain identical when only hair color changes. Intentional Heather and Night violet outfits retain purple. The corrected renderer also passed 18/18 actual input/ownership/reload checks. See `testing/palette-fix58.md` for scope, criteria and limits.
+
+The whole-character integration remains unreleased. Existing carry/facing/hairstyle/tool/source-crop and contact blockers remain in `art/whole-integration-58.md`. Palette verification is not animation acceptance. No terrain, mechanics, progression or save changes.
+
+## Previous integration checkpoint
+
 # Whole-character integration — unreleased development checkpoint
 
 Updated 2026-10-19 UTC. Continue from **whole-integration-wip-58** on `integrate/whole-0.58.0`. This is a runnable source milestone, **not a new approved Windows build**. The last Windows package remains .57.0, whose visuals the user rejected. Do not present it as the repaired build.
 
-The user approved the whole-figure study and said “Do it.” The later “Why is the hair purple” question concerns the reserved hair pigment in the source paintings. The active renderer replaces that pigment with the saved hair palette; native oak, honey, copper and grey proof is `testing/whole-0.58.0/hair-palette.png`. Explain this plainly. Purple is not a new art-direction choice.
+The user approved the whole-figure study and said “Do it.” The later “Why is the hair purple” question concerns the reserved hair pigment in the source paintings. The original native preview still had residual purple; it is superseded by the correction described above. Purple is not a new art-direction choice.
 
 ## Active implementation
 

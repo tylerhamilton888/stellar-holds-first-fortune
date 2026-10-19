@@ -67,19 +67,29 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
  # constructs the character from separate body parts.
  for span in m.get("omit",[]):img.fill_rect(Rect2i(span[0],span[1],span[2],1),Color.TRANSPARENT)
  var ratio=1.0 if full else minf(1,HEIGHT/maxf(1,float(m.height))*2.6)
- img.resize(maxi(1,int(img.get_width()*ratio)),maxi(1,int(img.get_height()*ratio)),Image.INTERPOLATE_LANCZOS)
  var hair=HoldAppearance.hair(p);var cloth=HoldAppearance.cloth(p);var skin=HoldAppearance.skin(p)
  for y in img.get_height():
   for x in img.get_width():
    var c=img.get_pixel(x,y)
-   if c.a<.09:img.set_pixel(x,y,Color.TRANSPARENT);continue
-   # Reserved hair pigment covers every hair shadow without a face-shaped mask.
-   if c.h>.67 and c.h<.95 and c.s>.10:
-    c=Color.from_hsv(hair.h,hair.s*clampf(c.s/.32,.65,1.15),clampf(hair.v*c.v/.58,0,1),c.a)
+   if c.a<=0:img.set_pixel(x,y,Color.TRANSPARENT);continue
+   # Purple includes red-violet shadows and nearly neutral highlights. HSV
+   # cutoffs excluded both. Resolve the source pigment before resampling so
+   # filtering cannot blend unconverted purple into skin or transparent edges.
+   if c.r>c.g and c.b>c.g:
+    var pigment=minf(c.r-c.g,c.b-c.g)
+    var coverage=clampf(2.0*(c.b-c.g)/maxf(c.r-c.g,1.0/255.0),0,1)*clampf(pigment*64.0,0,1)
+    var clean=Color(c.r,c.g,minf(c.b,c.g),c.a)
+    var dyed=Color.from_hsv(hair.h,hair.s*clampf(c.s/.32,.65,1.15),clampf(hair.v*c.v/.58,0,1),c.a)
+    c=clean.lerp(dyed,coverage)
+    # Blending a warm fringe with cool grey can itself make mauve. Preserve
+    # the shaded value while keeping this hair-only blend free of magenta.
+    c.g=maxf(c.g,minf(c.r,c.b))
    elif c.h>.46 and c.h<.67 and c.s>.20:c=HoldCharacterArt.recolor(c,cloth,Color("356477"))
    elif c.h>.015 and c.h<.10 and c.v>.62 and c.s>.15 and c.s<.64:c=HoldCharacterArt.recolor(c,skin,Color("f3d6bc"))
    elif p.jewelry>0 and c.h>.105 and c.h<.17 and c.s>.45 and c.v>.4:c=HoldCharacterArt.recolor(c,Color(["d8a651","c3cfd2","d59742","746f60"][p.jewelry]),Color("d8a651"))
    img.set_pixel(x,y,c)
+ # Keep palette resolution ahead of the filter for both portrait and game sizes.
+ if ratio<1:img.resize(maxi(1,int(img.get_width()*ratio)),maxi(1,int(img.get_height()*ratio)),Image.INTERPOLATE_LANCZOS)
  var tex=ImageTexture.create_from_image(img);cache[key]=tex;order.append(key)
  while order.size()>3072:cache.erase(order.pop_front())
  return tex

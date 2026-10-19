@@ -1,3 +1,9 @@
+# Unreleased — residual hair pigment correction
+
+- Corrected purple source coverage for red-violet shadows and muted highlights. Resolve colors before resizing and remove mauve introduced by warm/grey hair-fringe mixing.
+- Preserved painted sources, selected palettes and intentional purple clothing. Added full-sheet native color audit and corrected previews covering all identities/natural palettes.
+- Previous delivered palette preview was faulty and is superseded. This correction does not close the existing animation release blockers or create a new Windows build.
+
 # Unreleased — whole-character integration milestone
 
 - Activated complete painted figures through the existing player/NPC/work/equipment/portrait paths, preserving all fourteen identity families and saved material palettes. No active separate-head fallback.

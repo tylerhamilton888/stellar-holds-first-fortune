@@ -2,7 +2,7 @@
 
 The user approved whole painted Dwarfs and asked for integration. The active backend now draws complete frames; head, body, hands and feet share the painting. Preserve connected anatomy, compact adult proportions, readable planted/lifted feet and drawn tool grips. Never describe baking the old composite as a redraw. All seven male/female identities and their palettes must remain consistent through every state.
 
-Purple in the original sheets is a reserved hair pigment, replaced by the saved hair color in-game. It is not the intended default hair color. No geometric face-color patch is permitted.
+Purple in the original sheets is a reserved hair pigment, replaced by the saved hair color in-game. It is not the intended default hair color. The first preview missed muted highlights and red-violet shadows; `palette-fix58` corrects coverage and resolves pigment before resizing. Require the all-sheet palette audit and native review after source changes. Preserve intentional clothing colors. No geometric face-color patch is permitted.
 
 Read **art/whole-integration-58.md** for current source layout and observed release blockers. The approved study is a direction reference, not acceptance of all generated sequences. Core crops now retain feet; carry continuity, hairstyle/tool identity, equipped gait, clipped keys and material/contact parity still fail the full release gate. Do not ship the milestone as finished or silently map identities to defaults.
 

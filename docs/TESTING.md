@@ -1,3 +1,7 @@
+# Current palette correction: palette-fix58
+
+Read [palette coverage verification](testing/palette-fix58.md). `palette_audit58.gd` checks every active frame at source resolution plus all eight hair choices per identity, and protects non-hair materials including intentional purple clothing. `palette_fix58.gd`, `palette_all58.gd` and `palette_actions58.gd` provide native review captures. These tests do not certify unrelated animation poses. Preserve isolated saves and sequential native displays.
+
 # Current development: whole-integration-wip-58
 
 Read [whole-character verification](testing/whole-0.58.0.md). The active whole-frame backend passes 98 native mechanical checks but has **failed visual acceptance**; see [observed art blockers](art/whole-integration-58.md). Use isolated save data and sequential native displays. New harnesses: core_art58, palette58, grips58, art58, capture_grip58, creator58 and motion58. Old head/body/stride geometry assertions describe the superseded composite and are not acceptance tests for whole drawings. No new Windows package has been verified or released.

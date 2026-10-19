@@ -1,5 +1,7 @@
 # Highest priority — finish whole-character visual acceptance
 
+Palette follow-up `palette-fix58`: residual source purple corrected and audited across all active sheets. Keep its output-color and protected-material tests for future asset changes. Do not use the former palette preview as acceptance evidence.
+
 The complete-figure backend is active in **whole-integration-wip-58**; it is not release-ready. Correct the observed per-key shoulder swaps, hairstyle/facing drift, wrong work props and clipped source drawings listed in `art/whole-integration-58.md`. Finish material parity, tray occlusion, tattoos, directional contacts and passing poses. Preserve all saved sculpts/palettes; no old-head fallback. Review native moving sequences before packaging. Mechanical verification currently passes 98/98; artistic acceptance remains failed.
 
 ## After 0.57.0

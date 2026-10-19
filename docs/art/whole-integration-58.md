@@ -10,7 +10,7 @@ Every current HoldFolk paint call now selects a complete painted figure, includi
 
 `tools/measure_whole_frames.py` measures alpha components and roots without modifying the original PNGs. `frames.json` records bounds, roots, per-sequence scale, neighboring-fragment exclusions and correction-source overrides. `extraction-review.json` names sheets whose touching drawings required segmentation. Native review caught clipped boots and stray neighboring fragments; wider seam search corrected the reviewed core crops. Do not assume every utility/handling/equipped crop is accepted merely because the metadata is valid.
 
-Purple hair is a **reserved source pigment**, used to identify hair pixels for the saved character palette. The active renderer replaces it with the selected hair color. Native `hair-palette.png` shows oak, honey, copper and iron grey on complete figures. Skin recoloring is applied to painted material pixels, not a separate circular head layer. Cloth and jewelry colors are also retained; tattoo decoration is not yet implemented in this backend.
+Purple hair is a **reserved source pigment**, used to identify hair pixels for the saved character palette. The active renderer replaces it with the selected hair color. The first native preview still contained residual purple and is superseded by `../testing/palette-fix58/hair-palette.png`; see the palette-fix verification report. Skin recoloring is applied to painted material pixels, not a separate circular head layer. Cloth and jewelry colors are also retained; tattoo decoration is not yet implemented in this backend.
 
 ## Release blockers — observed, not hypothetical
 
