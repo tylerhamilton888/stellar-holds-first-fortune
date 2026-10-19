@@ -1,3 +1,5 @@
+Current release: **0.53.0**. See [native playability validation](testing/playability-0.53.0.md). Use isolated native input for playability53, intro53, combat_edges53 and input_world53; test_deepworks41 covers existing crew/depth persistence.
+
 Current world release: 0.50.0. See testing/world-0.50.0.md and tests/input_world50.gd, collision_world50.gd, migration_world50.gd. Use isolated native data and inspect hitbox overlays.
 
 Tavern/container follow-up: input_tavern492.gd (7), bringing current focused checks to 51.

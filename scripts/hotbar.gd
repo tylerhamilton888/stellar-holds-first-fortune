@@ -68,15 +68,16 @@ func _draw():
  var d=data();var current=selected();var id=str(d.slots[current])
  var box=StyleBoxFlat.new();box.bg_color=Color(.04,.09,.12,.95);box.border_color=Color("8c7953");box.set_border_width_all(1);box.set_corner_radius_all(7)
  draw_style_box(box,Rect2(224,bar_y(),512,80))
- var text="Holding · "+title(id)
- if id=="slagcaster":text+=" · %d charge" % int(g.state.outpost.get("gun_charge",0))
- elif not id.begins_with("tool:"):text+=" · %d in pack" % g.state.count(id)
+ var text=("Weapon · "+g.combat.weapon().name) if g.combat.armed else "Holding · "+title(id)
+ if g.combat.armed and g.state.combat.weapon=="gun":text+=" · %d cartridges" % g.state.count("ammo")
+ elif not g.combat.armed and id=="slagcaster":text+=" · %d charge" % int(g.state.outpost.get("gun_charge",0))
+ elif not g.combat.armed and not id.begins_with("tool:"):text+=" · %d in pack" % g.state.count(id)
  var held=g.handworks.held_label()
  if held!="":text=held
  if g.fieldwork.action!="":text=g.fieldwork.held_label()
  draw_string(ThemeDB.fallback_font,Vector2(238,bar_y()+17),text,HORIZONTAL_ALIGNMENT_LEFT,480,13,Color("ead6ab"))
  for i in 10:
-  var r=slot_rect(i);var key=str(d.slots[i]);var chosen=i==current
+  var r=slot_rect(i);var key=str(d.slots[i]);var chosen=i==current and not g.combat.armed
   var locked=key=="slagcaster" and not g.state.outpost.get("mining_gun",false)
   var resource=not key.begins_with("tool:") and key!="slagcaster"
   var empty=resource and g.state.count(key)==0

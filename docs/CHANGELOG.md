@@ -1,3 +1,22 @@
+# Connected work, clear footing — 0.53.0
+Updated 2026-10-19 UTC. Recovery tag `playability-0.53.0`; pre-edit checkpoint `pre-playability-0.53.0` preserves `labor-0.52.0` (9762ca65e9e82608ec545b52b4c3c6dd97063ac6). The existing incremental bundle was verified before edits. Previous archives, tags, original art and saves remain. No remote was changed or pushed.
+
+General handcarts and freight wagons now retain their identity, raw loads, processed cargo and hitch through connected outdoor routes and mine stairs. C parks/takes the handles; E remains usable at doors and landings. An empty-handed player can use a doorway beside a parked cart. Wagons park outside interiors; handcarts enter ordinary rooms but park before sparring. House stairs require parking; mine ladders reject attached carts. Handcarts move at 175 units/s, wagons at 155, unladen Dwarfs at 185. Existing mine wheelbarrows and their stair handling remain.
+
+Settling-in keeps Ivar's actual street/quarters escort and the two practical tasks. The objective names the unfinished bed/chest step. Rest takes 1.1 seconds with a warm fade; moving cancels without healing or credit. Completion restores health, saves and advances the existing introduction sequence. Either task order, skipped/interrupted escort and progressed saves remain supported.
+
+Borin's practice is now part of the ordinary top-down interior renderer, with the current drawn Dwarf, a marked sparring floor and a report bench. WASD moves in eight normalized directions; the mouse faces, held LMB repeats attacks, RMB guards in front, a short timed guard parries, and Q dodges in the chosen movement direction. Dodge uses normal collision. Amber arcs show locked enemy attack direction before contact. No stamina or practice injuries. Training requires three hits, a guard/parry and evasion of an actual telegraphed attack. E at the bench reports the lesson and unlocks the existing deeper encounter progression.
+
+The same controller handles sparse persistent encounters below the first mine layer. Axe, hammer, carbine, ammunition, armor reduction, salvage and rescue use existing equipment/economy data. Walls stop attacks; rear attacks bypass guard; hammer/riposte stagger; menus pause combat; rapid guard tapping cannot continually reopen parry. Wounds and cleared IDs persist, and cleared encounters do not respawn. Enemy sites are deterministic and stored per geological layer. Legacy combat progress is retained under its original IDs. The hotbar names the drawn weapon and gun ammunition without falsely highlighting a tool. Combat advice has a contrasting background. Existing enemy frames now use measured sprite bounds, removing adjacent-frame fragments.
+
+Validation: 142 unique gameplay/model assertions across focused loops (32), intro (20), weapon edges (10), complete world journey (35), and existing Deepworks/crew regression (45). Native Linux Godot 4.4.1 input/rendering, real save/reload, screenshot review and exported-pack boot. See `testing/playability-0.53.0.md`. Windows execution, audio balance and subjective feel remain player acceptance checks.
+
+Recovery: standalone Windows ZIP; incremental source ZIP and Git bundle relative to .52. Source/Git restoration requires the preserved .51 baseline plus .52 update, then .53. Exact restoration and hashes are in `Stellar-Holds-0.53.0-Recovery.txt`; previous versions are not overwritten.
+
+Boundaries: transport uses existing player collision and authored passages, not full wheelbase/turning-radius physics. House stairs do not carry carts. Guard/gun ready poses and hostile creatures reuse existing art; this is not a new eight-direction combat animation set. New raw-station/farm NPC jobs, convoy routing and additional enemy types remain deferred. Existing automation and unrelated labor systems remain intact.
+
+## Earlier milestones
+
 # A Place to Begin — 0.52.0
 Updated 2026-10-18 UTC. Recovery tag `labor-0.52.0`; baseline `pre-animation-0.52.0` / `labor-0.51.0` at `c02adc0bf08c34b064a1ba21f1108a00579c7f17`. The baseline full-history bundle was verified before edits. Prior tags, archives, original assets and save formats remain. No remote was changed or pushed.
 

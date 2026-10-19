@@ -25,6 +25,8 @@ var cut_target=-1
 var cut_struck=false
 var cut_approach=false
 var cut_flash=0.0
+var rest_time=0.0
+var rest_elapsed=0.0
 var route_hint=""
 var ground_cache={}
 var bed_bounds=Rect2i()
@@ -33,7 +35,7 @@ var world
 
 func _init(game):
  g=game;house=HoldHearthcraft.new(self);world=HoldWorldZones.new(self)
-func active()->bool:return g.playing and g.zone!="mine" and g.room_id!="training"
+func active()->bool:return g.playing and g.zone!="mine"
 func ensure():
  HoldForestry.ensure(g.state)
  if g.state.surface.is_empty():g.state.surface={"version":1,"area":"hearthward","positions":{},"chests":{},"homes":{},"decor":[],"facts":{}}
@@ -64,6 +66,7 @@ func remember():
  g.state.surface.area=area;g.state.surface.return_area=return_area
  g.state.surface.positions[area]=[g.player.x,g.player.y]
 func restore():
+ rest_time=0;rest_elapsed=0
  ensure()
  if g.zone=="mine":return
  var desired=str(g.state.surface.get("area","hearthward"))
@@ -87,7 +90,8 @@ func enter(id:String,at:Vector2=Vector2.INF):
  if id=="room:throne" and HoldOnboarding.ensure(g.state).fresh and HoldOnboarding.stage(g.state)<4:g.notify("Ivar's first-shift reference opens the royal audience.");return
  if id in ["trail","pinewood","claim"] and g.state.opening==0:g.notify(g.region_travel_hint());return
  if g.room_id=="training":g.state.resident_visits.erase("borin")
- world.speech=""
+ var travelling_cart=g.handworks.passage(id)
+ world.speech="";rest_time=0
  remember();var old=area
  g.flush_pickups()
  var claim_site=id=="claim" or id.begins_with("home:") or (id.begins_with("room:") and g.state.active_site=="claim" and old=="claim")
@@ -106,6 +110,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.combat.armed=false;g.combat.reset_actions();g.construction.selected=""
  g.state.region_travel.active=false;g.state.hold_travel.active=false
  g.camera=camera_target();g.close_panel();g.spawn_agents();g.sound.set_context(g.room_id if room() else g.zone)
+ g.handworks.arrive(travelling_cart)
  g.begin_transition(label().to_upper());g.save_game()
 func leave():
  var back=return_area
@@ -128,6 +133,8 @@ func points()->Array:
   result=[spot(480,620,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
   if area.begins_with("home:") or area=="room:home":
    result.append(spot(290,420,"Bed · rest and save","rest"));result.append(spot(735,515,"Wardrobe & supplies" if area=="room:home" else "Homestead workbench","home" if area=="room:home" else "homestead"))
+  elif area=="room:training":
+   result.append(spot(660,570,"Borin’s training notes","training_notes"))
   else:
    var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
    result.append(spot(620,410,HoldInteriors.ROOMS.get(g.room_id,{"action":"Rest and supplies"}).action,"talk:"+host if host!="" and g.state.active_site=="hold" else "training" if g.room_id=="practice" else g.room_id))
@@ -178,9 +185,9 @@ func action(id:String):
   for d in g.state.surface.decor:
    if house.local(d) and d.kind=="bed" and g.player.distance_to(Vector2(d.x,d.y))<85:house.rest(Vector2(d.x,d.y));break
  elif id=="rest":
-  g.state.surface.facts.rest=true
-  if area=="room:home":HoldOnboarding.settle(g,"bed")
-  g.save_game();g.sound.effect("door",-18);g.notify("A warm bed and a sound roof. Rested; fortune saved.")
+  if g.handworks.busy_hands():g.notify("Park or set down your load before resting.");return
+  rest_time=1.1;rest_elapsed=0;g.notify("Taking a breather · move to cancel")
+ elif id=="training_notes":g.lesson_id="training";g.open_panel("lesson")
  elif id=="training":g.enter_room("training")
  elif id=="private":g.notify("Folk homes · private quarters. Meet the neighbors in the streets and tavern.")
  elif id.begins_with("citizen:"):world.speak(int(id.trim_prefix("citizen:")))
@@ -231,8 +238,17 @@ func walkable(p:Vector2)->bool:
 func move(dt:float):
  if g.handworks.approaching or g.fieldwork.moving:return
  var input=Input.get_vector("left","right","up","down")
- if input!=Vector2.ZERO:direction=input
- var delta=input*185*dt
+ if input!=Vector2.ZERO and not (g.fight.enabled() and g.combat.armed):direction=input
+ if rest_time>0:
+  if input!=Vector2.ZERO:rest_time=0;g.notify("Back on your feet.")
+  else:
+   rest_time=maxf(0,rest_time-dt);rest_elapsed+=dt;g.walking_pose=false
+   if rest_time<=0:
+    g.state.surface.facts.rest=true;g.state.combat.health=100;g.notify("Rested · health restored · fortune saved")
+    if area=="room:home":HoldOnboarding.settle(g,"bed")
+    g.save_game()
+   return
+ var delta=g.fight.movement(input)*dt
  var before=g.player
  var steps=maxi(1,ceili(delta.length()/6.0))
  for i in steps:
@@ -412,7 +428,7 @@ func draw():
   if house.local(c):objects.append({"p":Vector2(c.x,c.y),"kind":"chest_open" if g.panel_id=="storage" and c==g.state.surface.chests.get(selected_chest,{}) else "chest"})
  for d in g.state.surface.decor:
   if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind})
- if room() and not area.begins_with("home:"):
+ if room() and not area.begins_with("home:") and area!="room:training":
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
   if host!="" and g.state.active_site=="hold":objects.append({"p":Vector2(620,370 if host=="eirik" else 410),"kind":"npc","id":host})
   if g.room_id=="tavern":
@@ -426,6 +442,7 @@ func draw():
   g.draw_set_transform(-cam);HoldAnniversary.station(g,HoldWorldZones.door(10),g.clock)
  if area=="pinewood":
   for i in TREES.size():objects.append({"p":TREES[i],"kind":"tree","i":i})
+ objects.append_array(g.fight.objects())
  objects.append_array(g.handworks.objects())
  objects.append_array(g.fieldwork.objects())
  if g.opening_scene is HoldArrivalEscort:objects.append({"p":g.opening_scene.guide,"kind":"escort"})
@@ -436,6 +453,7 @@ func draw():
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":world.draw_furnishing(o)
   elif o.kind=="citizen":world.draw_citizen(o)
+  elif o.kind=="fighter":g.fight.draw_enemy(o.enemy)
   elif o.kind=="escort":g.opening_scene.draw_guide()
   elif o.kind=="garden":g.fieldwork.draw_bed(o.bed)
   elif o.kind=="handwork":g.handworks.draw_object(o)
@@ -490,9 +508,15 @@ func draw():
  world.speech_overlay()
  g.handworks.overlay()
  g.fieldwork.draw()
+ g.fight.overlay()
+ if rest_time>0:
+  g.draw_rect(Rect2(0,74,960,424),Color(.04,.08,.10,sin(rest_elapsed/1.1*PI)*.6))
+  A.text(g,Vector2(340,300),"A moment by your own hearth…",18,Color("efcf95"))
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.04,.055,.48))
 func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
  var is_player=p==g.player
+ if is_player and g.fight.enabled() and g.combat.armed:
+  g.fight.draw_player(p,.85,-g.camera.round());return
  if is_player:p=g.handworks.work_pose()
  var cam=g.camera.round()
  g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,19,Color(0,0,0,.3))

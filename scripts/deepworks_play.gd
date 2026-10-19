@@ -80,13 +80,14 @@ func input(e:InputEvent)->bool:
 func use_stairs(up:bool):
  ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
  if not up and not world.can_descend(c,world.depth()) and works.interact():return
+ var travelling_cart=g.handworks.attached()
  var link=world.data.links.get(world.link_key(c,old_depth-1 if up else old_depth),{})
- if link.get("kind","stair")=="ladder" and not haul.cart().is_empty() and haul.cart().get("hitched",false):
+ if link.get("kind","stair")=="ladder" and (not travelling_cart.is_empty() or (not haul.cart().is_empty() and haul.cart().get("hitched",false))):
   g.notify("Park the wheelbarrow [C], or widen this ladder into stairs from its upper landing [V].");return
  if world.traverse(c,up):
   works.cancel()
   haul.stairs(Deepworks.center(c),old_depth)
-  g.player=Deepworks.center(c);g.velocity=Vector2.ZERO;strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear();pulse=0
+  g.player=Deepworks.center(c);g.handworks.arrive(travelling_cart);g.velocity=Vector2.ZERO;strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear();pulse=0
   g.begin_transition("DEPTH %d · %s" % [world.depth()+1,Deepworks.NAMES[world.depth()].to_upper()]);g.sound.effect("door",-16)
   world.survey(g.player);g.save_game();return
  if world.entrance(g.player):
@@ -128,9 +129,8 @@ func crew_entry(agent:Dictionary)->Dictionary:
 func move(dt:float):
  if g.handworks.approaching:return
  ensure();var axis=Input.get_vector("left","right","up","down")
- if axis!=Vector2.ZERO:g.surface.direction=axis
- var speed=185.0
- g.velocity=axis*speed;var old=g.player
+ if axis!=Vector2.ZERO and not g.combat.armed:g.surface.direction=axis
+ g.velocity=g.fight.movement(axis);var old=g.player
  for i in maxi(1,int(ceil(dt*120))):
   var step=g.velocity*dt/maxi(1,int(ceil(dt*120)))
   var next=g.player+Vector2(step.x,0)
@@ -154,6 +154,7 @@ func move(dt:float):
  haul.scavenge(g.player)
  remember()
 func mine(dt:float):
+ if g.combat.armed:strike_left=0;return
  ensure();works.masonry.tick(dt);pulse=maxf(0,pulse-dt);unload_flash=maxf(0,unload_flash-dt)
  for i in range(rubble.size()-1,-1,-1):
   rubble[i].life-=dt
@@ -435,14 +436,17 @@ func draw():
  var actors:Array=[]
  for a in g.agents:
   if int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
+ actors.append_array(g.fight.objects())
  actors.append_array(g.handworks.objects())
  actors.append({"p":g.player,"player":true});actors.sort_custom(func(a,b):return a.p.y<b.p.y)
  for actor in actors:
   var p:Vector2=actor.p
   g.draw_set_transform(offset)
   g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
-  if actor.get("kind","")=="handwork":g.handworks.draw_object(actor)
+  if actor.get("kind","")=="fighter":g.fight.draw_enemy(actor.enemy)
+  elif actor.get("kind","")=="handwork":g.handworks.draw_object(actor)
   elif actor.has("player"):
+   if g.combat.armed:g.fight.draw_player(p+Vector2(0,12),1.0,offset);continue
    var profile=g.state.appearance.duplicate();profile.air_pose=0;profile.gait_time=g.gait_clock
    var pose=g.handworks.work_pose()+Vector2(0,12)
    var facing_dir=(contact-p).normalized() if strike_left>0 else g.surface.direction
@@ -489,17 +493,17 @@ func draw():
  g.draw_rect(Rect2(0,462,960,36),Color(.04,.09,.12,.9));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"))
  A.text(g,Vector2(24,485),"DEPTH %d / %d · %s" % [z+1,world.data.layers.size(),Deepworks.NAMES[z]],14,Color("eac98b"))
  var tool_name="Slagcaster" if g.mining_gun.selected else ["Pick","Shovel","Axe","Hammer"][clampi(g.tool,0,3)]
- if aim.x>=0 and g.panel_id=="":
+ if aim.x>=0 and g.panel_id=="" and not g.combat.armed:
   var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=world.grade_label(aim)+" "+HoldData.TILES[k].name
   A.text(g,Vector2(680,480),tool_name+" · "+name,12,ore_color(k));g.draw_rect(Rect2(680,487,250,3),Color("2b414a"));g.draw_rect(Rect2(680,487,250*d/world.resistance(k),3),Color("cbb57e"))
- elif g.panel_id=="":A.text(g,Vector2(680,485),tool_name+" · 1–4 change tool",12,Color("b9d0c8"))
+ elif g.panel_id=="" and not g.combat.armed:A.text(g,Vector2(680,485),tool_name+" · 1–4 change tool",12,Color("b9d0c8"))
  if g.panel_id=="":
   g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
   A.text(g,Vector2(30,99),"H · Bucket %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
  if survey_open and g.panel_id=="":draw_survey()
  works.hud()
- g.handworks.overlay()
+ g.handworks.overlay();g.fight.overlay()
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.045,.06,.55))
 func lamp(p:Vector2):
  for r in [68,48,32,18]:g.draw_circle(p-Vector2(0,15),r,Color(1,.72,.35,.025))

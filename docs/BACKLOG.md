@@ -1,3 +1,6 @@
+## After 0.53.0
+Player-test loaded travel, practice pacing, aimed strikes and the short rest on Windows with sound. Add further authored directional combat/guard/pushing poses, richer enemy navigation and vehicle footprint/turning clearance only after this playable baseline. House-stair transport, convoy/NPC cart jobs and raw-station/farm automation remain deferred. Preserve one-owner cargo and permanent encounter outcomes. Dedicated practice and outdoor/mine cart passage integration are now implemented; historical entries below describe earlier states.
+
 ## After 0.52.0
 Player-test the new arrival escort, bed/chest objectives, gait, hand grips and directional cargo at normal speed. Windows launcher and audible balance remain acceptance checks. Further authored directional work/pushing poses and dedicated top-down sparring remain follow-up. Retain the now-tested introductory quest/save continuity and collision-checked route. Do not reopen the world layout or labor systems merely to refine a pose. Cross-zone wagon travel and raw-station/farm automation remain deferred.
 

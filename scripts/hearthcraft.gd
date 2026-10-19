@@ -56,6 +56,8 @@ func use_stairs(up:bool)->bool:
  var dest=z+1 if up else z-1
  var t=tiles(dest).get(key(found),{})
  if t.is_empty() or t.get("wall","")!="" or occupied_at(found,dest):g.notify("Clear the landing before climbing.");return false
+ var travelling_cart=g.handworks.attached()
+ if not travelling_cart.is_empty():g.notify("Park the cart [C] before using a house stair. Outdoor and mine freight routes stay available.");return false
  data().z=dest;g.player=center(found);s.placing="";impact=0;g.velocity=Vector2.ZERO;g.walking_pose=false
  data().facts["ascend" if up else "descend"]=true
  g.camera=s.camera_target();g.sound.effect("wood",-17);g.save_game();g.notify("Homestead Z+%d · E up / Shift+E down at landings" % dest);return true

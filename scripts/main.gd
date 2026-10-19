@@ -28,6 +28,7 @@ var overworld
 var hold_room_return=false
 var construction:HoldConstruction
 var mining_gun:HoldMiningGun
+var fight:HoldSkirmish
 var combat:HoldCombat
 var sound:HoldSound
 var playing=false
@@ -118,7 +119,7 @@ func _ready():
  var atmosphere=ShaderMaterial.new();atmosphere.shader=load("res://scripts/atmosphere.gdshader");backdrop.material=atmosphere
  forest_view=preload("res://scripts/forestry_view.gd").new();forest_view.host=self;forest_view.z_index=-5;add_child(forest_view)
  sprite_atlas=HoldSpriteAtlas.new();add_child(sprite_atlas)
- combat=HoldCombat.new(self);construction=HoldConstruction.new(self);mining_gun=HoldMiningGun.new(self)
+ fight=HoldSkirmish.new(self);combat=HoldCombat.new(self);construction=HoldConstruction.new(self);mining_gun=HoldMiningGun.new(self)
  deep=DeepworksPlay.new(self);surface=HoldSurface.new(self);handworks=HoldHandworks.new(self);fieldwork=HoldHomesteadLife.new(self)
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
@@ -213,10 +214,10 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.52.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.53.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
- fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}
+ fight.reset();fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
  jump_buffer=0;coyote_left=0;movement_remainder=0;jump_was_held=Input.is_action_pressed("jump");grounded=false
  mining_gun.selected=false;mining_gun.flash=0
@@ -311,7 +312,7 @@ func _process(dt):
   if completed!="":notify(completed);sound.effect("build")
   if zone!="mine" and not surface.active():combat.update(dt)
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
-   handworks.update(dt)
+   fight.update(dt);handworks.update(dt)
    if zone=="mine":deep.move(dt);deep.mine(dt)
    elif surface.active():surface.move(dt)
    else:move_player(dt)
@@ -362,6 +363,7 @@ func _unhandled_input(e):
  if not playing and panel_id!="" and e.is_action_pressed("pause"):
   back_panel();get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
+ if fight.input(e):get_viewport().set_input_as_handled();return
  if fieldwork.input(e):get_viewport().set_input_as_handled();return
  if handworks.input(e):get_viewport().set_input_as_handled();return
  if hotbar.handle(e):get_viewport().set_input_as_handled();return
@@ -748,12 +750,14 @@ func change_zone(z:String):
  if z!="mine" and surface:
   surface.enter("claim" if z=="claim" or state.active_site=="claim" else "hearthward");return
  if zone=="mine" and z!="mine":deep.depart()
+ var travelling_cart=handworks.passage("mine")
  room_id="";swing=0;impact_pause=0
  for d in drops:state.add(d.item,d.count)
  drops.clear();particles.clear();popups.clear();close_panel();zone=z;velocity=Vector2.ZERO
  player=Vector2(150,370) if z=="mine" else Vector2(1465,HUB_FLOOR)
  camera=Vector2.ZERO if z=="mine" else Vector2(985,0)
  if z=="mine":deep.enter()
+ handworks.arrive(travelling_cart)
  begin_transition("THE LOWER WORKINGS" if z=="mine" else "BACK TO THE HOLD");sound.set_context(z)
  notify("DEEPWORKS: WASD move · Hold LMB dig · V carve stairs · E down / Shift+E up · X survey below." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
  save_game()
@@ -1694,6 +1698,10 @@ func begin_transition(title:String):
  transition_left=.65;transition_shade.visible=true;transition_shade.modulate.a=1;transition_label.text=title
  swing=0;impact_pause=0;impact_flashes.clear()
 func enter_room(id:String):
+ if id=="training":
+  if not HoldOnboarding.ensure(state).accepted.has("training"):notify("Ask Borin about Keep your feet before using the practice bay.");return
+  var practice_return=surface.area if surface.area in ["room:forge","room:practice"] else "room:practice"
+  surface.enter("room:training",Vector2(420,520));surface.return_area=practice_return;state.resident_visits.borin="training";fight.reset();combat.armed=true;save_game();return
  if id!="training" and surface:
   surface.enter("home:"+state.claim_id if id=="home" and state.active_site=="claim" else "room:"+id);return
  if not HoldInteriors.ROOMS.has(id):return

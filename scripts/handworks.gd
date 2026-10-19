@@ -31,6 +31,22 @@ func context()->String:
 func local(o:Dictionary)->bool:return o.get("area","")==context()
 func vehicle(f:Dictionary)->bool:return f.get("kind","") in ["cart","wagon"]
 func pos(o:Dictionary)->Vector2:return Vector2(o.x,o.y)
+func attached()->Dictionary:
+ for f in data().facilities:
+  if vehicle(f) and f.get("hitched",false) and local(f) and pos(f).distance_to(g.player)<145:return f
+ return {}
+func arrive(f:Dictionary):
+ if f.is_empty():return
+ f.area=context();f.x=g.player.x;f.y=g.player.y;f.hitched=true
+func travel_speed()->float:
+ var f=attached()
+ return 155.0 if f.get("kind","")=="wagon" else 175.0 if not f.is_empty() else 185.0
+func passage(id:String)->Dictionary:
+ var f=attached()
+ if f.is_empty():return f
+ if id=="room:training" or (f.kind=="wagon" and (id.begins_with("room:") or id.begins_with("home:"))):
+  f.hitched=false;g.notify("Your "+SPECS[f.kind].name.to_lower()+" is parked outside with its cargo. C takes the handles when you return.");return {}
+ return f
 func busy_hands()->bool:
  if working or not data().carry.is_empty() or not setting_down.is_empty():return true
  var cart=nearby_cart()
@@ -149,7 +165,10 @@ func input(e:InputEvent)->bool:
    var f=nearby_cart()
    if not f.is_empty() and vehicle(f):
     if not data().carry.is_empty():g.notify("Set your shoulder load down before taking the handles.");return true
-    f.hitched=not f.hitched
+    var hitch=not f.hitched
+    for other in data().facilities:
+     if vehicle(other):other.hitched=false
+    f.hitched=hitch
     if not f.hitched:
      var parked=g.player+Vector2(-45 if g.surface.direction.x<-.3 else 45,10)
      if clear_line(g.player,parked):f.x=parked.x;f.y=parked.y
@@ -159,6 +178,11 @@ func input(e:InputEvent)->bool:
    if not raw.is_empty() and not e.shift_pressed and data().carry.size()<capacity() and (f.is_empty() or g.player.distance_to(pos(raw))+15<g.player.distance_to(pos(f))):
     data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;g.save_game();return true
    if not f.is_empty():
+    if vehicle(f):
+     if f.hitched:return false # E remains available for doors and landings.
+     if g.surface.active() and data().carry.is_empty() and not e.shift_pressed:
+      var near=g.surface.nearest();var action=str(near.get("action",""))
+      if action in ["leave","mine","trail","hearthward","crownward","forgeward","pinewood","claim","lift"] or action.begins_with("room:") or action.begins_with("home:"):return false
     if e.shift_pressed:withdraw(f)
     elif f.kind in ["breaker","saw"]:active_id=f.id;begin(f)
     else:deposit(f)
@@ -193,7 +217,7 @@ func update(dt:float):
  var d=data()
  for f in d.facilities:
   if vehicle(f) and f.hitched:
-   # Never teleport abandoned equipment across a map or ladder.
+   # Only explicit, validated passages transfer equipment; abandoned carts stay put.
    if not local(f) or pos(f).distance_to(g.player)>145:f.hitched=false
    else:f.x=g.player.x;f.y=g.player.y
  var f=facility()
@@ -330,7 +354,7 @@ func overlay():
  g.draw_set_transform(-g.camera)
  if placing!="":sprite(SPECS[placing].art,g.get_global_mouse_position()+g.camera,85,.55)
  var f=facility();var raw=closest(data().loose,65);var text=""
- if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),SPECS[f.kind].capacity,DeepHaul.amount(f.cargo),"Hold E work · Shift+E collect" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
+ if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),SPECS[f.kind].capacity,DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · Shift+E collect" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
  elif f.is_empty() and not raw.is_empty():text="E · Lift "+("raw log" if raw.kind=="log" else "stone chunk")
  elif not data().carry.is_empty():text="Carrying %d / %d · Q put down · E deliver" % [data().carry.size(),capacity()]

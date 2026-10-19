@@ -1,8 +1,8 @@
-# Current build: 0.52.0 — A Place to Begin
+# Current build: 0.53.0 — Connected work, clear footing
 
-Open project.godot with Godot 4.4.1, or extract the complete versioned Windows build and run PLAY-WINDOWS.bat. Read docs/PLAYTEST_GUIDE.md and docs/CURRENT_STATUS.md. Recovery tag: labor-0.52.0; earlier versions remain preserved.
+Open project.godot with Godot 4.4.1, or extract the complete Windows build and run PLAY-WINDOWS.bat. Read docs/PLAYTEST_GUIDE.md and docs/CURRENT_STATUS.md. Recovery tag: playability-0.53.0; prior versions remain preserved.
 
-New fortunes meet Ivar for an in-world walk to their quarters before settling in and meeting the hold. Walking/carrying now use registered drawn gait keys. Source/Git recovery uses the preserved 0.51.0 baseline plus the 0.52.0 update; see the versioned Recovery.txt.
+Connected cart travel, clearer settling-in objectives and integrated top-down practice/deep combat. Source/Git recovery requires .51 baseline, .52 update, then .53 update; see the versioned Recovery.txt.
 
 # Earlier milestone: 0.43.1 — The Living Works
 Integrated workshops, bedrooms and craftsmanship in the existing Deepworks. See docs/CURRENT_STATUS.md and docs/PROJECT_INDEX.md. O opens the works board underground.

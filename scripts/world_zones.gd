@@ -158,6 +158,7 @@ func room_objects()->Array:
  elif id in ["forge","practice"]:result=[furn(1,330,390,245),furn(2,685,350,130)]
  elif id=="market":result=[furn(5,400,385,280),furn(3,710,340,100)]
  elif id in ["commission","research"]:result=[furn(2,620,365,175),furn(3,270,365,130),furn(3,420,365,130)]
+ elif id=="training":result=[furn(2,660,570,100)]
  elif id=="home":result=[furn(4,650,330,140)]
  return result
 func furn(art:int,x:float,y:float,width:float)->Dictionary:return {"kind":"furnishing","art":art,"p":Vector2(x,y),"width":width}
@@ -200,6 +201,9 @@ func draw_room_floor():
   for x in [350,710]:
    s.house.material(3,Rect2(x,270,32,180))
    g.draw_style_box(stone_style(Color("b5b397")),Rect2(x-5,435,42,18))
+ if g.room_id=="training":
+  s.house.material(0,Rect2(305,345,330,185))
+  g.draw_rect(Rect2(315,355,310,165),Color("bda673"),false,3)
  if g.room_id=="home":
   if s.area.begins_with("home:") and int(g.state.surface.homes[g.state.claim_id].level)>0:
    g.draw_style_box(stone_style(Color("3f777a")),Rect2(365,420,230,115))
