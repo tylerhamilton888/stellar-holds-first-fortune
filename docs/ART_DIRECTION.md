@@ -1,8 +1,10 @@
-# Whole-character direction — unreleased 0.58 study
+# Whole-character direction — active development, not accepted release
 
-The user rejected .57's oversized separate heads, skin-circle recoloring, lanky assembled bodies and floating-looking grips, then explicitly requested characters drawn as one piece. This supersedes the separated-head guidance below. Every accepted animation key must be a complete painted Dwarf: naturally connected head/neck/shoulders, matching face/arm skin, compact adult proportions, readable planted and lifted feet, and fingers drawn around the actual tool. Do not bake the old composite and describe it as a redraw. Palette customization may use material masks on a whole figure; it must not introduce geometric face patches or recolor skin shadows as hair.
+The user approved whole painted Dwarfs and asked for integration. The active backend now draws complete frames; head, body, hands and feet share the painting. Preserve connected anatomy, compact adult proportions, readable planted/lifted feet and drawn tool grips. Never describe baking the old composite as a redraw. All seven male/female identities and their palettes must remain consistent through every state.
 
-The first two complete-figure sheets and native review are retained under assets/folk-v58 and docs/testing/whole-figure-study. They are an ART CHECKPOINT, not a finished animation library or an active production renderer. Front-walk turning, repeated keys and rear-quarter drift remain. Preserve all seven male/female saved identities and palette choices during the eventual replacement; never silently collapse them to two defaults. See art/whole-figure-study.md.
+Purple in the original sheets is a reserved hair pigment, replaced by the saved hair color in-game. It is not the intended default hair color. No geometric face-color patch is permitted.
+
+Read **art/whole-integration-58.md** for current source layout and observed release blockers. The approved study is a direction reference, not acceptance of all generated sequences. Core crops now retain feet; carry continuity, hairstyle/tool identity, equipped gait, clipped keys and material/contact parity still fail the full release gate. Do not ship the milestone as finished or silently map identities to defaults.
 
 # Historical implementation — 0.57.0 (rejected by the user)
 Equipped tools must be drawn with their supporting forearms and wrapped fingers. Do not restore a generic item icon over a neutral hand in active top-down play. Dedicated front/side/rear-quarter/back bodies own the grip. Actual inventory supplies may sit inside the small supported tray, behind its rim/fingers; do not fabricate contents for empty stacks. Work/carry poses override equipment.

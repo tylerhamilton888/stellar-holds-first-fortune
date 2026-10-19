@@ -1,3 +1,7 @@
+# Current development: whole-integration-wip-58
+
+Read [whole-character verification](testing/whole-0.58.0.md). The active whole-frame backend passes 98 native mechanical checks but has **failed visual acceptance**; see [observed art blockers](art/whole-integration-58.md). Use isolated save data and sequential native displays. New harnesses: core_art58, palette58, grips58, art58, capture_grip58, creator58 and motion58. Old head/body/stride geometry assertions describe the superseded composite and are not acceptance tests for whole drawings. No new Windows package has been verified or released.
+
 # Current release: 0.57.0
 Read [grip/proportion verification](testing/grips-0.57.0.md). New `grips57.gd` exercises actual numbered input, moving selection, supply ownership, load priority, reload and prepared facings. `capture_grip57.gd` renders 48 equipped poses at game/enlarged scale; `motion57.gd` records real movement. `pack57.gd` is self-contained for the exported PCK. Retained mining55, handworks55, integration56 and combat_edges53 provide regression coverage. Combat's older fixture now waits for the current transition prewarm before input. Use isolated saves, sequential native displays and explicit completion markers.
 

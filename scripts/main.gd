@@ -214,7 +214,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.57.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="THE FIRST FORTUNE  /  WHOLE-FIGURE DEVELOPMENT";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  fight.reset();fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}

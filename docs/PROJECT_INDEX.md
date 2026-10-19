@@ -1,6 +1,11 @@
 # Authoritative project index
 
-Latest development checkpoint: **whole-figure-study-58**, an unreleased art/renderer study. Current Windows release remains **0.57.0**, whose visuals the user rejected. `art/whole-figure-study.md` records the new complete-character direction, native findings and unfinished integration requirements. `assets/folk-v58` contains the original paintings and exact prompts; `scripts/whole_folk.gd` is inactive in production. `Stellar-Holds-Whole-Figure-Study-58.zip` and its incremental Git bundle preserve this work after .57. No .58 game build is claimed.
+Latest source checkpoint: **whole-integration-wip-58**, an active whole-character integration with unresolved visual release blockers. This is not a new Windows release. Read `SESSION_HANDOFF.md`, `CURRENT_STATUS.md`, `art/whole-integration-58.md` and `testing/whole-0.58.0.md`. Source: `scripts/whole_frames.gd`, `assets/whole-v58`, `tools/measure_whole_frames.py`; native evidence: `docs/testing/whole-0.58.0`. The original approved study and all prior releases remain.
+
+Recovery: `Stellar-Holds-Whole-Integration-WIP-58.bundle` is incremental after `whole-figure-study-58`; its companion Recovery.txt contains exact restore instructions and hashes. `Stellar-Holds-Whole-Integration-WIP-58-Motion.mp4` is native development evidence, not an acceptance trailer. `Stellar-Holds-Whole-Character-Hair-Colors.png` shows the actual palette replacement.
+
+## Previous packaged release — visuals rejected
+
 Updated 2026-10-19 UTC. Build **0.57.0**, checkpoint **grips-0.57.0**. The October 19 user concept remains the art authority; shipped assets are not automatically accepted.
 
 | Artifact | Purpose |
@@ -18,4 +23,4 @@ Updated 2026-10-19 UTC. Build **0.57.0**, checkpoint **grips-0.57.0**. The Octob
 
 Preserve the full .51 baseline and .52/.53/.53.1/.54/.55/.55.1/.56 update chain. Restore through `art-0.56.0` using its retained recovery instructions before applying .57. All prior releases and backups remain. No remote changed or pushed. Current .56 base commit: `bbf977acbf60d58fd30b22b124f77f7d7cec8f6f`.
 
-Active source: scripts/folk.gd; assets/folk-v57; hotbar.gd; surface.gd; deepworks_play.gd; skirmish.gd. Historical checkpoint evidence remains in docs/testing. The .55 mining and .55.1 landmark work are preserved, not superseded by new generation.
+Historical .57 source: scripts/folk.gd; assets/folk-v57; hotbar.gd; surface.gd; deepworks_play.gd; skirmish.gd. Historical checkpoint evidence remains in docs/testing. The .55 mining and .55.1 landmark work are preserved, not superseded by new generation.

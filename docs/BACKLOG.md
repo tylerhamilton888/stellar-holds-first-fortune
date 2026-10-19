@@ -1,6 +1,6 @@
-# Highest priority — whole painted characters
+# Highest priority — finish whole-character visual acceptance
 
-Replace the rejected .57 composite head/body/legs with complete drawn animation frames. Start from the unreleased whole-figure study, correct walk facing and repeated leg phases, and finish every saved identity and action. Preserve skin/hair/cloth choices with material-aware whole-figure coloring. No old-head fallback during work; no silent collapse of seven sculpts to two. Native moving inspection and actual gameplay integration are required before a new build. See art/whole-figure-study.md.
+The complete-figure backend is active in **whole-integration-wip-58**; it is not release-ready. Correct the observed per-key shoulder swaps, hairstyle/facing drift, wrong work props and clipped source drawings listed in `art/whole-integration-58.md`. Finish material parity, tray occlusion, tattoos, directional contacts and passing poses. Preserve all saved sculpts/palettes; no old-head fallback. Review native moving sequences before packaging. Mechanical verification currently passes 98/98; artistic acceptance remains failed.
 
 ## After 0.57.0
 - Replaced floating equipped tools with complete drawn grips and shortened/broadened Folk bodies. Await user judgement of silhouette, held/work transition and side steps.

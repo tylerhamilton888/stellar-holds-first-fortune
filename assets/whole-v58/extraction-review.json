@@ -1,0 +1,122 @@
+[
+  {
+    "sheet": "female0-corrected",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female0-handfix",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female1-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female2-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female2-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female2-utility",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female3-core",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female3-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female4-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female5-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female5-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female6-core",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female6-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female6-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "female6-utility",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male1-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male2-core",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male2-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male2-utility",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male3-core",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male3-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male3-handling",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male4-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male5-core",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  }
+]

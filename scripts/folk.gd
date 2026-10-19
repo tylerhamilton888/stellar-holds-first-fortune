@@ -36,7 +36,7 @@ static func contact_frame(phase:float)->int:
  if phase<.52:return 1
  if phase<.76:return 2
  return 3
-static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
+static func legacy_descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
  var gender="female" if int(p.gender) else "male"
  var view=HoldDirectional.view(d);var f=frame(time);var sheet=gender+"-walk";var index=view*6+f
  if not walking:sheet=gender+"-handling";index=20+view
@@ -222,8 +222,8 @@ static func walking_hands(n:Node2D,p:Dictionary,a:Dictionary,full:bool):
  for hand in [palm,Vector2(a.neck.x*2-palm.x,palm.y)]:
   var region=Rect2(hand-Vector2(21,26),Vector2(42,52)).intersection(Rect2(a.rect))
   n.draw_texture_rect_region(tex,Rect2((region.position-a.root)*a.shape,region.size*a.shape),Rect2((region.position-Vector2(a.rect.position))*ratio,region.size*ratio))
-static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
- var a=descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
+static func legacy_paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
+ var a=legacy_descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
  var bob=0.0
  n.draw_set_transform(at+Vector2(0,bob)*zoom,0,Vector2(flip,1)*zoom)
  cargo(n,a,action)
@@ -264,20 +264,20 @@ static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:f
  # sliced their shafts across faces and cut the beard silhouette in wind-up.
  if action!="" and not action.begins_with("hold_") and action not in ["pick","axe","hammer"] and a.rect.position.y<a.neck.y-3:n.draw_texture_rect(texture(p,a.sheet,a.index,false,true,zoom>2.0),dest,false)
  n.draw_set_transform(reset)
-static func grip(p:Dictionary,d:Vector2,time:float,walking:bool)->Vector2:
- var a=descriptor(p,d,walking,time,"",0);var m=info(a.sheet,a.index)
+static func legacy_grip(p:Dictionary,d:Vector2,time:float,walking:bool)->Vector2:
+ var a=legacy_descriptor(p,d,walking,time,"",0);var m=info(a.sheet,a.index)
  return (vec(m.get("palm",[a.neck.x+80,a.root.y-90]))-a.root)*a.shape*Vector2(-1 if d.x<-.3 else 1,1)
-static func muzzle(p:Dictionary,d:Vector2)->Vector2:
- var a=descriptor(p,d,false,0,"hold_rifle",0)
+static func legacy_muzzle(p:Dictionary,d:Vector2)->Vector2:
+ var a=legacy_descriptor(p,d,false,0,"hold_rifle",0)
  return (Vector2(a.rect.end.x-6,a.rect.position.y+83)-a.root)*a.shape*Vector2(-1 if d.x<-.3 else 1,1)
-static func grip_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2,walking:bool):
- var a=descriptor(p,d,walking,time,"",0);var m=info(a.sheet,a.index);var palm=vec(m.get("palm",[a.neck.x+80,a.root.y-90]));var tex=texture(p,a.sheet,a.index)
+static func legacy_grip_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2,walking:bool):
+ var a=legacy_descriptor(p,d,walking,time,"",0);var m=info(a.sheet,a.index);var palm=vec(m.get("palm",[a.neck.x+80,a.root.y-90]));var tex=texture(p,a.sheet,a.index)
  var region=Rect2(palm-Vector2(a.rect.position)-Vector2(8,9),Vector2(16,18))
  var ratio=Vector2(tex.get_size())/Vector2(a.rect.size)
  n.draw_set_transform(at+reset,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)
  n.draw_texture_rect_region(tex,Rect2((palm-Vector2(8,9)-a.root)*a.shape,Vector2(16,18)*a.shape),Rect2(region.position*ratio,region.size*ratio));n.draw_set_transform(reset)
-static func work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
- var a=descriptor(p,d,false,0,action,phase)
+static func legacy_work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
+ var a=legacy_descriptor(p,d,false,0,action,phase)
  n.draw_set_transform(at+reset,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)
  # Draw only the work-facing hand/tool region above the station's front edge.
  var tex=texture(p,a.sheet,a.index);var dest=body_rect(a);var x=maxf(3,dest.position.x)
@@ -286,10 +286,10 @@ static func work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,res
 
 static var warm_jobs:Array=[]
 static var warm_total=0
-static func warming()->bool:return not warm_jobs.is_empty()
+static func legacy_warming()->bool:return not warm_jobs.is_empty()
 static func key_for(p:Dictionary,sheet:String,index:int,head:bool,foreground:bool)->String:
  return sheet+":"+str(index)+":"+str(p.skin)+":"+(HoldAppearance.hair(p).to_html() if head else str(p.cloth_color))+":"+str(foreground)+":"+str(p.jewelry)
-static func prepare(g:Node):
+static func legacy_prepare(g:Node):
  warm_jobs.clear()
  # Prepare drawn footwork during the existing scene transition, not the first step.
  for view in [0,1,3]:
@@ -333,7 +333,7 @@ static func prepare(g:Node):
    var key=key_for(p,task[0],task[1],task[2],task[3])
    if not cache.has(key) and not queued.has(key):warm_jobs.append([p]+task);queued[key]=true
  warm_total=warm_jobs.size()
-static func warm_step():
+static func legacy_warm_step():
  var started=Time.get_ticks_usec()
  while not warm_jobs.is_empty():
   var job=warm_jobs.pop_back()
@@ -342,9 +342,27 @@ static func warm_step():
    else:equipment_upper(job[1],job[2],job[3])
   else:texture(job[0],job[1],job[2],job[3],job[4])
   if Time.get_ticks_usec()-started>=5000:break
-static func warm_draw(n:Node2D):
+static func legacy_warm_draw(n:Node2D):
  n.draw_set_transform(Vector2.ZERO)
  n.draw_rect(Rect2(0,0,960,540),Color("10232a"))
  HoldArt.text(n,Vector2(313,250),"Preparing the next stretch…",20,Color("ead3a6"))
  n.draw_rect(Rect2(300,278,360,4),Color("2d454b"))
  n.draw_rect(Rect2(300,278,360*(1.0-float(warm_jobs.size())/maxi(1,warm_total)),4),Color("c3a364"))
+
+
+# Complete whole-figure production entry points. Legacy assembly is retained
+# above only for source recovery; no production paint path calls it.
+static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
+ return HoldWholeFrames.descriptor(p,d,walking,time,action,phase)
+static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
+ HoldWholeFrames.paint(n,at,p,d,walking,time,zoom,reset,action,phase)
+static func grip(p:Dictionary,d:Vector2,time:float,walking:bool)->Vector2:return HoldWholeFrames.grip(p,d,time,walking)
+static func grip_front(_n:Node2D,_at:Vector2,_p:Dictionary,_d:Vector2,_time:float,_zoom:float,_reset:Vector2,_walking:bool):
+ pass # Fingers and their load already belong to the complete painting.
+static func work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
+ HoldWholeFrames.work_front(n,at,p,d,zoom,reset,action,phase)
+static func muzzle(p:Dictionary,d:Vector2)->Vector2:return HoldWholeFrames.muzzle(p,d)
+static func prepare(g:Node):HoldWholeFrames.prepare(g)
+static func warming()->bool:return HoldWholeFrames.warming()
+static func warm_step():HoldWholeFrames.warm_step()
+static func warm_draw(n:Node2D):HoldWholeFrames.warm_draw(n)

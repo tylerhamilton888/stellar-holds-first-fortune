@@ -1,3 +1,11 @@
+# Unreleased — whole-character integration milestone
+
+- Activated complete painted figures through the existing player/NPC/work/equipment/portrait paths, preserving all fourteen identity families and saved material palettes. No active separate-head fallback.
+- Added original core, utility, handling and equipped sources plus correction sheets and exact prompts. Measured frame registration and extraction exclude neighboring fragments; corrected reviewed core boot clipping.
+- Verified that source-purple hair becomes selected natural colors. Added required frame JSON to export configuration and marked the source title as development.
+- Passed 98 native mechanical checks and captured core/equipment/interior/moving gameplay evidence. No terrain, save schema, balance or quest changes.
+- **Not released:** carry continuity, hairstyle/facing drift, clipped/wrong source keys, material parity, tattoos, contacts and gait polish remain explicit blockers. This does not complete the requested polished animation replacement.
+
 # Unreleased — whole-character art study
 
 - User rejected .57's detached heads and skin-circle coloring; complete painted character frames are now the target.
