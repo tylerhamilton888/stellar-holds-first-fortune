@@ -1,0 +1,21 @@
+{
+  "source_url": "https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_export_templates.tpz",
+  "archive_sha512": "8f461c7d6e91a0fbabfc95b1e4ca70ff1732c6f2920956a16b086ec2a85b5f7e238baf4dbce60dcc5630fae3bcb9a1fa2ae2027b92cb495c02d082705715e441",
+  "files": [
+    {
+      "name": "windows_release_x86_64.exe",
+      "size": 97520128,
+      "sha256": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b"
+    },
+    {
+      "name": "linux_release.x86_64",
+      "size": 69688024,
+      "sha256": "820f3fec74869f088dc4509737a5d30a8b54208a75d148ec26da9e0e839d9d9a"
+    },
+    {
+      "name": "version.txt",
+      "size": 13,
+      "sha256": "29e6e34cfed3a6ed0922f00f54a1a5847c1f6bcb2a760687ba877ea9be38b207"
+    }
+  ]
+}

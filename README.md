@@ -1,6 +1,6 @@
-# Current build: 0.53.0 — Connected work, clear footing
+# Current build: 0.53.1 — Standard Windows release
 
-Open project.godot with Godot 4.4.1, or extract the complete Windows build and run PLAY-WINDOWS.bat. Read docs/PLAYTEST_GUIDE.md and docs/CURRENT_STATUS.md. Recovery tag: playability-0.53.0; prior versions remain preserved.
+Open project.godot with Godot 4.4.1, or extract the complete Windows build and run FirstFortune.exe. Read docs/PLAYTEST_GUIDE.md and docs/CURRENT_STATUS.md. Recovery tag: packaging-0.53.1; prior versions remain preserved.
 
 Connected cart travel, clearer settling-in objectives and integrated top-down practice/deep combat. Source/Git recovery requires .51 baseline, .52 update, then .53 update; see the versioned Recovery.txt.
 

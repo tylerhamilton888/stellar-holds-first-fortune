@@ -1,0 +1,16 @@
+LibClamAV Warning: **************************************************
+LibClamAV Warning: ***  The virus database is older than 7 days!  ***
+LibClamAV Warning: ***   Please update it as soon as possible.    ***
+LibClamAV Warning: **************************************************
+
+----------- SCAN SUMMARY -----------
+Known viruses: 3628164
+Engine version: 1.5.3
+Scanned directories: 46
+Scanned files: 2796
+Infected files: 0
+Data scanned: 2.99 GiB
+Data read: 1.18 GiB (ratio 2.53:1)
+Time: 236.431 sec (3 m 56 s)
+Start Date: 2026:10:19 10:05:46
+End Date:   2026:10:19 10:09:42

@@ -1,5 +1,5 @@
-# Playtest 0.53.0 — Connected work, clear footing
-Extract the full Windows ZIP and run PLAY-WINDOWS.bat. This build was tested using native Linux Godot; Windows launch, audible balance and your judgement of feel are the remaining acceptance checks.
+# Playtest 0.53.1 — Standard Windows release
+Extract the full Windows ZIP and run FirstFortune.exe. The Windows runtime matches the official Godot export template. The game data was tested using the native Linux release runtime;  Windows launch, audible balance and your judgement of feel are the remaining acceptance checks.
 
 1. **Tutorial:** Start a new fortune, follow Ivar or skip his walk. Check the chest and rest at the bed in either order. Rest lasts about a second; moving cancels. The objective should name only the remaining task. Meet Borin, Orla and Hedrik through the existing introductions.
 2. **Transport:** Craft/place a handcart with Shift+B, load raw stone/logs using E, and take its handles with C. Travel the gate, trail, mine door and real stairs. Check the same cargo after returning and reloading. Park before withdrawing/unloading. A wagon parks outside an interior, ready to collect on return. Ladders and house stairs require parking; no cargo should disappear.

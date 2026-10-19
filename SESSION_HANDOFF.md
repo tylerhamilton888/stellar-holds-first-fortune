@@ -1,3 +1,3 @@
-# Resume here — 0.50.0
+# Resume here — 0.53.1
 
-Read AGENTS.md, docs/SESSION_HANDOFF.md, docs/CURRENT_STATUS.md and docs/ART_DIRECTION.md. Current checkpoint: `world-0.50.0`. Baseline: `pre-world-0.50.0`. See docs/testing/world-0.50.0.md for validation and limitations. Previous releases remain recoverable.
+Read AGENTS.md, docs/SESSION_HANDOFF.md and docs/CURRENT_STATUS.md. Current checkpoint: packaging-0.53.1. Previous checkpoint: playability-0.53.0. The .53.1 changes are packaging and verification only; see docs/testing/packaging-0.53.1.md, including antivirus limitations. Preserve all prior backups.

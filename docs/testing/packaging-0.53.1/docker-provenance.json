@@ -1,0 +1,42 @@
+{
+  "source": "clamav/clamav:stable",
+  "manifest": "sha256:705e0723f02fc13bf6e5e8a8e13a8c44420acf5e7ed06dfa2197081da00c7a73",
+  "image_created": "2026-10-12T01:46:01.246625684Z",
+  "layers": [
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5",
+      "size": 3849738
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:c03aeff1bf165dadbc277498e23ccee00fbc399217127a17dd1cc044e3c09445",
+      "size": 7387243
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:c8c770fdac256a9f61e1290cb4bbd34daf069a860248fe3731a98fa762a74813",
+      "size": 34528171
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:9b392526e73d161094fc987f0a12b9395b9ee437226cbed1d6812ed51762b565",
+      "size": 344
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:d7a6a000bfe6fc736d9f5d487d8cc29dc8ef5eea3c5ef5321ce3d5c3bed988d7",
+      "size": 1562
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:134b4d67f1e48d8f9f642542c3a62aced0bcca6d6f8ddbc1d496c45fc933feeb",
+      "size": 1227
+    },
+    {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:fe5bd983a40af0b4772cfd83d75106234d98219dfe47eff195d35e4aa426db84",
+      "size": 112847137
+    }
+  ]
+}

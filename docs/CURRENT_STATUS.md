@@ -1,3 +1,18 @@
+# Standard Windows release — 0.53.1
+Updated 2026-10-19 UTC. Checkpoint `packaging-0.53.1`; baseline `pre-packaging-0.53.1` preserves `playability-0.53.0` (40185112021128584cdba21fc58ad914ca3c0b79). Prior archives and recovery files remain intact.
+
+Packaging-only update after a reported Defender `Trojan:Win32/MalUri.A!cl` detection on the .53.0 ZIP during download. The trigger is unresolved; do not label it a confirmed false positive. The new build uses `FirstFortune.exe` plus `FirstFortune.pck`, removing the editor and batch launcher. Extract completely and open FirstFortune.exe. Gameplay, art, save paths and save format remain unchanged; only the displayed version changed in runtime code.
+
+The official Godot 4.4.1 export-template archive and Linux build tool were verified against published SHA-512 sums. The shipped Windows executable matches the official release template byte for byte. A fresh source copy was imported/exported with no previous import cache. All 2,639 PCK entries passed path/bounds/checksum validation and were unpacked for local antivirus inspection. Source review found no process execution, shell launch, network API calls or native extensions. These checks are evidence, not a malware-free guarantee.
+
+ClamAV 1.5.3 reported zero detections in 2,796 component/source/original-archive files and in a separate scan of the final download. Official daily signatures are dated October 11, 2026; they are over seven days old. This is not a current Defender clearance.
+
+Native Linux **release runtime** checks passed title rendering, combat poses, working rest, new game, mine travel, exact stairs down/up, and depth/resource save-reload. Windows execution and Defender detection are not tested here. See `testing/packaging-0.53.1.md` for antivirus results, definition dates and the retained shutdown-warning boundary.
+
+Recovery: standalone Windows ZIP, small source update and incremental Git bundle relative to .53.0. Source/Git recovery requires .51 baseline, .52, .53.0, then .53.1. No Git remote was changed or pushed.
+
+## Previous gameplay milestone
+
 # Connected work, clear footing — 0.53.0
 Updated 2026-10-19 UTC. Recovery tag `playability-0.53.0`; pre-edit checkpoint `pre-playability-0.53.0` preserves `labor-0.52.0` (9762ca65e9e82608ec545b52b4c3c6dd97063ac6). The existing incremental bundle was verified before edits. Previous archives, tags, original art and saves remain. No remote was changed or pushed.
 

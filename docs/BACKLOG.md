@@ -1,3 +1,7 @@
+## After 0.53.1
+- SEC-01: Obtain a current Windows Defender result for the exact .53.1 ZIP. The original .53.0 MalUri detection remains unexplained; local ClamAV and source inspection cannot settle Microsoft's verdict. Leave any flagged build blocked. Do not prescribe antivirus exclusions.
+- Packaging now uses the official release runtime and separate PCK. Preserve the previous versions for recovery, not as a recommendation to run a flagged package. Existing .53 gameplay limitations remain.
+
 ## After 0.53.0
 Player-test loaded travel, practice pacing, aimed strikes and the short rest on Windows with sound. Add further authored directional combat/guard/pushing poses, richer enemy navigation and vehicle footprint/turning clearance only after this playable baseline. House-stair transport, convoy/NPC cart jobs and raw-station/farm automation remain deferred. Preserve one-owner cargo and permanent encounter outcomes. Dedicated practice and outdoor/mine cart passage integration are now implemented; historical entries below describe earlier states.
 
