@@ -1,13 +1,9 @@
-# Latest correction: hair palette — still unreleased
+# Current source — animation-refinement58
 
-2026-10-19 · **palette-fix58**. Fixed missed red-violet shadows/desaturated hair highlights and recoloring order in the active whole-figure renderer. The previously delivered PNG did contain residual purple. Native all-frame palette audit passed 2,576 cases and protected-color controls; see `testing/palette-fix58.md` and the corrected native preview. This does not close the separate animation release blockers below.
+2026-10-19. A runnable **unreleased** refinement of the active whole-character renderer.
 
-# Current source: whole-character integration, unreleased
+Integrated 42 selected key corrections: rear-facing equipment, bun/bob axe hair, the wrong spade, clipped rifle boots and female fishing recovery. Fixed reviewed atlas extraction crossing neighboring figures. Rifle/fishing effects attach to measured drawn tool ends. Original sources, gameplay balance, saves, terrain, inventories and progression are preserved; the hair-palette fix remains intact.
 
-2026-10-19 · checkpoint **whole-integration-wip-58**. Complete painted character frames are active in the existing game, including player, ordinary NPC, work, carrying, equipment and portraits. Saved identity variants remain distinct. The original palette preview had residual source purple; use `testing/palette-fix58/hair-palette.png` instead.
+**The full animation overhaul is not release-ready.** Carry redraws failed continuity/proportion review and were rejected. Broader gaits, hair continuity, cargo appearance, tray occlusion, tattoos and directional work still need completion. Doubled-tool generations are rejected assets, not intended gameplay.
 
-**Visual release gate failed.** Several sequences still change shoulder, hairstyle, facing or tool; some source keys are clipped. Carry material parity, tray occlusion, tattoos, contact sockets and fuller gait sequences remain unfinished. See `art/whole-integration-58.md` for precise blockers. This is a recoverable runnable development milestone, not a polished new game build.
-
-Native input/mining/handling/combat checks passed **98/98**, with native core, equipment, interior and movement captures. These mechanical passes do not establish animation quality. See `testing/whole-0.58.0.md`. Windows execution/audio/hardware performance are unverified.
-
-No gameplay balance, terrain, quests or save schema changed. The .57 Windows package remains the last package, with visuals rejected by the user. All prior checkpoints/backups remain; continue from the new source milestone rather than shipping .57 as the fix.
+See `testing/refinement58.md`, `art/whole-integration-58.md` and `SESSION_HANDOFF.md`. The last Windows package remains .57.0, with visuals rejected by the user; no new Windows build is claimed. New recovery follows palette-fix58 and preserves all prior checkpoints.

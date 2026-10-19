@@ -103,7 +103,11 @@ static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:f
  n.draw_set_transform(reset)
 static func grip(_p:Dictionary,d:Vector2,_time:float,_walking:bool)->Vector2:return Vector2(17,-23)*Vector2(-1 if d.x<-.3 else 1,1)
 static func muzzle(p:Dictionary,d:Vector2)->Vector2:
- var a=descriptor(p,d,false,0,"hold_rifle",0);return Vector2(a.destination.end.x-3,-32)*Vector2(-1 if d.x<-.3 else 1,1)
+ return tool_tip(p,d,"hold_rifle",0)
+static func tool_tip(p:Dictionary,d:Vector2,action:String,phase:float)->Vector2:
+ var a=descriptor(p,d,false,0,action,phase);var m=metadata[a.sheet][a.index]
+ var tip=m.right_tip
+ return (Vector2(tip[0],tip[1])-a.root)*a.scale*Vector2(-1 if d.x<-.3 else 1,1)
 static func work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
  var a=descriptor(p,d,false,0,action,phase);var dest:Rect2=a.destination;var tex=texture(p,a.sheet,a.index)
  var x=maxf(4,dest.position.x);var fraction=clampf((x-dest.position.x)/dest.size.x,0,1)

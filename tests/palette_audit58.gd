@@ -3,6 +3,7 @@ var checked=0
 var failed=0
 var total_pixels=0
 var worst=[]
+var output="res://docs/testing/palette-fix58"
 func _initialize():call_deferred("run")
 func scan(p:Dictionary,sheet:String,index:int):
  var texture=HoldWholeFrames.texture(p,sheet,index,true)
@@ -18,6 +19,7 @@ func scan(p:Dictionary,sheet:String,index:int):
  if count>0:failed+=1;worst.append({"sheet":sheet,"frame":index,"hair":p.hair_color,"purple_pixels":count})
  HoldWholeFrames.cache.clear();HoldWholeFrames.order.clear()
 func run():
+ if not OS.get_cmdline_user_args().is_empty():output=OS.get_cmdline_user_args()[0]
  var started=Time.get_ticks_msec();HoldWholeFrames.data()
  for gender in 2:
   for sculpt in 7:
@@ -53,7 +55,7 @@ func run():
    if changed>0 or (cloth in [2,7] and violet==0):
     failed+=1;worst.append({"protected_material_failure":true,"gender":gender,"cloth":cloth,"changed":changed,"purple_clothing_pixels":violet})
  var report={"frames_checked":checked,"visible_pixels_checked":total_pixels,"failed":failed,"protected_material_pixels":controls,"elapsed_ms":Time.get_ticks_msec()-started,"failures":worst}
- DirAccess.make_dir_recursive_absolute("res://docs/testing/palette-fix58")
- var f=FileAccess.open("res://docs/testing/palette-fix58/audit.json",FileAccess.WRITE);f.store_string(JSON.stringify(report,"  "));f.close()
+ DirAccess.make_dir_recursive_absolute(output)
+ var f=FileAccess.open(output+"/audit.json",FileAccess.WRITE);f.store_string(JSON.stringify(report,"  "));f.close()
  print("PALETTE AUDIT COMPLETE: ",checked," frames; ",failed," failed; ",controls," protected material pixels")
  quit(1 if failed else 0)

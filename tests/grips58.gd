@@ -1,6 +1,7 @@
 extends "res://tests/input_reference54.gd"
 func run():
- output="res://docs/testing/whole-0.58.0/interaction";DirAccess.make_dir_recursive_absolute(output)
+ output=OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "res://docs/testing/whole-0.58.0/interaction"
+ DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
  g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false;g.state.claim_id="old_delving";g.surface.enter("claim");settle()
  g.player=Vector2(650,850)

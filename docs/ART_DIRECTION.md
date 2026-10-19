@@ -1,3 +1,7 @@
+# Refinement gate — animation-refinement58
+
+Targeted corrections are recorded in `assets/whole-v58/refinements.json`; briefs and rejection decisions are in `refinements-production.json`. Generated tool duplication is an error, never intended equipment. Complete-frame drawings must preserve one physical tool, grips, body/identity, consistent footfalls and source margins. Inspect extracted native motion too: an attractive source can still fail atlas extraction or continuity. No full release acceptance is claimed.
+
 # Whole-character direction — active development, not accepted release
 
 The user approved whole painted Dwarfs and asked for integration. The active backend now draws complete frames; head, body, hands and feet share the painting. Preserve connected anatomy, compact adult proportions, readable planted/lifted feet and drawn tool grips. Never describe baking the old composite as a redraw. All seven male/female identities and their palettes must remain consistent through every state.

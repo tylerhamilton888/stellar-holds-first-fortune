@@ -1,6 +1,8 @@
+Latest source checkpoint: **animation-refinement58**, an unreleased repair batch after palette-fix58. Read `testing/refinement58.md` and the updated handoff. Recovery: `Stellar-Holds-Animation-Refinement58.bundle` plus companion Recovery.txt. Forty-two selected key fixes, reviewed atlas extraction and drawn tool endpoints; full carry/gait acceptance remains blocked. No new Windows package.
+
 # Authoritative project index
 
-Latest source checkpoint: **palette-fix58**, a focused renderer correction for residual purple hair, after `whole-integration-wip-58`. Read `testing/palette-fix58.md`. Updated `Stellar-Holds-Whole-Character-Hair-Colors.png` replaces the earlier faulty preview; all original paintings and previous checkpoints remain. Recovery: `Stellar-Holds-Palette-Fix-58.bundle` and `Stellar-Holds-Palette-Fix-58-Recovery.txt`, incremental after the whole-character integration. No new Windows release.
+Previous source checkpoint: **palette-fix58**, a focused renderer correction for residual purple hair, after `whole-integration-wip-58`. Read `testing/palette-fix58.md`. Updated `Stellar-Holds-Whole-Character-Hair-Colors.png` replaces the earlier faulty preview; all original paintings and previous checkpoints remain. Recovery: `Stellar-Holds-Palette-Fix-58.bundle` and `Stellar-Holds-Palette-Fix-58-Recovery.txt`, incremental after the whole-character integration. No new Windows release.
 
 Previous integration checkpoint: **whole-integration-wip-58**, an active whole-character integration with unresolved visual release blockers. This is not a new Windows release. Read `SESSION_HANDOFF.md`, `CURRENT_STATUS.md`, `art/whole-integration-58.md` and `testing/whole-0.58.0.md`. Source: `scripts/whole_frames.gd`, `assets/whole-v58`, `tools/measure_whole_frames.py`; native evidence: `docs/testing/whole-0.58.0`. The original approved study and all prior releases remain.
 

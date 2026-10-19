@@ -1,3 +1,7 @@
+# Animation-refinement58 follow-up
+
+Rear equipped faces, bun/bob axe hair, the bob spade/rifle clipping and female reeling props have targeted corrections. Carry shoulders, double/mixed loads, passing gaits, older male4 rear plaits, male3 topknot, loose-wave axe hair, material parity, tray occlusion, tattoos and full work contacts remain. Rejected image generations must not be revived as accepted work. Read testing/refinement58.md.
+
 # Highest priority — finish whole-character visual acceptance
 
 Palette follow-up `palette-fix58`: residual source purple corrected and audited across all active sheets. Keep its output-color and protected-material tests for future asset changes. Do not use the former palette preview as acceptance evidence.

@@ -1,3 +1,7 @@
+# Current refinement checkpoint
+
+Read [refinement verification](testing/refinement58.md). Use `refinement_play58.gd`, `refinement58.gd` and `refinement_sockets58.gd`. `grips58.gd` and `palette_audit58.gd` accept an output directory after `--`; preserve previous evidence. Wait for each native completion marker before launching the next display. Full visual release acceptance remains blocked.
+
 # Current palette correction: palette-fix58
 
 Read [palette coverage verification](testing/palette-fix58.md). `palette_audit58.gd` checks every active frame at source resolution plus all eight hair choices per identity, and protects non-hair materials including intentional purple clothing. `palette_fix58.gd`, `palette_all58.gd` and `palette_actions58.gd` provide native review captures. These tests do not certify unrelated animation poses. Preserve isolated saves and sequential native displays.

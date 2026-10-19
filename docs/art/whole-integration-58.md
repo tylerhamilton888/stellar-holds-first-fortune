@@ -1,3 +1,9 @@
+# Refinement update — 2026-10-19
+
+`animation-refinement58` repairs male4/male5 rear equipped faces, bun/bob axe hair, female4 spade and rifle boot clipping, and female fishing recovery. Muzzle/fishing endpoints are now measured from the drawing. Selected extraction now follows isolated silhouettes and actual gutters. See `../testing/refinement58.md`.
+
+The table below records the previous checkpoint; those specific repaired keys are superseded. All other blockers remain. In particular, carry trials failed and were rejected, passing poses remain inadequate, male4 older rear hair differs from its corrected cropped equipped view, and loose-wave axe/male3 topknot continuity remain unfinished. This is a runnable development checkpoint, not the promised finished animation release.
+
 # Whole-character integration — development checkpoint
 
 2026-10-19. The user approved the complete-figure direction and requested its integration. This checkpoint activates that renderer in the existing game. It is **not a visually accepted release** and must not be packaged as a finished .58 build.

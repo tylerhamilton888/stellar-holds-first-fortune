@@ -1,5 +1,10 @@
 [
   {
+    "sheet": "female-axe-hairfix-v3",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
     "sheet": "female0-corrected",
     "segmented": true,
     "reason": "neighbor contact in source alpha; visually review edges"
@@ -111,6 +116,11 @@
   },
   {
     "sheet": "male4-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male5-backfix-v3",
     "segmented": true,
     "reason": "neighbor contact in source alpha; visually review edges"
   },

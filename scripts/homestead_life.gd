@@ -151,7 +151,8 @@ func draw():
   for i in 3:g.draw_arc(float_at,7+i*9+fmod(g.clock*5,9),0,TAU,24,Color(.6,.83,.83,.2-i*.04),1)
   if action=="fish":
    float_at.y+=sin(g.clock*6)*(3 if elapsed<3.8 else 7)
-   g.draw_line(origin+(Vector2(61,-61) if elapsed<3.8 else Vector2(51,-51)),float_at,Color(.86,.87,.72,.65),.8)
+   var tip=HoldWholeFrames.tool_tip(g.state.appearance,g.surface.direction,"fish",animation_phase())
+   g.draw_line(origin+tip*.85,float_at,Color(.86,.87,.72,.65),.8)
    g.draw_circle(float_at,3,Color("e9dab5"));g.draw_line(float_at+Vector2(0,-4),float_at,Color("cc6852"),2)
   if near_water():g.surface.plaque(BANK+Vector2(-38,-100),"Hold E · Fish" if data().kit else "E · River & Root")
  var b=near_bed()

@@ -1,0 +1,293 @@
+{
+  "version": 1,
+  "layouts": {
+    "male5-backfix-v3": {
+      "cols": 8,
+      "rows": 6,
+      "reference": 0,
+      "contours": true
+    },
+    "female-axe-hairfix-v3": {
+      "cols": 4,
+      "rows": 7,
+      "reference": 0,
+      "row_scale": true,
+      "contours": true
+    },
+    "female4-shovel-v2": {
+      "cols": 4,
+      "rows": 8,
+      "reference": 8
+    },
+    "female4-rifle-alpha-v4": {
+      "cols": 4,
+      "rows": 2,
+      "reference": 0
+    },
+    "male4-equipped": {
+      "cols": 8,
+      "rows": 6,
+      "reference": 0,
+      "contours": true
+    },
+    "male4-backtools-v2": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0
+    }
+  },
+  "overrides": [
+    {
+      "sheet": "male5-equipped",
+      "index": 7,
+      "source": "male5-backfix-v3",
+      "frame": 7
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 15,
+      "source": "male5-backfix-v3",
+      "frame": 15
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 23,
+      "source": "male5-backfix-v3",
+      "frame": 23
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 31,
+      "source": "male5-backfix-v3",
+      "frame": 31
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 39,
+      "source": "male5-backfix-v3",
+      "frame": 39
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 47,
+      "source": "male5-backfix-v3",
+      "frame": 47
+    },
+    {
+      "sheet": "female1-core",
+      "index": 24,
+      "source": "female-axe-hairfix-v3",
+      "frame": 4
+    },
+    {
+      "sheet": "female1-core",
+      "index": 25,
+      "source": "female-axe-hairfix-v3",
+      "frame": 5
+    },
+    {
+      "sheet": "female1-core",
+      "index": 26,
+      "source": "female-axe-hairfix-v3",
+      "frame": 6
+    },
+    {
+      "sheet": "female1-core",
+      "index": 27,
+      "source": "female-axe-hairfix-v3",
+      "frame": 7
+    },
+    {
+      "sheet": "female4-core",
+      "index": 24,
+      "source": "female-axe-hairfix-v3",
+      "frame": 16
+    },
+    {
+      "sheet": "female4-core",
+      "index": 25,
+      "source": "female-axe-hairfix-v3",
+      "frame": 17
+    },
+    {
+      "sheet": "female4-core",
+      "index": 26,
+      "source": "female-axe-hairfix-v3",
+      "frame": 18
+    },
+    {
+      "sheet": "female4-core",
+      "index": 27,
+      "source": "female-axe-hairfix-v3",
+      "frame": 19
+    },
+    {
+      "sheet": "female4-utility",
+      "index": 17,
+      "source": "female4-shovel-v2",
+      "frame": 17
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 40,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 0
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 41,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 1
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 42,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 2
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 43,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 3
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 44,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 4
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 45,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 5
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 46,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 6
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 47,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 7
+    },
+    {
+      "sheet": "female0-utility",
+      "index": 27,
+      "source": "female0-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female1-utility",
+      "index": 27,
+      "source": "female1-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female2-utility",
+      "index": 27,
+      "source": "female2-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female3-utility",
+      "index": 27,
+      "source": "female3-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female4-utility",
+      "index": 27,
+      "source": "female4-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female5-utility",
+      "index": 27,
+      "source": "female5-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female6-utility",
+      "index": 27,
+      "source": "female6-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 6,
+      "source": "male4-backtools-v2",
+      "frame": 0
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 7,
+      "source": "male4-backtools-v2",
+      "frame": 2
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 14,
+      "source": "male4-backtools-v2",
+      "frame": 4
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 15,
+      "source": "male4-backtools-v2",
+      "frame": 6
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 22,
+      "source": "male4-backtools-v2",
+      "frame": 8
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 23,
+      "source": "male4-backtools-v2",
+      "frame": 10
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 30,
+      "source": "male4-backtools-v2",
+      "frame": 12
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 31,
+      "source": "male4-backtools-v2",
+      "frame": 14
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 38,
+      "source": "male4-backtools-v2",
+      "frame": 16
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 39,
+      "source": "male4-backtools-v2",
+      "frame": 18
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 46,
+      "source": "male4-backtools-v2",
+      "frame": 20
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 47,
+      "source": "male4-backtools-v2",
+      "frame": 22
+    }
+  ]
+}

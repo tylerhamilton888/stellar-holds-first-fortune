@@ -1,3 +1,9 @@
+# Unreleased — selective animation refinement
+
+- Integrated reviewed whole-frame rear equipment, bun/bob axe, spade, rifle-boot and fishing-recovery corrections. Preserved original sources and the verified hair palette.
+- Repaired selected atlas extraction at real silhouette/gutter boundaries; attached rifle and fishing effects to drawn tool contours.
+- Rejected duplicated-tool and inconsistent carry generations. Full animation release gate still fails; no new Windows build. See testing/refinement58.md.
+
 # Unreleased — residual hair pigment correction
 
 - Corrected purple source coverage for red-violet shadows and muted highlights. Resolve colors before resizing and remove mauve introduced by warm/grey hair-fringe mixing.

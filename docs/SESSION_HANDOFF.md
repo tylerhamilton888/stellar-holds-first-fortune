@@ -1,39 +1,27 @@
-# Palette correction — source pigment coverage
+# Animation refinement — runnable, unreleased milestone
 
-2026-10-19 · checkpoint **palette-fix58**, following `whole-integration-wip-58`. The user correctly reported residual purple in the previous delivered preview. The earlier statement that the palette had been fully verified was too strong.
+2026-10-19 · continue from **animation-refinement58**, following **palette-fix58** on `integrate/whole-0.58.0`. The requested whole-character overhaul is still unfinished. No new Windows package was produced or represented as ready.
 
-The source filter in `scripts/whole_frames.gd` used hue .67–.95 and saturation >.10, missing red-violet shadows and muted highlights. It also recolored after reducing the image, allowing source purple to mix into edge pixels. The correction recognizes the reserved pigment by red/blue excess over green, softly resolves mixed fringe pixels, prevents warm/grey fringe blends from producing mauve, and resolves source colors before resizing. Original painted PNGs and saved palettes are unchanged. This is a renderer correction, not a paint-over of the preview.
+The user asked to proceed, then spotted doubled axes/hammers/picks in a generated rear-view sheet. Those were generation errors, not intended equipment. The duplicated-tool sheets were rejected and are not referenced by the game. Several carry redraws also failed proportional or footfall continuity and were rejected. Do not revive them as completed animation work.
 
-Native evidence: `testing/palette-fix58/hair-palette.png`, `all-colors-0.png`, `all-colors-1.png` and `animation/`. Automated native audit: 2,576 full-resolution frame/color combinations, no marker-color failures; all 2,464 active core/utility/handling/equipped frames across fourteen identities checked in iron grey, plus all eight natural palettes on each front idle. 103,482 skin/clothing/leather/metal control pixels remain identical when only hair color changes. Intentional Heather and Night violet outfits retain purple. The corrected renderer also passed 18/18 actual input/ownership/reload checks. See `testing/palette-fix58.md` for scope, criteria and limits.
+## Integrated repairs
 
-The whole-character integration remains unreleased. Existing carry/facing/hairstyle/tool/source-crop and contact blockers remain in `art/whole-integration-58.md`. Palette verification is not animation acceptance. No terrain, mechanics, progression or save changes.
+`assets/whole-v58/refinements.json` selects **42 complete keys**: twelve male-4 rear equipped keys, six male-5 rear keys, eight bun/bob axe keys, one bob spade key, eight complete bob rifle keys, and seven female reeling keys reusing their own raised-rod drawings. Original painted PNGs remain unchanged. The new selected paintings and exact built-in imagegen prompts/rejection decisions are in `refinements-production.json`.
 
-## Previous integration checkpoint
+The metadata extractor now supports explicit selective correction layouts. On three reviewed sheets it preserves isolated complete silhouettes and searches real row/column gutters for touching figures. This repairs tool clipping/neighbor fragments caused by fixed column cuts. A watershed experiment failed native review and was removed. The renderer still draws one complete figure; no independent head or limb assembly was added.
 
-# Whole-character integration — unreleased development checkpoint
+Rifle muzzle and fishing-line attachment coordinates now come from the actual drawn rightmost tool contour. The fishing line uses the same .85 scale as the surface actor. The prior source-purple correction is unchanged.
 
-Updated 2026-10-19 UTC. Continue from **whole-integration-wip-58** on `integrate/whole-0.58.0`. This is a runnable source milestone, **not a new approved Windows build**. The last Windows package remains .57.0, whose visuals the user rejected. Do not present it as the repaired build.
+## What is not finished
 
-The user approved the whole-figure study and said “Do it.” The later “Why is the hair purple” question concerns the reserved hair pigment in the source paintings. The original native preview still had residual purple; it is superseded by the correction described above. Purple is not a new art-direction choice.
+Full visual release gate remains failed. Carry shoulders and mixed/double loads still need correction; the rejected carry trials did not solve this. Two-key equipped gaits still lack good passing poses. Male-4 corrected equipped rear hair is cropped, but older rear-quarter/idle/work art still has extra plaits. Male-3 topknot, loose-wave axe hair, some work-facing transitions and other identity drift remain. The bob rifle feet are complete; its gait is not newly certified. Material parity, tray occlusion, tattoos, lift-log and full directional work contacts remain. See `art/whole-integration-58.md`.
 
-## Active implementation
+Do not treat this milestone or the last .57 Windows package as the finished repair. The source title remains development. Preserve all fourteen identities, saved palettes, progression and original assets.
 
-`scripts/whole_frames.gd` is the active complete-figure renderer through HoldFolk/HoldDrawnAnimation. Surface, Deepworks, ordinary NPCs, work/equipment/carry states and portraits use complete painted character keys. No separate head is composited in the new production paint path. Existing dedicated Lord/throne artwork remains. `folk.gd` retains dormant legacy helpers and the shared world cargo drawing used by ground materials, stations, stockpiles and carts.
+## Validation and recovery
 
-`assets/whole-v58` holds all seven male/female identity families with core, utility, handling and equipped sources, correction sheets, exact prompts (`production.json`) and measured frame data. `tools/measure_whole_frames.py` regenerates metadata without editing PNGs. It uses connected alpha components, wider row-seam detection for touching figures, fragment exclusions, consistent sequence scale and whole-frame overrides. Native review corrected core clipped boots/stray pixels. Generation and successful extraction do not establish artistic acceptance.
+Read `testing/refinement58.md` for final native results and limits. Focused controls cover rear tool movement, load ownership, actual fishing/reeling and save/reload. Native review includes work, rifle boots, all male-4 equipment keys, tool sockets, gameplay captures and a short pose-motion sequence. Existing broad mining/Pinewood/combat results are historical, not rerun claims.
 
-Hair, skin, cloth and jewelry palettes remain data-driven; no circular face patch. Tattoo decoration remains unfinished. Scene prewarming caches whole colored frames and releases raw source images when finished. `export_presets.cfg` includes the new frame metadata. The title explicitly says development; no new versioned Windows export was made.
+Pre-edit tag **pre-motion-refinement58** preserves `ec53abe1684aeb56dcc3d63c68923facd756f6ce` (palette-fix58), tree `cf129e8664e6cb481946eb24364bef228225865a`. Its recovery bundle was verified before edits. New incremental recovery follows palette-fix58; the companion Recovery.txt records exact commit/tree/hash and independent restore verification. Retain the .51 full baseline, release increments through .57, whole-figure-study-58, whole-integration-wip-58 and palette-fix58. No remote changed or pushed.
 
-## Release gate — still failed
-
-Read **art/whole-integration-58.md** before changing anything. Important observed blockers: carrying keys switch shoulders; mixed/double logs change configuration; some equipped keys change facing or hairstyle, including front faces in male 4/5 back keys and clipped female 4 rifle boots; female axe correction changes hair; a female shovel key is a saw and fishing recovery uses harvest contents. Two-key equipped gait needs passing poses. Mineral appearance, tray occlusion, tattoos, lift-log, some directional work and muzzle/contact alignment need completion. Do not hide these by collapsing saved identities to defaults or returning to the old head rig.
-
-The next pass should correct small complete-frame sequences, review them at native size and normal speed, and rerun affected real-input checks. Avoid another large atlas-generation batch without per-sequence review. The requested polished integration remains unfinished.
-
-## Verification and preservation
-
-Native graphical checks: grips58 **18/18**, mining55 **38/38**, handworks55 **32/32**, combat_edges53 **10/10**. Total **98/98** mechanical checks. Core/equipment/interior captures completed; motion58 recorded 180 native frames of actual left/right movement with pick, axe, supply and physical load. See `testing/whole-0.58.0.md` for exact evidence and limits. Linux Godot 4.4.1, software OpenGL, Dummy audio and isolated saves were used. No Windows execution, audible balance, hardware-performance or complete artistic acceptance is claimed.
-
-No movement speed, mining balance, generation, quests, inventory ownership, save schema or terrain was changed. Native tests verified physical materials, workstations, Pinewood, stairs, progression and reload. Previous release evidence overwritten by old test output was copied into the new evidence directory and restored to its previous committed bytes.
-
-Pre-edit **pre-whole-0.58.0** preserves approved study commit `5378ea42703a439081a90603082db04d392302e4`, tree `7afd1b02a2e252563245814135435016b3b93b09`. That study and .57 recovery were verified before editing. Keep the .51 full baseline, .52/.53/.53.1/.54/.55/.55.1/.56/.57 chain and `whole-figure-study-58`. New incremental recovery follows the study; its Recovery.txt records exact commit/tree/hashes and independent restoration verification. No remote changed or pushed; previous backups remain.
+Use isolated saves and strictly sequential native displays. Wait for each runner's completion marker before starting another. `grips58.gd` and `palette_audit58.gd` now accept an output directory argument so previous evidence is preserved.
