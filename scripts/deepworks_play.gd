@@ -506,13 +506,13 @@ func draw():
      g.handworks.raw_sprite(g.handworks.field_raw,pose+Vector2(24,1),30)
    elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
    elif g.handworks.pushing():animation="push"
+   if animation=="" or (strike_left>0 and g.mining_gun.selected):animation=g.hotbar.pose()
    HoldDrawnAnimation.paint(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,animation,action)
    g.draw_set_transform(offset)
    if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
-   if animation=="":g.hotbar.held(g,pose,offset)
    g.handworks.carried(pose)
    if bucket_visible():draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
-   if strike_left>0 and g.mining_gun.selected:g.draw_line(pose+Vector2(24,-30),contact,Color("c4f4e2"),3)
+   if strike_left>0 and g.mining_gun.selected:g.draw_line(pose+HoldFolk.muzzle(profile,facing_dir),contact,Color("c4f4e2"),3)
   else:
    var a=actor.agent
    if a.type=="bot":A.bot(g,p+Vector2(0,10),g.clock,a.work)

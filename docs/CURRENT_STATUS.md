@@ -1,6 +1,6 @@
-# Current playable build — 0.56.0
-2026-10-19 UTC. Checkpoint `art-0.56.0`; verified .55.1 remains recoverable as `pre-art-0.56.0`.
+# Current playable build — 0.57.0
+2026-10-19 UTC. Checkpoint `grips-0.57.0`; verified .56 retained as `pre-grip-0.57.0`.
 
-Repaired attached head/body registration, face coloration, stable held-tool hand and complete drinking silhouettes. New drawn contact/passing footwork makes side steps and loaded walking readable. Shared transparent furnishings replace oversized interior pieces and integrate with player construction, actual collision, placement previews, building occupancy, recovery and saves. Reduced overlapping labels.
+Complete drawn equipment/hands replace floating tool-icon overlays in surface, mine and combat play. Compact, broader bodies and shorter drawn steps apply across walking, work and carrying. Selected supplies sit in a supported tray; empty stacks produce no false load. Identity, physical material ownership, movement, mining resistance, saves, furniture and unrelated gameplay remain.
 
-See `testing/art-0.56.0.md` for actual completed tests and native visual evidence. Existing mining, Pinewood, cargo processing, Z-levels and landmark persistence are preserved. Old saves receive an exact unique backup. This does not finish every historical prop, architectural/interior treatment or work/combat direction. Windows, audio, Defender and subjective visual/feel acceptance remain player checks.
+See `testing/grips-0.57.0.md` for completed native input/gameplay checks, enlarged/game-scale review, motion and exported-package evidence. Held upper poses remain steady while drawn feet cycle; not every animation has been redrawn. Broader world-art backlog persists. Windows execution, audio, hardware performance and the user's aesthetic acceptance remain unverified.

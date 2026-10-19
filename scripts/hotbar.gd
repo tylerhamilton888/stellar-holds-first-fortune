@@ -70,7 +70,7 @@ func _draw():
  var d=data();var current=selected();var id=str(d.slots[current])
  var box=StyleBoxFlat.new();box.bg_color=Color(.04,.09,.12,.95);box.border_color=Color("8c7953");box.set_border_width_all(1);box.set_corner_radius_all(7)
  draw_style_box(box,Rect2(224,bar_y(),512,80))
- var text=("Weapon · "+g.combat.weapon().name) if g.combat.armed else "Holding · "+title(id)
+ var text=("Weapon · "+g.combat.weapon().name) if g.combat.armed else ("Selected · " if item!="" and g.state.count(item)==0 else "Holding · ")+title(id)
  if g.combat.armed and g.state.combat.weapon=="gun":text+=" · %d cartridges" % g.state.count("ammo")
  elif not g.combat.armed and id=="slagcaster":text+=" · %d charge" % int(g.state.outpost.get("gun_charge",0))
  elif not g.combat.armed and not id.begins_with("tool:"):text+=" · %d in pack" % g.state.count(id)
@@ -90,17 +90,8 @@ func _draw():
   draw_string(ThemeDB.fallback_font,r.position+Vector2(4,13),str((i+1)%10),HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color("f0deba"))
   var count="LOCK" if locked else (str(g.state.count(key)) if resource else "")
   draw_string(ThemeDB.fallback_font,r.position+Vector2(3,46),count,HORIZONTAL_ALIGNMENT_RIGHT,39,11,Color("cdded4"))
-func held(n:Node2D,p:Vector2,reset:Vector2):
- if g.handworks.busy_hands() or g.fieldwork.action!="":return
- if item=="":
-  if g.mining_gun.selected:return
-  var direction=g.surface.direction
-  var scale=g.character_scale()
-  var hand=p+HoldDrawnAnimation.grip(g.state.appearance,direction,g.gait_clock,g.walking_pose,scale)
-  HoldCharacterArt.draw_tool(n,hand+reset,hand+reset+Vector2((-10 if direction.x<-.3 else 10),-23)*scale,g.tool,reset,(-1 if direction.x<-.3 else 1),-1,scale*.8)
-  n.draw_set_transform(reset)
-  HoldDrawnAnimation.grip_foreground(n,p,g.state.appearance,direction,g.gait_clock,scale,reset,g.walking_pose)
-  return
- if g.state.count(item)<=0:return
- HoldItemArt.draw(n,Rect2(p+Vector2(-10,-40),Vector2(20,20)),HoldItemArt.item_index(item),HoldItemArt.tint(item))
- n.draw_set_transform(reset)
+func pose()->String:
+ if g.handworks.busy_hands() or g.fieldwork.action!="":return ""
+ if g.mining_gun.selected:return "hold_rifle"
+ if item!="":return "hold_supply" if g.state.count(item)>0 else ""
+ return "hold_"+["pick","shovel","axe","hammer"][clampi(g.tool,0,3)]

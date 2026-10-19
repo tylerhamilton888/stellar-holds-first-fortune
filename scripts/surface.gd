@@ -559,10 +559,10 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
   elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
   elif g.handworks.pushing():animation="push"
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
+ if is_player and animation=="" and action<0 and not g.opening_scene is HoldArrivalEscort:animation=g.hotbar.pose()
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
  g.draw_set_transform(-cam)
  if is_player:
-  if action<0 and animation=="" and not g.opening_scene is HoldArrivalEscort:g.hotbar.held(g,p,-cam)
   g.handworks.carried(p)
   if cut_flash>0 and cut_target>=0:
    var target=TREES[cut_target]-Vector2(0,18)

@@ -1,6 +1,10 @@
 extends "res://tests/playability53.gd"
+func settle():
+ while HoldFolk.warming():HoldFolk.warm_step()
+ super.settle()
 func run():
- output="res://docs/testing/playability-0.53.0/combat";DirAccess.make_dir_recursive_absolute(output)
+ output=OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "res://docs/testing/playability-0.53.0/combat"
+ DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle();g.state.opening=4
  HoldOnboarding.ensure(g.state).fresh=false;HoldOnboarding.ensure(g.state).combat=true
  g.change_zone("mine");settle();var w=g.deep.world;w.data.depth=1

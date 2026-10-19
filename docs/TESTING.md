@@ -1,3 +1,6 @@
+# Current release: 0.57.0
+Read [grip/proportion verification](testing/grips-0.57.0.md). New `grips57.gd` exercises actual numbered input, moving selection, supply ownership, load priority, reload and prepared facings. `capture_grip57.gd` renders 48 equipped poses at game/enlarged scale; `motion57.gd` records real movement. `pack57.gd` is self-contained for the exported PCK. Retained mining55, handworks55, integration56 and combat_edges53 provide regression coverage. Combat's older fixture now waits for the current transition prewarm before input. Use isolated saves, sequential native displays and explicit completion markers.
+
 # Current release: 0.56.0
 Read [art repair verification](testing/art-0.56.0.md). `tests/integration56.gd` covers head/grip registration, foot silhouettes, reachable services, furniture placement/occupancy/refunds and exact save backup. `tests/art56.gd` captures native pose sheets/interiors; `tests/motion56.gd` records actual moving gameplay. External `tests/pack56.gd` exercises the exported pack independently. Run sequentially with isolated saves and require completion markers. Review output images/video; geometry assertions cannot establish artistic quality.
 

@@ -195,15 +195,9 @@ func draw_enemy(e:Dictionary):
   g.draw_rect(Rect2(p+Vector2(-22,-76),Vector2(44,4)),Color("312b2a"));g.draw_rect(Rect2(p+Vector2(-22,-76),Vector2(44*e.hp/e.max,4)),Color("cf956c"))
 func draw_player(p:Vector2,zoom:float,offset:Vector2):
  var action="hammer" if g.state.combat.weapon=="hammer" else "axe"
- HoldDrawnAnimation.paint(g,p+offset,g.combat.profile(),locked_aim if swing>0 else aim,g.walking_pose,g.gait_clock,zoom,offset,action if swing>0 and g.state.combat.weapon!="gun" else "",1-swing/g.combat.weapon().time if swing>0 else 0)
+ var pose_action=action if swing>0 and g.state.combat.weapon!="gun" else "hold_rifle" if g.state.combat.weapon=="gun" else "hold_"+action
+ HoldDrawnAnimation.paint(g,p+offset,g.combat.profile(),locked_aim if swing>0 else aim,g.walking_pose,g.gait_clock,zoom,offset,pose_action,1-swing/g.combat.weapon().time if swing>0 else 0)
  g.draw_set_transform(offset)
- if swing<=0 or g.state.combat.weapon=="gun":
-  var hand=p+HoldDrawnAnimation.grip(g.state.appearance,aim,g.gait_clock,g.walking_pose,zoom)
-  if g.state.combat.weapon=="gun":
-   g.draw_set_transform(hand+offset,aim.angle(),Vector2.ONE*.07*zoom)
-   g.draw_texture_rect_region(HoldCombat.EQUIPMENT,Rect2(-240,-195,700,260),Rect2(10,810,700,260));g.draw_set_transform(offset)
-  else:HoldCharacterArt.draw_tool(g,hand+offset,hand+offset+Vector2(-10 if aim.x<-.3 else 10,-23)*zoom,3 if g.state.combat.weapon=="hammer" else 2,offset,-1 if aim.x<-.3 else 1,-1,zoom*.8)
-  HoldDrawnAnimation.grip_foreground(g,p,g.state.appearance,aim,g.gait_clock,zoom,offset,g.walking_pose)
  if g.state.combat.weapon=="axe":
   var shield=p+(aim*23+Vector2(0,-27) if guard else Vector2(16 if aim.x<-.3 else -16,-31))*zoom
   g.draw_texture_rect_region(HoldCombat.EQUIPMENT,Rect2(shield-Vector2(15,16)*zoom,Vector2(30,32)*zoom),Rect2(720,665,515,515))

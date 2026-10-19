@@ -1,3 +1,8 @@
+# Holding and proportions — 0.57.0
+Equipped tools must be drawn with their supporting forearms and wrapped fingers. Do not restore a generic item icon over a neutral hand in active top-down play. Dedicated front/side/rear-quarter/back bodies own the grip. Actual inventory supplies may sit inside the small supported tray, behind its rim/fingers; do not fabricate contents for empty stacks. Work/carry poses override equipment.
+
+Body basis is 37 rather than 43 units with 1.14 horizontal build; head scale remains unchanged. Apply the same proportions to work, carry, NPC bodies and drawn footwork. Preserve anatomical collar overlap, planted/returning foot distinction and clear tool contact. Holding upper bodies currently remain steady above the drawn foot cycle; dedicated per-step upper-body artwork is a possible refinement, not a completed feature. See art/production-0.57.0.md and native grips-0.57.0 captures.
+
 # Art direction — reference-led Folk
 Updated 2026-10-19. The user's October 19 concept board is the authority. Existing assets are implementation, not proof of acceptance. The board is retained as `art/reference-oct19.png`; .54 originals remain for recovery.
 

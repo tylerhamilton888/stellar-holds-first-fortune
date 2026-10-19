@@ -3,7 +3,9 @@ extends RefCounted
 # Reference-led complete drawn bodies, with registered identity heads.
 # Source images are read once; small pose textures are cached, never recolored per frame.
 const HEIGHT=62.0
-const BODY=43.0
+const BODY=37.0
+const BUILD=Vector2(1.14,1.0)
+const LEG_RATIO=BODY/43.0
 const CYCLE=.52
 const HEAD_SCALE=[.17,.145]
 const MAP=[[0,3,2,6,1,4,5],[1,3,0,5,4,2,6]]
@@ -13,11 +15,14 @@ static var cache:Dictionary={}
 static var order:Array=[]
 static var raw_cache:Dictionary={}
 static func info(sheet:String,index:int)->Dictionary:
- if metadata.is_empty():metadata=JSON.parse_string(FileAccess.get_file_as_string("res://assets/folk-v54/frames.json"))
+ if metadata.is_empty():
+  metadata=JSON.parse_string(FileAccess.get_file_as_string("res://assets/folk-v54/frames.json"))
+  metadata.merge(JSON.parse_string(FileAccess.get_file_as_string("res://assets/folk-v57/frames.json")))
  return metadata[sheet][index]
 static func source(sheet:String)->Image:
  if not sources.has(sheet):
-  var img=(load("res://assets/folk-v54/"+sheet+".png") as Texture2D).get_image()
+  var folder="folk-v57" if sheet.ends_with("-equipped") else "folk-v54"
+  var img=(load("res://assets/"+folder+"/"+sheet+".png") as Texture2D).get_image()
   if img.is_compressed():img.decompress()
   sources[sheet]=img
  return sources[sheet]
@@ -54,9 +59,11 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  elif action.begins_with("carry_") or action.begins_with("double_"):
   sheet=gender+"-handling";index=(8 if action.begins_with("double_") else 4 if action.ends_with("log") else 0)+view
  elif action=="push":sheet=gender+"-handling";index=16+([0,1,2,1][posmod(int(time/CYCLE*4),4)] if walking else 0);view=1
+ elif action.begins_with("hold_"):
+  sheet=gender+"-equipped";index=["pick","shovel","axe","hammer","supply","rifle"].find(action.trim_prefix("hold_"))*4+view
  var m=info(sheet,index);var neck=vec(m.neck);var root=vec(m.root)
  var scale=float(m.get("scale",BODY/float(m.get("body_height",root.y-neck.y))))
- return {"sheet":sheet,"index":index,"view":view,"frame":f,"neck":neck,"root":root,"scale":scale,"rect":rect_of(m),"walking":walking,"action":action,"phase":phase}
+ return {"sheet":sheet,"index":index,"view":view,"frame":f,"neck":neck,"root":root,"scale":scale,"shape":Vector2.ONE*scale*BUILD,"rect":rect_of(m),"walking":walking,"action":action,"phase":phase}
 static func texture(p:Dictionary,sheet:String,index:int,head:bool=false,foreground:bool=false,full:bool=false)->Texture2D:
  var key=sheet+":"+str(index)+":"+str(p.skin)+":"+(HoldAppearance.hair(p).to_html() if head else str(p.cloth_color))+":"+str(foreground)+":"+str(p.jewelry)+(":full" if full else "")
  if cache.has(key):return cache[key]
@@ -102,7 +109,7 @@ static func texture(p:Dictionary,sheet:String,index:int,head:bool=false,foregrou
  cache[key]=tex;order.append(key)
  while order.size()>2048:cache.erase(order.pop_front())
  return tex
-static func body_rect(a:Dictionary)->Rect2:return Rect2((Vector2(a.rect.position)-a.root)*a.scale,Vector2(a.rect.size)*a.scale)
+static func body_rect(a:Dictionary)->Rect2:return Rect2((Vector2(a.rect.position)-a.root)*a.shape,Vector2(a.rect.size)*a.shape)
 static func head_anchor(p:Dictionary,m:Dictionary)->Vector2:
  # Anatomical collar registration, not the bottom of a beard or braid.
  # Hair deliberately overlaps the shoulders/chest in every direction.
@@ -112,7 +119,7 @@ static func head_anchor(p:Dictionary,m:Dictionary)->Vector2:
 static func head_rect(p:Dictionary,a:Dictionary)->Dictionary:
  var sheet=("female" if p.gender else "male")+"-heads";var i=int(a.view)*7+MAP[p.gender][p.sculpt]
  var m=info(sheet,i);var r=rect_of(m)
- var at=(a.neck-a.root)*a.scale
+ var at=(a.neck-a.root)*a.shape
  if p.gender==1 and a.action=="drink" and a.index==2:at.x-=4
  return {"sheet":sheet,"index":i,"rect":Rect2(at+(Vector2(r.position)-head_anchor(p,m))*HEAD_SCALE[int(p.gender)],Vector2(r.size)*HEAD_SCALE[int(p.gender)])}
 static func raw_texture(log:bool)->Texture2D:
@@ -126,7 +133,7 @@ static func raw_texture(log:bool)->Texture2D:
 static func cargo(n:Node2D,a:Dictionary,action:String):
  if not (action.begins_with("carry_") or action.begins_with("double_") or action.begins_with("lift_")):return
  var double=action.begins_with("double_");var view=int(a.view)
- var at=(a.neck-a.root)*a.scale
+ var at=(a.neck-a.root)*a.shape
  var side=-1 if view in [0,1] else 1
  for i in (2 if double else 1):
   var log=action.ends_with("log") or (action=="double_mixed" and i==1)
@@ -152,6 +159,28 @@ static func raw_draw(n:Node2D,raw:Dictionary,rect:Rect2):
   n.draw_line(p+Vector2(-r*.4,-r*.35),p+Vector2(r*.55,0),tint.lightened(.32),maxf(.6,rect.size.x*.025),true)
 static var stride_cache={}
 static var stride_sources={}
+static var equipment_cache={}
+static func equipment_upper(p:Dictionary,sheet:String,index:int)->Texture2D:
+ var key=key_for(p,sheet,index,false,false)
+ if equipment_cache.has(key):return equipment_cache[key]
+ var m=info(sheet,index);var region=rect_of(m);var img=texture(p,sheet,index).get_image()
+ var ratio=Vector2(img.get_size())/Vector2(region.size)
+ for y in img.get_height():
+  for x in img.get_width():
+   var q=Vector2(x,y)/ratio+Vector2(region.position)
+   if q.y>m.cutline and q.x<=m.leg_range[1]+14:img.set_pixel(x,y,Color.TRANSPARENT)
+ var tex=ImageTexture.create_from_image(img);equipment_cache[key]=tex;return tex
+static func tray_contents(n:Node2D,p:Dictionary,a:Dictionary):
+ if a.action!="hold_supply" or int(a.view)==3:return
+ var bar=n.get("hotbar")
+ if bar==null or bar.item=="" or n.state.count(bar.item)<=0:return
+ var m=info(a.sheet,a.index);var r=m.payload
+ var item_rect=Rect2((Vector2(r[0],r[1])-a.root)*a.shape,Vector2(r[2],r[3])*a.shape)
+ HoldItemArt.draw(n,item_rect,HoldItemArt.item_index(bar.item),HoldItemArt.tint(bar.item))
+ # Restore the drawn tray rim and fingers in FRONT of its actual contents.
+ var rim:Rect2=Rect2(m.rim[0],m.rim[1],m.rim[2],m.rim[3]).intersection(Rect2(a.rect))
+ var tex=texture(p,a.sheet,a.index);var ratio=Vector2(tex.get_size())/Vector2(a.rect.size)
+ n.draw_texture_rect_region(tex,Rect2((rim.position-a.root)*a.shape,rim.size*a.shape),Rect2((rim.position-Vector2(a.rect.position))*ratio,rim.size*ratio))
 static func stride(view:int,time:float)->Dictionary:
  var f=stride_frame(time);var side=view==1
  var index=f if side else ([0,2,3,5][f]+(12 if view>=2 else 0))
@@ -176,7 +205,7 @@ static func stride(view:int,time:float)->Dictionary:
   var centers=[161,412,656,902,1157,1410]
   hip=Vector2(centers[index%6],326 if index<6 else 984)
   scale=29.0/300.0
- var size_scale=Vector2(1.12 if side else 1.40,1.0)*scale
+ var size_scale=Vector2(1.12 if side else 1.40,1.0)*scale*LEG_RATIO*BUILD
  var pixels=image.get_region(crop)
  pixels.resize(maxi(1,int(crop.size.x*size_scale.x*3)),maxi(1,int(crop.size.y*size_scale.y*3)),Image.INTERPOLATE_LANCZOS)
  for y in pixels.get_height():
@@ -192,7 +221,7 @@ static func walking_hands(n:Node2D,p:Dictionary,a:Dictionary,full:bool):
  var ratio=Vector2(tex.get_size())/Vector2(a.rect.size)
  for hand in [palm,Vector2(a.neck.x*2-palm.x,palm.y)]:
   var region=Rect2(hand-Vector2(21,26),Vector2(42,52)).intersection(Rect2(a.rect))
-  n.draw_texture_rect_region(tex,Rect2((region.position-a.root)*a.scale,region.size*a.scale),Rect2((region.position-Vector2(a.rect.position))*ratio,region.size*ratio))
+  n.draw_texture_rect_region(tex,Rect2((region.position-a.root)*a.shape,region.size*a.shape),Rect2((region.position-Vector2(a.rect.position))*ratio,region.size*ratio))
 static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
  var a=descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
  var bob=0.0
@@ -201,20 +230,25 @@ static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:f
  var dest=body_rect(a)
  # Complete contact/passing drawings share a belt registration. No rotating legs.
  # The shirt overlaps the waist so there is never an exposed horizontal seam.
- if walking and (action=="" or action=="push" or action.begins_with("carry_") or action.begins_with("double_")):
+ if walking and action.begins_with("hold_"):
   var legs=stride(int(a.view),time)
   n.draw_texture_rect(legs.texture,legs.rect,false)
-  var tex=texture(p,a.sheet,a.index,false,false,zoom>2.0);var limit=clampf(((-18 if action=="" else -14)-dest.position.y)/dest.size.y,0,1)
+  n.draw_texture_rect(equipment_upper(p,a.sheet,a.index),dest,false)
+ elif walking and (action=="" or action=="push" or action.begins_with("carry_") or action.begins_with("double_")):
+  var legs=stride(int(a.view),time)
+  n.draw_texture_rect(legs.texture,legs.rect,false)
+  var tex=texture(p,a.sheet,a.index,false,false,zoom>2.0);var limit=clampf((((-18 if action=="" else -14)*LEG_RATIO)-dest.position.y)/dest.size.y,0,1)
   n.draw_texture_rect_region(tex,Rect2(dest.position,Vector2(dest.size.x,dest.size.y*limit)),Rect2(0,0,tex.get_width(),tex.get_height()*limit))
   if action=="":walking_hands(n,p,a,zoom>2.0)
  else:n.draw_texture_rect(texture(p,a.sheet,a.index,false,false,zoom>2.0),dest,false)
  if p.jewelry in [0,1,2] and a.view in [0,1]:
-  var center=(a.neck-a.root)*a.scale+Vector2(1,9)
+  var center=(a.neck-a.root)*a.shape+Vector2(1,9)
   if p.jewelry==2:
    n.draw_polyline(PackedVector2Array([center+Vector2(-3,-4),center+Vector2(0,2),center+Vector2(3,-4)]),Color("d9b265"),.6,true)
    n.draw_colored_polygon(PackedVector2Array([center+Vector2(0,-1),center+Vector2(1.6,1.5),center+Vector2(0,4),center+Vector2(-1.6,1.5)]),Color("d48b33"))
   else:
    n.draw_circle(center,1.7,Color("423b31"));n.draw_circle(center,1.2,Color("c4d0d4") if p.jewelry==1 else Color("be9857"));n.draw_line(center+Vector2(-.6,.6),center+Vector2(.6,-.6),Color("f5e1b4"),.4,true)
+ tray_contents(n,p,a)
  var h=head_rect(p,a);n.draw_texture_rect(texture(p,h.sheet,h.index,true,false,zoom>2.0),h.rect,false)
  if p.tattoo>0:
   var meta=info(h.sheet,h.index)
@@ -226,17 +260,22 @@ static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:f
    else:line=PackedVector2Array([Vector2(-1,0),Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)])
    for i in line.size():line[i]=line[i]*.5+center
    n.draw_polyline(line,Color("386675"),.22,true)
- if action!="" and a.rect.position.y<a.neck.y-3:n.draw_texture_rect(texture(p,a.sheet,a.index,false,true,zoom>2.0),dest,false)
+ # Raised work tools pass behind the head. A horizontal collar foreground
+ # sliced their shafts across faces and cut the beard silhouette in wind-up.
+ if action!="" and not action.begins_with("hold_") and action not in ["pick","axe","hammer"] and a.rect.position.y<a.neck.y-3:n.draw_texture_rect(texture(p,a.sheet,a.index,false,true,zoom>2.0),dest,false)
  n.draw_set_transform(reset)
 static func grip(p:Dictionary,d:Vector2,time:float,walking:bool)->Vector2:
  var a=descriptor(p,d,walking,time,"",0);var m=info(a.sheet,a.index)
- return (vec(m.get("palm",[a.neck.x+80,a.root.y-90]))-a.root)*a.scale*Vector2(-1 if d.x<-.3 else 1,1)
+ return (vec(m.get("palm",[a.neck.x+80,a.root.y-90]))-a.root)*a.shape*Vector2(-1 if d.x<-.3 else 1,1)
+static func muzzle(p:Dictionary,d:Vector2)->Vector2:
+ var a=descriptor(p,d,false,0,"hold_rifle",0)
+ return (Vector2(a.rect.end.x-6,a.rect.position.y+83)-a.root)*a.shape*Vector2(-1 if d.x<-.3 else 1,1)
 static func grip_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2,walking:bool):
  var a=descriptor(p,d,walking,time,"",0);var m=info(a.sheet,a.index);var palm=vec(m.get("palm",[a.neck.x+80,a.root.y-90]));var tex=texture(p,a.sheet,a.index)
  var region=Rect2(palm-Vector2(a.rect.position)-Vector2(8,9),Vector2(16,18))
  var ratio=Vector2(tex.get_size())/Vector2(a.rect.size)
  n.draw_set_transform(at+reset,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)
- n.draw_texture_rect_region(tex,Rect2((palm-Vector2(8,9)-a.root)*a.scale,Vector2(16,18)*a.scale),Rect2(region.position*ratio,region.size*ratio));n.draw_set_transform(reset)
+ n.draw_texture_rect_region(tex,Rect2((palm-Vector2(8,9)-a.root)*a.shape,Vector2(16,18)*a.shape),Rect2(region.position*ratio,region.size*ratio));n.draw_set_transform(reset)
 static func work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
  var a=descriptor(p,d,false,0,action,phase)
  n.draw_set_transform(at+reset,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)
@@ -276,6 +315,9 @@ static func prepare(g:Node):
   for i in 24:tasks.append([gender+"-walk",i,false,false])
   for i in range(20,24):tasks.append([gender+"-handling",i,false,false])
   if entry.player:
+   for i in 24:
+    tasks.append([gender+"-equipped",i,false,false])
+    if not equipment_cache.has(key_for(p,gender+"-equipped",i,false,false)):warm_jobs.append(["upper",p,gender+"-equipped",i])
    for row in [int(p.gender),int(p.gender)+2]:
     for col in 4:
      for fg in [false,true]:tasks.append(["rear-work",row*4+col,false,fg])
@@ -295,7 +337,9 @@ static func warm_step():
  var started=Time.get_ticks_usec()
  while not warm_jobs.is_empty():
   var job=warm_jobs.pop_back()
-  if job[0] is String:stride(job[1],job[2])
+  if job[0] is String:
+   if job[0]=="stride":stride(job[1],job[2])
+   else:equipment_upper(job[1],job[2],job[3])
   else:texture(job[0],job[1],job[2],job[3],job[4])
   if Time.get_ticks_usec()-started>=5000:break
 static func warm_draw(n:Node2D):

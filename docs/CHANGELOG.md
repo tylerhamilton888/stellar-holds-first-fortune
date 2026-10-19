@@ -1,3 +1,11 @@
+# 0.57.0 — Drawn grips and compact Folk
+- 48 complete equipped body/tool/hand drawings across two body types and four facings; removed active surface/mine/combat held-tool icon overlays.
+- Shorter, broader bodies and corresponding drawn footwork; unchanged identity head scales and anatomical attachment. Corrected female collar overlap and stray rear-hair crop fragment.
+- Raised-tool wind-ups pass behind the head, removing the clipped shaft/arm strip across faces and beards.
+- Selected pack supplies in a small supported tray with finger/rim occlusion. Empty stacks show no false material; busy physical handling overrides selected equipment.
+- Equipped turn/selection textures prepare during scene transitions. No inventory, mining balance, save schema, terrain or quest changes.
+- Native input/gameplay, visual and exported-pack verification; recovery after .56 with all prior versions preserved. See testing/grips-0.57.0.md.
+
 # 0.56.0 — Folk and furnishing repair
 - Anatomical head/shoulder registration, face shading, stable idle/walk tool grip and complete mug/hand foregrounds. Creator portraits fit actual hair bounds.
 - New drawn contact/passing boot keys across walking, carrying and pushing; matched boot scale/material, preserved fingertips and prewarmed texture cache.

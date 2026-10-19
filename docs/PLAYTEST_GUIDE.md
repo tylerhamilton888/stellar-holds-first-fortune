@@ -1,3 +1,13 @@
+# 0.57.0 — Grip and silhouette check
+Extract the whole Windows ZIP. Continue your existing fortune. Use the accompanying Motion.mp4 for a quick native gameplay preview.
+
+1. Select pick, shovel, axe and hammer with 1–4. Walk left/right, stop, turn toward/away from the camera. Fingers should encircle the shaft, tools stay with the body, and shorter, thicker legs should still show planted and passing steps.
+2. Hold LMB at a reachable mine face or Pinewood tree. Check the transition from carrying the tool to the drawn work pose and back. Excavation resistance and responsive movement are unchanged.
+3. Select an actual pack resource, such as stone [7]. It sits in a small tray supported by both hands. An empty stack should show no pretend material. Lift a raw rock/log with E: its physical carry pose takes priority. Q puts it down and restores the selected equipment.
+4. Try a stockpile, breaker/saw and cart. Watch the broader body across work, shoulder loads and pushing. Save/reload; selection, inventory and loose material should remain.
+
+Please judge the silhouette and motion against your concept, especially side steps and held-to-working transitions. Report the character, tool and direction for any remaining awkward pose. This pass changes grips/proportions; broader environment art is still separate follow-up.
+
 # 0.56.0 — inspect the repair first
 Extract the entire Windows ZIP and run FirstFortune.exe beside FirstFortune.pck. Continue your fortune or start a test slot. Previous saves are copied to unique `.pre-art-560-*.bak` files before loading; keep those for rollback.
 

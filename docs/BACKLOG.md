@@ -1,3 +1,9 @@
+## After 0.57.0
+- Replaced floating equipped tools with complete drawn grips and shortened/broadened Folk bodies. Await user judgement of silhouette, held/work transition and side steps.
+- Equipped upper poses remain steady while the four drawn foot keys cycle. More per-step shoulder/arm variation and additional work/combat directions are future art refinements; do not claim a full animation redraw.
+- Shared cargo sprites/carry poses remain. Broader Keldrath architecture, older mine/exterior props, industrial NPC jobs and prior world backlog are unchanged.
+- Windows/audio/hardware performance remain player checks. Do not treat passing mechanical tests as visual acceptance.
+
 ## After 0.56.0
 - Repaired reported detached heads, weak side-step footwork, clipping mugs/hands, jumping tool hand and major oversized room furniture. Shared furniture sprites now support player construction and actual bases.
 - User acceptance of the repaired native motion/reference likeness is still needed. Some rear-quarter/pushing directions share drawings; further direction-specific work/combat art remains.

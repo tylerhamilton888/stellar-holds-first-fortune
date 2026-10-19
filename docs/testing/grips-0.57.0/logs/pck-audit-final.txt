@@ -1,0 +1,2 @@
+All PCK file hashes, bounds and relative paths verified 2683
+Counter({'.import': 924, '.ctex': 850, '.mask': 660, '.remap': 77, '.gdc': 76, '.sample': 67, '.coverage': 10, '.oggvorbisstr': 6, '.json': 6, '.scn': 1, '.cfg': 1, '.fontdata': 1, '.bin': 1, '.svg': 1, '.binary': 1, '.gdshader': 1})
