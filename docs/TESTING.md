@@ -1,3 +1,6 @@
+# Current release: 0.54.0
+See [reference-0.54.0](testing/reference-0.54.0.md). Isolate saves for all native/input scripts ending in 54.gd. Export metadata must include assets/folk-v54/frames.json. Use the measured bounds, not equal-grid crops.
+
 Current release: **0.53.0**. See [native playability validation](testing/playability-0.53.0.md). Use isolated native input for playability53, intro53, combat_edges53 and input_world53; test_deepworks41 covers existing crew/depth persistence.
 
 Current world release: 0.50.0. See testing/world-0.50.0.md and tests/input_world50.gd, collision_world50.gd, migration_world50.gd. Use isolated native data and inspect hitbox overlays.

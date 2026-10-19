@@ -2,7 +2,7 @@ class_name HoldDrawnLocomotion
 extends RefCounted
 # Drawn lower-body keys share a registered hip with the drawn working torso.
 # No joint rotation, limb warping or runtime pose interpolation.
-const CYCLE=.64
+const CYCLE=.52
 const WALK=[preload("res://assets/animation-v52/male-walk.png"),preload("res://assets/animation-v52/female-walk.png")]
 const CARRY=[preload("res://assets/animation-v52/male-carry.png"),preload("res://assets/animation-v52/female-carry.png")]
 const LEGS=preload("res://assets/animation-v52/legs.png")
@@ -24,7 +24,7 @@ static func phase(time:float)->float:return fposmod(time/CYCLE,1)
 static func frame(time:float)->int:return mini(3,int(phase(time)*4))
 static func advance(g:Node,distance:float,material:String):
  if distance<=.01:return
- var before=int(g.gait_clock/(CYCLE*.5));g.gait_clock+=distance/185.0
+ var before=int(g.gait_clock/(CYCLE*.5));g.gait_clock+=distance/150.0
  if int(g.gait_clock/(CYCLE*.5))!=before:g.sound.footstep(material)
 static func is_carry(action:String)->bool:return action in ["carry_stone","carry_log","double_stone","double_log","double_mixed"]
 static func descriptor(p:Dictionary,d:Vector2,time:float,action:String)->Dictionary:

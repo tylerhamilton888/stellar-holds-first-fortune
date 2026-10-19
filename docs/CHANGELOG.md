@@ -1,3 +1,25 @@
+# Reference-led Folk — 0.54.0
+Updated 2026-10-19 UTC. Checkpoint `reference-0.54.0`. The verified pre-edit tag `pre-reference-0.54.0` preserves `packaging-0.53.1` at `5ac23fed34c03ac4f3a224bd158fbec9c54edd65`. Prior archives, tags, original artwork and saves remain intact. No remote was changed or pushed.
+
+The October 19 user board is the new art authority. The integrated game now uses seven male beard/hair designs and seven female hairstyles, 264 registered drawn head/body/work keys, consistent palettes, held-tool sockets, supported single/double/mixed cargo and a newly seated Lord. Creator busts, dialogue and the live world share identity; enlarged previews use source-resolution art. Cosmetic marks and fittings remain available. Original source art is retained.
+
+Dwarfs are smaller relative to doors, stairs and stonework. Unladen travel is 150 units/s, handcarts 135 and wagons 120. Walking keys and footfalls follow actual distance. Ordinary rock takes two deliberate contacts with the starting pick; soil one, coal two, iron three. Held mining repeats a 0.64-second cycle with anticipation, damage cracks and a short impact hold. The player plants their feet and is never automatically pulled into a new wall. Hard materials, steel progression, existing yields, five geological levels and saved partial damage remain. Pinewood has a matching 0.64-second axe cadence; workbench approaches and reach are aligned to the smaller Dwarf.
+
+Keldrath has six new illustrated service facades and a great mountain vault. Existing door locations/quests remain. Visible tiles and citizens are culled, static footprints and per-frame citizen data cached, and an incorrect citizen route-wrap duration corrected. Small recolored poses are cached and prepared behind a short loading screen before controls resume. The surface header is slimmer; the mine hotbar leaves the depth label clear.
+
+Native source checks passed: 35 integrated journey, 121 collision/navigation, 65 mining/identity registration, 32 workshop/material, 32 transport/tutorial/combat, 20 escort/settling, 5 old-save preservation and 45 geology/crew/automation checks (355 total). Creator palette/normalization assertions and native visual review also passed. See `testing/reference-0.54.0.md` for exact evidence, performance and exported-pack results.
+
+Loading a pre-.54 save creates a unique byte-for-byte `.pre-folk-54-*.bak` before any autosave. Existing appearance indices map to the closest new designs; names, inventories, charter, quests, terrain, structures, storage, cargo and automation data are retained. The new selectors save independently. Original terrain is not regenerated.
+
+This is a playable reference-art, scale, weight and performance milestone. It does not complete the requested larger connected overworld, all interior/prop modernization, a full armor wardrobe, eight authored work directions or new NPC production jobs. Some side work/pushing views are shared. Windows execution, audio balance and subjective visual/feel acceptance remain player checks. Known test-only shutdown resource-retention warnings are recorded separately from gameplay failures.
+
+Recovery is a standard standalone Windows EXE/PCK ZIP plus incremental source and Git updates after .53.1. Preserve the .51 full baseline and .52/.53/.53.1 recovery chain. New recovery instructions include exact commit/tree/hash verification. The official Windows runtime remains byte-identical to the verified Godot 4.4.1 template. No editor, installer or batch launcher is shipped. The earlier Defender detection remains unresolved; current package checks cannot certify a Defender verdict.
+
+## Resume here
+Read AGENTS.md, ART_DIRECTION.md and testing/reference-0.54.0.md. `folk.gd` owns the active registered character renderer/cache; `frames.json` owns measured bounds and sockets. `drawn_animation.gd` routes active callers to it and preserves old source helpers. `deepworks_play.gd` owns planted mining cadence; `world_zones.gd` owns shared door/footprint layout and cached/culling presentation. Keep functional quests and passage coordinates stable while extending the world.
+
+## Earlier releases
+
 # Standard Windows release — 0.53.1
 Updated 2026-10-19 UTC. Checkpoint `packaging-0.53.1`; baseline `pre-packaging-0.53.1` preserves `playability-0.53.0` (40185112021128584cdba21fc58ad914ca3c0b79). Prior archives and recovery files remain intact.
 

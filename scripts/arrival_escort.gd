@@ -74,7 +74,7 @@ func tick(dt:float):
   travel=minf(limit,travel+140*dt)
   guide=sample_route(minf(travel,route_length))
   game.player=sample_route(maxf(0,travel-55))
-  if guide.distance_to(old_guide)>.01:guide_direction=(guide-old_guide).normalized();guide_gait+=guide.distance_to(old_guide)/185
+  if guide.distance_to(old_guide)>.01:guide_direction=(guide-old_guide).normalized();guide_gait+=guide.distance_to(old_guide)/150
   ivar_walking=guide.distance_to(old_guide)>.01
   game.walking_pose=old.distance_to(game.player)>.01
   if game.walking_pose:game.surface.direction=(game.player-old).normalized();HoldDrawnLocomotion.advance(game,old.distance_to(game.player),"wood" if game.surface.room() else "stone")
@@ -92,7 +92,7 @@ func tick(dt:float):
  elif departing:
   var targets=[Vector2(560,565),Vector2(480,565),Vector2(480,620)];var old=guide
   guide=guide.move_toward(targets[leaving_point],125*dt);ivar_walking=true
-  guide_direction=(guide-old).normalized();guide_gait+=old.distance_to(guide)/185
+  guide_direction=(guide-old).normalized();guide_gait+=old.distance_to(guide)/150
   if guide.distance_to(targets[leaving_point])<1:
    leaving_point+=1
    if leaving_point==targets.size():finish();return

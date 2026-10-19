@@ -1,6 +1,6 @@
 class_name HoldPortrait
 extends Control
-# Ten complete painted identities; no independent hair or beard layers.
+# The selected identity is shared with the game; no old-design fallback in the creator.
 var profile:Dictionary=HoldAppearance.defaults()
 var viewport:SubViewport
 var canvas:Node2D
@@ -27,4 +27,4 @@ func apply_profile(p:Dictionary):
  if is_instance_valid(canvas):
   canvas.queue_redraw();viewport.render_target_update_mode=SubViewport.UPDATE_ONCE
 func draw_bust():
- HoldCharacterBust.draw(canvas,profile,Rect2(0,0,96,96),animate and fmod(clock+profile.hair_color*.37,5.2)<.12)
+ HoldFolk.paint(canvas,Vector2(48,180),profile,Vector2.DOWN,false,0,2.65,Vector2.ZERO)

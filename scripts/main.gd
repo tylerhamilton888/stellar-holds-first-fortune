@@ -214,7 +214,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.53.1";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.54.0";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  fight.reset();fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}
@@ -237,7 +237,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  state.ensure_dynasty()
  for key in HoldAppearance.NPC_NAMES:state.npc(key)
  for i in 3:state.npc("visitor_"+str(i))
- HoldPaintedWalk.warm(combat.profile())
+ # The retired side-view atlas is not prepared by the active top-down renderer.
  velocity=Vector2.ZERO;camera=Vector2.ZERO;particles.clear();drops.clear();popups.clear()
  if zone=="mine":camera=deep.camera_target()
  playing=true;launching=false;launch_time=0;autosave=0;close_panel()
@@ -249,6 +249,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  if state.deepworks_migrated:notify("Deepworks ready. Your original save was backed up; old terrain and structures remain archived. All supplies and progress are retained.")
  state.region_travel.active=false;state.hold_travel.active=false
  hotbar.restore()
+ HoldFolk.prepare(self)
  if not load_saved:
   save_game()
   if capture_mode=="" and not skip_arrival:opening_scene=HoldOpeningScene.begin(self,"arrival")
@@ -289,6 +290,8 @@ func pause_for_focus_loss():
  if playing and panel_id!="pause" and not is_instance_valid(creator):open_panel("pause")
 
 func _process(dt):
+ if HoldFolk.warming():
+  HoldFolk.warm_step();queue_redraw();return
  if is_instance_valid(anniversary_scene) or is_instance_valid(opening_scene):return
  if playing and (menu_paused or panel_id in ["pause","settings"] or is_instance_valid(creator)):
   jump_buffer=0;movement_remainder=0;jump_was_held=Input.is_action_pressed("jump")
@@ -353,6 +356,7 @@ func capture():
  shutdown()
 
 func _unhandled_input(e):
+ if playing and HoldFolk.warming():return
  if is_instance_valid(anniversary_scene) or is_instance_valid(opening_scene):return
  if is_instance_valid(overworld):
   if e is InputEventKey:
@@ -871,6 +875,7 @@ func update_hud():
  status.visible=false
 
 func _draw():
+ if playing and HoldFolk.warming():HoldFolk.warm_draw(self);return
  forest_view.visible=playing and zone=="road" and room_id=="" and not surface.active()
  if forest_view.visible:forest_view.queue_redraw()
  if not playing:draw_title();return
@@ -1466,7 +1471,7 @@ func help_panel():
 J: work journal  •  N: people and location tracking
 I: resources  •  B: weapons and armor"],["What comes next?","Your first coal delivery earns an audience with the Lord. Return to Ivar for the lift commission and new lessons. Finish all three commissions to earn a reference, buy a mountain charter, and hire a founding crew as you build your workshop and freight beacon."]],
   [["Dig comfortably","WASD / arrows move in eight directions underground. Hold LMB with pick [1] for rock or shovel [2] for dirt. Hammer [4] exploits existing cracks; Shift + pick extracts ore selectively. Axe [3] is for Pinewood timber."],["Connect the depths","V opens stairs, timber ladder shafts and lamps. Build on clear floor; E descends, Shift + E ascends at that same location. Ladders carry Dwarfs and buckets; stairs also carry carts and machines. X surveys the layer below. T assigns crew depth. Return through the entrance to deliver cargo and leave."],["Build your hold","O opens Rooms, Furnish, Finishes and Folk. Designate excavated floor, then place furniture or apply finishes with LMB. Right mouse cancels. H manages hauling; C takes/parks the cart, U unloads and Shift + U loads piles. L opens the project ledger. Delivered supplies fund crafting and construction."]],
-  [["Draw your weapon","F switches between your weapon and tools. Left mouse attacks; hold right mouse to guard. Press guard just before an impact to parry, then counterattack. Q dodges. There is no stamina."],["Prepare for an expedition","B opens gear. Borin introduces the starter axe and shield in his safe practice bay after the lift repair and return-route lesson. Hostile encounters unlock when you report your training. Forge upgrades at Borin's workbench; equipped armor changes your appearance. Guns consume cartridges."],["Choose your fights","Cleared encounters stay cleared. Enemies drop useful salvage. Rest outside the mine to heal. Defeat triggers paid rescue, so prepare an escape route."]],
+  [["Draw your weapon","F switches between your weapon and tools. Left mouse attacks; hold right mouse to guard. Press guard just before an impact to parry, then counterattack. Q dodges. There is no stamina."],["Prepare for an expedition","B opens gear. Borin introduces the starter axe and shield in his safe practice bay after the lift repair and return-route lesson. Hostile encounters unlock when you report your training. Forge upgrades at Borin's workbench; equipped armor improves your protection. Guns consume cartridges."],["Choose your fights","Cleared encounters stay cleared. Enemies drop useful salvage. Rest outside the mine to heal. Defeat triggers paid rescue, so prepare an escape route."]],
   [["Craft, trade, grow","The forge reserves materials when you queue a job; completed items enter your pack automatically. Production continues while browsing ordinary menus. Sell surplus at Orla's exchange; contracts or tavern hospitality unlock bargaining."],["Save & pause","F5 saves. Escape opens pause or goes back through menus. Losing window focus pauses the world until you resume. Auto-save runs every 45 seconds and on major purchases or travel. Three separate save slots; a new fortune asks before replacing the selected slot."],["Comfort & controls","Use Sound & comfort from the pause menu for music, ambience, effects and camera shake. Tab moves focus; Enter activates a button. Given and family names are separate. There is no hunger timer: provisions fuel your worker."]]
  ]
  for entry in topics[help_tab]:
@@ -1695,6 +1700,7 @@ func character_tint(p:Vector2)->Color:
  return Color("d6e1df").lerp(Color("ffe4bd"),warm*.72)
 
 func begin_transition(title:String):
+ HoldFolk.prepare(self)
  transition_left=.65;transition_shade.visible=true;transition_shade.modulate.a=1;transition_label.text=title
  swing=0;impact_pause=0;impact_flashes.clear()
 func enter_room(id:String):

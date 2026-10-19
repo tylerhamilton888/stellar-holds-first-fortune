@@ -40,6 +40,7 @@ func ensure():
  HoldForestry.ensure(g.state)
  if g.state.surface.is_empty():g.state.surface={"version":1,"area":"hearthward","positions":{},"chests":{},"homes":{},"decor":[],"facts":{}}
  var s=g.state.surface
+ s.folk_revision=54
  if int(s.get("world_layout",0))<50:
   s.legacy_positions=s.get("positions",{}).duplicate(true)
   for id in ["hearthward","crownward","forgeward"]:s.get("positions",{}).erase(id)
@@ -379,14 +380,14 @@ func chop(dt:float):
  if best<0:cut_clock=0;return
  if best!=cut_target:cut_clock=0;cut_target=best;cut_struck=false
  g.face=1 if TREES[best].x>g.player.x else -1
- var stance=TREES[best]+Vector2(-g.face*42,-15)
+ var stance=TREES[best]+Vector2(-g.face*32,-6)
  if Input.get_vector("left","right","up","down")==Vector2.ZERO and g.player.distance_to(stance)>3:
-  var step=g.player.move_toward(stance,185*dt)
+  var step=g.player.move_toward(stance,150*dt)
   if walkable(step):
    direction=(stance-g.player).normalized();HoldDrawnLocomotion.advance(g,g.player.distance_to(step),"wood");g.player=step;g.walking_pose=true;cut_approach=true;cut_clock=0;cut_struck=false;return
  cut_clock+=dt
- if cut_clock>=.36:cut_clock=fmod(cut_clock,.36);cut_struck=false
- if cut_clock<.18 or cut_struck:return
+ if cut_clock>=.64:cut_clock=fmod(cut_clock,.64);cut_struck=false
+ if cut_clock<.35 or cut_struck:return
  cut_struck=true;cut_flash=.16
  var is_log=g.state.road_trees[best]<=0
  if is_log:
@@ -459,20 +460,20 @@ func draw():
   elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
   elif o.kind=="npc":
-   if o.id=="eirik":g.draw_texture_rect(HoldRoyalHall.SPRITE,Rect2(o.p-Vector2(57,125),Vector2(114,136)),false)
+   if o.id=="eirik":g.draw_texture_rect(HoldRoyalHall.SPRITE,Rect2(o.p-Vector2(40,88),Vector2(80,96)),false)
    elif o.id=="borin" and g.room_id=="forge":
     A.draw_offset=-cam;HoldNpcActivity.smith(g,o.p,g.clock,g.state.opening>=2);A.draw_offset=Vector2.ZERO
    elif g.room_id=="tavern":
     A.draw_offset=-cam;HoldNpcActivity.social(g,o.p,g.clock+(0 if o.id=="hedrik" else posmod(hash(o.id),11)),-1,g.state.npc(o.id),true);A.draw_offset=Vector2.ZERO
    else:actor(o.p,g.state.npc(o.id),false,-1,g.clock)
-   g.draw_set_transform(-cam);A.text(g,o.p+Vector2(-30,-140 if o.id=="eirik" else -90),g.state.npc(o.id).first_name,12,Color("e8ce93"))
+   g.draw_set_transform(-cam);A.text(g,o.p+Vector2(-30,-103 if o.id=="eirik" else -90),g.state.npc(o.id).first_name,12,Color("e8ce93"))
   elif o.kind=="wall":house.wall_draw(o.c)
   elif o.kind=="tree":draw_fir(o.p,int(o.i))
   else:furniture(o.p,o.kind)
  if g.handworks.working:
   var station=g.handworks.facility()
   if not station.is_empty() and not station.job.is_empty():
-   HoldDrawnAnimation.work_foreground(g,g.player,g.state.appearance,(g.handworks.pos(station)-g.player).normalized(),.85,-cam,"saw" if station.kind=="saw" else "hammer",fmod(float(station.job.progress),.42)/.42)
+   HoldDrawnAnimation.work_foreground(g,g.player,g.state.appearance,g.handworks.work_direction(station),.85,-cam,"saw" if station.kind=="saw" else "hammer",fmod(float(station.job.progress),.42)/.42)
  g.draw_set_transform(-cam)
  house.roof_draw()
  if g.opening_scene is HoldArrivalEscort:
@@ -494,7 +495,7 @@ func draw():
   var p=((g.get_global_mouse_position()+g.camera)/40).round()*40
   g.draw_rect(Rect2(p-Vector2(22,24),Vector2(44,30)),Color(.5,.9,.7,.4) if walkable(p) else Color(.9,.3,.2,.4))
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
- g.draw_rect(Rect2(0,0,960,74),Color("10232d"));g.draw_line(Vector2(20,73),Vector2(940,73),Color("6e796b"))
+ g.draw_rect(Rect2(0,0,960,48),Color(.06,.14,.18,.94));g.draw_line(Vector2(20,47),Vector2(940,47),Color("6e796b"))
  g.draw_rect(Rect2(0,498,960,42),Color("10232d"))
  if g.panel_id=="" and area in ["hearthward","crownward","forgeward"] and g.state.tracked_npc!="":
   var target=HoldNpcPresence.room_for(g.state,g.state.tracked_npc)
@@ -523,11 +524,11 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
  var look=profile.duplicate();look.air_pose=0
  var aim=direction if is_player else Vector2(face,.45)
  var action=-1.0
- if is_player and cut_target>=0 and not cut_approach:aim=(TREES[cut_target]-p).normalized();action=clampf(cut_clock/.36,0,1)
+ if is_player and cut_target>=0 and not cut_approach:aim=(TREES[cut_target]-p).normalized();action=clampf(cut_clock/.64,0,1)
  elif is_player and house.impact>0:aim=(house.contact-p).normalized();action=1-house.impact/.24
  if is_player and g.handworks.working:
   var station=g.handworks.facility()
-  if not station.is_empty() and not station.job.is_empty():aim=(g.handworks.pos(station)-p).normalized();action=fmod(float(station.job.progress),.42)/.42
+  if not station.is_empty() and not station.job.is_empty():aim=g.handworks.work_direction(station);action=fmod(float(station.job.progress),.42)/.42
  var animation=""
  if is_player:
   if cut_target>=0 and not cut_approach:animation="axe"

@@ -1,3 +1,9 @@
+## After 0.54.0
+- Player acceptance of the October 19 reference interpretation, walk/carry/work contact, smaller world scale, slower planted mining and Windows Keldrath performance. Keep native evidence and compare new work at gameplay size.
+- Expand the connected world and give Keldrath richer districts/interiors and daily activity. The new facades/vault do not finish this larger request. Replace remaining older props/interior treatments to match the new Folk.
+- Add further directional pushing/station/combat drawings, wardrobe/armor silhouettes and richer NPC production/transport jobs without changing save ownership or quest continuity.
+- Follow up with a current Windows Defender result for the exact .54 ZIP; the prior .53 detection is unresolved. Local scans do not establish Microsoft's verdict.
+
 ## After 0.53.1
 - SEC-01: Obtain a current Windows Defender result for the exact .53.1 ZIP. The original .53.0 MalUri detection remains unexplained; local ClamAV and source inspection cannot settle Microsoft's verdict. Leave any flagged build blocked. Do not prescribe antivirus exclusions.
 - Packaging now uses the official release runtime and separate PCK. Preserve the previous versions for recovery, not as a recommendation to run a flagged package. Existing .53 gameplay limitations remain.

@@ -2,7 +2,7 @@ class_name HoldRoyalHall
 extends RefCounted
 const A=preload("res://scripts/art.gd")
 const ROOM=preload("res://assets/opening-v31/throne-room.png")
-const SPRITE=preload("res://assets/royal-v44/eirik-enthroned.png")
+const SPRITE=preload("res://assets/folk-v54/eirik-throne.png")
 const LORD=preload("res://assets/opening-v31/lord-eirik.png")
 static func draw(n:Node2D,t:float,s,markers:bool=true):
  n.draw_texture_rect(ROOM,Rect2(0,-12,960,540),false)

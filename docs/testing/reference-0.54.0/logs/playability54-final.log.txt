@@ -1,0 +1,43 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Rest has a brief visible interval before healing
+PASS Movement cancels rest without false credit
+PASS Completed rest heals, saves and credits bed
+PASS Tutorial names only the unfinished next step
+PASS Checking personal chest completes settling without spending supplies
+PASS Hitched cart uses the real gate without swallowing E
+PASS Portal preserves original raw IDs and processed cargo
+PASS Same cart reaches the mine through the actual trail door
+PASS Cart descends matching stairs with cargo
+PASS Cart returns up the same stair
+PASS Ladder rejects hitched cart without losing it
+PASS Loaded cart returns naturally to the trail
+PASS Reload preserves cart hitch, location and exact contents
+PASS Wagon parks with cargo outside narrow interior
+PASS Returned player can retake parked wagon handles
+PASS Borin practice opens in the integrated top-down room
+PASS Combat movement is normalized and free of platform gravity
+PASS Held attack lands repeated facing blows without click spam
+PASS Facing a timed strike parries and staggers Borin
+PASS Directional dodge evades a real telegraphed strike
+PASS Practice never injures the player
+PASS Melee does not hit enemies behind the swing
+PASS Dodge respects room collision
+PASS Practice bench opens completed lesson report
+PASS Reporting training unlocks combat and pays once
+PASS Practice door returns to the connected hall with tools ready
+PASS Practice entered from the forge returns through its own doorway
+PASS Lower geology contains deterministic persistent encounters
+PASS Top-down mine combat deals actual directional damage
+WOUND deep53/50340/mine:hold:1/0 -> deep53/50340/mine:hold:1/0 hp 40.0 -> 40.0 saved { "deep53/50340/mine:hold:1/0": 40.0 }
+PASS Enemy wounds and location persist through reload
+PASS Defeat awards salvage exactly once
+PASS Cleared encounter remains cleared after reload
+PLAYABILITY54: 32 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

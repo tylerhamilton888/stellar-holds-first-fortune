@@ -158,7 +158,7 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  if sheet.ends_with("walk"):sx*=1.15
  if sheet=="idle":sx*=1.20
  return {"sheet":sheet,"index":index,"rect":r,"neck":neck,"root":Vector2(neck.x,baseline),"scale":Vector2(sx,sy),"view":view,"frame":f,"head_y":(neck.y-baseline)*sy+52}
-static func paint(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0.0):
+static func legacy_paint(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0.0):
  var p=HoldAppearance.normalized(profile)
  if HoldDrawnLocomotion.paint(n,at,p,d,walking,time,zoom,reset,action):return
  var a=descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
@@ -177,13 +177,13 @@ static func paint(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,walking:bool,
 const PALMS=[
  [Vector2(305,135),Vector2(634,135),Vector2(1013,135),Vector2(1403,133),Vector2(300,376),Vector2(665,361),Vector2(1016,379),Vector2(1418,374),Vector2(314,622),Vector2(668,612),Vector2(1031,625),Vector2(1417,620),Vector2(307,862),Vector2(663,854),Vector2(1031,873),Vector2(1417,862)],
  [Vector2(288,148),Vector2(589,133),Vector2(979,132),Vector2(1335,138),Vector2(289,366),Vector2(601,353),Vector2(962,367),Vector2(1343,350),Vector2(298,603),Vector2(610,600),Vector2(973,602),Vector2(1346,602),Vector2(306,837),Vector2(615,831),Vector2(973,841),Vector2(1350,838)]]
-static func grip(profile:Dictionary,d:Vector2,time:float,walking:bool,zoom:float=1)->Vector2:
+static func legacy_grip(profile:Dictionary,d:Vector2,time:float,walking:bool,zoom:float=1)->Vector2:
  var p=HoldAppearance.normalized(profile)
  if walking:return HoldDrawnLocomotion.grip(p,d,time)*Vector2(-1 if d.x<-.3 else 1,1)*zoom
  var a=descriptor(p,d,false,time,"",0)
  var palm:Vector2=a.neck+Vector2(130,240)
  return (palm-a.root)*a.scale*Vector2(-1 if d.x<-.3 else 1,1)*zoom
-static func grip_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2,walking:bool=true):
+static func legacy_grip_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2,walking:bool=true):
  var p=HoldAppearance.normalized(profile)
  if walking:HoldDrawnLocomotion.grip_front(n,at,p,d,time,zoom,reset);return
  var a=descriptor(p,d,false,time,"",0);var palm:Vector2=a.neck+Vector2(130,240)
@@ -205,7 +205,7 @@ static func foreground(p:Dictionary,a:Dictionary)->Texture2D:
    if not region:img.set_pixel(x,y,Color.TRANSPARENT)
  var tex=ImageTexture.create_from_image(img);textures[key]=tex;return tex
 
-static func work_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
+static func legacy_work_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
  var p=HoldAppearance.normalized(profile);var a=descriptor(p,d,false,0,action,phase)
  var key="work-front/"+a.sheet+str(a.index)+str(p.cloth_color)+str(p.skin)
  if not textures.has(key):
@@ -218,3 +218,13 @@ static func work_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,zoo
  n.draw_set_transform(at+reset,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)
  n.draw_texture_rect(textures[key],Rect2((Vector2(a.rect.position)-a.root)*a.scale,Vector2(a.rect.size)*a.scale),false)
  n.draw_set_transform(reset)
+
+# Active game entry points share the reference-led rig; legacy drawings remain for recovery.
+static func paint(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0.0):
+ HoldFolk.paint(n,at,HoldAppearance.normalized(profile),d,walking,time,zoom,reset,action,phase)
+static func grip(profile:Dictionary,d:Vector2,time:float,walking:bool,zoom:float=1)->Vector2:
+ return HoldFolk.grip(HoldAppearance.normalized(profile),d,time,walking)*zoom
+static func grip_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,time:float,zoom:float,reset:Vector2,walking:bool=true):
+ HoldFolk.grip_front(n,at,HoldAppearance.normalized(profile),d,time,zoom,reset,walking)
+static func work_foreground(n:Node2D,at:Vector2,profile:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
+ HoldFolk.work_front(n,at,HoldAppearance.normalized(profile),d,zoom,reset,action,phase)

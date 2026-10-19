@@ -48,7 +48,7 @@ func _ready():
   input.text_changed.connect(func(text):profile[field]=text;profile=HoldAppearance.normalized(profile);update_preview())
  var tabs=HBoxContainer.new();tabs.add_theme_constant_override("separation",8);outer.add_child(tabs)
  for page in 2:
-  var tab=Button.new();tab.text=["Design & colors","Markings & details"][page];tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.custom_minimum_size.y=30;compact_button(tab);tabs.add_child(tab);page_buttons.append(tab)
+  var tab=Button.new();tab.text=["Design & colors","Clothing & details"][page];tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.custom_minimum_size.y=30;compact_button(tab);tabs.add_child(tab);page_buttons.append(tab)
   tab.pressed.connect(func():option_page=page;rebuild_options())
  form=VBoxContainer.new();form.size_flags_horizontal=Control.SIZE_EXPAND_FILL;form.add_theme_constant_override("separation",2);outer.add_child(form)
  rebuild_options()
@@ -83,6 +83,7 @@ func rebuild_options():
   option("sculpt","Dwarf design",HoldAppearance.FEMALE_SCULPTS if profile.gender==1 else HoldAppearance.SCULPTS)
   option("hair_color","Hair & beard" if profile.gender==0 else "Hair color",HoldAppearance.HAIR_NAMES,HoldAppearance.HAIR_COLORS)
  else:
+  option("cloth_color","Workwear color",HoldAppearance.CLOTH_NAMES,HoldAppearance.CLOTH_COLORS)
   option("tattoo","Runic tattoo",HoldAppearance.TATTOOS)
   option("jewelry","Fittings",HoldAppearance.JEWELRY)
   var note=Label.new();note.text="Choose your starting look here.\nEquip weapons and armor through Gear [B] in the world.";note.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;note.add_theme_font_size_override("font_size",16);note.modulate=Color("bbc9ca");form.add_child(note)

@@ -160,6 +160,11 @@ func load_world(geo:Geology)->Dictionary:
  if not f:return {}
  var d=JSON.parse_string(f.get_as_text())
  if not d is Dictionary or d.get("version",0)!=1 or d.get("cells",[]).size() not in [Geology.W*Geology.H,96*44]:return {}
+ # Art selections expand additively. Keep an exact prior save for old-build rollback.
+ if int(d.get("surface",{}).get("folk_revision",0))<54:
+  var backup=save_path()+".pre-folk-54-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  # Preserve the exact pre-migration file before any autosave can replace it.
  deepworks_migrated=not d.has("deepworks")
  if deepworks_migrated:

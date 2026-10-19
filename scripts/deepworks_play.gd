@@ -12,8 +12,8 @@ var mining_method="pick"
 var swing_duration=SWING
 var rubble:Array=[]
 var unload_flash=0.0
-const SWING=.32
-const IMPACT=.15
+const SWING=.64
+const IMPACT=.45 # Fraction remaining when the authored contact drawing lands.
 var site=""
 var survey_open=false
 var pulse=0.0
@@ -29,7 +29,7 @@ var stair_work=0.0
 var passage_kind="stair"
 func _init(game):g=game
 func ensure():
- if world==null or site!=g.state.active_site or world.data!=g.state.deepworks.get(g.state.active_site,{}):
+ if world==null or site!=g.state.active_site or not is_same(world.data,g.state.deepworks.get(g.state.active_site,{})):
   site=g.state.active_site;world=Deepworks.new(g.state);haul=DeepHaul.new(g.state,world);works=LivingPlay.new(g,world)
 func enter(resume:bool=false):
  ensure()
@@ -130,7 +130,7 @@ func move(dt:float):
  if g.handworks.approaching:return
  ensure();var axis=Input.get_vector("left","right","up","down")
  if axis!=Vector2.ZERO and not g.combat.armed:g.surface.direction=axis
- g.velocity=g.fight.movement(axis);var old=g.player
+ g.velocity=Vector2.ZERO if strike_left>0 and not g.combat.armed else g.fight.movement(axis);var old=g.player
  for i in maxi(1,int(ceil(dt*120))):
   var step=g.velocity*dt/maxi(1,int(ceil(dt*120)))
   var next=g.player+Vector2(step.x,0)
@@ -168,10 +168,10 @@ func mine(dt:float):
  if contact_hold>0:contact_hold=maxf(0,contact_hold-dt);return
  if strike_left>0:
   strike_left=maxf(0,strike_left-dt)
-  if strike_left<=IMPACT and not struck:
+  if strike_left<=swing_duration*IMPACT and not struck:
    struck=true
    if not works.pending.is_empty():works.impact()
-   elif target.x>=0 and contact.distance_to(g.player)<(200 if g.mining_gun.selected else 112) and world.visible(g.player,contact):hit(target,g.mining_gun.selected)
+   elif target.x>=0 and contact.distance_to(g.player)<(200 if g.mining_gun.selected else 58) and world.visible(g.player,contact):hit(target,g.mining_gun.selected)
   return
  if g.hotbar.blocked_work():return
  if works.mode!="":works.begin();return
@@ -180,20 +180,17 @@ func mine(dt:float):
  g.mining_buffer=0
  if g.tool not in [0,1,3] and not g.mining_gun.selected:g.notify("Equip pick [1], shovel [2], or fracture hammer [4].");return
  var aim=g.get_global_mouse_position()+g.camera
- target=world.target(g.player,aim,180 if g.mining_gun.selected else 78)
+ target=world.target(g.player,aim,180 if g.mining_gun.selected else 52)
  if target.x<0:return
  # The collision surface is authoritative; short automatic approach closes tool reach.
  contact=g.player
  for i in range(1,190):
   contact=g.player+(Deepworks.center(target)-g.player).normalized()*i
   if Deepworks.cell(contact)==target:break
- var reach=15.0 if contact.y>g.player.y and absf(contact.y-g.player.y)>absf(contact.x-g.player.x)*1.35 else 40.0
- if not g.mining_gun.selected and contact.distance_to(g.player)>reach+2 and Input.get_vector("left","right","up","down")==Vector2.ZERO:
-  var approach=(contact-g.player).normalized();var next=g.player+approach*minf(185*dt,contact.distance_to(g.player)-reach)
-  if not world.solid(next):HoldDrawnLocomotion.advance(g,g.player.distance_to(next),"stone");g.player=next;g.surface.direction=approach;g.walking_pose=true;return
+ # Mining never moves the player. WASD advances the next planted stance.
  g.face=1 if contact.x>=g.player.x else -1
  mining_method="hammer" if g.tool==3 else ("careful" if Input.is_key_pressed(KEY_SHIFT) else "pick")
- swing_duration=.44 if mining_method=="careful" else SWING
+ swing_duration=.78 if mining_method=="careful" else (.72 if mining_method=="hammer" else SWING)
  strike_left=swing_duration;struck=false;g.sound.effect("swing",-20)
 func hit(c:Vector2i,thermal:bool=false):
  if thermal:
@@ -206,7 +203,7 @@ func hit(c:Vector2i,thermal:bool=false):
  var result=world.strike(c,-1,thermal,false,mining_method)
  if result.is_empty():return
  if result.has("blocked"):g.notify("Hard basalt: research Tempered steel at the survey office.");return
- g.sound.impact(result.kind,result.broken);pulse=.14;contact_hold=.035
+ g.sound.impact(result.kind,result.broken);pulse=.14;contact_hold=.065 if result.broken else .045
  var color=ore_color(result.kind) if result.kind in [3,4,5,6] else color(result.kind,world.depth()).lightened(.25)
  for i in (15 if result.broken else 7):sparks.append({"p":contact,"v":Vector2.from_angle(randf()*TAU)*randf_range(30,140),"life":randf_range(.15,.5),"color":color,"kind":result.kind,"size":randf_range(2,5)})
  if result.broken:
@@ -237,7 +234,7 @@ func agents(dt:float):
    var next:Vector2=a.p.move_toward(a.path[0],100*dt)
    if world.solid(next,z):a.path=[];a.target=Vector2i(-1,-1)
    else:
-    a.facing=(next-a.p).normalized();a.gait=float(a.get("gait",0))+next.distance_to(a.p)/185.0
+    a.facing=(next-a.p).normalized();a.gait=float(a.get("gait",0))+next.distance_to(a.p)/150.0
     a.p=next;saved.x=next.x;saved.y=next.y;a.status="Walking depth "+str(z+1)
     if next.distance_to(a.path[0])<1:a.path.pop_front()
    continue
@@ -340,7 +337,7 @@ func draw():
  A.draw_offset=offset;g.draw_set_transform(offset)
  var room_lamps=works.lamps()
  var z=world.depth();var l=world.layer();var start=Deepworks.cell(g.camera)-Vector2i.ONE
- var aim=world.target(g.player,g.get_global_mouse_position()+g.camera,180 if g.mining_gun.selected else 78)
+ var aim=world.target(g.player,g.get_global_mouse_position()+g.camera,180 if g.mining_gun.selected else 52)
  for y in range(maxi(0,start.y),mini(Deepworks.H,start.y+17)):
   for x in range(maxi(0,start.x),mini(Deepworks.W,start.x+27)):
    var c=Vector2i(x,y);var id=Deepworks.key(c)
@@ -391,8 +388,12 @@ func draw():
       var points=PackedVector2Array([q+Vector2(-3,1),q+Vector2(0,-7 if k==6 else -3),q+Vector2(4,0),q+Vector2(2,5)])
       g.draw_colored_polygon(points,oc);g.draw_line(q+Vector2(0,-4),q+Vector2(0,3),oc.lightened(.3),1)
     if c==aim and g.panel_id=="":
-     # Target uses the actual collision footprint, not an unrelated round prop.
-     g.draw_rect(r.grow(-2),Color("efd395"),false,1.5)
+     # Highlight only the exposed cut face; the mountain remains one continuous mass.
+     for side in Deepworks.DIRS:
+      if world.at(c+side)!=0:continue
+      var edge_a=p+Vector2(40 if side==Vector2i.RIGHT else 0,40 if side==Vector2i.DOWN else 0)
+      var edge_b=edge_a+(Vector2(40,0) if side.y!=0 else Vector2(0,40))
+      g.draw_line(edge_a,edge_b,Color("efd395"),2)
  # Large angular fragments briefly keep the broken face's volume before settling.
  for rock in rubble:
   var progress=1.0-rock.life/.42
@@ -455,7 +456,7 @@ func draw():
    if g.handworks.working:
     var station=g.handworks.facility()
     if not station.is_empty() and not station.job.is_empty():
-     facing_dir=(g.handworks.pos(station)-p).normalized();action=fmod(float(station.job.progress),.42)/.42
+     facing_dir=g.handworks.work_direction(station);action=fmod(float(station.job.progress),.42)/.42
      animation="saw" if station.kind=="saw" else "hammer"
    elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
    elif g.handworks.pushing():animation="push"

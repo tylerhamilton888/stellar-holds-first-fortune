@@ -15,4 +15,4 @@ func render():
  canvas.draw_rect(Rect2(2,83,92,7),Color("526c69"))
  canvas.draw_rect(Rect2(2,90,92,6),Color("2b454e"))
  for i in 7:canvas.draw_rect(Rect2(3+i*14,84,12,1),Color("95a080"))
- HoldSpriteAtlas.paint(canvas,Vector2(48,83),clock,motion=="walk",1,profile,motion=="work")
+ HoldDrawnAnimation.paint(canvas,Vector2(48,83),profile,Vector2(1,.45),motion=="walk",clock,1.15,Vector2.ZERO,"pick" if motion=="work" else "",fposmod(clock,.64)/.64)

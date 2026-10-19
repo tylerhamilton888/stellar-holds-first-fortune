@@ -15,6 +15,10 @@ var bounds={}
 var citizens=[]
 var styles={}
 var profiles={}
+var people_frame=-1
+var people_area=""
+var people_cache=[]
+var collision_cache={}
 var speech=""
 var speech_until=0.0
 func _init(surface):surface_ref=weakref(surface);g=surface.g
@@ -34,6 +38,7 @@ func buildings()->Array:
    result.append({"p":p,"kind":"building","art":0,"width":310.0,"id":-1})
  return result
 func obstacles()->Array:
+ if collision_cache.has(s.area):return collision_cache[s.area].duplicate()
  var result=[]
  for b in buildings():result.append(Rect2(b.p-Vector2(b.width*.44,b.width*.5),Vector2(b.width*.88,b.width*.5-20)))
  # Central memorial fountain has a tangible basin, with broad streets around it.
@@ -44,7 +49,8 @@ func obstacles()->Array:
     if o.art==0:result.append(Rect2(o.p+Vector2(side*o.width*.32-o.width*.14,-o.width*.34),Vector2(o.width*.28,o.width*.42)))
     else:result.append(Rect2(o.p+Vector2(side*o.width*.4-10,-o.width*.6),Vector2(20,o.width*.6)))
   elif o.art==5:result.append(Rect2(o.p-Vector2(50,20),Vector2(100,20)))
- return result
+ collision_cache[s.area]=result
+ return result.duplicate()
 func points()->Array:
  var result=[]
  for i in HoldDistrictMap.DOORS:
@@ -73,12 +79,13 @@ func arrival(old:String,id:String)->Vector2:
  return Vector2.INF
 func people(at_time:float=-1)->Array:
  if not ward(s.area):return []
+ if at_time<0 and people_frame==Engine.get_process_frames() and people_area==s.area:return people_cache
  var time=g.state.elapsed if at_time<0 else at_time
  var route=[Vector2(270,550),Vector2(780,550),Vector2(1450,550),Vector2(1450,580),Vector2(780,580),Vector2(780,650),Vector2(270,650)]
  var names=[["Yrsa","Hakon","Inga","Viggo","Tova","Arvid"],["Runa","Torsten","Sigrid","Dori","Edda","Brynjar"],["Kara","Tormund","Hilda","Odd","Alva","Gunnar"]][s.level()]
  var roles=["Stonecarver","Lamplighter","Courier","Baker","Apprentice","Shift worker"]
  var result=[]
- var cycle=18.0
+ var cycle=3.0*route.size()
  for j in route.size():cycle+=route[j].distance_to(route[(j+1)%route.size()])/62.0
  for i in 6:
   var phase=fposmod(time+i*19+s.level()*11,cycle);var p=route[0];var aim=Vector2.DOWN;var walking=false
@@ -92,23 +99,26 @@ func people(at_time:float=-1)->Array:
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+5100+i+s.level()*101,1 if i%3==0 else 0)
   var profile=profiles[key]
   result.append({"p":p,"kind":"citizen","profile":profile,"aim":aim,"walking":walking,"name":names[i],"role":roles[i],"index":i,"time":time+i*.7})
+ if at_time<0:people_cache=result;people_frame=Engine.get_process_frames();people_area=s.area
  return result
 func speak(index:int):
  var lines=["A good hold is built one sound stone at a time. The royal stair is on the western terrace.","I keep these lamps lit. The eastern lift serves all three wards.","Ivar keeps the shift book southeast of the fountain. Orla trades on the north street.","The Copper Kettle is on the north street. Hedrik always has a warm hearth.","Borin works below in Forgeward. Take the eastern stairs beside the gate.","Through King's Gate: the Old Workings north, Pinewood south, your mountain claim east."]
  speech=people()[index].name+" · "+lines[index];speech_until=g.clock+8
  g.notify("A word from "+people()[index].name+". Keep walking whenever you like.")
 func draw_citizen(c:Dictionary):
+ if not Rect2(g.camera-Vector2(80,0),Vector2(1120,650)).has_point(c.p):return
  var cam=g.camera.round()
  g.draw_set_transform(c.p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,17,Color(0,0,0,.25))
- HoldDirectional.draw(g,c.p-cam,c.profile,c.aim,c.walking,c.time*62.0/185.0,.85,-cam)
+ HoldDirectional.draw(g,c.p-cam,c.profile,c.aim,c.walking,c.time*62.0/150.0,.85,-cam)
  g.draw_set_transform(-cam)
 func draw_ground():
  g.draw_rect(Rect2(0,0,1880,1080),Color("28393b"))
- tile(0,Rect2(80,180,1720,840),160,Color("aab5ae") if s.area=="forgeward" else Color("d3d4bd"))
- # The hold opens onto a deep mountain terrace, bounded by substantial masonry.
+ tile(0,Rect2(80,180,1720,840),100,Color("aab5ae") if s.area=="forgeward" else Color("d3d4bd"))
+ g.draw_texture_rect(VAULT,Rect2(45,-365,1790,597),false)
+ # The inhabited wards sit beneath the ancestral mountain vault.
  # Broad shadow and coping follow the collision envelope, without thin repeated strips.
  for x in range(90,1780,170):
-  detail(2,Vector2(x+85,206),176,70)
+  # Northern boundary is the vault footing, aligned with the walkable limit.
   detail(2,Vector2(x+85,1040),176,70)
  for side in [80,1780]:
   g.draw_rect(Rect2(side-12,207,30,790),Color("28383b"))
@@ -122,6 +132,10 @@ func draw_ground():
 func stone_style(color:Color)->StyleBoxFlat:
  if styles.has(color):return styles[color]
  var style=StyleBoxFlat.new();styles[color]=style;style.bg_color=color;style.border_color=color.darkened(.35);style.set_border_width_all(2);style.set_corner_radius_all(5);return style
+const VAULT=preload("res://assets/folk-v54/hold-vault.png")
+const FACADES=preload("res://assets/folk-v54/hold-facades.png")
+const FACADE_RECTS=[Rect2(19,10,383,572),Rect2(428,26,426,558),Rect2(845,43,401,544),Rect2(16,615,410,607),Rect2(427,607,416,608),Rect2(841,655,403,560)]
+const FACADE_DOORS=[Vector2(210,575),Vector2(627,578),Vector2(1046,580),Vector2(211,1212),Vector2(626,1202),Vector2(1046,1208)]
 const WORKPLACES=preload("res://assets/world-v50/workplaces.png")
 const BUILDINGS=preload("res://assets/world-v50/buildings.png")
 const LANDMARKS=preload("res://assets/world-v50/landmarks.png")
@@ -134,9 +148,13 @@ const LAND_ANCHORS=[Vector2(292,444),Vector2(815,463),Vector2(1285,465),Vector2(
 const FURN_RECTS=[Rect2(10,120,500,340),Rect2(530,40,550,420),Rect2(1110,115,415,350),Rect2(25,495,405,450),Rect2(450,590,530,355),Rect2(995,570,530,365)]
 func image_at(tex:Texture2D,source:Rect2,anchor:Vector2,p:Vector2,width:float,fade:bool=false):
  var scale=width/source.size.x;var rect=Rect2(p-(anchor-source.position)*scale,source.size*scale)
+ if not rect.intersects(Rect2(g.camera,Vector2(960,540))):return
  var alpha=.35 if fade and rect.has_point(g.player) and g.player.y<p.y-25 else 1.0
  g.draw_texture_rect_region(tex,rect,source,Color(1,1,1,alpha))
 func draw_building(b:Dictionary):
+ if ward(s.area):
+  var i={0:0,1:1,2:2,3:3,4:4,5:5,6:5,7:3}[b.art]
+  image_at(FACADES,FACADE_RECTS[i],FACADE_DOORS[i],b.p,b.width,true);return
  if b.art>=6:
   var r=Rect2(0,110,710,710) if b.art==6 else Rect2(735,140,795,675)
   var anchor=Vector2(365,800) if b.art==6 else Vector2(1130,800)
@@ -169,7 +187,7 @@ func room_obstacles()->Array:
  if g.room_id=="forge":
   result.append(Rect2(558,425,48,28))
  if g.room_id=="throne":
-  result.append(Rect2(565,295,110,85))
+  result.append(Rect2(586,350,68,32))
   for x in [350,710]:result.append(Rect2(x-5,435,42,18))
  return result
 func furn_footprint(o:Dictionary)->Rect2:
@@ -186,7 +204,7 @@ func draw_furnishing(o:Dictionary):
 func draw_room_floor():
  g.draw_rect(Rect2(Vector2.ZERO,s.ROOM_SIZE),Color("182a30"))
  var warm=g.room_id in ["home","tavern","commission"]
- tile(1 if warm else 0,Rect2(160,260,640,385),160,Color("ddd4bb") if warm else Color("cbd1c5"))
+ tile(1 if warm else 0,Rect2(160,260,640,385),110,Color("ddd4bb") if warm else Color("cbd1c5"))
  # Load-bearing walls and a single south doorway share the collision envelope.
  for x in range(150,810,55):
   s.house.material(3,Rect2(x,210,54,70))
@@ -238,7 +256,7 @@ func tile(index:int,rect:Rect2,unit:float=160,tint:Color=Color.WHITE):
   var x=rect.position.x
   while x<rect.end.x:
    var size=Vector2(minf(unit,rect.end.x-x),minf(unit,rect.end.y-y))
-   g.draw_texture_rect_region(TERRAIN,Rect2(Vector2(x,y),size),Rect2(origin,size/unit*512),tint)
+   if Rect2(Vector2(x,y),size).intersects(Rect2(g.camera,Vector2(960,540))):g.draw_texture_rect_region(TERRAIN,Rect2(Vector2(x,y),size),Rect2(origin,size/unit*512),tint)
    x+=unit
   y+=unit
 

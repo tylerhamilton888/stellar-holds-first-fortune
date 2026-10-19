@@ -1,18 +1,16 @@
 # Authoritative project index
-Updated 2026-10-19 UTC. Build **0.53.1**, checkpoint **packaging-0.53.1**. Art authority: ART_DIRECTION.md.
-
-Collection: The Stellar Holds - Development.
+Updated 2026-10-19 UTC. Build **0.54.0**, checkpoint **reference-0.54.0**. Art authority: October 19 acceptance board, documented in ART_DIRECTION.md. Collection: The Stellar Holds - Development.
 
 | Artifact | Purpose |
 |---|---|
-| Stellar-Holds-First-Fortune-0.53.1-Windows.zip | Standalone standard Windows export. Extract fully and run FirstFortune.exe. |
-| Stellar-Holds-0.53.1-Source-Update.zip | Changes since .53.0; apply after the .51 baseline and .52/.53.0 updates. |
-| Stellar-Holds-0.53.1-Incremental.bundle | Git checkpoint since playability-0.53.0; requires the preserved earlier chain. |
-| Stellar-Holds-0.53.1-Verification.txt | Exact package hash, malware-check results and limitations. |
-| Stellar-Holds-0.53.1-Recovery.txt | Restore commands, checksums and checkpoint identity. |
-| SESSION_HANDOFF.md | Current packaging/security status and existing gameplay implementation. |
-| PLAYTEST_GUIDE.md | Current launch instructions and gameplay acceptance route. |
+| Stellar-Holds-First-Fortune-0.54.0-Windows.zip | Standalone game. Extract fully and run FirstFortune.exe beside FirstFortune.pck. |
+| Stellar-Holds-0.54.0-Source-Update.zip | Changes after .53.1; apply after the preserved earlier source chain. |
+| Stellar-Holds-0.54.0-Incremental.bundle | Recoverable Git checkpoint after packaging-0.53.1. |
+| Stellar-Holds-0.54.0-Recovery.txt | Exact commit/tree, restoration commands and hashes. |
+| Stellar-Holds-0.54.0-Verification.txt | Package audit, native testing, scanner results and limits. |
+| Stellar-Holds-0.54.0-Folk.png | Actual game rendering of all fourteen identity variants. |
+| Stellar-Holds-0.54.0-Work.png | Actual drawn work/carry poses in the game renderer. |
+| SESSION_HANDOFF.md / CURRENT_STATUS.md | Current implementation, scope and next entry points. |
+| PLAYTEST_GUIDE.md | Focused player acceptance route. |
 
-This update changes packaging, not the .53.0 transport/tutorial/combat behavior. The .53.0 ZIP was flagged by Defender during download; it is retained as evidence/recovery, not recommended for execution. The exact detection trigger remains unknown. See CURRENT_STATUS.md and testing/packaging-0.53.1.md for measured checks and antivirus limitations.
-
-Preserved recovery chain: .51 full source/bundle (or split parts), .52 update, .53.0 update, then .53.1. No remote was changed or pushed.
+Preserved recovery chain: .51 full source/bundle (or split parts), .52, .53.0, .53.1, then .54.0 updates. The Windows ZIP is standalone. Earlier releases are not overwritten. No remote was changed or pushed.

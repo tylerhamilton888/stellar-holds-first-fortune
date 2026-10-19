@@ -7,14 +7,14 @@ const CLOTH_COLORS=["407e83","506a9d","925c91","a84e47","538064","b28a48","6b788
 const CLOTH_NAMES=["Fjord teal","Woad blue","Heather","Rowan red","Pine green","Ochre","Slate","Night violet"]
 const SKIN_COLORS=["f3d6bc","eed0b7","e6c1ad","f4dcd0"]
 const SKIN_NAMES=["Ivory","Warm fair","Rose fair","Porcelain"]
-const SCULPTS=["Swept greatbeard","Long twin braids","King’s mantle","High-knot forkbeard","Royal triple plait"]
-const FEMALE_SCULPTS=["Crown braids","High knot","Long waves","Side braid","Braided bob"]
+const SCULPTS=["Short square beard","Twin oath braids","Mountain greatbeard","Topknot & braids","Banded forkbeard","Grand moustache","Bare crown & beard"]
+const FEMALE_SCULPTS=["Crown braid","Practical bun","Loose waves","Side braid","Layered bob","Twin braids","High ponytail"]
 const MALE_HAIR=["Swept crest","Braided sides","Wild mane","High knot","Cropped","Bare crown"]
 const FEMALE_HAIR=["Twin braids","Crown braid","Wave & braid","High knot","Side braid","Loose waves"]
 const BEARDS=["Greatbeard","Twin braids","Forked beard","Rounded beard","Braided goatee","Clean shaven","Oath braid","Long twin braids","King’s mantle","Royal triple plait"]
 const OUTFITS=["Prospector","Hearthkeeper","Runesmith"]
 const TATTOOS=["None","Oath rune","Woad band","Knotwork"]
-const JEWELRY=["Bronze clasps","Silver rings","Amber pendant","Plain"]
+const JEWELRY=["Bronze clasp","Silver clasp","Amber pendant","Plain"]
 const NPC_NAMES={"hedrik":"Hedrik Copperkettle","orla":"Orla Brassbraid","borin":"Borin Cinderthumb","eldric":"Eldric Farspan","brann":"Brann Rivethand","eirik":"Lord Eirik Granitecrown","ivar":"Ivar Deepmeasure"}
 const NPC_ROLES={"hedrik":"Keeper of the hearth","orla":"Merchant & freight broker","borin":"Master of the forge","eldric":"Surveyor of impossible things","brann":"Cable-certified miner","eirik":"Lord of Keldrath","ivar":"Foreman of the lower works"}
 static func clean_family(value:String)->String:
@@ -28,9 +28,9 @@ static func normalized(raw:Dictionary)->Dictionary:
  for k in limits:p[k]=clampi(int(raw.get(k,p[k])),0,limits[k]-1)
  # Complete sprite designs own their hair/beard geometry. Old saves map to
  # the closest design, preserving names, palettes, equipment and world state.
- p.sculpt=clampi(int(raw.get("sculpt",1 if int(raw.get("beard_style",0)) in [1,6,7,8,9] else 0)),0,4)
- if p.gender==1:p.hair_style=[1,3,5,4,2][p.sculpt];p.beard_style=5
- else:p.hair_style=[0,1,2,3,5][p.sculpt];p.beard_style=[0,7,8,2,9][p.sculpt]
+ p.sculpt=clampi(int(raw.get("sculpt",1 if int(raw.get("beard_style",0)) in [1,6,7,8,9] else 0)),0,6)
+ if p.gender==1:p.hair_style=[1,3,5,4,2,0,3][p.sculpt];p.beard_style=5
+ else:p.hair_style=[0,1,2,3,1,0,5][p.sculpt];p.beard_style=[0,7,8,2,9,5,3][p.sculpt]
  # Canonical fields win; full name is derived for display.
  var legacy=str(raw.get("name","Haldor Stonehand")).strip_edges()
  var honorific=str(raw.get("title","")).strip_edges().left(16)
@@ -56,7 +56,7 @@ static func random_profile(seed_number:int,gender:int=-1)->Dictionary:
  p.gender=gender if gender>=0 else (1 if rng.randi_range(0,19)<3 else 0)
  for k in ["hair_color","cloth_color"]:p[k]=rng.randi_range(0,7)
  p.beard_color=p.hair_color
- p.sculpt=rng.randi_range(0,4)
+ p.sculpt=rng.randi_range(0,6)
  p.skin=rng.randi_range(0,3);p.hair_style=rng.randi_range(0,5)
  p.beard_style=[0,1,2,3,4,6,7,8,9][rng.randi_range(0,8)] if p.gender==0 else 5
  p.outfit=0;p.tattoo=rng.randi_range(0,3);p.jewelry=rng.randi_range(0,3)

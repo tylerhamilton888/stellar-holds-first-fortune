@@ -40,7 +40,7 @@ func arrive(f:Dictionary):
  f.area=context();f.x=g.player.x;f.y=g.player.y;f.hitched=true
 func travel_speed()->float:
  var f=attached()
- return 155.0 if f.get("kind","")=="wagon" else 175.0 if not f.is_empty() else 185.0
+ return 120.0 if f.get("kind","")=="wagon" else 135.0 if not f.is_empty() else 150.0
 func passage(id:String)->Dictionary:
  var f=attached()
  if f.is_empty():return f
@@ -52,6 +52,7 @@ func busy_hands()->bool:
  var cart=nearby_cart()
  return not cart.is_empty() and cart.hitched
 func work_pose()->Vector2:return g.player
+func work_direction(f:Dictionary)->Vector2:return Vector2(1 if float(f.x)>=g.player.x else -1,.45)
 func held_label()->String:
  if not setting_down.is_empty():return "Setting down · "+str(setting_down.kind)
  if working:
@@ -224,9 +225,9 @@ func update(dt:float):
  if f.is_empty() or f.kind not in ["breaker","saw"] or not Input.is_action_pressed("interact") or Input.get_vector("left","right","up","down")!=Vector2.ZERO:return
  if not begin(f):return
  var side=-1 if g.player.x<=f.x else 1
- var stance=pos(f)+Vector2(side*(48 if f.kind=="breaker" else 42),-45 if f.kind=="breaker" else -22)
+ var stance=pos(f)+Vector2(side*(32 if f.kind=="breaker" else 34),-45 if f.kind=="breaker" else -22)
  if g.player.distance_to(stance)>3 and clear_line(g.player,stance):
-  var before_pos=g.player;g.player=g.player.move_toward(stance,185*dt);g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(stance-before_pos).normalized();approaching=true;return
+  var before_pos=g.player;g.player=g.player.move_toward(stance,150*dt);g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(stance-before_pos).normalized();approaching=true;return
  working=true;active_id=f.id
  var before=float(f.job.progress)
  f.job.progress=before+dt

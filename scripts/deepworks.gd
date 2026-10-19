@@ -88,7 +88,7 @@ func target(origin:Vector2,aim:Vector2,reach:float=88)->Vector2i:
   var c=cell(origin+delta.normalized()*i)
   if at(c)!=0:return c if at(c)!=8 else Vector2i(-1,-1)
  return Vector2i(-1,-1)
-func resistance(kind:int)->float:return {1:1.0,2:1.0,3:2.0,4:1.5,5:1.0,6:3.0,7:4.0}.get(kind,1.0)
+func resistance(kind:int)->float:return {1:1.0,2:2.0,3:3.0,4:2.5,5:1.5,6:4.0,7:6.0}.get(kind,1.0)
 # Grade is derived from seed and position: old excavations are never regenerated.
 func grade(c:Vector2i,z:int=-1)->int:
  var level=depth() if z<0 else z
