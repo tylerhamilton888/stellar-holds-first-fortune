@@ -1,3 +1,11 @@
+# 0.56.0 — Folk and furnishing repair
+- Anatomical head/shoulder registration, face shading, stable idle/walk tool grip and complete mug/hand foregrounds. Creator portraits fit actual hair bounds.
+- New drawn contact/passing boot keys across walking, carrying and pushing; matched boot scale/material, preserved fingertips and prewarmed texture cache.
+- Shared transparent furniture catalogue for rooms, claim/home construction, previews, collisions, full building occupancy and exact refunds. Smaller separate mugs/kettles; accessible tavern counter and door routes.
+- Pinewood uses a grounded remaining-trunk scale, shared raw-log art, staged depletion and actual fir-bark stump.
+- Focused names/footer prompts reduce labels covering the Dwarf. Unique exact old-save backups; no mine/quest/inventory reset.
+- Native gameplay/visual tests and verified incremental recovery; see testing/art-0.56.0.md for evidence and limits.
+
 # 0.55.1 — Stable, solid cave landmarks
 - Fixed JSON numeric-type mismatch turning crystals into oath pillars after load.
 - Shared visual anchors/collision bases; actor depth sorting; movement, crew, reach and placement respect landmarks.

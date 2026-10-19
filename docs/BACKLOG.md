@@ -1,3 +1,9 @@
+## After 0.56.0
+- Repaired reported detached heads, weak side-step footwork, clipping mugs/hands, jumping tool hand and major oversized room furniture. Shared furniture sprites now support player construction and actual bases.
+- User acceptance of the repaired native motion/reference likeness is still needed. Some rear-quarter/pushing directions share drawings; further direction-specific work/combat art remains.
+- Remaining old mine furniture primitives, exterior ornaments and broader Keldrath architecture/interior atmosphere have not all been converted. Do not call every world asset modernized.
+- Windows/audio and performance on the user's machine remain unverified. Existing NPC raw-workstation/industrial hauling and larger-world backlog remains; no new industry systems in this repair.
+
 ## After 0.55.1
 - Resolved cave landmark reload identity, missing base collision and actor depth sorting.
 - For unusually dense legacy sites where no nearby landmark relocation fits, inspect the preserved pre-551 save rather than regenerating terrain.

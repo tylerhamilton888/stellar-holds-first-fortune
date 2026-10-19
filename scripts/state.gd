@@ -160,6 +160,11 @@ func load_world(geo:Geology)->Dictionary:
  if not f:return {}
  var d=JSON.parse_string(f.get_as_text())
  if not d is Dictionary or d.get("version",0)!=1 or d.get("cells",[]).size() not in [Geology.W*Geology.H,96*44]:return {}
+ # Preserve a pre-art save before new furniture footprints/placement definitions.
+ if int(d.get("surface",{}).get("folk_revision",0))<56:
+  var backup=save_path()+".pre-art-560-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  # Keep the previous bytes before normalizing landmark types/legacy overlaps.
  if int(d.get("landmark_revision",0))<551:
   var backup=save_path()+".pre-landmarks-551-"+str(Time.get_ticks_usec())+".bak"

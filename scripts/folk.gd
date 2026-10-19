@@ -5,6 +5,7 @@ extends RefCounted
 const HEIGHT=62.0
 const BODY=43.0
 const CYCLE=.52
+const HEAD_SCALE=[.17,.145]
 const MAP=[[0,3,2,6,1,4,5],[1,3,0,5,4,2,6]]
 static var metadata:Dictionary={}
 static var sources:Dictionary={}
@@ -23,7 +24,8 @@ static func source(sheet:String)->Image:
 static func rect_of(m:Dictionary)->Rect2i:
  var r=m.rect;return Rect2i(r[0],r[1],r[2],r[3])
 static func vec(a:Array)->Vector2:return Vector2(a[0],a[1])
-static func frame(time:float)->int:return posmod(int(time/CYCLE*6),6)
+static func stride_frame(time:float)->int:return posmod(int(time/CYCLE*4),4)
+static func frame(time:float)->int:return [0,2,4,5][stride_frame(time)]
 static func contact_frame(phase:float)->int:
  if phase<.18:return 0
  if phase<.52:return 1
@@ -60,7 +62,7 @@ static func texture(p:Dictionary,sheet:String,index:int,head:bool=false,foregrou
  if cache.has(key):return cache[key]
  var m=info(sheet,index);var r=rect_of(m);var img=source(sheet).get_region(r)
  for trim in m.get("trim",[]):img.fill_rect(Rect2i(trim[0],trim[1],trim[2],trim[3]),Color.TRANSPARENT)
- var scale=float(m.get("scale",BODY/float(m.get("body_height",m.root[1]-m.neck[1])))) if not head else .115
+ var scale=float(m.get("scale",BODY/float(m.get("body_height",m.root[1]-m.neck[1])))) if not head else HEAD_SCALE[int(p.gender)]
  var ratio=1.0 if full else minf(1.0,scale*(2.5 if head else 2.0))
  img.resize(maxi(1,int(img.get_width()*ratio)),maxi(1,int(img.get_height()*ratio)),Image.INTERPOLATE_LANCZOS)
  var hair=HoldAppearance.hair(p);var cloth=HoldAppearance.cloth(p);var skin=HoldAppearance.skin(p)
@@ -71,13 +73,26 @@ static func texture(p:Dictionary,sheet:String,index:int,head:bool=false,foregrou
    var q=Vector2(x,y)/ratio+Vector2(r.position)
    if foreground:
     var neck=vec(m.neck)
-    # Closed fingers and tool edges occlude the face at raised/sip contacts.
-    if q.y>neck.y-3 or absf(q.x-neck.x)<7:img.set_pixel(x,y,Color.TRANSPARENT);continue
+    # Authored sip silhouettes retain the complete mug and gripping hand.
+    # A horizontal collar clip used to cut the vessel/beard in half.
+    var keep=q.y<neck.y-3 and absf(q.x-neck.x)>=7
+    if sheet.ends_with("-utility") and index==2:
+     var points=PackedVector2Array([Vector2(744,0),Vector2(838,0),Vector2(880,48),Vector2(880,98),Vector2(813,110),Vector2(784,78),Vector2(737,110),Vector2(701,99),Vector2(701,72)]) if p.gender==0 else PackedVector2Array([Vector2(691,0),Vector2(771,0),Vector2(790,61),Vector2(772,94),Vector2(709,86),Vector2(691,55)])
+     keep=Geometry2D.is_point_in_polygon(q,points)
+    elif sheet.ends_with("-utility") and index==1:
+     keep=Rect2(465,57,90,70).has_point(q) if p.gender==0 else Rect2(448,49,64,63).has_point(q)
+    if not keep:img.set_pixel(x,y,Color.TRANSPARENT);continue
    if int(p.jewelry)>0 and c.h>.105 and c.h<.165 and c.s>.45 and c.v>.4:
     c=HoldCharacterArt.recolor(c,Color(["d8a651","c3cfd2","d59742","746f60"][p.jewelry]),Color("d8a651"))
    if head:
     # Warm high-saturation copper is hair; skin highlights and dark ink stay intact.
-    if c.h>.025 and c.h<.115 and c.s>.51 and c.v>.18:
+    var face=false
+    if m.has("brow"):
+     var center=vec(m.brow)+Vector2(0,35 if p.gender else 15)
+     face=((q-center)/Vector2(r.size.x*(.28 if index<7 else .23),55 if p.gender else 38)).length()<1.0
+    if face and c.h>.015 and c.h<.115 and c.v>.40:
+     c=HoldCharacterArt.recolor(c,skin,Color("f3d6bc"))
+    elif c.h>.025 and c.h<.115 and c.s>.51 and c.v>.18:
      c=HoldCharacterArt.recolor(c,hair,Color("ae592f"))
     elif c.h>.02 and c.h<.105 and c.s<.52 and c.v>.48:c=HoldCharacterArt.recolor(c,skin,Color("f3d6bc"))
    elif c.h>.48 and c.h<.66 and c.s>.20:c=HoldCharacterArt.recolor(c,cloth,Color("356477"))
@@ -88,12 +103,18 @@ static func texture(p:Dictionary,sheet:String,index:int,head:bool=false,foregrou
  while order.size()>2048:cache.erase(order.pop_front())
  return tex
 static func body_rect(a:Dictionary)->Rect2:return Rect2((Vector2(a.rect.position)-a.root)*a.scale,Vector2(a.rect.size)*a.scale)
+static func head_anchor(p:Dictionary,m:Dictionary)->Vector2:
+ # Anatomical collar registration, not the bottom of a beard or braid.
+ # Hair deliberately overlaps the shoulders/chest in every direction.
+ var r=rect_of(m);var anchor=vec(m.neck)
+ anchor.y=float(m.brow[1])+(85 if p.gender else 70) if m.has("brow") else r.position.y+r.size.x*(.66 if p.gender else .72)
+ return anchor
 static func head_rect(p:Dictionary,a:Dictionary)->Dictionary:
  var sheet=("female" if p.gender else "male")+"-heads";var i=int(a.view)*7+MAP[p.gender][p.sculpt]
  var m=info(sheet,i);var r=rect_of(m)
  var at=(a.neck-a.root)*a.scale
- if p.gender==1 and a.action=="drink" and a.index==2:at+=Vector2(-4,3)
- return {"sheet":sheet,"index":i,"rect":Rect2(at+(Vector2(r.position)-vec(m.neck))*.115,Vector2(r.size)*.115)}
+ if p.gender==1 and a.action=="drink" and a.index==2:at.x-=4
+ return {"sheet":sheet,"index":i,"rect":Rect2(at+(Vector2(r.position)-head_anchor(p,m))*HEAD_SCALE[int(p.gender)],Vector2(r.size)*HEAD_SCALE[int(p.gender)])}
 static func raw_texture(log:bool)->Texture2D:
  var key="log" if log else "stone"
  if not raw_cache.has(key):
@@ -129,20 +150,63 @@ static func raw_draw(n:Node2D,raw:Dictionary,rect:Rect2):
   var p=rect.position+points[j]*rect.size;var r=rect.size.x*.075
   n.draw_colored_polygon(PackedVector2Array([p+Vector2(-r,0),p+Vector2(-r*.2,-r*.7),p+Vector2(r,r*.1),p+Vector2(r*.2,r*.7)]),tint.darkened(.12))
   n.draw_line(p+Vector2(-r*.4,-r*.35),p+Vector2(r*.55,0),tint.lightened(.32),maxf(.6,rect.size.x*.025),true)
+static var stride_cache={}
+static var stride_sources={}
+static func stride(view:int,time:float)->Dictionary:
+ var f=stride_frame(time);var side=view==1
+ var index=f if side else ([0,2,3,5][f]+(12 if view>=2 else 0))
+ var key=("side" if side else "front")+str(index)
+ if stride_cache.has(key):return stride_cache[key]
+ var atlas=preload("res://assets/folk-v56/stride-side.png") if side else preload("res://assets/folk-v56/stride-front-rear.png")
+ var sheet="side" if side else "front"
+ if not stride_sources.has(sheet):
+  var source_image=atlas.get_image()
+  if source_image.is_compressed():source_image.decompress()
+  stride_sources[sheet]=source_image
+ var image:Image=stride_sources[sheet]
+ var crop:Rect2i;var hip:Vector2;var scale:float
+ if side:
+  crop=[Rect2i(110,25,642,459),Rect2i(980,20,370,466),Rect2i(115,523,680,450),Rect2i(975,515,422,466)][index]
+  hip=[Vector2(437,478),Vector2(1099,480),Vector2(458,969),Vector2(1104,976)][index]
+  scale=29.0/440.0
+ else:
+  var region=Rect2i((index%6)*256,(index/6)*341,256,341)
+  crop=region
+  # Belt centers stay registered while each planted/lifted boot moves around them.
+  var centers=[161,412,656,902,1157,1410]
+  hip=Vector2(centers[index%6],326 if index<6 else 984)
+  scale=29.0/300.0
+ var size_scale=Vector2(1.12 if side else 1.40,1.0)*scale
+ var pixels=image.get_region(crop)
+ pixels.resize(maxi(1,int(crop.size.x*size_scale.x*3)),maxi(1,int(crop.size.y*size_scale.y*3)),Image.INTERPOLATE_LANCZOS)
+ for y in pixels.get_height():
+  for x in pixels.get_width():
+   var color=pixels.get_pixel(x,y)
+   if color.a>.05 and color.h>.035 and color.h<.11 and color.s>.3 and color.v>.2:
+    color.r*=.76;color.g*=.76;color.b*=.76;pixels.set_pixel(x,y,color)
+ var tex=ImageTexture.create_from_image(pixels)
+ var result={"texture":tex,"rect":Rect2((Vector2(crop.position)-hip)*size_scale,Vector2(crop.size)*size_scale),"frame":f}
+ stride_cache[key]=result;return result
+static func walking_hands(n:Node2D,p:Dictionary,a:Dictionary,full:bool):
+ var m=info(a.sheet,a.index);var palm=vec(m.palm);var tex=texture(p,a.sheet,a.index,false,false,full)
+ var ratio=Vector2(tex.get_size())/Vector2(a.rect.size)
+ for hand in [palm,Vector2(a.neck.x*2-palm.x,palm.y)]:
+  var region=Rect2(hand-Vector2(21,26),Vector2(42,52)).intersection(Rect2(a.rect))
+  n.draw_texture_rect_region(tex,Rect2((region.position-a.root)*a.scale,region.size*a.scale),Rect2((region.position-Vector2(a.rect.position))*ratio,region.size*ratio))
 static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
  var a=descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
  var bob=0.0
- if walking and (action.begins_with("carry_") or action.begins_with("double_")):bob=-absf(sin(time/CYCLE*TAU))*.6
  n.draw_set_transform(at+Vector2(0,bob)*zoom,0,Vector2(flip,1)*zoom)
  cargo(n,a,action)
  var dest=body_rect(a)
- # Carry torso uses the same six drawn leg keys, registered at the belt.
- if walking and (action.begins_with("carry_") or action.begins_with("double_")):
-  var legs=descriptor(p,d,true,time,"",0);var lr=body_rect(legs);var lt=texture(p,legs.sheet,legs.index,false,false,zoom>2.0)
-  var cut=clampf((-16-lr.position.y)/lr.size.y,0,1)
-  n.draw_texture_rect_region(lt,Rect2(lr.position+Vector2(0,lr.size.y*cut),Vector2(lr.size.x,lr.size.y*(1-cut))),Rect2(0,lt.get_height()*cut,lt.get_width(),lt.get_height()*(1-cut)))
-  var tex=texture(p,a.sheet,a.index,false,false,zoom>2.0);var limit=clampf((-16-dest.position.y)/dest.size.y,0,1)
+ # Complete contact/passing drawings share a belt registration. No rotating legs.
+ # The shirt overlaps the waist so there is never an exposed horizontal seam.
+ if walking and (action=="" or action=="push" or action.begins_with("carry_") or action.begins_with("double_")):
+  var legs=stride(int(a.view),time)
+  n.draw_texture_rect(legs.texture,legs.rect,false)
+  var tex=texture(p,a.sheet,a.index,false,false,zoom>2.0);var limit=clampf(((-18 if action=="" else -14)-dest.position.y)/dest.size.y,0,1)
   n.draw_texture_rect_region(tex,Rect2(dest.position,Vector2(dest.size.x,dest.size.y*limit)),Rect2(0,0,tex.get_width(),tex.get_height()*limit))
+  if action=="":walking_hands(n,p,a,zoom>2.0)
  else:n.draw_texture_rect(texture(p,a.sheet,a.index,false,false,zoom>2.0),dest,false)
  if p.jewelry in [0,1,2] and a.view in [0,1]:
   var center=(a.neck-a.root)*a.scale+Vector2(1,9)
@@ -155,7 +219,7 @@ static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:f
  if p.tattoo>0:
   var meta=info(h.sheet,h.index)
   if meta.has("brow"):
-   var center=(a.neck-a.root)*a.scale+(vec(meta.brow)+Vector2(0,7)-vec(meta.neck))*.115
+   var center=h.rect.position+(vec(meta.brow)+Vector2(0,7)-Vector2(rect_of(meta).position))*HEAD_SCALE[int(p.gender)]
    var line=PackedVector2Array()
    if p.tattoo==1:line=PackedVector2Array([Vector2(0,1),Vector2(0,-1.2),Vector2(1,.1),Vector2(0,.1)])
    elif p.tattoo==2:line=PackedVector2Array([Vector2(-1.5,0),Vector2(1.5,0)])
@@ -188,6 +252,12 @@ static func key_for(p:Dictionary,sheet:String,index:int,head:bool,foreground:boo
  return sheet+":"+str(index)+":"+str(p.skin)+":"+(HoldAppearance.hair(p).to_html() if head else str(p.cloth_color))+":"+str(foreground)+":"+str(p.jewelry)
 static func prepare(g:Node):
  warm_jobs.clear()
+ # Prepare drawn footwork during the existing scene transition, not the first step.
+ for view in [0,1,3]:
+  for f in 4:
+   var index=f if view==1 else [0,2,3,5][f]+(12 if view==3 else 0)
+   var key=("side" if view==1 else "front")+str(index)
+   if not stride_cache.has(key):warm_jobs.append(["stride",view,(f+.05)*CYCLE/4])
  var people=[{"profile":g.state.appearance,"player":true}]
  if g.surface.active() and HoldWorldZones.ward(g.surface.area):
   for c in g.surface.world.people():people.append({"profile":c.profile,"player":false})
@@ -224,7 +294,9 @@ static func prepare(g:Node):
 static func warm_step():
  var started=Time.get_ticks_usec()
  while not warm_jobs.is_empty():
-  var job=warm_jobs.pop_back();texture(job[0],job[1],job[2],job[3],job[4])
+  var job=warm_jobs.pop_back()
+  if job[0] is String:stride(job[1],job[2])
+  else:texture(job[0],job[1],job[2],job[3],job[4])
   if Time.get_ticks_usec()-started>=5000:break
 static func warm_draw(n:Node2D):
  n.draw_set_transform(Vector2.ZERO)

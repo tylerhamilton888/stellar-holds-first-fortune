@@ -1,0 +1,82 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS All facings attach hair/beard to shoulders: gender 0 design 0
+PASS Idle/walk retain the same supporting hand: gender 0 design 0
+PASS All facings attach hair/beard to shoulders: gender 0 design 1
+PASS Idle/walk retain the same supporting hand: gender 0 design 1
+PASS All facings attach hair/beard to shoulders: gender 0 design 2
+PASS Idle/walk retain the same supporting hand: gender 0 design 2
+PASS All facings attach hair/beard to shoulders: gender 0 design 3
+PASS Idle/walk retain the same supporting hand: gender 0 design 3
+PASS All facings attach hair/beard to shoulders: gender 0 design 4
+PASS Idle/walk retain the same supporting hand: gender 0 design 4
+PASS All facings attach hair/beard to shoulders: gender 0 design 5
+PASS Idle/walk retain the same supporting hand: gender 0 design 5
+PASS All facings attach hair/beard to shoulders: gender 0 design 6
+PASS Idle/walk retain the same supporting hand: gender 0 design 6
+PASS All facings attach hair/beard to shoulders: gender 1 design 0
+PASS Idle/walk retain the same supporting hand: gender 1 design 0
+PASS All facings attach hair/beard to shoulders: gender 1 design 1
+PASS Idle/walk retain the same supporting hand: gender 1 design 1
+PASS All facings attach hair/beard to shoulders: gender 1 design 2
+PASS Idle/walk retain the same supporting hand: gender 1 design 2
+PASS All facings attach hair/beard to shoulders: gender 1 design 3
+PASS Idle/walk retain the same supporting hand: gender 1 design 3
+PASS All facings attach hair/beard to shoulders: gender 1 design 4
+PASS Idle/walk retain the same supporting hand: gender 1 design 4
+PASS All facings attach hair/beard to shoulders: gender 1 design 5
+PASS Idle/walk retain the same supporting hand: gender 1 design 5
+PASS All facings attach hair/beard to shoulders: gender 1 design 6
+PASS Idle/walk retain the same supporting hand: gender 1 design 6
+PASS Side contact spreads both feet; each passing pose lifts one clear of the floor
+PASS Four distinct drawn side-step silhouettes are active
+PASS Walkable approach to every door, resident and service: home
+PASS Furniture sprite bases block feet: home
+PASS Actual south doorway exits: home
+PASS Walkable approach to every door, resident and service: tavern
+PASS Furniture sprite bases block feet: tavern
+PASS Actual south doorway exits: tavern
+PASS Walkable approach to every door, resident and service: forge
+PASS Furniture sprite bases block feet: forge
+PASS Actual south doorway exits: forge
+PASS Walkable approach to every door, resident and service: market
+PASS Furniture sprite bases block feet: market
+PASS Actual south doorway exits: market
+PASS Walkable approach to every door, resident and service: commission
+PASS Furniture sprite bases block feet: commission
+PASS Actual south doorway exits: commission
+PASS Walkable approach to every door, resident and service: research
+PASS Furniture sprite bases block feet: research
+PASS Actual south doorway exits: research
+PASS Walkable approach to every door, resident and service: throne
+PASS Furniture sprite bases block feet: throne
+PASS Actual south doorway exits: throne
+PASS Walkable approach to every door, resident and service: practice
+PASS Furniture sprite bases block feet: practice
+PASS Actual south doorway exits: practice
+PASS Walkable approach to every door, resident and service: training
+PASS Furniture sprite bases block feet: training
+PASS Actual south doorway exits: training
+PASS Solid bar permits a natural conversation across the counter
+PASS Town thresholds remain connected: hearthward
+PASS Town thresholds remain connected: crownward
+PASS Town thresholds remain connected: forgeward
+PASS Player crafts and places the same sprite catalogue: chest
+PASS Player crafts and places the same sprite catalogue: table
+PASS Player crafts and places the same sprite catalogue: chair
+PASS Player crafts and places the same sprite catalogue: lamp
+PASS Player crafts and places the same sprite catalogue: bed
+PASS Player crafts and places the same sprite catalogue: desk
+PASS Player crafts and places the same sprite catalogue: bookcase
+PASS Player crafts and places the same sprite catalogue: counter
+PASS Player crafts and places the same sprite catalogue: hearth
+PASS Overlapping full furnishing footprint is rejected without spending
+PASS Building system reserves the far end of a bed, not only its anchor
+PASS Old fortune receives an exact non-overwritten pre-art recovery copy
+PASS Furniture, resource payments and prior progress survive reload
+PASS Dismantling refunds the exact catalogue recipe
+PASS Full-size counter cannot obstruct the home doorway
+PACK56: 76 passed / 0 failed

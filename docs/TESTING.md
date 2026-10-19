@@ -1,3 +1,6 @@
+# Current release: 0.56.0
+Read [art repair verification](testing/art-0.56.0.md). `tests/integration56.gd` covers head/grip registration, foot silhouettes, reachable services, furniture placement/occupancy/refunds and exact save backup. `tests/art56.gd` captures native pose sheets/interiors; `tests/motion56.gd` records actual moving gameplay. External `tests/pack56.gd` exercises the exported pack independently. Run sequentially with isolated saves and require completion markers. Review output images/video; geometry assertions cannot establish artistic quality.
+
 # Current release: 0.55.1
 See [cave landmark verification](testing/landmarks-0.55.1.md). Run `tests/landmarks551.gd` natively; `tests/pack551.gd` is a self-contained external harness for the exported PCK. Require the completion marker, not just exit code zero. Isolate saves; run native displays sequentially. Compare reload pixels and inspect front/behind overlap.
 

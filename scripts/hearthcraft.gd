@@ -42,7 +42,7 @@ func occupied_at(c:Vector2i,z:int)->bool:
    if f.area=="surface:claim:"+str(z) and center(c).distance_to(g.handworks.pos(f))<55:return true
  for list in [g.state.surface.chests.values(),g.state.surface.decor]:
   for o in list:
-   if o.area=="claim" and int(o.get("z",0))==z and Vector2(o.x,o.y).distance_to(center(c))<38:return true
+   if o.area=="claim" and int(o.get("z",0))==z and HoldFurnishings.footprint(o.get("kind","chest"),Vector2(o.x,o.y)).intersects(Rect2(Vector2(c)*CELL,Vector2.ONE*CELL).grow(5)):return true
  return s.area=="claim" and level()==z and center(c).distance_to(g.player)<30
 func use_stairs(up:bool)->bool:
  var z=level();var lower=z if up else z-1
@@ -84,9 +84,9 @@ func occupied(c:Vector2i)->bool:
    if g.handworks.local(f) and center(c).distance_to(g.handworks.pos(f))<55:return true
  var rect=Rect2(Vector2(c)*CELL,Vector2.ONE*CELL).grow(8)
  for o in g.state.surface.chests.values():
-  if local(o) and rect.has_point(Vector2(o.x,o.y)):return true
+  if local(o) and rect.intersects(HoldFurnishings.footprint("chest",Vector2(o.x,o.y))):return true
  for o in g.state.surface.decor:
-  if local(o) and rect.has_point(Vector2(o.x,o.y)):return true
+  if local(o) and rect.intersects(HoldFurnishings.footprint(o.kind,Vector2(o.x,o.y))):return true
  return false
 func routes_open(map:Dictionary)->bool:
  # Doors count as operable passages; walls may never seal a player or landmark away.

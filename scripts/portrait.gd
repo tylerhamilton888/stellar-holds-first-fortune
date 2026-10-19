@@ -27,4 +27,6 @@ func apply_profile(p:Dictionary):
  if is_instance_valid(canvas):
   canvas.queue_redraw();viewport.render_target_update_mode=SubViewport.UPDATE_ONCE
 func draw_bust():
- HoldFolk.paint(canvas,Vector2(48,180),profile,Vector2.DOWN,false,0,2.65,Vector2.ZERO)
+ var pose=HoldFolk.descriptor(profile,Vector2.DOWN,false,0,"",0)
+ var head=HoldFolk.head_rect(profile,pose)
+ HoldFolk.paint(canvas,Vector2(48,12-head.rect.position.y*2.4),profile,Vector2.DOWN,false,0,2.4,Vector2.ZERO)

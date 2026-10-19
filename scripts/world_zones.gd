@@ -49,6 +49,7 @@ func obstacles()->Array:
     if o.art==0:result.append(Rect2(o.p+Vector2(side*o.width*.32-o.width*.14,-o.width*.34),Vector2(o.width*.28,o.width*.42)))
     else:result.append(Rect2(o.p+Vector2(side*o.width*.4-10,-o.width*.6),Vector2(20,o.width*.6)))
   elif o.art==5:result.append(Rect2(o.p-Vector2(50,20),Vector2(100,20)))
+ for o in street_furnishings():result.append(furn_footprint(o))
  collision_cache[s.area]=result
  return result.duplicate()
 func points()->Array:
@@ -128,7 +129,10 @@ func draw_ground():
  for y in [520,740,980]:
   g.draw_line(Vector2(115,y),Vector2(1770,y),Color("6d786a"),3)
  g.draw_arc(Vector2(970,635),125,0,TAU,64,Color("a39170"),4)
- for p in [Vector2(180,450),Vector2(1700,450),Vector2(680,800),Vector2(1130,820)]:s.furniture(p,"lamp")
+func street_furnishings()->Array:
+ var result=[]
+ for p in [Vector2(180,450),Vector2(1700,450),Vector2(600,800),Vector2(1210,820)]:result.append(furn("lamp",p.x,p.y))
+ return result
 func stone_style(color:Color)->StyleBoxFlat:
  if styles.has(color):return styles[color]
  var style=StyleBoxFlat.new();styles[color]=style;style.bg_color=color;style.border_color=color.darkened(.35);style.set_border_width_all(2);style.set_corner_radius_all(5);return style
@@ -171,36 +175,33 @@ func draw_landmark(o:Dictionary):image_at(LANDMARKS,LAND_RECTS[o.art],LAND_ANCHO
 func room_objects()->Array:
  var result=[];var id=g.room_id
  if id=="tavern":
-  result.append(furn(0,400,350,190))
-  for x in [270,440,610]:result.append(furn(4,x,495,94))
- elif id in ["forge","practice"]:result=[furn(1,330,390,245),furn(2,685,350,130)]
- elif id=="market":result=[furn(5,400,385,280),furn(3,710,340,100)]
- elif id in ["commission","research"]:result=[furn(2,620,365,175),furn(3,270,365,130),furn(3,420,365,130)]
- elif id=="training":result=[furn(2,660,570,100)]
- elif id=="home":result=[furn(4,650,330,140)]
+  result=[furn("hearth",330,345),furn("counter",620,450),furn("bookcase",480,330)]
+  for x in [270,440,610]:
+   result.append(furn("table",x,525));result.append(furn("chair",x-47,540))
+ elif id in ["forge","practice"]:result=[furn("hearth",330,360),furn("desk",700,355),furn("bookcase",450,335)]
+ elif id=="market":result=[furn("counter",410,390),furn("bookcase",305,335),furn("bookcase",705,335)]
+ elif id in ["commission","research"]:result=[furn("desk",620,365),furn("bookcase",270,345),furn("bookcase",345,345)]
+ elif id=="training":result=[furn("desk",660,570)]
+ elif id=="home":result=[furn("table",650,330),furn("bed",290,420),furn("desk",735,515),furn("hearth",440,335)]
+ for x in [220,740]:result.append(furn("lamp",x,305))
  return result
-func furn(art:int,x:float,y:float,width:float)->Dictionary:return {"kind":"furnishing","art":art,"p":Vector2(x,y),"width":width}
+func furn(kind:String,x:float,y:float)->Dictionary:return {"kind":"furnishing","furnishing":kind,"p":Vector2(x,y)}
 func room_obstacles()->Array:
  var result=[]
  for o in room_objects():result.append(furn_footprint(o))
- if g.room_id=="home":result.append(Rect2(264,343,52,82))
- if g.room_id=="forge":
-  result.append(Rect2(558,425,48,28))
+ if g.room_id=="forge":result.append(Rect2(558,425,48,28))
  if g.room_id=="throne":
   result.append(Rect2(586,350,68,32))
   for x in [350,710]:result.append(Rect2(x-5,435,42,18))
  return result
-func furn_footprint(o:Dictionary)->Rect2:
- # Lower solid volume, not transparent sprite gutters or its projecting top.
- var depth=o.width*(.22 if o.art==3 else .35)
- return Rect2(o.p-Vector2(o.width*.46,depth),Vector2(o.width*.92,depth-5))
+func furn_footprint(o:Dictionary)->Rect2:return HoldFurnishings.footprint(o.furnishing,o.p)
 func draw_furnishing(o:Dictionary):
- if o.art==0:
-  detail(0,o.p,o.width,o.width*.47);return
- if o.art==4:
-  detail(1,o.p,o.width,o.width*.60);return
- var r=FURN_RECTS[o.art]
- image_at(FURNISHINGS,r,Vector2(r.get_center().x,r.end.y),o.p,o.width)
+ HoldFurnishings.draw(g,o.p,o.furnishing)
+ if o.furnishing=="table":
+  HoldFurnishings.draw(g,o.p+Vector2(0,-30),"kettle")
+  for x in [-16,16]:HoldFurnishings.draw(g,o.p+Vector2(x,-29),"mug")
+ elif o.furnishing=="counter":
+  for x in [-23,19]:HoldFurnishings.draw(g,o.p+Vector2(x,-41),"mug")
 func draw_room_floor():
  g.draw_rect(Rect2(Vector2.ZERO,s.ROOM_SIZE),Color("182a30"))
  var warm=g.room_id in ["home","tavern","commission"]
@@ -212,7 +213,7 @@ func draw_room_floor():
  for x in [150,790]:g.draw_style_box(stone_style(Color("68766f")),Rect2(x,260,20,380))
  for r in [Rect2(160,635,280,18),Rect2(520,635,280,18)]:g.draw_style_box(stone_style(Color("9ca18c")),r)
  g.draw_style_box(stone_style(Color("baac8b")),Rect2(440,615,80,30))
- for x in [220,740]:s.furniture(Vector2(x,295),"lamp")
+
  if g.room_id=="throne":
   g.draw_style_box(stone_style(Color("3b696d")),Rect2(440,285,210,330))
   for x in [446,642]:g.draw_line(Vector2(x,290),Vector2(x,610),Color("bd9e57"),4)
@@ -227,9 +228,9 @@ func draw_room_floor():
    g.draw_style_box(stone_style(Color("3f777a")),Rect2(365,420,230,115))
    g.draw_rect(Rect2(373,428,214,99),Color("c9ac6e"),false,3)
    for x in range(390,580,35):g.draw_polyline(PackedVector2Array([Vector2(x,439),Vector2(x+9,448),Vector2(x,457),Vector2(x-9,448),Vector2(x,439)]),Color("cab785"),2)
-  s.furniture(Vector2(290,420),"bed")
+
  if g.room_id in ["tavern","forge"]:
-  var fire=Vector2(460,330) if g.room_id=="tavern" else Vector2(330,330)
+  var fire=Vector2(330,320)
   for r in [35,65,95]:g.draw_circle(fire,r,Color(1,.66,.26,.025+.004*sin(g.clock*4)))
 func draw_river():
  g.draw_rect(Rect2(1155,200,160,800),Color("465950"))

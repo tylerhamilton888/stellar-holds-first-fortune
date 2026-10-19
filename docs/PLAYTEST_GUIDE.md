@@ -1,3 +1,14 @@
+# 0.56.0 — inspect the repair first
+Extract the entire Windows ZIP and run FirstFortune.exe beside FirstFortune.pck. Continue your fortune or start a test slot. Previous saves are copied to unique `.pre-art-560-*.bak` files before loading; keep those for rollback.
+
+1. Walk left and right with the pick equipped, then turn toward/away from the camera. Look for alternating planted/lifted boots, attached shoulders and a steady supporting hand. Stop and restart; the pick should not switch hands.
+2. Carry stone or timber, then two loads if unlocked. Check feet and supporting hands while moving in both directions. Set the load down and work at the existing breaker/saw.
+3. Visit the Copper Kettle. Inspect mug-to-mouth contact, smaller tables/counter, approach to Hedrik and clear navigation back to the door. Interact using the footer prompt.
+4. At your claim/home use the existing furnishing menu to build a table, bed, desk, bookcase, counter, hearth or lantern. The preview and real sprite match. Walk around the base, recover it, save and reload. Storage chests still hold actual items.
+5. Revisit a familiar cave crystal/pillar and work a rock face. Landmark identity/collision and deliberate excavation should remain as in .55.1. Try Pinewood and return home with timber.
+
+Please report the character design, direction and activity if a head/hand/foot still looks wrong, ideally with a screenshot or short clip. This pass improves the assembly and core footwork; it does not finish every historical prop or directional action.
+
 # Cave repair check — 0.55.1
 Load your existing save, find a crystal or oath refuge, and note its depth/location. Save and Continue: it should remain the same landmark. Walk around its base and behind it; the base should be solid while the tall art draws in front of you. Existing stair landings should still return to the same coordinates. Older saves are backed up automatically before load. Continue with the established mining route below.
 

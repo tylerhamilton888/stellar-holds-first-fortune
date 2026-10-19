@@ -1,6 +1,6 @@
-# Current playable build — 0.55.1
-2026-10-19 UTC. Checkpoint `landmarks-0.55.1`; .55 remains recoverable.
+# Current playable build — 0.56.0
+2026-10-19 UTC. Checkpoint `art-0.56.0`; verified .55.1 remains recoverable as `pre-art-0.56.0`.
 
-Cave landmarks retain their visual identity after reload, have shared visible/physical bases, and sort correctly around the Dwarf. Movement, crew routing, tool reach and placement respect those bases. Legacy save backup, local player recovery and nearby landmark adjustment protect old progress and matching stair locations. Terrain and the .55 mining economy are unchanged.
+Repaired attached head/body registration, face coloration, stable held-tool hand and complete drinking silhouettes. New drawn contact/passing footwork makes side steps and loaded walking readable. Shared transparent furnishings replace oversized interior pieces and integrate with player construction, actual collision, placement previews, building occupancy, recovery and saves. Reduced overlapping labels.
 
-235 completed checks passed, including 60 checks on the final exported PCK. Reload captures match pixel-for-pixel; source and exported visuals inspected. See `testing/landmarks-0.55.1.md` for actual scope, bounded legacy correction and remaining limitations. Windows/audio/Defender are unverified. New antivirus signatures were unavailable (HTTP 403); no fresh scan result is claimed.
+See `testing/art-0.56.0.md` for actual completed tests and native visual evidence. Existing mining, Pinewood, cargo processing, Z-levels and landmark persistence are preserved. Old saves receive an exact unique backup. This does not finish every historical prop, architectural/interior treatment or work/combat direction. Windows, audio, Defender and subjective visual/feel acceptance remain player checks.
