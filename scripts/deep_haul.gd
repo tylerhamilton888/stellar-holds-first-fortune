@@ -53,7 +53,7 @@ func build_cart(p:Vector2)->bool:
 func toggle_cart(p:Vector2)->String:
  if not near_cart(p):return "Stand beside your wheelbarrow. Build one on the haulage board [H]."
  cart().hitched=not cart().hitched
- return "Wheelbarrow in hand. It follows your path and connected stairs." if cart().hitched else "Wheelbarrow parked. Nearby mining loads it automatically."
+ return "Wheelbarrow in hand. It follows your path and connected stairs." if cart().hitched else "Wheelbarrow parked. Nearby field-dressed materials load it automatically."
 func follow(p:Vector2):
  if cart().is_empty() or not cart().hitched:return
  # The cart's collision anchor shares the dwarf's clear footprint; no trailing corner cuts.
@@ -101,6 +101,13 @@ func in_field(item:String)->int:
  for site in s.deepworks.values():
   var h=site.get("haulage",{});n+=int(h.get("cart",{}).get("cargo",{}).get(item,0))
   for a in h.get("piles",{}).values():n+=int(a.cargo.get(item,0))
+ var hands=s.hauling.get("hands",{});var raw=[]
+ raw.append_array(hands.get("loose",[]));raw.append_array(hands.get("carry",[]))
+ for f in hands.get("facilities",[]):
+  raw.append_array(f.get("raw",[]));n+=int(f.get("cargo",{}).get(item,0))
+  if not f.get("job",{}).is_empty():raw.append(f.job.raw)
+ for load in raw:
+  if HoldHandworks.raw_item(load)==item:n+=int(load.units)
  return n
 static func contents(cargo:Dictionary)->String:
  return "empty" if cargo.is_empty() else HoldData.cost_text(cargo)

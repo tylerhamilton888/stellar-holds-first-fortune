@@ -288,11 +288,9 @@ func draw_furniture(kind:String,p:Vector2):
    for y in [-14,0,14]:g.draw_line(p+Vector2(-17,y),p+Vector2(17,y),rim,3)
    for j in 6:g.draw_rect(Rect2(p+Vector2(-13+j%3*10,-12+j/3*14),Vector2(6,9)),Color("839893") if j%2 else Color("b18d57"))
   "pillar","rune":
-   g.draw_rect(Rect2(p-Vector2(13,13),Vector2(26,29)),Color("455c62"))
-   g.draw_rect(Rect2(p-Vector2(10,18),Vector2(20,30)),Color("8c9b93"));g.draw_rect(Rect2(p-Vector2(14,21),Vector2(28,7)),Color("a9b3a1"))
+   g.surface.world.detail(4,p+Vector2(0,16),34,70)
    if kind=="rune":
-    g.draw_line(p+Vector2(0,-12),p+Vector2(0,8),rim,2)
-    g.draw_polyline(PackedVector2Array([p+Vector2(0,-12),p+Vector2(6,-6),p+Vector2(-6,1),p+Vector2(0,8)]),rim,2)
+    g.draw_polyline(PackedVector2Array([p+Vector2(0,-34),p+Vector2(4,-26),p+Vector2(-4,-19),p+Vector2(0,-12)]),Color("bde5d6"),1.3,true)
   "chair":
    g.draw_rect(Rect2(p-Vector2(9,6),Vector2(18,18)),wood);g.draw_rect(Rect2(p-Vector2(11,17),Vector2(22,13)),rim)
    g.draw_line(p+Vector2(-7,-14),p+Vector2(7,-14),Color("445e66"),2)

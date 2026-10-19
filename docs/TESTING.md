@@ -1,3 +1,6 @@
+# Current release: 0.55.0
+Read [mining refinement verification](testing/mining-0.55.0.md). Use isolated data for `tests/mining55.gd`, `handworks55.gd`, `site55.gd`, `test_deepworks55.gd` and external `pack55.gd`. Native tests must run sequentially with separate X displays/saves. Historical two-contact assertions describe old balance and are not current acceptance gates. The fieldwork fixture uses full-duration authored strokes; bench tests allow approach travel before measuring work.
+
 # Current release: 0.54.0
 See [reference-0.54.0](testing/reference-0.54.0.md). Isolate saves for all native/input scripts ending in 54.gd. Export metadata must include assets/folk-v54/frames.json. Use the measured bounds, not equal-grid crops.
 

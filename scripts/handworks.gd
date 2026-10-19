@@ -15,14 +15,17 @@ const OUTPUTS=["stone","wood","dressed_stone","iron_ore","copper_ore","coal","cr
 var g
 var placing=""
 var active_id=""
+var active_anchor=Vector2.INF
 var working=false
 var approaching=false
 var last_beat=-1
 var lift=0.0
 var setting_down:Dictionary={}
+var field_raw:Dictionary={}
 var textures={}
 func _init(game):g=game
 func data()->Dictionary:
+ g.state.hauling.mining_revision=55
  if not g.state.hauling.has("hands"):g.state.hauling.hands={"version":1,"next":1,"loose":[],"carry":[],"facilities":[],"skills":{"miner":0,"mason":0,"forester":0,"smith":0},"facts":{}}
  return g.state.hauling.hands
 func context()->String:
@@ -54,27 +57,39 @@ func busy_hands()->bool:
 func work_pose()->Vector2:return g.player
 func work_direction(f:Dictionary)->Vector2:return Vector2(1 if float(f.x)>=g.player.x else -1,.45)
 func held_label()->String:
- if not setting_down.is_empty():return "Setting down · "+str(setting_down.kind)
+ if not setting_down.is_empty():return "Setting down · "+raw_name(setting_down)
  if working:
   var f=facility()
   if not f.is_empty():return "Working · "+SPECS[f.kind].name
- if not data().carry.is_empty():return "Carrying · "+("stone chunk" if data().carry[0].kind=="stone" else "raw log")+" · %d / %d" % [data().carry.size(),capacity()]
+ if not field_raw.is_empty():return "Dressing · "+raw_name(field_raw)
+ if not data().carry.is_empty():return "Carrying · "+raw_name(data().carry[0])+" · %d / %d" % [data().carry.size(),capacity()]
  var cart=nearby_cart()
- return "Pushing · %s · %d / %d loads" % [SPECS[cart.kind].name,cart.raw.size(),SPECS[cart.kind].capacity] if not cart.is_empty() and cart.hitched else ""
-func capacity()->int:return 2 if int(data().skills.mason)+int(data().skills.forester)>=8 else 1
+ return "Pushing · %s · %d / %d loads" % [SPECS[cart.kind].name,cart.raw.size(),load_capacity(cart)] if not cart.is_empty() and cart.hitched else ""
+func capacity()->int:return 2 if int(data().skills.mason)+int(data().skills.forester)>=8 or int(data().skills.miner)>=12 else 1
+func load_capacity(f:Dictionary)->int:
+ return int(SPECS[f.kind].capacity)+(4 if vehicle(f) and int(data().skills.miner)>=40 else 0)
+static func raw_item(raw:Dictionary)->String:return str(raw.get("item","wood" if raw.kind=="log" else "stone"))
+static func raw_name(raw:Dictionary)->String:return "raw log" if raw.kind=="log" else HoldData.ITEMS[raw_item(raw)].name.to_lower()+" chunk"
 func award(path:String):data().skills[path]=int(data().skills.get(path,0))+1
-func spawn(kind:String,p:Vector2,units:int,source:String=""):
+func spawn(kind:String,p:Vector2,units:int,source:String="",item:String=""):
  var d=data();var id=int(d.next);d.next=id+1
- d.loose.append({"id":id,"kind":kind,"units":units,"source":source,"area":context(),"x":p.x,"y":p.y})
+ var raw={"id":id,"kind":kind,"units":units,"source":source,"area":context(),"x":p.x,"y":p.y}
+ if item!="":raw.item=item
+ d.loose.append(raw)
  d.facts.extract=true
 func rock(result:Dictionary,c:Vector2i)->bool:
- if result.kind!=2 or posmod(c.x*7+c.y*11+g.state.seed_value,4)!=0:return false
- spawn("stone",Deepworks.center(c),int(result.count),"stone:"+str(g.deep.world.depth())+":"+str(c))
+ if result.kind not in [2,3,4,5,6,7] or result.item in ["iron_slag","copper_slag"] or result.count<=0:return false
+ spawn("stone",Deepworks.center(c),int(result.count),"rock:"+str(g.deep.world.depth())+":"+str(c),result.item)
  award("miner");return true
 func clear_line(a:Vector2,b:Vector2)->bool:
  if g.zone=="mine":return g.deep.world.visible(a,b)
  for i in 8:
   if not g.surface.walkable(a.lerp(b,float(i+1)/8)):return false
+ return true
+func stance_clear(a:Vector2,b:Vector2)->bool:
+ for i in range(1,maxi(2,ceili(a.distance_to(b)/5.0))+1):
+  var p=a.lerp(b,float(i)/maxi(2,ceili(a.distance_to(b)/5.0)))
+  if g.deep.world.solid(p) if g.zone=="mine" else not g.surface.walkable(p):return false
  return true
 func closest(list:Array,radius:float=78)->Dictionary:
  var best={};var distance=radius
@@ -84,6 +99,9 @@ func closest(list:Array,radius:float=78)->Dictionary:
   if d<distance and clear_line(g.player,pos(o)):best=o;distance=d
  return best
 func facility()->Dictionary:
+ if active_anchor.distance_to(g.player)<8 and Input.get_vector("left","right","up","down")==Vector2.ZERO:
+  for station in data().facilities:
+   if str(station.id)==str(active_id) and local(station) and pos(station).distance_to(g.player)<120 and clear_line(g.player,pos(station)):return station
  var fixed=[]
  for f in data().facilities:
   if not vehicle(f) or not f.hitched:fixed.append(f)
@@ -128,17 +146,17 @@ func accepts(f:Dictionary,r:Dictionary)->bool:
 func deposit(f:Dictionary)->int:
  var moved=0;var carry=data().carry
  for i in range(carry.size()-1,-1,-1):
-  if f.raw.size()>=SPECS[f.kind].capacity or not accepts(f,carry[i]):continue
+  if f.raw.size()>=load_capacity(f) or not accepts(f,carry[i]):continue
   f.raw.append(carry.pop_at(i));moved+=1
- if vehicle(f):
+ if vehicle(f) or f.kind in ["stone_pile","timber_pile"]:
   for r in data().loose.duplicate():
-   if f.raw.size()>=SPECS[f.kind].capacity:break
-   if local(r) and pos(r).distance_to(pos(f))<90 and clear_line(pos(r),pos(f)):data().loose.erase(r);f.raw.append(r);moved+=1
- elif f.kind in ["stone_pile","timber_pile"]:
+   if f.raw.size()>=load_capacity(f):break
+   if local(r) and accepts(f,r) and pos(r).distance_to(pos(f))<90 and clear_line(pos(r),pos(f)):data().loose.erase(r);f.raw.append(r);moved+=1
+ if f.kind in ["stone_pile","timber_pile"]:
   var cart=nearby_cart()
   if not cart.is_empty():
    for i in range(cart.raw.size()-1,-1,-1):
-    if f.raw.size()<SPECS[f.kind].capacity and accepts(f,cart.raw[i]):f.raw.append(cart.raw.pop_at(i));moved+=1
+    if f.raw.size()<load_capacity(f) and accepts(f,cart.raw[i]):f.raw.append(cart.raw.pop_at(i));moved+=1
  if f.kind=="store":
   for k in OUTPUTS:
    var incoming={k:g.state.count(k)};var n=DeepHaul.transfer(incoming,f.cargo,200)
@@ -175,7 +193,11 @@ func input(e:InputEvent)->bool:
      if clear_line(g.player,parked):f.x=parked.x;f.y=parked.y
     g.save_game();return true
   if e.keycode==KEY_E:
+   if g.zone=="mine":
+    var world=g.deep.world;var upper=world.depth()-1 if e.shift_pressed else world.depth()
+    if upper>=0 and world.can_descend(Deepworks.cell(g.player),upper):return false
    var f=facility();var raw=closest(data().loose,65)
+   if e.shift_pressed and g.zone=="mine" and f.is_empty() and (not raw.is_empty() or not data().carry.is_empty()):return true
    if not raw.is_empty() and not e.shift_pressed and data().carry.size()<capacity() and (f.is_empty() or g.player.distance_to(pos(raw))+15<g.player.distance_to(pos(f))):
     data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;g.save_game();return true
    if not f.is_empty():
@@ -211,7 +233,8 @@ func begin(f:Dictionary)->bool:
  if active_id!=f.id:g.notify("Bring a raw "+("stone chunk" if f.kind=="breaker" else "log")+" on your shoulder or in a rack within 150 units.")
  return false
 func update(dt:float):
- lift=maxf(0,lift-dt);working=false;approaching=false
+ lift=maxf(0,lift-dt);working=false;approaching=false;field_raw={}
+ if Input.get_vector("left","right","up","down")!=Vector2.ZERO:active_id=""
  if Input.get_vector("left","right","up","down")!=Vector2.ZERO:lift=0.0
  if lift<=0:setting_down={}
  if not g.playing or g.panel_id!="" or g.room_id=="training":return
@@ -222,18 +245,33 @@ func update(dt:float):
    if not local(f) or pos(f).distance_to(g.player)>145:f.hitched=false
    else:f.x=g.player.x;f.y=g.player.y
  var f=facility()
+ if f.is_empty() and g.zone=="mine" and Input.is_key_pressed(KEY_SHIFT) and Input.is_action_pressed("interact") and Input.get_vector("left","right","up","down")==Vector2.ZERO:
+  var raw=closest(d.loose,65) if d.carry.is_empty() else d.carry.back()
+  if not raw.is_empty() and raw.kind=="stone":
+   field_raw=raw;working=true;g.surface.direction=Vector2(1,.45)
+   var before=float(raw.get("dressing",0));raw.dressing=before+dt
+   if int((before+.315)/.7)!=int((float(raw.dressing)+.315)/.7):g.sound.effect("stone_0",-14)
+   if float(raw.dressing)>=2.1:
+    if raw in d.carry:d.carry.erase(raw)
+    else:d.loose.erase(raw)
+    g.deep.haul.collect(raw_item(raw),int(raw.units),g.player);d.facts.process=true;d.facts.field_dress=true;field_raw={};working=false;g.save_game()
+   return
  if f.is_empty() or f.kind not in ["breaker","saw"] or not Input.is_action_pressed("interact") or Input.get_vector("left","right","up","down")!=Vector2.ZERO:return
  if not begin(f):return
+ active_id=f.id;active_anchor=g.player
  var side=-1 if g.player.x<=f.x else 1
- var stance=pos(f)+Vector2(side*(32 if f.kind=="breaker" else 34),-45 if f.kind=="breaker" else -22)
- if g.player.distance_to(stance)>3 and clear_line(g.player,stance):
-  var before_pos=g.player;g.player=g.player.move_toward(stance,150*dt);g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(stance-before_pos).normalized();approaching=true;return
+ var stance=pos(f)+Vector2(side*(56 if f.kind=="breaker" else 34),-55 if f.kind=="breaker" else -22)
+ if not stance_clear(g.player,stance):stance=pos(f)+Vector2(-side*(56 if f.kind=="breaker" else 34),-55 if f.kind=="breaker" else -22)
+ if g.player.distance_to(stance)>3:
+  if stance_clear(g.player,stance):
+   var before_pos=g.player;g.player=g.player.move_toward(stance,150*dt);active_anchor=g.player;g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(stance-before_pos).normalized();approaching=true
+  return
  working=true;active_id=f.id
  var before=float(f.job.progress)
- f.job.progress=before+dt
+ f.job.progress=before+dt*HoldIndustry.production(g.state)
  if int((before+.21)/.42)!=int((float(f.job.progress)+.21)/.42):g.sound.effect("wood" if f.kind=="saw" else "stone_0",-14)
  if float(f.job.progress)<1.26:return
- var raw=f.job.raw;var item="wood" if raw.kind=="log" else "stone"
+ var raw=f.job.raw;var item=raw_item(raw)
  f.cargo[item]=int(f.cargo.get(item,0))+int(raw.units)
  f.job={};award("forester" if raw.kind=="log" else "mason");d.facts.process=true
  for store in d.facilities:
@@ -260,11 +298,13 @@ func panel():
   var icon=TextureRect.new();icon.texture=texture(SPECS[id].art);icon.custom_minimum_size=Vector2(200,36);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;card.add_child(icon)
   g.label(card,HoldData.cost_text(SPECS[id].cost),13,Color("edc98a"))
   g.small_button(card,"Craft & place",func():placing=id;g.close_panel();g.notify("LMB places nearby; right click cancels. Materials charged only on valid placement."))
- g.label(g.panel_body,"Keep input racks and output pallets close to the bench, with a clear path. Work takes three short strokes. Collect finished materials into your pack before building or trading.",14)
+ g.label(g.panel_body,"Stonebreakers dress stone, ore, coal and crystal chunks into their original materials. Racks within 150 units feed the bench; nearby pallets catch its output. E at a rack or parked cart gathers nearby loose loads. Shift+E collects finished materials.",14)
+ g.label(g.panel_body,"Prospecting without a station? Away from equipment, hold Shift+E beside a chunk or while carrying it: three field-dressing blows preserve its full yield. Benches process batches faster; powered workshop technology improves them further.",14)
  g.small_button(g.panel_body,"Recover empty equipment · full material refund",recover)
  var f=facility()
  if not f.is_empty() and not f.job.is_empty():g.small_button(g.panel_body,"Return unfinished input to this station",func():cancel_job(f))
- g.label(g.panel_body,"Strong shoulders · %d / 8 productive cuts/jobs · capacity %d" % [mini(8,int(d.skills.mason)+int(d.skills.forester)),capacity()],16)
+ g.label(g.panel_body,"Strong shoulders · %d / 8 masonry / forestry jobs OR %d / 12 mined faces · capacity %d" % [mini(8,int(d.skills.mason)+int(d.skills.forester)),mini(12,int(d.skills.miner)),capacity()],15)
+ g.label(g.panel_body,"Miner · %d productive faces · 12: strong shoulders & joint reading · 40: controlled sections & four extra cart loads" % int(d.skills.miner),15)
  for step in [["build","Craft and place a station or stockpile"],["extract","Free a raw chunk or log"],["lift","Lift it with E; Q sets it down"],["stockpile","Deliver it to a suitable rack"],["process","Hold E at the matching bench; collect with Shift+E"]]:g.label(g.panel_body,("✓ " if d.facts.get(step[0],false) else "○ ")+step[1],15)
 func texture(index:int)->Texture2D:
  if textures.has(index):return textures[index]
@@ -284,19 +324,20 @@ func sprite(index:int,p:Vector2,width:float,alpha:float=1.0):
 func objects()->Array:
  var list=[]
  for o in data().loose:
-  if local(o) and int(o.id)!=int(setting_down.get("id",-1)) and pos(o).distance_to(g.player)<900:list.append({"p":pos(o),"kind":"handwork","raw":o})
+  if local(o) and int(o.id)!=int(setting_down.get("id",-1)) and int(o.id)!=int(field_raw.get("id",-1)) and pos(o).distance_to(g.player)<900:list.append({"p":pos(o),"kind":"handwork","raw":o})
  for f in data().facilities:
   if local(f) and pos(f).distance_to(g.player)<900:list.append({"p":pos(f),"kind":"handwork","facility":f})
  return list
-func raw_sprite(raw:Dictionary,p:Vector2):
- sprite(7 if raw.kind=="log" else 6,p,40)
+func raw_sprite(raw:Dictionary,p:Vector2,width:float=40):
+ var tex=HoldFolk.raw_texture(raw.kind=="log");var height=width*tex.get_height()/tex.get_width()
+ HoldFolk.raw_draw(g,raw,Rect2(p-Vector2(width/2,height),Vector2(width,height)))
 func vehicle_loads(f:Dictionary,p:Vector2):
  # Pack lengthwise into the bed, two rows per tier; never build a tall icon tower.
  # Every raw record still contributes one matching stone/log silhouette.
  for i in f.raw.size():
   var col=i%4;var row=int(i/4)%2;var tier=int(i/8)
   var at=p+Vector2(7+(col-1.5)*16,-34+row*8-tier*7)
-  sprite(7 if f.raw[i].kind=="log" else 6,at,27)
+  raw_sprite(f.raw[i],at,27)
 func draw_object(o:Dictionary):
  if o.has("raw"):raw_sprite(o.raw,o.p);return
  var f=o.facility
@@ -319,11 +360,13 @@ func draw_object(o:Dictionary):
    bundle+=1
  if g.player.distance_to(o.p)<200 and f.kind in ["stone_pile","timber_pile","store","cart","wagon"]:
   var count=DeepHaul.amount(f.cargo) if f.kind=="store" else f.raw.size()
-  HoldArt.text(g,o.p+Vector2(-22,16),"%d / %d" % [count,SPECS[f.kind].capacity],11,Color("f1d8a0"))
+  HoldArt.text(g,o.p+Vector2(-22,16),"%d / %d" % [count,load_capacity(f)],11,Color("f1d8a0"))
  if not f.job.is_empty():
-  raw_sprite(f.job.raw,o.p+Vector2(0,-27))
+  var work_side=-1 if g.player.x<=f.x else 1
+  var work_at=o.p+Vector2(work_side*26,-34) if working and active_id==f.id and f.kind=="breaker" else o.p+Vector2(0,-27)
+  raw_sprite(f.job.raw,work_at,30 if f.kind=="breaker" else 40)
   var phase=fmod(float(f.job.progress),.42)/.42
-  var tip=o.p+Vector2(0,-48)
+  var tip=work_at+Vector2(0,-12)
   if f.kind=="breaker":
    for i in int(float(f.job.progress)/.42):g.draw_line(tip+Vector2(-8+i*7,-10),tip+Vector2(3+i*4,8),Color("354049"),1.5)
   if working and active_id==f.id and phase>.45 and phase<.7:
@@ -335,6 +378,7 @@ func pushing()->bool:
  return g.zone=="mine" and g.deep.world!=null and not g.deep.haul.cart().is_empty() and g.deep.haul.cart().hitched and data().carry.is_empty()
 func carry_action()->String:
  var cargo=data().carry
+ if working:return ""
  if cargo.is_empty():return "lift_"+str(setting_down.kind) if not setting_down.is_empty() else ""
  if cargo.size()>1:return "double_"+(cargo[0].kind if cargo[0].kind==cargo[1].kind else "mixed")
  return ("lift_" if lift>0 else "carry_")+str(cargo[0].kind)
@@ -355,9 +399,9 @@ func overlay():
  g.draw_set_transform(-g.camera)
  if placing!="":sprite(SPECS[placing].art,g.get_global_mouse_position()+g.camera,85,.55)
  var f=facility();var raw=closest(data().loose,65);var text=""
- if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),SPECS[f.kind].capacity,DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · Shift+E collect" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
+ if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · Shift+E collect" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
- elif f.is_empty() and not raw.is_empty():text="E · Lift "+("raw log" if raw.kind=="log" else "stone chunk")
+ elif f.is_empty() and not raw.is_empty():text="E · Lift "+raw_name(raw)+" · %d units" % int(raw.units)+(" · Hold Shift+E dress" if g.zone=="mine" and raw.kind=="stone" else "")
  elif not data().carry.is_empty():text="Carrying %d / %d · Q put down · E deliver" % [data().carry.size(),capacity()]
  if placing!="":text="Placing "+SPECS[placing].name+" · LMB build · Right click cancel"
  g.draw_set_transform(Vector2.ZERO)

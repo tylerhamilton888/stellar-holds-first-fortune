@@ -113,7 +113,22 @@ static func cargo(n:Node2D,a:Dictionary,action:String):
   var hand=at+Vector2((14 if i==0 else -14)*side,2)
   if action.begins_with("lift_"):
    hand=Vector2(21,lerpf(-4,-43,clampf(a.phase,0,1)))
-  n.draw_texture_rect(tex,Rect2(hand-Vector2(width/2,height*.8),Vector2(width,height)),false)
+  var raw={"kind":"log" if log else "stone"}
+  var hands=n.get("handworks")
+  if hands!=null:
+   var carried=hands.data().carry
+   if i<carried.size():raw=carried[i]
+   elif not hands.setting_down.is_empty():raw=hands.setting_down
+  raw_draw(n,raw,Rect2(hand-Vector2(width/2,height*.8),Vector2(width,height)))
+static func raw_draw(n:Node2D,raw:Dictionary,rect:Rect2):
+ n.draw_texture_rect(raw_texture(raw.kind=="log"),rect,false)
+ var item=HoldHandworks.raw_item(raw)
+ if item not in ["iron_ore","copper_ore","coal","crystal"]:return
+ var tint=Color(HoldData.ITEMS[item].color);var points=[Vector2(.24,.42),Vector2(.45,.31),Vector2(.59,.53),Vector2(.73,.41)]
+ for j in points.size():
+  var p=rect.position+points[j]*rect.size;var r=rect.size.x*.075
+  n.draw_colored_polygon(PackedVector2Array([p+Vector2(-r,0),p+Vector2(-r*.2,-r*.7),p+Vector2(r,r*.1),p+Vector2(r*.2,r*.7)]),tint.darkened(.12))
+  n.draw_line(p+Vector2(-r*.4,-r*.35),p+Vector2(r*.55,0),tint.lightened(.32),maxf(.6,rect.size.x*.025),true)
 static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
  var a=descriptor(p,d,walking,time,action,phase);var flip=-1 if d.x<-.3 else 1
  var bob=0.0

@@ -1,3 +1,6 @@
+# 0.55.0 — Working the Mountain
+More substantial planted excavation and persistent fracture stages; physical ore/stone loads integrated with existing Handworks; full-yield field dressing; rack/cart batch gathering; mineral-aware stonebreaking and powered bench processing; useful lamps/supports, stronger Miner handling and controlled section work; continuous-lode notes. Fixed bench focus/stance and loose-cargo passage priority. Updated existing quest guidance. Exact pre-.55 save backup, 146 passing final checks, native visual review and new verified recovery artifacts. See testing/mining-0.55.0.md for scope and limitations.
+
 # Reference-led Folk — 0.54.0
 Updated 2026-10-19 UTC. Checkpoint `reference-0.54.0`. The verified pre-edit tag `pre-reference-0.54.0` preserves `packaging-0.53.1` at `5ac23fed34c03ac4f3a224bd158fbec9c54edd65`. Prior archives, tags, original artwork and saves remain intact. No remote was changed or pushed.
 

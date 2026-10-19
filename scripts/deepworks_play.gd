@@ -97,7 +97,9 @@ func use_stairs(up:bool):
  else:g.notify("Stand on stairs: E down / Shift+E up. V carves stairs beneath your feet.")
 func panel():
  ensure();g.label(g.panel_body,"THE DEEPWORKS · DEPTH %d / %s" % [world.depth()+1,Deepworks.NAMES[world.depth()]],20)
- g.label(g.panel_body,"WASD moves freely. Hold LMB against an exposed face to excavate. Ordinary rock breaks in one contact; metal and crystal resist. Pick [1], shovel [2], or your powered slagcaster [5].",16)
+ g.label(g.panel_body,"Hold LMB at an exposed face: four planted pick contacts free ordinary rock. Opening a second face improves leverage. Pick [1] scores the joints; hammer [4] splits a face once it is 40% fractured. Moving cancels the stroke immediately.",16)
+ g.label(g.panel_body,"Rock and minerals become substantial physical loads. E lifts; Q sets down. Hold Shift+E away from equipment to dress a small batch in the field. Shift+B crafts stockpiles, carts and stonebreakers for larger operations.",16)
+ g.label(g.panel_body,"A lamp within 180 units improves clean contacts and careful recovery [Shift+LMB]. Existing masonry pillars [O] brace work within 160 units: stronger joint fractures, and a tempered pick or master Miner can split a second exposed, weakened face with the hammer. No cave-ins or upkeep chores.",15)
  g.label(g.panel_body,"Survey [X] shows the ground immediately beneath your feet. Stairs connect the exact same location on both levels and stay open permanently. E goes down, Shift+E goes up.",16)
  g.button(g.panel_body,"Carve descending stair · free · hold still for 1.2 seconds",func():
   g.close_panel();passage_kind="stair";stair_work=1.2;g.notify("Carving a safe stair landing… stay still."))
@@ -116,6 +118,12 @@ func panel():
  g.button(g.panel_body,"Living Works [O] · rooms / finishing / furnishings",func():g.open_panel("living"))
  g.button(g.panel_body,"Project ledger [L]",func():g.open_panel("projects"))
  g.label(g.panel_body,"Discoveries: "+(", ".join(world.data.discoveries) if not world.data.discoveries.is_empty() else "Follow seams into untouched rock."),16)
+ g.label(g.panel_body,"MINER · %d productive faces · %s" % [int(g.handworks.data().skills.miner),["Apprentice: free 12 faces for strong shoulders and joint reading","Journeyman: free 40 faces for controlled sections and cart packing","Master: four extra raw loads in each cart or wagon"][world.mastery()]],16)
+ for note in world.data.get("prospects",{}).values():
+  var depths=[]
+  for d in note.depths:depths.append(str(int(d)+1))
+  g.label(g.panel_body,"%s · depths %s · %d loads / %d recoverable units" % [note.name,", ".join(depths),note.loads,note.units],14)
+ g.label(g.panel_body,"IVAR’S WORKSITE LESSON · Free a load → lift or field-dress it → place a rack and breaker → hold E to work → Shift+E collect → follow your seam down a surveyed stair. Existing workshop lesson progress is recorded on Shift+B.",15)
 func assign_crew():
  ensure()
  if g.agents.is_empty():g.notify("Recruit and assign miners at your claimed mountain first. M opens your crew ledger.");return
@@ -129,6 +137,7 @@ func crew_entry(agent:Dictionary)->Dictionary:
 func move(dt:float):
  if g.handworks.approaching:return
  ensure();var axis=Input.get_vector("left","right","up","down")
+ if axis!=Vector2.ZERO and strike_left>0 and works.pending.is_empty():strike_left=0;contact_hold=0
  if axis!=Vector2.ZERO and not g.combat.armed:g.surface.direction=axis
  g.velocity=Vector2.ZERO if strike_left>0 and not g.combat.armed else g.fight.movement(axis);var old=g.player
  for i in maxi(1,int(ceil(dt*120))):
@@ -165,6 +174,7 @@ func mine(dt:float):
  for i in range(messages.size()-1,-1,-1):
   messages[i].life-=dt;messages[i].p.y-=dt*20
   if messages[i].life<=0:messages.remove_at(i)
+ if g.handworks.working or g.handworks.approaching:strike_left=0;contact_hold=0;return
  if contact_hold>0:contact_hold=maxf(0,contact_hold-dt);return
  if strike_left>0:
   strike_left=maxf(0,strike_left-dt)
@@ -173,7 +183,7 @@ func mine(dt:float):
    if not works.pending.is_empty():works.impact()
    elif target.x>=0 and contact.distance_to(g.player)<(200 if g.mining_gun.selected else 58) and world.visible(g.player,contact):hit(target,g.mining_gun.selected)
   return
- if g.hotbar.blocked_work():return
+ if g.hotbar.blocked_work() or g.handworks.working or Input.get_vector("left","right","up","down")!=Vector2.ZERO:return
  if works.mode!="":works.begin();return
  if stair_work>0:return
  if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and g.mining_buffer<=0:return
@@ -182,7 +192,7 @@ func mine(dt:float):
  var aim=g.get_global_mouse_position()+g.camera
  target=world.target(g.player,aim,180 if g.mining_gun.selected else 52)
  if target.x<0:return
- # The collision surface is authoritative; short automatic approach closes tool reach.
+ # The collision surface is authoritative; the player chooses their own stance.
  contact=g.player
  for i in range(1,190):
   contact=g.player+(Deepworks.center(target)-g.player).normalized()*i
@@ -192,6 +202,18 @@ func mine(dt:float):
  mining_method="hammer" if g.tool==3 else ("careful" if Input.is_key_pressed(KEY_SHIFT) else "pick")
  swing_duration=.78 if mining_method=="careful" else (.72 if mining_method=="hammer" else SWING)
  strike_left=swing_duration;struck=false;g.sound.effect("swing",-20)
+func worksite(c:Vector2i)->Dictionary:
+ var lit=false;var braced=false;var p=Deepworks.center(c)
+ for id in world.layer().fixtures:
+  var xy=id.split(",");var q=Deepworks.center(Vector2i(int(xy[0]),int(xy[1])))
+  if q.distance_to(p)<=180 and world.visible(q,p):lit=true
+ for f in works.model.data.furniture.values():
+  if int(f.depth)!=world.depth():continue
+  var q=Deepworks.center(Vector2i(f.x,f.y))
+  if q.distance_to(p)<=180 and f.kind=="lamp" and world.visible(q,p):lit=true
+  if q.distance_to(p)<=160 and f.kind in ["pillar","rune"] and world.visible(q,p):braced=true
+ var rank=world.mastery()
+ return {"lit":lit,"braced":braced,"focus":.15 if lit else 0.0,"fracture":(.35 if rank>=1 else 0.0)+(.55 if braced else 0.0),"recovery":(1 if lit else 0)+(1 if rank>=2 else 0),"section":braced and (g.state.steel or rank>=2)}
 func hit(c:Vector2i,thermal:bool=false):
  if thermal:
   if not g.state.outpost.get("mining_gun",false):return
@@ -200,18 +222,32 @@ func hit(c:Vector2i,thermal:bool=false):
    if not g.state.pay({"energy_cell":1}):g.notify("No energy cells. Craft cells at a powered forge.");return
    charge=24 if maxi(HoldIndustry.tier(g.state),HoldIndustry.tier(g.state,"hold"))>=2 else 16
   g.state.outpost.gun_charge=charge-1;g.sound.effect("thermal_pulse",-12)
- var result=world.strike(c,-1,thermal,false,mining_method)
+ var work=worksite(c);var result=world.strike(c,-1,thermal,false,mining_method,work)
  if result.is_empty():return
  if result.has("blocked"):g.notify("Hard basalt: research Tempered steel at the survey office.");return
- g.sound.impact(result.kind,result.broken);pulse=.14;contact_hold=.065 if result.broken else .045
+ g.sound.impact(result.kind,result.broken);pulse=.18 if result.broken else .14;contact_hold=.09 if result.broken else .055
  var color=ore_color(result.kind) if result.kind in [3,4,5,6] else color(result.kind,world.depth()).lightened(.25)
  for i in (15 if result.broken else 7):sparks.append({"p":contact,"v":Vector2.from_angle(randf()*TAU)*randf_range(30,140),"life":randf_range(.15,.5),"color":color,"kind":result.kind,"size":randf_range(2,5)})
  if result.broken:
-  var destination="raw chunk · E to lift" if g.handworks.rock(result,c) else haul.collect(result.item,result.count,g.player)
+  recover_face(c,result,thermal)
+  if not thermal and mining_method=="hammer" and work.section:
+   for dir in Deepworks.DIRS:
+    var next=c+dir;var k=world.at(next)
+    if k!=result.kind or Deepworks.center(next).distance_to(g.player)>70 or world.exposed(next)<2 or not world.visible(g.player,Deepworks.center(next)):continue
+    if float(world.layer().damage.get(Deepworks.key(next),0))<world.resistance(k)*.65:continue
+    var section=world.strike(next,-1,false,false,"hammer",work)
+    if section.get("broken",false):recover_face(next,section);g.handworks.data().facts.section=true
+    break
   works.model.refresh()
-  rubble.append({"p":Vector2(c)*40,"kind":result.kind,"life":.42})
-  messages.append({"p":Deepworks.center(c),"text":"+%d %s · %s" % [result.count,HoldData.ITEMS[result.item].name,destination],"life":1.25})
   for name in world.survey(g.player):g.notify("DISCOVERY · "+name);g.sound.effect("crystal",-12)
+func recover_face(c:Vector2i,result:Dictionary,thermal:bool=false):
+ if thermal or not g.handworks.rock(result,c):haul.collect(result.item,result.count,g.player)
+ rubble.append({"p":Vector2(c)*40,"kind":result.kind,"life":.42})
+ for message in messages:
+  if message.get("item","")==result.item and message.p.distance_to(Deepworks.center(c))<90:
+   message.units=int(message.units)+int(result.count);message.text="+%d %s" % [message.units,HoldData.ITEMS[result.item].name];message.life=1.25;return
+ messages.append({"p":Deepworks.center(c)+Vector2(0,-24),"item":result.item,"units":result.count,"text":"+%d %s" % [result.count,HoldData.ITEMS[result.item].name],"life":1.25})
+ while messages.size()>3:messages.pop_front()
 func agents(dt:float):
  ensure()
  if not g.state.agents_enabled or (g.state.claim_id!="legacy" and g.state.active_site!="claim"):return
@@ -381,6 +417,11 @@ func draw():
      var crack=PackedVector2Array([p+Vector2(9,3),p+Vector2(20,14),p+Vector2(15,22),p+Vector2(28,35)])
      g.draw_polyline(crack,Color("17242c"),1+damage*3)
      if damage>.4:g.draw_polyline(PackedVector2Array([p+Vector2(20,14),p+Vector2(30,13),p+Vector2(38,6)]),Color("17242c"),1+damage*2)
+     if damage>.65:
+      g.draw_polyline(PackedVector2Array([p+Vector2(15,22),p+Vector2(4,28),p+Vector2(0,25)]),Color("101d24"),2.5)
+      for j in 3:
+       var chip=p+Vector2(8+j*11,37)
+       g.draw_colored_polygon(PackedVector2Array([chip,chip+Vector2(3,-4),chip+Vector2(7,0)]),base.lightened(.2))
     if k in [3,4,5,6]:
      var oc=ore_color(k).darkened(1-light)
      for j in [2,4,7][world.grade(c)]:
@@ -458,6 +499,9 @@ func draw():
     if not station.is_empty() and not station.job.is_empty():
      facing_dir=g.handworks.work_direction(station);action=fmod(float(station.job.progress),.42)/.42
      animation="saw" if station.kind=="saw" else "hammer"
+    elif not g.handworks.field_raw.is_empty():
+     facing_dir=Vector2(1,.45);action=fmod(float(g.handworks.field_raw.dressing),.7)/.7;animation="hammer"
+     g.handworks.raw_sprite(g.handworks.field_raw,pose+Vector2(24,1),30)
    elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
    elif g.handworks.pushing():animation="push"
    HoldDrawnAnimation.paint(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,animation,action)
@@ -481,12 +525,15 @@ func draw():
     if works.masonry.data.jobs.has(a.id) and not a.work:works.masonry.carry(p,1,works.masonry.data.jobs[a.id].cargo)
     if works.model.data.assignments.has(a.id):A.text(g,p+Vector2(-35,-81),g.state.npc(a.id).first_name+" · "+works.model.data.folk[a.id].activity,10,Color("dfc695"))
  g.draw_set_transform(offset)
+ if g.handworks.working:
+  var station=g.handworks.facility()
+  if not station.is_empty() and not station.job.is_empty():HoldDrawnAnimation.work_foreground(g,g.player+Vector2(0,12),g.state.appearance,g.handworks.work_direction(station),1.0,offset,"saw" if station.kind=="saw" else "hammer",fmod(float(station.job.progress),.42)/.42)
  works.masonry.foreground()
  for s in sparks:
   var tint=Color(s.color,clampf(s.life*4,0,1))
   if int(s.get("kind",2))==6:g.draw_line(s.p,s.p+s.v.normalized()*s.size*2,tint,2)
   elif int(s.get("kind",2))==1:g.draw_circle(s.p,s.size*1.8,Color(tint,.24*clampf(s.life*4,0,1)))
-  else:g.draw_rect(Rect2(s.p,Vector2.ONE*s.size),tint)
+  else:g.draw_colored_polygon(PackedVector2Array([s.p,s.p+Vector2(s.size,-s.size*.6),s.p+Vector2(s.size*1.2,s.size*.5),s.p+Vector2(-s.size*.3,s.size*.4)]),tint)
  for m in messages:A.text(g,m.p,m.text,13,Color(1,.88,.62,minf(1,m.life)))
  if pulse>0:g.draw_arc(contact,4+(1-pulse/.14)*17,0,TAU,12,Color(1,.9,.7,pulse*5),2)
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
@@ -496,7 +543,8 @@ func draw():
  var tool_name="Slagcaster" if g.mining_gun.selected else ["Pick","Shovel","Axe","Hammer"][clampi(g.tool,0,3)]
  if aim.x>=0 and g.panel_id=="" and not g.combat.armed:
   var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=world.grade_label(aim)+" "+HoldData.TILES[k].name
-  A.text(g,Vector2(680,480),tool_name+" · "+name,12,ore_color(k));g.draw_rect(Rect2(680,487,250,3),Color("2b414a"));g.draw_rect(Rect2(680,487,250*d/world.resistance(k),3),Color("cbb57e"))
+  var stage="solid" if d<=0 else "scored" if d/world.resistance(k)<.4 else "split-ready" if d/world.resistance(k)<.65 else "deeply fractured"
+  A.text(g,Vector2(655,480),name+" · "+stage,11,ore_color(k))
  elif g.panel_id=="" and not g.combat.armed:A.text(g,Vector2(680,485),tool_name+" · 1–4 change tool",12,Color("b9d0c8"))
  if g.panel_id=="":
   g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
@@ -561,6 +609,8 @@ func haulage_panel():
  if g.zone!="mine":
   g.label(g.panel_body,"Enter the Deepworks to handle containers. Your bucket retains: "+DeepHaul.contents(haul.bucket()),16)
   return
+ g.button(g.panel_body,"Raw loads · craft stockpiles, stonebreakers and handcarts [Shift+B]",func():g.open_panel("handworks"))
+ g.label(g.panel_body,"Dress raw loads at a breaker or hold Shift+E in the field. This board handles finished loose materials and existing bulk wheelbarrows.",15)
  g.label(g.panel_body,"BUCKET · %d / %d units" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET],20)
  g.label(g.panel_body,DeepHaul.contents(haul.bucket()),16)
  g.label(g.panel_body,"U: unload / cache · Shift+U: load piles · C: take / park cart. Overflow stays safe.",14)
@@ -568,7 +618,7 @@ func haulage_panel():
  if haul.cart().is_empty():
   g.button(g.panel_body,"Build wheelbarrow here · 6 timber + 2 iron · 320 units",func():
    if g.zone!="mine":g.notify("Build your wheelbarrow inside the mine.")
-   elif haul.build_cart(g.player):g.notify("Wheelbarrow ready. C takes or parks it; nearby mining loads it.");g.sound.effect("build");g.save_game()
+   elif haul.build_cart(g.player):g.notify("Wheelbarrow ready. C takes or parks it; nearby field dressing loads it.");g.sound.effect("build");g.save_game()
    else:g.notify("Needs 6 timber and 2 iron ingots in stores.")
    g.open_panel("haulage",false))
  else:
@@ -590,7 +640,7 @@ func project_panel():
   var need=int(project.cost[item]);var have=g.state.count(item)
   g.label(g.panel_body,"%s · %d / %d stored · %d in field · %d shortage" % [HoldData.ITEMS[item].name,have,need,haul.in_field(item),maxi(0,need-have)],16)
  if project.money>0:g.label(g.panel_body,"Crowns · %d / %d" % [g.state.money,project.money],16)
- g.label(g.panel_body,"Field cargo becomes usable on delivery. Tracking does not reserve or spend supplies. Existing research and workshop prerequisites still apply.",16)
+ g.label(g.panel_body,"Raw chunks need dressing at a breaker or in the field; processed cargo becomes usable on delivery. Tracking does not reserve or spend supplies. Existing research and workshop prerequisites still apply.",16)
  var choices=g.row(g.panel_body)
  for goal in [["cart","Wheelbarrow"],["iron","Iron"],["steel","Steel"],["assembly","Drive assembly"]]:
   g.small_button(choices,"Track · "+goal[1],func():g.state.hauling.project=goal[0];g.save_game();g.open_panel("projects",false))

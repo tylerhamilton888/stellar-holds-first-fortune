@@ -1,3 +1,8 @@
+## After 0.55.0
+- Player acceptance of the 10–15 minute site-development goal: excavation weight, mineral value, field-versus-bench convenience, hauling and sound. Tune from actual feedback; preserve 150-unit/s unladen travel and one-owner material records.
+- Existing miners/automation remain functional. Raw-workstation NPC operation and dedicated industrial hauling jobs are still deferred; do not claim those are implemented.
+- Retain .54 reference art, previous world/interior scope and the unresolved Defender follow-up. Current scans use October 11 definitions and cannot establish a Windows Defender verdict.
+
 ## After 0.54.0
 - Player acceptance of the October 19 reference interpretation, walk/carry/work contact, smaller world scale, slower planted mining and Windows Keldrath performance. Keep native evidence and compare new work at gameplay size.
 - Expand the connected world and give Keldrath richer districts/interiors and daily activity. The new facades/vault do not finish this larger request. Replace remaining older props/interior treatments to match the new Folk.

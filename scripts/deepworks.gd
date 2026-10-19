@@ -88,7 +88,35 @@ func target(origin:Vector2,aim:Vector2,reach:float=88)->Vector2i:
   var c=cell(origin+delta.normalized()*i)
   if at(c)!=0:return c if at(c)!=8 else Vector2i(-1,-1)
  return Vector2i(-1,-1)
-func resistance(kind:int)->float:return {1:1.0,2:2.0,3:3.0,4:2.5,5:1.5,6:4.0,7:6.0}.get(kind,1.0)
+func resistance(kind:int)->float:return {1:1.0,2:3.6,3:4.8,4:4.2,5:2.8,6:6.0,7:8.0}.get(kind,1.0)
+func exposed(c:Vector2i,z:int=-1)->int:
+ var n=0
+ for d in DIRS:
+  if walkable(c+d,z):n+=1
+ return n
+func mastery()->int:
+ var practice=int(state.hauling.get("hands",{}).get("skills",{}).get("miner",0))
+ return 2 if practice>=40 else 1 if practice>=12 else 0
+# Additive prospect notes follow the existing dipping geology, without regenerating saves.
+func formation(c:Vector2i,z:int=-1,kind:int=-1)->Dictionary:
+ var level=depth() if z<0 else z;var k=at(c,level) if kind<0 else kind
+ if k not in [3,4,5,6]:return {}
+ var rng=RandomNumberGenerator.new();rng.seed=int(data.seed);var offset=rng.randf_range(-2,2)
+ var best=-1;var distance=7.0
+ for v in 5:
+  if [5,3,4,3,6][v]!=k:continue
+  var delta=absf(c.x-(13+v*13+sin(c.y*.12+v+offset)*3+level*1.2))
+  if delta<distance:distance=delta;best=v
+ var id=str(k)+":"+("seam"+str(best) if best>=0 else "pocket"+str(c.x/8)+":"+str(c.y/8))
+ return {"id":id,"name":{3:"Anvil iron",4:"Copperfold",5:"Blackribbon coal",6:"Prismatic root"}[k]+(" · seam "+str(best+1) if best>=0 else " · pocket"),"kind":k}
+func record_lode(c:Vector2i,z:int,k:int,count:int):
+ var f=formation(c,z,k)
+ if f.is_empty():return
+ if not data.has("prospects"):data.prospects={}
+ if not data.prospects.has(f.id):data.prospects[f.id]={"name":f.name,"kind":k,"depths":[],"loads":0,"units":0}
+ var note=data.prospects[f.id];var level=depth() if z<0 else z
+ if level not in note.depths:note.depths.append(level)
+ note.loads=int(note.loads)+1;note.units=int(note.units)+count
 # Grade is derived from seed and position: old excavations are never regenerated.
 func grade(c:Vector2i,z:int=-1)->int:
  var level=depth() if z<0 else z
@@ -97,32 +125,35 @@ func grade(c:Vector2i,z:int=-1)->int:
  var value=sin(c.y*.17+phase+level*.21)+cos(c.x*.22-level*.19)
  return 2 if value>.55 else (0 if value<-.65 else 1)
 func yield_count(c:Vector2i,z:int=-1)->int:
- return [1,2,4][grade(c,z)] if at(c,z) in [3,4,5] else 1
+ return [3,5,8][grade(c,z)] if at(c,z) in [3,4,5] else 4 if at(c,z) in [2,7] else 3 if at(c,z)==6 else 1
 func grade_label(c:Vector2i,z:int=-1)->String:
  return ["LEAN", "BANDED", "RICH"][grade(c,z)] if at(c,z) in [3,4,5] else ""
-func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:String="pick")->Dictionary:
+func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:String="pick",work:Dictionary={})->Dictionary:
  var k=at(c,z)
  if k in [0,8]:return {}
  if k==7 and not state.steel and not thermal:return {"blocked":true}
  var l=layer(z);var id=key(c)
  var prior=float(l.damage.get(id,0))
- var power=10.0 if thermal else (2.0 if state.steel else 1.0)
- if method=="hammer" and not thermal:power=3.0 if prior>0 else .65
+ var power=12.0 if thermal else (1.65 if state.steel else 1.0)
+ if method=="hammer" and not thermal:power=2.6 if prior>=resistance(k)*.4 else .65
+ if not thermal and exposed(c,z)>=2:power+=.3
+ if not thermal:power+=float(work.get("focus",0))
  l.damage[id]=prior+power
  if l.damage[id]<resistance(k):return {"kind":k,"broken":false}
- var count=yield_count(c,z)+(1 if method=="careful" and k in [3,4,5] else 0)
+ var count=yield_count(c,z)+(1+int(work.get("recovery",0)) if method=="careful" and k in [3,4,5,6] else 0)
  set_cell(c,0,z);l.damage.erase(id)
- # A contact opens hairline fractures; neighbors never break or yield remotely.
+ # Joint stress is persistent. Only a later, exposed contact can release a section.
  for d in DIRS:
   var n=c+d;var nk=at(n,z)
   if nk in [2,3,4,7] and method!="careful":
-   var nid=key(n);l.damage[nid]=minf(resistance(nk)*.65,float(l.damage.get(nid,0))+(.5 if method=="hammer" else .25))
+   var nid=key(n);l.damage[nid]=minf(resistance(nk)*.8,float(l.damage.get(nid,0))+(.9 if method=="hammer" else .4)+float(work.get("fracture",0)))
  var item=HoldData.TILES[k].item
  if thermal:
   if k in [3,4]:item="iron_slag" if k==3 else "copper_slag"
   if k==5:count=0
  if deliver:state.add(item,count)
  state.mined+=1
+ if not thermal:record_lode(c,z,k,count)
  if k==6 and not state.discovered:state.discovered=true;state.money+=40
  return {"kind":k,"broken":true,"item":item,"count":count}
 func survey(p:Vector2)->Array:

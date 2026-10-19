@@ -160,6 +160,12 @@ func load_world(geo:Geology)->Dictionary:
  if not f:return {}
  var d=JSON.parse_string(f.get_as_text())
  if not d is Dictionary or d.get("version",0)!=1 or d.get("cells",[]).size() not in [Geology.W*Geology.H,96*44]:return {}
+ # Raw mineral metadata is additive, but old executables would treat it as stone.
+ # Preserve exact pre-refinement bytes before any new-version autosave.
+ if int(d.get("hauling",{}).get("mining_revision",0))<55:
+  var backup=save_path()+".pre-mining-55-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  # Art selections expand additively. Keep an exact prior save for old-build rollback.
  if int(d.get("surface",{}).get("folk_revision",0))<54:
   var backup=save_path()+".pre-folk-54-"+str(Time.get_ticks_usec())+".bak"
@@ -185,6 +191,7 @@ func load_world(geo:Geology)->Dictionary:
  surface=d.get("surface",{})
  deepworks=d.get("deepworks",{})
  hauling=d.get("hauling",{})
+ hauling.mining_revision=55
  for k in ["inventory","money","tech","queue","market","steel","worker","automaton","priority","ship_stage","launched","contract","bargain","hospitality","elapsed","mined","seed_value","trees","discovered","agents_enabled","volume","music_volume","ambience_volume","effects_volume","footsteps_volume","dialogue_volume","shake"]:
   if d.has(k):set(k,d[k])
  # Earlier saves already owned their claim; do not re-lock their progression.
