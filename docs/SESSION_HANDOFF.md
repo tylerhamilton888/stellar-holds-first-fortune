@@ -1,4 +1,14 @@
-# Drawn grips and compact Folk — 0.57.0
+# Whole-character art checkpoint — unreleased, 2026-10-19
+
+User's latest direction: draw the characters as one piece instead of fitting a separate head to an animated body. .57 is mechanically recoverable but its visuals were rejected: oversized detached heads, circular skin patch, inconsistent skin coloring and unconvincing movement. Do not treat earlier successful tests as visual acceptance.
+
+Checkpoint `whole-figure-study-58` follows .57 commit `9ffeb598868f95a7776c662ea738da7440b21fa0`. That commit/tree and incremental bundle were verified before editing; `pre-folk-0.58.0` preserves it. Current production rendering, saves and game version remain .57. No new Windows package exists for this study.
+
+New assets: assets/folk-v58/male-core.png, female-core.png, front-study.png; metadata and exact prompts alongside them. Each painting contains a complete head/body/limb/tool figure. `scripts/whole_folk.gd` is an inactive single-atlas-region development renderer. `tools/measure_whole58.py` measures source alpha without editing paintings. `tests/whole58.gd` produced native captures and passed its source-bound checks. See art/whole-figure-study.md for actual findings and the remaining release gate. Core front walk turns sideways; rear-quarter and repeated keys still need correction. The second front study holds facing but duplicates leg phases, so is not used by the renderer.
+
+Next work must finish whole-figure identity/action coverage and motion, then activate one coherent backend through HoldFolk/HoldDrawnAnimation, portraits and scene warm-up. Preserve seven male/female sculpts, saved palettes, resource handling, all work/equipment states and actual contact timing. Do not mix the new walk with old assembled heads during work, or silently map every saved sculpt to the two first drafts. Native review is required before any release. This checkpoint demonstrates the direction; it does not fulfill the complete animation replacement.
+
+## Previous release implementation — 0.57.0
 Updated 2026-10-19 UTC. Checkpoint `grips-0.57.0`; pre-edit `pre-grip-0.57.0` preserves verified .56 commit `bbf977acbf60d58fd30b22b124f77f7d7cec8f6f`. Its recovery bundle and full Git object integrity were checked before editing. All previous versions remain; no remote changed or pushed.
 
 ## Current implementation

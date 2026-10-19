@@ -1,3 +1,7 @@
+# Highest priority — whole painted characters
+
+Replace the rejected .57 composite head/body/legs with complete drawn animation frames. Start from the unreleased whole-figure study, correct walk facing and repeated leg phases, and finish every saved identity and action. Preserve skin/hair/cloth choices with material-aware whole-figure coloring. No old-head fallback during work; no silent collapse of seven sculpts to two. Native moving inspection and actual gameplay integration are required before a new build. See art/whole-figure-study.md.
+
 ## After 0.57.0
 - Replaced floating equipped tools with complete drawn grips and shortened/broadened Folk bodies. Await user judgement of silhouette, held/work transition and side steps.
 - Equipped upper poses remain steady while the four drawn foot keys cycle. More per-step shoulder/arm variation and additional work/combat directions are future art refinements; do not claim a full animation redraw.

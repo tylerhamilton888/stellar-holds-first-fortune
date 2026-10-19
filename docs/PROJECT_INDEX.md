@@ -1,4 +1,6 @@
 # Authoritative project index
+
+Latest development checkpoint: **whole-figure-study-58**, an unreleased art/renderer study. Current Windows release remains **0.57.0**, whose visuals the user rejected. `art/whole-figure-study.md` records the new complete-character direction, native findings and unfinished integration requirements. `assets/folk-v58` contains the original paintings and exact prompts; `scripts/whole_folk.gd` is inactive in production. `Stellar-Holds-Whole-Figure-Study-58.zip` and its incremental Git bundle preserve this work after .57. No .58 game build is claimed.
 Updated 2026-10-19 UTC. Build **0.57.0**, checkpoint **grips-0.57.0**. The October 19 user concept remains the art authority; shipped assets are not automatically accepted.
 
 | Artifact | Purpose |

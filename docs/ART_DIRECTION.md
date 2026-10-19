@@ -1,4 +1,10 @@
-# Holding and proportions — 0.57.0
+# Whole-character direction — unreleased 0.58 study
+
+The user rejected .57's oversized separate heads, skin-circle recoloring, lanky assembled bodies and floating-looking grips, then explicitly requested characters drawn as one piece. This supersedes the separated-head guidance below. Every accepted animation key must be a complete painted Dwarf: naturally connected head/neck/shoulders, matching face/arm skin, compact adult proportions, readable planted and lifted feet, and fingers drawn around the actual tool. Do not bake the old composite and describe it as a redraw. Palette customization may use material masks on a whole figure; it must not introduce geometric face patches or recolor skin shadows as hair.
+
+The first two complete-figure sheets and native review are retained under assets/folk-v58 and docs/testing/whole-figure-study. They are an ART CHECKPOINT, not a finished animation library or an active production renderer. Front-walk turning, repeated keys and rear-quarter drift remain. Preserve all seven male/female saved identities and palette choices during the eventual replacement; never silently collapse them to two defaults. See art/whole-figure-study.md.
+
+# Historical implementation — 0.57.0 (rejected by the user)
 Equipped tools must be drawn with their supporting forearms and wrapped fingers. Do not restore a generic item icon over a neutral hand in active top-down play. Dedicated front/side/rear-quarter/back bodies own the grip. Actual inventory supplies may sit inside the small supported tray, behind its rim/fingers; do not fabricate contents for empty stacks. Work/carry poses override equipment.
 
 Body basis is 37 rather than 43 units with 1.14 horizontal build; head scale remains unchanged. Apply the same proportions to work, carry, NPC bodies and drawn footwork. Preserve anatomical collar overlap, planted/returning foot distinction and clear tool contact. Holding upper bodies currently remain steady above the drawn foot cycle; dedicated per-step upper-body artwork is a possible refinement, not a completed feature. See art/production-0.57.0.md and native grips-0.57.0 captures.

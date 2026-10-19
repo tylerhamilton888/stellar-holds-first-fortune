@@ -1,3 +1,9 @@
+# Unreleased — whole-character art study
+
+- User rejected .57's detached heads and skin-circle coloring; complete painted character frames are now the target.
+- Added original whole male/female core studies, an eight-frame front correction study, native single-frame rendering/registration checks and review captures.
+- Recorded remaining facing/foot-cycle/identity/action work. Production renderer and .57 playable remain unchanged; no new release or save migration.
+
 # 0.57.0 — Drawn grips and compact Folk
 - 48 complete equipped body/tool/hand drawings across two body types and four facings; removed active surface/mine/combat held-tool icon overlays.
 - Shorter, broader bodies and corresponding drawn footwork; unchanged identity head scales and anatomical attachment. Corrected female collar overlap and stray rear-hair crop fragment.
