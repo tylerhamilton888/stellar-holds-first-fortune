@@ -2,7 +2,7 @@ extends SceneTree
 var g
 var passed=0
 var failed=0
-const OUT="res://docs/testing/mining-0.55.0/handworks"
+var OUT="res://docs/testing/mining-0.55.0/handworks"
 func _initialize():call_deferred("run")
 func check(ok:bool,label:String):
  if ok:passed+=1;print("PASS ",label)
@@ -21,8 +21,11 @@ func snap(name:String):
  await RenderingServer.frame_post_draw
  root.get_texture().get_image().save_png(OUT+"/"+name+".png")
 func run():
+ var args=OS.get_cmdline_user_args()
+ if not args.is_empty():OUT=args[0]
  DirAccess.make_dir_recursive_absolute(OUT)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
+ if args.size()>1:g.state.appearance=HoldAppearance.normalized({"sculpt":int(args[1]),"hair_color":3})
  g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false;g.state.claim_id="old_delving";g.surface.enter("claim");settle()
  var h=g.handworks;g.state.add("wood",100);g.state.add("stone",100);g.state.add("iron",10)
  at(Vector2(940,660));var before=g.state.count("wood")

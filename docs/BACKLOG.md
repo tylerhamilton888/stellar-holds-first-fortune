@@ -1,3 +1,9 @@
+# Folk-quality58 follow-up
+
+Completed full-beard coverage for the former moustache-only male, proper male axe strokes, male3 equipped topknot, male4 cropped nape and female2 axe waves. Those specific entries in older notes are superseded. Completed targeted extraction repairs do not certify every old source edge.
+
+Next animation gates remain: stable carry shoulders and mixed/double loads; equipped passing poses; broader material parity, tray occlusion, tattoos, lift-log and directional work contacts. Preserve full male beards and run the colour audit after new art. Read testing/quality58.md. No new Windows release or full visual acceptance.
+
 # Animation-refinement58 follow-up
 
 Rear equipped faces, bun/bob axe hair, the bob spade/rifle clipping and female reeling props have targeted corrections. Carry shoulders, double/mixed loads, passing gaits, older male4 rear plaits, male3 topknot, loose-wave axe hair, material parity, tray occlusion, tattoos and full work contacts remain. Rejected image generations must not be revived as accepted work. Read testing/refinement58.md.

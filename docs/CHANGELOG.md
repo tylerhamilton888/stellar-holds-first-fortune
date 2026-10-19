@@ -1,3 +1,11 @@
+# Unreleased — male beards and character quality
+
+- Gave the moustache-only male a full beard across the active complete-figure poses; preserved saved sculpt identity and palettes.
+- Corrected male axe strokes, selected topknot/cropped-nape/loose-wave continuity, a handling extraction fragment and the raised pick's neighboring tool fragment.
+- Integrated 356 selected keys from thirteen new source paintings, preserving originals and prior rear corrections.
+- Passed 97 focused native creator, movement, material handling, Pinewood, mining, stairs and save/reload checks. See testing/quality58.md for palette and native art evidence.
+- This focused milestone does not close carry/gait or broader visual release gates; no new Windows build.
+
 # Unreleased — selective animation refinement
 
 - Integrated reviewed whole-frame rear equipment, bun/bob axe, spade, rifle-boot and fishing-recovery corrections. Preserved original sources and the verified hair palette.

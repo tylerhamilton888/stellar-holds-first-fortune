@@ -1,27 +1,25 @@
-# Animation refinement — runnable, unreleased milestone
+# Folk quality — runnable, unreleased milestone
 
-2026-10-19 · continue from **animation-refinement58**, following **palette-fix58** on `integrate/whole-0.58.0`. The requested whole-character overhaul is still unfinished. No new Windows package was produced or represented as ready.
+2026-10-19 · continue from **folk-quality58**, following **animation-refinement58** on `integrate/whole-0.58.0`. This implements the user's full-beard requirement and focused character repairs. The larger animation overhaul remains unfinished; no new Windows package is represented as ready.
 
-The user asked to proceed, then spotted doubled axes/hammers/picks in a generated rear-view sheet. Those were generation errors, not intended equipment. The duplicated-tool sheets were rejected and are not referenced by the game. Several carry redraws also failed proportional or footfall continuity and were rejected. Do not revive them as completed animation work.
+## Integrated work
 
-## Integrated repairs
+All seven male identities have full beards. The former moustache-only sculpt keeps its index, face, saved palette and other identity data, but is now “Grand moustache & beard.” Its chin/jaw remains covered through idle, movement, tools, work, drinking and hauling. The legacy clean-shaven enum remains for female/backward compatibility; male normalization never selects it.
 
-`assets/whole-v58/refinements.json` selects **42 complete keys**: twelve male-4 rear equipped keys, six male-5 rear keys, eight bun/bob axe keys, one bob spade key, eight complete bob rifle keys, and seven female reeling keys reusing their own raised-rod drawings. Original painted PNGs remain unchanged. The new selected paintings and exact built-in imagegen prompts/rejection decisions are in `refinements-production.json`.
+Thirteen new complete-figure source PNGs supply **356 distinct active key substitutions**. `assets/whole-v58/refinements.json` is the exact selection; `quality-production58.json` records built-in imagegen briefs and decisions. Original PNGs and prior rear-tool repairs remain. All male axe sequences now show an actual axe throughout the stroke. Male3 equipped topknot, male4 cropped rear/nape and female2 loose-wave axe hair have targeted continuity repairs. Male2 handling extraction excludes an observed neighboring rifle fragment. A separate complete male5 raised-pick painting replaces a source key touching the next row; a bottom-only crop was insufficient and was discarded.
 
-The metadata extractor now supports explicit selective correction layouts. On three reviewed sheets it preserves isolated complete silhouettes and searches real row/column gutters for touching figures. This repairs tool clipping/neighbor fragments caused by fixed column cuts. A watershed experiment failed native review and was removed. The renderer still draws one complete figure; no independent head or limb assembly was added.
+The renderer still paints one complete figure. No separate head, floating tool or new limb assembly. Reserved purple source pigment is replaced by the saved natural hair colour; always run the palette audit after new art. Mining balance, movement speed, material ownership, terrain, save schema and progression are unchanged.
 
-Rifle muzzle and fishing-line attachment coordinates now come from the actual drawn rightmost tool contour. The fishing line uses the same .85 scale as the surface actor. The prior source-purple correction is unchanged.
+## Validation
 
-## What is not finished
+Read `testing/quality58.md` and `testing/quality58/` for final evidence. **97/97 focused native gameplay checks**: beard identity/creator/movement/reload 27, Pinewood/material handling/workstations 32, Deepworks mining/progression/stairs/reload 38. Native review covers selected full sheets, all male/female axe phases, enlarged male5 pick/axe/drink, colour variants, creator, Keldrath, tavern, throne and real work. Palette results are recorded separately in the verification report. Checks use Godot 4.4.1, isolated data, software OpenGL and Dummy audio.
 
-Full visual release gate remains failed. Carry shoulders and mixed/double loads still need correction; the rejected carry trials did not solve this. Two-key equipped gaits still lack good passing poses. Male-4 corrected equipped rear hair is cropped, but older rear-quarter/idle/work art still has extra plaits. Male-3 topknot, loose-wave axe hair, some work-facing transitions and other identity drift remain. The bob rifle feet are complete; its gait is not newly certified. Material parity, tray occlusion, tattoos, lift-log and full directional work contacts remain. See `art/whole-integration-58.md`.
+## Remaining release gates
 
-Do not treat this milestone or the last .57 Windows package as the finished repair. The source title remains development. Preserve all fourteen identities, saved palettes, progression and original assets.
+Carry shoulders, mixed/double cargo shape and side continuity remain. Equipped two-key gaits still need good passing poses. Broader material parity, tray occlusion, tattoos, lift-log and full directional work contacts remain. This beard repair preserves existing load poses; it does not certify their continuity. Other world/architecture quality, audio and hardware performance were not accepted by these tests. The last Windows package is still .57.0, with visuals rejected by the user. Do not call this a finished .58 release.
 
-## Validation and recovery
+## Recovery and efficiency
 
-Read `testing/refinement58.md` for final native results and limits. Focused controls cover rear tool movement, load ownership, actual fishing/reeling and save/reload. Native review includes work, rifle boots, all male-4 equipment keys, tool sockets, gameplay captures and a short pose-motion sequence. Existing broad mining/Pinewood/combat results are historical, not rerun claims.
+Pre-edit tag **pre-quality-beards58** preserves `a610e73d0dc61a6a5c767a379708bc0f51d2b8ab` (animation-refinement58), tree `ff539e10d987ae80a3205d5b6bda91f1ea0781f1`. Its bundle was independently verified before editing. New recovery is `Stellar-Holds-Folk-Quality58.bundle`, incremental after animation-refinement58; the companion Recovery.txt records exact commit/tree/hash and independent restore verification. Preserve the .51 full baseline, increments through .57, whole-figure-study-58, whole-integration-wip-58, palette-fix58 and animation-refinement58. No remote changed or pushed.
 
-Pre-edit tag **pre-motion-refinement58** preserves `ec53abe1684aeb56dcc3d63c68923facd756f6ce` (palette-fix58), tree `cf129e8664e6cb481946eb24364bef228225865a`. Its recovery bundle was verified before edits. New incremental recovery follows palette-fix58; the companion Recovery.txt records exact commit/tree/hash and independent restore verification. Retain the .51 full baseline, release increments through .57, whole-figure-study-58, whole-integration-wip-58 and palette-fix58. No remote changed or pushed.
-
-Use isolated saves and strictly sequential native displays. Wait for each runner's completion marker before starting another. `grips58.gd` and `palette_audit58.gd` now accept an output directory argument so previous evidence is preserved.
+Native displays must be strictly sequential: require runner completion AND explicit test marker before starting another. Use isolated saves. `handworks55.gd` and `mining55.gd` now accept output directory and male sculpt arguments; defaults preserve existing tests. Keep historical evidence separate from rerun claims. The source title remains development. Preserve all fourteen identities, palettes, original assets, UIDs and saves.

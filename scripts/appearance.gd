@@ -7,7 +7,7 @@ const CLOTH_COLORS=["407e83","506a9d","925c91","a84e47","538064","b28a48","6b788
 const CLOTH_NAMES=["Fjord teal","Woad blue","Heather","Rowan red","Pine green","Ochre","Slate","Night violet"]
 const SKIN_COLORS=["f3d6bc","eed0b7","e6c1ad","f4dcd0"]
 const SKIN_NAMES=["Ivory","Warm fair","Rose fair","Porcelain"]
-const SCULPTS=["Short square beard","Twin oath braids","Mountain greatbeard","Topknot & braids","Banded forkbeard","Grand moustache","Bare crown & beard"]
+const SCULPTS=["Short square beard","Twin oath braids","Mountain greatbeard","Topknot & braids","Banded forkbeard","Grand moustache & beard","Bare crown & beard"]
 const FEMALE_SCULPTS=["Crown braid","Practical bun","Loose waves","Side braid","Layered bob","Twin braids","High ponytail"]
 const MALE_HAIR=["Swept crest","Braided sides","Wild mane","High knot","Cropped","Bare crown"]
 const FEMALE_HAIR=["Twin braids","Crown braid","Wave & braid","High knot","Side braid","Loose waves"]
@@ -30,7 +30,7 @@ static func normalized(raw:Dictionary)->Dictionary:
  # the closest design, preserving names, palettes, equipment and world state.
  p.sculpt=clampi(int(raw.get("sculpt",1 if int(raw.get("beard_style",0)) in [1,6,7,8,9] else 0)),0,6)
  if p.gender==1:p.hair_style=[1,3,5,4,2,0,3][p.sculpt];p.beard_style=5
- else:p.hair_style=[0,1,2,3,1,0,5][p.sculpt];p.beard_style=[0,7,8,2,9,5,3][p.sculpt]
+ else:p.hair_style=[0,1,2,3,1,0,5][p.sculpt];p.beard_style=[0,7,8,2,9,3,3][p.sculpt]
  # Canonical fields win; full name is derived for display.
  var legacy=str(raw.get("name","Haldor Stonehand")).strip_edges()
  var honorific=str(raw.get("title","")).strip_edges().left(16)

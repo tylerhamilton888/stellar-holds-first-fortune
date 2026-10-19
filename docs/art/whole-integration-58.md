@@ -1,3 +1,11 @@
+# Folk quality update — 2026-10-19
+
+**folk-quality58** implements full beards for all male Dwarfs. Sculpt 5 keeps its saved identity but now has a complete rounded beard under the grand moustache. Selected original whole drawings replace its visible face poses. Proper male axe strokes, male3 equipped topknot, male4 cropped nape and female2 axe waves supersede those specific earlier hair/tool blockers. Male2 handling crop and male5 raised-pick neighbor fragments are repaired. See `../testing/quality58.md`.
+
+Thirteen new PNG sources supply 356 active key substitutions. Original art remains unchanged. Exact prompts: `assets/whole-v58/quality-production58.json`; selection: `refinements.json`. Source purple is a palette marker, never the intended final hair colour.
+
+The historical tables below remain useful for unresolved carry, gait, material, tray and directional-work limitations. This focused pass preserves existing cargo poses and does not certify their side continuity or footfalls. No new Windows release.
+
 # Refinement update — 2026-10-19
 
 `animation-refinement58` repairs male4/male5 rear equipped faces, bun/bob axe hair, female4 spade and rifle boot clipping, and female fishing recovery. Muzzle/fishing endpoints are now measured from the drawing. Selected extraction now follows isolated silhouettes and actual gutters. See `../testing/refinement58.md`.

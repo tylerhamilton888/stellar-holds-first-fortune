@@ -1,3 +1,9 @@
+# Male Dwarf quality rule — folk-quality58
+
+**Every male Dwarf has a full beard covering the chin and jaw.** A moustache alone is not acceptable. Preserve this identity through all views, work, drinking, equipment and hauling; the beard is part of the complete painting, behind gripping hands and props. Never substitute a clean-shaven version in an animation key. Saved sculpt indices and natural palettes remain stable.
+
+This pass repairs male axe strokes and selected topknot/cropped-nape/loose-wave continuity. Exact source selection and production briefs: `refinements.json` and `quality-production58.json`. Inspect native extraction, not only the generated sheets. The male5 raised pick uses a separate complete pose because a neighboring tool touched the original boot. Full carry/gait release gates remain; see `testing/quality58.md`.
+
 # Refinement gate — animation-refinement58
 
 Targeted corrections are recorded in `assets/whole-v58/refinements.json`; briefs and rejection decisions are in `refinements-production.json`. Generated tool duplication is an error, never intended equipment. Complete-frame drawings must preserve one physical tool, grips, body/identity, consistent footfalls and source margins. Inspect extracted native motion too: an attractive source can still fail atlas extraction or continuity. No full release acceptance is claimed.

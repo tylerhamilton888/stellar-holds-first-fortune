@@ -1,4 +1,6 @@
-Latest source checkpoint: **animation-refinement58**, an unreleased repair batch after palette-fix58. Read `testing/refinement58.md` and the updated handoff. Recovery: `Stellar-Holds-Animation-Refinement58.bundle` plus companion Recovery.txt. Forty-two selected key fixes, reviewed atlas extraction and drawn tool endpoints; full carry/gait acceptance remains blocked. No new Windows package.
+Latest source checkpoint: **folk-quality58**, an unreleased beard and character quality pass after animation-refinement58. Read `testing/quality58.md`, `CURRENT_STATUS.md` and `SESSION_HANDOFF.md`. Thirteen source paintings, 356 selected keys; all male Dwarfs fully bearded, corrected male axe strokes and selected hair continuity. 97 focused native gameplay checks passed. Recovery: `Stellar-Holds-Folk-Quality58.bundle` and companion Recovery.txt. Carry/gait work remains; no new Windows package.
+
+Previous source checkpoint: **animation-refinement58**, an unreleased repair batch after palette-fix58. Read `testing/refinement58.md` and the updated handoff. Recovery: `Stellar-Holds-Animation-Refinement58.bundle` plus companion Recovery.txt. Forty-two selected key fixes, reviewed atlas extraction and drawn tool endpoints; full carry/gait acceptance remains blocked. No new Windows package.
 
 # Authoritative project index
 

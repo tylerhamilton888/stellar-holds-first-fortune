@@ -80,6 +80,11 @@
     "reason": "neighbor contact in source alpha; visually review edges"
   },
   {
+    "sheet": "male-axes-quality58-1",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
     "sheet": "male1-equipped",
     "segmented": true,
     "reason": "neighbor contact in source alpha; visually review edges"
@@ -115,12 +120,37 @@
     "reason": "neighbor contact in source alpha; visually review edges"
   },
   {
+    "sheet": "male3-knot-equipped58",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male4-cropped-equipped58",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
     "sheet": "male4-equipped",
     "segmented": true,
     "reason": "neighbor contact in source alpha; visually review edges"
   },
   {
     "sheet": "male5-backfix-v3",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male5-bearded-core",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male5-bearded-equipped",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male5-bearded-handling",
     "segmented": true,
     "reason": "neighbor contact in source alpha; visually review edges"
   },

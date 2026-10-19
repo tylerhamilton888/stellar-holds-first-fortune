@@ -1,3 +1,9 @@
+# Current quality checkpoint — folk-quality58
+
+Read [quality verification](testing/quality58.md). `beard_quality58.gd` covers all male beard normalization, creator, actual equipped movement and legacy-profile reload (27 checks). `handworks55.gd` and `mining55.gd` accept optional output directory and male sculpt; sculpt 5 reruns passed 32 and 38 checks. `quality_art58.gd` renders the selected complete keys, work phases and native pose-motion frames. Run `palette_audit58.gd` after source changes.
+
+Use isolated saves, sequential native displays and explicit completion markers. Screenshot poses and passing mechanics do not certify a good gait. Preserve previous checkpoint evidence; do not mix historical totals into current results.
+
 # Current refinement checkpoint
 
 Read [refinement verification](testing/refinement58.md). Use `refinement_play58.gd`, `refinement58.gd` and `refinement_sockets58.gd`. `grips58.gd` and `palette_audit58.gd` accept an output directory after `--`; preserve previous evidence. Wait for each native completion marker before launching the next display. Full visual release acceptance remains blocked.

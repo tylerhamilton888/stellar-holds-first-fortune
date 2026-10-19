@@ -13,8 +13,10 @@ func cut(c:Vector2i,method:String="pick"):
   g.deep.hit(c)
  g.deep.strike_left=0;g.deep.contact_hold=0
 func run():
- output="res://docs/testing/mining-0.55.0";DirAccess.make_dir_recursive_absolute(output)
+ var args=OS.get_cmdline_user_args()
+ output=args[0] if not args.is_empty() else "res://docs/testing/mining-0.55.0";DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle();g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false
+ if args.size()>1:g.state.appearance=HoldAppearance.normalized({"sculpt":int(args[1]),"hair_color":3})
  g.surface.enter("trail",Vector2(950,340));settle();key(KEY_E);settle()
  check(g.zone=="mine","Existing trail doorway enters integrated Deepworks")
  var w=g.deep.world;var h=g.handworks;var c=Vector2i(12,8);w.set_cell(c,2);w.layer().damage.erase(Deepworks.key(c));g.player=Deepworks.center(Vector2i(11,8));g.hotbar.select(0);var origin=g.player
