@@ -1,3 +1,5 @@
+0.61.3: Shared placement grid/validity, fine furniture placement and safe repositioning implemented. Broader animation coverage, environment scale/art acceptance and Windows packaging remain separate follow-ups. Test placement around doors, on upper storeys and beside storage in player sessions.
+
 0.61.2: Title sprite parity and illustrated loading feedback implemented. First-time palette preparation and synchronous world generation remain performance follow-ups; repeat preparation now reuses disk-cached frames.
 
 # Foundation follow-up

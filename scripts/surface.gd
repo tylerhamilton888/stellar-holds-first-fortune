@@ -17,6 +17,9 @@ var g
 var area="hearthward"
 var return_area="hearthward"
 var selected_chest=""
+const FURNITURE_GRID=10.0
+const FOOT_RADIUS=10.0
+var moving_furnishing:Dictionary={}
 var placing=""
 var direction=Vector2.DOWN
 var foot=0.0
@@ -107,7 +110,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  var landing=world.arrival(old,id) if at==Vector2.INF else at
  g.player=spawn(id) if landing==Vector2.INF else landing
  if not walkable(g.player):g.player=spawn(id)
- g.velocity=Vector2.ZERO;g.grounded=true;g.walking_pose=false;g.gait_clock=0;g.swing=0;placing="";cut_clock=0;cut_target=-1;house.impact=0
+ g.velocity=Vector2.ZERO;g.grounded=true;g.walking_pose=false;g.gait_clock=0;g.swing=0;placing="";moving_furnishing={};cut_clock=0;cut_target=-1;house.impact=0
  g.combat.armed=false;g.combat.reset_actions();g.construction.selected=""
  g.state.region_travel.active=false;g.state.hold_travel.active=false
  g.camera=camera_target();g.close_panel();g.spawn_agents();g.sound.set_context(g.room_id if room() else g.zone)
@@ -218,17 +221,17 @@ func base_obstacles()->Array:
   for i in TREES.size():
    if g.state.road_trees[i]>0:list.append(Rect2(TREES[i]-Vector2(17,24),Vector2(34,30)))
  return list
-func obstacles()->Array:
+func obstacles(ignore:Dictionary={})->Array:
  var list=base_obstacles()
  if area in ["claim","pinewood"] and house.level()==0:list.append(HoldFurnishings.footprint("desk",Vector2(740,780) if area=="claim" else Vector2(300,790)))
  list.append_array(house.obstacles())
  if g.fieldwork:list.append_array(g.fieldwork.obstacles())
  for c in g.state.surface.chests.values():
-  if house.local(c):list.append(HoldFurnishings.footprint("chest",Vector2(c.x,c.y)))
+  if house.local(c) and (ignore.is_empty() or c!=ignore):list.append(HoldFurnishings.footprint("chest",Vector2(c.x,c.y)))
  for d in g.state.surface.decor:
-  if house.local(d):list.append(HoldFurnishings.footprint(d.kind,Vector2(d.x,d.y)))
+  if house.local(d) and (ignore.is_empty() or d!=ignore):list.append(HoldFurnishings.footprint(d.kind,Vector2(d.x,d.y)))
  return list
-func walkable(p:Vector2)->bool:
+func walkable(p:Vector2,ignore:Dictionary={})->bool:
  if area=="claim" and house.level()>0 and not house.on_floor(p,house.level()):return false
  if HoldWorldZones.ward(area):
   if not Rect2(110,210,1660,780).has_point(p):return false
@@ -236,8 +239,8 @@ func walkable(p:Vector2)->bool:
   if not Rect2(175,290,610,345).has_point(p):return false
  elif not Rect2(90,210,1700,750).has_point(p):return false
  if area=="trail" and p.x>1170 and p.x<1300 and (p.y<665 or p.y>735):return false
- for r in obstacles():
-  if r.grow(10).has_point(p):return false
+ for r in obstacles(ignore):
+  if r.grow(FOOT_RADIUS).has_point(p):return false
  return true
 func move(dt:float):
  if g.handworks.approaching or g.fieldwork.moving:return
@@ -261,6 +264,7 @@ func move(dt:float):
  g.velocity=(g.player-before)/maxf(dt,.001);g.grounded=true;g.walking_pose=g.velocity.length()>1
  if absf(input.x)>.1:g.face=1 if input.x>0 else -1
  if g.walking_pose:
+  if not (g.fight.enabled() and g.combat.armed):direction=(g.player-before).normalized()
   HoldDrawnLocomotion.advance(g,g.player.distance_to(before),"wood" if room() else "stone")
  cut_flash=maxf(0,cut_flash-dt)
  if area=="pinewood":chop(dt)
@@ -276,29 +280,65 @@ func input(e:InputEvent)->bool:
   if e.keycode==KEY_O and (area=="claim" or area.begins_with("home:")):g.open_panel("homestead");return true
   if e.keycode in [KEY_SPACE,KEY_V,KEY_X,KEY_P,KEY_F,KEY_Q]:return true
  if e is InputEventMouseButton and e.pressed:
-  if e.button_index==MOUSE_BUTTON_RIGHT:placing="";return true
+  if e.button_index==MOUSE_BUTTON_RIGHT:cancel_placement();return true
   if e.button_index==MOUSE_BUTTON_LEFT and placing!="":
    if placing.begins_with("house:"):house.build(g.get_global_mouse_position()+g.camera,placing.trim_prefix("house:"));house.timer=.18
    else:place(g.get_global_mouse_position()+g.camera)
    return true
  return false
+static func snap_furnishing(p:Vector2)->Vector2:return (p/FURNITURE_GRID).round()*FURNITURE_GRID
+func cancel_placement():
+ placing="";moving_furnishing={}
+func start_placement(kind:String):
+ cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
+ g.notify("Place on the fine grid. LMB builds; right click cancels. Keep approaches clear.")
+func move_nearby_furnishing()->bool:
+ if not (area=="claim" or area.begins_with("home:")):return false
+ var best:Dictionary={};var kind="";var distance=85.0
+ for d in g.state.surface.decor:
+  if house.local(d) and not d.get("fixed",false) and g.player.distance_to(Vector2(d.x,d.y))<distance:
+   best=d;kind=d.kind;distance=g.player.distance_to(Vector2(d.x,d.y))
+ for c in g.state.surface.chests.values():
+  if house.local(c) and not c.get("fixed",false) and g.player.distance_to(Vector2(c.x,c.y))<distance:
+   best=c;kind="chest";distance=g.player.distance_to(Vector2(c.x,c.y))
+ if best.is_empty():g.notify("Stand beside a furnishing you placed.");return false
+ moving_furnishing=best;g.handworks.placing="";placing=kind;g.close_panel()
+ g.notify("Reposition "+HoldFurnishings.ITEMS[kind].title+" · LMB confirms; right click leaves it in place.")
+ return true
+func furniture_ready(p:Vector2,kind:String)->bool:
+ return furniture_valid(p,kind) and (not moving_furnishing.is_empty() or g.state.afford(HoldFurnishings.ITEMS[kind].cost))
+func build_bounds()->Rect2:
+ return Rect2(175,290,610,345) if room() else Rect2(90,210,1700,750)
 func furniture_valid(p:Vector2,kind:String)->bool:
  if not (area=="claim" or area.begins_with("home:")):return false
  if not HoldFurnishings.ITEMS.has(kind) or p.distance_to(g.player)>140:return false
  var base=HoldFurnishings.footprint(kind,p)
+ if kind in ["chest","bed"] and not walkable(p+Vector2(0,25),moving_furnishing):return false
  for corner in [base.position,Vector2(base.end.x,base.position.y),base.end,Vector2(base.position.x,base.end.y),base.get_center()]:
-  if not walkable(corner):return false
- for obstacle in obstacles():
+  if not walkable(corner,moving_furnishing):return false
+ for obstacle in obstacles(moving_furnishing):
   if base.grow(6).intersects(obstacle):return false
+ # Check the entire base, not just its corners, across upper-floor tile seams.
+ if area=="claim" and house.level()>0:
+  for x in range(int(base.position.x),int(base.end.x)+1,5):
+   for y in range(int(base.position.y),int(base.end.y)+1,5):
+    if not house.on_floor(Vector2(x,y),house.level()):return false
  for point in points():
+  if not moving_furnishing.is_empty() and point.action.begins_with("chest:") and g.state.surface.chests.get(point.action.trim_prefix("chest:"),{})==moving_furnishing:continue
+  if moving_furnishing.get("kind","")=="bed" and point.action=="house_rest" and point.p==Vector2(moving_furnishing.x,moving_furnishing.y+25):continue
+  if point.action.begins_with("chest:") or point.action=="house_rest":
+   var approach=Rect2(point.p+Vector2(-16,10 if point.action.begins_with("chest:") else -10),Vector2(32,24))
+   if base.grow(FOOT_RADIUS).intersects(approach):return false
+   continue
   if p.distance_to(point.p)<80 or base.grow(36).has_point(point.p):return false
  return not base.grow(8).has_point(g.player)
 func place(p:Vector2)->bool:
- ensure();p=(p/40).round()*40
+ ensure();p=snap_furnishing(p)
  if not (area=="claim" or area.begins_with("home:")):g.notify("Build around your own hearth and claim.");return false
  if not furniture_valid(p,placing):g.notify("Choose clear ground within reach; leave room for the entire furnishing.");return false
- for point in points():
-  if p.distance_to(point.p)<80:g.notify("Keep doorways, workstations and paths clear.");return false
+ if not moving_furnishing.is_empty():
+  moving_furnishing.x=p.x;moving_furnishing.y=p.y
+  cancel_placement();g.sound.effect("build");g.save_game();return true
  var cost=HoldFurnishings.ITEMS[placing].cost
  if not g.state.afford(cost):g.notify("Bring "+HoldFurnishings.cost_text(placing)+" in your pack.");return false
  for k in cost:g.state.add(k,-cost[k])
@@ -320,6 +360,7 @@ func transfer(item:String,n:int,deposit:bool)->int:
  if source[item]==0:source.erase(item)
  g.state.surface.facts.storage=true;g.save_game();return moved
 func recover_chest()->bool:
+ cancel_placement()
  var c=g.state.surface.chests.get(selected_chest,{})
  if c.get("fixed",false):g.notify("This chest belongs to your borrowed quarters. Its contents are yours.");return false
  if c.is_empty() or not house.local(c) or g.player.distance_to(Vector2(c.x,c.y))>85:return false
@@ -327,6 +368,7 @@ func recover_chest()->bool:
   if int(value)>0:g.notify("Empty the chest before taking it apart.");return false
  g.state.surface.chests.erase(selected_chest);g.state.add("wood",4);g.close_panel();g.save_game();return true
 func recover_decor()->bool:
+ cancel_placement()
  for i in g.state.surface.decor.size():
   var d=g.state.surface.decor[i]
   if house.local(d) and g.player.distance_to(Vector2(d.x,d.y))<85:
@@ -363,7 +405,8 @@ func home_panel():
  for step in [["rest","1 · Enter your cottage and rest at the bed."],["storage","2 · Put supplies in your chest, then withdraw what you need."],["build","3 · Place a chest, table or lamp around your home."]]:g.label(g.panel_body,("✓ " if g.state.surface.facts.get(step[0],false) else "○ ")+step[1],15)
  for kind in HoldFurnishings.BUILDABLE:
   var id=str(kind)
-  g.button(g.panel_body,"Place "+HoldFurnishings.ITEMS[id].title+" · "+HoldFurnishings.cost_text(id),func():placing=id;g.close_panel();g.notify("Choose clear ground nearby. LMB builds; right click cancels."))
+  g.button(g.panel_body,"Place "+HoldFurnishings.ITEMS[id].title+" · "+HoldFurnishings.cost_text(id),func():start_placement(id))
+ g.small_button(g.panel_body,"Move nearby furnishing or chest",move_nearby_furnishing)
  g.small_button(g.panel_body,"Recover nearby placed furnishing",recover_decor)
  g.button(g.panel_body,"Build a house · floors, walls, doors and roofs",func():g.open_panel("house_build"))
  if int(h.level)==0:
@@ -422,7 +465,7 @@ func hud():
  g.hud.text=label().to_upper()+"   %d CROWNS" % g.state.money
  if g.panel_id=="":
   var p=nearest()
-  g.footer.text="LMB place "+placing+" · Right click cancel" if placing!="" else ("E · "+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
+  g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else ("E · "+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
   if g.notice_time>0:g.footer.text=g.notice
   if g.handworks.busy_hands():g.footer.text="Shift+B · Workshop lesson & crafting   Q · Set down   Shift+E · Collect"
 func draw():
@@ -511,10 +554,11 @@ func draw():
   # The footer already names this action; keep the actor and footwork unobscured.
  house.preview()
  if placing!="" and not placing.begins_with("house:"):
-  var p=((g.get_global_mouse_position()+g.camera)/40).round()*40
-  var tint=Color(.6,1,.8,.6) if furniture_valid(p,placing) else Color(1,.4,.35,.6)
-  HoldFurnishings.draw(g,p,placing,tint)
-  g.draw_rect(HoldFurnishings.footprint(placing,p),tint,false,1)
+  var p=snap_furnishing(g.get_global_mouse_position()+g.camera)
+  if area=="claim" or area.begins_with("home:"):HoldBuildPreview.grid(g,g.camera,FURNITURE_GRID,build_bounds())
+  var ok=furniture_ready(p,placing);var tint=HoldBuildPreview.color(ok)
+  HoldFurnishings.draw(g,p,placing,Color(tint,.65))
+  HoldBuildPreview.outline(g,HoldFurnishings.footprint(placing,p),ok)
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
  g.draw_rect(Rect2(0,0,960,48),Color(.06,.14,.18,.94));g.draw_line(Vector2(20,47),Vector2(940,47),Color("6e796b"))
  g.draw_rect(Rect2(0,498,960,42),Color("10232d"))

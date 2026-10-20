@@ -188,7 +188,7 @@ func room_objects()->Array:
  elif id=="home":result=[furn("table",650,330),furn("bed",290,420),furn("desk",735,515),furn("hearth",440,335)]
  for x in [220,740]:result.append(furn("lamp",x,305))
  return result
-func furn(kind:String,x:float,y:float)->Dictionary:return {"kind":"furnishing","furnishing":kind,"p":Vector2(x,y)}
+func furn(kind:String,x:float,y:float)->Dictionary:return {"kind":"furnishing","furnishing":{"table":"tea_table","counter":"serving_counter"}.get(kind,kind),"p":Vector2(x,y)}
 func room_obstacles()->Array:
  var result=[]
  for o in room_objects():result.append(furn_footprint(o))
@@ -200,11 +200,6 @@ func room_obstacles()->Array:
 func furn_footprint(o:Dictionary)->Rect2:return HoldFurnishings.footprint(o.furnishing,o.p)
 func draw_furnishing(o:Dictionary):
  HoldFurnishings.draw(g,o.p,o.furnishing)
- if o.furnishing=="table":
-  HoldFurnishings.draw(g,o.p+Vector2(0,-30),"kettle")
-  for x in [-16,16]:HoldFurnishings.draw(g,o.p+Vector2(x,-29),"mug")
- elif o.furnishing=="counter":
-  for x in [-23,19]:HoldFurnishings.draw(g,o.p+Vector2(x,-41),"mug")
 func draw_room_floor():
  g.draw_rect(Rect2(Vector2.ZERO,s.ROOM_SIZE),Color("182a30"))
  var warm=g.room_id in ["home","tavern","commission"]

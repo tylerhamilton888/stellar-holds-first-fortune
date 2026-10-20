@@ -15,6 +15,15 @@
       "equipment",
       "mining",
       "handworks",
+      "world",
+      "modular"
+    ],
+    "modular": [
+      "modular",
+      "orientation",
+      "ambient",
+      "equipment",
+      "handworks",
       "world"
     ]
   },
@@ -50,6 +59,10 @@
     "loading": {
       "script": "tests/loading63.gd",
       "marker": "LOADING63"
+    },
+    "modular": {
+      "script": "tests/modular64.gd",
+      "marker": "MODULAR64"
     }
   }
 }

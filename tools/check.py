@@ -49,7 +49,7 @@ def run(godot, suite, output, skip_import=False):
 if __name__ == '__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--godot',required=True)
-    p.add_argument('--suite', choices=['core','gameplay'], default='core')
+    p.add_argument('--suite', choices=list(json.loads((ROOT / 'tests/suites.json').read_text())['suites']), default='core')
     p.add_argument('--output',type=Path,required=True,help='New directory; never overwrite previous evidence')
     p.add_argument('--skip-import',action='store_true')
     a=p.parse_args()

@@ -1,3 +1,11 @@
+# 0.61.3 — Modular placement refinement (source milestone)
+
+Build mode now shows a subtle snapped grid and green PLACE / red BLOCKED footprint for furniture, house construction and handworks equipment. Preview eligibility includes materials, reach and existing placement/access rules; house previews now include route validation. Furniture snaps at 10 units, equipment at 20 and construction at 40. Ordinary play hides the grid.
+
+Owned furniture and filled chests can be repositioned without paying again, losing contents or deleting the original on cancellation. Close storage rows preserve front access. Town and crafted tea tables/serving counters share catalogue dressing and geometry. Wall sliding faces actual movement; blocked movement stops gait. No save-schema or source-art changes.
+
+171 focused native checks passed; grid/furniture/foundation visuals inspected. Source backed up in GitHub PR #4. See testing/modular64.md for verification and limits. Latest downloadable Windows package remains v0.61.2; this source milestone has not been exported as a new Windows release. Prior checkpoints and releases are preserved.
+
 # 0.61.2 — Welcome to the Hold
 
 2026-10-20. Implemented and merged via PR #3 (`d539cb535fad79fb2bd141ed73e5c3a848ad9bf0`). The title uses the current whole-character held-pick artwork. An illustrated overlay above HUD and cutscenes shows rotating hints and actual animation-preparation progress. Release-scoped disk caching reuses recolored frames across launches. New fortunes start with randomized editable Dwarven names and appearances; existing identities and save format are preserved.

@@ -1,3 +1,10 @@
+## 0.61.3 (source)
+- Build-only snapped grid, translucent preview and green/red placement footprint.
+- Material/access-aware construction previews, including house route protection.
+- Move owned furniture and filled storage chests without rebuilding; tighter storage rows.
+- Shared tea-table/counter dressing for town and player furniture.
+- Wall-slide facing follows actual travel and blocked movement stops walking.
+
 New fortunes now begin with a randomized editable Dwarven name and appearance; existing characters retain their identity.
 
 ## 0.61.2
