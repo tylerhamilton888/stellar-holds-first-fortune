@@ -4,7 +4,7 @@ Build mode now shows a subtle snapped grid and green PLACE / red BLOCKED footpri
 
 Owned furniture and filled chests can be repositioned without paying again, losing contents or deleting the original on cancellation. Close storage rows preserve front access. Town and crafted tea tables/serving counters share catalogue dressing and geometry. Wall sliding faces actual movement; blocked movement stops gait. No save-schema or source-art changes.
 
-See testing/modular64.md for verification and limits. Latest downloadable Windows package remains v0.61.2; this source milestone has not been exported as a new Windows release. Prior checkpoints and releases are preserved.
+171 focused native checks passed; grid/furniture/foundation visuals inspected. Source backed up in GitHub PR #4. See testing/modular64.md for verification and limits. Latest downloadable Windows package remains v0.61.2; this source milestone has not been exported as a new Windows release. Prior checkpoints and releases are preserved.
 
 # 0.61.2 — Welcome to the Hold
 

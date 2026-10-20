@@ -7,3 +7,5 @@ Visually inspected native worksite, tavern, green/red furniture previews and fou
 Verification command: `tools/check.py --suite modular` (native display required). Includes orientation, ambient, equipment, handworks and world cases in addition to modular checks. Working captures/logs: animations61/qa/modular64-pass. Earlier failed fixture placements intentionally landed near the founding-stones interaction; final fixture selects valid nearby ground and separately checks occupied ground. The save assertion normalizes JSON numeric types without omitting any saved values.
 
 Recovery: local pre-modular64 preserves 0.61.2; current work is on polish/modular64 in GitHub. No old release/bundle overwritten. New Windows export and hardware/audio checks are not included in this source milestone. Broader animation/world-art backlog remains separate.
+
+Final focused native suite: **171 checks passed**, zero failures or script errors (modular 28, orientation 20, ambient 36, equipment 20, handworks 32, world 35). GitHub PR #4 preserves source; hosted full gameplay validation is separate.
