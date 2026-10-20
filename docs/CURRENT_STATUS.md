@@ -1,17 +1,9 @@
-New fortunes now begin with a randomized editable Dwarven name and appearance; existing characters retain their identity.
+# 0.61.2 — Welcome to the Hold
 
-# 0.61.2 — title and loading polish
+2026-10-20. Implemented and merged via PR #3 (`d539cb535fad79fb2bd141ed73e5c3a848ad9bf0`). The title uses the current whole-character held-pick artwork. An illustrated overlay above HUD and cutscenes shows rotating hints and actual animation-preparation progress. Release-scoped disk caching reuses recolored frames across launches. New fortunes start with randomized editable Dwarven names and appearances; existing identities and save format are preserved.
 
-Implemented the current whole-character title sprite, illustrated loading overlay above all UI, rotating hints, real frame-preparation progress and a release-scoped persistent animation cache. See testing/loading63.md for behavior, cache invalidation and validation. Gameplay/save formats remain unchanged.
+**228 local checks passed**: 190 existing gameplay checks, 19 loading/identity checks, and 19 against the exact exported PCK. Native visuals inspected. Hosted full gameplay validation passed, run 39484028846. All 3,134 pack entries and the complete Windows ZIP passed integrity checks. GitHub's asset digest matches the local ZIP.
 
-# Foundation 0.61.1 — complete
+[Download 0.61.2](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.61.2): one Windows ZIP, 698,806,969 bytes; SHA-256 `7a3b83aaf213bc4681a9eaa211ae9f1015b8d7058d0bf91d554d76e05874f6a2`. Release tag points to complete source `4169069d9f80e6fae3dc33deee855c8b16a13916`. Prior releases and the full foundation source bundle remain intact.
 
-2026-10-20. GitHub **main now contains the complete editable game**, original assets and source history. Source import PR #2 merged at `5955e2e754a1545742e7ffc3f66dacc253ddc446`; its import commit `3f97736cbc02ee1b46bbbbd4cbfb00d633593215` joins the source and delivery histories without rewriting existing tags. The core asset/audio/script/test/tool/project Git hashes match the verified local source.
-
-Implemented: shared menu presentation (`HoldMenuView`), one version/engine metadata source (`HoldBuild`), canonical native test fixture, current suite manifest, checked packaging, GitHub validation, PR template and concise contributor documentation. No gameplay balance, art, movement or save-schema changes.
-
-Verification: **201 passing local checks**, including 11 against the exact exported PCK; all 3,132 entries audited. A separate full-bundle clone imported without existing caches, passed all 190 source checks, exported, and passed the 11 standalone pack checks. Fresh export content matches the delivered pack except Godot's generated UID cache; byte-identical PCK output across machines is not claimed. GitHub importer and PR validation both passed on hosted runners.
-
-[0.61.1 build and complete recovery](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/foundation-0.61.1). Download only the Windows ZIP to play. Its SHA-256 is `6867fd2c76c20171b2c12daf6dc0e379f7b70f1f04efde38390470e2f589b837`. The optional full source bundle restores independently; older backups/releases remain intact. Windows execution, audio and player-device performance still require playtesting.
-
-Use `tools/check.py`, `tests/suites.json`, and `tools/build.py`; see DEVELOPMENT.md and TESTING.md. Broader session extraction, actor orchestration and legacy dependency cleanup remain incremental future work, with regression evidence required.
+First-time preparation still costs work; cached preparation was about 1.35 seconds for 488 frames on the Linux software renderer. This is not a Windows hardware performance guarantee. Windows execution/audio remain player-test limitations. Details, captures, logs and cache-invalidation rules: testing/loading63.md. Development workflow and foundation history: DEVELOPMENT.md and testing/foundation62.md.

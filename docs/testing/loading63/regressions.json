@@ -1,0 +1,66 @@
+[
+  {
+    "test": "loading",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 11,
+    "seconds": 32.48
+  },
+  {
+    "test": "menus",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 9,
+    "seconds": 23.71
+  },
+  {
+    "test": "orientation",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 36.42
+  },
+  {
+    "test": "ambient",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 36,
+    "seconds": 79.65
+  },
+  {
+    "test": "equipment",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 35.7
+  },
+  {
+    "test": "mining",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 38,
+    "seconds": 39.7
+  },
+  {
+    "test": "handworks",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 32,
+    "seconds": 34.43
+  },
+  {
+    "test": "world",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 57.69
+  }
+]
