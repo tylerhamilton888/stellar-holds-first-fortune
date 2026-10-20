@@ -9,6 +9,17 @@ static var cache:Dictionary={}
 static var order:Array=[]
 static var warm_jobs:Array=[]
 static var warm_total=0
+static var disk_hits=0
+static var cache_directory=""
+# Release-scoped derived textures: never save data. Changing artwork or palette
+# code requires a version bump, just like a shipping build.
+static func disk_path(key:String)->String:
+ if cache_directory=="":
+  cache_directory="user://animation-cache/"+HoldBuild.VERSION
+  DirAccess.make_dir_recursive_absolute(cache_directory)
+ return cache_directory+"/"+key.sha256_text()+".png"
+static func progress()->float:
+ return 1.0-float(warm_jobs.size())/maxi(1,warm_total)
 static func contact_frame(phase:float)->int:
  if phase<.18:return 0
  if phase<.52:return 1
@@ -70,6 +81,12 @@ static func cache_key(p:Dictionary,sheet:String,index:int,full:bool=false)->Stri
 static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Texture2D:
  data();var key=cache_key(p,sheet,index,full)
  if cache.has(key):return cache[key]
+ if not full:
+  var path=disk_path(key)
+  if FileAccess.file_exists(path):
+   var ready=Image.new()
+   if ready.load(path)==OK and not ready.is_empty():
+    var saved=ImageTexture.create_from_image(ready);remember(key,saved);disk_hits+=1;return saved
  var m=metadata[sheet][index];var r=m.rect;var img=source(m.get("source",sheet)).get_region(Rect2i(r[0],r[1],r[2],r[3]))
  # Atlas extraction removes neighboring figures' disconnected fragments, never
  # constructs the character from separate body parts.
@@ -98,9 +115,12 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
    img.set_pixel(x,y,c)
  # Keep palette resolution ahead of the filter for both portrait and game sizes.
  if ratio<1:img.resize(maxi(1,int(img.get_width()*ratio)),maxi(1,int(img.get_height()*ratio)),Image.INTERPOLATE_LANCZOS)
- var tex=ImageTexture.create_from_image(img);cache[key]=tex;order.append(key)
- while order.size()>3072:cache.erase(order.pop_front())
+ if not full:img.save_png(disk_path(key))
+ var tex=ImageTexture.create_from_image(img);remember(key,tex)
  return tex
+static func remember(key:String,tex:Texture2D):
+ cache[key]=tex;order.append(key)
+ while order.size()>3072:cache.erase(order.pop_front())
 static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
  var a=descriptor(p,d,walking,time,action,phase)
  n.draw_set_transform(at,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)

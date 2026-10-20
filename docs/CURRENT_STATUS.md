@@ -1,3 +1,9 @@
+New fortunes now begin with a randomized editable Dwarven name and appearance; existing characters retain their identity.
+
+# 0.61.2 — title and loading polish
+
+Implemented the current whole-character title sprite, illustrated loading overlay above all UI, rotating hints, real frame-preparation progress and a release-scoped persistent animation cache. See testing/loading63.md for behavior, cache invalidation and validation. Gameplay/save formats remain unchanged.
+
 # Foundation 0.61.1 — complete
 
 2026-10-20. GitHub **main now contains the complete editable game**, original assets and source history. Source import PR #2 merged at `5955e2e754a1545742e7ffc3f66dacc253ddc446`; its import commit `3f97736cbc02ee1b46bbbbd4cbfb00d633593215` joins the source and delivery histories without rewriting existing tags. The core asset/audio/script/test/tool/project Git hashes match the verified local source.

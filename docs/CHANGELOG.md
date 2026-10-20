@@ -1,3 +1,10 @@
+New fortunes now begin with a randomized editable Dwarven name and appearance; existing characters retain their identity.
+
+## 0.61.2
+- Current whole-character title artwork and clearer menu labels.
+- Illustrated preparation screen, rotating hints and actual job progress above HUD/cutscenes.
+- Versioned on-disk prepared animation cache; unchanged save format.
+
 # 0.61.1 — Development foundation
 
 Behavior-preserving menu presentation extraction, canonical native fixture and current suite manifest, single build metadata source, repeatable checked packaging, concise contributor/testing documentation and completed GitHub source import/CI. 201 local passing checks including exact exported pack; source migration, clean-checkout validation and hosted CI completed; details in CURRENT_STATUS. No art, mining balance or save-schema changes.

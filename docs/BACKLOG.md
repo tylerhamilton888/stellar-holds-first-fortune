@@ -1,3 +1,5 @@
+0.61.2: Title sprite parity and illustrated loading feedback implemented. First-time palette preparation and synchronous world generation remain performance follow-ups; repeat preparation now reuses disk-cached frames.
+
 # Foundation follow-up
 
 Completed source import and independent fresh-checkout validation. Use small reviewed changes for remaining main.gd responsibilities, confirmed dead renderer dependencies, and measured geometry/animation duplication. Preserve older art and tests; do not confuse historic suites with current gates.
