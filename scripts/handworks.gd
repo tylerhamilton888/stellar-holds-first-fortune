@@ -133,9 +133,12 @@ func can_place(p:Vector2)->bool:
  for f in data().facilities:
   if local(f) and pos(f).distance_to(p)<80:return false
  return clear_line(g.player,p)
+static func snap_build(p:Vector2)->Vector2:return (p/20).round()*20
+func placement_ready(kind:String,p:Vector2)->bool:
+ return SPECS.has(kind) and (kind!="wagon" or capacity()>=2) and g.state.afford(SPECS[kind].cost) and can_place(snap_build(p))
 func build(kind:String,p:Vector2)->bool:
  if kind=="wagon" and capacity()<2:g.notify("Freight wagon plans unlock with Strong Shoulders: eight productive masonry/forestry jobs.");return false
- p=(p/20).round()*20
+ p=snap_build(p)
  if not SPECS.has(kind) or not can_place(p):g.notify("Choose clear floor nearby, away from doors, stairs and other furniture.");return false
  if not g.state.pay(SPECS[kind].cost):g.notify("Bring the construction materials in your pack.");return false
  var d=data();var id=str(d.next);d.next=int(d.next)+1
@@ -297,7 +300,7 @@ func panel():
   var frame=card.get_parent().get_theme_stylebox("panel").duplicate();frame.set_content_margin_all(8);card.get_parent().add_theme_stylebox_override("panel",frame)
   var icon=TextureRect.new();icon.texture=texture(SPECS[id].art);icon.custom_minimum_size=Vector2(200,36);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;card.add_child(icon)
   g.label(card,HoldData.cost_text(SPECS[id].cost),13,Color("edc98a"))
-  g.small_button(card,"Craft & place",func():placing=id;g.close_panel();g.notify("LMB places nearby; right click cancels. Materials charged only on valid placement."))
+  g.small_button(card,"Craft & place",func():g.surface.cancel_placement();placing=id;g.close_panel();g.notify("LMB places nearby; right click cancels. Materials charged only on valid placement."))
  g.label(g.panel_body,"Stonebreakers dress stone, ore, coal and crystal chunks into their original materials. Racks within 150 units feed the bench; nearby pallets catch its output. E at a rack or parked cart gathers nearby loose loads. Shift+E collects finished materials.",14)
  g.label(g.panel_body,"Prospecting without a station? Away from equipment, hold Shift+E beside a chunk or while carrying it: three field-dressing blows preserve its full yield. Benches process batches faster; powered workshop technology improves them further.",14)
  g.small_button(g.panel_body,"Recover empty equipment · full material refund",recover)
@@ -397,7 +400,12 @@ func carried(p:Vector2):
 func overlay():
  if g.panel_id!="":return
  g.draw_set_transform(-g.camera)
- if placing!="":sprite(SPECS[placing].art,g.get_global_mouse_position()+g.camera,85,.55)
+ if placing!="":
+  var p=snap_build(g.get_global_mouse_position()+g.camera);var ok=placement_ready(placing,p)
+  if g.zone=="mine" or g.surface.area in ["claim","pinewood"] or g.surface.area.begins_with("home:"):
+   HoldBuildPreview.grid(g,g.camera,20,Rect2(g.player-Vector2(180,180),Vector2(360,360)) if g.zone=="mine" else g.surface.build_bounds())
+  sprite(SPECS[placing].art,p,85,.55)
+  HoldBuildPreview.outline(g,Rect2(p-Vector2(28,22),Vector2(56,44)),ok)
  var f=facility();var raw=closest(data().loose,65);var text=""
  if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · Shift+E collect" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)

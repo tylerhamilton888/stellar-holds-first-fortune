@@ -1,3 +1,11 @@
+# Modular building refinement — 0.61.3
+
+- scripts/build_preview.gd: shared world-space grid, valid/blocked footprint and labels.
+- scripts/furnishings.gd: canonical furniture art, geometry, recipes and dressed variants.
+- scripts/surface.gd: snapped placement, safe repositioning and wall-slide facing.
+- scripts/hearthcraft.gd / handworks.gd: construction/equipment preview eligibility.
+- tests/modular64.gd / docs/testing/modular64.md: focused checks and evidence.
+
 Title/loading presentation: scripts/loading_view.gd; frame cache: scripts/whole_frames.gd; regression and evidence: tests/loading63.gd and docs/testing/loading63.md.
 
 # Foundation development index — 0.61.1

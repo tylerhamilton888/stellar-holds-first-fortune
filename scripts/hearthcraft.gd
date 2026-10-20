@@ -58,7 +58,7 @@ func use_stairs(up:bool)->bool:
  if t.is_empty() or t.get("wall","")!="" or occupied_at(found,dest):g.notify("Clear the landing before climbing.");return false
  var travelling_cart=g.handworks.attached()
  if not travelling_cart.is_empty():g.notify("Park the cart [C] before using a house stair. Outdoor and mine freight routes stay available.");return false
- data().z=dest;g.player=center(found);s.placing="";impact=0;g.velocity=Vector2.ZERO;g.walking_pose=false
+ data().z=dest;g.player=center(found);s.cancel_placement();impact=0;g.velocity=Vector2.ZERO;g.walking_pose=false
  data().facts["ascend" if up else "descend"]=true
  g.camera=s.camera_target();g.sound.effect("wood",-17);g.save_game();g.notify("Homestead Z+%d · E up / Shift+E down at landings" % dest);return true
 
@@ -161,9 +161,14 @@ func valid(c:Vector2i,kind:String,check_routes:bool=true)->bool:
    var draft=tiles().duplicate(true);var item=t.duplicate();item.wall=kind;draft[key(c)]=item
    if not routes_open(draft):reason="Leave a door or gap: keep every destination reachable.";return false
  return true
+func ready_to_build(c:Vector2i,kind:String)->bool:
+ if not valid(c,kind):return false
+ if kind!="remove" and (not COSTS.has(kind) or not g.state.afford(COSTS[kind])):
+  reason="Bring "+cost_text(COSTS.get(kind,{}))+" in your pack.";return false
+ return true
 func build(p:Vector2,kind:String)->bool:
  var c=cell(p)
- if not valid(c,kind):g.notify(reason);return false
+ if not ready_to_build(c,kind):g.notify(reason);return false
  var map=tiles();var k=key(c);var t=map.get(k,{});var cost={}
  if kind=="remove":
   var old=""
@@ -246,9 +251,9 @@ func panel():
  for kind in TITLES:
   if count>0 and count%2==0:buttons=g.row(g.panel_body)
   count+=1;var id=str(kind)
-  var b=g.small_button(buttons,TITLES[id]+(" · "+cost_text(COSTS[id]) if COSTS.has(id) else " · refund"),func():s.placing="house:"+id;g.close_panel())
+  var b=g.small_button(buttons,TITLES[id]+(" · "+cost_text(COSTS[id]) if COSTS.has(id) else " · refund"),func():s.cancel_placement();s.placing="house:"+id;g.handworks.placing="";g.close_panel())
   b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- g.button(g.panel_body,"Place bed · 5 timber + 2 stone",func():s.placing="bed";g.close_panel())
+ g.button(g.panel_body,"Place bed · 5 timber + 2 stone",func():s.start_placement("bed"))
  g.label(g.panel_body,"Working on Z+%d. Five storeys plus their accessible roof deck. Upper floors, furniture and chests stay on their actual level." % level(),15)
  g.label(g.panel_body,"Roof tiles fade while you stand beneath them. Doors open with E. Furniture and chests fit inside your own buildings. Recover roof → wall → floor in that order; contents must be moved first.",14)
  lesson()
@@ -315,6 +320,8 @@ func roof_draw():
   if not tiles().get(key(coords(k)+Vector2i.DOWN),{}).get("roof",false):g.draw_line(p+Vector2(0,-6),p+Vector2(40,-6),Color(.7,.52,.27,alpha),3)
 func preview():
  if not s.placing.begins_with("house:"):return
- var c=cell(g.get_global_mouse_position()+g.camera);var ok=valid(c,s.placing.trim_prefix("house:"),false)
- g.draw_rect(Rect2(Vector2(c)*CELL,Vector2.ONE*CELL),Color(.4,.9,.7,.35) if ok else Color(.9,.3,.2,.35))
- g.draw_rect(Rect2(Vector2(c)*CELL,Vector2.ONE*CELL),Color("e2d2a3"),false,1)
+ var c=cell(g.get_global_mouse_position()+g.camera);var kind=s.placing.trim_prefix("house:");var ok=ready_to_build(c,kind)
+ if s.area=="claim":HoldBuildPreview.grid(g,g.camera,CELL,Rect2(260,320,1300,600))
+ var base=Rect2(Vector2(c)*CELL,Vector2.ONE*CELL)
+ if kind in ["stone_floor","wood_floor","roof"]:material(1 if kind=="wood_floor" else 2 if kind=="roof" else 0,base,Color(HoldBuildPreview.color(ok),.55))
+ HoldBuildPreview.outline(g,base,ok)
