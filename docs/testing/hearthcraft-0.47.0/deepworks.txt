@@ -1,0 +1,52 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+
+PASS Existing title/new game initializes settlement
+PASS Settlement basin arrival enters integrated Deepworks
+PASS Five independent geological layers
+PASS Seed generation reproducible before excavation
+PASS Normalized eight-direction movement without gravity
+PASS Standing dwarf does not fall
+PASS Substepped collision prevents wall tunnelling
+PASS Accurate first exposed face targeting
+PASS Mining contact removes coal and loads the ore container
+PASS Exhausted terrain cannot duplicate rewards
+PASS Target ray never mines through a blocking wall
+PASS Iron resists the first basic pick contact
+PASS Iron yields on second contact
+PASS Carved stairs persist without granting clearance resources
+PASS E descends at matching XY coordinates
+PASS Shift E returns by the same stair
+PASS No traversal through unrelated or absent passages
+PASS Player-created chain reaches third depth
+PASS Basalt retains steel research requirement
+PASS Steel pick opens basalt
+PASS Fifth depth reachable; frontier has no invalid sixth map
+PASS Rare deep formation grants a one-time geological discovery reward
+PASS Rediscovering a landmark cannot duplicate its reward
+PASS Entire stair chain returns to surface level
+PASS Breaking through natural geology discovers named cavern
+PASS Actual save/load preserves separate excavated layers
+PASS Connections and discoveries survive actual reload
+PASS Reload restores underground position
+PASS Built fixtures and partial mining damage survive reload
+PASS Entrance interaction returns to the connected High Trail
+PASS Return to existing settlement via basin
+PASS Collected ore/coal use existing smelting recipe
+PASS Existing forge production completes
+PASS Collected resources enter existing market economy
+PASS Pinewood remains independently reachable
+PASS Pinewood state survives Deepworks save/load
+PASS Legacy migration preserves inventory/progression
+PASS Migration creates byte-exact recoverable old save
+PASS Legacy terrain and structures remain archived, unmodified
+PASS Existing worker and automaton populate claim mine
+PASS Crew physically navigate and excavate layered terrain
+PASS Worker and automaton follow real stair route to assigned depth
+PASS Crew depth, positions and assignments survive reload
+PASS Slagcaster uses existing cells and slag economy
+PASS New saves remain compatible with existing slot selector
+DEEPWORKS41: 45 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

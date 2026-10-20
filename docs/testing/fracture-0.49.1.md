@@ -1,0 +1,4 @@
+# Native verification — 0.49.1
+Godot 4.4.1 with X11/software OpenGL and isolated test-native491 saves. `input_fracture491.gd`: 8 checks covering deterministic/varied silhouettes, chipped geometry, actual first iron contact, interrupted mining save/reload, final actual contact, settling debris and held-button ordinary excavation. Four actual game captures show intact, fractured, staged damage and breakthrough. The staged basalt showcase uses fixture damage values; iron strikes and held stone extraction use gameplay code. No resistance/collision/yield/state-schema edits.
+
+Original slate artwork is mapped into code-native irregular polygons. No external art borrowed. 0.49.0 regression evidence remains historical baseline, not a claim of rerunning every suite. Exported-pack boot and recovery bundle/ZIP verification accompany release. Native Linux testing does not establish Windows execution or audible mix. Existing shutdown resource warnings remain.

@@ -1,0 +1,20 @@
+Built-in image generation/editing workflow, original production assets.
+
+Normal atlas prompt specification:
+Edit the matching actors-v11 male or female complete 16-pose atlas, preserving canvas dimensions (1536x1024), four columns/four rows, pose order, body, clothing, hands and boots. Change integrated hair/beard only to the design below. Honey-gold hair for runtime palette customization. Empty fists; transparent background. No independent beard/hair attachments. Female characters have no facial hair.
+
+male2: magnificent broad unbraided king's mantle beard to belt, rooted moustache, wild long swept-back mane.
+male3: compact high topknot, close sides, long forked beard with two broad unbraided points, rooted moustache.
+male4: bald crown, short side/back hair, grand three-plait beard, rooted moustache.
+female1: high knot and two small braided side locks.
+female2: long loose waves behind ears and over back, small temple braid.
+female3: thick single side braid across near shoulder, side-swept fringe.
+female4: shoulder-length braided bob, narrow woven headband braid, curled ends.
+
+Armed atlas edit prompt:
+Edit sprite atlas input1 ONLY changing hair/beards. Keep exact canvas dimensions, cell layout, foot positions, anatomy, clothing, hands gripping weapons, poses and animation sequence of input1. Top half male and bottom half female use corresponding supporting normal atlas identities. All hair honey gold for recoloring. Female NO facial hair. Preserve weapons and shields as drawn, keep hand gripping axe. Combat: exactly 4x4 grid, 16 poses, 1536x1024, top8 male bottom8female. Walk/guard: exactly4x2 grid,8poses,1774x887,top4male bottom4female. Hair and beard integrated organically into each complete character. Transparent background, no glow or shadows. Supporting references give identity only; retain the target's ARMED poses.
+
+Edit targets: actors-v17/classic-combat.png, classic-walk.png, classic-guard.png.
+Pair1 = male2 / female1; pair2 = male3 / female2; pair3 = male4 / female3; pair4 = unchanged classic male / female4.
+
+Final assets: assets/actors-v18/*.png. Existing male0, male1 and female0 retain actors-v11 and actors-v17 designs. Runtime framing metadata corrects generated cell-placement variations; the renderer thresholds faint alpha below .45 and clips neighboring-row remnants below the measured sole. Source PNGs are retained unmodified.

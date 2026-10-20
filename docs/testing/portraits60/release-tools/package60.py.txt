@@ -1,0 +1,112 @@
+from pathlib import Path
+import hashlib,json,shutil,zipfile
+base=Path('/workspace/scratch/a447fc5d46ab');t=base/'portraits60';b=t/'build';d=t/'delivery'
+for name,marker in [('pack-ui60-final','PORTRAIT UI60: 28 passed / 0 failed'),('pack-grips60','WHOLE58: 20 passed / 0 failed'),('pack-mining60','MINING55: 38 passed / 0 failed')]:
+ assert marker in (t/(name+'.log')).read_text(),name
+assert json.loads((t/'required-resources.json').read_text())['verified']
+def sha(p):
+ with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+assert sha(b/'FirstFortune.exe')=='b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b'
+for name in ['GODOT-LICENSE.txt','GODOT-COPYRIGHT.txt']:shutil.copyfile(base/'fix551/build'/name,b/name)
+(b/'START-HERE.txt').write_text('''THE STELLAR HOLDS: THE FIRST FORTUNE — 0.60.0
+FACES OF THE HOLD
+
+Extract this entire ZIP to a folder. Keep FirstFortune.exe and
+FirstFortune.pck together; double-click FirstFortune.exe. No editor,
+installer or batch launcher is needed. Continue uses your existing save
+location. Keep previous saves/migration backups when returning to an
+older build. No new save format or terrain migration is introduced here.
+
+WHAT TO TRY
+Open the creator or wardrobe. Compare the new painted portrait with the
+walking preview, try natural hair colours, and inspect full male beards,
+braids, bobs, topknots and ponytails. Talk to the hold's residents. Lord
+Eirik now has a throne portrait, and his audience uses current actors.
+This build includes the completed whole-character animation integration.
+
+Select tools with 1-4. Walk, stop and turn; hold LMB to mine or cut timber.
+E lifts raw material; Q puts it down. Physical cargo overrides selected
+equipment. Try unlocked two-shoulder carrying, a stockpile, breaker/saw
+and a cart. Save/reload to check exact cargo, materials and appearance.
+Revisit your cave landmarks and a connected lower level, then return home.
+
+WASD move; E interact; I inventory; G directions; J journal.
+Shift+B opens the workshop placement board. Hold E at a station to work.
+Shift+E field-dresses a raw load away from stations, or collects output.
+C takes/parks cart handles. At mine stairs, E descends, Shift+E ascends.
+V opens the mine development ledger; X surveys the next layer.
+
+Please report the character design, facing and activity for any remaining
+visual issue. See VERIFICATION.txt for completed checks and limitations.
+''')
+verification='''THE STELLAR HOLDS — 0.60.0 VERIFICATION
+2026-10-20 UTC. Recovery tag: portraits-0.60.0.
+
+ART AND INTEGRATION
+Fifteen dedicated whole painted portraits: seven male identities, seven
+female identities and Lord Eirik with his throne/crown. Saved natural
+appearance colours and full male beards remain. Portraits are integrated
+into the creator, conversations, roster, quarters and story captions.
+The royal audience's player/Ivar now use current whole-character actors.
+The build also includes whole-motion59's 2,464 equipped/shoulder-cargo
+keys across all fourteen identities. Existing world/gameplay is retained.
+
+COMPLETED CHECKS
+189 portrait/palette checks: 112 identity/hair cases, 14 independent grey
+hair/heather clothing controls, 56 complexion updates and seven cast IDs.
+No residual source-violet failures. 13,073,656 protected non-hair pixels
+unchanged. Native all-identity/sprite comparisons and actual UI inspected.
+158 current-game checks: whole motion/ownership 68; hotbar/holding 20;
+Pinewood, workstations, stockpiles, carts and materials 32; Deepworks 38.
+86 additional checks against the exact exported PCK: portrait/UI/save flow
+28; hotbar/ownership 20; mining/logistics/levels/save flow 38. External
+self-contained harnesses ran from an empty directory with isolated saves.
+433 final checks passed. Earlier fixture failures and the corrected dark
+hair fringe are recorded in docs/testing/portraits60.md in the recovery.
+
+PACKAGE
+Fresh committed-source checkout imported/exported with Godot 4.4.1.
+All 3,126 PCK entries passed path, byte bounds, MD5 and SHA-256 checks.
+All fifteen portraits, 112 selected motion sources and 200 resolved
+current character/portrait textures are present. No embedded executable,
+native extension or launcher script in the PCK. Eight explicit ZIP files;
+all member hashes and ZIP CRC verified. FILE-HASHES.sha256 is included.
+The Windows executable is unchanged from the official release template:
+b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b
+No new antivirus/Defender verdict: signature databases are unavailable
+here. These provenance/content checks are not antivirus certification.
+
+LIMITS AND SAVES
+Native tests used Linux Godot 4.4.1, Xvfb/software OpenGL and Dummy audio.
+Windows execution, audible balance and your hardware FPS were not tested.
+No save schema/location, terrain, inventory, progression, quest,
+automation or mining-balance change. Existing backups remain preserved.
+Dedicated log-lift/put-down and cart-push art, wider directional work,
+tattoos, material markings and broader world architecture remain follow-up
+work. Mirrored turns can alter apparent anatomical shoulder assignment.
+Illustrated story plates retain their established separate treatment.
+Your judgement remains the final standard for appearance and feel.
+
+RECOVERY
+The verified whole-motion59 checkpoint was preserved by pre-portraits60.
+The new incremental recovery bundle follows whole-motion59. Its companion
+Recovery.txt records exact commit/tree/hash and independent restoration.
+All previous releases/backups remain. No remote was changed or pushed.
+'''
+(b/'VERIFICATION.txt').write_text(verification)
+(d/'Stellar-Holds-0.60.0-Verification.txt').write_text(verification)
+(b/'version.txt').write_text('The Stellar Holds — The First Fortune\n0.60.0 — Faces of the Hold\n')
+names=['FirstFortune.exe','FirstFortune.pck','GODOT-LICENSE.txt','GODOT-COPYRIGHT.txt','START-HERE.txt','VERIFICATION.txt','version.txt']
+hashes={name:sha(b/name) for name in names}
+(b/'FILE-HASHES.sha256').write_text(''.join(hashes[name]+'  '+name+'\n' for name in names));names.append('FILE-HASHES.sha256');hashes[names[-1]]=sha(b/names[-1])
+path=d/'Stellar-Holds-First-Fortune-0.60.0-Windows.zip';assert not path.exists()
+with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+ for name in names:z.write(b/name,name)
+with zipfile.ZipFile(path) as z:
+ assert z.namelist()==names and z.testzip() is None
+ for name in names:
+  with z.open(name) as f:assert hashlib.file_digest(f,'sha256').hexdigest()==hashes[name]
+result={'zip':path.name,'bytes':path.stat().st_size,'sha256':sha(path),'members':hashes,'source_export':json.loads((t/'export-identity.json').read_text()),'resources':json.loads((t/'required-resources.json').read_text())}
+(t/'package-identity.json').write_text(json.dumps(result,indent=2)+'\n')
+shutil.copyfile(base/'stellar-holds/docs/testing/portraits60/named-cast.png',d/'Stellar-Holds-0.60.0-Portraits.png')
+print('PACKAGE60 COMPLETE',json.dumps({k:result[k] for k in ['zip','bytes','sha256']}),flush=True)

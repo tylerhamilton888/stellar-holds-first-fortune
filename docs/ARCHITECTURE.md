@@ -1,0 +1,46 @@
+# Hands of the Dwarf extension — 0.49.0
+handworks.gd is a small integrated physical-resource controller referenced by main, surface and Deepworks. Raw records live under state.hauling.hands and have exactly one owner: loose, carry, facility.raw or facility.job.raw. Movement transfers records, never copies them. Processing replaces a reserved record with its explicit yield in an existing-resource cargo dictionary. DeepHaul.transfer conserves processed output during pallet/pack transfers. Save serializes the same authoritative graph; processing progress and reservation survive interruption. Local context includes site/zone/Z; no remote input lookup. Distant raw records are data-only; rendering culls to nearby objects and never creates active rigid bodies.
+
+Player-build specs provide cost, allowed type, capacity and art. Facilities use real locations; recovery requires empty raw/input/output buffers. Hearthcraft floor safety checks facilities. Extending worker processing should use the same reservation/recipe fields, not a second independent resource generator. Existing workers/masonry remain on their functioning models until that integration is implemented.
+
+Raw artwork is centralized in raw_sprite(): one material texture and scale across all states. Empty station bases receive the actual job workpiece. Processing effects overlay that workpiece, and only completion changes it to output artwork.
+
+# Architecture
+## Runtime and conventions
+Godot 4.4.1, GDScript, GL Compatibility. `project.godot` launches `main.tscn`, a Node2D attached to `scripts/main.gd`. Logical viewport 960×540, stretched to the window. There is no collection of independent level scenes or autoload-manager hierarchy: main owns state, input, movement, drawing and UI, with named helper classes and instantiated subsystems. Most UI is built programmatically. Preserve resource paths and `.uid`/`.import` sidecars.
+
+## Module map
+| Area | Source files under scripts/ |
+|---|---|
+| State, economy, progression | state.gd, data.gd, campaign.gd, industry.gd |
+| Excavation and generation | geology.gd, mountain.gd, legacy_geology.gd, world_style.gd |
+| Terrain rendering and discoveries | terrain_view.gd, world_details.gd, field_survey.gd |
+| Woodland gathering | forestry.gd (state/targets/cuts/draw), forestry_view.gd (separate filtered canvas); internal zone `road` maps to Pinewood |
+| Construction and danger | construction.gd, combat.gd, practice.gd, mining_gun.gd |
+| Crew and emerging stories | outpost.gd, outpost_ui.gd, frontier.gd, claim_stories.gd |
+| Opening and quests | onboarding.gd, conversation.gd, culture.gd, anniversary.gd, quest_markers.gd |
+| Locations and NPC presence | hold_map.gd, hold_floor.gd, region_map.gd, interiors.gd, npc_presence.gd, npc_activity.gd, royal_hall.gd |
+| Character rendering | appearance.gd, character_designs.gd, character_art.gd, character_materials.gd, painted_walk.gd, sprite_atlas.gd, equipment_rig.gd, shield_actor.gd, portrait.gd |
+| Presentation | art.gd, scenery.gd, sound.gd, opening_scene.gd, anniversary_scene.gd, cinematic.gd |
+
+`assets/` retains versioned art, masks and rig data; `audio/` contains runtime sound. Do not consolidate historical art directories without checking every preload and export filter. `dev/` and `tools/` hold authoring utilities; `tests/` holds regressions and captures. Old documents and tests are historical evidence, not automatically current requirements.
+
+## Data and generation
+HoldState owns dictionary-based gameplay state. Save schema `version:1` is distinct from game version. Slot 1: `user://first_fortune_v1.json`; slots 2/3: `first_fortune_slot_2.json` / `_3.json`. JSON saves contain inventory, queue, research, appearance, quests/outpost, travel, per-site worlds, terrain cells/damage, grain bank, structures and mountain metadata (including surveys). Writes use a temporary file followed by rename. Audio settings also use `user://audio_settings.cfg`.
+
+Loading accepts current 384×176 cells and legacy 96×44 grids, normalizes identities and state, and may regenerate mountains with metadata version below 2. Never promise every old save preserves excavation without checking this migration. Keep project name/user-data location unchanged. No real player save was supplied for this task.
+
+Geology uses 7-pixel cells; HoldMountain generates seeded surface, overburden, strata, veins and caves. HoldWorldStyle version 2 hashes galaxy/planet/region/channel into deterministic seeds. This address system is scaffolding, not a complete galaxy. Excavation feeds inventory/grain accounting and dirty terrain rendering. Main drives actor collision, contact targeting and crew mining. Research/equipment affects extraction; outpost roles affect production and surveying.
+
+## Safe changes
+Read handoff/status, then relevant modules. Work from a clean checkpoint; preserve unknown fields and identifiers. Keep generation changes versioned. Test affected save/economy/terrain dependencies. Visually inspect art/contact/UI changes. Update status, backlog and changelog. See TESTING.md for commands and RECOVERY.md for backups.
+
+Pinewood keeps `road_trees` for compatibility and adds `forestry` dictionaries keyed by tree index: `logs`, `fell_at`, `direction`. `HoldForestry.ensure` extends five trees to seven without restoring existing cuts. Rendering never grows trees automatically. Trees occupy a rear cutting strip; the foreground walking lane stays clear. The artwork has a fixed ground anchor, avoiding background/footing drift.
+
+### Cargo ownership (0.42)
+`DeepHaul` is the transfer boundary. Global state.hauling.bucket follows the player; site-local deepworks.haulage holds cart and piles at exact XY/depth. Manual extraction routes its yield to cargo; worker extraction delivers directly. Only depot transfer credits existing inventory. Terrain/grade supplies yields, never visual particles. Rendered contents read authoritative dictionaries. Future vehicles should use the same transfer API, with independent location/connectivity rather than a second economic balance.
+
+## Living Works (0.43)
+`LivingWorks` separates room geometry/function, surface finish, furnishing definitions/paid costs, inhabitants and metrics in per-site `deepworks.living`. `LivingPlay` drives actual hammer-contact mutations and canvas presentation. Deepworks walkability and BFS include solid furniture; outer aisles and all floor connectivity are validated. Physical lamp positions affect light. Actor, cart and stair occupancy prevent invalid placement. Up to 16 rooms, 4–9 tiles per axis, keep evaluation bounded.
+
+NPC room destinations use existing crew depth assignments and stair routing. Rest occupies the final quarter of a 120-second cycle; assigned work otherwise replaces mining. Production reads the best active staffed workshop, enabled miner role and persisted presence. Existing `state.tick` applies the capped factor to craft time only. Brann’s one-time opportunity and research use existing tech/resources/chronicle. Preferences live with the site; cross-site social simulation remains future.

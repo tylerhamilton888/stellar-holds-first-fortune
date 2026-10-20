@@ -1,0 +1,75 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Anticipation does not remove stone before the actual impact
+PASS First contact leaves persistent fractures in ordinary rock
+PASS Held input finishes ordinary stone with two deliberate blows
+PASS Held mining does not automatically drag the Dwarf into successive walls
+PASS Holding at a cleared face does not tunnel beyond tool reach
+PASS Partial damage is retained when the held button is released
+PASS North-facing contact fractures the actual wall
+PASS Reload retains partial mining damage and inventory
+PASS Additional character variants survive save/reload
+PASS Variant 0/0 has registered view 0
+PASS Variant 0/0 has registered view 1
+PASS Variant 0/0 has registered view 2
+PASS Variant 0/0 has registered view 3
+PASS Variant 0/1 has registered view 0
+PASS Variant 0/1 has registered view 1
+PASS Variant 0/1 has registered view 2
+PASS Variant 0/1 has registered view 3
+PASS Variant 0/2 has registered view 0
+PASS Variant 0/2 has registered view 1
+PASS Variant 0/2 has registered view 2
+PASS Variant 0/2 has registered view 3
+PASS Variant 0/3 has registered view 0
+PASS Variant 0/3 has registered view 1
+PASS Variant 0/3 has registered view 2
+PASS Variant 0/3 has registered view 3
+PASS Variant 0/4 has registered view 0
+PASS Variant 0/4 has registered view 1
+PASS Variant 0/4 has registered view 2
+PASS Variant 0/4 has registered view 3
+PASS Variant 0/5 has registered view 0
+PASS Variant 0/5 has registered view 1
+PASS Variant 0/5 has registered view 2
+PASS Variant 0/5 has registered view 3
+PASS Variant 0/6 has registered view 0
+PASS Variant 0/6 has registered view 1
+PASS Variant 0/6 has registered view 2
+PASS Variant 0/6 has registered view 3
+PASS Variant 1/0 has registered view 0
+PASS Variant 1/0 has registered view 1
+PASS Variant 1/0 has registered view 2
+PASS Variant 1/0 has registered view 3
+PASS Variant 1/1 has registered view 0
+PASS Variant 1/1 has registered view 1
+PASS Variant 1/1 has registered view 2
+PASS Variant 1/1 has registered view 3
+PASS Variant 1/2 has registered view 0
+PASS Variant 1/2 has registered view 1
+PASS Variant 1/2 has registered view 2
+PASS Variant 1/2 has registered view 3
+PASS Variant 1/3 has registered view 0
+PASS Variant 1/3 has registered view 1
+PASS Variant 1/3 has registered view 2
+PASS Variant 1/3 has registered view 3
+PASS Variant 1/4 has registered view 0
+PASS Variant 1/4 has registered view 1
+PASS Variant 1/4 has registered view 2
+PASS Variant 1/4 has registered view 3
+PASS Variant 1/5 has registered view 0
+PASS Variant 1/5 has registered view 1
+PASS Variant 1/5 has registered view 2
+PASS Variant 1/5 has registered view 3
+PASS Variant 1/6 has registered view 0
+PASS Variant 1/6 has registered view 1
+PASS Variant 1/6 has registered view 2
+PASS Variant 1/6 has registered view 3
+MINING54: 65 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

@@ -1,0 +1,22 @@
+[
+  {
+    "sheet": "male0-back-source",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male2-quarter",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male3-front",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  },
+  {
+    "sheet": "male3-side",
+    "segmented": true,
+    "reason": "neighbor contact in source alpha; visually review edges"
+  }
+]

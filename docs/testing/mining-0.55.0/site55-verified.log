@@ -1,0 +1,28 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Held excavation opens a real natural prospecting tunnel
+PASS Small field-dressed prospect supplies the stone for a first worksite
+PASS Raw rack built with recovered prospecting materials
+PASS Stonebreaker built in original entrance chamber
+PASS Existing handcart provides the next logistical step
+PASS Actual cart handles engage
+PASS Parked cart gathers remaining physical prospect loads
+PASS Cart unloads into nearby rack without individual shoulder trips
+PASS Wall-adjacent breaker selects a collision-safe working stance
+PASS Held station work processes a rack-fed batch
+PASS Excavation breaks into the original Hollow Bell cavern
+PASS Productive development earns Miner handling mastery and lode notes
+PASS Prospect stair descends at matching geological coordinates
+PASS Actual held mining recovers a continuous mineral formation across two depths
+PASS Development leaves a substantial reusable tunnel and persistent material reserve
+PASS Established site, loose loads and depth accomplishments survive a real reload
+PASS Developed mine returns naturally to its surface entrance
+SITE55 METRICS: simulated_seconds=181.716666666703 walked_units=5640.50131297112 faces=51 loose_loads=47 formations=4
+SITE55: 17 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

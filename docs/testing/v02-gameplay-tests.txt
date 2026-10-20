@@ -1,0 +1,49 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+
+PASS: same seed produces identical geology
+PASS: different seeds change geological formations
+PASS: generator includes all strata, deposits, cavities and boundary
+PASS: starter gallery exposes connected iron deposits
+PASS: worker route traverses air
+PASS: impacts destroy real terrain and yield the matching resource
+PASS: unaffordable transactions are atomic
+PASS: research blocks advanced recipes
+PASS: smelting reserves input resources
+PASS: reserved ingredients cannot be spent twice
+PASS: production completes and credits inventory
+PASS: precision forging unlocks fabrication
+PASS: extraction research unlocks pick upgrade
+PASS: automation requires and accepts metallurgy
+PASS: research cannot charge twice
+PASS: unlocked fabrication queues machine parts
+PASS: selling depresses prices through supply
+PASS: bid/ask spread prevents immediate arbitrage
+PASS: bargained prices remain valid
+PASS: ship stage consumes listed materials and crowns
+PASS: ship stage consumes listed materials and crowns
+PASS: ship stage consumes listed materials and crowns
+PASS: all three construction stages complete
+PASS: atomic save succeeds
+PASS: load restores zone and position
+PASS: load preserves destroyed cells and partially damaged rock
+PASS: load preserves inventory and production jobs
+PASS: load preserves research and ship progression
+PASS: player settles above the mine floor without collision penetration
+PASS: keyboard movement advances the dwarf
+PASS: survey winch provides vertical escape
+PASS: worker and automaton travel and excavate actual terrain
+PASS: automated mining yields real inventory
+PASS: pause assignments stops excavation
+PASS: opens home interface
+PASS: opens tavern interface
+PASS: opens market interface
+PASS: opens forge interface
+PASS: opens research interface
+PASS: opens inventory interface
+PASS: opens manage interface
+PASS: opens ship interface
+PASS: opens pause interface
+PASS: opens help interface
+PASS: opens victory interface
+PASS: launch sequence reaches saved victory state
+46 CHECKS PASSED / 0 FAILED

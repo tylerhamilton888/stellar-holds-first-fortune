@@ -1,0 +1,35 @@
+THE STELLAR HOLDS — 0.60.0 DOWNLOAD INSTRUCTIONS
+
+The standard ZIP could not be saved by the file service, so the exact tested
+ZIP is provided as two numbered pieces. Both pieces are required:
+Stellar-Holds-First-Fortune-0.60.0-Windows.zip.001
+Stellar-Holds-First-Fortune-0.60.0-Windows.zip.002
+
+Put both in the same folder without changing their names. Open the .001
+file with 7-Zip and extract the archive. If it produces a ZIP first, extract
+that ZIP too. Run FirstFortune.exe alongside FirstFortune.pck.
+Official 7-Zip: https://www.7-zip.org/
+
+Alternatively, use Command Prompt (cmd.exe, not PowerShell) in the folder:
+copy /b "Stellar-Holds-First-Fortune-0.60.0-Windows.zip.001"+"Stellar-Holds-First-Fortune-0.60.0-Windows.zip.002" "Stellar-Holds-First-Fortune-0.60.0-Windows.zip"
+Then use Windows Extract All on the resulting ZIP. No installer or
+additional game launcher is included. Existing saves remain supported.
+
+The combined pieces were compared byte-for-byte by SHA-256 with the full
+verified ZIP. No game content was changed, omitted or recompressed.
+The complete ZIP hash:
+0b531ef5957fee4af2af8ed384f551b0aae5a64b524fea62fda482748e15f523
+Part .001: 350000000 bytes
+0e6f2d47221b5f1105e6c41dbdfdf3ed20cd7c878ff56b37639c7f1db4abdc7a
+Part .002: 348756907 bytes
+1c2c88644690d444f2a5c95e8280289aa6ce55dd0616ad78ce97b9ab631d2c0e
+
+The unsuccessful smaller TAR/XZ experiment was not delivered. The two ZIP
+parts are the release download. Runtime/source recovery remains the
+portraits-0.60.0 tag. The portraits-0.60.0-delivery tag adds documentation
+only; its small Delivery.bundle follows the saved 0.60.0 Recovery.bundle.
+
+433 final portrait/gameplay/package checks passed using native Linux
+Godot and the exact Windows-exported PCK. Windows execution, audio and
+user hardware frame rate have not been tested. Verification.txt records
+scope and limitations. All previous backups/releases remain preserved.

@@ -1,0 +1,42 @@
+{
+  "male0": [
+    "actors-v11/male.png",
+    "SWEPT GREATBEARD: compact swept-back crest, close sides, short nape. NO long flowing hair, ponytail, tail braid or bun. Broad compact rounded unbraided beard and rooted moustache. Match reference beard length, ending high on the chest, not at belt."
+  ],
+  "male1": [
+    "actors-v17/braided-normal.png",
+    "LONG TWIN BRAIDS: exactly TWO long thick beard plaits, rooted moustache, swept-back scalp hair. Match reference hair silhouette and both plait lengths and clasps. No third plait, loose greatbeard or bun."
+  ],
+  "male2": [
+    "actors-v18/male2-normal.png",
+    "KING\u2019S MANTLE: broad unbraided beard ending at belt, rooted moustache, thick swept-back mane. Match reference mane length and beard width exactly. No plaits, ponytail, topknot or sudden extra-long flying locks."
+  ],
+  "male3": [
+    "actors-v18/male3-normal.png",
+    "HIGH-KNOT FORKBEARD: one compact high knot, closely cropped sides, long unbraided beard split into exactly TWO broad pointed lobes. Match reference length and silhouette; not two short chin tufts, not plaits."
+  ],
+  "male4": [
+    "actors-v18/male4-normal.png",
+    "ROYAL TRIPLE PLAIT: clearly BALD crown, short side/back hair, exactly THREE long thick beard plaits with matching clasps and rooted moustache. No top hair, no change to two plaits; an arm may naturally occlude a plait."
+  ],
+  "female0": [
+    "actors-v11/female.png",
+    "CROWN BRAIDS: woven crown, one short near-side front braid and one longer rear braid behind shoulder. Never two front chest braids. No facial hair."
+  ],
+  "female1": [
+    "actors-v18/female1-normal.png",
+    "HIGH KNOT: one compact braided high bun, small side locks matching the reference. Match its hairline, bun placement, lock count, thickness and length exactly. No loose flowing hair or different crown-braid hairstyle. No facial hair."
+  ],
+  "female2": [
+    "actors-v18/female2-normal.png",
+    "LONG WAVES: loose long wavy hair behind ears and over back, exactly ONE small near-side temple braid. NO second hanging braid. Match the reference side part, length and wave silhouette. No bun, bob or crown braid. No facial hair."
+  ],
+  "female3": [
+    "actors-v18/female3-normal.png",
+    "SIDE BRAID: exactly ONE thick braid over the near shoulder, side-swept fringe, smooth swept hair at the back. NO second braid at the far side of the neck, NO crown braid or bun. Match braid length/thickness and fringe exactly. No facial hair."
+  ],
+  "female4": [
+    "actors-v19/female4-normal.png",
+    "BRAIDED BOB: short shoulder-length bob with curled ends and woven headband braid. NO hanging neck/chest braids, no ponytail or bun. Match reference bob outline, length and side part exactly. No facial hair."
+  ]
+}

@@ -1,0 +1,52 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS New fortune starts inside the real walkable hold
+PASS Eight-way movement has normalized diagonal speed and no gravity
+PASS Physical foreman's doorway opens a local interior
+PASS Existing Ivar conversation remains local and available
+PASS Existing introductions unlock the trail through actual NPC dialogue
+PASS Interior threshold returns to its original district
+PASS Royal stairs connect to Crownward
+PASS Lord's existing audience stays accessible
+PASS Forge stairs arrive on clear, walkable ground
+PASS Borin's crafting service remains reachable
+PASS Hold lift connects matching landings without map travel
+PASS King's Gate reaches a full-sized local trail
+PASS Trail mine entrance reaches existing Deepworks
+PASS Real excavation still places mined stone in haulage
+PASS Excavated stairs still descend to the connected lower layer
+PASS The same stair returns upward
+PASS Mine exit returns to the same trail entrance and delivers cargo
+PASS Held axe harvesting uses existing persistent tree cuts and yields
+PASS Existing exchange sells carried resources from the new local interior
+PASS Existing forge turns pack inputs into usable metal
+PASS Charter creates a free starter home and unique chest
+PASS Claim home is a connected interior on the same site
+PASS E opens the physical chest
+PASS Chest deposit conserves materials and removes carried supply
+PASS Withdrawal returns the exact amount to the pack
+PASS Remote chest transfer is rejected
+PASS Placeable chest spends pack timber and persists in the home
+PASS Doorway obstruction is rejected
+PASS Cottage improvement pays once and changes the home
+PASS Bed interaction rests and saves
+PASS Reload restores the actual room and exact walkable position
+PASS Reload preserves independent chest contents and home improvement
+PASS G shows directions without replacing the player with a map avatar
+PASS Pre-homestead save migrates safely without resetting progression
+PASS Original save is copied before homestead migration
+HOMESTEAD46: 35 passed / 0 failed
+ERROR: 3 RID allocations of type 'N5GLES37TextureE' were leaked at exit.
+ERROR: Texture with GL ID of 213: leaked 2706356 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:77)
+ERROR: Texture with GL ID of 211: leaked 2706356 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:77)
+ERROR: Texture with GL ID of 214: leaked 2706356 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:77)
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 8 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

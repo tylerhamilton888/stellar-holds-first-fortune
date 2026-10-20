@@ -1,0 +1,100 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Existing cottage/chest survive additive building initialization
+PASS Cannot replace the starter cottage or doorway
+PASS Walls require a paid floor foundation
+PASS Arbitrary 6 by 6 footprint spends exactly one stone per tile
+PASS Duplicate foundation cannot double-charge
+PASS A real operable door can be built on its foundation
+PASS Freeform walls and windows enclose the chosen footprint
+PASS Unroofed enclosure is recognized without pretending it is a complete home
+PASS Construction cannot entomb the player
+PASS Built walls physically block normal movement
+PASS Open doorway is physically traversable
+PASS E closes a door and updates collision
+PASS E reopens the same door
+PASS Door cannot close through the player
+PASS Real movement crosses the doorway to the yard
+PASS Real movement returns through the built door
+PASS Roof tiles cover the actual custom footprint
+PASS Bed can be placed in a player-built house
+PASS Storage chest can be placed in the new house
+PASS Resting in a roofed enclosed house completes the practical lesson
+PASS Built house chest uses the existing physical storage UI
+PASS New house storage conserves pack resources
+PASS Roof repair above furniture preserves its contents
+PASS Foundation demolition protects stored contents and furniture
+PASS Roof can be replaced above a furnished room
+PASS Roof removal refunds exactly its paid material
+PASS Removing a roof exposes the actual room
+PASS Removed roof can be rebuilt
+PASS Held mouse builds a floor once without repeated spending
+PASS Save/reload preserves every built tile, door and chest quantity
+PASS Reload returns to a safe walkable location
+PASS Construction catalog pauses play and retains the bounded menu
+PASS Route validation rejects sealing the player inside
+PASS Directional variant 0/0/0 is present
+PASS Directional variant 0/0/1 is present
+PASS Directional variant 0/0/2 is present
+PASS Directional variant 0/0/3 is present
+PASS Directional variant 0/1/0 is present
+PASS Directional variant 0/1/1 is present
+PASS Directional variant 0/1/2 is present
+PASS Directional variant 0/1/3 is present
+PASS Directional variant 0/2/0 is present
+PASS Directional variant 0/2/1 is present
+PASS Directional variant 0/2/2 is present
+PASS Directional variant 0/2/3 is present
+PASS Directional variant 0/3/0 is present
+PASS Directional variant 0/3/1 is present
+PASS Directional variant 0/3/2 is present
+PASS Directional variant 0/3/3 is present
+PASS Directional variant 0/4/0 is present
+PASS Directional variant 0/4/1 is present
+PASS Directional variant 0/4/2 is present
+PASS Directional variant 0/4/3 is present
+PASS Directional variant 1/0/0 is present
+PASS Directional variant 1/0/1 is present
+PASS Directional variant 1/0/2 is present
+PASS Directional variant 1/0/3 is present
+PASS Directional variant 1/1/0 is present
+PASS Directional variant 1/1/1 is present
+PASS Directional variant 1/1/2 is present
+PASS Directional variant 1/1/3 is present
+PASS Directional variant 1/2/0 is present
+PASS Directional variant 1/2/1 is present
+PASS Directional variant 1/2/2 is present
+PASS Directional variant 1/2/3 is present
+PASS Directional variant 1/3/0 is present
+PASS Directional variant 1/3/1 is present
+PASS Directional variant 1/3/2 is present
+PASS Directional variant 1/3/3 is present
+PASS Directional variant 1/4/0 is present
+PASS Directional variant 1/4/1 is present
+PASS Directional variant 1/4/2 is present
+PASS Directional variant 1/4/3 is present
+PASS Roof construction creates corresponding walkable Z+1 cells
+PASS Stair flight creates a same-location vertical link
+PASS E climbs to the roof at exactly the same XY landing
+PASS Ground destinations cannot be activated from an upper storey
+PASS Roof edge prevents walking into unsupported air
+PASS An upper chest may share XY with a different ground-floor chest
+PASS Roof chest receives its own independent contents
+PASS Walls can extend the house upward on a roof floor
+PASS Upper walls cannot obstruct a vertical landing
+PASS Upper storey roof creates a Z+2 surface
+PASS A ladder extends the same shaft to another storey
+PASS E chooses upward travel at a landing with connections both ways
+PASS Supported upper floor can be expanded beside a landing
+PASS Save/reload restores current Z and exact landing
+PASS Shift+E descends the ladder to the matching floor
+PASS Shift+E descends the original stair to ground level
+PASS Same XY cannot access a chest on another Z-level
+PASS A furnished upper floor prevents removing its supporting roof
+PASS Upper construction prevents dismantling its access passage
+PASS Building lesson credits actual ascent and return
+PASS Directional locomotion is integrated into the existing mine
+HEARTHCRAFT47: 94 passed / 0 failed

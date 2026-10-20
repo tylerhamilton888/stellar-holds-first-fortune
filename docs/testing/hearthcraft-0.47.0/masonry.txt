@@ -1,0 +1,33 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+
+PASS Chisel contacts persist until a whole block is freed
+PASS Quarry creates exactly one cargo block, no duplicate ordinary stone
+PASS Empty terrain cannot be quarried repeatedly
+PASS Ore cannot be converted into free masonry blocks
+PASS Unforged steel gate protects basalt quarrying
+PASS Lesson cannot reward before real work
+PASS Remote stockpiles cannot feed a bench through unrelated terrain
+PASS Changing work modes clears the recovery swing before the next job
+PASS Caching transfers existing blocks into marked stockpile once
+PASS Repeated cache cannot duplicate stone
+PASS Partial dressing consumes no premature materials
+PASS Three bench contacts convert one local block to two dressed stone
+PASS Empty supply prevents phantom crafting
+PASS Field output must be delivered before construction
+PASS Delivered dressed floor raises actual room craftsmanship
+PASS Useful completed project earns delegation and one part
+PASS Lesson reward is once-only
+PASS Relevant masonry knowledge improves useful output
+PASS Optional reduction produces four ordinary stone
+Brann will fetch, dress and return stone through the nearby stockpile.
+PASS Existing recruited miner can take over familiar work
+PASS Mason physically fetches block without duplication
+PASS Save/reload preserves in-flight worker cargo and quest
+PASS Mason dresses and physically returns finished stone to stockpile
+PASS Releasing mason returns carried input safely
+PASS Older Living Works save gains additive masonry defaults without resetting rooms or inventory
+MASONRY45: 25 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

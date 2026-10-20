@@ -1,0 +1,42 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Player crafts stonebreaker on valid claim ground
+PASS Station material cost paid exactly once
+PASS Overlapping placement rejected without spending
+PASS Player establishes typed stone stockpile
+PASS Processed-material pallet is craftable
+PASS Player crafts sawbench
+PASS Player establishes timber rack
+PASS Player crafts working handcart
+PASS E moves raw chunk from ground to shoulder exactly once
+PASS Q places persistent chunk on ground
+PASS E deposits only into compatible local stockpile
+PASS Stone stockpile refuses logs without loss
+PASS Timber rack accepts log
+PASS Station reserves exactly one nearby raw input
+PASS Partial work and input ownership survive actual reload
+PASS Completed stone goes once to nearby output pallet
+PASS Shift+E returns actual output to existing inventory
+PASS Processed stone builds a real house floor at its normal cost
+PASS Timber workflow preserves explicit two-unit yield
+PASS Cart receives raw material without duplication
+PASS Pushed cart visibly follows player's clear path
+PASS Cart unloads back to shoulders
+PASS Shift+B opens craft/placement board
+PASS Handling loops give no mastery experience
+PASS Strong shoulders unlocks at eight productive work credits
+PASS Equipment ground cargo and handling upgrade persist
+PASS Actual held axe stroke fells tree and releases one persistent log
+PASS Felling avoids duplicate timber and retains fallen trunk cuts/regrowth
+PASS Newly felled log is physically liftable with E
+PASS Suitable actual mine seam produces a persistent raw object
+PASS Raw extraction does not also award inventory/bucket stone
+PASS Claim equipment cannot be used remotely from underground
+HANDWORKS54: 32 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 8 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

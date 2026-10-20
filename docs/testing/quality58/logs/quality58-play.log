@@ -1,0 +1,33 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Creator represents moustache identity with a full beard
+PASS Male identity retains a beard: 0
+PASS Male identity retains a beard: 1
+PASS Male identity retains a beard: 2
+PASS Male identity retains a beard: 3
+PASS Male identity retains a beard: 4
+PASS Male identity retains a beard: 5
+PASS Male identity retains a beard: 6
+PASS Female identity is preserved
+PASS Responsive bearded movement: 0 / right
+PASS Responsive bearded movement: 0 / left
+PASS Responsive bearded movement: 0 / up
+PASS Responsive bearded movement: 0 / down
+PASS Responsive bearded movement: 2 / right
+PASS Responsive bearded movement: 2 / left
+PASS Responsive bearded movement: 2 / up
+PASS Responsive bearded movement: 2 / down
+PASS Responsive bearded movement: 3 / right
+PASS Responsive bearded movement: 3 / left
+PASS Responsive bearded movement: 3 / up
+PASS Responsive bearded movement: 3 / down
+PASS Responsive bearded movement: 5 / right
+PASS Responsive bearded movement: 5 / left
+PASS Responsive bearded movement: 5 / up
+PASS Responsive bearded movement: 5 / down
+PASS Old moustache save keeps exact identity and palette with corrected beard
+PASS Appearance correction preserves inventory, money and claim
+BEARD QUALITY58: 27 passed / 0 failed

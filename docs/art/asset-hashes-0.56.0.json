@@ -1,0 +1,14 @@
+{
+  "assets/folk-v56/stride-front-rear.png": {
+    "bytes": 2452163,
+    "sha256": "55d742dc686dc7c031a6056da458c4a052e71283e05a192e1e1e630b4bbb43dd"
+  },
+  "assets/folk-v56/stride-side.png": {
+    "bytes": 1912278,
+    "sha256": "f411300e340ed59b4466f54b0fcea0f770b32015d624b4e1f069dacb680ec11f"
+  },
+  "assets/furnishings-v56/interior.png": {
+    "bytes": 2456455,
+    "sha256": "53ff3ba98c7a7e5bff617815e38a5d032fad582984f8336049dcf4a3b216b277"
+  }
+}

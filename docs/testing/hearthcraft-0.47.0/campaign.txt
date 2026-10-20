@@ -1,0 +1,46 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+
+PASS: new dwarf starts employed without a charter
+PASS: briefing and reference gate rewards and charters
+PASS: missing delivery cannot grant wages
+PASS: commission pays exactly once: A cold hearth
+PASS: delivered material consumed: coal
+PASS: commission pays exactly once: The weight of the mountain
+PASS: delivered material consumed: stone
+PASS: delivered material consumed: wood
+PASS: commission pays exactly once: Copper in the veins
+PASS: delivered material consumed: iron
+PASS: delivered material consumed: copper
+PASS: completed commission chain cannot be paid again
+PASS: three commissions fund every offered charter
+PASS: unknown charter rejected
+PASS: insufficient money preserves charter choice
+PASS: Old Delving includes inherited foundation
+PASS: second charter cannot overwrite chosen mountain
+PASS: claim is a distinct geological map
+PASS: returning to employer preserves exact excavation
+PASS: returning to claim preserves exact excavation
+PASS: campaign save succeeds
+PASS: campaign and ownership survive reload
+PASS: road timber and active mine persist
+PASS: inactive mine also survives reload
+PASS: safe arrival for Old Delving
+PASS: safe arrival for Copper Ridge
+PASS: safe arrival for Wayfarer's Rise
+PASS: charter geology differs reproducibly
+PASS: founding work advances Raise your workshop
+PASS: founding work advances Commission the freight beacon
+PASS: completed founding cannot consume more resources
+PASS: legacy saves remain independent and unlocked
+PASS: legacy mine and surface migrate together
+PASS: opens campaign panel: briefing
+PASS: opens campaign panel: commission
+PASS: opens campaign panel: charters
+PASS: opens campaign panel: gate
+PASS: opens campaign panel: camp
+PASS: travel reaches owned mountain
+PASS: claim mine exits to its own mountain
+PASS: hired claim crew cannot excavate employer mine
+PASS: visible road firs yield timber
+PASS: no invisible trees can be chopped inside hold
+43 CAMPAIGN CHECKS PASSED / 0 FAILED

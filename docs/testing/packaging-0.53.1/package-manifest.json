@@ -1,0 +1,13 @@
+{
+  "file": "Stellar-Holds-First-Fortune-0.53.1-Windows.zip",
+  "size": 354393303,
+  "sha256": "eb05e75e2cac42fe64556a827eb4646d0a8935c0cedd12a99d6afd8571590dcd",
+  "contents": [
+    "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b  FirstFortune.exe",
+    "302d00b6cb0bf4a4a9fbf8d07d5545feebc6e778a7ce5fed56be45e769080da9  FirstFortune.pck",
+    "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584  GODOT-COPYRIGHT.txt",
+    "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80  GODOT-LICENSE.txt",
+    "4d8d8669d3b79e3aae8941f1c97ec051df472109a76d51994103eb95e00abc5d  SECURITY-NOTES.txt",
+    "5429c69fc8ad85377c614227ca935b38905e6c852c7bb59c1ad5757906f6c3b5  START-HERE.txt"
+  ]
+}
