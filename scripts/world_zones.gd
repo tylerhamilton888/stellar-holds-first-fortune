@@ -36,15 +36,19 @@ func buildings()->Array:
   for p in [Vector2(350,450),Vector2(450,820)]:
    if s.area=="forgeward" and p.y<500:continue
    result.append({"p":p,"kind":"building","art":0,"width":310.0,"id":-1})
+ result.append_array(HoldNeighborhood.buildings(s.area))
  return result
+static func building_footprint(b:Dictionary)->Rect2:
+ return Rect2(b.p-Vector2(b.width*.44,b.width*.5),Vector2(b.width*.88,b.width*.5-20))
 func obstacles()->Array:
  if collision_cache.has(s.area):return collision_cache[s.area].duplicate()
- var result=[]
- for b in buildings():result.append(Rect2(b.p-Vector2(b.width*.44,b.width*.5),Vector2(b.width*.88,b.width*.5-20)))
+ var result=HoldNeighborhood.obstacles()
+ for b in buildings():result.append(building_footprint(b))
  # Central memorial fountain has a tangible basin, with broad streets around it.
  result.append(Rect2(895,595,150,70))
  for o in landmarks():
-  if o.art in [0,1,2,4]:
+  if o.art in [1,2]:result.append_array(HoldNeighborhood.stair_rails(o.p))
+  elif o.art in [0,4]:
    for side in [-1,1]:
     if o.art==0:result.append(Rect2(o.p+Vector2(side*o.width*.32-o.width*.14,-o.width*.34),Vector2(o.width*.28,o.width*.42)))
     else:result.append(Rect2(o.p+Vector2(side*o.width*.4-10,-o.width*.6),Vector2(20,o.width*.6)))
@@ -67,10 +71,16 @@ func points()->Array:
   result.append({"p":FORGE,"name":"Forge stairs · Forgeward","action":"forgeward"})
  else:result.append({"p":ROYAL if s.area=="crownward" else FORGE,"name":"Stairs · Hearthward","action":"hearthward"})
  for b in buildings():
-  if b.id==-1:result.append({"p":b.p,"name":"Folk homes · private quarters","action":"private"})
+  if b.has("home"):result.append({"p":b.p,"name":HoldNeighborhood.title(b.home),"action":b.home})
+  elif b.id==-1:result.append({"p":b.p,"name":"Folk homes · private quarters","action":"private"})
+ for stair in HoldNeighborhood.gallery_stairs(s.area):result.append({"p":stair.p,"name":"Gallery stair · "+s.NAMES[stair.dest],"action":"hold_stair:"+stair.dest+":"+stair.side})
  for c in people():result.append({"p":c.p,"name":c.name+" · "+c.role,"action":"citizen:"+str(c.index)})
  return result
 func arrival(old:String,id:String)->Vector2:
+ if HoldNeighborhood.is_home(old):
+  var p=HoldNeighborhood.parts(old)
+  if HoldNeighborhood.is_home(id):return HoldNeighborhood.STAIR+Vector2(0,30)
+  if id==p[0]:return HoldNeighborhood.home_door(int(p[1]))+Vector2(0,35)
  if ward(old) and ward(id):
   if old=="crownward" or id=="crownward":return ROYAL+Vector2(0,30)
   return FORGE+Vector2(0,30)
@@ -100,9 +110,12 @@ func people(at_time:float=-1)->Array:
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+5100+i+s.level()*101,1 if i%3==0 else 0)
   var profile=profiles[key]
   result.append({"p":p,"kind":"citizen","profile":profile,"aim":aim,"walking":walking,"name":names[i],"role":roles[i],"index":i,"time":time+i*.7,"gait":distance/95.0+i*.13})
+ result.append_array(HoldNeighborhood.people(self,time))
  if at_time<0:people_cache=result;people_frame=Engine.get_process_frames();people_area=s.area
  return result
 func speak(index:int):
+ if index>=6:
+  speech=HoldNeighborhood.resident(self,index-6,Vector2.ZERO).name+" · "+["Come warm your hands by our hearth. The upper rooms are just up the stair.","Three wards, one mountain. Follow the bridge south to our family gallery.","My family has kept this hearth for generations. The lower forges never quite fall silent."][index-6];speech_until=g.clock+8;return
  var lines=["A good hold is built one sound stone at a time. The royal stair is on the western terrace.","I keep these lamps lit. The eastern lift serves all three wards.","Ivar keeps the shift book southeast of the fountain. Orla trades on the north street.","The Copper Kettle is on the north street. Hedrik always has a warm hearth.","Borin works below in Forgeward. Take the eastern stairs beside the gate.","Through King's Gate: the Old Workings north, Pinewood south, your mountain claim east."]
  speech=people()[index].name+" · "+lines[index];speech_until=g.clock+8
  g.notify("A word from "+people()[index].name+". Keep walking whenever you like.")
@@ -120,7 +133,7 @@ func draw_ground():
  # Broad shadow and coping follow the collision envelope, without thin repeated strips.
  for x in range(90,1780,170):
   # Northern boundary is the vault footing, aligned with the walkable limit.
-  detail(2,Vector2(x+85,1040),176,70)
+  pass # The former southern coping is now the open gallery connection.
  for side in [80,1780]:
   g.draw_rect(Rect2(side-12,207,30,790),Color("28383b"))
   g.draw_line(Vector2(side,208),Vector2(side,995),Color("8a9384"),8)
@@ -128,9 +141,12 @@ func draw_ground():
   for y in [330,580,830]:detail(4,Vector2(side,y),58,90)
  for y in [520,740,980]:
   g.draw_line(Vector2(115,y),Vector2(1770,y),Color("6d786a"),3)
+ HoldNeighborhood.draw_gallery(self)
 func street_furnishings()->Array:
  var result=[]
  for p in [Vector2(180,450),Vector2(1700,450),Vector2(600,800),Vector2(1210,820)]:result.append(furn("lamp",p.x,p.y))
+ for p in [Vector2(800,1180),Vector2(1120,1180),Vector2(230,1380),Vector2(1620,1380)]:result.append(furn("lamp",p.x,p.y))
+ result.append_array([furn("tea_table",1120,1330),furn("chair",1065,1345),furn("chair",1175,1345),furn("hearth",1250,1270)])
  return result
 func stone_style(color:Color)->StyleBoxFlat:
  if styles.has(color):return styles[color]
@@ -168,14 +184,17 @@ func landmarks()->Array:
  if s.area in ["hearthward","crownward"]:result.append({"p":ROYAL,"kind":"landmark","art":1 if s.area=="hearthward" else 2,"width":150.0})
  if s.area in ["hearthward","forgeward"]:result.append({"p":FORGE,"kind":"landmark","art":2 if s.area=="hearthward" else 1,"width":150.0})
  if s.area=="hearthward":result.append({"p":GATE,"kind":"landmark","art":0,"width":240.0})
+ for stair in HoldNeighborhood.gallery_stairs(s.area):result.append({"p":stair.p,"kind":"landmark","art":1 if stair.up else 2,"width":150.0})
  for p in [Vector2(680,800),Vector2(1130,820)]:result.append({"p":p+Vector2(0,15),"kind":"landmark","art":5,"width":110.0})
  return result
 func draw_landmark(o:Dictionary):
+ if o.art in [1,2]:HoldNeighborhood.draw_stairs(self,o.p,o.art==1);return
  image_at(LANDMARKS,LAND_RECTS[o.art],LAND_ANCHORS[o.art],o.p,o.width,o.art in [0,3,5])
  if o.art==3:
   var rect=Rect2(o.p-Vector2(o.width*.5,o.width*.82),Vector2(o.width,o.width*.85))
   if rect.intersects(Rect2(g.camera,Vector2(960,540))):HoldAmbientProps.fountain(g,o.p,g.clock,o.width/180.0,.35 if rect.has_point(g.player) and g.player.y<o.p.y-25 else 1.0)
 func room_objects()->Array:
+ if HoldNeighborhood.is_home(s.area):return HoldNeighborhood.room_objects(self)
  var result=[];var id=g.room_id
  if id=="tavern":
   result=[furn("hearth",330,345),furn("counter",620,450),furn("bookcase",480,330)]
@@ -192,6 +211,9 @@ func furn(kind:String,x:float,y:float)->Dictionary:return {"kind":"furnishing","
 func room_obstacles()->Array:
  var result=[]
  for o in room_objects():result.append(furn_footprint(o))
+ if HoldNeighborhood.is_home(s.area):
+  result.append_array(HoldNeighborhood.stair_rails(HoldNeighborhood.STAIR,96))
+  if HoldNeighborhood.parts(s.area)[2]=="1":result.append(Rect2(160,615,640,30))
  if g.room_id=="forge":result.append(Rect2(558,425,48,28))
  if g.room_id=="throne":
   result.append(Rect2(586,350,68,32))
@@ -202,7 +224,7 @@ func draw_furnishing(o:Dictionary):
  HoldFurnishings.draw(g,o.p,o.furnishing)
 func draw_room_floor():
  g.draw_rect(Rect2(Vector2.ZERO,s.ROOM_SIZE),Color("182a30"))
- var warm=g.room_id in ["home","tavern","commission"]
+ var warm=g.room_id in ["home","tavern","commission"] or HoldNeighborhood.is_home(s.area)
  tile(1 if warm else 0,Rect2(160,260,640,385),110,Color("ddd4bb") if warm else Color("cbd1c5"))
  # Load-bearing walls and a single south doorway share the collision envelope.
  for x in range(150,810,55):
@@ -212,6 +234,9 @@ func draw_room_floor():
  for r in [Rect2(160,635,280,18),Rect2(520,635,280,18)]:g.draw_style_box(stone_style(Color("9ca18c")),r)
  g.draw_style_box(stone_style(Color("baac8b")),Rect2(440,615,80,30))
 
+ if HoldNeighborhood.is_home(s.area):
+  HoldNeighborhood.draw_stairs(self,HoldNeighborhood.STAIR,HoldNeighborhood.parts(s.area)[2]=="0",96)
+  if HoldNeighborhood.parts(s.area)[2]=="1":g.draw_style_box(stone_style(Color("9ca18c")),Rect2(160,615,640,30))
  if g.room_id=="throne":
   g.draw_style_box(stone_style(Color("3b696d")),Rect2(440,285,210,330))
   for x in [446,642]:g.draw_line(Vector2(x,290),Vector2(x,610),Color("bd9e57"),4)
@@ -246,6 +271,7 @@ func draw_bridge():
 
 const TERRAIN=preload("res://assets/world-v50/terrain.png")
 func tile(index:int,rect:Rect2,unit:float=160,tint:Color=Color.WHITE):
+ if index in [0,1]:HoldFloorPattern.draw(g,rect,index==1,tint);return
  var origin=Vector2(index%3,index/3)*512
  var y=rect.position.y
  while y<rect.end.y:

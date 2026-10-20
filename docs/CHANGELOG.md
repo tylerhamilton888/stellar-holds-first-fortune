@@ -1,3 +1,10 @@
+## 0.62.0 (source)
+- Extend all three Keldrath wards with bridged residential galleries and additional inter-ward stairs.
+- Nine furnished family homes with connected upstairs rooms, persistent location and distinct neighbors.
+- Align painted stair rails and physical footprints; block shaft edges; prioritize doors over passing citizens.
+- Check building sides/corners, bridge movement and all household entrances/returns.
+- Replace repeated floor-atlas strips with continuous staggered timber/stone surfaces and subtle grain.
+
 ## 0.61.3 (source)
 - Build-only snapped grid, translucent preview and green/red placement footprint.
 - Material/access-aware construction previews, including house route protection.

@@ -844,7 +844,7 @@ func update_hud():
  if zone=="approach":place="MOUNTAIN APPROACH"
  elif zone=="road":place="PINEWOOD"
  elif state.active_site=="claim":place=HoldOutpost.title(state).to_upper()
- if room_id!="":place=HoldInteriors.ROOMS[room_id].name.to_upper()
+ if room_id!="":place=HoldInteriors.ROOMS.get(room_id,{"name":"Family hearth"}).name.to_upper()
  hud.text=place+" / "+("DEEP WORKINGS" if zone=="mine" else ("KELDRATH" if zone=="approach" else "TIMBER COUPE" if zone=="road" else "MOUNTAIN HOLD"))+"   %d CROWNS" % state.money
  status.text="IRON ORE %d   COPPER %d   COAL %d   CRYSTAL %d   TIMBER %d" % [state.count("iron_ore"),state.count("copper_ore"),state.count("coal"),state.count("crystal"),state.count("wood")]
  objectives.text=goal()
@@ -853,7 +853,7 @@ func update_hud():
  if menu_paused or panel_id in ["pause","settings"]:footer.text="PAUSED — TAKE YOUR TIME   |   CLOSE TO RESUME"
  elif panel_id!="":footer.text="ESC  BACK / CLOSE     |     "+("PRODUCTION CONTINUES" if not state.queue.is_empty() else "YOUR HOLD, YOUR FORTUNE")
  elif room_id!="":
-  footer.text="E  LEAVE BUILDING" if absf(player.x-115)<95 else ("E  "+str(HoldInteriors.ROOMS[room_id].action).to_upper() if absf(player.x-625)<115 else "A/D WALK   E INTERACT   EXIT TO THE LEFT")
+  footer.text="E  LEAVE BUILDING" if absf(player.x-115)<95 else ("E  "+str(HoldInteriors.ROOMS.get(room_id,{"action":"Explore the hearth"}).action).to_upper() if absf(player.x-625)<115 else "A/D WALK   E INTERACT   EXIT TO THE LEFT")
  elif zone=="hub" and room_id=="" and state.active_site=="hold" and player.x<125:footer.text="E  WEST GALLERY / EXPLORE KELDRATH     |     D  RETURN TO THE CONCOURSE"
  elif notice_time>0:footer.text=notice
  elif construction.selected!="":footer.text="BUILD: "+HoldConstruction.OPTIONS[construction.selected].name+"   LMB PLACE   1–4 CANCEL   V OPTIONS"

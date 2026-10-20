@@ -16,7 +16,8 @@
       "mining",
       "handworks",
       "world",
-      "modular"
+      "modular",
+      "hold"
     ],
     "modular": [
       "modular",
@@ -25,6 +26,13 @@
       "equipment",
       "handworks",
       "world"
+    ],
+    "hold": [
+      "hold",
+      "orientation",
+      "ambient",
+      "world",
+      "modular"
     ]
   },
   "cases": {
@@ -63,6 +71,10 @@
     "modular": {
       "script": "tests/modular64.gd",
       "marker": "MODULAR64"
+    },
+    "hold": {
+      "script": "tests/hold65.gd",
+      "marker": "HOLD65"
     }
   }
 }

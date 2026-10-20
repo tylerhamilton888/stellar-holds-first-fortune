@@ -266,7 +266,7 @@ func update_info():
   info.text=("Hold lift" if portal%7==6 else "Royal stair" if portal in [2,10] else "Forge stair")+"  /  "+NAMES[level]+"\nE travels between levels. WASD explores north, south, east and west on this floor."
   return
  if paused:info.text="Travel paused. Your place in the hold will be saved."
- elif survey:info.text="You are inside "+HoldInteriors.ROOMS[g.room_id].name+". Leave by the door to explore the hold."
+ elif survey:info.text="You are inside "+HoldInteriors.ROOMS.get(g.room_id,{"name":"a family hearth"}).name+". Leave by the door to explore the hold."
  elif near_wip():
   enter_button.disabled=true;enter_button.text="WIP · Unavailable"
   info.text="UNOPENED WING · WIP\nThis interior is not implemented. Quests and upgrades will not open it in this build."

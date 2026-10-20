@@ -1,3 +1,10 @@
+# Keldrath galleries — 0.62.0
+
+- scripts/hold_neighborhood.gd: residential galleries, connected home floors, painted stair envelopes, neighbors.
+- scripts/floor_pattern.gd: continuous cached timber/stone floor drawing.
+- scripts/world_zones.gd / surface.gd: ward geometry, doorstep links, interaction selection and bounds.
+- tests/hold65.gd / testing/hold65.md: collision, doors, Z traversal, persistence and native visual QA.
+
 # Modular building refinement — 0.61.3
 
 - scripts/build_preview.gd: shared world-space grid, valid/blocked footprint and labels.
