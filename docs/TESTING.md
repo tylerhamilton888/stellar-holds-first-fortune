@@ -1,109 +1,17 @@
-# Current release — ambient-0.61.0
+# Current acceptance checks
 
-Read testing/ambient61.md. Run intro53, ambient61 and grips58 with isolated saves and explicit output directories. pack_ambient61 is self-contained for the exact PCK. Sequential native runs, completion marker plus exit required. No character source paintings changed.
+Use Godot 4.4.1, Python 3.11+, and isolated test data. Never test against personal saves.
 
-# Current release — portraits-0.60.0
-Read `testing/portraits60.md`. `portraits60.gd` checks native palettes and produces all-identity/cast galleries. `portrait_ui60.gd` exercises actual creator/dialogue/audience/story/roster/reload paths; set the audience prerequisite in the fixture, and capture after its fade. `motion_play59.gd`, `grips58.gd`, `handworks55.gd` and `mining55.gd` remain focused gameplay regressions.
-
-Fresh clean export uses the existing official unmodified Windows template and separate PCK. External self-contained UI/grip/mining harnesses test that exact PCK from an empty working directory. `audit_release_pck.py --inventory-only` verifies every entry without creating a redundant extraction when no local antivirus database is available; omit the flag for independent unpacking/scanning. No current Defender result is implied.
-
-Keep native displays strictly sequential. Require both runner exit and explicit completion marker before another native run or runtime asset mutation. Use isolated saves.
-
-# Current motion checkpoint — whole-motion59
-
-Read [motion verification](testing/motion59.md). `motion_play59.gd` exercises every identity/state/facing/key and actual physical pickup, movement, save/reload and put-down. Compare numeric raw IDs as integers across JSON, which reloads numbers as floats. `grips58.gd`, `handworks55.gd` and `mining55.gd` remain the focused input/workflow regressions.
-
-`motion_art59.gd`, `supply_art59.gd` and `motion_film59.gd` render the native result. `palette_audit58.gd -- <output> motion` audits the new motion collection and protected non-hair materials. Use isolated saves and strictly sequential native displays. Require completion marker AND runner completion. Static sheets or parsing alone do not establish motion quality.
-
-# Current quality checkpoint — folk-quality58
-
-Read [quality verification](testing/quality58.md). `beard_quality58.gd` covers all male beard normalization, creator, actual equipped movement and legacy-profile reload (27 checks). `handworks55.gd` and `mining55.gd` accept optional output directory and male sculpt; sculpt 5 reruns passed 32 and 38 checks. `quality_art58.gd` renders the selected complete keys, work phases and native pose-motion frames. Run `palette_audit58.gd` after source changes.
-
-Use isolated saves, sequential native displays and explicit completion markers. Screenshot poses and passing mechanics do not certify a good gait. Preserve previous checkpoint evidence; do not mix historical totals into current results.
-
-# Current refinement checkpoint
-
-Read [refinement verification](testing/refinement58.md). Use `refinement_play58.gd`, `refinement58.gd` and `refinement_sockets58.gd`. `grips58.gd` and `palette_audit58.gd` accept an output directory after `--`; preserve previous evidence. Wait for each native completion marker before launching the next display. Full visual release acceptance remains blocked.
-
-# Current palette correction: palette-fix58
-
-Read [palette coverage verification](testing/palette-fix58.md). `palette_audit58.gd` checks every active frame at source resolution plus all eight hair choices per identity, and protects non-hair materials including intentional purple clothing. `palette_fix58.gd`, `palette_all58.gd` and `palette_actions58.gd` provide native review captures. These tests do not certify unrelated animation poses. Preserve isolated saves and sequential native displays.
-
-# Current development: whole-integration-wip-58
-
-Read [whole-character verification](testing/whole-0.58.0.md). The active whole-frame backend passes 98 native mechanical checks but has **failed visual acceptance**; see [observed art blockers](art/whole-integration-58.md). Use isolated save data and sequential native displays. New harnesses: core_art58, palette58, grips58, art58, capture_grip58, creator58 and motion58. Old head/body/stride geometry assertions describe the superseded composite and are not acceptance tests for whole drawings. No new Windows package has been verified or released.
-
-# Current release: 0.57.0
-Read [grip/proportion verification](testing/grips-0.57.0.md). New `grips57.gd` exercises actual numbered input, moving selection, supply ownership, load priority, reload and prepared facings. `capture_grip57.gd` renders 48 equipped poses at game/enlarged scale; `motion57.gd` records real movement. `pack57.gd` is self-contained for the exported PCK. Retained mining55, handworks55, integration56 and combat_edges53 provide regression coverage. Combat's older fixture now waits for the current transition prewarm before input. Use isolated saves, sequential native displays and explicit completion markers.
-
-# Current release: 0.56.0
-Read [art repair verification](testing/art-0.56.0.md). `tests/integration56.gd` covers head/grip registration, foot silhouettes, reachable services, furniture placement/occupancy/refunds and exact save backup. `tests/art56.gd` captures native pose sheets/interiors; `tests/motion56.gd` records actual moving gameplay. External `tests/pack56.gd` exercises the exported pack independently. Run sequentially with isolated saves and require completion markers. Review output images/video; geometry assertions cannot establish artistic quality.
-
-# Current release: 0.55.1
-See [cave landmark verification](testing/landmarks-0.55.1.md). Run `tests/landmarks551.gd` natively; `tests/pack551.gd` is a self-contained external harness for the exported PCK. Require the completion marker, not just exit code zero. Isolate saves; run native displays sequentially. Compare reload pixels and inspect front/behind overlap.
-
-# Current release: 0.55.0
-Read [mining refinement verification](testing/mining-0.55.0.md). Use isolated data for `tests/mining55.gd`, `handworks55.gd`, `site55.gd`, `test_deepworks55.gd` and external `pack55.gd`. Native tests must run sequentially with separate X displays/saves. Historical two-contact assertions describe old balance and are not current acceptance gates. The fieldwork fixture uses full-duration authored strokes; bench tests allow approach travel before measuring work.
-
-# Current release: 0.54.0
-See [reference-0.54.0](testing/reference-0.54.0.md). Isolate saves for all native/input scripts ending in 54.gd. Export metadata must include assets/folk-v54/frames.json. Use the measured bounds, not equal-grid crops.
-
-Current release: **0.53.0**. See [native playability validation](testing/playability-0.53.0.md). Use isolated native input for playability53, intro53, combat_edges53 and input_world53; test_deepworks41 covers existing crew/depth persistence.
-
-Current world release: 0.50.0. See testing/world-0.50.0.md and tests/input_world50.gd, collision_world50.gd, migration_world50.gd. Use isolated native data and inspect hitbox overlays.
-
-Tavern/container follow-up: input_tavern492.gd (7), bringing current focused checks to 51.
-
-Current release: 0.49.2; input_style492.gd (10), capture_style492.gd (2), rerun input_handworks49.gd (32). Evidence testing/style-0.49.2.md.
-
-Current release: 0.49.1; native tests/input_fracture491.gd and docs/testing/fracture-0.49.1.md.
-
-Current release: [Hands of the Dwarf 0.49.0](testing/handworks-0.49.0.md). Use native input_handworks49.gd and input_surface49.gd with isolated XDG saves.
-
-Current release evidence: [0.48.0 readability and animation](testing/readability-0.48.0.md). Native input/display required for tests/input_readability48.gd; isolate XDG_DATA_HOME.
-
-Current release evidence: [0.47.0 Hearthcraft and directional views](testing/hearthcraft-0.47.0.md). Native input tests require a display and isolated XDG_DATA_HOME.
-
-Current release evidence: [0.46.0 walkable zones and home](testing/homestead-0.46.0.md). Native display required for input_homestead46.gd; keep isolated XDG_DATA_HOME.
-
-Current release evidence: [0.45.1 visual pass](testing/polish-0.45.1.md).
-
-Current release evidence: [0.45.0 masonry](testing/masonry-0.45.0.md).
-
-Current release evidence: [0.44.0 routes and story art](testing/routes-0.44.0.md). Player acceptance: [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md).
-
-## Visual polish 0.43.1
-`tests/input_polish431.gd` verifies tabbed construction flow and viewport bounds. `tests/capture_ui431.gd` renders shared menus and unrelated areas. See testing/polish-0.43.1.md.
-
-## Living Works
-Run `tests/test_living43.gd` headless and `tests/input_living43.gd` with native display, in isolated XDG_DATA_HOME. See testing/living-0.43.0.md for fixture scope and regression results.
-
-# Focused validation
-Run from a recovered checkout with Python 3 and Godot 4.4.1:
 ```sh
-python3 tools/smoke.py --godot /absolute/path/to/godot
+python tools/check.py --godot /path/to/godot --suite gameplay --output test-results/unique-run
 ```
-Windows also accepts the executable path. The runner imports resources, boots the title, then runs existing targeted tests and a small integration smoke. It isolates user data through XDG_DATA_HOME/APPDATA/LOCALAPPDATA; never run save-writing tests against live player saves. Logs/results go to ignored `test-results/`. Use `--skip-import` only after a successful current import.
 
-Coverage: title/new-game initialization; synthetic three-slot save/reload and replacement isolation; terrain/cuts/collection; controller movement; opening dialogue progression; smelting/trade; crew recruitment/assignment/physical work; industry/progression; survey/sift and downward cutting. Headless tests do not establish visual quality, audio mixing or Windows launcher behavior. Known teardown resource warnings are recorded separately; other Godot errors fail the runner. A timeout also fails.
+A native display is required; on Linux CI use `xvfb-run -a` and `LIBGL_ALWAYS_SOFTWARE=1`. The runner imports first, executes sequentially, and requires exit zero, no script errors and an explicit passing summary. Every case has independent temporary save directories. Timeouts and missing completion markers fail the run. Existing output directories are refused.
 
-For a single task, run the smallest relevant test under isolated user data. Historical capture scripts may contain old absolute output paths; inspect before using them. `down43.gd`, `survey42.gd`, `review40.gd` and `interiors41.gd` are recent visual harnesses, not portable smoke entry points.
+`tests/suites.json` is the authoritative list. `core` covers menus, orientation, ambient animation and held equipment. `gameplay` adds excavation/Z-levels, material handling and a settlement-to-world journey with legacy-save migration. The shared fixture lives in `tests/support/game_fixture.gd`; historical filenames remain to preserve links and resource paths. Exact-export tests must remain standalone.
 
-Manual release checks: launch FirstFortune.exe; new game and Continue; copy/load a real prior save; move/jump/climb; cut above/below/beside; collect and craft/sell; check crew work and return route; inspect relevant menus/animation/contact and audio. Record build, platform, fixture and result. Do not label an unrun check passed.
+Inspect captured inventory/settings/directions, escort, fountain/fire, held-tool and mining/workstation images at gameplay scale. Compare to baseline when presentation code changes. Passing state assertions alone do not establish visual quality.
 
-Export from the project root:
-```sh
-godot --headless --path . --export-release 'Windows Desktop' /absolute/output/FirstFortune.exe
-```
-Use a fresh source checkout and verified official 4.4.1 export templates. The preset keeps game data separate and leaves the official runtime bytes intact. Do not ship the editor or a batch launcher. Retain Godot notices. Test the exported pack with the native release runtime, audit its contents, scan the executable/ZIP plus independently unpacked PCK files, and record scanner/database dates and limitations. A passing ClamAV scan does not establish a Defender verdict. See testing/packaging-0.53.1.md.
+For each Windows release, use `tools/build.py`, then run `tests/pack_ambient61.gd` externally against the resulting PCK from an empty working directory with an isolated save directory. Require its completion marker plus successful exit. Repeat affected input workflows against the pack when runtime dependencies change. Record Windows/audio/performance limitations honestly.
 
-## Pinewood (0.40.0)
-Run `--headless --path . --script res://tests/test_forestry40.gd` with isolated user data. It covers migration, all character designs/facings, invalid reach/tool/airborne contact, exact rewards, exhausted-target rejection, save/reload and basin round trip. `tests/capture_forestry40.gd -- --output=/absolute/review-directory` requires a graphics display and writes native captures. Use `--audio-driver Dummy` in a display-only CI environment. Keep existing test data isolated.
-
-`test_campaign.gd` now aims at the actual tree instead of the superseded x=275 fixture. `test_expedition25.gd` retains two obsolete continuous-travel expectations; see the release verification note. Do not re-enable manual mine/hold walking just to satisfy them.
-
-## Deepworks (0.41.0)
-Use isolated user data. Run `tests/test_deepworks41.gd` for the integrated flow and model checks. With a graphics display, run `tests/input_deepworks41.gd` for held input and real UI/button interactions, and `tests/capture_deepworks41.gd` for visual review. The capture harness currently targets this session's review directory; change it for another checkout. See `testing/deepworks-0.41.0.md` for explicit scope and limits. Legacy granular/controller tests remain compatibility checks; they do not certify the new mining UI.
-
-## Weight of the Mountain (0.42.0)
-Run `tests/test_haul42.gd` under isolated user data for transfer conservation, overflow, cart construction, stockpiles, cross-depth movement, existing forge/trade, real save/reload and additive 0.41 upgrade. Existing Deepworks tests now expect personal bulk in containers until delivery and derived grade yields. `tests/input_deepworks41.gd` now covers 15 real input/UI checks, including hauling and ledger. `tests/capture_haul42.gd` provides native visual fixtures; pass the output path via editing its declared variable on other hosts. Run headless model tests plus native input/captures, not parsing alone.
+Historical evidence and acceptance notes: [0.61.0](testing/ambient61.md), [foundation](testing/foundation62.md), [earlier testing index](testing/HISTORY.md). Historical tests may target retired mechanics; do not treat all versioned files as current gates.

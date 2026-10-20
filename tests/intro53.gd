@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func scene_tick(scene,seconds:float):
  for i in int(seconds*60):
   if not is_instance_valid(scene) or scene.finished:break

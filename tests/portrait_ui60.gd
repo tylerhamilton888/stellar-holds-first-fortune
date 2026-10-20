@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func snap(name:String):
  if g.playing:
   g.camera=g.surface.camera_target() if g.surface.active() else g.deep.camera_target();g.update_hud()

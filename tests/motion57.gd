@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func run():
  output=OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "user://motion57"
  DirAccess.make_dir_recursive_absolute(output)

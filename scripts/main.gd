@@ -176,17 +176,7 @@ func setup_inputs():
 func setup_ui():
  var layer=CanvasLayer.new();add_child(layer)
  ui=Control.new();ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);ui.mouse_filter=Control.MOUSE_FILTER_IGNORE;layer.add_child(ui)
- var theme=Theme.new();theme.default_font=ThemeDB.fallback_font;theme.default_font_size=16
- for type in ["Button","PanelContainer"]:
-  var style=StyleBoxFlat.new();style.bg_color=Color("152731");style.border_color=Color("8c784f");style.set_border_width_all(1);style.set_content_margin_all(14);style.set_corner_radius_all(3)
-  theme.set_stylebox("normal" if type=="Button" else "panel",type,style)
-  if type=="Button":
-   var hover=style.duplicate();hover.bg_color=Color("34565b");hover.border_color=Color("e2b96d");theme.set_stylebox("hover",type,hover)
-   var pressed=style.duplicate();pressed.bg_color=Color("496561");theme.set_stylebox("pressed",type,pressed)
-   var disabled=style.duplicate();disabled.bg_color=Color("202d36");disabled.border_color=Color("3e4a50");theme.set_stylebox("disabled",type,disabled)
-   theme.set_color("font_color","Button",Color("f0dbaf"));theme.set_color("font_disabled_color","Button",Color("a5b2b7"))
-   var focus=StyleBoxFlat.new();focus.bg_color=Color(0,0,0,0);focus.border_color=Color("a7dfcb");focus.set_border_width_all(2);theme.set_stylebox("focus","Button",focus)
- theme.set_color("font_color","Label",Color("e6e8e2"));theme.set_constant("line_spacing","Label",4);ui.theme=theme
+ ui.theme=HoldMenuView.make_theme()
  hud=Label.new();hud.position=Vector2(24,17);hud.add_theme_font_size_override("font_size",19);ui.add_child(hud)
  status=Label.new();status.position=Vector2(24,48);status.add_theme_color_override("font_color",Color("a3c4bd"));ui.add_child(status)
  objectives=Label.new();objectives.position=Vector2(24,84);objectives.add_theme_font_size_override("font_size",14);ui.add_child(objectives)
@@ -214,7 +204,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="THE FIRST FORTUNE  /  0.61.0  /  LIFE IN THE HOLD";credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
  fight.reset();fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}
@@ -1078,11 +1068,11 @@ func draw_title():
  A.line(self,Vector2(65,282),Vector2(425,282),Color("aa8a55"),2)
 
 func button(parent:Node,label:String,callback:Callable)->Button:
- var b=Button.new();b.text=label;b.custom_minimum_size.y=42;b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.size_flags_vertical=Control.SIZE_SHRINK_CENTER;b.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND;parent.add_child(b);b.pressed.connect(callback);return b
+ return HoldMenuView.button(parent,label,callback)
 func label(parent:Node,s:String,size:int=15,color:Color=Color("e6e8e2"))->Label:
- var l=Label.new();l.text=s;l.add_theme_font_size_override("font_size",maxi(16,size));l.add_theme_color_override("font_color",color);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(l);return l
+ return HoldMenuView.label(parent,s,size,color)
 func row(parent:Node)->HBoxContainer:
- var r=HBoxContainer.new();r.add_theme_constant_override("separation",8);parent.add_child(r);return r
+ return HoldMenuView.row(parent)
 func toggle_panel(id:String):
  if panel_id==id:close_panel()
  else:open_panel(id)
@@ -1114,15 +1104,9 @@ func refresh_panel():
  var text=focused.text if focused is Button else ""
  open_panel(panel_id,false);restore_menu.call_deferred(offset,text)
 func small_button(parent:Node,text:String,fn:Callable)->Button:
- var b=button(parent,text,fn);b.custom_minimum_size.y=30;b.add_theme_font_size_override("font_size",14)
- for style_name in ["normal","hover","pressed","disabled"]:
-  var style=b.get_theme_stylebox(style_name).duplicate();style.set_content_margin_all(7);b.add_theme_stylebox_override(style_name,style)
- return b
+ return HoldMenuView.small_button(parent,text,fn)
 func section(parent:Node,title:String)->VBoxContainer:
- var box=PanelContainer.new();var style=StyleBoxFlat.new();style.bg_color=Color("1d3540");style.set_content_margin_all(12);style.set_corner_radius_all(4);box.add_theme_stylebox_override("panel",style);parent.add_child(box)
- var body=VBoxContainer.new();body.add_theme_constant_override("separation",7);box.add_child(body)
- if title!="":label(body,title,18,Color("edc98a"))
- return body
+ return HoldMenuView.section(parent,title)
 func requirements(cost:Dictionary,crowns:int=0)->String:
  var missing:PackedStringArray=[]
  for k in cost:
@@ -1150,23 +1134,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  if id in ["fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
  panel_id=id;panel.visible=true
- panel.position=Vector2(120,44) if id=="living" else Vector2(60,44)
- panel.size=Vector2(720,452) if id=="living" else Vector2(840,452)
- for child in panel.get_children():panel.remove_child(child);child.queue_free()
- var outer=VBoxContainer.new();outer.add_theme_constant_override("separation",9);panel.add_child(outer)
- var top=row(outer)
- if not menu_history.is_empty():small_button(top,"‹ Back",back_panel)
- var names={"fieldwork":"RIVER & ROOT","handworks":"HANDS OF THE DWARF","wayfinding":"PATHS & DOORWAYS","storage":"YOUR STORAGE CHEST","house_build":"BUILD YOUR HEARTH","homestead":"YOUR HOMESTEAD","living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
- label(top,names.get(id,"Claim business" if id=="claim_stories" else id.to_upper()),22,Color("e9c586"))
- small_button(top,"Close ×",close_panel)
- if playing and id not in ["fieldwork","handworks","living","haulage","projects","deepworks","briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes","pinewood"]:
-  var nav=row(outer)
-  for entry in [["commission","Journal · J"],["inventory","Pack · I"],["equipment","Gear · B"],["roster","People · N"],["wayfinding","Directions · G"],["help","Guide · F1"]]:
-   var tab=small_button(nav,entry[1],func():open_panel(entry[0]));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-   if id==entry[0]:tab.modulate=Color("a7e2ce")
- var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;outer.add_child(scroll);menu_scroll=scroll
- panel_body=VBoxContainer.new();panel_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;panel_body.add_theme_constant_override("separation",6 if id in ["commission","lesson","social"] else 9);scroll.add_child(panel_body)
- menu_footer(outer)
+ HoldMenuView.build_shell(self,id)
  match id:
   "conversation":HoldConversation.panel(self)
   "field_notes":

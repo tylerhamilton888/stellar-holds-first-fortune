@@ -9,3 +9,5 @@ export_credentials.cfg
 *.log
 *.tmp
 .DS_Store
+__pycache__/
+*.pyc

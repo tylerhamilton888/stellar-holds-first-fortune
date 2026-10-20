@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func run():
  output="res://docs/testing/grips-0.57.0/interaction";DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()

@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 class Board extends Node2D:
  var hotbar
  var state

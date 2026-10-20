@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func same(a,b)->bool:return JSON.stringify(JSON.parse_string(JSON.stringify(a)))==JSON.stringify(JSON.parse_string(JSON.stringify(b)))
 func aim_at(p:Vector2):
  g.camera=g.deep.camera_target();root.warp_mouse((p-g.camera)*root.get_visible_rect().size/Vector2(960,540));await frames(2)

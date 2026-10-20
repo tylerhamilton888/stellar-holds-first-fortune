@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func digest(value)->String:return JSON.stringify(JSON.parse_string(JSON.stringify(value)))
 func signature(w:Deepworks)->Array:
  var all:Array=[]

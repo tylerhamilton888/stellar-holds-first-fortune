@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 const ACTIONS=["hold_pick","hold_axe","hold_hammer","hold_shovel","hold_supply","hold_rifle","carry_stone","carry_log","double_stone","double_log","double_mixed"]
 const DIRECTIONS=[Vector2.RIGHT,Vector2(1,1),Vector2.DOWN,Vector2(-1,1),Vector2.LEFT,Vector2(-1,-1),Vector2.UP,Vector2(1,-1)]
 func run():

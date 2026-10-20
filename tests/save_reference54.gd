@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func run():
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
  g.state.opening=4;g.state.appearance.sculpt=4;g.state.claim_id="old_delving";g.state.add("iron",13);g.surface.enter("claim");settle();g.state.add("wood",20);g.state.add("stone",20)

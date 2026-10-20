@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func reachable(start:Vector2)->Dictionary:
  var origin=Vector2i((start/20).round());var todo=[origin];var visited={origin:origin};var head=0
  while head<todo.size():

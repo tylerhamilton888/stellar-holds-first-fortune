@@ -1,0 +1,26 @@
+extends "res://tests/support/game_fixture.gd"
+func run():
+ output=OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "user://menus62"
+ DirAccess.make_dir_recursive_absolute(output)
+ g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
+ g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false
+ var inventory=g.state.inventory.duplicate(true)
+ key(KEY_I)
+ check(g.panel_id=="inventory" and g.panel.visible,"Real inventory key opens the menu shell")
+ await snap("inventory")
+ button("Gear")
+ check(g.panel_id=="equipment" and not g.menu_history.is_empty(),"Navigation callbacks open the intended panel and record history")
+ button("‹ Back")
+ check(g.panel_id=="inventory","Back returns to the previous panel")
+ button("Close")
+ check(not g.panel.visible and g.menu_history.is_empty(),"Close clears visible panel and navigation history")
+ g.open_panel("settings");await snap("settings")
+ check(g.menu_paused,"Settings retain pause behavior")
+ g.refresh_panel();check(g.panel_id=="settings","Refresh rebuilds the same panel")
+ key(KEY_ESCAPE);check(not g.panel.visible and not g.menu_paused,"Escape closes settings and resumes play")
+ g.open_panel("world_map")
+ check(g.panel_id=="wayfinding" and not is_instance_valid(g.overworld),"Legacy map requests still open local directions")
+ await snap("directions");g.close_panel();g.save_game();g.start_game(true);settle()
+ check(g.state.inventory==inventory,"Navigation and reload preserve inventory")
+ print("MENUS62: ",passed," passed / ",failed," failed")
+ g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)

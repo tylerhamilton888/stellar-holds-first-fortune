@@ -1,4 +1,4 @@
-extends "res://tests/input_reference54.gd"
+extends "res://tests/support/game_fixture.gd"
 func image_now()->Image:
  g.queue_redraw();await process_frame;await RenderingServer.frame_post_draw
  return root.get_texture().get_image()
