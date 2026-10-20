@@ -1,3 +1,9 @@
+# Whole-motion59 update — 2026-10-20
+
+The new `assets/whole-motion59/runtime.json` supersedes the earlier equipped and sustained shoulder-cargo keys for all fourteen identities. It supplies four gait phases in each of four painted camera views, for eleven states. Stopping uses the same artwork. Reviewed corrections preserve full beards, braid/bun/topknot silhouettes and mixed/double load counts. Pack items sit behind the painted tray rim and fingers. See `../testing/motion59.md` for current evidence.
+
+The historical carry/gait/tray issues below describe prior sources and are superseded where replaced. Older log lifting/put-down, cart pushing, directional work contacts, tattoos and material markings remain. Left facings mirror complete figures, so strict anatomical shoulder identity across turns remains a limitation. No full world-art or Windows release acceptance is implied.
+
 # Folk quality update — 2026-10-19
 
 **folk-quality58** implements full beards for all male Dwarfs. Sculpt 5 keeps its saved identity but now has a complete rounded beard under the grand moustache. Selected original whole drawings replace its visible face poses. Proper male axe strokes, male3 equipped topknot, male4 cropped nape and female2 axe waves supersede those specific earlier hair/tool blockers. Male2 handling crop and male5 raised-pick neighbor fragments are repaired. See `../testing/quality58.md`.

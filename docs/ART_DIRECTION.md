@@ -1,3 +1,9 @@
+# Equipped and shoulder-cargo motion — whole-motion59
+
+The active motion collection has four complete painted keys per view for all fourteen identities and eleven equipped/load states. Feet pass visibly between contacts; stop and walk share a source family. Keep head, beard, torso, arms, gripping hands, tool/load and boots in one drawing. Do not replace this with rotating parts or a floating tool icon. Male chins/jaws remain fully bearded.
+
+Review all views and transitions at gameplay scale, plus larger frame sequences for anatomy and hair continuity. Single loads must remain single; two-load rows must stay two; mixed cargo must keep its ordering through the gait. Horizontal mirroring currently affects apparent anatomical handedness across turns. Tray contents come from real inventory and sit behind the original painted rim/hands; empty selections must not invent supplies. See `testing/motion59.md` and `assets/whole-motion59/production59.json`. Remaining log-lift, directional work and material-marking limitations are explicit in the handoff.
+
 # Male Dwarf quality rule — folk-quality58
 
 **Every male Dwarf has a full beard covering the chin and jaw.** A moustache alone is not acceptable. Preserve this identity through all views, work, drinking, equipment and hauling; the beard is part of the complete painting, behind gripping hands and props. Never substitute a clean-shaven version in an animation key. Saved sculpt indices and natural palettes remain stable.

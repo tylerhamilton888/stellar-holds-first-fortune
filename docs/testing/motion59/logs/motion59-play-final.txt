@@ -1,0 +1,88 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS male0 has all eleven four-view, four-key states
+PASS male0 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: male0
+PASS male1 has all eleven four-view, four-key states
+PASS male1 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: male1
+PASS male2 has all eleven four-view, four-key states
+PASS male2 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: male2
+PASS male3 has all eleven four-view, four-key states
+PASS male3 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: male3
+PASS male4 has all eleven four-view, four-key states
+PASS male4 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: male4
+PASS male5 has all eleven four-view, four-key states
+PASS male5 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: male5
+PASS male6 has all eleven four-view, four-key states
+PASS male6 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: male6
+PASS female0 has all eleven four-view, four-key states
+PASS female0 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: female0
+PASS female1 has all eleven four-view, four-key states
+PASS female1 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: female1
+PASS female2 has all eleven four-view, four-key states
+PASS female2 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: female2
+PASS female3 has all eleven four-view, four-key states
+PASS female3 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: female3
+PASS female4 has all eleven four-view, four-key states
+PASS female4 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: female4
+PASS female5 has all eleven four-view, four-key states
+PASS female5 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: female5
+PASS female6 has all eleven four-view, four-key states
+PASS female6 turns/stops in the same complete artwork with every gait key prewarmed
+MOTION59 identity complete: female6
+PASS Actual pickup selects only the correct supported load: 0 carry_stone
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 0 carry_stone
+PASS Reload preserves exact physical cargo identities and drawing: 0 carry_stone
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 0 carry_log
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 0 carry_log
+PASS Reload preserves exact physical cargo identities and drawing: 0 carry_log
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 0 double_stone
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 0 double_stone
+PASS Reload preserves exact physical cargo identities and drawing: 0 double_stone
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 0 double_log
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 0 double_log
+PASS Reload preserves exact physical cargo identities and drawing: 0 double_log
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 0 double_mixed
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 0 double_mixed
+PASS Reload preserves exact physical cargo identities and drawing: 0 double_mixed
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 1 carry_stone
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 1 carry_stone
+PASS Reload preserves exact physical cargo identities and drawing: 1 carry_stone
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 1 carry_log
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 1 carry_log
+PASS Reload preserves exact physical cargo identities and drawing: 1 carry_log
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 1 double_stone
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 1 double_stone
+PASS Reload preserves exact physical cargo identities and drawing: 1 double_stone
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 1 double_log
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 1 double_log
+PASS Reload preserves exact physical cargo identities and drawing: 1 double_log
+PASS Put-down restores the selected tool with every load owned exactly once
+PASS Actual pickup selects only the correct supported load: 1 double_mixed
+PASS Eight-direction loaded movement stays responsive and keeps cargo: 1 double_mixed
+PASS Reload preserves exact physical cargo identities and drawing: 1 double_mixed
+PASS Put-down restores the selected tool with every load owned exactly once
+MOTION59 PLAY COMPLETE: 68 passed / 0 failed

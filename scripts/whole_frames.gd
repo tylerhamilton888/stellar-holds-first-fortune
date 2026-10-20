@@ -15,7 +15,10 @@ static func contact_frame(phase:float)->int:
  if phase<.76:return 2
  return 3
 static func data():
- if metadata.is_empty():metadata=JSON.parse_string(FileAccess.get_file_as_string("res://assets/whole-v58/frames.json"))
+ if metadata.is_empty():
+  metadata=JSON.parse_string(FileAccess.get_file_as_string("res://assets/whole-v58/frames.json"))
+  var motion_path="res://assets/whole-motion59/runtime.json"
+  if FileAccess.file_exists(motion_path):metadata.merge(JSON.parse_string(FileAccess.get_file_as_string(motion_path)))
 static func identity(p:Dictionary)->String:return ("female" if p.gender else "male")+str(int(p.sculpt))
 static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
  data()
@@ -48,12 +51,17 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
   if walking and metadata.has(walk_sheet):
    sheet=walk_sheet;view=HoldDirectional.view(d)
    index={"pick":0,"axe":8,"hammer":16,"shovel":24,"supply":32,"rifle":40}.get(tool,0)+view*2+int(key/2)
+ var motion_sheet=identity(p)+"-motion"
+ var motion_row={"hold_pick":0,"hold_axe":1,"hold_hammer":2,"hold_shovel":3,"hold_supply":4,"hold_rifle":5,"carry_stone":6,"carry_log":7,"double_stone":8,"double_log":9,"double_mixed":10}.get(action,-1)
+ if motion_row>=0 and metadata.has(motion_sheet):
+  sheet=motion_sheet;view=HoldDirectional.view(d);index=motion_row*16+view*4+(key if walking else 0)
  var m=metadata[sheet][index];var r=m.rect
  var rect=Rect2(r[0],r[1],r[2],r[3]);var root=Vector2(m.root[0],m.root[1]);var scale=HEIGHT/maxf(1,float(m.height))
  return {"sheet":sheet,"index":index,"view":view,"frame":key,"rect":rect,"root":root,"scale":scale,"shape":Vector2.ONE*scale,"action":action,"phase":phase,"walking":walking,"destination":Rect2((rect.position-root)*scale,rect.size*scale)}
 static func source(sheet:String)->Image:
  if not sources.has(sheet):
-  var img=(load("res://assets/whole-v58/"+sheet+".png") as Texture2D).get_image()
+  var path=sheet if sheet.begins_with("res://") else "res://assets/whole-v58/"+sheet+".png"
+  var img=(load(path) as Texture2D).get_image()
   if img.is_compressed():img.decompress()
   sources[sheet]=img
  return sources[sheet]
@@ -96,10 +104,18 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
 static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
  var a=descriptor(p,d,walking,time,action,phase)
  n.draw_set_transform(at,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)
- n.draw_texture_rect(texture(p,a.sheet,a.index,zoom>2),a.destination,false)
- if action=="hold_supply" and a.view<3:
+ var figure=texture(p,a.sheet,a.index,zoom>2)
+ n.draw_texture_rect(figure,a.destination,false)
+ if action=="hold_supply" and a.view<2:
   var bar=n.get("hotbar")
-  if bar!=null and bar.item!="" and n.state.count(bar.item)>0:HoldItemArt.draw(n,Rect2(-7,-29,18,12),HoldItemArt.item_index(bar.item),HoldItemArt.tint(bar.item))
+  if bar!=null and bar.item!="" and n.state.count(bar.item)>0:
+   # Contents sit inside the painted tray. Repaint its existing front rim and
+   # gripping hands over the contents; never attach a new arm or loose tool.
+   var contents=Rect2(-7,-36,14,12) if a.view==0 else Rect2(13,-35,14,12)
+   HoldItemArt.draw(n,contents,HoldItemArt.item_index(bar.item),HoldItemArt.tint(bar.item))
+   var dest:Rect2=a.destination;var rim=-28.0
+   var fraction=clampf((rim-dest.position.y)/dest.size.y,0,1)
+   n.draw_texture_rect_region(figure,Rect2(dest.position.x,rim,dest.size.x,dest.end.y-rim),Rect2(0,figure.get_height()*fraction,figure.get_width(),figure.get_height()*(1-fraction)))
  n.draw_set_transform(reset)
 static func grip(_p:Dictionary,d:Vector2,_time:float,_walking:bool)->Vector2:return Vector2(17,-23)*Vector2(-1 if d.x<-.3 else 1,1)
 static func muzzle(p:Dictionary,d:Vector2)->Vector2:
@@ -107,6 +123,7 @@ static func muzzle(p:Dictionary,d:Vector2)->Vector2:
 static func tool_tip(p:Dictionary,d:Vector2,action:String,phase:float)->Vector2:
  var a=descriptor(p,d,false,0,action,phase);var m=metadata[a.sheet][a.index]
  var tip=m.right_tip
+ if action=="hold_rifle" and a.sheet.ends_with("-motion") and a.view==3:tip=m.get("left_tip",tip)
  return (Vector2(tip[0],tip[1])-a.root)*a.scale*Vector2(-1 if d.x<-.3 else 1,1)
 static func work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,reset:Vector2,action:String,phase:float):
  var a=descriptor(p,d,false,0,action,phase);var dest:Rect2=a.destination;var tex=texture(p,a.sheet,a.index)
@@ -127,10 +144,12 @@ static func prepare(g:Node):
  var queued={}
  for entry in people:
   var p=HoldAppearance.normalized(entry.profile)
-  for kind in (["core","utility","handling","equipped"] if entry.player else ["core","utility"]):
+  for kind in (["core","utility","handling","equipped","motion"] if entry.player else ["core","utility"]):
    var sheet=identity(p)+"-"+kind
    if not metadata.has(sheet):continue
+   if kind=="equipped" and metadata.has(identity(p)+"-motion"):continue
    for index in metadata[sheet].size():
+    if kind=="handling" and metadata.has(identity(p)+"-motion") and index<40 and index not in range(8,16):continue
     if not entry.player and kind=="utility" and index not in range(8,12):continue
     var key=cache_key(p,sheet,index)
     if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index]);queued[key]=true

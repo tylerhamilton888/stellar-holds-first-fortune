@@ -1,0 +1,84 @@
+{
+  "male3-side": {
+    "9": {
+      "source": "male3-side-logs",
+      "frame": 0
+    }
+  },
+  "male6-front": {
+    "10": {
+      "source": "male6-front-mixed",
+      "frame": 0
+    }
+  },
+  "female1-side": {
+    "9": {
+      "source": "female1-side-logs",
+      "frame": 0
+    }
+  },
+  "male3-front": {
+    "4": {
+      "source": "male3-front-tray",
+      "frame": 0
+    }
+  },
+  "keys": {
+    "male2": {
+      "3": {
+        "source": "male2-front-pass",
+        "frame": 0
+      },
+      "19": {
+        "source": "male2-front-pass",
+        "frame": 1
+      },
+      "35": {
+        "source": "male2-front-pass",
+        "frame": 2
+      },
+      "51": {
+        "source": "male2-front-pass",
+        "frame": 3
+      },
+      "67": {
+        "source": "male2-front-pass",
+        "frame": 4
+      },
+      "83": {
+        "source": "male2-front-pass",
+        "frame": 5
+      }
+    },
+    "male3": {
+      "3": {
+        "source": "male3-front-pass",
+        "frame": 0
+      },
+      "19": {
+        "source": "male3-front-pass",
+        "frame": 1
+      },
+      "35": {
+        "source": "male3-front-pass",
+        "frame": 2
+      },
+      "51": {
+        "source": "male3-front-pass",
+        "frame": 3
+      },
+      "83": {
+        "source": "male3-front-pass",
+        "frame": 5
+      },
+      "99": {
+        "source": "male3-front-pass",
+        "frame": 6
+      },
+      "115": {
+        "source": "male3-front-pass",
+        "frame": 7
+      }
+    }
+  }
+}

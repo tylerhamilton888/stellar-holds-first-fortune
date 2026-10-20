@@ -4,8 +4,9 @@ from PIL import Image
 from scipy import ndimage
 import numpy as np
 import json
+import sys
 
-OUT=Path(__file__).resolve().parents[1]/'assets/whole-v58'
+OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else Path(__file__).resolve().parents[1]/'assets/whole-v58'
 patches=json.loads((OUT/'refinements.json').read_text()) if (OUT/'refinements.json').exists() else {}
 result={};report=[]
 for path in sorted(OUT.glob('*.png')):
@@ -27,6 +28,7 @@ for path in sorted(OUT.glob('*.png')):
   objects=[b for row in range(rows) for b in sorted(objects[row*cols:(row+1)*cols])]
  else:
   islands=objects.copy();objects=[];height,width=mask.shape
+  height=spec.get('grid_height',height)
   typical=np.median([np.count_nonzero(labels[b[1]:b[3],b[0]:b[2]]==b[4]) for b in islands])
   for row in range(rows):
    for col in range(cols):
@@ -70,6 +72,8 @@ for path in sorted(OUT.glob('*.png')):
   x=max(0,x0-2);y=max(0,y0-2);xx=min(mask.shape[1],x1+2);yy=min(mask.shape[0],y1+2)
   owned=labels[y:yy,x:xx]==label;region=hsv[y:yy,x:xx]
   blue=(region[:,:,0]>112)&(region[:,:,0]<175)&(region[:,:,1]>40)&owned
+  if 'anchor_upper' in spec:
+   blue[np.indices(blue.shape)[0]>int((yy-y)*spec['anchor_upper'])]=False
   by,bx=np.nonzero(blue);rx=x+float(np.median(bx)) if len(bx) else (x0+x1)/2
   # Exclude another character's islands; retain this figure's antialiased edge.
   foreign=(rgba[y:yy,x:xx,3]>0)&~owned&~ndimage.binary_dilation(owned,iterations=2)
@@ -84,6 +88,9 @@ for path in sorted(OUT.glob('*.png')):
   tip_y,tip_x=np.nonzero(owned & (np.indices(owned.shape)[1]>=x1-x-3))
   tip=[x1-1,round(y+float(np.median(tip_y)),2)]
   frames.append({'rect':[x,y,xx-x,yy-y],'root':[round(rx,2),y1-1],'height':y1-y0,'crown':y0,'omit':omit,'right_tip':tip})
+  if spec.get('left_tip'):
+   ly,lx=np.nonzero(owned & (np.indices(owned.shape)[1]<=x0-x+2))
+   frames[-1]['left_tip']=[x0,round(y+float(np.median(ly)),2)]
  # Keep one anatomical scale for a sequence: tools raised overhead and crouches
  # must not make the actor inflate or shrink.
  reference=8 if layout=='utility' else 48 if layout=='handling' else 0

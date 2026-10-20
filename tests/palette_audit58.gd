@@ -4,6 +4,7 @@ var failed=0
 var total_pixels=0
 var worst=[]
 var output="res://docs/testing/palette-fix58"
+var motion_only=false
 func _initialize():call_deferred("run")
 func scan(p:Dictionary,sheet:String,index:int):
  var texture=HoldWholeFrames.texture(p,sheet,index,true)
@@ -19,17 +20,19 @@ func scan(p:Dictionary,sheet:String,index:int):
  if count>0:failed+=1;worst.append({"sheet":sheet,"frame":index,"hair":p.hair_color,"purple_pixels":count})
  HoldWholeFrames.cache.clear();HoldWholeFrames.order.clear()
 func run():
- if not OS.get_cmdline_user_args().is_empty():output=OS.get_cmdline_user_args()[0]
+ var args=OS.get_cmdline_user_args()
+ if not args.is_empty():output=args[0]
+ motion_only=args.size()>1 and args[1]=="motion"
  var started=Time.get_ticks_msec();HoldWholeFrames.data()
  for gender in 2:
   for sculpt in 7:
    var p=HoldAppearance.normalized({"gender":gender,"sculpt":sculpt,"hair_color":6,"cloth_color":0})
-   for kind in ["core","utility","handling","equipped"]:
+   for kind in (["motion"] if motion_only else ["core","utility","handling","equipped"]):
     var sheet=HoldWholeFrames.identity(p)+"-"+kind
     for index in HoldWholeFrames.metadata[sheet].size():scan(p,sheet,index)
    # All saved natural palettes, including near-black, flaxen and white.
    for color in 8:
-    p.hair_color=color;scan(p,HoldWholeFrames.identity(p)+"-core",0)
+    p.hair_color=color;scan(p,HoldWholeFrames.identity(p)+("-motion" if motion_only else "-core"),0)
    HoldWholeFrames.sources.clear()
    print("PALETTE AUDIT identity ",gender,"/",sculpt,"; ",checked," frames; ",failed," failed")
    await process_frame
@@ -39,11 +42,12 @@ func run():
  for gender in 2:
   for cloth in [0,2,7]:
    var p=HoldAppearance.normalized({"gender":gender,"sculpt":0,"hair_color":0,"cloth_color":cloth})
-   var sheet=HoldWholeFrames.identity(p)+"-core";var m=HoldWholeFrames.metadata[sheet][22];var r=m.rect
+   var sheet=HoldWholeFrames.identity(p)+("-motion" if motion_only else "-core");var index=2 if motion_only else 22
+   var m=HoldWholeFrames.metadata[sheet][index];var r=m.rect
    var original=HoldWholeFrames.source(m.get("source",sheet)).get_region(Rect2i(r[0],r[1],r[2],r[3]));original.convert(Image.FORMAT_RGBA8)
-   var a=HoldWholeFrames.texture(p,sheet,22,true).get_image();a.convert(Image.FORMAT_RGBA8);var aa=a.get_data()
+   var a=HoldWholeFrames.texture(p,sheet,index,true).get_image();a.convert(Image.FORMAT_RGBA8);var aa=a.get_data()
    p.hair_color=7
-   var b=HoldWholeFrames.texture(p,sheet,22,true).get_image();b.convert(Image.FORMAT_RGBA8);var bb=b.get_data();var raw=original.get_data()
+   var b=HoldWholeFrames.texture(p,sheet,index,true).get_image();b.convert(Image.FORMAT_RGBA8);var bb=b.get_data();var raw=original.get_data()
    var changed=0;var violet=0
    for off in range(0,raw.size(),4):
     if raw[off+3]<64 or aa[off+3]<64:continue

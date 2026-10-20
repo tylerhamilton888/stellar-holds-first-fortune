@@ -1,3 +1,9 @@
+# Current motion checkpoint — whole-motion59
+
+Read [motion verification](testing/motion59.md). `motion_play59.gd` exercises every identity/state/facing/key and actual physical pickup, movement, save/reload and put-down. Compare numeric raw IDs as integers across JSON, which reloads numbers as floats. `grips58.gd`, `handworks55.gd` and `mining55.gd` remain the focused input/workflow regressions.
+
+`motion_art59.gd`, `supply_art59.gd` and `motion_film59.gd` render the native result. `palette_audit58.gd -- <output> motion` audits the new motion collection and protected non-hair materials. Use isolated saves and strictly sequential native displays. Require completion marker AND runner completion. Static sheets or parsing alone do not establish motion quality.
+
 # Current quality checkpoint — folk-quality58
 
 Read [quality verification](testing/quality58.md). `beard_quality58.gd` covers all male beard normalization, creator, actual equipped movement and legacy-profile reload (27 checks). `handworks55.gd` and `mining55.gd` accept optional output directory and male sculpt; sculpt 5 reruns passed 32 and 38 checks. `quality_art58.gd` renders the selected complete keys, work phases and native pose-motion frames. Run `palette_audit58.gd` after source changes.

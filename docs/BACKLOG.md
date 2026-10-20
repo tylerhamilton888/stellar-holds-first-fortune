@@ -1,3 +1,9 @@
+# Whole-motion59 follow-up
+
+Completed: four-key equipped passing poses and continuous one-/two-shoulder cargo cycles for all fourteen identities, stop/walk source parity, reviewed hair/load continuity and supported tray contents. These supersede the matching older carry/gait/tray blockers below.
+
+Remaining: dedicated log lift/put-down and cart-pushing art; directional work/combat contacts; ore-specific carried markings and broader prop/material parity; tattoos; strict anatomical cargo handedness across mirrored turns. Broader world architecture and Windows/audio/hardware validation are separate. Keep complete male beards and rerun palette coverage after new art. See testing/motion59.md.
+
 # Folk-quality58 follow-up
 
 Completed full-beard coverage for the former moustache-only male, proper male axe strokes, male3 equipped topknot, male4 cropped nape and female2 axe waves. Those specific entries in older notes are superseded. Completed targeted extraction repairs do not certify every old source edge.

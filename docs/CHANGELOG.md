@@ -1,3 +1,11 @@
+# Unreleased — complete equipped and shoulder-cargo motion
+
+- Added four-key complete-figure gaits for all fourteen identities, four camera views and eleven equipment/supply/cargo states; stopping keeps the same artwork.
+- Preserved full male beards and saved natural palettes. Repaired reviewed beard/braid/bun/topknot continuity and mixed-load ordering.
+- Integrated actual supply contents behind painted tray rims/hands; kept physical load ownership, controls and save format.
+- Added native eight-direction, pickup/drop/reload, palette and motion-capture coverage. See testing/motion59.md for the final results and boundaries.
+- Preserved original paintings and all prior recovery points. This is an integrated source checkpoint, not a new Windows release.
+
 # Unreleased — male beards and character quality
 
 - Gave the moustache-only male a full beard across the active complete-figure poses; preserved saved sculpt identity and palettes.
