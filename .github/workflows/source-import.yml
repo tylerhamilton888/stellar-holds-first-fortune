@@ -1,0 +1,63 @@
+name: Import verified source history
+on:
+  workflow_dispatch:
+    inputs:
+      bundle_sha256:
+        description: SHA256 of Stellar-Holds-Foundation-Source.bundle
+        required: true
+      source_commit:
+        description: Verified source commit in the bundle
+        required: true
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - name: Download and verify complete recovery
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_HASH: ${{ inputs.bundle_sha256 }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_HASH" =~ ^[0-9a-f]{64}$ ]]
+          gh release download foundation-0.61.1 --repo "$GITHUB_REPOSITORY" --pattern Stellar-Holds-Foundation-Source.bundle --dir "$RUNNER_TEMP/source-import"
+          printf '%s  %s\n' "$EXPECTED_HASH" "$RUNNER_TEMP/source-import/Stellar-Holds-Foundation-Source.bundle" | sha256sum --check
+          git bundle verify "$RUNNER_TEMP/source-import/Stellar-Holds-Foundation-Source.bundle"
+      - name: Join source and delivery histories on a new branch
+        env:
+          EXPECTED_COMMIT: ${{ inputs.source_commit }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          git fetch "$RUNNER_TEMP/source-import/Stellar-Holds-Foundation-Source.bundle" refs/heads/chore/foundation62:refs/heads/imported-source
+          test "$(git rev-parse imported-source)" = "$EXPECTED_COMMIT"
+          git fsck --full
+          git config user.name "Stellar Holds build"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout imported-source
+          # Keep delivery records and workflow definitions already reviewed on main.
+          git checkout origin/main -- DELIVERY_0.60.0.md DELIVERY_0.61.0.md .github
+          tree=$(git write-tree)
+          commit=$(printf '%s\n' "Join verified game source and delivery history" | git commit-tree "$tree" -p origin/main -p imported-source)
+          git checkout -b foundation/source-import "$commit"
+          git push origin HEAD:refs/heads/foundation/source-import
+          echo "Imported commit: $commit" >> "$GITHUB_STEP_SUMMARY"
+          echo "Source parent: $EXPECTED_COMMIT" >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify native gameplay on imported checkout
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+          xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/import
+      - name: Retain verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source-import-evidence
+          path: test-results/import
+          retention-days: 7
