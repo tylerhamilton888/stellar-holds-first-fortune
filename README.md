@@ -1,3 +1,5 @@
+**Download update:** the complete ZIP could not be saved by the file service. The exact tested archive is delivered as `Stellar-Holds-First-Fortune-0.60.0-Windows.zip.001` and `.zip.002`. Download both into one folder and extract `.001` with 7-Zip; `docs/testing/portraits60/download.txt` also gives a Windows Command Prompt rejoin option. Their concatenated SHA-256 exactly matches the verified ZIP. No game/runtime content changed. Documentation-only recovery tag: `portraits-0.60.0-delivery`, with `Stellar-Holds-0.60.0-Delivery.bundle` after the existing 0.60.0 Recovery.bundle.
+
 # Current playtest build: 0.60.0 — Faces of the Hold
 Extract the complete Windows ZIP and run FirstFortune.exe beside its PCK. Current whole-character animations and fifteen matching painted portraits are integrated. Existing saves remain supported. Read docs/SESSION_HANDOFF.md, docs/CURRENT_STATUS.md and docs/PLAYTEST_GUIDE.md. Recovery tag: portraits-0.60.0. Older release notes below are historical.
 

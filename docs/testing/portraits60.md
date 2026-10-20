@@ -38,3 +38,6 @@ No save schema, save location, terrain generator, mining balance, inventory, res
 Remaining broader work includes dedicated log lift/put-down and cart-pushing art, additional directional work/combat contacts, tattoos, distinctive material markings, mirrored shoulder handedness and world architecture. The user remains the final judge of art/feel. This release does not certify every historical asset.
 
 Pre-edit tag `pre-portraits60` preserves verified whole-motion59. Final recovery tag is `portraits-0.60.0`; its incremental bundle requires whole-motion59 and all preceding recovery history. The companion Recovery.txt records independent verify/fetch/fsck results and the exact restored commit/tree. Previous versions/backups are retained, and no remote changed or pushed.
+
+## Final download packaging
+The original 698,756,907-byte ZIP could not be saved. It was split into two standard numbered pieces, 350,000,000 and 348,756,907 bytes, whose concatenated hash exactly matches the tested archive. Both parts saved successfully; all eight archived files and original package verification are unchanged. See `portraits60/download.txt` and `portraits60/split-delivery.json`. The TAR/XZ compression experiment did not complete and is not a deliverable. No new runtime test is necessary because runtime bytes are unchanged.
