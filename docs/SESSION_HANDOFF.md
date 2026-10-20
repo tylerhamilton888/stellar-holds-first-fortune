@@ -1,3 +1,9 @@
+New fortunes now begin with a randomized editable Dwarven name and appearance; existing characters retain their identity.
+
+# 0.61.2 continuation
+
+Title/loading changes are in scripts/loading_view.gd, main.gd and whole_frames.gd. HoldBuild.VERSION is 0.61.2. Read testing/loading63.md; bump the build version for any future artwork/palette/metadata change so derived animation PNGs cannot become stale. Keep the existing whole-character sprite renderer and source assets. The pre-change checkpoint is pre-loading63; previous releases and full recovery remain intact.
+
 # Foundation 0.61.1 handoff
 
 Continue from GitHub `main`, now a complete editable Godot project. Source import PR #2 merged at `5955e2e754a1545742e7ffc3f66dacc253ddc446`. The two-parent import commit is `3f97736cbc02ee1b46bbbbd4cbfb00d633593215`; its verified source parent is `6a153eff59e6e38dccf8e2bdd2d3b575703260ac`. Earlier delivery tags remain unchanged. `ambient-0.61.0` / `pre-foundation62` preserve source baseline `300ec660c3b66ee2dcf2c0866d8c52b0e872603f` in the complete bundle.

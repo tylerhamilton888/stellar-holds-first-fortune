@@ -1,3 +1,5 @@
+Title/loading presentation: scripts/loading_view.gd; frame cache: scripts/whole_frames.gd; regression and evidence: tests/loading63.gd and docs/testing/loading63.md.
+
 # Foundation development index — 0.61.1
 
 - DEVELOPMENT.md: contributor workflow, architecture boundaries, builds and releases.

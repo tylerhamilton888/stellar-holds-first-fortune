@@ -1,15 +1,55 @@
 {
   "suites": {
-    "core": ["menus", "orientation", "ambient", "equipment"],
-    "gameplay": ["menus", "orientation", "ambient", "equipment", "mining", "handworks", "world"]
+    "core": [
+      "loading",
+      "menus",
+      "orientation",
+      "ambient",
+      "equipment"
+    ],
+    "gameplay": [
+      "loading",
+      "menus",
+      "orientation",
+      "ambient",
+      "equipment",
+      "mining",
+      "handworks",
+      "world"
+    ]
   },
   "cases": {
-    "menus": {"script": "tests/menu_foundation62.gd", "marker": "MENUS62"},
-    "orientation": {"script": "tests/intro53.gd", "marker": "INTRO53"},
-    "ambient": {"script": "tests/ambient61.gd", "marker": "AMBIENT61"},
-    "equipment": {"script": "tests/grips58.gd", "marker": "WHOLE58"},
-    "mining": {"script": "tests/mining55.gd", "marker": "MINING55"},
-    "handworks": {"script": "tests/handworks55.gd", "marker": "HANDWORKS55"},
-    "world": {"script": "tests/input_reference54.gd", "marker": "REFERENCE54 JOURNEY"}
+    "menus": {
+      "script": "tests/menu_foundation62.gd",
+      "marker": "MENUS62"
+    },
+    "orientation": {
+      "script": "tests/intro53.gd",
+      "marker": "INTRO53"
+    },
+    "ambient": {
+      "script": "tests/ambient61.gd",
+      "marker": "AMBIENT61"
+    },
+    "equipment": {
+      "script": "tests/grips58.gd",
+      "marker": "WHOLE58"
+    },
+    "mining": {
+      "script": "tests/mining55.gd",
+      "marker": "MINING55"
+    },
+    "handworks": {
+      "script": "tests/handworks55.gd",
+      "marker": "HANDWORKS55"
+    },
+    "world": {
+      "script": "tests/input_reference54.gd",
+      "marker": "REFERENCE54 JOURNEY"
+    },
+    "loading": {
+      "script": "tests/loading63.gd",
+      "marker": "LOADING63"
+    }
   }
 }

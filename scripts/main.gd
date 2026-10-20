@@ -13,6 +13,7 @@ const STATIONS=[{"x":225.0,"name":"Workers' quarters","panel":"home"},{"x":410.0
 const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinewood"}]
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
+var loading_view:HoldLoadingView
 var fieldwork:HoldHomesteadLife
 var handworks:HoldHandworks
 var hotbar:HoldHotbar
@@ -124,6 +125,8 @@ func _ready():
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
  setup_ui()
+ var loading_layer=CanvasLayer.new();loading_layer.layer=100;add_child(loading_layer)
+ loading_view=HoldLoadingView.new();loading_view.game=self;loading_layer.add_child(loading_view)
  hotbar=HoldHotbar.new();hotbar.g=self;ui.add_child(hotbar)
  state.load_audio_settings();apply_audio_settings()
  geo.generate(27419)
@@ -194,16 +197,16 @@ func show_title():
  var sub=Label.new();sub.text="THE FIRST FORTUNE";sub.position=Vector2(69,218);sub.add_theme_font_size_override("font_size",19);sub.modulate=Color("85c9bc");title_ui.add_child(sub)
  var description=Label.new();description.text="Earn your mountain. Found your house.";description.position=Vector2(69,254);description.add_theme_font_size_override("font_size",14);title_ui.add_child(description)
  var box=VBoxContainer.new();box.position=Vector2(69,288);box.size=Vector2(288,150);box.add_theme_constant_override("separation",6);title_ui.add_child(box)
- button(box,"Choose a fortune • 3 save slots",func():open_panel("save_slots"))
+ button(box,"Continue / choose a fortune",func():open_panel("save_slots"))
  button(box,"Begin a new fortune",func():open_panel("save_slots"))
- button(box,"Sound options",func():open_panel("settings"))
+ button(box,"Settings & sound",func():open_panel("settings"))
  button(box,"Quit",shutdown)
  for b in box.get_children():
   b.add_theme_font_size_override("font_size",18)
   for key in ["normal","hover","pressed","disabled"]:
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
- var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,456);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
+ var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,459);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
  var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={}):
@@ -865,7 +868,7 @@ func update_hud():
  status.visible=false
 
 func _draw():
- if playing and HoldFolk.warming():HoldFolk.warm_draw(self);return
+ if playing and HoldFolk.warming():return
  forest_view.visible=playing and zone=="road" and room_id=="" and not surface.active()
  if forest_view.visible:forest_view.queue_redraw()
  if not playing:draw_title();return
@@ -1064,7 +1067,7 @@ func draw_title():
   var x=540+fmod(i*71.0+sin(clock*.4+i)*12,400)
   var y=440-fmod(clock*(9+i%4)+i*29,370)
   A.rect(self,x,y,2,2,Color(1,.72,.36,.22+.18*sin(clock+i)))
- A.dwarf(self,Vector2(815,449),clock,false,-1,0,false,state.appearance)
+ HoldWholeFrames.paint(self,Vector2(792,435),state.appearance,Vector2(-1,.45),false,clock,1.8,Vector2.ZERO,"hold_pick")
  A.line(self,Vector2(65,282),Vector2(425,282),Color("aa8a55"),2)
 
 func button(parent:Node,label:String,callback:Callable)->Button:
@@ -1480,7 +1483,7 @@ func open_creator(new_fortune:bool):
  close_panel()
  if is_instance_valid(creator):creator.queue_free()
  creator=HoldCreator.new();creator.z_index=30;creator.creating=new_fortune
- creator.profile=(HoldAppearance.defaults() if new_fortune else state.appearance.duplicate(true))
+ creator.profile=(HoldAppearance.random_profile(randi()) if new_fortune else state.appearance.duplicate(true))
  ui.add_child(creator)
  creator.accepted.connect(func(p:Dictionary):
   creator.queue_free();creator=null
