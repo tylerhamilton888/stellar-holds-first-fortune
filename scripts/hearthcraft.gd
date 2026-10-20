@@ -265,6 +265,7 @@ func lesson():
   if step[0]=="wall":done=done and f.get("door",false)
   g.label(g.panel_body,("✓ " if done else "○ ")+step[1],14)
 func material(index:int,rect:Rect2,tint:Color=Color.WHITE):
+ if index in [0,1]:HoldFloorPattern.draw(g,rect,index==1,tint);return
  var size=Vector2(MATERIALS.get_width()/3.0,MATERIALS.get_height()/2.0)
  g.draw_texture_rect_region(MATERIALS,rect,Rect2(Vector2(index%3,index/3)*size,size),tint)
 func floor_draw():

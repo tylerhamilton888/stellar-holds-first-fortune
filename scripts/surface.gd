@@ -58,8 +58,9 @@ func ensure():
   var id="claim:"+g.state.claim_id+":starter"
   s.chests[id]={"area":"home:"+g.state.claim_id,"x":650.0,"y":380.0,"items":{}}
 func room()->bool:return area.begins_with("room:") or area.begins_with("home:")
-func size()->Vector2:return ROOM_SIZE if room() else SIZE
+func size()->Vector2:return ROOM_SIZE if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else SIZE
 func label()->String:
+ if HoldNeighborhood.is_home(area):return HoldNeighborhood.title(area)
  if area.begins_with("home:"):return "Your hearth · "+HoldOutpost.title(g.state)
  if area.begins_with("room:"):return HoldInteriors.ROOMS.get(g.room_id,{"name":"Keldrath"}).name
  if area=="claim":return NAMES[area]+" · Z+"+str(house.level())
@@ -117,6 +118,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.handworks.arrive(travelling_cart)
  g.begin_transition(label().to_upper());g.save_game()
 func leave():
+ if HoldNeighborhood.is_home(area):enter(HoldNeighborhood.parts(area)[0],HoldNeighborhood.home_door(int(HoldNeighborhood.parts(area)[1]))+Vector2(0,35));return
  var back=return_area
  var p=g.state.surface.positions.get(back,[])
  enter(back,Vector2(p[0],p[1])+Vector2(0,35) if p.size()==2 else spawn(back))
@@ -135,7 +137,12 @@ func points()->Array:
  elif area=="pinewood":result=[spot(180,650,"High Trail","trail"),spot(300,790,"Woodcutter's field board","pinewood_panel")]
  elif room():
   result=[spot(480,620,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
-  if area.begins_with("home:") or area=="room:home":
+  if HoldNeighborhood.is_home(area):
+   var parts=HoldNeighborhood.parts(area)
+   if parts[2]=="1":result=[] # Upper rooms leave by their real stair, never a ground-level door.
+   result.append(spot(700,550,"Stairs · "+("upper rooms" if parts[2]=="0" else "family hearth"),HoldNeighborhood.home_id(parts[0],int(parts[1]),1-int(parts[2]))))
+   for c in HoldNeighborhood.people(world):result.append({"p":c.p,"name":c.name,"action":"citizen:"+str(c.index)})
+  elif area.begins_with("home:") or area=="room:home":
    result.append(spot(290,420,"Bed · rest and save","rest"));result.append(spot(735,515,"Wardrobe & supplies" if area=="room:home" else "Homestead workbench","home" if area=="room:home" else "homestead"))
   elif area=="room:training":
    result.append(spot(660,570,"Borin’s training notes","training_notes"))
@@ -163,7 +170,10 @@ func nearest()->Dictionary:
  var found={};var distance=78.0
  for p in points():
   var d=g.player.distance_to(p.p)
+  if p.action.begins_with("citizen:"):d+=38 # Do not let a passing neighbor steal a doorway interaction.
   if (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
+  if p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action)):
+   if not HoldNeighborhood.stair_access(g.player,p.p,96 if HoldNeighborhood.is_home(area) else 140):continue
   if p.action=="leave" and absf(g.player.x-p.p.x)>34:continue
   if not clear_interaction(g.player,p.p):continue
   if d<distance:distance=d;found=p
@@ -182,6 +192,8 @@ func use():
  action(p.action)
 func action(id:String):
  if id=="leave":leave()
+ elif id.begins_with("hold_stair:"):
+  var link=id.split(":");enter(link[1],Vector2(180 if link[2]=="west" else 1700,1420))
  elif id=="mine":
   remember();g.state.surface.mine_return=area;g.change_zone("mine")
  elif id=="house_up":house.use_stairs(true)
@@ -234,7 +246,7 @@ func obstacles(ignore:Dictionary={})->Array:
 func walkable(p:Vector2,ignore:Dictionary={})->bool:
  if area=="claim" and house.level()>0 and not house.on_floor(p,house.level()):return false
  if HoldWorldZones.ward(area):
-  if not Rect2(110,210,1660,780).has_point(p):return false
+  if not HoldNeighborhood.BOUNDS.has_point(p):return false
  elif room():
   if not Rect2(175,290,610,345).has_point(p):return false
  elif not Rect2(90,210,1700,750).has_point(p):return false
@@ -424,7 +436,7 @@ func lift_panel():
 func guide_panel():
  g.label(g.panel_body,"FOLLOW THE PATHS",22,Color("edc98a"))
  g.label(g.panel_body,"Walk with WASD or arrows. Press E at doors, stairs, trail signs and workstations. You are here: "+label()+".",16)
- for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Western Royal stairs → Crownward (Z +1): Lord Eirik and the survey office.","Eastern Forge stairs → Forgeward (Z -1): Borin’s forge and practice bay.","King’s Gate → High Trail → Old Workings, Pinewood and your claim.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
+ for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Western Royal stairs → Crownward (Z +1): Lord Eirik and the survey office.","Eastern Forge stairs → Forgeward (Z -1): Borin’s forge and practice bay.","King’s Gate → High Trail → Old Workings, Pinewood and your claim.","Keldrath: cross the southern gallery bridge to visit nine family hearths and their upper rooms.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
   g.label(g.panel_body,text,16)
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
@@ -482,6 +494,7 @@ func draw():
   objects.append_array(world.buildings());objects.append_array(world.people());objects.append_array(world.landmarks())
   objects.append_array(world.street_furnishings())
  if room():objects.append_array(world.room_objects())
+ if HoldNeighborhood.is_home(area):objects.append_array(HoldNeighborhood.people(world))
  if area in ["claim","pinewood"] and house.level()==0:objects.append(world.furn("desk",740 if area=="claim" else 300,780 if area=="claim" else 790))
  if area in ["claim","trail"]:objects.append_array(world.exterior_objects())
  if area=="claim":

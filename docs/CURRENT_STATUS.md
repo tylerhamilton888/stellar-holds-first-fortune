@@ -1,3 +1,13 @@
+# 0.62.0 — Keldrath galleries and collision refinement (source)
+
+Keldrath's three existing Z wards now extend south across guarded gallery bridges into residential streets. Nine enterable family homes have distinct neighbors, furnished hearths and upper rooms; matching stair coordinates connect each room pair and the residential wards. Upper rooms have no phantom ground-level exit. Original story doors, the Ivar arrival, royal audience, trade, claims and Deepworks routes remain in place.
+
+The collision pass unifies painted stair rail envelopes, enlarges the actual ward floor bounds, blocks open shafts/railings, prioritizes aligned doors over passing citizens, and checks building sides/corners with real movement. Houses retain solid ground footprints and depth-sorted painted upper facades. This remains 2D architecture, not free-form 3D interiors carved out of the exterior sprite.
+
+Clean-floor pass: continuous staggered timber boards and dressed stone courses replace repeated atlas strips in interiors, ward paving, bridges and crafted floors. Original cached meshes plus subtle material grain preserve deterministic joints without expensive per-frame regeneration. Source textures are retained for recovery.
+
+199 focused native checks passed; final 80-check household/collision rerun also passed. Native visuals inspected. See testing/hold65.md. No new Windows export yet; latest downloadable package remains v0.61.2. Prior checkpoint pre-keldrath65 and GitHub's completed PR #4 preserve the previous source milestone.
+
 # 0.61.3 — Modular placement refinement (source milestone)
 
 Build mode now shows a subtle snapped grid and green PLACE / red BLOCKED footprint for furniture, house construction and handworks equipment. Preview eligibility includes materials, reach and existing placement/access rules; house previews now include route validation. Furniture snaps at 10 units, equipment at 20 and construction at 40. Ordinary play hides the grid.
