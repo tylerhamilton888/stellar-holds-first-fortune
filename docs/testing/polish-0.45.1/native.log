@@ -1,0 +1,18 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Masonry tutorial opens in existing O board
+PASS Actual placement UI installs masonry workstation
+PASS Held input extracts physical block without repetitive clicks
+PASS Cache action sets block down into persistent marked pile
+PASS E at mason's bench opens contextual work choices
+PASS Held bench work deposits finished output in the real pile
+PASS Existing haul controls load and deliver dressed stone
+PASS Actual finishing contact satisfies useful construction lesson
+PASS Tutorial completion unlocks worker handover
+PASS Refreshed tutorial remains bounded with scroll and fixed tabs
+PASS Recruited Dwarf physically fetches, works and returns finished stone
+PASS Native session reload retains quest and worker material state
+MASONRY INPUT: 12 passed / 0 failed

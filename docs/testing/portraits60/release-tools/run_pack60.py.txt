@@ -1,0 +1,15 @@
+from pathlib import Path
+import os,subprocess,sys,time
+base=Path('/workspace/scratch/a447fc5d46ab'); task=base/'portraits60'; name=sys.argv[1]
+empty=task/'pack-runtime';empty.mkdir(exist_ok=True)
+env=os.environ.copy();env.update(DISPLAY='127.0.0.1:96',LD_LIBRARY_PATH=str(base/'runtime/x11/usr/lib/x86_64-linux-gnu'),PATH=str(base/'runtime/x11/usr/bin')+':'+env['PATH'],XDG_DATA_HOME=str(task/('user-'+name)),GODOT_SILENCE_ROOT_WARNING='1')
+with (task/('x-'+name+'.log')).open('w') as log:
+ x=subprocess.Popen([str(base/'runtime/x11/usr/bin/Xvfb'),':96','-screen','0','1280x720x24','-ac','-listen','tcp','-nolisten','unix','-nolisten','local','-xkbdir','/usr/share/X11/xkb'],stdout=log,stderr=log,env=env)
+ try:
+  time.sleep(1)
+  with (task/(name+'.log')).open('w') as f:
+   cmd=[str(base/'runtime/Godot_v4.4.1-stable_linux.x86_64'),'--path',str(empty),'--main-pack',str(task/'build/FirstFortune.pck'),'--audio-driver','Dummy','--script',sys.argv[2]]+sys.argv[3:]
+   result=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,env=env,timeout=900)
+  print(name,'exit',result.returncode);print((task/(name+'.log')).read_text()[-2000:])
+ finally:x.terminate();x.wait(timeout=10)
+sys.exit(result.returncode)

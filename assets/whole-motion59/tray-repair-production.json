@@ -1,0 +1,20 @@
+[
+  {
+    "id": "male3-front-tray-17",
+    "prompt": "Use case: identity-preserve. Production sprite repair for The Stellar Holds. Reference image is the existing male3 full-figure atlas. Redraw ONLY its FRONT-FACING SUPPLY TRAY WALK ROW as a separate FOUR-COLUMN, ONE-ROW transparent sprite strip. Four complete short, broad adult Dwarfs, same individual, teal work shirt, heavy brown boots, leather wrist bracers, shaved/short nape with a tall rounded topknot, full two-point beard and moustache covering chin/jaw. Keep reserved purple hair/beard pigment exactly as source (game recolors it); warm skin and teal clothing unchanged. Each holds ONE EMPTY small rectangular wooden supply tray at waist height, BOTH gripping hands wrapped around sides; front rim visible. No tools and no cargo. Front camera slightly above, consistent head/body scale and connected anatomy. Four successive gait keys: left contact with separated boots; right boot lifted in passing; opposite contact with separated boots; left boot lifted in passing. Full figure painted as one image in each column. Match source's hand-painted cartoony compact adult Dwarf style. Preserve identity and tray design. CRITICAL: every topknot, hair tuft, finger, tray edge and both boots fully inside its cell, generous transparent top/bottom/side margins, absolutely no touching or cropped silhouettes, no extra rows, no text, no shadow/background. The topknot must be ROUND AND COMPLETE in ALL FOUR frames.",
+    "reference_paths": [
+      "/workspace/scratch/a447fc5d46ab/stellar-holds/assets/whole-motion59/male3-front.png"
+    ],
+    "result_path": "/workspace/scratch/a447fc5d46ab/generated_images/exec-601ca9bb-abbc-41fa-b76c-b8e16f66d9e7.png",
+    "selected": false
+  },
+  {
+    "id": "male3-front-tray-18",
+    "prompt": "Precise-object-edit of the attached four-frame dwarf sprite strip. Change ONLY the FOURTH, RIGHTMOST whole figure's walking leg pose: the boot on the RIGHT SIDE OF THE IMAGE must be lifted FORWARD with its sole visible, and the boot on the LEFT SIDE OF THE IMAGE must be DOWN supporting weight. This must be the opposite passing foot from frame two. Keep the first three figures exactly, all four complete rounded purple topknots and full purple beards, connected stout anatomy, facial identity, teal clothes and empty wooden tray held in both hands unchanged. Match body size and art style. Preserve generous margins, isolated four whole figures in one row, transparent background. No tools, cargo or text. Fourth figure: LEFT screen boot planted; RIGHT screen boot lifted and showing sole.",
+    "reference_paths": [
+      "/workspace/scratch/a447fc5d46ab/generated_images/exec-601ca9bb-abbc-41fa-b76c-b8e16f66d9e7.png"
+    ],
+    "result_path": "/workspace/scratch/a447fc5d46ab/generated_images/exec-9e974d9d-072c-4f9b-9b84-7c23e3773535.png",
+    "selected": true
+  }
+]

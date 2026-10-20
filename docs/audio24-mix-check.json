@@ -1,0 +1,17 @@
+[
+  {
+    "scene": "mine",
+    "pre_limiter_peak_dbfs": -11.36,
+    "sample_clips": 0
+  },
+  {
+    "scene": "mountain",
+    "pre_limiter_peak_dbfs": -11.93,
+    "sample_clips": 0
+  },
+  {
+    "scene": "forge",
+    "pre_limiter_peak_dbfs": -11.09,
+    "sample_clips": 0
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "original_sha256": "0b531ef5957fee4af2af8ed384f551b0aae5a64b524fea62fda482748e15f523",
+  "parts": [
+    {
+      "name": "Stellar-Holds-First-Fortune-0.60.0-Windows.zip.001",
+      "size": 350000000,
+      "sha256": "0e6f2d47221b5f1105e6c41dbdfdf3ed20cd7c878ff56b37639c7f1db4abdc7a"
+    },
+    {
+      "name": "Stellar-Holds-First-Fortune-0.60.0-Windows.zip.002",
+      "size": 348756907,
+      "sha256": "1c2c88644690d444f2a5c95e8280289aa6ce55dd0616ad78ce97b9ab631d2c0e"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Creator colour change visibly refreshes the portrait
+PASS Portrait and walking preview have separate readable space
+PASS Creator preserves identity 0/0
+PASS Creator preserves identity 0/1
+PASS Creator preserves identity 0/2
+PASS Creator preserves identity 0/3
+PASS Creator preserves identity 0/4
+PASS Creator preserves identity 0/5
+PASS Creator preserves identity 0/6
+PASS Creator preserves identity 1/0
+PASS Creator preserves identity 1/1
+PASS Creator preserves identity 1/2
+PASS Creator preserves identity 1/3
+PASS Creator preserves identity 1/4
+PASS Creator preserves identity 1/5
+PASS Creator preserves identity 1/6
+PASS Local dialogue uses the matching new portrait: ivar
+PASS Local dialogue uses the matching new portrait: orla
+PASS Local dialogue uses the matching new portrait: borin
+PASS Local dialogue uses the matching new portrait: hedrik
+PASS Local dialogue uses the matching new portrait: eldric
+PASS Local dialogue uses the matching new portrait: eirik
+PASS Royal audience opens with updated portrait type
+PASS Audience uses the painted enthroned Lord
+PASS Story captions switch to Orla's new portrait
+ERROR: Reloaded player card displays the saved portrait, not a default or NPC
+   at: push_error (core/variant/variant_utility.cpp:1098)
+PASS Reload preserves exact portrait identity and colours
+PASS Portrait update does not alter inventory on save/reload
+PORTRAIT UI60: 27 passed / 1 failed

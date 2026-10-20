@@ -1,0 +1,167 @@
+{
+  "tool": "built-in imagegen",
+  "checkpoint": "animation-refinement58",
+  "policy": "Original source files remain unchanged; only explicitly selected complete keys are used. Rejected results are not referenced by the game.",
+  "jobs": [
+    {
+      "id": "male0-stonewalk-v2",
+      "prompt": "Use case: identity-preserve. Create a corrected production animation sheet for the SAME stout adult male Dwarf as the supplied reference. Only the single-stone shoulder carry. Transparent background. Exactly 16 complete full-body sprites in a clean 4 columns by 4 rows grid, generous clear gutters, nothing touching cell edges. ROW 1 front facing camera, ROW 2 strict right profile facing right, ROW 3 rear-right three-quarter consistently, ROW 4 straight back. Each row is FOUR distinct walk-cycle drawings: left heel contact/right toe pushing, left planted/right knee passing forward, right heel contact/left toe pushing, right planted/left knee passing forward. Obvious alternating boots and lifted knees, small controlled body weight shifts, same stature and proportions in all frames. One compact faceted grey stone rests securely on the character's ANATOMICAL LEFT shoulder through EVERY frame. His left palm supports its underside; his right arm free and swinging naturally. For front view this means stone on screen RIGHT, for back view stone on screen LEFT. Never swap shoulder when changing feet; never change facing within a row. Same rock shape/size and same supporting hand throughout. Preserve whole connected anatomy, swept-back long hair tied low behind, full pointed fork beard with small brass clasps, blue short-sleeved tunic, brown leather braces/belt, blue trousers, heavy brown boots and broad adult face. Exact illustrated warm outline/shaded hand-painted game style, no chibi or anime, no enlarged head, no separate parts. Hair/beard purple in this TECHNICAL source sheet because the existing game replaces that source pigment with player's chosen natural color. Keep that reserved purple only in hair/beard. Grey stone, natural warm skin, teal-blue cloth, brown leather. No floor, shadow disk, props, lettering, labels or extra figures.",
+      "references": [
+        "assets/whole-v58/male0-handling.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Insufficient alternating footfalls and/or changed proportions/carry continuity: rejected."
+    },
+    {
+      "id": "male4-backtools-v2",
+      "prompt": "Use case: identity-preserve. Correct the back-facing animation of the SAME cropped-hair adult male Dwarf in reference. The reference incorrectly puts a FACE on the back of his head in the final column: eliminate that bug. New transparent production sprite sheet: exactly 24 complete whole-character sprites, FOUR columns and SIX rows. EVERY sprite faces straight AWAY from camera, back view only, no face/beard visible at all. Very short cropped hair, exposed nape; absolutely no long ponytail or rear braids. Same compact powerful body, blue tunic/trousers, brown leather suspenders crossing upper back, belt pouch and heavy boots. Each row is a four-phase backward-view walking cycle: left boot steps forward away from camera with right sole behind, right knee passing, opposite stride, left knee passing. Keep gaze/back facing identical within each row. Row1 holds pickaxe, row2 holds axe, row3 holds short smith's hammer, row4 holds shovel, row5 supports wooden supply tray, row6 holds stocky brass/steel rifle. Both gripping hands remain in front of his body: tools may extend visibly out to the side but are naturally occluded by his back where appropriate. No tool teleports or swaps hands. Preserve correct same tool/material/shape per row. Stout connected complete figures, meaningful foot movement and distinct passing poses, not rotated parts. Keep exact reference painterly cartoon rendering and proportions. The source hair is purple as a technical material marker, only on scalp; game recolors it. Natural warm skin, brown leather, teal-blue cloth, grey metal. Generous transparent margins and gutters including below boots. No labels, no floor, no extra faces, no additional characters.",
+      "references": [
+        "assets/whole-v58/male4-equipped.png"
+      ],
+      "status": "selected",
+      "selected": "Twelve rear equipped keys use columns 1 and 3 of each row. One functional tool head, correct rear facing and alternating boot contacts. Cropped rear hair is correct for this design, but continuity with other older male4 rear states remains unfinished.",
+      "reason": null
+    },
+    {
+      "id": "male5-backtools-v2",
+      "prompt": "Use case: identity-preserve. Fix this same broad adult male dwarf's BACK walking animation. Do NOT copy the erroneous last-column faces. New transparent sheet, exactly FOUR columns by SIX rows, 24 complete connected figures. EVERY drawing is straight back view: see the back of skull and shoulders, NEVER face/eyes/moustache. Preserve the reference's long swept hair in one low tied ponytail behind, blue work tunic/trousers, brown suspenders belt pouch and chunky brown boots. Rows hold: 1 pickaxe,2 axe,3 hammer,4 shovel,5 small supply tray,6 compact brass/steel rifle. All are held steadily in both hands IN FRONT of torso, correctly occluded from this back view, tool ends visible each side. EACH ROW four clearly different footfalls, camera and upper-body orientation constant: column1 screen-LEFT boot extending down/toward viewer, right leg forward away; column2 feet CLOSE under hips, screen-RIGHT boot lifted/bent at knee, left boot planted; column3 screen-RIGHT boot extending down/toward viewer, left leg forward away; column4 feet CLOSE, screen-LEFT boot lifted/bent, right planted. This must alternate the weight-bearing leg, not repeat the same stride. Same character size, hair length, gripping arms, clothes and tool each frame. Purple hair as reference technical source pigment replaced by game palette, not actual hair design. Hand-painted stout adult dwarf art matching reference. Broad shoulders, compact legs, connected anatomy. Generous transparent gutters and margins around ALL boots/tools/crown. No labels, no floor, no extra characters.",
+      "references": [
+        "assets/whole-v58/male5-equipped.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Incorrect duplicated metal tool heads: rejected."
+    },
+    {
+      "id": "male0-stone-side-v3",
+      "prompt": "Use case: identity-preserve. Production sprite correction. Exactly FOUR entire connected drawings of this same stout male Dwarf, arranged ONE HORIZONTAL ROW, all strict RIGHT PROFILE, carrying the same compact faceted grey stone on the FAR shoulder in raised supporting hand. Transparent background, generous separation. These are a real walk cycle, NOT four copies of a pose. Frame1 NEAR LEG stretched FORWARD to right, heel touching ground, FAR leg stretches back left toe pushing. Frame2 NEAR LEG vertical under hip supporting body, FAR leg bent at knee swinging FORWARD; feet nearly together horizontally, one clearly lifted. Frame3 FAR LEG stretched FORWARD right heel down, NEAR LEG stretched BACK left toe pushing: the darker far boot is foregroundmost right, the lighter near boot now behind left. Frame4 FAR LEG vertical under hip supporting body, NEAR leg bent forward/right with lifted boot nearly under hip. All same strict right profile. Opposite contact silhouettes and two passing silhouettes must be clearly distinct. Free NEAR arm counter-swings, FAR palm always supports underside of shoulder stone. Stone fixed on same shoulder and same shape/scale every frame. Preserve identity exactly: broad face, swept long hair tied low, dense forked beard with brass clasps, stout connected anatomy, short blue tunic sleeves, leather braces/belt, blue trousers, heavy brown boots. Hair purple technical source marker as reference, natural warm skin. Full figure from crown and stone to soles, no clipping. No floating parts, no shadows/floor, no text. Match charming painted cartoon art and thick readable outlines. 2048 wide composition.",
+      "references": [
+        "assets/whole-v58/male0-handling.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Insufficient alternating footfalls and/or changed proportions/carry continuity: rejected."
+    },
+    {
+      "id": "female4-riflewalk-v2",
+      "prompt": "Use case: identity-preserve. Repair the reference's clipped bottom rifle row. Produce exactly EIGHT full-body sprites in FOUR columns by TWO rows, on transparent background with large gutters and margin under boots. SAME stout adult female Dwarf, same short layered bob hair reaching nape, NO bun/long braids/ponytail. Same warm face, cream shirt, blue vest/trousers, leather belt/bracers, heavy boots. All hold same compact brown wood/brass/grey-steel rifle naturally across chest in both hands, right hand on stock/trigger and left under barrel, never swap grip. Row1: front-left-foot contact, front-right-foot contact, strict right profile near-leg-forward contact, strict right profile far-leg-forward contact. Row2: rear-right three-quarter near-leg contact, same rear-right opposite-leg contact, full straight-back left-leg contact, full straight-back right-leg contact. Rifle never aimed at camera; held across body pointed screen-right, naturally occluded in rear views. Keep both paired drawings facing exactly same angle. Distinct alternating boots/weight shift. Every COMPLETE figure including ALL BOOTS must be comfortably inside its cell; no edge crop anywhere. Preserve original illustrated whole-character style, proportions and identity. Purple hair only as technical source marker, game recolors it. No floor, no labels, no extra figures, no separate limbs or head.",
+      "references": [
+        "assets/whole-v58/female4-equipped.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": null
+    },
+    {
+      "id": "male5-backfix-v3",
+      "prompt": "Edit target: supplied sprite sheet. Correct ONLY the last column (column 8) of all six rows. Each character in that last column must face straight AWAY, showing the back of the head with the same low-tied ponytail as the adjacent column 7, no face or moustache visible. Preserve the existing full body, boots, walking pose, clothing, scale, style and positions. Each figure carries exactly ONE SINGLE tool held in both hands in front of his torso, just like column7. A wooden handle tail protrudes at screen LEFT, and its ONE functional head protrudes at screen RIGHT. Never put a second metal head at the left. Rows: one pickaxe, one single-bladed axe, one hammer with single steel block, one shovel with one spade, one wooden tray, one rifle (one barrel on right, wooden stock on left). Keep the other seven columns unchanged. Keep the same 8 columns x 6 rows layout, no cropped figures. Truly transparent background throughout, alpha zero between characters, no colored backing. Source purple hair remains a technical marker. No text.",
+      "references": [
+        "assets/whole-v58/male5-equipped.png"
+      ],
+      "status": "selected",
+      "selected": "Only equipped keys 7,15,23,31,39,47.",
+      "reason": null
+    },
+    {
+      "id": "female4-riflefix-v3",
+      "prompt": "Edit target supplied sprite sheet. Fix ONLY the clipped bottom row: extend the transparent canvas downward and finish drawing the legs and boots of all eight rifle-carrying characters in that bottom row. All eight must have complete heavy brown boots with clear transparent margin beneath. Preserve their existing body, head, short purple bob, clothes, single rifle held in both hands, paired walk phases, facing angles and positions. Keep the other five rows untouched. Keep eight columns, six rows. Absolutely NO new weapons, NO double barrels or doubled tool heads, NO face on back of head. Truly transparent background alpha zero between figures; no colored backing/floor/glow. Keep original drawing style. This is a simple canvas extension and completion of missing boots, NOT a redesign.",
+      "references": [
+        "assets/whole-v58/female4-equipped.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": null
+    },
+    {
+      "id": "female-axe-hairfix-v3",
+      "prompt": "Edit target supplied 4 column by 7 row sprite sheet. Correct ONLY hairstyle continuity in rows 2,3,5 (counting from top). Row2 practical BUN: every frame has the same round bun as first frame, no braids added. Row3 LOOSE WAVES: every frame has loose wavy unbraided hair, no enormous plait. Row5 short BOB: all four frames have the short bob ending at nape, no bun or ponytail or long braid. Preserve face, stout body, single two-handed axe, arm pose, feet, clothes, all other rows, transparency, exact positions and original illustrated style. Each figure has ONE axe with ONE axe head and one wooden haft. Hair purple as source material marker. No background or text.",
+      "references": [
+        "assets/whole-v58/female-axes.png"
+      ],
+      "status": "selected",
+      "selected": "Only bun and bob axe rows (1 and 4). Loose-waves correction still drifts; not used.",
+      "reason": null
+    },
+    {
+      "id": "female4-rifle-alpha-v4",
+      "prompt": "Use case: background-extraction. Remove ONLY the colored background from this existing sheet of eight Dwarf sprites. Make all background genuinely TRANSPARENT (alpha zero). Preserve the eight complete character drawings exactly: face, short bob, hands, ONE rifle, all legs and boots and original outlines. Keep the same 4x2 layout and resolution, no cropping, no shadows, no new objects, no background gradients/checkerboard. Transparent space around all eight complete figures. Do not redesign any character.",
+      "references": [
+        "/workspace/scratch/a447fc5d46ab/generated_images/exec-71c13602-9165-46cc-8ede-1e1876313052.png"
+      ],
+      "status": "selected",
+      "selected": "Eight complete rifle drawings replace clipped equipped keys 40\u201347. Existing insufficient passing gait remains a release blocker.",
+      "reason": null
+    },
+    {
+      "id": "female4-shovel-v2",
+      "prompt": "Use case: precise-object-edit. In the supplied 4x8 sprite atlas, edit ONLY row5 column2 (the fifth row from top, second character from left). That character incorrectly holds a saw. Replace that one saw with the same SINGLE wooden-handled steel spade visible in row5 columns1,3,4. She is preparing to dig: both hands wrapped around its wooden shaft, one grey spade blade at its right end. No saw, no extra shovel blade, no second tool. Preserve her body, short bob, arms, boots, the other31 complete drawings, their exact placement, dimensions and transparent background. No redesign of any other frame.",
+      "references": [
+        "assets/whole-v58/female4-utility.png"
+      ],
+      "status": "selected",
+      "selected": "Only utility key 17, replacing wrong saw with spade.",
+      "reason": null
+    },
+    {
+      "id": "male0-carry-frontfix",
+      "prompt": "Use case: precise-object-edit. Edit supplied 8 columns x8 rows character sprite atlas. Correct ONLY single-load continuity: in row1 column2 and row2 column2 move the carried stone/log from screen-LEFT shoulder to screen-RIGHT shoulder with supporting bent arm, matching column1. Keep feet in their existing alternate step. In row1 column8 and row2 column8 move the load to screen-LEFT shoulder with supporting arm, matching column7 back view. Each character has only ONE stone (row1) or ONE log (row2), with free arm lowered. Preserve entire figure's identity, face, anatomy, size, foot pose, color, style and all other60 drawings unchanged. Same resolution and transparent background. Do not create extra tools or cargo. This is just a correction to four whole-character poses, ensuring the load stays on the same shoulder throughout two consecutive walking frames.",
+      "references": [
+        "assets/whole-v58/male0-handling.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": null
+    },
+    {
+      "id": "male0-stone-front-key",
+      "prompt": "One complete character sprite only, transparent background. Same male dwarf as reference. Straight FRONT view, facing camera, full connected body, exact same painted cartoon style, proportions, purple source hair, dense split beard, swept-back hair, blue tunic, brown bracers and boots. He carries ONE compact faceted grey stone on his LEFT shoulder (SCREEN RIGHT). His left hand supports underside; free right arm at screen left swings BACK. Draw a specific walking contact: his RIGHT BOOT (SCREEN LEFT) is stepping FORWARD toward the viewer, lowest/largest boot in the picture; his LEFT BOOT (SCREEN RIGHT) stays behind, smaller/higher, toe touching ground. Make that alternating footfall unmistakable: screen-left boot forward; screen-right boot back. Stone stays at screen right. No extra limbs, no separate head, no second rock, no tool. Hair must stay exactly as reference, no helmet. Entire soles and crown inside transparent margins. Do not create a sheet, just ONE pose.",
+      "references": [
+        "assets/whole-v58/male0-handling.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Insufficient alternating footfalls and/or changed proportions/carry continuity: rejected."
+    },
+    {
+      "id": "male0-stone-back-key",
+      "prompt": "ONE complete character sprite only on transparent background. Same male dwarf as reference. Straight BACK view, facing away, no face visible. Same swept-back hair in low ponytail, blue tunic, brown crossed shoulder straps/belt/bracers, blue trousers, heavy brown boots. Purple hair is source pigment. He carries ONE compact faceted grey stone on LEFT shoulder (SCREEN LEFT in back view), left bent arm/palm supports underside, right free arm swings. Specific walking contact: SCREEN-LEFT boot is extended BACK toward viewer, clearly lower in picture and showing its sole; SCREEN-RIGHT foot is forward away from viewer and planted below hip, higher in image. Rock always screen-left, never on right. Match the reference's whole connected stout adult body and hand-painted illustrated rendering. No face on back, no second rock, no weapon. Entire figure within generous transparent margin; just one drawing, no sheet.",
+      "references": [
+        "assets/whole-v58/male0-handling.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Insufficient alternating footfalls and/or changed proportions/carry continuity: rejected."
+    },
+    {
+      "id": "female0-stone-front-key",
+      "prompt": "ONE complete character sprite only, transparent background. Same stout adult female dwarf as supplied reference: crown braid with long thick hair behind and small paired front plaits, source purple hair, blue vest and trousers over cream short-sleeve shirt, brown belt/bracers and heavy boots, same face and proportions. Straight FRONT view. ONE faceted grey stone supported on SCREEN-LEFT shoulder by raised SCREEN-LEFT palm. Free arm at screen right swings BACK. Specific opposite walking contact: SCREEN-RIGHT boot extends FORWARD toward viewer, the lowest/largest boot; SCREEN-LEFT foot stays behind under hip, smaller/higher. Distinct clear leg positions, no repeated symmetric feet. Maintain exact same painterly whole-character art, connected body, broad shoulders and compact legs. No second rock, no tools, no extra limbs, no bob hairstyle, no oversized head. Entire crown and boots inside generous transparent margin. Just one single pose, not an atlas.",
+      "references": [
+        "assets/whole-v58/female0-handling.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Insufficient alternating footfalls and/or changed proportions/carry continuity: rejected."
+    },
+    {
+      "id": "female0-stone-back-key",
+      "prompt": "ONE complete character sprite only, transparent background. Same stout female dwarf in reference: long thick crown-braided purple source hair down her back, cream shirt under blue vest, blue trousers, brown belt and boots. Straight BACK view, no face. ONE faceted grey stone supported on SCREEN-LEFT shoulder by screen-left raised hand. Free arm on screen right. Specific opposite walking contact: SCREEN-RIGHT boot extends BACK toward viewer, the lowest/largest boot showing sole; SCREEN-LEFT foot is planted forward away, under hip and higher in picture. Keep rock screen left and same size as reference. Preserve same compact powerful body, long braided identity, connected painted anatomy and hand-drawn game style. No extra rock/weapon/limbs/head, no floor/shadow. Full crown, rock and soles inside generous transparent margins. Just one pose.",
+      "references": [
+        "assets/whole-v58/female0-handling.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Insufficient alternating footfalls and/or changed proportions/carry continuity: rejected."
+    },
+    {
+      "id": "male4-backfix-v3",
+      "prompt": "Edit this existing 8 columns by 6 rows sprite sheet. Correct ONLY the last column (column8) in all six rows. Change each last-column FACE into the BACK OF HIS HEAD, facing straight AWAY from camera like adjacent column7. Copy the same rear hairstyle, brown crossed suspenders, blue tunic and body orientation from its adjacent column7, but retain the last column's alternate boot step. No face, no eyes, no front beard on rear skull. Keep every other drawing untouched. Exactly ONE tool per figure, already correct in input: one wooden handle with its ONE steel tool head at SCREEN RIGHT; handle tail at SCREEN LEFT has NO second metal head. Rows are pickaxe, axe, hammer, shovel, wooden tray, rifle. Rifle has one steel barrel on right, wood stock on left. Keep all arms, hand grips, tools, feet, character sizes, style, purple source hair pigment, atlas positions and transparent background. No cropped figures. No redesign. This is a targeted rear-facing-head correction to six complete figures.",
+      "references": [
+        "assets/whole-v58/male4-equipped.png"
+      ],
+      "status": "rejected-or-superseded",
+      "selected": null,
+      "reason": "Native inspection exposes an unwanted second tool end. Not integrated."
+    }
+  ]
+}

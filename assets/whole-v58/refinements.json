@@ -1,0 +1,2547 @@
+{
+  "version": 1,
+  "layouts": {
+    "male5-backfix-v3": {
+      "cols": 8,
+      "rows": 6,
+      "reference": 0,
+      "contours": true
+    },
+    "female-axe-hairfix-v3": {
+      "cols": 4,
+      "rows": 7,
+      "reference": 0,
+      "row_scale": true,
+      "contours": true
+    },
+    "female4-shovel-v2": {
+      "cols": 4,
+      "rows": 8,
+      "reference": 8
+    },
+    "female4-rifle-alpha-v4": {
+      "cols": 4,
+      "rows": 2,
+      "reference": 0
+    },
+    "male4-equipped": {
+      "cols": 8,
+      "rows": 6,
+      "reference": 0,
+      "contours": true
+    },
+    "male4-backtools-v2": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0
+    },
+    "male5-bearded-core": {
+      "cols": 4,
+      "rows": 8,
+      "reference": 0,
+      "contours": true
+    },
+    "male5-bearded-utility": {
+      "cols": 4,
+      "rows": 8,
+      "reference": 8,
+      "contours": true
+    },
+    "male5-bearded-handling": {
+      "cols": 8,
+      "rows": 8,
+      "reference": 48,
+      "contours": true
+    },
+    "male5-bearded-equipped": {
+      "cols": 8,
+      "rows": 6,
+      "reference": 0,
+      "contours": true
+    },
+    "male-axes-quality58-0": {
+      "cols": 4,
+      "rows": 4,
+      "reference": 0,
+      "row_scale": true,
+      "contours": true
+    },
+    "male-axes-quality58-1": {
+      "cols": 4,
+      "rows": 3,
+      "reference": 0,
+      "row_scale": true,
+      "contours": true
+    },
+    "male3-knot-equipped58": {
+      "cols": 8,
+      "rows": 6,
+      "reference": 0,
+      "row_scale": false,
+      "contours": true
+    },
+    "female2-axe-waves58": {
+      "cols": 2,
+      "rows": 2,
+      "reference": 0,
+      "row_scale": false,
+      "contours": true
+    },
+    "male2-handling": {
+      "cols": 8,
+      "rows": 8,
+      "reference": 48,
+      "contours": true
+    },
+    "male4-cropped-core58": {
+      "cols": 4,
+      "rows": 8,
+      "reference": 0,
+      "contours": true
+    },
+    "male4-cropped-utility58": {
+      "cols": 4,
+      "rows": 8,
+      "reference": 8,
+      "contours": true
+    },
+    "male4-cropped-handling58": {
+      "cols": 8,
+      "rows": 8,
+      "reference": 48,
+      "contours": true
+    },
+    "male4-cropped-equipped58": {
+      "cols": 8,
+      "rows": 6,
+      "reference": 0,
+      "contours": true
+    },
+    "male5-raised-pick58": {
+      "cols": 1,
+      "rows": 1,
+      "reference": 0,
+      "contours": true
+    }
+  },
+  "overrides": [
+    {
+      "sheet": "male5-equipped",
+      "index": 7,
+      "source": "male5-backfix-v3",
+      "frame": 7
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 15,
+      "source": "male5-backfix-v3",
+      "frame": 15
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 23,
+      "source": "male5-backfix-v3",
+      "frame": 23
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 31,
+      "source": "male5-backfix-v3",
+      "frame": 31
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 39,
+      "source": "male5-backfix-v3",
+      "frame": 39
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 47,
+      "source": "male5-backfix-v3",
+      "frame": 47
+    },
+    {
+      "sheet": "female1-core",
+      "index": 24,
+      "source": "female-axe-hairfix-v3",
+      "frame": 4
+    },
+    {
+      "sheet": "female1-core",
+      "index": 25,
+      "source": "female-axe-hairfix-v3",
+      "frame": 5
+    },
+    {
+      "sheet": "female1-core",
+      "index": 26,
+      "source": "female-axe-hairfix-v3",
+      "frame": 6
+    },
+    {
+      "sheet": "female1-core",
+      "index": 27,
+      "source": "female-axe-hairfix-v3",
+      "frame": 7
+    },
+    {
+      "sheet": "female4-core",
+      "index": 24,
+      "source": "female-axe-hairfix-v3",
+      "frame": 16
+    },
+    {
+      "sheet": "female4-core",
+      "index": 25,
+      "source": "female-axe-hairfix-v3",
+      "frame": 17
+    },
+    {
+      "sheet": "female4-core",
+      "index": 26,
+      "source": "female-axe-hairfix-v3",
+      "frame": 18
+    },
+    {
+      "sheet": "female4-core",
+      "index": 27,
+      "source": "female-axe-hairfix-v3",
+      "frame": 19
+    },
+    {
+      "sheet": "female4-utility",
+      "index": 17,
+      "source": "female4-shovel-v2",
+      "frame": 17
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 40,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 0
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 41,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 1
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 42,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 2
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 43,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 3
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 44,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 4
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 45,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 5
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 46,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 6
+    },
+    {
+      "sheet": "female4-equipped",
+      "index": 47,
+      "source": "female4-rifle-alpha-v4",
+      "frame": 7
+    },
+    {
+      "sheet": "female0-utility",
+      "index": 27,
+      "source": "female0-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female1-utility",
+      "index": 27,
+      "source": "female1-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female2-utility",
+      "index": 27,
+      "source": "female2-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female3-utility",
+      "index": 27,
+      "source": "female3-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female4-utility",
+      "index": 27,
+      "source": "female4-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female5-utility",
+      "index": 27,
+      "source": "female5-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "female6-utility",
+      "index": 27,
+      "source": "female6-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 6,
+      "source": "male4-backtools-v2",
+      "frame": 0
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 7,
+      "source": "male4-backtools-v2",
+      "frame": 2
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 14,
+      "source": "male4-backtools-v2",
+      "frame": 4
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 15,
+      "source": "male4-backtools-v2",
+      "frame": 6
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 22,
+      "source": "male4-backtools-v2",
+      "frame": 8
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 23,
+      "source": "male4-backtools-v2",
+      "frame": 10
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 30,
+      "source": "male4-backtools-v2",
+      "frame": 12
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 31,
+      "source": "male4-backtools-v2",
+      "frame": 14
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 38,
+      "source": "male4-backtools-v2",
+      "frame": 16
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 39,
+      "source": "male4-backtools-v2",
+      "frame": 18
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 46,
+      "source": "male4-backtools-v2",
+      "frame": 20
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 47,
+      "source": "male4-backtools-v2",
+      "frame": 22
+    },
+    {
+      "sheet": "male5-core",
+      "index": 0,
+      "source": "male5-bearded-core",
+      "frame": 0
+    },
+    {
+      "sheet": "male5-core",
+      "index": 1,
+      "source": "male5-bearded-core",
+      "frame": 1
+    },
+    {
+      "sheet": "male5-core",
+      "index": 2,
+      "source": "male5-bearded-core",
+      "frame": 2
+    },
+    {
+      "sheet": "male5-core",
+      "index": 3,
+      "source": "male5-bearded-core",
+      "frame": 3
+    },
+    {
+      "sheet": "male5-core",
+      "index": 4,
+      "source": "male5-bearded-core",
+      "frame": 4
+    },
+    {
+      "sheet": "male5-core",
+      "index": 5,
+      "source": "male5-bearded-core",
+      "frame": 5
+    },
+    {
+      "sheet": "male5-core",
+      "index": 6,
+      "source": "male5-bearded-core",
+      "frame": 6
+    },
+    {
+      "sheet": "male5-core",
+      "index": 7,
+      "source": "male5-bearded-core",
+      "frame": 7
+    },
+    {
+      "sheet": "male5-core",
+      "index": 8,
+      "source": "male5-bearded-core",
+      "frame": 8
+    },
+    {
+      "sheet": "male5-core",
+      "index": 9,
+      "source": "male5-bearded-core",
+      "frame": 9
+    },
+    {
+      "sheet": "male5-core",
+      "index": 10,
+      "source": "male5-bearded-core",
+      "frame": 10
+    },
+    {
+      "sheet": "male5-core",
+      "index": 11,
+      "source": "male5-bearded-core",
+      "frame": 11
+    },
+    {
+      "sheet": "male5-core",
+      "index": 12,
+      "source": "male5-bearded-core",
+      "frame": 12
+    },
+    {
+      "sheet": "male5-core",
+      "index": 13,
+      "source": "male5-bearded-core",
+      "frame": 13
+    },
+    {
+      "sheet": "male5-core",
+      "index": 14,
+      "source": "male5-bearded-core",
+      "frame": 14
+    },
+    {
+      "sheet": "male5-core",
+      "index": 15,
+      "source": "male5-bearded-core",
+      "frame": 15
+    },
+    {
+      "sheet": "male5-core",
+      "index": 20,
+      "source": "male5-bearded-core",
+      "frame": 20
+    },
+    {
+      "sheet": "male5-core",
+      "index": 21,
+      "source": "male5-bearded-core",
+      "frame": 21
+    },
+    {
+      "sheet": "male5-core",
+      "index": 22,
+      "source": "male5-bearded-core",
+      "frame": 22
+    },
+    {
+      "sheet": "male5-core",
+      "index": 23,
+      "source": "male5-bearded-core",
+      "frame": 23
+    },
+    {
+      "sheet": "male5-core",
+      "index": 24,
+      "source": "male5-bearded-core",
+      "frame": 24
+    },
+    {
+      "sheet": "male5-core",
+      "index": 25,
+      "source": "male5-bearded-core",
+      "frame": 25
+    },
+    {
+      "sheet": "male5-core",
+      "index": 26,
+      "source": "male5-bearded-core",
+      "frame": 26
+    },
+    {
+      "sheet": "male5-core",
+      "index": 27,
+      "source": "male5-bearded-core",
+      "frame": 27
+    },
+    {
+      "sheet": "male5-core",
+      "index": 28,
+      "source": "male5-bearded-core",
+      "frame": 28
+    },
+    {
+      "sheet": "male5-core",
+      "index": 29,
+      "source": "male5-bearded-core",
+      "frame": 29
+    },
+    {
+      "sheet": "male5-core",
+      "index": 30,
+      "source": "male5-bearded-core",
+      "frame": 30
+    },
+    {
+      "sheet": "male5-core",
+      "index": 31,
+      "source": "male5-bearded-core",
+      "frame": 31
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 0,
+      "source": "male5-bearded-utility",
+      "frame": 0
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 1,
+      "source": "male5-bearded-utility",
+      "frame": 1
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 2,
+      "source": "male5-bearded-utility",
+      "frame": 2
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 3,
+      "source": "male5-bearded-utility",
+      "frame": 3
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 4,
+      "source": "male5-bearded-utility",
+      "frame": 4
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 5,
+      "source": "male5-bearded-utility",
+      "frame": 5
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 6,
+      "source": "male5-bearded-utility",
+      "frame": 6
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 7,
+      "source": "male5-bearded-utility",
+      "frame": 7
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 8,
+      "source": "male5-bearded-utility",
+      "frame": 8
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 9,
+      "source": "male5-bearded-utility",
+      "frame": 9
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 10,
+      "source": "male5-bearded-utility",
+      "frame": 10
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 11,
+      "source": "male5-bearded-utility",
+      "frame": 11
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 12,
+      "source": "male5-bearded-utility",
+      "frame": 12
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 13,
+      "source": "male5-bearded-utility",
+      "frame": 13
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 14,
+      "source": "male5-bearded-utility",
+      "frame": 14
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 15,
+      "source": "male5-bearded-utility",
+      "frame": 15
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 16,
+      "source": "male5-bearded-utility",
+      "frame": 16
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 17,
+      "source": "male5-bearded-utility",
+      "frame": 17
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 18,
+      "source": "male5-bearded-utility",
+      "frame": 18
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 19,
+      "source": "male5-bearded-utility",
+      "frame": 19
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 20,
+      "source": "male5-bearded-utility",
+      "frame": 20
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 21,
+      "source": "male5-bearded-utility",
+      "frame": 21
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 22,
+      "source": "male5-bearded-utility",
+      "frame": 22
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 23,
+      "source": "male5-bearded-utility",
+      "frame": 23
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 24,
+      "source": "male5-bearded-utility",
+      "frame": 24
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 25,
+      "source": "male5-bearded-utility",
+      "frame": 25
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 26,
+      "source": "male5-bearded-utility",
+      "frame": 26
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 27,
+      "source": "male5-bearded-utility",
+      "frame": 27
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 28,
+      "source": "male5-bearded-utility",
+      "frame": 28
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 29,
+      "source": "male5-bearded-utility",
+      "frame": 29
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 30,
+      "source": "male5-bearded-utility",
+      "frame": 30
+    },
+    {
+      "sheet": "male5-utility",
+      "index": 31,
+      "source": "male5-bearded-utility",
+      "frame": 31
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 0,
+      "source": "male5-bearded-handling",
+      "frame": 0
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 1,
+      "source": "male5-bearded-handling",
+      "frame": 1
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 2,
+      "source": "male5-bearded-handling",
+      "frame": 2
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 3,
+      "source": "male5-bearded-handling",
+      "frame": 3
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 4,
+      "source": "male5-bearded-handling",
+      "frame": 4
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 5,
+      "source": "male5-bearded-handling",
+      "frame": 5
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 6,
+      "source": "male5-bearded-handling",
+      "frame": 6
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 7,
+      "source": "male5-bearded-handling",
+      "frame": 7
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 8,
+      "source": "male5-bearded-handling",
+      "frame": 8
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 9,
+      "source": "male5-bearded-handling",
+      "frame": 9
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 10,
+      "source": "male5-bearded-handling",
+      "frame": 10
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 11,
+      "source": "male5-bearded-handling",
+      "frame": 11
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 12,
+      "source": "male5-bearded-handling",
+      "frame": 12
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 13,
+      "source": "male5-bearded-handling",
+      "frame": 13
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 14,
+      "source": "male5-bearded-handling",
+      "frame": 14
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 15,
+      "source": "male5-bearded-handling",
+      "frame": 15
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 16,
+      "source": "male5-bearded-handling",
+      "frame": 16
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 17,
+      "source": "male5-bearded-handling",
+      "frame": 17
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 18,
+      "source": "male5-bearded-handling",
+      "frame": 18
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 19,
+      "source": "male5-bearded-handling",
+      "frame": 19
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 20,
+      "source": "male5-bearded-handling",
+      "frame": 20
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 21,
+      "source": "male5-bearded-handling",
+      "frame": 21
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 22,
+      "source": "male5-bearded-handling",
+      "frame": 22
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 23,
+      "source": "male5-bearded-handling",
+      "frame": 23
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 24,
+      "source": "male5-bearded-handling",
+      "frame": 24
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 25,
+      "source": "male5-bearded-handling",
+      "frame": 25
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 26,
+      "source": "male5-bearded-handling",
+      "frame": 26
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 27,
+      "source": "male5-bearded-handling",
+      "frame": 27
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 28,
+      "source": "male5-bearded-handling",
+      "frame": 28
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 29,
+      "source": "male5-bearded-handling",
+      "frame": 29
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 30,
+      "source": "male5-bearded-handling",
+      "frame": 30
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 31,
+      "source": "male5-bearded-handling",
+      "frame": 31
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 32,
+      "source": "male5-bearded-handling",
+      "frame": 32
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 33,
+      "source": "male5-bearded-handling",
+      "frame": 33
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 34,
+      "source": "male5-bearded-handling",
+      "frame": 34
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 35,
+      "source": "male5-bearded-handling",
+      "frame": 35
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 36,
+      "source": "male5-bearded-handling",
+      "frame": 36
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 37,
+      "source": "male5-bearded-handling",
+      "frame": 37
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 38,
+      "source": "male5-bearded-handling",
+      "frame": 38
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 39,
+      "source": "male5-bearded-handling",
+      "frame": 39
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 40,
+      "source": "male5-bearded-handling",
+      "frame": 40
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 41,
+      "source": "male5-bearded-handling",
+      "frame": 41
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 42,
+      "source": "male5-bearded-handling",
+      "frame": 42
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 43,
+      "source": "male5-bearded-handling",
+      "frame": 43
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 44,
+      "source": "male5-bearded-handling",
+      "frame": 44
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 45,
+      "source": "male5-bearded-handling",
+      "frame": 45
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 46,
+      "source": "male5-bearded-handling",
+      "frame": 46
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 47,
+      "source": "male5-bearded-handling",
+      "frame": 47
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 48,
+      "source": "male5-bearded-handling",
+      "frame": 48
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 49,
+      "source": "male5-bearded-handling",
+      "frame": 49
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 50,
+      "source": "male5-bearded-handling",
+      "frame": 50
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 51,
+      "source": "male5-bearded-handling",
+      "frame": 51
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 52,
+      "source": "male5-bearded-handling",
+      "frame": 52
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 53,
+      "source": "male5-bearded-handling",
+      "frame": 53
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 54,
+      "source": "male5-bearded-handling",
+      "frame": 54
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 55,
+      "source": "male5-bearded-handling",
+      "frame": 55
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 56,
+      "source": "male5-bearded-handling",
+      "frame": 56
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 57,
+      "source": "male5-bearded-handling",
+      "frame": 57
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 58,
+      "source": "male5-bearded-handling",
+      "frame": 58
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 59,
+      "source": "male5-bearded-handling",
+      "frame": 59
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 60,
+      "source": "male5-bearded-handling",
+      "frame": 60
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 61,
+      "source": "male5-bearded-handling",
+      "frame": 61
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 62,
+      "source": "male5-bearded-handling",
+      "frame": 62
+    },
+    {
+      "sheet": "male5-handling",
+      "index": 63,
+      "source": "male5-bearded-handling",
+      "frame": 63
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 0,
+      "source": "male5-bearded-equipped",
+      "frame": 0
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 1,
+      "source": "male5-bearded-equipped",
+      "frame": 1
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 2,
+      "source": "male5-bearded-equipped",
+      "frame": 2
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 3,
+      "source": "male5-bearded-equipped",
+      "frame": 3
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 4,
+      "source": "male5-bearded-equipped",
+      "frame": 4
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 5,
+      "source": "male5-bearded-equipped",
+      "frame": 5
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 6,
+      "source": "male5-bearded-equipped",
+      "frame": 6
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 8,
+      "source": "male5-bearded-equipped",
+      "frame": 8
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 9,
+      "source": "male5-bearded-equipped",
+      "frame": 9
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 10,
+      "source": "male5-bearded-equipped",
+      "frame": 10
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 11,
+      "source": "male5-bearded-equipped",
+      "frame": 11
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 12,
+      "source": "male5-bearded-equipped",
+      "frame": 12
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 13,
+      "source": "male5-bearded-equipped",
+      "frame": 13
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 14,
+      "source": "male5-bearded-equipped",
+      "frame": 14
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 16,
+      "source": "male5-bearded-equipped",
+      "frame": 16
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 17,
+      "source": "male5-bearded-equipped",
+      "frame": 17
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 18,
+      "source": "male5-bearded-equipped",
+      "frame": 18
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 19,
+      "source": "male5-bearded-equipped",
+      "frame": 19
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 20,
+      "source": "male5-bearded-equipped",
+      "frame": 20
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 21,
+      "source": "male5-bearded-equipped",
+      "frame": 21
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 22,
+      "source": "male5-bearded-equipped",
+      "frame": 22
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 24,
+      "source": "male5-bearded-equipped",
+      "frame": 24
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 25,
+      "source": "male5-bearded-equipped",
+      "frame": 25
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 26,
+      "source": "male5-bearded-equipped",
+      "frame": 26
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 27,
+      "source": "male5-bearded-equipped",
+      "frame": 27
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 28,
+      "source": "male5-bearded-equipped",
+      "frame": 28
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 29,
+      "source": "male5-bearded-equipped",
+      "frame": 29
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 30,
+      "source": "male5-bearded-equipped",
+      "frame": 30
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 32,
+      "source": "male5-bearded-equipped",
+      "frame": 32
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 33,
+      "source": "male5-bearded-equipped",
+      "frame": 33
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 34,
+      "source": "male5-bearded-equipped",
+      "frame": 34
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 35,
+      "source": "male5-bearded-equipped",
+      "frame": 35
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 36,
+      "source": "male5-bearded-equipped",
+      "frame": 36
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 37,
+      "source": "male5-bearded-equipped",
+      "frame": 37
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 38,
+      "source": "male5-bearded-equipped",
+      "frame": 38
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 40,
+      "source": "male5-bearded-equipped",
+      "frame": 40
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 41,
+      "source": "male5-bearded-equipped",
+      "frame": 41
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 42,
+      "source": "male5-bearded-equipped",
+      "frame": 42
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 43,
+      "source": "male5-bearded-equipped",
+      "frame": 43
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 44,
+      "source": "male5-bearded-equipped",
+      "frame": 44
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 45,
+      "source": "male5-bearded-equipped",
+      "frame": 45
+    },
+    {
+      "sheet": "male5-equipped",
+      "index": 46,
+      "source": "male5-bearded-equipped",
+      "frame": 46
+    },
+    {
+      "sheet": "male0-core",
+      "index": 24,
+      "source": "male-axes-quality58-0",
+      "frame": 0
+    },
+    {
+      "sheet": "male0-core",
+      "index": 25,
+      "source": "male-axes-quality58-0",
+      "frame": 1
+    },
+    {
+      "sheet": "male0-core",
+      "index": 26,
+      "source": "male-axes-quality58-0",
+      "frame": 2
+    },
+    {
+      "sheet": "male0-core",
+      "index": 27,
+      "source": "male-axes-quality58-0",
+      "frame": 3
+    },
+    {
+      "sheet": "male1-core",
+      "index": 24,
+      "source": "male-axes-quality58-0",
+      "frame": 4
+    },
+    {
+      "sheet": "male1-core",
+      "index": 25,
+      "source": "male-axes-quality58-0",
+      "frame": 5
+    },
+    {
+      "sheet": "male1-core",
+      "index": 26,
+      "source": "male-axes-quality58-0",
+      "frame": 6
+    },
+    {
+      "sheet": "male1-core",
+      "index": 27,
+      "source": "male-axes-quality58-0",
+      "frame": 7
+    },
+    {
+      "sheet": "male2-core",
+      "index": 24,
+      "source": "male-axes-quality58-0",
+      "frame": 8
+    },
+    {
+      "sheet": "male2-core",
+      "index": 25,
+      "source": "male-axes-quality58-0",
+      "frame": 9
+    },
+    {
+      "sheet": "male2-core",
+      "index": 26,
+      "source": "male-axes-quality58-0",
+      "frame": 10
+    },
+    {
+      "sheet": "male2-core",
+      "index": 27,
+      "source": "male-axes-quality58-0",
+      "frame": 11
+    },
+    {
+      "sheet": "male3-core",
+      "index": 24,
+      "source": "male-axes-quality58-0",
+      "frame": 12
+    },
+    {
+      "sheet": "male3-core",
+      "index": 25,
+      "source": "male-axes-quality58-0",
+      "frame": 13
+    },
+    {
+      "sheet": "male3-core",
+      "index": 26,
+      "source": "male-axes-quality58-0",
+      "frame": 14
+    },
+    {
+      "sheet": "male3-core",
+      "index": 27,
+      "source": "male-axes-quality58-0",
+      "frame": 15
+    },
+    {
+      "sheet": "male4-core",
+      "index": 24,
+      "source": "male-axes-quality58-1",
+      "frame": 0
+    },
+    {
+      "sheet": "male4-core",
+      "index": 25,
+      "source": "male-axes-quality58-1",
+      "frame": 1
+    },
+    {
+      "sheet": "male4-core",
+      "index": 26,
+      "source": "male-axes-quality58-1",
+      "frame": 2
+    },
+    {
+      "sheet": "male4-core",
+      "index": 27,
+      "source": "male-axes-quality58-1",
+      "frame": 3
+    },
+    {
+      "sheet": "male5-core",
+      "index": 24,
+      "source": "male-axes-quality58-1",
+      "frame": 4
+    },
+    {
+      "sheet": "male5-core",
+      "index": 25,
+      "source": "male-axes-quality58-1",
+      "frame": 5
+    },
+    {
+      "sheet": "male5-core",
+      "index": 26,
+      "source": "male-axes-quality58-1",
+      "frame": 6
+    },
+    {
+      "sheet": "male5-core",
+      "index": 27,
+      "source": "male-axes-quality58-1",
+      "frame": 7
+    },
+    {
+      "sheet": "male6-core",
+      "index": 24,
+      "source": "male-axes-quality58-1",
+      "frame": 8
+    },
+    {
+      "sheet": "male6-core",
+      "index": 25,
+      "source": "male-axes-quality58-1",
+      "frame": 9
+    },
+    {
+      "sheet": "male6-core",
+      "index": 26,
+      "source": "male-axes-quality58-1",
+      "frame": 10
+    },
+    {
+      "sheet": "male6-core",
+      "index": 27,
+      "source": "male-axes-quality58-1",
+      "frame": 11
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 0,
+      "source": "male3-knot-equipped58",
+      "frame": 0
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 1,
+      "source": "male3-knot-equipped58",
+      "frame": 1
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 2,
+      "source": "male3-knot-equipped58",
+      "frame": 2
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 3,
+      "source": "male3-knot-equipped58",
+      "frame": 3
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 4,
+      "source": "male3-knot-equipped58",
+      "frame": 4
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 5,
+      "source": "male3-knot-equipped58",
+      "frame": 5
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 6,
+      "source": "male3-knot-equipped58",
+      "frame": 6
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 7,
+      "source": "male3-knot-equipped58",
+      "frame": 7
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 8,
+      "source": "male3-knot-equipped58",
+      "frame": 8
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 9,
+      "source": "male3-knot-equipped58",
+      "frame": 9
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 10,
+      "source": "male3-knot-equipped58",
+      "frame": 10
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 11,
+      "source": "male3-knot-equipped58",
+      "frame": 11
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 12,
+      "source": "male3-knot-equipped58",
+      "frame": 12
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 13,
+      "source": "male3-knot-equipped58",
+      "frame": 13
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 14,
+      "source": "male3-knot-equipped58",
+      "frame": 14
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 15,
+      "source": "male3-knot-equipped58",
+      "frame": 15
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 16,
+      "source": "male3-knot-equipped58",
+      "frame": 16
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 17,
+      "source": "male3-knot-equipped58",
+      "frame": 17
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 18,
+      "source": "male3-knot-equipped58",
+      "frame": 18
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 19,
+      "source": "male3-knot-equipped58",
+      "frame": 19
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 20,
+      "source": "male3-knot-equipped58",
+      "frame": 20
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 21,
+      "source": "male3-knot-equipped58",
+      "frame": 21
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 22,
+      "source": "male3-knot-equipped58",
+      "frame": 22
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 23,
+      "source": "male3-knot-equipped58",
+      "frame": 23
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 24,
+      "source": "male3-knot-equipped58",
+      "frame": 24
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 25,
+      "source": "male3-knot-equipped58",
+      "frame": 25
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 26,
+      "source": "male3-knot-equipped58",
+      "frame": 26
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 27,
+      "source": "male3-knot-equipped58",
+      "frame": 27
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 28,
+      "source": "male3-knot-equipped58",
+      "frame": 28
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 29,
+      "source": "male3-knot-equipped58",
+      "frame": 29
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 30,
+      "source": "male3-knot-equipped58",
+      "frame": 30
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 31,
+      "source": "male3-knot-equipped58",
+      "frame": 31
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 32,
+      "source": "male3-knot-equipped58",
+      "frame": 32
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 33,
+      "source": "male3-knot-equipped58",
+      "frame": 33
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 34,
+      "source": "male3-knot-equipped58",
+      "frame": 34
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 35,
+      "source": "male3-knot-equipped58",
+      "frame": 35
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 36,
+      "source": "male3-knot-equipped58",
+      "frame": 36
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 37,
+      "source": "male3-knot-equipped58",
+      "frame": 37
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 38,
+      "source": "male3-knot-equipped58",
+      "frame": 38
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 39,
+      "source": "male3-knot-equipped58",
+      "frame": 39
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 40,
+      "source": "male3-knot-equipped58",
+      "frame": 40
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 41,
+      "source": "male3-knot-equipped58",
+      "frame": 41
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 42,
+      "source": "male3-knot-equipped58",
+      "frame": 42
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 43,
+      "source": "male3-knot-equipped58",
+      "frame": 43
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 44,
+      "source": "male3-knot-equipped58",
+      "frame": 44
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 45,
+      "source": "male3-knot-equipped58",
+      "frame": 45
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 46,
+      "source": "male3-knot-equipped58",
+      "frame": 46
+    },
+    {
+      "sheet": "male3-equipped",
+      "index": 47,
+      "source": "male3-knot-equipped58",
+      "frame": 47
+    },
+    {
+      "sheet": "female2-core",
+      "index": 24,
+      "source": "female2-axe-waves58",
+      "frame": 0
+    },
+    {
+      "sheet": "female2-core",
+      "index": 25,
+      "source": "female2-axe-waves58",
+      "frame": 1
+    },
+    {
+      "sheet": "female2-core",
+      "index": 26,
+      "source": "female2-axe-waves58",
+      "frame": 2
+    },
+    {
+      "sheet": "female2-core",
+      "index": 27,
+      "source": "female2-axe-waves58",
+      "frame": 3
+    },
+    {
+      "sheet": "male4-core",
+      "index": 2,
+      "source": "male4-cropped-core58",
+      "frame": 2
+    },
+    {
+      "sheet": "male4-core",
+      "index": 3,
+      "source": "male4-cropped-core58",
+      "frame": 3
+    },
+    {
+      "sheet": "male4-core",
+      "index": 12,
+      "source": "male4-cropped-core58",
+      "frame": 12
+    },
+    {
+      "sheet": "male4-core",
+      "index": 13,
+      "source": "male4-cropped-core58",
+      "frame": 13
+    },
+    {
+      "sheet": "male4-core",
+      "index": 14,
+      "source": "male4-cropped-core58",
+      "frame": 14
+    },
+    {
+      "sheet": "male4-core",
+      "index": 15,
+      "source": "male4-cropped-core58",
+      "frame": 15
+    },
+    {
+      "sheet": "male4-core",
+      "index": 16,
+      "source": "male4-cropped-core58",
+      "frame": 16
+    },
+    {
+      "sheet": "male4-core",
+      "index": 17,
+      "source": "male4-cropped-core58",
+      "frame": 17
+    },
+    {
+      "sheet": "male4-core",
+      "index": 18,
+      "source": "male4-cropped-core58",
+      "frame": 18
+    },
+    {
+      "sheet": "male4-core",
+      "index": 19,
+      "source": "male4-cropped-core58",
+      "frame": 19
+    },
+    {
+      "sheet": "male4-utility",
+      "index": 4,
+      "source": "male4-cropped-utility58",
+      "frame": 4
+    },
+    {
+      "sheet": "male4-utility",
+      "index": 5,
+      "source": "male4-cropped-utility58",
+      "frame": 5
+    },
+    {
+      "sheet": "male4-utility",
+      "index": 6,
+      "source": "male4-cropped-utility58",
+      "frame": 6
+    },
+    {
+      "sheet": "male4-utility",
+      "index": 7,
+      "source": "male4-cropped-utility58",
+      "frame": 7
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 0,
+      "source": "male4-cropped-handling58",
+      "frame": 0
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 1,
+      "source": "male4-cropped-handling58",
+      "frame": 1
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 2,
+      "source": "male4-cropped-handling58",
+      "frame": 2
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 3,
+      "source": "male4-cropped-handling58",
+      "frame": 3
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 4,
+      "source": "male4-cropped-handling58",
+      "frame": 4
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 5,
+      "source": "male4-cropped-handling58",
+      "frame": 5
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 6,
+      "source": "male4-cropped-handling58",
+      "frame": 6
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 7,
+      "source": "male4-cropped-handling58",
+      "frame": 7
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 8,
+      "source": "male4-cropped-handling58",
+      "frame": 8
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 9,
+      "source": "male4-cropped-handling58",
+      "frame": 9
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 10,
+      "source": "male4-cropped-handling58",
+      "frame": 10
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 11,
+      "source": "male4-cropped-handling58",
+      "frame": 11
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 12,
+      "source": "male4-cropped-handling58",
+      "frame": 12
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 13,
+      "source": "male4-cropped-handling58",
+      "frame": 13
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 14,
+      "source": "male4-cropped-handling58",
+      "frame": 14
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 15,
+      "source": "male4-cropped-handling58",
+      "frame": 15
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 16,
+      "source": "male4-cropped-handling58",
+      "frame": 16
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 17,
+      "source": "male4-cropped-handling58",
+      "frame": 17
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 18,
+      "source": "male4-cropped-handling58",
+      "frame": 18
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 19,
+      "source": "male4-cropped-handling58",
+      "frame": 19
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 20,
+      "source": "male4-cropped-handling58",
+      "frame": 20
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 21,
+      "source": "male4-cropped-handling58",
+      "frame": 21
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 22,
+      "source": "male4-cropped-handling58",
+      "frame": 22
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 23,
+      "source": "male4-cropped-handling58",
+      "frame": 23
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 24,
+      "source": "male4-cropped-handling58",
+      "frame": 24
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 25,
+      "source": "male4-cropped-handling58",
+      "frame": 25
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 26,
+      "source": "male4-cropped-handling58",
+      "frame": 26
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 27,
+      "source": "male4-cropped-handling58",
+      "frame": 27
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 28,
+      "source": "male4-cropped-handling58",
+      "frame": 28
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 29,
+      "source": "male4-cropped-handling58",
+      "frame": 29
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 30,
+      "source": "male4-cropped-handling58",
+      "frame": 30
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 31,
+      "source": "male4-cropped-handling58",
+      "frame": 31
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 32,
+      "source": "male4-cropped-handling58",
+      "frame": 32
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 33,
+      "source": "male4-cropped-handling58",
+      "frame": 33
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 34,
+      "source": "male4-cropped-handling58",
+      "frame": 34
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 35,
+      "source": "male4-cropped-handling58",
+      "frame": 35
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 36,
+      "source": "male4-cropped-handling58",
+      "frame": 36
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 37,
+      "source": "male4-cropped-handling58",
+      "frame": 37
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 38,
+      "source": "male4-cropped-handling58",
+      "frame": 38
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 39,
+      "source": "male4-cropped-handling58",
+      "frame": 39
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 40,
+      "source": "male4-cropped-handling58",
+      "frame": 40
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 41,
+      "source": "male4-cropped-handling58",
+      "frame": 41
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 42,
+      "source": "male4-cropped-handling58",
+      "frame": 42
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 43,
+      "source": "male4-cropped-handling58",
+      "frame": 43
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 44,
+      "source": "male4-cropped-handling58",
+      "frame": 44
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 45,
+      "source": "male4-cropped-handling58",
+      "frame": 45
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 46,
+      "source": "male4-cropped-handling58",
+      "frame": 46
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 47,
+      "source": "male4-cropped-handling58",
+      "frame": 47
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 48,
+      "source": "male4-cropped-handling58",
+      "frame": 48
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 49,
+      "source": "male4-cropped-handling58",
+      "frame": 49
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 50,
+      "source": "male4-cropped-handling58",
+      "frame": 50
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 51,
+      "source": "male4-cropped-handling58",
+      "frame": 51
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 52,
+      "source": "male4-cropped-handling58",
+      "frame": 52
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 53,
+      "source": "male4-cropped-handling58",
+      "frame": 53
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 54,
+      "source": "male4-cropped-handling58",
+      "frame": 54
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 55,
+      "source": "male4-cropped-handling58",
+      "frame": 55
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 56,
+      "source": "male4-cropped-handling58",
+      "frame": 56
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 57,
+      "source": "male4-cropped-handling58",
+      "frame": 57
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 58,
+      "source": "male4-cropped-handling58",
+      "frame": 58
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 59,
+      "source": "male4-cropped-handling58",
+      "frame": 59
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 60,
+      "source": "male4-cropped-handling58",
+      "frame": 60
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 61,
+      "source": "male4-cropped-handling58",
+      "frame": 61
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 62,
+      "source": "male4-cropped-handling58",
+      "frame": 62
+    },
+    {
+      "sheet": "male4-handling",
+      "index": 63,
+      "source": "male4-cropped-handling58",
+      "frame": 63
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 0,
+      "source": "male4-cropped-equipped58",
+      "frame": 0
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 1,
+      "source": "male4-cropped-equipped58",
+      "frame": 1
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 2,
+      "source": "male4-cropped-equipped58",
+      "frame": 2
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 3,
+      "source": "male4-cropped-equipped58",
+      "frame": 3
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 4,
+      "source": "male4-cropped-equipped58",
+      "frame": 4
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 5,
+      "source": "male4-cropped-equipped58",
+      "frame": 5
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 8,
+      "source": "male4-cropped-equipped58",
+      "frame": 8
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 9,
+      "source": "male4-cropped-equipped58",
+      "frame": 9
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 10,
+      "source": "male4-cropped-equipped58",
+      "frame": 10
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 11,
+      "source": "male4-cropped-equipped58",
+      "frame": 11
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 12,
+      "source": "male4-cropped-equipped58",
+      "frame": 12
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 13,
+      "source": "male4-cropped-equipped58",
+      "frame": 13
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 16,
+      "source": "male4-cropped-equipped58",
+      "frame": 16
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 17,
+      "source": "male4-cropped-equipped58",
+      "frame": 17
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 18,
+      "source": "male4-cropped-equipped58",
+      "frame": 18
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 19,
+      "source": "male4-cropped-equipped58",
+      "frame": 19
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 20,
+      "source": "male4-cropped-equipped58",
+      "frame": 20
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 21,
+      "source": "male4-cropped-equipped58",
+      "frame": 21
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 24,
+      "source": "male4-cropped-equipped58",
+      "frame": 24
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 25,
+      "source": "male4-cropped-equipped58",
+      "frame": 25
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 26,
+      "source": "male4-cropped-equipped58",
+      "frame": 26
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 27,
+      "source": "male4-cropped-equipped58",
+      "frame": 27
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 28,
+      "source": "male4-cropped-equipped58",
+      "frame": 28
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 29,
+      "source": "male4-cropped-equipped58",
+      "frame": 29
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 32,
+      "source": "male4-cropped-equipped58",
+      "frame": 32
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 33,
+      "source": "male4-cropped-equipped58",
+      "frame": 33
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 34,
+      "source": "male4-cropped-equipped58",
+      "frame": 34
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 35,
+      "source": "male4-cropped-equipped58",
+      "frame": 35
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 36,
+      "source": "male4-cropped-equipped58",
+      "frame": 36
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 37,
+      "source": "male4-cropped-equipped58",
+      "frame": 37
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 40,
+      "source": "male4-cropped-equipped58",
+      "frame": 40
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 41,
+      "source": "male4-cropped-equipped58",
+      "frame": 41
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 42,
+      "source": "male4-cropped-equipped58",
+      "frame": 42
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 43,
+      "source": "male4-cropped-equipped58",
+      "frame": 43
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 44,
+      "source": "male4-cropped-equipped58",
+      "frame": 44
+    },
+    {
+      "sheet": "male4-equipped",
+      "index": 45,
+      "source": "male4-cropped-equipped58",
+      "frame": 45
+    },
+    {
+      "sheet": "male5-core",
+      "index": 21,
+      "source": "male5-raised-pick58",
+      "frame": 0
+    }
+  ]
+}

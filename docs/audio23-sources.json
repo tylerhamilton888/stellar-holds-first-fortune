@@ -1,0 +1,160 @@
+[
+  {
+    "source": "pickaxe sounds",
+    "asset": "pick_real_0",
+    "start": 1.72,
+    "end": 1.96,
+    "duration": 0.234421768707483
+  },
+  {
+    "source": "pickaxe sounds",
+    "asset": "pick_real_1",
+    "start": 2.065,
+    "end": 2.35,
+    "duration": 0.2822902494331066
+  },
+  {
+    "source": "pickaxe sounds",
+    "asset": "pick_real_2",
+    "start": 2.495,
+    "end": 2.91,
+    "duration": 0.40807256235827666
+  },
+  {
+    "source": "pickaxe sounds",
+    "asset": "pick_real_3",
+    "start": 9.465,
+    "end": 9.73,
+    "duration": 0.2506802721088435
+  },
+  {
+    "source": "pickaxe sounds",
+    "asset": "pick_real_4",
+    "start": 9.8,
+    "end": 10.1,
+    "duration": 0.28206349206349207
+  },
+  {
+    "source": "pickaxe sounds",
+    "asset": "pick_real_5",
+    "start": 10.19,
+    "end": 10.59,
+    "duration": 0.39653061224489794
+  },
+  {
+    "source": "digging dirt and gravel",
+    "asset": "dig_real_0",
+    "start": 0.12,
+    "end": 0.75,
+    "duration": 0.63
+  },
+  {
+    "source": "digging dirt and gravel",
+    "asset": "dig_real_1",
+    "start": 5.16,
+    "end": 5.7,
+    "duration": 0.5303401360544218
+  },
+  {
+    "source": "digging dirt and gravel",
+    "asset": "dig_real_2",
+    "start": 6.32,
+    "end": 6.57,
+    "duration": 0.25
+  },
+  {
+    "source": "dwarven walking",
+    "asset": "step_real_0",
+    "start": 0.81,
+    "end": 1.25,
+    "duration": 0.4314739229024943
+  },
+  {
+    "source": "dwarven walking",
+    "asset": "step_real_1",
+    "start": 1.5,
+    "end": 1.95,
+    "duration": 0.43682539682539684
+  },
+  {
+    "source": "dwarven walking",
+    "asset": "step_real_2",
+    "start": 6.84,
+    "end": 7.08,
+    "duration": 0.21224489795918366
+  },
+  {
+    "source": "dwarven walking",
+    "asset": "step_real_3",
+    "start": 7.15,
+    "end": 7.57,
+    "duration": 0.42
+  },
+  {
+    "source": "rock breaking",
+    "asset": "rubble_real_0",
+    "start": 0.065,
+    "end": 1.15,
+    "duration": 1.0849886621315192
+  },
+  {
+    "source": "rock breaking",
+    "asset": "rubble_real_1",
+    "start": 10.65,
+    "end": 11.8,
+    "duration": 1.15
+  },
+  {
+    "source": "ancient industrial door",
+    "asset": "door_real",
+    "start": 0.08,
+    "end": 1.4,
+    "duration": 1.316984126984127
+  },
+  {
+    "source": "ancient industrial door",
+    "asset": "door_close_real",
+    "start": 7.18,
+    "end": 8.1,
+    "duration": 0.9190929705215419
+  },
+  {
+    "source": "quiet mountain air",
+    "asset": "air_real",
+    "start": 1,
+    "end": 12,
+    "crossfade": 1
+  },
+  {
+    "source": "rune powered machinery",
+    "asset": "machine_real",
+    "start": 1,
+    "end": 12.5,
+    "crossfade": 1
+  },
+  {
+    "source": "An Oath Beneath the Mountain",
+    "asset": "score_oath",
+    "processing": "loudnorm=I=-20:TP=-2:LRA=11,afade=t=in:d=0.08"
+  },
+  {
+    "source": "Hearths of Keldrath",
+    "asset": "score_hold",
+    "processing": "loudnorm=I=-20:TP=-2:LRA=11,afade=t=in:d=0.08"
+  },
+  {
+    "source": "Beneath the Roots of Stone",
+    "asset": "score_mine",
+    "processing": "loudnorm=I=-20:TP=-2:LRA=11,afade=t=in:d=0.08"
+  },
+  {
+    "source": "The Road Beyond the Gate",
+    "asset": "score_road",
+    "processing": "loudnorm=I=-20:TP=-2:LRA=11,afade=t=in:d=0.08"
+  },
+  {
+    "source": "ivar speech",
+    "asset": "ivar_voice",
+    "processing": "loudnorm=I=-18:TP=-2:LRA=9"
+  }
+]

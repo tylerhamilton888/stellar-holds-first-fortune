@@ -1,0 +1,88 @@
+[
+  {
+    "test": "title_boot",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 4.2,
+    "errors": [],
+    "teardown_warning": true,
+    "summary": []
+  },
+  {
+    "test": "continuity_smoke",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 5.16,
+    "errors": [],
+    "teardown_warning": true,
+    "summary": [
+      "CONTINUITY_SMOKE: 10 checks, 0 failures"
+    ]
+  },
+  {
+    "test": "test_slots25",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 3.19,
+    "errors": [],
+    "teardown_warning": false,
+    "summary": [
+      "SLOTS25: Three independent worlds, replacement isolation, metadata and legacy slot path passed"
+    ]
+  },
+  {
+    "test": "test_granular",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 5.21,
+    "errors": [],
+    "teardown_warning": false,
+    "summary": [
+      "GRANULAR TEST: 36 checks, 0 failures"
+    ]
+  },
+  {
+    "test": "test_controller20",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 6.21,
+    "errors": [],
+    "teardown_warning": true,
+    "summary": [
+      "CONTROLLER20: 18 checks, 0 failures"
+    ]
+  },
+  {
+    "test": "test_opening39",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 6.25,
+    "errors": [],
+    "teardown_warning": false,
+    "summary": [
+      "OPENING39: 13 passed, 0 failed"
+    ]
+  },
+  {
+    "test": "test_outpost29",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 8.26,
+    "errors": [],
+    "teardown_warning": false,
+    "summary": [
+      "OUTPOST29: 67 passed; 0 failed"
+    ]
+  },
+  {
+    "test": "test_industry30",
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 3.2,
+    "errors": [],
+    "teardown_warning": false,
+    "summary": [
+      "INDUSTRY30: 76 passed; 0 failed"
+    ]
+  }
+]

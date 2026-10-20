@@ -1,0 +1,12 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+LOAD_MS 7280.939
+BENCH 0 {"draw_calls_p95":129.0,"frames":420,"max_ms":23.764,"p50_ms":13.735,"p95_ms":17.309,"p99_ms":20.756}
+BENCH 1 {"draw_calls_p95":124.0,"frames":420,"max_ms":53.178,"p50_ms":13.662,"p95_ms":16.957,"p99_ms":20.259}
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

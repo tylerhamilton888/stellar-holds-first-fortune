@@ -1,0 +1,30 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS New game retains the illustrated arrival
+PASS Arrival hands off to Ivar in the actual hold
+PASS Ivar leads and the player walks with the drawn gait
+PASS Interrupted welcome resumes safely on load
+PASS Full escort route is clear of buildings, gateposts, fountain and benches
+PASS Guide keeps a comfortable lead at the doorway
+PASS Both actors use the matching quarters doorway and walk into the room
+PASS Ivar walks out and returns control with a settle-in objective
+PASS Orientation does not spend or invent pack resources
+PASS Ivar reminds the player to settle before introductions
+PASS E at the visible bed records resting
+PASS Checking the real chest unlocks introductions after resting
+PASS Borrowed chest stores real carried supplies
+PASS Borrowed room furniture cannot be dismantled for free materials
+PASS Reload keeps settled progress and chest contents without replaying intro
+PASS Quarters exit returns to its own visible door
+PASS New settling quest joins the existing three introductions and first coal commission
+PASS Existing fortunes are not pulled backwards into the new tutorial
+PASS Skip walk arrives safely in quarters and retains usable objectives
+PASS Bed and chest objectives work in either order after skipping
+INTRO54: 20 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

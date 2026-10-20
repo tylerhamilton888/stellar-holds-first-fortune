@@ -1,0 +1,20 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PALETTE AUDIT identity 0/0; 184 frames; 0 failed
+PALETTE AUDIT identity 0/1; 368 frames; 0 failed
+PALETTE AUDIT identity 0/2; 552 frames; 0 failed
+PALETTE AUDIT identity 0/3; 736 frames; 0 failed
+PALETTE AUDIT identity 0/4; 920 frames; 0 failed
+PALETTE AUDIT identity 0/5; 1104 frames; 0 failed
+PALETTE AUDIT identity 0/6; 1288 frames; 0 failed
+PALETTE AUDIT identity 1/0; 1472 frames; 0 failed
+PALETTE AUDIT identity 1/1; 1656 frames; 0 failed
+PALETTE AUDIT identity 1/2; 1840 frames; 0 failed
+PALETTE AUDIT identity 1/3; 2024 frames; 0 failed
+PALETTE AUDIT identity 1/4; 2208 frames; 0 failed
+PALETTE AUDIT identity 1/5; 2392 frames; 0 failed
+PALETTE AUDIT identity 1/6; 2576 frames; 0 failed
+PALETTE AUDIT COMPLETE: 2576 frames; 0 failed; 106059 protected material pixels

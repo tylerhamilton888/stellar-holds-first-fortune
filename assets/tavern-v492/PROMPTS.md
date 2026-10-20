@@ -1,0 +1,10 @@
+# Original tankard — 0.49.2
+Generated using the built-in image generation tool; output exec-f9a93d0e-a7f3-4f40-a762-869269950b53.png, retained as tankard.png. Transparent alpha preserved. Runtime crops transparent margins and attaches the same sprite to the dedicated directional lift/sip/lower pose.
+
+## Exact prompt
+Use case: stylized-concept. Production sprite for The Stellar Holds, a charming 2D Dwarven sandbox. One isolated stout Dwarven tankard, elevated three-quarter view matching hand-painted cartoon oak-and-copper workshop props. Rich warm copper body with a small embossed geometric mountain motif, thick rolled brass lip and foot ring, a substantial curved handle ON THE RIGHT with a clearly transparent open hole, dark crisp illustrated outline, subtle hammered metal highlights from upper left. A little creamy ale foam visible inside the elliptical rim, not overflowing. Clear chunky silhouette readable at 24 pixels tall. No hands, no characters, no table, no scenery, no text, no cast shadow outside the object. Centered large object with modest generous margins. Genuinely transparent background.
+
+## Mining bucket
+Built-in image generation, output exec-3b3487d6-500c-41fc-b022-d4580de735d7.png, retained as mining-bucket.png. Contents are overlaid from real cargo at runtime; empty or incompatible work poses hide the container without changing ownership.
+
+Use case: stylized-concept. One production inventory/world sprite for The Stellar Holds, charming hand-painted 2D Dwarven crafting game. A small stout EMPTY oak mining bucket, elevated three-quarter view, thick wooden staves, two dark iron hoops with tiny copper rivets, sturdy arched wrought-iron carrying handle raised over the open top. Clear dark interior, chunky readable silhouette, crisp dark illustrative outlines, warm oak grain and restrained metal edge highlights, upper-left illumination. Matches detailed cartoon Dwarven workshop furniture. No rock or other contents, no hands, no scenery, no text, no floor shadow. Isolated centered object on genuinely transparent background, modest margins, readable at 24 pixels tall.

@@ -1,0 +1,30 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+
+PASS: randomization is deterministic for a stable seed
+PASS: different seeds provide different appearances
+PASS: female profiles use female hair and no beard
+PASS: blank names receive a safe migration fallback
+PASS: out-of-range options are normalized
+PASS: NPC looks do not reroll on repeated encounters
+PASS: named character identities are preserved
+PASS: name, hair, beard, clothing and tattoo survive save/load
+PASS: NPC appearances survive save/load
+PASS: v0.1 saves load without losing terrain
+PASS: old saves receive compatible appearance defaults
+PASS: new game accepts the creator's named profile
+PASS: canceling the wardrobe leaves the character unchanged
+PASS: accepting creator updates name and appearance together
+PASS: wardrobe changes are immediately persisted
+PASS: portrait/sprite consistency gender 0 hair 0
+PASS: portrait/sprite consistency gender 0 hair 1
+PASS: portrait/sprite consistency gender 0 hair 2
+PASS: portrait/sprite consistency gender 0 hair 3
+PASS: portrait/sprite consistency gender 0 hair 4
+PASS: portrait/sprite consistency gender 0 hair 5
+PASS: portrait/sprite consistency gender 1 hair 0
+PASS: portrait/sprite consistency gender 1 hair 1
+PASS: portrait/sprite consistency gender 1 hair 2
+PASS: portrait/sprite consistency gender 1 hair 3
+PASS: portrait/sprite consistency gender 1 hair 4
+PASS: portrait/sprite consistency gender 1 hair 5
+27 APPEARANCE CHECKS PASSED / 0 FAILED

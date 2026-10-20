@@ -1,0 +1,131 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS hearthward has walkable route to Your quarters
+PASS Actual eight-way controller reaches Your quarters
+PASS Side wall does not activate Your quarters
+PASS Visible door center activates Your quarters
+PASS hearthward has walkable route to Copper Kettle
+PASS Actual eight-way controller reaches Copper Kettle
+PASS Side wall does not activate Copper Kettle
+PASS Visible door center activates Copper Kettle
+PASS hearthward has walkable route to The exchange
+PASS Actual eight-way controller reaches The exchange
+PASS Side wall does not activate The exchange
+PASS Visible door center activates The exchange
+PASS hearthward has walkable route to Main concourse
+PASS hearthward has walkable route to Foreman's office
+PASS Actual eight-way controller reaches Foreman's office
+PASS Side wall does not activate Foreman's office
+PASS Visible door center activates Foreman's office
+PASS hearthward has walkable route to King's Gate · High Trail
+PASS hearthward has walkable route to Hold lift
+PASS hearthward has walkable route to Royal stairs · Crownward
+PASS hearthward has walkable route to Forge stairs · Forgeward
+PASS hearthward has walkable route to Folk homes · private quarters
+PASS Citizens stay on traversable streets in hearthward
+PASS Solid building base 7
+PASS Solid building base 8
+PASS Solid building base 9
+PASS Solid building base 12
+PASS Solid building base -1
+PASS crownward has walkable route to King's hall
+PASS Actual eight-way controller reaches King's hall
+PASS Side wall does not activate King's hall
+PASS Visible door center activates King's hall
+PASS crownward has walkable route to Survey office
+PASS Actual eight-way controller reaches Survey office
+PASS Side wall does not activate Survey office
+PASS Visible door center activates Survey office
+PASS crownward has walkable route to Hold lift
+PASS crownward has walkable route to Stairs · Hearthward
+PASS crownward has walkable route to Folk homes · private quarters
+PASS crownward has walkable route to Folk homes · private quarters
+PASS Citizens stay on traversable streets in crownward
+PASS Solid building base 1
+PASS Solid building base 4
+PASS Solid building base -1
+PASS Solid building base -1
+PASS forgeward has walkable route to Borin's forge
+PASS Actual eight-way controller reaches Borin's forge
+PASS Side wall does not activate Borin's forge
+PASS Visible door center activates Borin's forge
+PASS forgeward has walkable route to Practice bay
+PASS Actual eight-way controller reaches Practice bay
+PASS Side wall does not activate Practice bay
+PASS Visible door center activates Practice bay
+PASS forgeward has walkable route to Hold lift
+PASS forgeward has walkable route to Stairs · Hearthward
+PASS forgeward has walkable route to Folk homes · private quarters
+PASS Citizens stay on traversable streets in forgeward
+PASS Solid building base 15
+PASS Solid building base 17
+PASS Solid building base -1
+PASS home reachable interaction Leave · Keldrath · Forgeward · Z -1
+PASS home reachable interaction Bed · rest and save
+PASS home reachable interaction Wardrobe & supplies
+PASS home reachable interaction Storage chest
+PASS home actual south doorway exits from inside
+PASS home furniture blocks its visible footprint
+PASS tavern reachable interaction Leave · Keldrath · Hearthward · Z 0
+PASS tavern reachable interaction Speak with Hedrik
+PASS tavern reachable interaction Speak with Brann
+PASS tavern reachable interaction Speak with Dagr
+PASS tavern reachable interaction Speak with Osvik
+PASS tavern actual south doorway exits from inside
+PASS tavern furniture blocks its visible footprint
+PASS tavern furniture blocks its visible footprint
+PASS tavern furniture blocks its visible footprint
+PASS tavern furniture blocks its visible footprint
+PASS forge reachable interaction Leave · Keldrath · Forgeward · Z -1
+PASS forge reachable interaction Work with Borin
+PASS forge reachable interaction Practice bay
+PASS forge actual south doorway exits from inside
+PASS forge furniture blocks its visible footprint
+PASS forge furniture blocks its visible footprint
+PASS market reachable interaction Leave · Keldrath · Hearthward · Z 0
+PASS market reachable interaction Trade with Orla
+PASS market actual south doorway exits from inside
+PASS market furniture blocks its visible footprint
+PASS market furniture blocks its visible footprint
+PASS commission reachable interaction Leave · Keldrath · Hearthward · Z 0
+PASS commission reachable interaction Speak with Ivar
+PASS commission actual south doorway exits from inside
+PASS commission furniture blocks its visible footprint
+PASS commission furniture blocks its visible footprint
+PASS commission furniture blocks its visible footprint
+PASS research reachable interaction Leave · Keldrath · Crownward · Z +1
+PASS research reachable interaction Consult Eldric
+PASS research actual south doorway exits from inside
+PASS research furniture blocks its visible footprint
+PASS research furniture blocks its visible footprint
+PASS research furniture blocks its visible footprint
+PASS throne reachable interaction Leave · Keldrath · Crownward · Z +1
+PASS throne reachable interaction Address Lord Eirik
+PASS throne actual south doorway exits from inside
+PASS practice reachable interaction Leave · Keldrath · Forgeward · Z -1
+PASS practice reachable interaction Review training
+PASS practice reachable interaction Practice bay
+PASS practice actual south doorway exits from inside
+PASS practice furniture blocks its visible footprint
+PASS practice furniture blocks its visible footprint
+PASS Actual controller crosses the full visible bridge deck
+PASS North bridge railing stops movement before water
+PASS South bridge railing stops movement before water
+PASS Bridge rail ends block feet outside the water strip too
+PASS River is blocked on both sides of crossing
+PASS Trail route reaches Keldrath's gate
+PASS Trail route reaches Old Workings · enter mine
+PASS Trail route reaches Pinewood trail
+PASS Trail route reaches Unclaimed mountain · charter required
+PASS Royal stairs share physical X/Y landing across Z levels
+PASS Royal stair return is reciprocal
+PASS Forge stairs share physical X/Y landing across Z levels
+PASS Forge stair return is reciprocal
+REFERENCE54 COLLISION: 121 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 5 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

@@ -1,36 +1,40 @@
 # The Stellar Holds: The First Fortune
 
-Private Windows playtest builds and recovery records.
+A Godot 4.4.1 game about Dwarven work, exploration and building a home beneath the mountain.
 
-## Download and play
+## Play
 
-Open **Releases** and download `Stellar-Holds-First-Fortune-0.61.0-Windows.zip`. It is one complete game download.
+Download the complete Windows ZIP from [Releases](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases). Extract all files and run `FirstFortune.exe` beside `FirstFortune.pck`. GitHub's automatic source archives are developer files, not playable Windows builds.
 
-1. Extract the entire ZIP into a new folder.
-2. Run `FirstFortune.exe`, keeping `FirstFortune.pck` beside it.
-3. Continue loads your existing saves; use a spare slot to replay the opening.
+## Develop
 
-Sign into the GitHub account that owns this private repository. The Developer-Recovery attachment is optional development backup; GitHub's automatic Source code archives are not the playable game.
+1. Clone this repository after the source-import branch is merged. Until then use the complete foundation recovery bundle; the delivery-only main branch is not a Godot project.
+2. Install **Godot 4.4.1 stable**, the standard editor (not .NET), and Python 3.11 or newer.
+3. Open `project.godot`. The editor imports assets; run `main.tscn` with F6 or the project with F5.
+4. Read [AGENTS.md](AGENTS.md), [handoff](docs/SESSION_HANDOFF.md), and [development guide](docs/DEVELOPMENT.md).
 
-## 0.61.0 — Life in the Hold
+Run current native acceptance checks, with a display available:
 
-- Prepared opening escort actors and clearer town walking cadence.
-- Painted animated hearths, including player-built ones.
-- Moving fountain water and removal of the oversized paving circle.
-- Orla and Hedrik Copperkettle, including existing saves.
+```sh
+python tools/check.py --godot /path/to/godot --suite gameplay --output test-results/my-check
+```
 
-87 current checks passed, including 11 against the exact exported PCK. All 3,128 PCK entries and ZIP integrity verified. Tests used Linux Godot 4.4.1, software rendering and Dummy audio; Windows execution, audio and player-device performance still need playtesting. No fresh antivirus verdict is claimed.
+On Linux without a desktop, prefix with `xvfb-run -a`. Every test gets isolated saves. Use a new output directory each run. See [testing](docs/TESTING.md) for visual review and exported-build checks.
 
-ZIP: 698,805,507 bytes  
-SHA-256: `2b4bc12d30ab39df67c60860498ba0d50b97516c1ddfb8299bcd5f76c1198e8b`
+Build one Windows package:
 
-The .60.0 release remains available. No save schema, mining balance or character artwork changed.
+```sh
+python tools/build.py --godot /path/to/godot --windows-runtime /path/to/verified/FirstFortune.exe --output build/my-build
+```
 
-## Recovery and development
+The runtime must be the unchanged official 4.4.1 template already shipped in 0.61.0. The tool checks its hash before packaging. Build output includes PCK integrity results, source identification and file hashes. Successful packaging does not replace gameplay or Windows playtesting.
 
-Source checkpoint: `300ec660c3b66ee2dcf2c0866d8c52b0e872603f`, tag `ambient-0.61.0`.
-The recovery attachment includes the incremental source bundle, restoration instructions and verification logs. Its restoration was independently checked against the exact .60 delivery baseline.
+## Project map
 
-This repository's main branch remains delivery documentation, not the complete editable game source history. Release tags identify delivery records; source checkpoint tags live in the recovery bundles. Keep all earlier source backups until a complete source migration is restored and verified.
+- `scripts/`: runtime systems; `main.gd` coordinates the game.
+- `assets/`, `audio/`: original artwork, metadata and sound, with stable resource paths.
+- `tests/support/`: shared native-game fixture; `tests/suites.json`: current acceptance manifest.
+- `tools/`: validation, packaging and asset-authoring utilities.
+- `docs/`: current handoff, art direction, system notes and historical evidence.
 
-Read `docs/SESSION_HANDOFF.md`, `docs/CURRENT_STATUS.md` and `docs/PROJECT_INDEX.md`.
+Historical release notes are retained in [README history](docs/history/README-through-0.61.md). Original assets, UIDs and prior recovery history remain preserved.

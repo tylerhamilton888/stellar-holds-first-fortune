@@ -1,0 +1,42 @@
+[
+  {
+    "id": "male2-front-pass",
+    "n": 19,
+    "prompt": "Use case: identity-preserve. Production whole-character animation repair. Reference: existing male2-front-pass dwarf atlas, identity and equipment design authority. Create a new isolated transparent key sheet with THREE COLUMNS by TWO ROWS, six complete figures. Read left to right: top row holds pickaxe, axe, hammer; bottom row holds shovel, EMPTY small wooden supply tray, rifle. Every figure shows EXACTLY THE SAME FRONT-FACING WALK PHASE: boot on the RIGHT SIDE OF THE IMAGE lifted forward showing its sole; boot on LEFT SIDE OF IMAGE planted supporting weight. This is the opposite passing pose from the second column of the reference. All knees below belt; no exaggerated high kicks. Keep torso upright and head stable. Identity: loose broad wavy purple mane down behind the shoulders, full flowing purple beard and moustache. Short broad adult Dwarf, connected stout anatomy, teal shirt, heavy brown boots, brown bracers and belt, hand-painted cartoon style matching reference. FULL MALE BEARD, never exposed chin. ONE tool per applicable figure; head, torso, legs, fingers and prop are painted as ONE COMPLETE FIGURE. Tools held across waist exactly as reference with head/barrel to SCREEN RIGHT and hands wrapped around shaft. Tray empty and supported by both hands. Do not change tool or shoulder handedness. Every single figure has RIGHT SCREEN boot lifted and LEFT SCREEN boot planted. Preserve reserved purple hair pigment for runtime recoloring, warm skin, teal shirt. Huge transparent gutters around complete figures, topknots fully contained, both boots visible, no touching, no clipping, no text, no background.",
+    "refs": [
+      "/workspace/scratch/a447fc5d46ab/stellar-holds/assets/whole-motion59/male2-front.png"
+    ],
+    "result_path": "/workspace/scratch/a447fc5d46ab/generated_images/exec-89033aed-f01d-417c-8e1a-79054c8a3651.png",
+    "selected": true
+  },
+  {
+    "id": "male2-front-pass",
+    "n": 20,
+    "prompt": "Background-extraction edit. Remove the ENTIRE colored gradient background between and around the six complete Dwarf sprites. Make it genuinely transparent alpha, NOT black, checkerboard, or colored. Keep the six figures exactly as painted, THREE COLUMNS TWO ROWS, all faces, loose purple hair, full beards, clothes, boots, drawn hands and exactly one held prop each. Every figure's RIGHT SCREEN boot is lifted; keep that unchanged. Preserve complete silhouettes and generous transparent gutters. Add transparent padding around the complete sheet. No other changes, no shadows/glow/backdrop.",
+    "refs": [
+      "/workspace/scratch/a447fc5d46ab/generated_images/exec-89033aed-f01d-417c-8e1a-79054c8a3651.png"
+    ],
+    "result_path": "/workspace/scratch/a447fc5d46ab/generated_images/exec-86c9eb6e-d773-4e71-9e64-e0e046781292.png",
+    "selected": false
+  },
+  {
+    "id": "male3-front-pass",
+    "n": 19,
+    "prompt": "Use case: identity-preserve. Production whole-character animation repair. Reference: existing male3-front-pass dwarf atlas, identity and equipment design authority. Create a new isolated transparent key sheet with FOUR COLUMNS by TWO ROWS, eight complete figures. Read left to right: top row holds pickaxe, axe, hammer, shovel; bottom row holds EMPTY small wooden supply tray, rifle, ONE grey stone on the SCREEN-RIGHT shoulder supported by raised hand, ONE log on the SCREEN-RIGHT shoulder supported by raised hand. Every figure shows EXACTLY THE SAME FRONT-FACING WALK PHASE: boot on the RIGHT SIDE OF THE IMAGE lifted forward showing its sole; boot on LEFT SIDE OF IMAGE planted supporting weight. This is the opposite passing pose from the second column of the reference. All knees below belt; no exaggerated high kicks. Keep torso upright and head stable. Identity: short/shaved nape, one tall rounded purple topknot, full purple beard covering chin/jaw with its small beard braids. Short broad adult Dwarf, connected stout anatomy, teal shirt, heavy brown boots, brown bracers and belt, hand-painted cartoon style matching reference. FULL MALE BEARD, never exposed chin. ONE tool per applicable figure; head, torso, legs, fingers and prop are painted as ONE COMPLETE FIGURE. Tools held across waist exactly as reference with head/barrel to SCREEN RIGHT and hands wrapped around shaft. Tray empty and supported by both hands. Do not change tool or shoulder handedness. Every single figure has RIGHT SCREEN boot lifted and LEFT SCREEN boot planted. Preserve reserved purple hair pigment for runtime recoloring, warm skin, teal shirt. Huge transparent gutters around complete figures, topknots fully contained, both boots visible, no touching, no clipping, no text, no background.",
+    "refs": [
+      "/workspace/scratch/a447fc5d46ab/stellar-holds/assets/whole-motion59/male3-front.png"
+    ],
+    "result_path": "/workspace/scratch/a447fc5d46ab/generated_images/exec-e082a9bf-5a89-4a93-9780-ebd3172f6397.png",
+    "selected": false
+  },
+  {
+    "id": "male3-front-pass",
+    "n": 20,
+    "prompt": "Precise canvas/margin repair. Preserve these EIGHT whole Dwarf figures in FOUR COLUMNS TWO ROWS exactly: identity, purple topknot and full beard, equipment, raised right-screen boot, hand positions, teal outfit. Add generous truly transparent padding ALL AROUND and between rows. The topknot tops on the TOP ROW graze the canvas edge: restore the small rounded tips so each topknot is complete and sits at least 40 pixels below the top edge. No cropped hair, tools, boots or limbs, no touching figures. Keep transparent alpha background. Do not change the poses, props or framing of individual figures; only give the full sprites room.",
+    "refs": [
+      "/workspace/scratch/a447fc5d46ab/generated_images/exec-e082a9bf-5a89-4a93-9780-ebd3172f6397.png"
+    ],
+    "result_path": "/workspace/scratch/a447fc5d46ab/generated_images/exec-f8ab0b8d-ba48-4ef6-b402-6eeb1749452e.png",
+    "selected": true
+  }
+]

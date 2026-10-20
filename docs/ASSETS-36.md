@@ -1,0 +1,9 @@
+# Original asset provenance, 0.36
+
+Existing dwarf identities, clothing, portraits and axe/shield drawings are original project assets from prior revisions. No borrowed game art or marketplace packs were used.
+
+New boot-paint source: `tools/quality36/leg-reference.png`, produced with the built-in image generator against the project's own male dwarf sheet. The whole generated walk sheet did not satisfy the required pose sequence. Only a continuous painted trouser/boot region is used by the offline baker. The game consumes the final whole-character `assets/walk-v36` frames, not that experimental sheet.
+
+Final source prompt:
+
+Use case: identity-preserve. Asset type: production 2D game sprite sheet, exactly eight complete full-body frames arranged in a regular 4-column by 2-row grid on transparent background, 1536 by 1024 landscape. The reference is the existing male dwarf identity and drawing style, not the motion to copy. Preserve his short stocky proportions, swept hair, attached full beard, teal work shirt, brown satchel, navy trousers, brown boots, broad friendly stern face. Draw a new side-view walk cycle facing right, two alternating steps, coherent anatomy and constant skull, body and boot size. Entire figures, no detached parts. Hair and beard neutral cool grey in every frame, no yellow, gold, orange or skin-colored hair fringe. Pink skin remains pink, brass buckle remains gold. Crisp smooth hand-painted cartoon outlines, fine texture, no deliberate blocky pixels or blur. Eight phases: contact, down, passing, up, opposite contact, opposite down, opposite passing, opposite up. Near and far legs alternate support; arms oppose the corresponding legs. Knee bend, boot roll, leg overlap, constant foot baseline, short purposeful grounded walk, no running, kicking or marching. Identical clothes, hairstyle, facial features and lighting. No labels, numbers, cell outlines, ground or shadows.

@@ -1,0 +1,9 @@
+{
+  "verified": true,
+  "pck_entries": 3126,
+  "portrait_count": 15,
+  "selected_motion_sources": 112,
+  "all_whole_character_and_portrait_assets": 200,
+  "resolved_texture_paths": 200,
+  "probe_notes": "PNG remapping uses .png.import descriptors; bare frame source names resolve under assets/whole-v58, matching the existing runtime. Every final resolved resource verified."
+}

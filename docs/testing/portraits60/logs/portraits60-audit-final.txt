@@ -1,0 +1,198 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS male0 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS male0 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS male0 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS male0 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS male0 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS male0 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS male0 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS male0 Snow: no source-violet hair or changes outside hair (0 / 0)
+ERROR: male0: intentional heather clothing changes independently of grey hair
+   at: push_error (core/variant/variant_utility.cpp:1098)
+PASS male0: complexion 0 updates the existing material
+PASS male0: complexion 1 updates the existing material
+PASS male0: complexion 2 updates the existing material
+PASS male0: complexion 3 updates the existing material
+PASS male1 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS male1 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS male1 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS male1 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS male1 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS male1 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS male1 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS male1 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS male1: intentional heather clothing changes independently of grey hair
+PASS male1: complexion 0 updates the existing material
+PASS male1: complexion 1 updates the existing material
+PASS male1: complexion 2 updates the existing material
+PASS male1: complexion 3 updates the existing material
+PASS male2 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS male2 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS male2 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS male2 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS male2 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS male2 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS male2 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS male2 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS male2: intentional heather clothing changes independently of grey hair
+PASS male2: complexion 0 updates the existing material
+PASS male2: complexion 1 updates the existing material
+PASS male2: complexion 2 updates the existing material
+PASS male2: complexion 3 updates the existing material
+PASS male3 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS male3 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS male3 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS male3 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS male3 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS male3 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS male3 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS male3 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS male3: intentional heather clothing changes independently of grey hair
+PASS male3: complexion 0 updates the existing material
+PASS male3: complexion 1 updates the existing material
+PASS male3: complexion 2 updates the existing material
+PASS male3: complexion 3 updates the existing material
+PASS male4 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS male4 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS male4 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS male4 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS male4 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS male4 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS male4 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS male4 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS male4: intentional heather clothing changes independently of grey hair
+PASS male4: complexion 0 updates the existing material
+PASS male4: complexion 1 updates the existing material
+PASS male4: complexion 2 updates the existing material
+PASS male4: complexion 3 updates the existing material
+PASS male5 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS male5 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS male5 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS male5 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS male5 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS male5 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS male5 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS male5 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS male5: intentional heather clothing changes independently of grey hair
+PASS male5: complexion 0 updates the existing material
+PASS male5: complexion 1 updates the existing material
+PASS male5: complexion 2 updates the existing material
+PASS male5: complexion 3 updates the existing material
+PASS male6 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS male6 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS male6 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS male6 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS male6 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS male6 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS male6 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS male6 Snow: no source-violet hair or changes outside hair (0 / 0)
+ERROR: male6: intentional heather clothing changes independently of grey hair
+   at: push_error (core/variant/variant_utility.cpp:1098)
+PASS male6: complexion 0 updates the existing material
+PASS male6: complexion 1 updates the existing material
+PASS male6: complexion 2 updates the existing material
+PASS male6: complexion 3 updates the existing material
+PASS female0 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS female0 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS female0 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS female0 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS female0 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS female0 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS female0 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS female0 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS female0: intentional heather clothing changes independently of grey hair
+PASS female0: complexion 0 updates the existing material
+PASS female0: complexion 1 updates the existing material
+PASS female0: complexion 2 updates the existing material
+PASS female0: complexion 3 updates the existing material
+PASS female1 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS female1 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS female1 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS female1 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS female1 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS female1 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS female1 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS female1 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS female1: intentional heather clothing changes independently of grey hair
+PASS female1: complexion 0 updates the existing material
+PASS female1: complexion 1 updates the existing material
+PASS female1: complexion 2 updates the existing material
+PASS female1: complexion 3 updates the existing material
+PASS female2 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS female2 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS female2 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS female2 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS female2 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS female2 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS female2 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS female2 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS female2: intentional heather clothing changes independently of grey hair
+PASS female2: complexion 0 updates the existing material
+PASS female2: complexion 1 updates the existing material
+PASS female2: complexion 2 updates the existing material
+PASS female2: complexion 3 updates the existing material
+PASS female3 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS female3 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS female3 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS female3 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS female3 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS female3 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS female3 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS female3 Snow: no source-violet hair or changes outside hair (0 / 0)
+ERROR: female3: intentional heather clothing changes independently of grey hair
+   at: push_error (core/variant/variant_utility.cpp:1098)
+PASS female3: complexion 0 updates the existing material
+PASS female3: complexion 1 updates the existing material
+PASS female3: complexion 2 updates the existing material
+PASS female3: complexion 3 updates the existing material
+PASS female4 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS female4 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS female4 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS female4 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS female4 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS female4 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS female4 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS female4 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS female4: intentional heather clothing changes independently of grey hair
+PASS female4: complexion 0 updates the existing material
+PASS female4: complexion 1 updates the existing material
+PASS female4: complexion 2 updates the existing material
+PASS female4: complexion 3 updates the existing material
+PASS female5 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS female5 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS female5 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS female5 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS female5 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS female5 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS female5 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS female5 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS female5: intentional heather clothing changes independently of grey hair
+PASS female5: complexion 0 updates the existing material
+PASS female5: complexion 1 updates the existing material
+PASS female5: complexion 2 updates the existing material
+PASS female5: complexion 3 updates the existing material
+PASS female6 Flaxen: no source-violet hair or changes outside hair (0 / 0)
+PASS female6 Honey: no source-violet hair or changes outside hair (0 / 0)
+PASS female6 Copper: no source-violet hair or changes outside hair (0 / 0)
+PASS female6 Chestnut: no source-violet hair or changes outside hair (0 / 0)
+PASS female6 Oak: no source-violet hair or changes outside hair (0 / 0)
+PASS female6 Raven: no source-violet hair or changes outside hair (0 / 0)
+PASS female6 Iron grey: no source-violet hair or changes outside hair (0 / 0)
+PASS female6 Snow: no source-violet hair or changes outside hair (0 / 0)
+PASS female6: intentional heather clothing changes independently of grey hair
+PASS female6: complexion 0 updates the existing material
+PASS female6: complexion 1 updates the existing material
+PASS female6: complexion 2 updates the existing material
+PASS female6: complexion 3 updates the existing material
+PASS ivar: canonical cast identity
+PASS orla: canonical cast identity
+PASS hedrik: canonical cast identity
+PASS borin: canonical cast identity
+PASS eldric: canonical cast identity
+PASS brann: canonical cast identity
+PASS eirik: canonical cast identity
+PORTRAITS60: 186 passed / 3 failed; 13073656 protected non-hair pixels

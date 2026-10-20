@@ -1,0 +1,44 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Existing trail doorway enters integrated Deepworks
+PASS Authored anticipation precedes rock contact
+PASS First planted contact scores solid rock
+PASS Solid face survives multiple deliberate contacts
+PASS Held work frees a substantial face without dragging the player
+PASS Ordinary face produces one four-unit physical load
+PASS Unworked chunks are not vacuumed into a bucket
+PASS Held input cannot tunnel beyond tool reach
+PASS WASD immediately cancels anticipation and moves at normal speed
+PASS Field-dressing progress lives on the existing raw load
+PASS Interrupted field work survives save/reload
+PASS Three field blows preserve the full yield without a workstation
+PASS Ore is a typed rock load, with original recipe item and exact yield
+PASS E lifts the actual ore record
+PASS Player crafts and places an underground raw stockpile
+PASS Player crafts a nearby integrated stonebreaker
+PASS Player adds an output pallet
+PASS Player crafts raw-load hauling equipment
+PASS Rack transfer retains mineral identity and unique ownership
+PASS Stonebreaker draws from nearby rack and delivers exact ore to existing pallet
+PASS Shift+E collects processed mineral for existing crafting
+PASS Recovered material enters unchanged forge recipe
+PASS Parked cart gathers nearby loose loads with one deliberate interaction
+PASS Meaningful mining practice unlocks two supported shoulder loads
+PASS Master Miner packs four additional cart loads
+PASS Mining mastery leaves unladen movement responsive
+PASS Local lamp improves careful recovery without an upkeep cost
+PASS Existing masonry supports enable controlled section work
+PASS Careful lit master work preserves three additional mineral units
+PASS Supported hammer frees a controlled two-face section with exact rewards
+PASS Natural iron formation continues through actual lower-level geology
+PASS Prospect ledger recognizes the same lode developed at two depths
+PASS All raw loads, facilities, outputs, mastery and ownership survive reload
+PASS Excavations and multi-depth prospect notes persist
+PASS Upgrade preserves exact prior save bytes and non-mining inventory
+PASS Real E uses stairs even when a loose load occupies the upper landing
+PASS Real Shift+E returns through the exact passage
+PASS Passage priority leaves the uncollected load safely on its original level
+MINING55: 38 passed / 0 failed

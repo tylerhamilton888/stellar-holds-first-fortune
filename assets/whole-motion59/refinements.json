@@ -1,0 +1,926 @@
+{
+  "version": 1,
+  "layouts": {
+    "male0-front-source": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-side-source": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-back-source": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-front-doubles": {
+      "cols": 4,
+      "rows": 3,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-side-doubles": {
+      "cols": 4,
+      "rows": 3,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-side-double-log": {
+      "cols": 4,
+      "rows": 1,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-quarter-carry": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-back-right-pass": {
+      "cols": 1,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-front": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-side": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-quarter": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male0-back": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-front": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-side": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-quarter": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-back": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-front": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-side": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-quarter": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-back": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-front": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-side": {
+      "cols": 4,
+      "rows": 10,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true,
+      "grid_height": 1730
+    },
+    "male1-quarter-mixed": {
+      "cols": 4,
+      "rows": 1,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-quarter-candidate": {
+      "cols": 4,
+      "rows": 11,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male4-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-side-logs": {
+      "cols": 4,
+      "rows": 1,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male5-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female0-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male1-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female2-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male6-front-mixed": {
+      "cols": 4,
+      "rows": 1,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female1-side-logs": {
+      "cols": 4,
+      "rows": 1,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female3-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female4-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female5-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-front-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-front-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-side-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-side-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-quarter-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-quarter-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-back-tools": {
+      "cols": 4,
+      "rows": 6,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "female6-back-cargo": {
+      "cols": 4,
+      "rows": 5,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-front-tray": {
+      "cols": 4,
+      "rows": 1,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male2-front-pass": {
+      "cols": 3,
+      "rows": 2,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    },
+    "male3-front-pass": {
+      "cols": 4,
+      "rows": 2,
+      "reference": 0,
+      "contours": true,
+      "anchor_upper": 0.68,
+      "left_tip": true
+    }
+  },
+  "overrides": []
+}

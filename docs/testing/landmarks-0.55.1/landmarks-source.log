@@ -1,0 +1,70 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Existing trail enters the integrated mine
+PASS Approaching solid crystal still discovers it through line of sight
+PASS Approaching solid oath pillar still discovers the refuge
+PASS Depth 0 retains four crystal formations and six oath pillars
+PASS Depth 1 retains four crystal formations and six oath pillars
+PASS Depth 2 retains four crystal formations and six oath pillars
+PASS Depth 3 retains four crystal formations and six oath pillars
+PASS Depth 4 retains four crystal formations and six oath pillars
+PASS Actual old-save reload preserves all landmark art, names, positions and discovery flags
+PASS Pre-fix save receives byte-exact unique recovery copy
+PASS Repeated save/reload 0 preserves visual identity
+PASS Repeated save/reload 1 preserves visual identity
+PASS Repeated save/reload 2 preserves visual identity
+PASS Depth 0 terrain remains unchanged
+PASS Depth 1 terrain remains unchanged
+PASS Depth 2 terrain remains unchanged
+PASS Depth 3 terrain remains unchanged
+PASS Depth 4 terrain remains unchanged
+PASS Every visible solid base has physical collision on depth 0
+PASS Every visible solid base has physical collision on depth 1
+PASS Every visible solid base has physical collision on depth 2
+PASS Every visible solid base has physical collision on depth 3
+PASS Every visible solid base has physical collision on depth 4
+PASS Actual movement stops at crystal base from approach 0
+PASS Actual movement stops at crystal base from approach 1
+PASS Actual movement stops at crystal base from approach 2
+PASS Actual movement stops at crystal base from approach 3
+PASS Actual movement stops at crystal base from approach 4
+PASS Actual movement stops at crystal base from approach 5
+PASS Actual movement stops at crystal base from approach 6
+PASS Actual movement stops at crystal base from approach 7
+PASS No clipping from approach 0 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 1 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 2 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 3 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 4 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 5 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 6 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 7 to landmark variant 0 (including grouped pillars)
+PASS No clipping from approach 0 to landmark variant 4 (including grouped pillars)
+PASS No clipping from approach 1 to landmark variant 4 (including grouped pillars)
+PASS No clipping from approach 2 to landmark variant 4 (including grouped pillars)
+PASS No clipping from approach 3 to landmark variant 4 (including grouped pillars)
+PASS No clipping from approach 4 to landmark variant 4 (including grouped pillars)
+PASS No clipping from approach 5 to landmark variant 4 (including grouped pillars)
+PASS No clipping from approach 6 to landmark variant 4 (including grouped pillars)
+PASS No clipping from approach 7 to landmark variant 4 (including grouped pillars)
+PASS Landmark base blocks reaching and hauling through solid artwork
+PASS Pick target ray cannot pass through crystal base
+PASS Workstation placement respects landmark base
+PASS Tall crystal silhouette does not create an oversized invisible wall
+PASS Crew route skirts landmark footprint with clear full-body steps
+PASS New stairs cannot open inside a landmark below
+PASS Legacy passage stays at original coordinates; overlapping landmark moves aside
+PASS Legacy overlap correction moves the artwork and collision together
+PASS Real E descends through preserved landing
+PASS Old embedded player is recovered locally without changing depth
+PASS Corrected legacy landmark anchors persist on next reload
+PASS Shift+E returns through the same passage
+PASS Existing mine return remains functional
+LANDMARKS551: 60 passed / 0 failed
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2378)
+ERROR: 7 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:614)

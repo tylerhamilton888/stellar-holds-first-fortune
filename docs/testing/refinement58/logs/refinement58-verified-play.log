@@ -1,0 +1,26 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Rear movement remains responsive: 4 / tool 0
+PASS Rear movement remains responsive: 4 / tool 1
+PASS Rear movement remains responsive: 4 / tool 2
+PASS Rear movement remains responsive: 4 / tool 3
+PASS Rear movement remains responsive: 5 / tool 0
+PASS Rear movement remains responsive: 5 / tool 1
+PASS Rear movement remains responsive: 5 / tool 2
+PASS Rear movement remains responsive: 5 / tool 3
+PASS Physical lift still takes exactly one load: gender 0
+PASS Moving carry retains ownership: 0down
+PASS Moving carry retains ownership: 0up
+PASS Set down returns one physical load: gender 0
+PASS Physical lift still takes exactly one load: gender 1
+PASS Moving carry retains ownership: 1down
+PASS Moving carry retains ownership: 1up
+PASS Set down returns one physical load: gender 1
+PASS E begins the existing fishing interaction
+PASS Reeling uses this character's raised rod, with no harvest bundle
+PASS Held E reels exactly one catch
+PASS Reload preserves exact catch and complete character identity
+REFINEMENT58 PLAY: 20 passed / 0 failed
