@@ -2,7 +2,9 @@ name: Game validation
 on:
   push:
     branches: [main]
+    paths: [project.godot, "scripts/**", "tests/**", "tools/**", "assets/**", "audio/**"]
   pull_request:
+    paths: [project.godot, "scripts/**", "tests/**", "tools/**", "assets/**", "audio/**"]
   workflow_dispatch:
 permissions:
   contents: read
