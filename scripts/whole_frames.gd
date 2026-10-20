@@ -132,6 +132,7 @@ static func work_front(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,zoom:float,res
  n.draw_texture_rect_region(tex,Rect2(Vector2(x,dest.position.y),Vector2(dest.size.x*(1-fraction),dest.size.y)),Rect2(tex.get_width()*fraction,0,tex.get_width()*(1-fraction),tex.get_height()));n.draw_set_transform(reset)
 static func prepare(g:Node):
  data();warm_jobs.clear();var people=[{"profile":g.state.appearance,"player":true}]
+ if g.opening_scene is HoldArrivalEscort:people.append({"profile":g.state.npc("ivar"),"player":false})
  if g.surface.active() and HoldWorldZones.ward(g.surface.area):
   for c in g.surface.world.people():people.append({"profile":c.profile,"player":false})
  elif g.surface.room():
@@ -153,6 +154,15 @@ static func prepare(g:Node):
     if not entry.player and kind=="utility" and index not in range(8,12):continue
     var key=cache_key(p,sheet,index)
     if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index]);queued[key]=true
+ warm_total=warm_jobs.size()
+static func prepare_profile(profile:Dictionary):
+ # Add scene-only actors without replacing the area's existing warm-up queue.
+ data();var p=HoldAppearance.normalized(profile);var sheet=identity(p)+"-core"
+ var queued={}
+ for job in warm_jobs:queued[cache_key(job[0],job[1],job[2])]=true
+ for index in 20:
+  var key=cache_key(p,sheet,index)
+  if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index])
  warm_total=warm_jobs.size()
 static func warming()->bool:return not warm_jobs.is_empty()
 static func warm_step():

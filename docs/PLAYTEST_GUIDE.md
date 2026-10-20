@@ -1,3 +1,13 @@
+# 0.61.0 — check these first
+
+1. Start a spare save: finish the illustrated road prologue, then follow Ivar to your room. Watch both pairs of boots and the inside transition.
+2. Walk through all three wards: citizens should step as they travel and stop briefly at route corners. The central fountain has flowing highlights and basin ripples, with no large paving ring. Walk around its edge.
+3. Visit your room, the Copper Kettle and forge: watch the painted flames and embers. A hearth you craft on your own claim uses the same effect. Pause and resume.
+4. Speak to Orla and Hedrik: both are Copperkettle. Continue an existing save and confirm your pack/progress.
+5. Switch held tools, carry a load, save and reload. The previous approved portraits and whole-character drawings remain.
+
+Download the one complete Windows ZIP from GitHub Releases, extract all files into a new folder, and run FirstFortune.exe beside its PCK. Earlier split-download notes below are historical.
+
 # 0.60.0 — Portraits and whole-character playtest
 Extract the entire Windows ZIP; run FirstFortune.exe beside FirstFortune.pck. Continue uses your existing save location. Keep older saves/migration backups for rollback.
 

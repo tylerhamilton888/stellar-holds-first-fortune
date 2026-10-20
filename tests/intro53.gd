@@ -1,16 +1,17 @@
-extends "res://tests/input_world52.gd"
+extends "res://tests/input_reference54.gd"
 func scene_tick(scene,seconds:float):
  for i in int(seconds*60):
   if not is_instance_valid(scene) or scene.finished:break
+  while HoldFolk.warming():HoldFolk.warm_step()
   scene.tick(1.0/60)
   if i%12==0:await process_frame
 func next(scene):scene.age=1;scene.advance()
 func run():
- output="res://docs/testing/playability-0.53.0/intro";DirAccess.make_dir_recursive_absolute(output)
+ output=OS.get_cmdline_user_args()[0] if not OS.get_cmdline_user_args().is_empty() else "user://intro53";DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.start_game(false)
  check(g.opening_scene!=null and g.opening_scene.mode=="arrival","New game retains the illustrated arrival")
  g.opening_scene.age=1;g.opening_scene.finish();await process_frame
- var scene=g.opening_scene;scene.set_process(false)
+ var scene=g.opening_scene;scene.set_process(false);settle()
  check(scene is HoldArrivalEscort and g.surface.area=="hearthward","Arrival hands off to Ivar in the actual hold")
  await snap("01-welcome")
  var inventory=g.state.inventory.duplicate(true)

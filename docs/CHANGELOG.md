@@ -1,3 +1,7 @@
+# 0.61.0 — Life in the Hold
+
+Escort loading/timing fix; clearer distance-based citizen gait; painted fire animation shared by crafted/town hearths; animated fountain water and removed plaza outline; Orla Copperkettle. 87 current checks passed. See testing/ambient61.md.
+
 # 0.60.0 — 2026-10-20 · Faces of the Hold
 - Fifteen complete painted portraits matching current identities, including the enthroned Lord.
 - Saved natural palette rendering before filtering; corrected dark-hair/skin fringe while preserving coloured clothes.

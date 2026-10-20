@@ -20,6 +20,8 @@ var ivar_x=240.0
 var walking=false
 var ivar_walking=false
 var shot_age=0.0
+var player_gait=0.0
+var ivar_gait=0.0
 static func begin(g,kind:String):
  if is_instance_valid(g.opening_scene):return null
  if kind=="audience" and HoldOnboarding.stage(g.state)!=4:return null
@@ -95,7 +97,7 @@ func _input(e):
    elif e.keycode==KEY_ESCAPE:finish()
   get_viewport().set_input_as_handled()
 func _process(dt):
- if not get_window().has_focus():return
+ if not get_window().has_focus() or HoldFolk.warming():return
  clock+=dt;age+=dt;shot_age+=dt
  update_staging(dt)
  queue_redraw()
@@ -104,15 +106,17 @@ func update_staging(dt:float):
   player_x=610.0;walking=false;ivar_walking=false;return
  var target=495.0 if mode=="audience" and step>=1 else 435.0 if mode=="audience" else 470.0
  var old=player_x;player_x=move_toward(player_x,target,48*dt);walking=absf(old-player_x)>.01
+ player_gait+=absf(old-player_x)/150.0
  old=ivar_x;ivar_x=move_toward(ivar_x,295,42*dt);ivar_walking=absf(old-ivar_x)>.01
+ ivar_gait+=absf(old-ivar_x)/150.0
 func _draw():
  A.draw_offset=Vector2.ZERO
  if mode=="audience":
   HoldRoyalHall.draw(self,clock,game.state,false)
   HoldCinematic.shadow(self,Vector2(ivar_x,410))
   HoldCinematic.shadow(self,Vector2(player_x,410))
-  HoldWholeFrames.paint(self,Vector2(ivar_x,410),game.state.npc("ivar"),Vector2.RIGHT,ivar_walking,clock,1.65,Vector2.ZERO)
-  HoldWholeFrames.paint(self,Vector2(player_x,410),game.state.appearance,Vector2.LEFT if step==6 else Vector2.RIGHT,walking,clock,1.65,Vector2.ZERO)
+  HoldWholeFrames.paint(self,Vector2(ivar_x,410),game.state.npc("ivar"),Vector2.RIGHT,ivar_walking,ivar_gait,1.65,Vector2.ZERO)
+  HoldWholeFrames.paint(self,Vector2(player_x,410),game.state.appearance,Vector2.LEFT if step==6 else Vector2.RIGHT,walking,player_gait,1.65,Vector2.ZERO)
   HoldCinematic.focus(self,Vector2(ivar_x,260) if step in [0,6] else Vector2(639,265))
  else:
   var panel=0 if step<2 else 1 if step==2 else 2

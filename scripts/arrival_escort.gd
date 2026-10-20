@@ -22,6 +22,9 @@ static func start(g):
  g.opening_scene=scene;scene.layer.add_child(scene)
  return scene
 func _ready():
+ # The guide is an extra cast member, not one of the generated street citizens.
+ # Prepare his complete walking frames before the scene begins to move.
+ HoldWholeFrames.prepare_profile(game.state.npc("ivar"))
  for n in [game.hud,game.status,game.objectives,game.footer]:n.visible=false
  game.notice_time=0
  var ui=Control.new();ui.theme=game.ui.theme;add_child(ui)
@@ -66,7 +69,7 @@ func advance():
    departing=true;leaving_point=0;next_button.disabled=true
    set_line("I’ll be in the office southeast of the fountain. No hurry—the mountain has waited this long. Welcome to Keldrath.","See you soon")
 func tick(dt:float):
- if finished:return
+ if finished or HoldFolk.warming():return
  clock+=dt;age+=dt;game.clock+=dt;game.state.elapsed+=dt
  if moving:
   var old=game.player;var old_guide=guide

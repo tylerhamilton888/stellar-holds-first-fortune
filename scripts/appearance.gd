@@ -15,7 +15,7 @@ const BEARDS=["Greatbeard","Twin braids","Forked beard","Rounded beard","Braided
 const OUTFITS=["Prospector","Hearthkeeper","Runesmith"]
 const TATTOOS=["None","Oath rune","Woad band","Knotwork"]
 const JEWELRY=["Bronze clasp","Silver clasp","Amber pendant","Plain"]
-const NPC_NAMES={"hedrik":"Hedrik Copperkettle","orla":"Orla Brassbraid","borin":"Borin Cinderthumb","eldric":"Eldric Farspan","brann":"Brann Rivethand","eirik":"Lord Eirik Granitecrown","ivar":"Ivar Deepmeasure"}
+const NPC_NAMES={"hedrik":"Hedrik Copperkettle","orla":"Orla Copperkettle","borin":"Borin Cinderthumb","eldric":"Eldric Farspan","brann":"Brann Rivethand","eirik":"Lord Eirik Granitecrown","ivar":"Ivar Deepmeasure"}
 const NPC_ROLES={"hedrik":"Keeper of the hearth","orla":"Merchant & freight broker","borin":"Master of the forge","eldric":"Surveyor of impossible things","brann":"Cable-certified miner","eirik":"Lord of Keldrath","ivar":"Foreman of the lower works"}
 static func clean_family(value:String)->String:
  # Retire recognizable borrowed generated surnames, including legacy saves.

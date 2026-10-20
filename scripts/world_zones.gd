@@ -89,17 +89,17 @@ func people(at_time:float=-1)->Array:
  var cycle=3.0*route.size()
  for j in route.size():cycle+=route[j].distance_to(route[(j+1)%route.size()])/62.0
  for i in 6:
-  var phase=fposmod(time+i*19+s.level()*11,cycle);var p=route[0];var aim=Vector2.DOWN;var walking=false
+  var phase=fposmod(time+i*19+s.level()*11,cycle);var p=route[0];var aim=Vector2.DOWN;var walking=false;var distance=0.0
   for j in route.size():
    var a=route[j];var b=route[(j+1)%route.size()];var duration=a.distance_to(b)/62.0
-   if phase<3:p=a;break
+   if phase<3:p=a;aim=(b-a).normalized();break
    phase-=3
-   if phase<duration:p=a.lerp(b,phase/duration);aim=(b-a).normalized();walking=true;break
-   phase-=duration;p=b
+   if phase<duration:p=a.lerp(b,phase/duration);aim=(b-a).normalized();walking=true;distance+=phase*62.0;break
+   phase-=duration;distance+=a.distance_to(b);p=b
   var key=str(g.state.seed_value)+":"+str(s.level())+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+5100+i+s.level()*101,1 if i%3==0 else 0)
   var profile=profiles[key]
-  result.append({"p":p,"kind":"citizen","profile":profile,"aim":aim,"walking":walking,"name":names[i],"role":roles[i],"index":i,"time":time+i*.7})
+  result.append({"p":p,"kind":"citizen","profile":profile,"aim":aim,"walking":walking,"name":names[i],"role":roles[i],"index":i,"time":time+i*.7,"gait":distance/95.0+i*.13})
  if at_time<0:people_cache=result;people_frame=Engine.get_process_frames();people_area=s.area
  return result
 func speak(index:int):
@@ -110,7 +110,7 @@ func draw_citizen(c:Dictionary):
  if not Rect2(g.camera-Vector2(80,0),Vector2(1120,650)).has_point(c.p):return
  var cam=g.camera.round()
  g.draw_set_transform(c.p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,17,Color(0,0,0,.25))
- HoldDirectional.draw(g,c.p-cam,c.profile,c.aim,c.walking,c.time*62.0/150.0,.85,-cam)
+ HoldDirectional.draw(g,c.p-cam,c.profile,c.aim,c.walking,c.gait,.85,-cam)
  g.draw_set_transform(-cam)
 func draw_ground():
  g.draw_rect(Rect2(0,0,1880,1080),Color("28393b"))
@@ -128,7 +128,6 @@ func draw_ground():
   for y in [330,580,830]:detail(4,Vector2(side,y),58,90)
  for y in [520,740,980]:
   g.draw_line(Vector2(115,y),Vector2(1770,y),Color("6d786a"),3)
- g.draw_arc(Vector2(970,635),125,0,TAU,64,Color("a39170"),4)
 func street_furnishings()->Array:
  var result=[]
  for p in [Vector2(180,450),Vector2(1700,450),Vector2(600,800),Vector2(1210,820)]:result.append(furn("lamp",p.x,p.y))
@@ -171,7 +170,11 @@ func landmarks()->Array:
  if s.area=="hearthward":result.append({"p":GATE,"kind":"landmark","art":0,"width":240.0})
  for p in [Vector2(680,800),Vector2(1130,820)]:result.append({"p":p+Vector2(0,15),"kind":"landmark","art":5,"width":110.0})
  return result
-func draw_landmark(o:Dictionary):image_at(LANDMARKS,LAND_RECTS[o.art],LAND_ANCHORS[o.art],o.p,o.width,o.art in [0,3,5])
+func draw_landmark(o:Dictionary):
+ image_at(LANDMARKS,LAND_RECTS[o.art],LAND_ANCHORS[o.art],o.p,o.width,o.art in [0,3,5])
+ if o.art==3:
+  var rect=Rect2(o.p-Vector2(o.width*.5,o.width*.82),Vector2(o.width,o.width*.85))
+  if rect.intersects(Rect2(g.camera,Vector2(960,540))):HoldAmbientProps.fountain(g,o.p,g.clock,o.width/180.0,.35 if rect.has_point(g.player) and g.player.y<o.p.y-25 else 1.0)
 func room_objects()->Array:
  var result=[];var id=g.room_id
  if id=="tavern":
@@ -229,9 +232,6 @@ func draw_room_floor():
    g.draw_rect(Rect2(373,428,214,99),Color("c9ac6e"),false,3)
    for x in range(390,580,35):g.draw_polyline(PackedVector2Array([Vector2(x,439),Vector2(x+9,448),Vector2(x,457),Vector2(x-9,448),Vector2(x,439)]),Color("cab785"),2)
 
- if g.room_id in ["tavern","forge"]:
-  var fire=Vector2(330,320)
-  for r in [35,65,95]:g.draw_circle(fire,r,Color(1,.66,.26,.025+.004*sin(g.clock*4)))
 func draw_river():
  g.draw_rect(Rect2(1155,200,160,800),Color("465950"))
  tile(4,Rect2(1170,200,130,800),160)

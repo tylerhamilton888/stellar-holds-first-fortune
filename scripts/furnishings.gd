@@ -28,7 +28,10 @@ static func silhouette(kind:String,p:Vector2)->Rect2:
  return Rect2(p-Vector2(size.x*.5,size.y),size)
 static func draw(n:Node2D,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=ITEMS.get(kind,ITEMS.table)
- n.draw_texture_rect_region(ATLAS,silhouette(kind,p),CROPS[item.art],tint)
+ if kind=="hearth":
+  var clock=n.get("clock")
+  HoldAmbientProps.hearth(n,p,float(clock) if clock!=null else 0.0,tint)
+ else:n.draw_texture_rect_region(ATLAS,silhouette(kind,p),CROPS[item.art],tint)
 static func cost_text(kind:String)->String:
  var parts=PackedStringArray()
  for resource in ITEMS[kind].cost:parts.append(str(ITEMS[kind].cost[resource])+" "+("timber" if resource=="wood" else resource))

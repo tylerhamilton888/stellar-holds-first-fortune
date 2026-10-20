@@ -1,3 +1,7 @@
+# 0.61.0 follow-up
+
+Completed: escort preparation gate, town cadence, shared animated hearths, fountain motion/outline removal, married cast surname. User playtest remains the art/pace acceptance check. Illustrated prologue plates and static idle dialogue poses are unchanged. Other existing backlog entries below remain separate.
+
 # 0.60.0 follow-up
 Completed: dedicated portraits for all fourteen identities and the Lord, source-pigment/fringe controls, native creator/dialogue/story/roster review, audience actor parity and a new Windows package. Do not restore the magnified idle sprite or old Lord portrait in active portrait controls.
 

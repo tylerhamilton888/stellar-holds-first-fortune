@@ -1,3 +1,7 @@
+# Current release — ambient-0.61.0
+
+Read testing/ambient61.md. Run intro53, ambient61 and grips58 with isolated saves and explicit output directories. pack_ambient61 is self-contained for the exact PCK. Sequential native runs, completion marker plus exit required. No character source paintings changed.
+
 # Current release — portraits-0.60.0
 Read `testing/portraits60.md`. `portraits60.gd` checks native palettes and produces all-identity/cast galleries. `portrait_ui60.gd` exercises actual creator/dialogue/audience/story/roster/reload paths; set the audience prerequisite in the fixture, and capture after its fade. `motion_play59.gd`, `grips58.gd`, `handworks55.gd` and `mining55.gd` remain focused gameplay regressions.
 
