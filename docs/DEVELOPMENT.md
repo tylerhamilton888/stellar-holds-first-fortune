@@ -2,7 +2,7 @@
 
 ## One source of truth
 
-The completed source import should join the verified source history to GitHub's delivery history, without force-pushing or rewriting old tags. `v0.60.0` and `v0.61.0` remain delivery tags; `ambient-0.61.0` identifies the earlier editable source. Record the actual import/merge commit in CURRENT_STATUS once verified.
+The verified source history is joined to GitHub's delivery history on main, without force-pushing or rewriting old tags. `v0.60.0` and `v0.61.0` remain delivery tags; `ambient-0.61.0` identifies the earlier editable source. CURRENT_STATUS records the verified merge.
 
 All active assets stay at their existing resource paths. The current source contains substantial historical art/evidence. Do not delete originals or introduce Git LFS pointers without a separate migration and clean-checkout test. Future large recordings belong in release evidence, not runtime dependencies. Ordinary source commits should exclude editor caches, saves, build outputs and test captures.
 

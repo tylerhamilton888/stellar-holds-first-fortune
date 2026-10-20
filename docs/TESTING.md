@@ -6,7 +6,7 @@ Use Godot 4.4.1, Python 3.11+, and isolated test data. Never test against person
 python tools/check.py --godot /path/to/godot --suite gameplay --output test-results/unique-run
 ```
 
-A native display is required; on Linux CI use `xvfb-run -a` and `LIBGL_ALWAYS_SOFTWARE=1`. The runner imports first, executes sequentially, and requires exit zero, no script errors and an explicit passing summary. Every case has independent temporary save directories. Timeouts and missing completion markers fail the run. Existing output directories are refused.
+A native display is required; on Linux CI use `xvfb-run -a` and `LIBGL_ALWAYS_SOFTWARE=1`. The runner imports first, executes sequentially, and requires exit zero, no script errors and an explicit passing summary. Every case has independent temporary save directories. Cold asset import allows 900 seconds; each gameplay case allows 360 seconds. Timeouts and missing completion markers fail the run. Existing output directories are refused.
 
 `tests/suites.json` is the authoritative list. `core` covers menus, orientation, ambient animation and held equipment. `gameplay` adds excavation/Z-levels, material handling and a settlement-to-world journey with legacy-save migration. The shared fixture lives in `tests/support/game_fixture.gd`; historical filenames remain to preserve links and resource paths. Exact-export tests must remain standalone.
 

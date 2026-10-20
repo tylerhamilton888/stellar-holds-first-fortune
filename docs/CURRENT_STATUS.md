@@ -1,11 +1,11 @@
-# Foundation 0.61.1 — source migration in progress
+# Foundation 0.61.1 — complete
 
-2026-10-20. Playable public-to-owner release remains **0.61.0**. Foundation runtime is behavior-preserving: menu widget/theme/shell code extracted to `HoldMenuView`; title and packaging share `HoldBuild`; current native tests share `tests/support/game_fixture.gd`.
+2026-10-20. GitHub **main now contains the complete editable game**, original assets and source history. Source import PR #2 merged at `5955e2e754a1545742e7ffc3f66dacc253ddc446`; its import commit `3f97736cbc02ee1b46bbbbd4cbfb00d633593215` joins the source and delivery histories without rewriting existing tags. The core asset/audio/script/test/tool/project Git hashes match the verified local source.
 
-Local validation: **201 passing checks**, including actual mining, Pinewood, hauling/workstations, Z-levels, tutorial, menus and legacy save migration. Exact exported PCK passed 11 of these checks and all 3,132 file integrity checks. See `testing/foundation62.md`. Windows execution/audio/hardware performance remain untested here.
+Implemented: shared menu presentation (`HoldMenuView`), one version/engine metadata source (`HoldBuild`), canonical native test fixture, current suite manifest, checked packaging, GitHub validation, PR template and concise contributor documentation. No gameplay balance, art, movement or save-schema changes.
 
-`tools/check.py` is the current acceptance runner. `tools/build.py` packages one complete Windows ZIP with source metadata and hashes. `tests/suites.json` selects current tests. GitHub PR #1 installed the reviewed import and validation workflows.
+Verification: **201 passing local checks**, including 11 against the exact exported PCK; all 3,132 entries audited. A separate full-bundle clone imported without existing caches, passed all 190 source checks, exported, and passed the 11 standalone pack checks. Fresh export content matches the delivered pack except Godot's generated UID cache; byte-identical PCK output across machines is not claimed. GitHub importer and PR validation both passed on hosted runners.
 
-Pending at this checkpoint: upload the full source recovery bundle, run the GitHub import workflow, verify its fresh checkout, and merge the imported source branch. Do not claim delivery-only main is the editable project until that is confirmed. Preserve both existing release tags and all recovery bundles.
+[0.61.1 build and complete recovery](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/foundation-0.61.1). Download only the Windows ZIP to play. Its SHA-256 is `6867fd2c76c20171b2c12daf6dc0e379f7b70f1f04efde38390470e2f589b837`. The optional full source bundle restores independently; older backups/releases remain intact. Windows execution, audio and player-device performance still require playtesting.
 
-Next cleanup is incremental: further menu/session extraction, legacy dependency audit, and shared geometry/animation rules only where evidence justifies changes. No blanket renderer removal, asset moves, save rewrite or gameplay redesign occurred.
+Use `tools/check.py`, `tests/suites.json`, and `tools/build.py`; see DEVELOPMENT.md and TESTING.md. Broader session extraction, actor orchestration and legacy dependency cleanup remain incremental future work, with regression evidence required.

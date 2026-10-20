@@ -6,7 +6,7 @@
 - ../scripts/menu_view.gd: shared presentation; ../scripts/build_info.gd: version source.
 - ../tools/check.py / build.py: reproducible verification and packaging.
 - ../.github/workflows/: source-history import and routine validation.
-- CURRENT_STATUS.md / SESSION_HANDOFF.md: migration completion and next work.
+- CURRENT_STATUS.md / SESSION_HANDOFF.md: verified GitHub source migration and next work.
 
 # Current development index — 0.61.0
 

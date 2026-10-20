@@ -8,7 +8,7 @@ Download the complete Windows ZIP from [Releases](https://github.com/tylerhamilt
 
 ## Develop
 
-1. Clone this repository after the source-import branch is merged. Until then use the complete foundation recovery bundle; the delivery-only main branch is not a Godot project.
+1. Clone this repository. `main` contains the complete editable game and original assets; open `project.godot` in Godot 4.4.1.
 2. Install **Godot 4.4.1 stable**, the standard editor (not .NET), and Python 3.11 or newer.
 3. Open `project.godot`. The editor imports assets; run `main.tscn` with F6 or the project with F5.
 4. Read [AGENTS.md](AGENTS.md), [handoff](docs/SESSION_HANDOFF.md), and [development guide](docs/DEVELOPMENT.md).

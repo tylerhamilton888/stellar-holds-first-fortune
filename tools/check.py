@@ -24,7 +24,7 @@ def run(godot, suite, output, skip_import=False):
             try:
                 proc = subprocess.run([engine, '--path', str(ROOT), *args], cwd=ROOT, env=env,
                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                      text=True, timeout=360)
+                                      text=True, timeout=900 if name == 'import' else 360)
                 log, code = proc.stdout, proc.returncode
             except subprocess.TimeoutExpired as exc:
                 log = exc.stdout or b''

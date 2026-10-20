@@ -1,3 +1,3 @@
 # Session handoff
 
-Current: **0.61.0 — Life in the Hold**, source tag `ambient-0.61.0`, after .60 delivery `19e2795c1e4170ac118485c58e0f6be9e4163820`. Read `docs/SESSION_HANDOFF.md`, `docs/CURRENT_STATUS.md`, then only task-relevant code. Single-ZIP delivery is through the private GitHub releases; the old split-download workaround is obsolete. GitHub delivery main is not the complete source history.
+Current: **0.61.1 — Development foundation**. GitHub `main` now contains the complete editable Godot project and source history. Read `docs/SESSION_HANDOFF.md`, `docs/CURRENT_STATUS.md`, then task-relevant code. Playable Windows builds and complete recovery are in the private GitHub releases. Previous versions remain intact.
