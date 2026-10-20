@@ -14,9 +14,8 @@ static func draw(n:Node2D,t:float,s,markers:bool=true):
  if markers and n.has_method("character_scale"):
   HoldQuestMarkers.draw(n,Vector2(639,410),s,"eirik")
  A.text(n,Vector2(82,390),"EXIT",12,Color("dac399"))
-static func portrait()->TextureRect:
- var p=TextureRect.new();var atlas=AtlasTexture.new();atlas.atlas=LORD;atlas.region=Rect2(465,90,440,440)
- p.texture=atlas;p.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;p.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+static func portrait()->HoldPortrait:
+ var p=HoldPortrait.new();p.profile=HoldAppearance.npc_profile("eirik",0)
  return p
 static func panel(g):
  if HoldConversation.local(g,"eirik"):

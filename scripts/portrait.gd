@@ -1,6 +1,6 @@
 class_name HoldPortrait
 extends Control
-# The selected identity is shared with the game; no old-design fallback in the creator.
+# Dedicated whole paintings share the saved identity and palettes with the game.
 var profile:Dictionary=HoldAppearance.defaults()
 var viewport:SubViewport
 var canvas:Node2D
@@ -25,7 +25,7 @@ func _ready():
 func apply_profile(p:Dictionary):
  profile=HoldAppearance.normalized(p)
  if is_instance_valid(canvas):
+  HoldPaintedPortraits.apply(canvas,profile)
   canvas.queue_redraw();viewport.render_target_update_mode=SubViewport.UPDATE_ONCE
 func draw_bust():
- var pose=HoldFolk.descriptor(profile,Vector2.DOWN,false,0,"",0)
- HoldFolk.paint(canvas,Vector2(48,12-pose.destination.position.y*2.4),profile,Vector2.DOWN,false,0,2.4,Vector2.ZERO)
+ canvas.draw_texture_rect(HoldPaintedPortraits.texture(profile),Rect2(5,5,86,86),false)

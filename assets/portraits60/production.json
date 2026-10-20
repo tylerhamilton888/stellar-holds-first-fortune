@@ -1,0 +1,211 @@
+{
+  "tool": "Built-in image_gen.imagegen",
+  "reference": "Current complete in-game figures, front idle, resolved Honey palette. Royal reference: assets/folk-v54/eirik-throne.png.",
+  "prompts": {
+    "male0": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. IDENTITY: Male0, swept-back crest, long swept side hair, compact squared full beard with two small bound side braids, covered chin, strong low brows and broad nose. Expression: steady, capable and quietly welcoming rather than furious. Preserve garment and facial identity from reference.",
+    "male1": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. The first reference is ONLY the paint style/framing reference. The SECOND reference is the required character identity; use its hairstyle and beard, do not copy the first character's hair. IDENTITY: Twin oath braids: swept-back tied hair and two LONG thick beard plaits with brass bands, full beard covering chin and jaw. No third central beard tuft. A knowing, level expression.",
+    "male2": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. The first reference is ONLY the paint style/framing reference. The SECOND reference is the required character identity; use its hairstyle and beard, do not copy the first character's hair. IDENTITY: Mountain greatbeard: wild thick swept mane and enormous unruly full beard, two small side braids, powerful nose, bushy brows. Gruff but thoughtful, no smile. Preserve his massive hair silhouette.",
+    "male3": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. The first reference is ONLY the paint style/framing reference. The SECOND reference is the required character identity; use its hairstyle and beard, do not copy the first character's hair. IDENTITY: Topknot and braids: high round topknot on neatly cropped nape/sides, full compact beard ending in two short tied braids. Full covered chin. Cheerful twinkle and restrained smile beneath moustache. Entire topknot with clear margin, don't crop.",
+    "male4": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. First reference is ONLY rendering style, SECOND is exact identity. Do not copy first character's hair/sex. IDENTITY: Male4, cropped close hair swept straight back, short nape, full beard dividing into TWO broad forked/bound ends, brass bands. Broad compact adult male face; practical, unflappable look. No topknot, no wild mane. All chin covered.",
+    "male5": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. First reference is ONLY rendering style, SECOND is exact identity. Do not copy first character's hair/sex. IDENTITY: Male5, swept-back crest and long side hair, magnificent outward curled moustache over a thick long ROUND FULL BEARD. IMPORTANT full beard completely covers the chin and jaw, no chin exposure. Welcoming solid craftsman, subtle grin expressed by eyes, not bare chin.",
+    "male6": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. First reference is ONLY rendering style, SECOND is exact identity. Do not copy first character's hair/sex. IDENTITY: Male6, bare BALD crown with bushy side hair (no hair on top), thick eyebrows, short broad round full beard covering chin/jaw, deep calm expression. Older experienced adult with warm crow's-feet, still powerful compact shoulders.",
+    "female0": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. First reference is ONLY rendering style, SECOND is exact identity. Do not copy first character's hair/sex. IDENTITY: Female0, FEMALE adult Dwarf; no beard/moustache. Crown braid and long thick braided hair with two modest front plaits, broad soft square adult face, substantial natural nose, compact strong neck, calm confident slight smile. Same face as SECOND reference. White linen rolled-sleeve blouse, teal fitted practical bodice, leather shoulder straps, brass fasteners. Do NOT masculinize her or make anime/teenager/doll features. Substantial shoulders and hands-free chest portrait.",
+    "female1": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. FIRST reference is only female paint style and framing; SECOND is exact identity. Keep the SAME face, eye size, strong short neck and costume as the second. Must use the second reference's hair geometry rather than copying the first. IDENTITY: Practical bun: ALL back hair gathered into ONE low large bun behind the head, smooth swept-back front, two SHORT small plaits descending only to collar. No crown braid, no loose flowing rear hair. Adult female, composed wry smile, sturdy broad cheeks, no facial hair.",
+    "female2": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. FIRST reference is only female paint style and framing; SECOND is exact identity. Keep the SAME face, eye size, strong short neck and costume as the second. Must use the second reference's hair geometry rather than copying the first. IDENTITY: Loose waves: long, thick loose waved hair flowing over both shoulders. NO crown braid, NO hairbands, NO plaits anywhere. Broad adult female face, quietly adventurous half-smile, substantial nose, no facial hair.",
+    "female3": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. FIRST reference is only female paint style and framing; SECOND is exact identity. Keep the SAME face, eye size, strong short neck and costume as the second. Must use the second reference's hair geometry rather than copying the first. IDENTITY: Side braid: smooth swept-back top, ONE large thick long plait over the shoulder on the LEFT OF IMAGE; all visible hanging hair belongs to that SINGLE plait. No second front braid, no crown braid, no bun. Warm attentive adult female, strong broad face, no facial hair.",
+    "female4": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. FIRST reference is only female paint style and framing; SECOND is exact identity. Keep the SAME face, eye size, strong short neck and costume as the second. Must use the second reference's hair geometry rather than copying the first. IDENTITY: Layered bob: short softly layered ear-length bob with thick swept side part and a couple of outward curls at the jaw. NO braids, NO long rear hair, no bun. Adult capable female, a slightly amused raised brow and friendly direct gaze. No facial hair.",
+    "female5": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. FIRST reference is only female paint style and framing; SECOND is exact identity. Keep the SAME face, eye size, strong short neck and costume as the second. Must use the second reference's hair geometry rather than copying the first. IDENTITY: Twin braids: clean CENTER PART, smooth hair over scalp with NO crown braid, TWO long thick full braids falling over the front shoulders and brass bands near their ends. Adult strong female, calm earnest expression. No facial hair.",
+    "female6": "Use case: stylized-concept. Production asset for the existing hand-painted 2D Dwarf game The Stellar Holds. Use the attached complete in-game character as the EXACT identity reference: same adult face, brow, nose, hairstyle, beard shape, garment and chest harness. Paint a polished bespoke square dialogue PORTRAIT, not a cropped/upscaled sprite. Bust from upper chest to the entire top of hair with comfortable 6% clear margin above and beside the head. Character fills the square, broad shoulders continue to bottom edge; face at about x=50%, y=37%; slight three-quarter turn toward viewer's right, eye contact, quiet personality and pride. Warm hand-drawn outline, clean illustrated planes, attractive restrained painterly shading and tactile cloth/leather. Compact powerful adult anatomy, thick neck anatomically joined to shoulders, substantial natural nose and eyebrows. Same recognizable stylization as reference, not anime, not chibi, not photorealistic, not glossy 3D. No hands, tools, text, labels, frame, ground, props or scenery. Genuine transparent background.\nTECHNICAL SOURCE PALETTE: ALL hair, eyebrows, moustache and beard must use a clearly violet pigment (mid #8449a2, shadows still purple, light tips pale violet); this reserved production pigment is replaced by natural saved hair colours IN ENGINE. No warm brown/gold/grey strands or white hair highlights. Violet MUST be confined to hair. Cloth is muted blue-teal #356477 with clean shaded folds. Skin warm ivory #f3d6bc with warm peach shading, never purple. Leather warm dark umber, clasps restrained brass. No purple anywhere outside hair. Do not bake lighting spill or tint from hair into skin or cloth.\n1024x1024, high quality complete portrait. FIRST reference is only female paint style and framing; SECOND is exact identity. Keep the SAME face, eye size, strong short neck and costume as the second. Must use the second reference's hair geometry rather than copying the first. IDENTITY: High ponytail: ONE high sweeping PONYTAIL with a visible hair tie atop the back of the head, loose waves cascading behind the shoulder on LEFT OF IMAGE. No front braids, no crown braid, no bun. Adult strong female with a confident open gaze and restrained smile. No facial hair.",
+    "male4-repair": "Use case: identity-preserve. Edit ONLY the beard geometry in the FIRST portrait; preserve exactly its face, cropped slicked-back hair, clothes, framing, rendering, purple production hair colour, skin and transparency. SECOND image is exact beard identity target. Replace current three-prong beard (pointy central unbound tuft plus two side plaits) with ONE full beard that divides into TWO thick equal parallel long forked beard locks. Each of the TWO locks has a broad brass binding near its bottom. The beard covers the whole jaw and chin then splits into TWO only below the mouth. NO third central hanging tuft or point: the central gap between the two bound ends shows a little teal chest fabric. No clean-shaven chin. The character has only TWO brass beard bands total. Keep everything else unchanged.",
+    "male5-repair": "Use case: identity-preserve. Edit ONLY the beard in the FIRST portrait, using SECOND whole-character image as exact beard identity. Preserve magnificent wide upturned curled moustache, hairstyle, eyebrows, face, body, garment, framing and brushwork. Remove BOTH little side beard braids and BOTH their brass bindings entirely. The beard is a SINGLE broad soft rounded unbraided full beard beneath the curled moustache, entirely covering chin and jaw, with naturally layered purple hair locks but absolutely NO plaits, NO small separated tails, NO metal rings anywhere in beard. Retain reserved violet production pigment for every hair and preserve genuine transparent background.",
+    "eirik": "Use case: stylized-concept. Paint a bespoke square chest-up game dialogue portrait of Lord Eirik Granitecrown, EXACT SAME adult white-haired royal Dwarf as the SECOND reference seated on his throne. FIRST reference is only style and bust framing; do NOT copy first's face, hair colour or peasant clothes. Preserve Eirik's wide face, heavy white eyebrows, big nose, white swept-back hair, magnificent fully covered chin with THREE thick white beard plaits, angular modest brass crown with one teal stone, teal wool royal coat, brown fur mantle, substantial brass clasps. Show the TOP BACK of his stone throne immediately behind him, etched angular original Dwarven ornament. No separate furniture scene: just close chest-up portrait, shoulders fill lower frame; no hands or legs. Compact powerful older man, dignified warm and shrewd expression, not malicious. Warm illustrated outlined painted style, modest brushwork, matching hand-painted sturdy Dwarf game sprite, NOT anime or chibi or glossy plastic. Natural ivory WHITE/SILVER hair, warm fair skin, natural brass/teal/brown garments. This special fixed-colour NPC uses NO purple palette pigment: absolutely NO purple anywhere. Entire crown with 5% headroom; face center about x=.5 y=.4. Transparent outer corners around the stone throne; no black/white background, no lettering, no extra characters. 1024x1024."
+  },
+  "assets": [
+    {
+      "path": "assets/portraits60/eirik.png",
+      "sha256": "552ea684b7cbd4a0bd9d2a4cfb2279f10626442258f697d1281a101b5aece2d0",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/female0.png",
+      "sha256": "c7c7826651335c07b7909cb094a08eabc5468bd8e6b520fc899d314b8185f6cb",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/female1.png",
+      "sha256": "0c24311f3338220280a33f81888a391ef7279db3f7c4240b97de1e17e232101f",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/female2.png",
+      "sha256": "2e68d8496477e63bd007920969df6aaa9b466139da4338ae90237a1fbcfb435d",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/female3.png",
+      "sha256": "2bbc1cf4af3bfe3cedaa5ef4f82d0dfcb2dc06508cced6c543df40facf6ce995",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/female4.png",
+      "sha256": "9d17b7a9eda768988b60c529853eba4f99a7f4725d2c5284f75e9058c3194112",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/female5.png",
+      "sha256": "3e3f25b5958a5e74987d96d9c21e86d7cbd5c1381704a0c1eb16bb90c6d45045",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/female6.png",
+      "sha256": "edbdc2ca404ef7ec620f7e7c5d8f24491d597de05b697bd75c14758ad71d9b63",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/male0.png",
+      "sha256": "4ad06a12eeeaa0ce78cc396eba0adf14ebf38bc6a566292f3b4f043bbc783313",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/male1.png",
+      "sha256": "4c3f2f2eb10f0d9d901f33dcf8e6a0931f1ed4a00ef981d1780c30cf444b47b9",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/male2.png",
+      "sha256": "c57404aac95e91091afaeda6c09605dc863a85e6162d7758a2700d4713576015",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/male3.png",
+      "sha256": "7b96653438ed7077cd99154ac78b58b83d0d4bb37ec08f9bf8461ea9def8ed28",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/male4.png",
+      "sha256": "c3b73b86492fd20eac37b1330fd7cf36d24bb0eb950b8a3d6ae90a3d60ed929b",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/male5.png",
+      "sha256": "73862b5a5a8dbd9fdc8fc42d5c833478bab3295e99c7f241b01d087d0d8bd920",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "path": "assets/portraits60/male6.png",
+      "sha256": "b44604a3c2f33435cdccbe0b42c75c542212d3f8c9115f6c7efebaf1fceff0ce",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  ],
+  "selection": {
+    "male4": "Repair replaces incorrect three-prong beard with two banded forks. First candidate retained under docs/art/portraits60/rejected.",
+    "male5": "Repair removes incorrect side braids and bands; full rounded beard and curled moustache retained. First candidate preserved.",
+    "others": "Dedicated whole painted portraits, no head/body assembly. All fourteen identity silhouettes and Lord Eirik visually reviewed in native render."
+  },
+  "runtime": "scripts/painted_portraits60.gd and scripts/portrait_palette60.gdshader; source violet is reserved hair pigment, resolved to saved natural colours before filtering. Natural fixed palette for Lord Eirik."
+}

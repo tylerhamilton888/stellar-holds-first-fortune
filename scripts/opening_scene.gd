@@ -13,7 +13,7 @@ var caption:Label
 var speaker:Label
 var next_button:Button
 var finished=false
-var royal_portrait:TextureRect
+var royal_portrait:HoldPortrait
 var foreman_portrait:HoldPortrait
 var player_x=610.0
 var ivar_x=240.0
@@ -29,6 +29,13 @@ static func begin(g,kind:String):
  return scene
 func _ready():
  if mode=="audience":player_x=405.0;game.state.resident_visits.ivar="throne"
+ if mode=="audience":
+  # The audience must not fall back to the retired side-view actor renderer.
+  for p in [game.state.npc("ivar"),game.state.appearance]:
+   for moving in [false,true]:
+    for key in 4:
+     var pose=HoldWholeFrames.descriptor(p,Vector2.RIGHT,moving,key*HoldWholeFrames.CYCLE/4,"",0)
+     HoldWholeFrames.texture(p,pose.sheet,pose.index)
  var name=game.state.appearance.first_name;var female=int(game.state.appearance.gender)==1
  if mode=="arrival":
   lines=[
@@ -104,8 +111,8 @@ func _draw():
   HoldRoyalHall.draw(self,clock,game.state,false)
   HoldCinematic.shadow(self,Vector2(ivar_x,410))
   HoldCinematic.shadow(self,Vector2(player_x,410))
-  A.dwarf(self,Vector2(ivar_x,410),clock,ivar_walking,1,0,false,game.state.npc("ivar"))
-  A.dwarf(self,Vector2(player_x,410),clock,walking,-1 if step==6 else 1,0,false,game.state.appearance)
+  HoldWholeFrames.paint(self,Vector2(ivar_x,410),game.state.npc("ivar"),Vector2.RIGHT,ivar_walking,clock,1.65,Vector2.ZERO)
+  HoldWholeFrames.paint(self,Vector2(player_x,410),game.state.appearance,Vector2.LEFT if step==6 else Vector2.RIGHT,walking,clock,1.65,Vector2.ZERO)
   HoldCinematic.focus(self,Vector2(ivar_x,260) if step in [0,6] else Vector2(639,265))
  else:
   var panel=0 if step<2 else 1 if step==2 else 2
