@@ -1,0 +1,16 @@
+from pathlib import Path
+import subprocess,hashlib,json
+base=Path('/workspace/scratch/a447fc5d46ab'); repo=base/'stellar-holds'; task=base/'portraits60'
+source=task/'export-source'; build=task/'build'; source.mkdir();build.mkdir()
+revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()
+archive=subprocess.Popen(['git','archive','--format=tar',revision],cwd=repo,stdout=subprocess.PIPE)
+extract=subprocess.run(['tar','-x','-C',str(source)],stdin=archive.stdout)
+archive.stdout.close();assert archive.wait()==0 and extract.returncode==0
+engine=base/'runtime/Godot_v4.4.1-stable_linux.x86_64'
+for name,args in [('import',['--editor','--import']),('export',['--export-release','Windows Desktop',str(build/'FirstFortune.exe')])]:
+ with (task/(name+'-clean.log')).open('w') as log:
+  subprocess.run([str(engine),'--headless','--path',str(source)]+args,stdout=log,stderr=subprocess.STDOUT,check=True)
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(build/'FirstFortune.exe')=='b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b'
+(task/'export-identity.json').write_text(json.dumps({'source_commit':revision,'engine_sha256':sha(engine),'exe_sha256':sha(build/'FirstFortune.exe'),'pck_sha256':sha(build/'FirstFortune.pck'),'pck_bytes':(build/'FirstFortune.pck').stat().st_size},indent=2))
+print('EXPORT60 COMPLETE',revision,flush=True)

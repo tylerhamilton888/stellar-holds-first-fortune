@@ -1,3 +1,6 @@
+# Current playtest build: 0.60.0 — Faces of the Hold
+Extract the complete Windows ZIP and run FirstFortune.exe beside its PCK. Current whole-character animations and fifteen matching painted portraits are integrated. Existing saves remain supported. Read docs/SESSION_HANDOFF.md, docs/CURRENT_STATUS.md and docs/PLAYTEST_GUIDE.md. Recovery tag: portraits-0.60.0. Older release notes below are historical.
+
 # Current build: 0.55.1 — Cave landmark repair
 Read docs/SESSION_HANDOFF.md and docs/testing/landmarks-0.55.1.md for current status. Earlier release notes below are historical.
 

@@ -47,7 +47,7 @@ func run():
  check(story.portrait.profile.get("cast_id","")=="orla","Story captions switch to Orla's new portrait")
  story.layer.queue_free();await process_frame
  g.state.appearance=HoldAppearance.normalized({"gender":1,"sculpt":6,"hair_color":5,"cloth_color":3,"skin":2,"jewelry":1})
- g.save_game();var pack=g.state.inventory.duplicate(true);g.start_game(true);settle();g.open_panel("roster");await snap("reloaded-player")
+ g.save_game();var pack=g.state.inventory.duplicate(true);g.start_game(true);settle();g.open_panel("home");await snap("reloaded-player")
  var player_face:HoldPortrait
  for node in g.panel.find_children("*","Control",true,false):
   if node is HoldPortrait and node.profile.get("cast_id","")=="":player_face=node;break

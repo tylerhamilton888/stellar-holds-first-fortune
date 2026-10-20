@@ -1,3 +1,8 @@
+# Portrait parity — 0.60.0
+Dedicated whole portraits must match the current whole-character identities. All male chins/jaws are fully bearded; preserve each braid, fork, topknot, bare crown, bun, bob and ponytail. `assets/portraits60/production.json` records briefs and repaired selections. The Lord's fixed portrait matches his seated throne sprite. Do not use a different legacy face in dialogue or an older actor renderer in the audience.
+
+Source violet is a reserved hair pigment, resolved to saved natural colours by `portrait_palette60.gdshader` before filtering. Keep fringe correction restricted to source-hair samples; intentional heather/night-violet clothes are valid. Run `tests/portraits60.gd`, inspect native identity boards and actual menus. Portraits are complete paintings, never assembled heads and bodies. Story plates may be more cinematic, but speaking portraits retain the same identity.
+
 # Equipped and shoulder-cargo motion — whole-motion59
 
 The active motion collection has four complete painted keys per view for all fourteen identities and eleven equipped/load states. Feet pass visibly between contacts; stop and walk share a source family. Keep head, beard, torso, arms, gripping hands, tool/load and boots in one drawing. Do not replace this with rotating parts or a floating tool icon. Male chins/jaws remain fully bearded.

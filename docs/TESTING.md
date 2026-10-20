@@ -1,3 +1,10 @@
+# Current release — portraits-0.60.0
+Read `testing/portraits60.md`. `portraits60.gd` checks native palettes and produces all-identity/cast galleries. `portrait_ui60.gd` exercises actual creator/dialogue/audience/story/roster/reload paths; set the audience prerequisite in the fixture, and capture after its fade. `motion_play59.gd`, `grips58.gd`, `handworks55.gd` and `mining55.gd` remain focused gameplay regressions.
+
+Fresh clean export uses the existing official unmodified Windows template and separate PCK. External self-contained UI/grip/mining harnesses test that exact PCK from an empty working directory. `audit_release_pck.py --inventory-only` verifies every entry without creating a redundant extraction when no local antivirus database is available; omit the flag for independent unpacking/scanning. No current Defender result is implied.
+
+Keep native displays strictly sequential. Require both runner exit and explicit completion marker before another native run or runtime asset mutation. Use isolated saves.
+
 # Current motion checkpoint — whole-motion59
 
 Read [motion verification](testing/motion59.md). `motion_play59.gd` exercises every identity/state/facing/key and actual physical pickup, movement, save/reload and put-down. Compare numeric raw IDs as integers across JSON, which reloads numbers as floats. `grips58.gd`, `handworks55.gd` and `mining55.gd` remain the focused input/workflow regressions.

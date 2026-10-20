@@ -1,3 +1,13 @@
+# 0.60.0 — Portraits and whole-character playtest
+Extract the entire Windows ZIP; run FirstFortune.exe beside FirstFortune.pck. Continue uses your existing save location. Keep older saves/migration backups for rollback.
+
+1. Open the creator or wardrobe. Cycle all seven male/female designs, natural hair colours, complexion and clothes. Compare the painted face with the moving preview. Check full male beards, topknot/ponytail margins and dark/grey hair edges.
+2. Visit Ivar, Orla, Hedrik, Borin, Eldric and the Lord when your audience is unlocked. Inspect their dialogue and People cards. Lord Eirik's portrait should match his throne sprite; the audience should use your current Dwarf and Ivar.
+3. Select tools with 1–4; walk, stop and turn in all directions. Hold LMB to mine or fell timber. Lift a real chunk/log with E, move with it, then Q to put it down. Try two shoulders if unlocked and a nearby stockpile/workstation/cart.
+4. Visit a familiar cave landmark, use a connected stair, then save/reload. Check terrain, exact cargo, inventory, chosen identity and colours. Return to the hold and craft or sell as usual.
+
+The new portraits and whole-character art are the focus. Existing work/balance/world systems remain. Please report the character design, direction and activity for any remaining visual mismatch; a screenshot or short clip helps. Broader log-lifting/cart/work-direction and world-art limitations are listed in the verification notes.
+
 # 0.57.0 — Grip and silhouette check
 Extract the whole Windows ZIP. Continue your existing fortune. Use the accompanying Motion.mp4 for a quick native gameplay preview.
 

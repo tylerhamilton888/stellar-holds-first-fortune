@@ -1,3 +1,8 @@
+# 0.60.0 follow-up
+Completed: dedicated portraits for all fourteen identities and the Lord, source-pigment/fringe controls, native creator/dialogue/story/roster review, audience actor parity and a new Windows package. Do not restore the magnified idle sprite or old Lord portrait in active portrait controls.
+
+Player acceptance of appearance and feel remains. Existing world/animation/material backlog below is retained, including log lift/put-down, cart pushing, more directional work/combat, tattoos and strict mirrored cargo handedness. Windows/audio/hardware performance needs the user's machine.
+
 # Whole-motion59 follow-up
 
 Completed: four-key equipped passing poses and continuous one-/two-shoulder cargo cycles for all fourteen identities, stop/walk source parity, reviewed hair/load continuity and supported tray contents. These supersede the matching older carry/gait/tray blockers below.

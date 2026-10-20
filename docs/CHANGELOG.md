@@ -1,3 +1,9 @@
+# 0.60.0 — 2026-10-20 · Faces of the Hold
+- Fifteen complete painted portraits matching current identities, including the enthroned Lord.
+- Saved natural palette rendering before filtering; corrected dark-hair/skin fringe while preserving coloured clothes.
+- Unified creator/dialogue/roster/story portraits. Current whole figures replace retired audience actors.
+- Fresh Windows export includes the completed whole-character motion work. Native portrait, gameplay and exact-PCK checks passed; verified recoverable checkpoint. No save or gameplay balance change.
+
 # Unreleased — complete equipped and shoulder-cargo motion
 
 - Added four-key complete-figure gaits for all fourteen identities, four camera views and eleven equipment/supply/cargo states; stopping keeps the same artwork.

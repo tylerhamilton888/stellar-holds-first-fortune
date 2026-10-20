@@ -1,0 +1,31 @@
+{
+  "zip": "Stellar-Holds-First-Fortune-0.60.0-Windows.zip",
+  "bytes": 698756907,
+  "sha256": "0b531ef5957fee4af2af8ed384f551b0aae5a64b524fea62fda482748e15f523",
+  "members": {
+    "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+    "FirstFortune.pck": "4adb5f0ab1e7f78f2bed56a996a7c247ab2322f209fdeea072afc233922de570",
+    "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+    "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+    "START-HERE.txt": "41f679cb5095b76a3672e7e75d6fbbbb9ded2dbbcc8f4fcb64b442441a0c77f6",
+    "VERIFICATION.txt": "440400a8c4b1565d0a68e378e2bc90a2c1045e7fe5b208dd8dde453516e2ecb0",
+    "version.txt": "86bc841485cba44af6a9244f52b3a70a1ab7757b7a9009e66d0e3ac933ef6177",
+    "FILE-HASHES.sha256": "a8c0a5b6997a951530c72bc54b4c3d98f4e7f4dc9c271bf47950498156eb35ec"
+  },
+  "source_export": {
+    "source_commit": "37d999bde9af684d3c90218f415fa4057e3357b8",
+    "engine_sha256": "54215149d52efb1d653a3dec39d0993587bdf5daa2c56e787b5ee88417fb1339",
+    "exe_sha256": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+    "pck_sha256": "4adb5f0ab1e7f78f2bed56a996a7c247ab2322f209fdeea072afc233922de570",
+    "pck_bytes": 774583600
+  },
+  "resources": {
+    "verified": true,
+    "pck_entries": 3126,
+    "portrait_count": 15,
+    "selected_motion_sources": 112,
+    "all_whole_character_and_portrait_assets": 200,
+    "resolved_texture_paths": 200,
+    "probe_notes": "PNG remapping uses .png.import descriptors; bare frame source names resolve under assets/whole-v58, matching the existing runtime. Every final resolved resource verified."
+  }
+}
