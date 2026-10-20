@@ -1,3 +1,7 @@
+# 0.61.1 — Development foundation
+
+Behavior-preserving menu presentation extraction, canonical native fixture and current suite manifest, single build metadata source, repeatable checked packaging, concise contributor/testing documentation and prepared GitHub source import/CI. 201 local passing checks including exact exported pack; source migration completion tracked in CURRENT_STATUS. No art, mining balance or save-schema changes.
+
 # 0.61.0 — Life in the Hold
 
 Escort loading/timing fix; clearer distance-based citizen gait; painted fire animation shared by crafted/town hearths; animated fountain water and removed plaza outline; Orla Copperkettle. 87 current checks passed. See testing/ambient61.md.

@@ -31,7 +31,12 @@ func run():
  at(Vector2(930,700));await snap("05-high-trail")
  at(Vector2(950,340));key(KEY_E);settle();check(g.zone=="mine","Trail mine entrance reaches existing Deepworks")
  var w=g.deep.world;var c=Deepworks.ENTRY+Vector2i.RIGHT
- w.set_cell(c,2);g.deep.contact=Deepworks.center(c);g.deep.hit(c);g.deep.hit(c)
+ w.set_cell(c,2);w.layer().damage.erase(Deepworks.key(c));g.deep.contact=Deepworks.center(c)
+ # This journey verifies ownership; mining55 separately checks real held-work timing.
+ # The retired two-contact balance is not a current acceptance requirement.
+ for i in 12:
+  if w.at(c)==0:break
+  g.deep.hit(c)
  var physical=0
  for raw in g.handworks.data().loose:
   if g.handworks.local(raw) and raw.kind=="stone":physical+=int(raw.units)

@@ -1,3 +1,7 @@
+# Foundation follow-up
+
+Complete source import/fresh-checkout validation and record actual remote commit. Then use small reviewed changes for remaining main.gd responsibilities, confirmed dead renderer dependencies, and measured geometry/animation duplication. Preserve older art and tests; do not confuse historic suites with current gates.
+
 # 0.61.0 follow-up
 
 Completed: escort preparation gate, town cadence, shared animated hearths, fountain motion/outline removal, married cast surname. User playtest remains the art/pace acceptance check. Illustrated prologue plates and static idle dialogue poses are unchanged. Other existing backlog entries below remain separate.
