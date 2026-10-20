@@ -1,28 +1,25 @@
-**Single-download delivery — 2026-10-20:** Version 0.60.0 is now published as one complete Windows ZIP in the private GitHub repository `tylerhamilton888/stellar-holds-first-fortune`.
+# 0.61.0 — Life in the Hold
 
-- Release: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.60.0
-- Game download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.60.0/Stellar-Holds-First-Fortune-0.60.0-Windows.zip
-- Sign in as the repository owner to access it. Extract the entire ZIP, then run `FirstFortune.exe` beside `FirstFortune.pck`.
-- GitHub confirmed the uploaded asset is 698,756,907 bytes, with SHA-256 `0b531ef5957fee4af2af8ed384f551b0aae5a64b524fea62fda482748e15f523`, exactly matching the original verified archive. Release ID 418647518; asset ID 659921980.
-- The repository is private and starts as build-delivery documentation only. Its release tag points to delivery commit `a42c307f87f582914356469fbdeae72a770ebe94`, not the original source history. The original game checkpoints and full recovery bundle chain remain authoritative and preserved separately. No runtime, artwork, save, or gameplay content changed during delivery repair.
-- The older two-part downloads remain as fallback backups. They are no longer the recommended download route.
+2026-10-20 UTC. Focused follow-up to the user-approved 0.60.0 characters/portraits. Source recovery tag: `ambient-0.61.0`; pre-edit checkpoint: `pre-ambient61` at `19e2795c1e4170ac118485c58e0f6be9e4163820`.
 
-# 0.60.0 — Faces of the Hold
+- Opening escort now waits for character preparation, including Ivar's scene-only walking frames. Inside transitions also prepare him. Both actors use whole painted frames; no separate heads or rotating limbs were introduced.
+- Town walking uses distance-based cadence appropriate to the residents' shorter, slower stride, holding direction through pauses. The royal audience now ties its gait to actual travel rather than wall-clock time.
+- Painted hearth fire moves within its aperture, with soft light and restrained embers. The masonry and iron guard stay fixed. Town and player-crafted hearths share this renderer, recipe and collision footprint.
+- Fountains have moving highlights down both spouts and small elliptical ripples inside the basin. Removed the oversized paving circle; basin collision and navigable streets remain.
+- Orla and Hedrik are both Copperkettle. The existing canonical cast accessor updates older saved Orla names while preserving cast ID, appearance, relationships and progress.
 
-2026-10-20 UTC · **portraits-0.60.0**, following **whole-motion59**, on `integrate/whole-0.58.0`. A new standalone Windows playtest build includes all current whole-character art and fifteen matching painted portraits.
+The road-to-Keldrath prologue remains an illustrated sequence. This pass repairs animated in-world escort/audience playback; it does not turn every story plate or stationary dialogue pose into a new animation.
 
-## Current implementation
-Fourteen whole portrait paintings match the seven male/seven female saved identities; Lord Eirik has a dedicated crowned throne portrait. Saved natural hair, complexion, clothes and metal colours remain. `scripts/portrait.gd` uses `painted_portraits60.gd` and `portrait_palette60.gdshader`; the GPU resolves source pigment before filtering and preserves intentional clothing colours. Portraits update only when the profile changes. Source purple is a reserved hair marker, never an intended in-game hair colour. The native colour audit is mandatory after artwork changes.
+Validation: 87 passing checks this pass: intro53 (20), ambient61 (36), grips58 (20), exact exported pack (11). Native captures reviewed for fire/water alignment, walking keys, interiors, escort and married-name dialogue. All 3,128 PCK entries passed hash/bounds/path verification. Linux Godot 4.4.1, software OpenGL and Dummy audio; Windows execution, audible balance and player-device performance still require playtesting. No new antivirus verdict is claimed.
 
-The royal audience now uses current whole-character player/Ivar actors instead of the retired side-view draw call. Creator, dialogue, roster and story captions use the new portraits. All male Dwarfs remain fully bearded. Source images, exact prompts, repairs and hashes: `assets/portraits60/production.json`; rejected first candidates remain for provenance. Existing whole-motion59 selection/runtime metadata is unchanged.
+No save schema/location, inventory rules, terrain generation, mining balance, Pinewood, quest rewards or automation logic changed. No character raster art changed. Existing broader art/transport/combat backlog remains separate.
 
-## Validation and playtest
-See `testing/portraits60.md` for final test counts, native captures, package identity and limits. 189 portrait checks passed, including all eight natural hair palettes and 13,073,656 unchanged non-hair pixels. 158 focused current-game motion/material/Pinewood/Deepworks checks passed. The exact Windows-exported PCK passed 86 further UI/hotbar/mining checks from external harnesses and an empty working directory. No gameplay/script errors occurred in completed final runs. Native execution is Linux/Xvfb/software OpenGL with Dummy audio; Windows, audible balance and the user's hardware performance are not certified.
+Download the one complete Windows ZIP from the private GitHub release. Extract all files into a new folder and run `FirstFortune.exe` beside `FirstFortune.pck`. The executable remains the verified unmodified official Godot 4.4.1 runtime. Older releases and recovery bundles remain intact.
 
-Extract the entire `Stellar-Holds-First-Fortune-0.60.0-Windows.zip` and run FirstFortune.exe beside FirstFortune.pck. Continue uses the existing save location. Start with the creator and local conversations, then walk/work/carry, revisit Pinewood and connected mine levels, and save/reload. Read `PLAYTEST_GUIDE.md`.
+Continue from this source checkpoint, not GitHub's delivery-only main branch. Read `testing/ambient61.md` and `PROJECT_INDEX.md`, then task-relevant files. The connected private repository `tylerhamilton888/stellar-holds-first-fortune` hosts build releases and delivery documents; its tag history is distinct from source recovery tags. A full editable source migration into its main branch has not been performed.
 
-## Boundaries
-No save schema/location, terrain generation, inventory, quest, automation or mining-balance change. Older log lift/put-down, cart push, wider directional work/combat, tattoos, material markings and broader world architecture remain follow-up work. Mirrored facings still affect apparent anatomical shoulder handedness. Romance story plates remain their existing style; speaking portraits are updated. This is a playable art release, not acceptance of every world asset.
+Key files: `scripts/arrival_escort.gd`, `opening_scene.gd`, `whole_frames.gd`, `world_zones.gd`, `ambient_props.gd`, `furnishings.gd`, `appearance.gd`. Preserve original raster sources. Fire animation caches 24 small meshes and moves only fire UVs; no per-frame image processing or new scene nodes. Water effects are drawn in the fountain's existing depth-sorted draw call and respect its occlusion fade. All effects use the simulation clock, including pause/focus behavior.
 
-## Recovery
-`pre-portraits60` preserves whole-motion59 (`630291f38c94bc6cc134236ffde9ec58b504791e`, tree `cbca1e30c820adc15d13d21fee692b622c01ea68`). Its existing bundle was verified before editing and its SHA-256 rechecked. The new `Stellar-Holds-0.60.0-Recovery.bundle` is incremental after that commit; the companion Recovery.txt records exact new commit/tree/hash and independent restore verification. Keep the .51 full baseline and every intermediate bundle through whole-motion59. No previous backup or original asset was overwritten, and no remote changed or pushed.
+Tests: `intro53.gd` now uses the current prewarming-aware fixture and accepts an output path instead of overwriting historical evidence. `ambient61.gd` tests all three wards, old names, rendered props, actual construction/reload and escort gating. `pack_ambient61.gd` is self-contained for running against the exact exported PCK from an empty directory. Require explicit completion marker AND runner exit; use isolated save directories and sequential native displays.
+
+Recovery: the complete .51 baseline and every increment through .60 delivery were verified and restored before edits; `git fsck --full` passed and the source tree matched `6212fae0f64452b470acc6b935c0c6ab5a463d60`. Apply `Stellar-Holds-0.61.0-Recovery.bundle` after the exact .60 delivery commit above; consult the companion Recovery.txt for the new commit/tree/hash and independent restore result. Keep all older backups.
