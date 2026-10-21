@@ -98,7 +98,7 @@ func dodge():
  if not HoldOnboarding.combat_ready(g.state) and not HoldPractice.allowed(g):return
  if dodge_cooldown>0 or attack_left>weapon().time*.55:return
  if HoldPractice.allowed(g):HoldOnboarding.fact(g.state,"practice_dodge")
- dodge_left=.24;dodge_cooldown=.72;dodge_direction=g.face;guard=false;parry_left=0
+ dodge_left=.24;dodge_cooldown=.58 if HoldDisciplines.has(g.state,"sure_footing") else .72;dodge_direction=g.face;guard=false;parry_left=0
  g.sound.effect("swing",-13)
 func attack():
  if attack_left>0 or dodge_left>0:return
@@ -199,6 +199,7 @@ func hurt_enemy(e:Dictionary,damage:float):
  g.burst(e.p+Vector2(0,-25),Color("d0a46b"),7)
  g.popups.append({"p":e.p+Vector2(0,-65),"text":str(int(damage)),"life":.7})
  if e.hp<=0:
+  HoldDisciplines.award(g.state,"warrior",1,g.state.active_site+":"+str(e.id))
   g.state.combat.cleared[e.id]=true;g.state.combat.wounds.erase(e.id)
   var loot={"scrap":3,"copper_ore":2} if e.kind==0 else {"shell":2,"iron_ore":2}
   # Credit immediately and persist defeat atomically: reloads cannot duplicate loot.

@@ -1,3 +1,11 @@
+# Work & Knowledge source playtest
+
+Open Disciplines with **Y** (also Pack, Pause or Survey Office). Try each left-hand tab and scroll its techniques. Learn a ready technique; locked ones must say what is missing. Research a method and check the normal workshop/building recipe becomes available. Confirm tabs and controls remain accessible with Tab/Enter and Escape closes normally.
+
+Mine ore, process stone, fell/section timber, saw logs, finish forge batches, harvest beds, catch fish, recover underground roots/springs, defeat a real threat and recruit crew. Only useful completed work should earn the corresponding mastery. Repeated lifting/dropping and practice dummy hits must not award it. Test a recovery or handling benefit, then save/reload. Existing research, automatic shoulders, mine terrain, quests and inventories should persist. U still unloads mine cargo; T still assigns crew.
+
+Brewing currently explains that its dedicated work loop is pending. Do not expect a new brewery or endgame tree in this milestone.
+
 # The Stone Remembers
 
 After your first commission, audience and return to Ivar, ask him about the missing crew. Enter Old Workings; J records the refuge survey coordinates. Dig a walking bypass on depth 1 and press E beside the miners. Both must walk to the entrance before the tablet is available. There is no death timer. Save midway and return to the same depth to continue.

@@ -47,3 +47,7 @@ The GitHub validation workflow has read-only repository access. Publishing remai
 5. Consolidate actor animation orchestration only with player/NPC/cutscene regression coverage.
 
 The foundation pass does not alter mining balance, movement, economy or save schema.
+
+## Discipline progression owner
+
+`scripts/disciplines.gd` contains stable path/node IDs, migration, eligibility, completed-work credit and recipe modifiers. `scripts/discipline_view.gd` is presentation and explicit learn/research actions only. Adding a path requires a definition, an actual completed-work event, an implemented effect and a behavioral test; never advertise a placeholder as a usable unlock. Keep technology in state.tech and appointments in ancestral_claim. No new top-level save field is needed. Do not remove legacy hauling counters while existing mechanics consume them. Unlocks do not spend experience or impose new locks on previously usable features.

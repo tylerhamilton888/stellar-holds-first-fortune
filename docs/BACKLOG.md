@@ -1,3 +1,9 @@
+# Discipline follow-ups
+
+- Brewing: dedicated production loop before earnable mastery and unlocks.
+- Extend the first-tier discipline definitions with real craft-quality options, apprenticeships and research discoveries as those systems are implemented.
+- Tune work thresholds with player sessions; preserve existing earned capabilities.
+
 ## After ancestral recognition
 - Discuss and implement a readable personal development screen. Preserve existing productive-work counters; separate mastery, researched knowledge and civic standing. See PROGRESSION_NEXT.md.
 - Expand the two-stage tablet investigation with bespoke narrative art or further field evidence only when it improves play. Current investigation and investiture use normal conversations, not new cinematics.

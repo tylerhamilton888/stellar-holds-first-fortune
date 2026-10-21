@@ -245,6 +245,9 @@ func hit(c:Vector2i,thermal:bool=false):
   works.model.refresh()
   for name in world.survey(g.player):g.notify("DISCOVERY · "+name);g.sound.effect("crystal",-12)
 func recover_face(c:Vector2i,result:Dictionary,thermal:bool=false):
+ if result.item in ["food","water"] and result.count>0:
+  HoldDisciplines.award(g.state,"gathering")
+  if HoldDisciplines.has(g.state,"field_lore"):result.count+=1
  if thermal or not g.handworks.rock(result,c):haul.collect(result.item,result.count,g.player)
  rubble.append({"p":Vector2(c)*40,"kind":result.kind,"life":.42})
  for message in messages:

@@ -67,19 +67,23 @@ func held_label()->String:
  return "Pushing · %s · %d / %d loads" % [SPECS[cart.kind].name,cart.raw.size(),load_capacity(cart)] if not cart.is_empty() and cart.hitched else ""
 func capacity()->int:return 2 if int(data().skills.mason)+int(data().skills.forester)>=8 or int(data().skills.miner)>=12 else 1
 func load_capacity(f:Dictionary)->int:
- return int(SPECS[f.kind].capacity)+(4 if vehicle(f) and int(data().skills.miner)>=40 else 0)
+ return int(SPECS[f.kind].capacity)+(4 if vehicle(f) and int(data().skills.miner)>=40 else 0)+(4 if vehicle(f) and HoldDisciplines.has(g.state,"load_bracing") else 0)
 static func raw_item(raw:Dictionary)->String:return str(raw.get("item","wood" if raw.kind=="log" else "stone"))
 static func raw_name(raw:Dictionary)->String:return "raw log" if raw.kind=="log" else HoldData.ITEMS[raw_item(raw)].name.to_lower()+" chunk"
-func award(path:String):data().skills[path]=int(data().skills.get(path,0))+1
+func award(path:String):
+ HoldDisciplines.data(g.state)
+ data().skills[path]=int(data().skills.get(path,0))+1
+ HoldDisciplines.award(g.state,{"miner":"mining","mason":"masonry","forester":"forestry","smith":"smithing"}.get(path,path))
 func spawn(kind:String,p:Vector2,units:int,source:String="",item:String=""):
  var d=data();var id=int(d.next);d.next=id+1
+ if kind=="log" and HoldDisciplines.has(g.state,"timber_selection"):units+=1
  var raw={"id":id,"kind":kind,"units":units,"source":source,"area":context(),"x":p.x,"y":p.y}
  if item!="":raw.item=item
  d.loose.append(raw)
  d.facts.extract=true
 func rock(result:Dictionary,c:Vector2i)->bool:
  if result.kind not in [2,3,4,5,6,7] or result.item in ["iron_slag","copper_slag"] or result.count<=0:return false
- spawn("stone",Deepworks.center(c),int(result.count),"rock:"+str(g.deep.world.depth())+":"+str(c),result.item)
+ spawn("stone",Deepworks.center(c),int(result.count)+(1 if result.kind in [3,4,5,6] and HoldDisciplines.has(g.state,"ore_sorting") else 0),"rock:"+str(g.deep.world.depth())+":"+str(c),result.item)
  award("miner");return true
 func clear_line(a:Vector2,b:Vector2)->bool:
  if g.zone=="mine":return g.deep.world.visible(a,b)
@@ -286,8 +290,12 @@ func update(dt:float):
  if int((before+.21)/.42)!=int((float(f.job.progress)+.21)/.42):g.sound.effect("wood" if f.kind=="saw" else "stone_0",-14)
  if float(f.job.progress)<1.26:return
  var raw=f.job.raw;var item=raw_item(raw)
- f.cargo[item]=int(f.cargo.get(item,0))+int(raw.units)
- f.job={};award("forester" if raw.kind=="log" else "mason");d.facts.process=true;HoldFirstShift.event(g,"process")
+ f.cargo[item]=int(f.cargo.get(item,0))+int(raw.units)+(1 if HoldDisciplines.has(g.state,"sawyer" if raw.kind=="log" else "stone_finish") else 0)
+ f.job={}
+ if raw.kind=="log":
+  HoldDisciplines.data(g.state);data().skills.forester=int(data().skills.forester)+1;HoldDisciplines.award(g.state,"woodworking")
+ else:award("mason")
+ d.facts.process=true;HoldFirstShift.event(g,"process")
  for store in d.facilities:
   if local(store) and store.kind=="store" and pos(store).distance_to(pos(f))<150 and clear_line(pos(store),pos(f)):DeepHaul.transfer(f.cargo,store.cargo,200);break
  g.sound.effect("build",-20);g.save_game()
