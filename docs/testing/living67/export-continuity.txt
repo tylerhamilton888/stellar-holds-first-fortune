@@ -1,0 +1,41 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS NPC passing pose is isolated from player art: 0/0
+PASS NPC passing pose is isolated from player art: 0/1
+PASS NPC passing pose is isolated from player art: 0/2
+PASS NPC passing pose is isolated from player art: 0/3
+PASS NPC passing pose is isolated from player art: 0/4
+PASS NPC passing pose is isolated from player art: 0/5
+PASS NPC passing pose is isolated from player art: 0/6
+PASS NPC passing pose is isolated from player art: 1/0
+PASS NPC passing pose is isolated from player art: 1/1
+PASS NPC passing pose is isolated from player art: 1/2
+PASS NPC passing pose is isolated from player art: 1/3
+PASS NPC passing pose is isolated from player art: 1/4
+PASS NPC passing pose is isolated from player art: 1/5
+PASS NPC passing pose is isolated from player art: 1/6
+PASS crownward painted wall body blocks feet, including upper facade
+PASS Resident moves through the real street
+PASS Resident advances the player's distance-based gait clock
+PASS hearthward painted wall body blocks feet, including upper facade
+PASS Resident moves through the real street
+PASS Resident advances the player's distance-based gait clock
+PASS forgeward painted wall body blocks feet, including upper facade
+PASS Resident moves through the real street
+PASS Resident advances the player's distance-based gait clock
+PASS Foot of bed is not a use anchor
+PASS Rest approaches the visible bedside and saves
+PASS E at the writing desk opens the letter
+PASS Reading a draft does not silently send it
+PASS Letter is recorded once
+PASS Written letter and identity persist on reload
+PASS Personal correspondence preserves inventory and main progression
+PASS Stair use starts a climb instead of immediate map teleport
+PASS Climb visibly moves up the drawn flight
+PASS Climb lands at the matching XY on the next Z
+PASS Same staircase returns to its paired floor
+PASS Stair top cannot be walked through into unrelated paving
+CONTINUITY66: 35 passed / 0 failed
