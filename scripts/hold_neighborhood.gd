@@ -33,7 +33,7 @@ static func draw_stairs(w,p:Vector2,up:bool,width:float=140):
  w.g.draw_texture_rect_region(w.LANDMARKS,Rect2(p-Vector2(48,80)*width/96,Vector2(96,100)*width/96),source)
 static func draw_gallery(w):
  var g=w.g
- w.tile(0,Rect2(80,1000,1720,640),100,Color("b8c5bc") if w.s.area=="crownward" else Color("bca78c") if w.s.area=="forgeward" else Color("cfbea0"))
+ w.tile(0,Rect2(80,1000,1720,640),100,Color("b8c5bc") if w.current_area()=="crownward" else Color("bca78c") if w.current_area()=="forgeward" else Color("cfbea0"))
  # A real open shaft separates public streets from the inhabited gallery.
  g.draw_rect(Rect2(110,1020,1660,110),Color("101e26"))
  w.draw_lower_gallery()
@@ -47,9 +47,12 @@ static func draw_gallery(w):
  for x in [90,1790]:
   g.draw_rect(Rect2(x-10,1000,20,640),Color("31474b"))
   for y in [1180,1610]:w.detail(4,Vector2(x,y),58,90)
- for x in range(110,1770,80):w.s.house.material(3,Rect2(x,1620,80,40))
-static func room_objects(w)->Array:
- var p=parts(w.s.area);var index=int(p[1]);var upper=p[2]=="1"
+ for x in range(110,1770,80):
+  if HoldTerraces.links(w.current_area()).any(func(l):return l.upper==w.current_area() and absf(x+40-l.x)<100):continue
+  w.s.house.material(3,Rect2(x,1620,80,40))
+static func room_objects(w,area_id:String="")->Array:
+ if area_id=="":area_id=w.s.area
+ var p=parts(area_id);var index=int(p[1]);var upper=p[2]=="1"
  var result=[w.furn("lamp",220,305),w.furn("lamp",740,305)]
  if upper:
   result.append_array([w.furn("bed",290,410),w.furn("bed",430,410),w.furn("desk",570,360),w.furn("bookcase",270,560)])
@@ -57,30 +60,10 @@ static func room_objects(w)->Array:
   result.append_array([w.furn("hearth",340,335),w.furn("tea_table",450,475),w.furn("chair",385,490),w.furn("chair",515,490),w.furn("counter",650,365),w.furn("bookcase",265,360)])
  if index==1:result.append(w.furn("lamp",570,570))
  return result
-static func resident(w,index:int,p:Vector2,walking:bool=false,aim:Vector2=Vector2.DOWN,gait:float=0)->Dictionary:
- var ward=parts(w.s.area)[0] if is_home(w.s.area) else w.s.area
- var key="house:"+ward+str(index)
+static func resident(w,index:int,p:Vector2,walking:bool=false,aim:Vector2=Vector2.DOWN,gait:float=0,ward:String="")->Dictionary:
+ if ward=="":ward=parts(w.s.area)[0] if is_home(w.s.area) else w.s.area
+ var key="house:"+str(w.g.state.seed_value)+ward+str(index)
  if not w.profiles.has(key):w.profiles[key]=HoldAppearance.random_profile(w.g.state.seed_value+8200+index+HoldWorldZones.WARDS.find(ward)*31,index%2)
  return {"p":p,"kind":"citizen","profile":w.profiles[key],"aim":aim,"walking":walking,"gait":gait,"name":{"hearthward":["Oskar","Freya","Sten"],"crownward":["Bjarne","Astrid","Halvar"],"forgeward":["Einar","Bodil","Haldor"]}[ward][index]+" "+FAMILIES[index],"role":"Neighbor","index":index+6,"time":w.g.state.elapsed}
 static func people(w,at_time:float=-1)->Array:
- var result=[];var time=float(w.g.state.elapsed) if at_time<0 else at_time
- for i in 3:
-  var phase=fposmod(time+i*29,180)
-  if is_home(w.s.area):
-   var p=parts(w.s.area)
-   if int(p[1])==i and p[2]=="0" and phase>=120:result.append(resident(w,i,Vector2(450,530)))
-  elif phase<120:
-   var a=home_door(i)+Vector2(0,45);var b=a+Vector2(150 if i<2 else -150,0)
-   var t=fposmod(phase,30);var forward=t<15;var blend=clampf((t if forward else t-15)/6,0,1)
-   var position=a.lerp(b,blend) if forward else b.lerp(a,blend)
-   var aim=(b-a).normalized()*(1 if forward else -1);var walking=blend<1;var gait=HoldDrawnLocomotion.time_for_distance(blend*150+(0 if forward else 150))
-   if phase<.75:position=home_door(i).lerp(a,phase/.75);aim=Vector2.DOWN;walking=true;gait=HoldDrawnLocomotion.time_for_distance(phase*60)
-   elif phase>119.25:position=a.lerp(home_door(i),(phase-119.25)/.75);aim=Vector2.UP;walking=true;gait=HoldDrawnLocomotion.time_for_distance((phase-119.25)*60)
-   result.append(resident(w,i,position,walking,aim,gait))
- return result
-
-static func gallery_stairs(ward:String)->Array:
- var result=[]
- if ward in ["hearthward","crownward"]:result.append({"p":Vector2(180,1570),"dest":"crownward" if ward=="hearthward" else "hearthward","up":ward=="hearthward","side":"west"})
- if ward in ["hearthward","forgeward"]:result.append({"p":Vector2(1700,1570),"dest":"forgeward" if ward=="hearthward" else "hearthward","up":ward=="forgeward","side":"east"})
- return result
+ return w.routines.people(w.s.area,float(w.g.state.elapsed) if at_time<0 else at_time)

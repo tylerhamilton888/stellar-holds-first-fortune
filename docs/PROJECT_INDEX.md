@@ -1,3 +1,12 @@
+# Living terraces — 0.63.0
+
+- scripts/hold_terraces.gd: shared projected ward coordinates, normal-movement stairs, rails and camera continuity.
+- scripts/hold_routines.gd: compiled household/work/tavern journeys sampled from saved time.
+- scripts/room_layout.gd: expanded forge plan, bounds, exit, camera and furnishing positions.
+- scripts/hold_masonry_art.gd / assets/hold-kit67: original painted architecture and measured crops.
+- scripts/furnishings.gd: craftable carved pillars and low workshop tables.
+- tests/living67.gd / docs/testing/living67.md: route clearance, loaded crossings, persistence and rendered contact evidence.
+
 # Physical continuity — 0.62.1
 
 - scripts/letters.gd: optional writing-desk story and journal copy.

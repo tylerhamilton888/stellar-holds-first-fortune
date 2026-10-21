@@ -56,6 +56,7 @@ func run():
  check(g.opening_scene==null and HoldOnboarding.stage(g.state)==5 and g.state.inventory==pack,"Existing fortunes are not pulled backwards into the new tutorial")
  g.start_game(false);g.opening_scene.finish();await process_frame;scene=g.opening_scene;scene.set_process(false);scene.finish();await process_frame
  check(g.opening_scene==null and g.surface.area=="room:home" and HoldOnboarding.settling(g.state),"Skip walk arrives safely in quarters and retains usable objectives")
+ settle() # The visible loader must finish before accepting gameplay input.
  at(Vector2(650,460));key(KEY_E);g.close_panel();at(Vector2(328,388));key(KEY_E);await frames(100)
  check(HoldOnboarding.stage(g.state)==2,"Bed and chest objectives work in either order after skipping")
  await snap("06-ready-to-meet")

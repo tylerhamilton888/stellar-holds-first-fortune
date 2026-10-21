@@ -18,7 +18,8 @@
       "world",
       "modular",
       "hold",
-      "continuity"
+      "continuity",
+      "living"
     ],
     "modular": [
       "modular",
@@ -44,6 +45,16 @@
     ],
     "locomotion": [
       "continuity",
+      "ambient",
+      "equipment"
+    ],
+    "living": [
+      "living",
+      "hold",
+      "continuity",
+      "orientation",
+      "world",
+      "modular",
       "ambient",
       "equipment"
     ]
@@ -92,6 +103,10 @@
     "continuity": {
       "script": "tests/continuity66.gd",
       "marker": "CONTINUITY66"
+    },
+    "living": {
+      "script": "tests/living67.gd",
+      "marker": "LIVING67"
     }
   }
 }

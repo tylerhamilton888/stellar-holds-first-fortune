@@ -6,6 +6,8 @@ const ATLAS=preload("res://assets/furnishings-v56/interior.png")
 const CROPS=[Rect2(40,83,316,237),Rect2(424,22,308,300),Rect2(805,57,326,271),Rect2(1250,36,210,289),Rect2(15,429,407,224),Rect2(442,397,320,258),Rect2(805,376,325,282),Rect2(1180,328,323,340),Rect2(54,661,288,342),Rect2(491,668,188,334),Rect2(853,751,257,226),Rect2(1204,698,280,291)]
 # size is the visible silhouette; base is its ground-plane occupied rectangle.
 const ITEMS={
+ "worktable":{"title":"Workshop table","art":4,"size":Vector2(108,34),"base":Rect2(-51,-18,102,18),"cost":{"wood":8,"stone":2}},
+ "stone_pillar":{"title":"Carved stone pillar","size":Vector2(54,124),"base":Rect2(-25,-22,50,22),"cost":{"stone":12,"dressed_stone":4}},
  "tea_table":{"title":"Tea table","base_kind":"table","cost":{"wood":4,"stone":2},"dressing":[["kettle",Vector2(0,-30)],["mug",Vector2(-16,-29)],["mug",Vector2(16,-29)]]},
  "serving_counter":{"title":"Serving counter","base_kind":"counter","cost":{"wood":9,"stone":2},"dressing":[["mug",Vector2(-23,-41)],["mug",Vector2(19,-41)]]},
  "chest":{"title":"Storage chest","art":0,"size":Vector2(44,33),"base":Rect2(-20,-17,40,17),"cost":{"wood":4}},
@@ -21,7 +23,7 @@ const ITEMS={
  "mug":{"title":"Copper mug","art":10,"size":Vector2(6,6),"base":Rect2(),"cost":{}},
  "kettle":{"title":"Tea kettle","art":11,"size":Vector2(12,12),"base":Rect2(),"cost":{}}
 }
-const BUILDABLE=["chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","hearth"]
+const BUILDABLE=["chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","worktable","hearth","stone_pillar"]
 static func geometry(kind:String)->Dictionary:
  var item=ITEMS.get(kind,ITEMS.table)
  return ITEMS[item.base_kind] if item.has("base_kind") else item
@@ -33,7 +35,8 @@ static func silhouette(kind:String,p:Vector2)->Rect2:
  return Rect2(p-Vector2(size.x*.5,size.y),size)
 static func draw(n:Node2D,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
- if kind=="hearth":
+ if kind=="stone_pillar":HoldMasonryArt.pillar(n,p,124,tint)
+ elif kind=="hearth":
   var clock=n.get("clock")
   HoldAmbientProps.hearth(n,p,float(clock) if clock!=null else 0.0,tint)
  else:n.draw_texture_rect_region(ATLAS,silhouette(kind,p),CROPS[item.art],tint)

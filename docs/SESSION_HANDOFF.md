@@ -1,3 +1,13 @@
+# 0.63.0 — Living terraces (verification in progress)
+
+Work branch world/living-hold67. Started from remote main 7fa8479904295103d16d1aedbbe8121419f45587 and restored local 1401303d8bfd0bda6ccd4e8a30244580aae49f3a. Local tag pre-living-hold67 and its verified incremental bundle preserve the starting state; older releases and backups are untouched. Local history differs from remote history: publish changed blobs on the verified remote parent, never force-push the restored local history.
+
+HoldTerraces projects the three saved wards into one continuous terrace space (stride 1740). Great Stairs cross through normal movement with unchanged camera/gait and attached cargo; save positions remain ward-local. Enclosed service stairs/lift and separate building interiors remain. HoldRoutines compiles nine household journeys once per seed and samples the persisted elapsed clock; grids are released after compilation. Only the active ward and visible adjacent architecture/people draw. Ordinary public rovers and story hosts retain their existing behavior.
+
+HoldRoomLayout owns the expanded forge floor, exit, camera and furnishings. HoldMasonryArt uses the original assets/hold-kit67 atlas. Shared carved pillars and low workshop tables are craftable furnishing catalogue entries; tables are decorative, not duplicate processing systems. WholeFrames.prepare warms town routes; player animation descriptors and artwork are unchanged. Keep the approved player walk.
+
+Read testing/living67.md for gates, observed fixes and limitations. Run suite living; full gameplay and exact-pack gates are required before release. tests/intro53 now waits for the existing loading gate before sending skipped-intro gameplay inputs. No save schema, mining, economy or forestry changes. Latest published release remains 0.62.1 until publication is verified.
+
 # 0.62.1 session handoff
 
 Published release v0.62.1: one Windows ZIP at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.62.1. Release source 7c51669f17b94ceb835b99fa9572f03e75cad880; hosted build report and published digest are verified in testing/continuity66/hosted-build.json. The release job completed all gameplay and exact-pack gates. Continue from GitHub main; preserve the player walk and this release.

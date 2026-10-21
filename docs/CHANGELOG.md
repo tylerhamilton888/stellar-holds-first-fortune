@@ -1,3 +1,12 @@
+# 0.63.0 — The Living Terraces
+
+- Connected all three Keldrath wards with continuous walking along painted Great Stairs; preserved camera, gait, saves and loaded handcarts at crossings.
+- Added deterministic home/work/tavern journeys for nine household residents, using actual doors and stairs and the saved world clock.
+- Enlarged Borin's workshop interior and exterior wing with shared masonry, modestly scaled benches, storage and painted work poses.
+- Added craftable/placable carved pillars and low workshop tables through the existing furniture system.
+- Updated directions and quest markers; kept enclosed service stairs and lift shortcuts, existing stories, player art, mining, timber and industrial systems.
+- Added native route/contact/export coverage; fixed tutorial test timing to wait for the visible loader after skipping the escort.
+
 ## 0.62.1
 - NPC-only whole-character passing poses; shared distance-based gait, preserving the player walk.
 - Solid facade wall coverage and collision-checked streets/door approaches.

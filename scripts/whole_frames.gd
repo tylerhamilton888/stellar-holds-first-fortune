@@ -156,12 +156,17 @@ static func prepare(g:Node):
  data();warm_jobs.clear();var people=[{"profile":g.state.appearance,"player":true}]
  if g.opening_scene is HoldArrivalEscort:people.append({"profile":g.state.npc("ivar"),"player":false})
  if g.surface.active() and HoldWorldZones.ward(g.surface.area):
-  for c in g.surface.world.people():people.append({"profile":c.profile,"player":false})
+  for ward in HoldWorldZones.WARDS:
+   for c in g.surface.world.people(-1,ward):
+    if not c.has("interaction"):people.append({"profile":c.profile,"player":false,"walk_only":true})
  elif g.surface.room():
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
   if host!="":people.append({"profile":g.state.npc(host),"player":false})
   if g.room_id=="tavern":
    for id in HoldNpcPresence.tavern_guests(g.state):people.append({"profile":g.state.npc(id),"player":false})
+ if g.surface.active() and (HoldWorldZones.ward(g.surface.area) or g.surface.room()):
+  g.surface.world.routines.ensure()
+  for plan in g.surface.world.routines.plans:people.append({"profile":plan.person.profile,"player":false,"walk_only":plan.index!=0})
  for a in g.agents:
   if a.type=="worker":people.append({"profile":g.state.npc(a.id),"player":false})
  var queued={}
@@ -173,6 +178,7 @@ static func prepare(g:Node):
    if kind=="equipped" and metadata.has(identity(p)+"-motion"):continue
    for index in metadata[sheet].size():
     if kind=="town" and index not in range(8,12):continue
+    if entry.get("walk_only",false) and kind=="core" and index>=20:continue
     if kind=="handling" and metadata.has(identity(p)+"-motion") and index<40 and index not in range(8,16):continue
     if not entry.player and kind=="utility" and index not in range(8,12):continue
     var key=cache_key(p,sheet,index)

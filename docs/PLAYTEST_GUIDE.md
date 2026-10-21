@@ -1,3 +1,15 @@
+# 0.63.0 — Living hold acceptance route
+
+1. Load a copy of an existing fortune or finish/skip Ivar's welcome. Check that bed, chest, letter home and introductions still work.
+2. From Hearthward, cross the southern gallery bridge, walk east past the homes, then walk down the Great Stair with WASD. Watch your feet and camera at the Z boundary. Walk back up without pressing E.
+3. Take the northwest Great Stair from Hearthward to Crownward. Check that the painted rails stop sideways movement and the landings remain clear. The older enclosed service stairs/lift are shortcuts.
+4. Follow a named household neighbor through streets, stairs and a doorway. Residents take several minutes to complete a journey; story hosts remain at their services. Reload and check that neighbors retain their identity and position.
+5. Enter Borin's forge through its painted door. Explore the wider work hall, inspect hammer/stone contact, speak with Borin and leave through the south doorway.
+6. At your claim, craft/place a Carved stone pillar (12 stone + 4 dressed stone) or Workshop table (8 wood + 2 stone). Check green/red placement feedback, base collision and save/reload. The table is furniture; processing still uses existing workstations.
+7. Hitch a loaded handcart and walk a Great Stair. Confirm contents remain intact after crossing and reload. Then revisit the mine/Pinewood, trade or craft, and return home.
+
+Report any spot where visible architecture and collision disagree, any snap at a stair boundary, missing walking frames, or Windows frame-time spikes. Please note the ward, door or named neighbor so it can be reproduced.
+
 # 0.62.1 focused playtest
 
 The normal player walk is deliberately unchanged. Watch town residents and Ivar from the side: their boots should visibly pass beneath the body, with whole-character poses and no hovering tool. Residents still pause at route stops.

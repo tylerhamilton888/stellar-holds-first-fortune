@@ -167,7 +167,7 @@ static func journal(g):
   g.label(g.panel_body,"IVAR · A PLACE TO BEGIN",20,Color("edc98a"))
   g.label(g.panel_body,"Your borrowed quarters are on Hearthward's northwestern street. Rest at the bed on the left and check the chest beside the table. Walk with WASD or arrows; E interacts. I shows your pack. Nothing needs to be spent or put away to finish settling in.",16)
   for task in ["bed","chest"]:g.label(g.panel_body,("✓ " if q.get("settle_"+task,false) else "○ ")+("Rest at your bed" if task=="bed" else "Check your storage chest"),16)
-  g.label(g.panel_body,"Then meet Borin in Forgeward (eastern stairs), Orla at the exchange on the north street, and Hedrik at the Copper Kettle next door. Your room and chest remain yours after you obtain a mountain charter.",15)
+  g.label(g.panel_body,"Then meet Borin in Forgeward (southern gallery bridge, then the eastern Great Stair; the service stair is a shortcut), Orla at the exchange on the north street, and Hedrik at the Copper Kettle next door. Your room and chest remain yours after you obtain a mountain charter.",15)
  if q.stage==2:
   for id in ["borin","orla","hedrik"]:
    g.button(g.panel_body,("Met " if q.met.has(id) else "Find ")+s.npc(id).name,func():s.tracked_npc=id;g.save_game();g.close_panel())
