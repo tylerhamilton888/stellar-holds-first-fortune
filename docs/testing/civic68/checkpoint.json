@@ -1,0 +1,13 @@
+{
+  "runtime_local_commit": "48e0b7dfe9a18b116b753245cb92a9c36ad1823a",
+  "runtime_remote_commit": "e9fc82ac86bfea87f9cc68e25639923c1bcae14f",
+  "pull_request": 11,
+  "source_checks": 315,
+  "pack_checks": 161,
+  "remote_changed_paths_verified": 34,
+  "art_receive_run": 39671678855,
+  "hosted_validation_run": 39671981253,
+  "hosted_validation_status": "pending",
+  "release_status": "not published",
+  "recovery_tag": "verified-civic68"
+}

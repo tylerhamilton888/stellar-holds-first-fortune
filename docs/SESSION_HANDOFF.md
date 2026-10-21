@@ -6,7 +6,7 @@ Read CURRENT_STATUS and testing/civic68.md. HoldWardDesign owns authored ward po
 
 Run suite civic and the exact-pack checker (now includes civic68). Verify Ivar's escort after moving the quarters lamp away from his route. Test freight deposit/reload/recovery from a valid approach, five interior exits, all wards and resident/public routes. Native visual captures are local QA artifacts, not runtime assets. New art provenance and exact prompts live in assets/hold-kit68.
 
-Native source verification passed all 315 checks. A clean Windows export passed the audit of all 3,165 packed entries; exact-pack gameplay verification is running. Publication remains pending. GitHub main and v0.63.0 are the previous verified delivery. Large image transfer is isolated on an asset branch; verify content hashes before using binary blobs in the runtime tree. Do not include transfer chunks in the game branch.
+Native source verification passed all 315 checks. A clean Windows export passed the audit of all 3,165 packed entries; all 161 exact-pack gameplay checks also passed. Local verified-civic68 and recovery/verified-civic68.bundle preserve this source/evidence, requiring pre-keldrath68 / 84141d65. GitHub PR #11 preserves runtime e9fc82ac86bfea87f9cc68e25639923c1bcae14f; all 34 changed paths match local blob hashes. Hosted validation 39671981253 is still pending; do not claim it passed or merge before checking. No new release is published. Publication remains pending. GitHub main and v0.63.0 are the previous verified delivery. Large image transfer is isolated on an asset branch; verify content hashes before using binary blobs in the runtime tree. Do not include transfer chunks in the game branch.
 
 # 0.63.0 — Living terraces (published and verified)
 

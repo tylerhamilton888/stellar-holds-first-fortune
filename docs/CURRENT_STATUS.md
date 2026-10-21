@@ -6,7 +6,7 @@ Original illustrated distant galleries and pumping works replace the empty perim
 
 Interior exits have painted open doors, solid side leaves, a clear threshold and camera framing above the hotbar. Automatic door captions, tracked-destination banners and overhead names are removed. A small nearby E cue and the existing contextual footer/guide supply interaction information; physical building signs remain. Player artwork and gait are unchanged.
 
-Native source verification passed 315 checks across civic, living, hold, orientation, world, modular and ambient cases, with no script errors. No 0.64.0 release is published yet; v0.63.0 remains the last verified download. See testing/civic68.md and SESSION_HANDOFF.md.
+Native source verification passed 315 checks across civic, living, hold, orientation, world, modular and ambient cases, with no script errors. Another 161 checks passed against the clean exported pack. Source is backed up in PR #11 and recovery tag verified-civic68. Hosted validation remains pending. No 0.64.0 release is published yet; v0.63.0 remains the last verified download. See testing/civic68.md and SESSION_HANDOFF.md.
 
 # 0.63.0 — Living terraces (published)
 
