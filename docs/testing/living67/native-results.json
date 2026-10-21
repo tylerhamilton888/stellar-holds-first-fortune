@@ -1,55 +1,70 @@
 {
   "checks": 303,
-  "duplicate_continuity_checks": 35,
   "cases": [
     {
       "test": "living",
-      "checks": 48,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 48,
       "seconds": 59.48
     },
     {
       "test": "hold",
-      "checks": 81,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 81,
       "seconds": 45.49
     },
     {
       "test": "continuity",
-      "checks": 35,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
       "seconds": 48.5
     },
     {
       "test": "orientation",
-      "checks": 20,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 20,
       "seconds": 70.49
     },
     {
       "test": "world",
-      "checks": 35,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
       "seconds": 65.57
     },
     {
       "test": "modular",
-      "checks": 28,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 28,
       "seconds": 47.5
     },
     {
       "test": "ambient",
-      "checks": 36,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 36,
       "seconds": 75.53
     },
     {
       "test": "equipment",
-      "checks": 20,
       "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 20,
       "seconds": 55.48
     }
   ],
-  "limitations": "Local exact-pack test completion unconfirmed after exec-server connection failure. Hosted full gameplay and exact-pack gates required before publication."
+  "prior_failed_runs": "Retained outside repository; superseded fixture/camera failures documented in living67.md"
 }

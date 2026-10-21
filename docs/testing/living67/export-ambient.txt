@@ -1,0 +1,17 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Exported cast names agree
+PASS Exported fountain animates on the native renderer
+PASS Exported basin collision and adjacent path agree with the art
+PASS Exported painted hearth animates
+PASS Exported hearth is stationary without advancing simulation time
+PASS Actual exported Orla dialogue displays her married name
+PASS Exported escort waits for asset preparation
+PASS Exported escort moves both actors with changing painted frames
+PASS Royal audience opens with the existing progression gate
+PASS Royal audience advances whole walk frames with movement for both actors
+PASS Exact pack reload preserves inventory and the married surname
+PACK AMBIENT61: 11 passed / 0 failed

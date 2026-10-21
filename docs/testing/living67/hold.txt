@@ -1,0 +1,87 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS crownward includes the residential gallery
+PASS crownward bridge deck supports feet and open shaft blocks travel
+PASS crownward visible bridge rails are solid
+PASS crownward lateral movement cannot wiggle inside building footprints
+PASS crownward every building threshold has a clear approach
+PASS crownward citizen routes stay on walkable floor
+PASS crownward home 0 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS crownward home 1 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS crownward home 2 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS hearthward includes the residential gallery
+PASS hearthward bridge deck supports feet and open shaft blocks travel
+PASS hearthward visible bridge rails are solid
+PASS hearthward lateral movement cannot wiggle inside building footprints
+PASS hearthward every building threshold has a clear approach
+PASS hearthward citizen routes stay on walkable floor
+PASS hearthward home 0 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS hearthward home 1 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS hearthward home 2 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS forgeward includes the residential gallery
+PASS forgeward bridge deck supports feet and open shaft blocks travel
+PASS forgeward visible bridge rails are solid
+PASS forgeward lateral movement cannot wiggle inside building footprints
+PASS forgeward every building threshold has a clear approach
+PASS forgeward citizen routes stay on walkable floor
+PASS forgeward home 0 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS forgeward home 1 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS forgeward home 2 enters through its painted threshold
+PASS Upper room has no phantom exit to the street
+PASS Upper room shares the real stair landing
+PASS Upper room and Z persist on reload
+PASS Same stair descends to family room
+PASS Home exit returns to its own doorstep
+PASS Real movement crosses the bridge onto the gallery
+PASS Real movement stops at the visible shaft railing
+PASS Royal stair climbs at the actual landing
+PASS Royal stair returns to the same horizontal coordinate
+PASS Forge stair descends to lower ward
+PASS Residential Great Stair walks down to hearthward
+PASS Same physical Great Stair returns to crownward
+PASS Residential Great Stair walks down to forgeward
+PASS Same physical Great Stair returns to hearthward
+HOLD65: 81 passed / 0 failed
