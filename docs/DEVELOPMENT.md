@@ -12,6 +12,14 @@ Use a short-lived branch for one coherent task. Read AGENTS.md and the current h
 
 No special architecture or assistant-specific instruction file is needed: all contributors use AGENTS.md. Avoid simultaneous edits to the same subsystem. Resource paths, .uid files and .import sidecars are part of the project contract.
 
+## Ancestral progression owner
+
+`ancestral_claim.gd` owns the saved rescue/research/appointment state machine. It uses existing mine cells, Handworks-independent NPC walking, conversation locality, outpost records and claim fields. Rescue paths are cached between waypoint advances and replanned when blocked. No ancestry logic belongs in generic mining damage or inventory.
+
+## Current worksite owner
+
+`first_shift.gd` retains Ivar’s commission panel and owns the practical mine lesson plus bounded crew demonstration. All material/equipment records remain in Handworks. `owner: hold` protects crew inputs, jobs and output; `owner: loan` permits player work without dismantling fixed borrowed equipment. Do not grant communal stock access as part of early onboarding.
+
 ## Boundaries
 
 - `main.gd`: session orchestration, input routing and host facade. Existing calls remain compatible while cohesive responsibilities are extracted.

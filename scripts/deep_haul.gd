@@ -104,6 +104,7 @@ func in_field(item:String)->int:
  var hands=s.hauling.get("hands",{});var raw=[]
  raw.append_array(hands.get("loose",[]));raw.append_array(hands.get("carry",[]))
  for f in hands.get("facilities",[]):
+  if f.get("owner","")=="hold":continue
   raw.append_array(f.get("raw",[]));n+=int(f.get("cargo",{}).get(item,0))
   if not f.get("job",{}).is_empty():raw.append(f.job.raw)
  for load in raw:

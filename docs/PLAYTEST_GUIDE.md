@@ -1,3 +1,23 @@
+# The Stone Remembers
+
+After your first commission, audience and return to Ivar, ask him about the missing crew. Enter Old Workings; J records the refuge survey coordinates. Dig a walking bypass on depth 1 and press E beside the miners. Both must walk to the entrance before the tablet is available. There is no death timer. Save midway and return to the same depth to continue.
+
+Take the slab to Eldric; obtain the archive comparison from Lord Eirik and family registration from Ivar; return to Eldric. Petition the Lord for appointment as Overseer. You receive nearby Old Delving if unclaimed; an existing purchased holding stays yours. Develop its three camp stages, recruit two Folk and keep 12 food/12 water before requesting investiture as Thane. Research and titles grant no right to take Keldrath's stock.
+
+# First-shift candidate checks
+
+Enter Old Workings from the settlement route. Open J for the practical step. Excavate stone, lift a freed load with E, deposit at the western loan rack, hold E beside its stonebreaker, and collect output with Shift+E. Use Shift+B to craft/place a stockpile and your own stonebreaker; valid previews are green. Leave walking and work space around the equipment.
+
+The eastern workers process hold-owned loads. Their stock and output should refuse collection and must not feed your bench. Ask Ivar in person for a timber allowance if desired. Save/reload after excavation and placement: terrain, equipment and lesson progress should remain. Older occupied mine layouts should keep their equipment.
+
+Walk all three wards and the Great Stairs, enter/exit homes and public buildings, and check bridges and visible furniture bases. Look for clear thresholds above the hotbar, restrained interaction cues, purposeful civic/industrial pockets and distant mountain works. Windows performance, sound and artistic acceptance still need your hardware.
+
+## Three Hearths playtest
+
+Walk from the Lord's Hall past the memorial and orrery, descend the Great Stairs to the commons, then continue to Borin's forge and the freight lift. Look for distinct civic, domestic and industrial activity without floating destination labels. G retains directions; the footer identifies the nearby E action.
+
+Try a family home and the starting quarters: the open exit threshold should be visible above the hotbar, with collision at the door leaves and a clear center. Inspect the southern Forgeward overlook for distant mountain works. Deposit materials in a freight chest, save/reload and recover them. Start a fresh game to check Ivar's walk, then revisit an existing save to confirm quests and inventory remain intact.
+
 # 0.63.0 — Living hold acceptance route
 
 1. Load a copy of an existing fortune or finish/skip Ivar's welcome. Check that bed, chest, letter home and introductions still work.

@@ -1,0 +1,62 @@
+extends "res://tests/support/game_fixture.gd"
+func press(k:int,shift:bool=false):
+ var e=InputEventKey.new();e.keycode=k;e.physical_keycode=k;e.shift_pressed=shift;e.pressed=true;g._unhandled_input(e)
+func run():
+ output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
+ g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
+ g.state.opening=1;HoldOnboarding.ensure(g.state).fresh=false
+ g.surface.enter("trail");settle();g.surface.action("mine");settle()
+ var h=g.handworks;var q=HoldFirstShift.data(g);var world=g.deep.world
+ check(g.zone=="mine" and q.started,"Settlement route enters the real mine and starts the first shift")
+ check(h.data().facilities.size()==4,"Four real loan/crew facilities establish the bay")
+ var cells=world.layer().cells.duplicate();var wood=g.state.count("wood")
+ HoldFirstShift.kit(g)
+ check(g.state.count("wood")==wood,"The mine journal cannot grant access to hold supplies")
+ g.surface.enter("room:commission");settle();HoldOnboarding.ensure(g.state).stage=3
+ HoldFirstShift.kit(g);HoldFirstShift.kit(g)
+ check(g.state.count("wood")==wood+6,"Ivar explicitly issues the construction allowance exactly once")
+ g.surface.enter("trail");g.surface.action("mine");settle()
+ for c in [Vector2i(12,11),Vector2i(13,11)]:
+  world.set_cell(c,2)
+  for i in 8:
+   if world.at(c)!=0:g.deep.hit(c)
+ at(Vector2(500,460));press(KEY_E)
+ at(Vector2(260,420));press(KEY_E)
+ at(Vector2(540,460))
+ press(KEY_E)
+ check(h.data().carry.size()==1 and q.facts.get("lift",false),"E lifts excavated material and advances the practical lesson")
+ await snap("01-lift")
+ at(Vector2(260,420));press(KEY_E)
+ check(h.data().carry.is_empty() and HoldFirstShift.station(g,"rack").raw.size()==2,"E stocks a real raw load")
+ at(Vector2(220,345));Input.action_press("interact");await frames(300);Input.action_release("interact")
+ var bench=HoldFirstShift.station(g,"bench")
+ check(int(bench.cargo.get("stone",0))==8 and q.facts.get("process",false),"Held work navigates around the solid bench and processes the stocked sample")
+ await snap("02-worksite")
+ press(KEY_E,true)
+ check(HoldFirstShift.step(g)==4 and bench.cargo.is_empty(),"Collecting output advances to equipment placement")
+ at(Vector2(310,180));check(h.build("stone_pile",Vector2(340,160)),"Usable stone crafts a player-owned rack in clear floor")
+ at(Vector2(260,180));check(h.build("breaker",Vector2(220,200)),"Player builds a second real stonebreaker")
+ check(HoldFirstShift.step(g)==6,"Practical introduction completes from actual work, collection and builds")
+ check(world.equipment_solid(Vector2(220,280)) and not world.solid(Vector2(280,280)),"Visible station bases block movement while their approaches remain clear")
+ var count=h.data().facilities.size();g.save_game();g.start_game(true);settle();q=HoldFirstShift.data(g)
+ check(h.data().facilities.size()==count and q.kit and HoldFirstShift.step(g)==6,"Equipment and lesson progression persist without duplicate grants")
+ var terrain_same=true
+ for i in world.layer().cells.size():
+  if int(g.deep.world.layer().cells[i])!=int(world.layer().cells[i]):terrain_same=false
+ check(terrain_same,"Camp setup and worker processing do not overwrite excavated terrain")
+ var rack=HoldFirstShift.station(g,"crewrack");var crewbench=HoldFirstShift.station(g,"crewbench")
+ for i in 1200:HoldFirstShift.tick(g,.05)
+ check(rack.raw.is_empty() and crewbench.job.is_empty() and int(crewbench.cargo.get("stone",0))==8,"Visible crew physically delivers and processes its finite four-load supply exactly once")
+ var total=int(crewbench.cargo.get("stone",0))
+ var inventory=g.state.count("stone")
+ check(h.withdraw(crewbench)==0 and h.withdraw(rack)==0 and not h.begin(crewbench),"Hold-owned raw stock, output and work orders are protected")
+ check(g.state.count("stone")==inventory and int(crewbench.cargo.get("stone",0))==total,"Denied access preserves ownership and quantities")
+ for i in 300:HoldFirstShift.tick(g,.05)
+ check(int(crewbench.cargo.get("stone",0))==total,"Idle crew cannot generate infinite materials")
+ at(Vector2(350,400));await snap("03-crew-bay")
+ press(KEY_J);await snap("04-worksite-journal");g.close_panel()
+ # A developed old layout keeps its own objects and receives no duplicate equipment.
+ q.started=false;var existing=h.data().facilities.size();HoldFirstShift.enter(g)
+ check(h.data().facilities.size()==existing,"Occupied bay positions never replace player equipment")
+ print("FIRSTSHIFT69: ",passed," passed / ",failed," failed")
+ g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)

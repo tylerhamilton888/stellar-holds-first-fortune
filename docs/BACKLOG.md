@@ -1,3 +1,8 @@
+## After the Three Hearths refinement
+- Player acceptance of ward identity, scenic depth and reduced captions; Windows hardware performance/audio still require device testing.
+- Distant Works Below are scenery, not a playable fourth ward. New pressure machinery and training racks are decorations, not new production/combat systems.
+- Preserve clear circulation when adding any future decor; escort routes and resident paths are release checks.
+
 ## After 0.63.0
 Published and verified; remaining items below are follow-ups, not incomplete release gates.
 - Player acceptance of Great Stair travel, hold scale, forge contact and nine household schedules. Target Windows performance/audio remain unverified locally.

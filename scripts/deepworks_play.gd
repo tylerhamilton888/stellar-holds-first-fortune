@@ -40,6 +40,8 @@ func enter(resume:bool=false):
  world.data.position=[g.player.x,g.player.y]
  g.velocity=Vector2.ZERO;g.camera=camera_target();g.combat.armed=false;g.combat.reset_actions();g.construction.selected="";strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear()
  world.survey(g.player)
+ HoldFirstShift.enter(g)
+ HoldAncestralClaim.enter(g)
 func remember():
  ensure()
  if g.zone=="mine":world.data.position=[g.player.x,g.player.y]
@@ -79,6 +81,7 @@ func input(e:InputEvent)->bool:
    g.open_panel("rescue");return true
  return false
 func use_stairs(up:bool):
+ if not up and HoldAncestralClaim.interact(g):return
  ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
  if not up and not world.can_descend(c,world.depth()) and works.interact():return
  var travelling_cart=g.handworks.attached()
@@ -469,7 +472,7 @@ func draw():
    g.draw_line(tread.position+Vector2(0,9),tread.end,Color("b2b5a6"),1)
   lamp(entry+Vector2(-58,0));lamp(entry+Vector2(58,0))
   draw_worksite(entry)
-  A.text(g,entry+Vector2(-64,-93),"KELDRATH ↑",15,Color("edcd8a"));A.text(g,entry+Vector2(-65,53),"E · RETURN HOME",12,Color("b9cbc0"))
+  if world.entrance(g.player):A.text(g,entry+Vector2(-5,-55),"E",12,Color("edcd8a"))
  works.draw()
  draw_haulage()
  var actors:Array=[]
@@ -480,6 +483,8 @@ func draw():
   if int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
  actors.append_array(g.fight.objects())
  actors.append_array(g.handworks.objects())
+ actors.append_array(HoldFirstShift.actors(g))
+ actors.append_array(HoldAncestralClaim.actors(g))
  actors.append({"p":g.player,"player":true});actors.sort_custom(func(a,b):return a.p.y<b.p.y)
  for actor in actors:
   var p:Vector2=actor.p
@@ -487,7 +492,9 @@ func draw():
   if actor.get("kind","")=="landmark":
    g.surface.world.detail(int(actor.art),actor.anchor,float(actor.width),float(actor.height));continue
   g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
-  if actor.get("kind","")=="fighter":g.fight.draw_enemy(actor.enemy)
+  if actor.get("kind","")=="firstshift":HoldFirstShift.draw(g,actor,offset)
+  elif actor.get("kind","")=="rescue_crew":HoldAncestralClaim.draw(g,actor,offset)
+  elif actor.get("kind","")=="fighter":g.fight.draw_enemy(actor.enemy)
   elif actor.get("kind","")=="handwork":g.handworks.draw_object(actor)
   elif actor.has("player"):
    if g.combat.armed:g.fight.draw_player(p+Vector2(0,12),1.0,offset);continue
@@ -548,7 +555,7 @@ func draw():
   var stage="solid" if d<=0 else "scored" if d/world.resistance(k)<.4 else "split-ready" if d/world.resistance(k)<.65 else "deeply fractured"
   A.text(g,Vector2(655,480),name+" · "+stage,11,ore_color(k))
  elif g.panel_id=="" and not g.combat.armed:A.text(g,Vector2(680,485),tool_name+" · 1–4 change tool",12,Color("b9d0c8"))
- if g.panel_id=="":
+ if g.panel_id=="" and g.handworks.facility().is_empty() and g.handworks.closest(g.handworks.data().loose,65).is_empty() and g.handworks.data().carry.is_empty() and g.handworks.placing=="":
   g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
   A.text(g,Vector2(30,99),"H · Bucket %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
@@ -592,9 +599,6 @@ func draw_worksite(entry:Vector2):
   if world.at(c)==0:
    g.draw_line(Vector2(entry.x-19,y),Vector2(entry.x+19,y),Color("736348"),4)
    for side in [-1,1]:g.draw_line(Vector2(entry.x+side*13,y-6),Vector2(entry.x+side*13,y+6),Color("9ca9a6"),2)
- for j in 3:
-  var p=entry+Vector2(-126+j%2*27,28+j/2*27)
-  g.surface.prop(p+Vector2(14,23),0,36)
 
 
 func camera_target()->Vector2:return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-290,0,Deepworks.H*40-540))
@@ -682,13 +686,4 @@ func draw_haulage():
   if not cart.hitched:
    g.handworks.sprite(5,p,90);cargo_art(cart.cargo,p+Vector2(15,-28))
   A.text(g,p+Vector2(-24,23),"%d / 320" % DeepHaul.amount(cart.cargo),10,Color("ecd39e"))
- if world.depth()==0:
-  var p=Deepworks.center(Deepworks.ENTRY)+Vector2(-112,-18)
-  g.handworks.sprite(2,p,82)
-  var cargo={}
-  for item in DeepHaul.BULK:
-   if g.state.count(item)>0:cargo[item]=g.state.count(item)
-  cargo_art(cargo,p+Vector2(0,-10))
-  A.text(g,p+Vector2(-40,25),"U · HOLD STORES",10,Color("e3c58f"))
-  if unload_flash>0:
-   for j in 10:g.draw_circle(p+Vector2(sin(j)*28,-(1-unload_flash)*35-j%3*7),2,Color(1,.85,.55,unload_flash))
+

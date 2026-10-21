@@ -42,7 +42,7 @@ static func rails(area:String)->Array:
   result.append(Rect2(Vector2(r.end.x+4,r.position.y),Vector2(14,r.size.y)))
  return result
 static func camera(area:String,p:Vector2)->Vector2:
- var min_y=-65.0;var max_y=1200.0
+ var min_y=-65.0;var max_y=1320.0 if area=="forgeward" else 1200.0
  for link in links(area):
   if link.lower==area:min_y=-450.0
   else:max_y=1580.0

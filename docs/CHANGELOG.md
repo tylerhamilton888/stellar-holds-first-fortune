@@ -1,3 +1,17 @@
+# 0.64.0 — The Hold of Three Hearths
+
+- Added The Stone Remembers: physical crew rescue, evidence-based tablet research, ancestral Overseer appointment and development-gated investiture as Thane. Existing claims and communal ownership are preserved.
+
+- Added a practical mine lesson with loan benches, player-excavated loads and real stockpile/processing/construction steps.
+- Added a protected hold crew work order; hold stock and output are unavailable to the player. Ivar may issue a small explicit timber allowance.
+- Matched mine equipment bases to collision and improved automatic work approaches. Added soft ward lighting and subtle industrial motion.
+
+- Composed the existing wards around an oath court, common hearth and iron terrace; added household details and original distant mountain works.
+- Added shared craft/place catalogue art for a memorial, orrery, notice board, pressure display and training rack. Freight chests retain real contents through existing storage saves.
+- Reframed interior exits above the hotbar with painted open thresholds and physical side leaves.
+- Removed automatic floating door/name/destination captions and large interaction rings; retained nearby E cues, contextual HUD and guide.
+- Kept Great Stairs, NPC routes, existing quests, player walk and previous save progress.
+
 # 0.63.0 — The Living Terraces
 
 - Connected all three Keldrath wards with continuous walking along painted Great Stairs; preserved camera, gait, saves and loaded handcarts at crossings.

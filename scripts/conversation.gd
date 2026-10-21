@@ -37,7 +37,8 @@ static func responses(g):
  var box=GridContainer.new();box.name="Responses";box.columns=2
  box.add_theme_constant_override("h_separation",10);box.add_theme_constant_override("v_separation",9)
  box.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- var outer=g.panel_body.get_parent().get_parent();outer.add_child(box);outer.move_child(box,outer.get_child_count()-2)
+ # Keep long quest responses inside the existing scroll area, never below the window.
+ g.panel_body.add_child(box)
 static func return_choice(g,id:String):
  if local(g,id):choose(g,"Talk about something else",func():start(g,id))
  else:choose(g,"Back to my journal",func():g.open_panel("guidance"))
@@ -65,6 +66,10 @@ static func panel(g):
  if g.talk_topic.begins_with("fluff"):
   header(g,g.panel_body,id,TOPICS[id][int(g.talk_topic.trim_prefix("fluff"))][1])
   choose(g,"There was something else…",func():g.talk_topic="";g.refresh_panel())
+ elif g.talk_topic=="ancestral":
+  header(g,g.panel_body,id,{"ivar":"We bring our Folk home first. The old stone can keep its secrets a little longer.","eldric":"A family mark is a lead. Evidence will tell us what it means.","eirik":"A lawful claim deserves a hearing. Responsibility must still be earned."}.get(id,"Let us examine the matter."))
+  HoldAncestralClaim.options(g,id)
+  return_choice(g,id)
  elif g.talk_topic=="intro":
   header(g,g.panel_body,id,HoldOnboarding.intro_text(s,id))
   choose(g,"Thank you. I will put that to use.",func():
@@ -74,6 +79,8 @@ static func panel(g):
   responses(g)
   if q.fresh and q.stage==2 and id in ["borin","orla","hedrik"] and not q.met.has(id):
    choose(g,"Introduce myself. Ivar sent me.",func():g.talk_topic="intro";g.refresh_panel(),true)
+  if id in ["ivar","eldric","eirik"] and (HoldAncestralClaim.data(s).stage>0 or (id=="ivar" and HoldAncestralClaim.eligible(s))):
+   choose(g,"The Stone Remembers · rescue and ancestral claim",func():g.talk_topic="ancestral";g.refresh_panel(),true)
   if id=="ivar":ivar_options(g)
   if id=="eirik" and q.fresh and q.stage==4:
    choose(g,"Step forward for my audience",func():g.opening_scene=HoldOpeningScene.begin(g,"audience"),true)
@@ -98,6 +105,8 @@ static func panel(g):
  choose(g,"Good fortune. I'll leave you to it.",g.close_panel)
 static func ivar_options(g):
  var s=g.state;var q=HoldOnboarding.ensure(s)
+ if q.stage>=2 and not HoldFirstShift.data(g).kit:
+  choose(g,"Request timber for my first worksite",func():HoldFirstShift.kit(g);g.talk_line="Six lengths, issued against your first shift. Use them to build your equipment. The loan benches are there for you; the crew’s stock and output belong to the hold.";g.refresh_panel())
  if HoldOnboarding.settling(s):
   choose(g,"Remind me what to do",func():g.open_panel("guidance"),true)
  elif q.fresh and q.stage in [0,1]:

@@ -143,10 +143,12 @@ func build(kind:String,p:Vector2)->bool:
  if not g.state.pay(SPECS[kind].cost):g.notify("Bring the construction materials in your pack.");return false
  var d=data();var id=str(d.next);d.next=int(d.next)+1
  d.facilities.append({"id":id,"kind":kind,"area":context(),"x":p.x,"y":p.y,"raw":[],"cargo":{},"job":{},"hitched":false})
+ HoldFirstShift.event(g,"rack" if kind=="stone_pile" else "bench" if kind=="breaker" else "equipment")
  d.facts.build=true;g.sound.effect("build");g.save_game();return true
 func accepts(f:Dictionary,r:Dictionary)->bool:
  return SPECS[f.kind].accept in [r.kind,"all"]
 func deposit(f:Dictionary)->int:
+ if f.get("owner","")=="hold":g.notify("Hold crew stock. Use the western loan rack for your own material.");return 0
  var moved=0;var carry=data().carry
  for i in range(carry.size()-1,-1,-1):
   if f.raw.size()>=load_capacity(f) or not accepts(f,carry[i]):continue
@@ -164,11 +166,14 @@ func deposit(f:Dictionary)->int:
   for k in OUTPUTS:
    var incoming={k:g.state.count(k)};var n=DeepHaul.transfer(incoming,f.cargo,200)
    g.state.add(k,-n);moved+=n
- if moved>0:lift=0;data().facts.stockpile=true;g.sound.effect("wood",-15)
+ if moved>0:lift=0;data().facts.stockpile=true;HoldFirstShift.event(g,"stock");g.sound.effect("wood",-15)
  return moved
 func withdraw(f:Dictionary)->int:
+ if f.get("owner","")=="hold":g.notify("These materials belong to the hold. Your worksite uses your own output.");return 0
  var moved=0
- if not f.cargo.is_empty():moved=DeepHaul.transfer(f.cargo,g.state.inventory)
+ if not f.cargo.is_empty():
+  moved=DeepHaul.transfer(f.cargo,g.state.inventory)
+  if moved>0:HoldFirstShift.event(g,"collect")
  elif not f.raw.is_empty() and data().carry.size()<capacity():data().carry.append(f.raw.pop_back());setting_down={};moved=1;lift=.35
  return moved
 func drop()->bool:
@@ -202,8 +207,9 @@ func input(e:InputEvent)->bool:
    var f=facility();var raw=closest(data().loose,65)
    if e.shift_pressed and g.zone=="mine" and f.is_empty() and (not raw.is_empty() or not data().carry.is_empty()):return true
    if not raw.is_empty() and not e.shift_pressed and data().carry.size()<capacity() and (f.is_empty() or g.player.distance_to(pos(raw))+15<g.player.distance_to(pos(f))):
-    data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;g.save_game();return true
+    data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;HoldFirstShift.event(g,"lift");g.save_game();return true
    if not f.is_empty():
+    if f.get("owner","")=="hold":g.notify("Hold crew equipment and materials. The western loan benches are available for your work.");return true
     if vehicle(f):
      if f.hitched:return false # E remains available for doors and landings.
      if g.surface.active() and data().carry.is_empty() and not e.shift_pressed:
@@ -215,7 +221,7 @@ func input(e:InputEvent)->bool:
     g.save_game();return true
    if not raw.is_empty():
     if data().carry.size()>=capacity():g.notify("Shoulders full. Q sets one down; E deposits at a rack.");return true
-    data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;g.sound.effect("stone_0",-18);g.save_game();return true
+    data().loose.erase(raw);data().carry.append(raw);setting_down={};lift=.35;data().facts.lift=true;HoldFirstShift.event(g,"lift");g.sound.effect("stone_0",-18);g.save_game();return true
  if e is InputEventMouseButton and e.pressed and placing!="":
   if e.button_index==MOUSE_BUTTON_RIGHT:placing="";return true
   if e.button_index==MOUSE_BUTTON_LEFT and not g.hotbar.over():
@@ -223,12 +229,13 @@ func input(e:InputEvent)->bool:
    return true
  return false
 func begin(f:Dictionary)->bool:
+ if f.get("owner","")=="hold":return false
  g.surface.house.impact=0;g.surface.cut_target=-1;g.surface.cut_clock=0
  if not f.job.is_empty():return true
  if DeepHaul.amount(f.cargo)>=180:g.notify("Output full. Shift+E collects finished materials.");return false
  var inputs=[data().carry,f.raw]
  for stock in data().facilities:
-  if local(stock) and stock.kind in ["stone_pile","timber_pile","cart","wagon"] and pos(stock).distance_to(pos(f))<150 and clear_line(pos(stock),pos(f)):inputs.append(stock.raw)
+  if stock.get("owner","")!="hold" and local(stock) and stock.kind in ["stone_pile","timber_pile","cart","wagon"] and pos(stock).distance_to(pos(f))<150 and clear_line(pos(stock),pos(f)):inputs.append(stock.raw)
  for cargo in inputs:
   for i in cargo.size():
    if accepts(f,cargo[i]):
@@ -263,11 +270,15 @@ func update(dt:float):
  if not begin(f):return
  active_id=f.id;active_anchor=g.player
  var side=-1 if g.player.x<=f.x else 1
- var stance=pos(f)+Vector2(side*(56 if f.kind=="breaker" else 34),-55 if f.kind=="breaker" else -22)
- if not stance_clear(g.player,stance):stance=pos(f)+Vector2(-side*(56 if f.kind=="breaker" else 34),-55 if f.kind=="breaker" else -22)
+ var stance=Vector2.INF;var approach=Vector2.INF
+ for sign in [side,-side]:
+  var candidate=pos(f)+Vector2(sign*(56 if f.kind=="breaker" else 34),-55 if f.kind=="breaker" else -22)
+  if stance_clear(g.player,candidate):stance=candidate;approach=candidate;break
+  var corner=pos(f)+Vector2(sign*60,35)
+  if stance_clear(g.player,corner) and stance_clear(corner,candidate):stance=candidate;approach=corner;break
+ if stance==Vector2.INF:return
  if g.player.distance_to(stance)>3:
-  if stance_clear(g.player,stance):
-   var before_pos=g.player;g.player=g.player.move_toward(stance,150*dt);active_anchor=g.player;g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(stance-before_pos).normalized();approaching=true
+  var before_pos=g.player;g.player=g.player.move_toward(approach,150*dt);active_anchor=g.player;g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(approach-before_pos).normalized();approaching=true
   return
  working=true;active_id=f.id
  var before=float(f.job.progress)
@@ -276,17 +287,19 @@ func update(dt:float):
  if float(f.job.progress)<1.26:return
  var raw=f.job.raw;var item=raw_item(raw)
  f.cargo[item]=int(f.cargo.get(item,0))+int(raw.units)
- f.job={};award("forester" if raw.kind=="log" else "mason");d.facts.process=true
+ f.job={};award("forester" if raw.kind=="log" else "mason");d.facts.process=true;HoldFirstShift.event(g,"process")
  for store in d.facilities:
   if local(store) and store.kind=="store" and pos(store).distance_to(pos(f))<150 and clear_line(pos(store),pos(f)):DeepHaul.transfer(f.cargo,store.cargo,200);break
  g.sound.effect("build",-20);g.save_game()
 func recover():
  var f=facility()
  if f.is_empty():g.notify("Stand beside your own equipment to recover it.");return
+ if f.get("fixed",false):g.notify("The loan benches stay with the hold. Build your own equipment to take with you.");return
  if not f.raw.is_empty() or not f.cargo.is_empty() or not f.job.is_empty():g.notify("Empty the equipment first, including its unfinished job.");return
  for k in SPECS[f.kind].cost:g.state.add(k,int(SPECS[f.kind].cost[k]))
  data().facilities.erase(f);g.save_game();g.open_panel("handworks",false)
 func cancel_job(f:Dictionary):
+ if f.get("owner","")=="hold":g.notify("This is the hold crew’s work order.");return
  if f.raw.size()>=SPECS[f.kind].capacity:g.notify("Make room in the station before returning its unfinished input.");return
  f.raw.append(f.job.raw);f.job={};g.save_game();g.open_panel("handworks",false)
 func panel():
@@ -365,8 +378,8 @@ func draw_object(o:Dictionary):
   var count=DeepHaul.amount(f.cargo) if f.kind=="store" else f.raw.size()
   HoldArt.text(g,o.p+Vector2(-22,16),"%d / %d" % [count,load_capacity(f)],11,Color("f1d8a0"))
  if not f.job.is_empty():
-  var work_side=-1 if g.player.x<=f.x else 1
-  var work_at=o.p+Vector2(work_side*26,-34) if working and active_id==f.id and f.kind=="breaker" else o.p+Vector2(0,-27)
+  var work_side=-1 if f.id=="firstshift:crewbench" or g.player.x<=f.x else 1
+  var work_at=o.p+Vector2(work_side*26,-34) if ((working and active_id==f.id) or f.id=="firstshift:crewbench") and f.kind=="breaker" else o.p+Vector2(0,-27)
   raw_sprite(f.job.raw,work_at,30 if f.kind=="breaker" else 40)
   var phase=fmod(float(f.job.progress),.42)/.42
   var tip=work_at+Vector2(0,-12)
@@ -411,6 +424,7 @@ func overlay():
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
  elif f.is_empty() and not raw.is_empty():text="E · Lift "+raw_name(raw)+" · %d units" % int(raw.units)+(" · Hold Shift+E dress" if g.zone=="mine" and raw.kind=="stone" else "")
  elif not data().carry.is_empty():text="Carrying %d / %d · Q put down · E deliver" % [data().carry.size(),capacity()]
+ if not f.is_empty() and f.get("owner","")=="hold":text="Hold crew · reserved stock and work order"
  if placing!="":text="Placing "+SPECS[placing].name+" · LMB build · Right click cancel"
  g.draw_set_transform(Vector2.ZERO)
  if text!="":

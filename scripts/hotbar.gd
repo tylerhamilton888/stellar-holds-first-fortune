@@ -16,6 +16,7 @@ func data()->Dictionary:
 func restore():select(clampi(int(data().get("selected",0)),0,9),false)
 func available()->bool:return not HoldFolk.warming() and g.playing and g.panel_id=="" and not is_instance_valid(g.creator) and not is_instance_valid(g.opening_scene) and not is_instance_valid(g.anniversary_scene)
 func bar_y()->float:
+ if g.surface.active() and g.surface.area in HoldWorldZones.WARDS and g.player.y>1510:return 80.0
  if g.zone=="mine":return 112.0 if (g.player-g.camera).y>390 else 374.0
  return 80.0 if (g.player-g.camera).y>430 else 414.0
 func slot_rect(i:int)->Rect2:return Rect2(230+i*50,bar_y()+24,46,51)

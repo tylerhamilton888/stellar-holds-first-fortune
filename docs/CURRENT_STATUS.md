@@ -1,3 +1,31 @@
+# Ancestral charter — Overseer to Thane
+
+The Stone Remembers is an additive quest stored in outpost.ancestral_claim. Ivar offers a rescue after the first paid shift and initial audience/next-work conversation. The quest uses an existing depth-1 hold cavern and never overwrites excavated terrain. Open a continuous walkable bypass, speak to the miners with E, and keep their route clear until both reach the entrance. Saved positions/path progress support mid-rescue reloads. The recovered slab then goes to Eldric.
+
+Eldric preserves the tablet; the Lord supplies an archive comparison and Ivar the family registration. Eldric authenticates the ancestral reclamation right to nearby Old Delving, not Keldrath. The Lord appoints an Overseer without a charter purchase. Existing saves keep their selected claim and camp stage. Commercial charters remain an alternative. Complete the workshop/beacon, recruit two Folk and hold 12 food plus 12 water to petition for investiture as Thane. Recognition grants no access to communal stock. This is a playable staged conversation and fieldwork quest, not a bespoke cinematic or a new political simulation.
+
+Personal progression audit: Handworks saves miner/mason/forester/smith counters. Mining awards productive faces; processing awards masonry/forestry jobs. Strong shoulders unlock at 12 miner faces or 8 masonry/forestry jobs; Miner 40 adds controlled section work and cart capacity. The smith counter has no comparable developed branch yet. Technology has nine existing prerequisite-linked methods. Neither is currently a comprehensive personal skill tree. Preserve counters when designing the next progression pass.
+
+New test: ancestral70 in the full gameplay and exact-pack gates. It exercises actual excavation/path connectivity, walking evacuation, mid-rescue saves, evidence prerequisites, local-only interactions, appointment, investiture and old-claim preservation. Verification results must be recorded before release.
+
+# 0.64.0 candidate — Practical first shift
+
+The mine introduction uses your own excavated material, loan equipment and an optional timber allowance issued by Ivar in person. A separate hold crew hauls and processes its own finite work order; its raw stock and finished output cannot be taken or automatically consumed by player benches. There is no early communal-reserve privilege.
+
+The lesson teaches real excavation, carrying, stocking, processing, collecting and crafting/placement through existing systems. Equipment and lesson progress persist, occupied old layouts are preserved, and station bases block movement with usable work approaches. The civic pass adds restrained lamp illumination and vent motion while preserving approved character art and Great Stairs.
+
+Candidate verification and publication are in progress. See SESSION_HANDOFF.md and testing/firstshift69.md; do not treat this paragraph as a release announcement.
+
+# 0.64.0 — The Hold of Three Hearths (source verified)
+
+Keldrath retains its three wards, Great Stairs, homes, interiors and established routes. Authored civic, social and industrial pockets now give each ward a distinct purpose: the Oath Court has a memorial and founders’ orrery; the Common Hearth has grouped tavern seating and trade lockboxes; the Iron Terrace separates workshop, freight and training equipment. Domestic lamps, household plaques and communal seating reinforce the Kin Galleries.
+
+Original illustrated distant galleries and pumping works replace the empty perimeter. These are non-playable scenery behind the existing boundaries. New civic furnishings share the player's crafting, placement and collision catalogue. Fixed freight chests use existing persistent storage, with no free supplies or new economy.
+
+Interior exits have painted open doors, solid side leaves, a clear threshold and camera framing above the hotbar. Automatic door captions, tracked-destination banners and overhead names are removed. A small nearby E cue and the existing contextual footer/guide supply interaction information; physical building signs remain. Player artwork and gait are unchanged.
+
+Native source verification passed 315 checks across civic, living, hold, orientation, world, modular and ambient cases, with no script errors. Another 161 checks passed against the clean exported pack. Source is backed up in PR #11 and recovery tag verified-civic68. Hosted validation remains pending. No 0.64.0 release is published yet; v0.63.0 remains the last verified download. See testing/civic68.md and SESSION_HANDOFF.md.
+
 # 0.63.0 — Living terraces (published)
 
 Keldrath's Crownward, Hearthward and Forgeward now connect through long walkable Great Stairs. Normal movement crosses the ward boundary without a fade or input lock, keeping the camera, gait and loaded handcart continuous. Painted masonry provides retaining walls, balustrades, columns and a wider forge exterior. Existing enclosed service stairs and lift remain useful shortcuts.
