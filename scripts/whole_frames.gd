@@ -30,12 +30,14 @@ static func data():
   metadata=JSON.parse_string(FileAccess.get_file_as_string("res://assets/whole-v58/frames.json"))
   var motion_path="res://assets/whole-motion59/runtime.json"
   if FileAccess.file_exists(motion_path):metadata.merge(JSON.parse_string(FileAccess.get_file_as_string(motion_path)))
+  metadata.merge(JSON.parse_string(FileAccess.get_file_as_string("res://assets/town-walk66/frames.json")))
 static func identity(p:Dictionary)->String:return ("female" if p.gender else "male")+str(int(p.sculpt))
 static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
  data()
  var view=HoldDirectional.view(d);var key=posmod(int(time/CYCLE*4),4)
  var sheet=identity(p)+"-core";var index=view
  if walking:index=4+view*4+([0,1,2,1][key] if view==2 else key)
+ if walking and action=="town_walk" and view==1:sheet=identity(p)+"-town"
  if action in ["pick","axe","hammer"]:
   index={"pick":20,"axe":24,"hammer":28}[action]+contact_frame(phase);view=1
   if action=="pick" and absf(d.y)>absf(d.x)*1.35:
@@ -165,11 +167,12 @@ static func prepare(g:Node):
  var queued={}
  for entry in people:
   var p=HoldAppearance.normalized(entry.profile)
-  for kind in (["core","utility","handling","equipped","motion"] if entry.player else ["core","utility"]):
+  for kind in (["core","utility","handling","equipped","motion"] if entry.player else ["core","utility","town"]):
    var sheet=identity(p)+"-"+kind
    if not metadata.has(sheet):continue
    if kind=="equipped" and metadata.has(identity(p)+"-motion"):continue
    for index in metadata[sheet].size():
+    if kind=="town" and index not in range(8,12):continue
     if kind=="handling" and metadata.has(identity(p)+"-motion") and index<40 and index not in range(8,16):continue
     if not entry.player and kind=="utility" and index not in range(8,12):continue
     var key=cache_key(p,sheet,index)
@@ -177,12 +180,14 @@ static func prepare(g:Node):
  warm_total=warm_jobs.size()
 static func prepare_profile(profile:Dictionary):
  # Add scene-only actors without replacing the area's existing warm-up queue.
- data();var p=HoldAppearance.normalized(profile);var sheet=identity(p)+"-core"
+ data();var p=HoldAppearance.normalized(profile)
  var queued={}
  for job in warm_jobs:queued[cache_key(job[0],job[1],job[2])]=true
- for index in 20:
-  var key=cache_key(p,sheet,index)
-  if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index])
+ for kind in ["core","town"]:
+  var sheet=identity(p)+"-"+kind
+  for index in (range(20) if kind=="core" else range(8,12)):
+   var key=cache_key(p,sheet,index)
+   if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index])
  warm_total=warm_jobs.size()
 static func warming()->bool:return not warm_jobs.is_empty()
 static func warm_step():

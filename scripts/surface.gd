@@ -30,6 +30,9 @@ var cut_approach=false
 var cut_flash=0.0
 var rest_time=0.0
 var rest_elapsed=0.0
+var rest_approach=Vector2.INF
+var stair_trip:Dictionary={}
+var rest_bed=Vector2.ZERO
 var route_hint=""
 var ground_cache={}
 var bed_bounds=Rect2i()
@@ -71,7 +74,7 @@ func remember():
  g.state.surface.area=area;g.state.surface.return_area=return_area
  g.state.surface.positions[area]=[g.player.x,g.player.y]
 func restore():
- rest_time=0;rest_elapsed=0
+ rest_time=0;rest_elapsed=0;rest_approach=Vector2.INF;stair_trip.clear()
  ensure()
  if g.zone=="mine":return
  var desired=str(g.state.surface.get("area","hearthward"))
@@ -143,7 +146,7 @@ func points()->Array:
    result.append(spot(700,550,"Stairs · "+("upper rooms" if parts[2]=="0" else "family hearth"),HoldNeighborhood.home_id(parts[0],int(parts[1]),1-int(parts[2]))))
    for c in HoldNeighborhood.people(world):result.append({"p":c.p,"name":c.name,"action":"citizen:"+str(c.index)})
   elif area.begins_with("home:") or area=="room:home":
-   result.append(spot(290,420,"Bed · rest and save","rest"));result.append(spot(735,515,"Wardrobe & supplies" if area=="room:home" else "Homestead workbench","home" if area=="room:home" else "homestead"))
+   result.append({"p":HoldFurnishings.bedside(Vector2(290,420)),"name":"Bed · rest and save","action":"rest","bed":Vector2(290,420)});result.append(spot(735,537,"Writing desk · write home","letter"))
   elif area=="room:training":
    result.append(spot(660,570,"Borin’s training notes","training_notes"))
   else:
@@ -163,13 +166,20 @@ func points()->Array:
   if house.local(c):result.append(spot(c.x,c.y,"Storage chest","chest:"+id))
  result.append_array(house.points())
  for d in g.state.surface.decor:
-  if house.local(d) and d.kind=="bed":result.append(spot(d.x,d.y+25,"Bed · rest in your own house","house_rest"))
+  if house.local(d) and d.kind=="bed":
+   var bed=Vector2(d.x,d.y)
+   for side in [-1,1]:
+    var access=HoldFurnishings.bedside(bed,side)
+    if walkable(access):result.append({"p":access,"bed":bed,"name":"Bed · rest in your own house","action":"house_rest"})
+  elif house.local(d) and d.kind=="desk":result.append({"p":HoldFurnishings.desk_access(Vector2(d.x,d.y)),"name":"Writing desk · write home","action":"letter"})
  return result
 func spot(x:float,y:float,title:String,action:String)->Dictionary:return {"p":Vector2(x,y),"name":title,"action":action}
 func nearest()->Dictionary:
  var found={};var distance=78.0
  for p in points():
   var d=g.player.distance_to(p.p)
+  if p.action in ["rest","house_rest"] and (d>46 or absf(g.player.y-p.p.y)>25):continue
+  if p.action=="letter" and (d>48 or g.player.y<p.p.y-8):continue
   if p.action.begins_with("citizen:"):d+=38 # Do not let a passing neighbor steal a doorway interaction.
   if (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
   if p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action)):
@@ -189,22 +199,50 @@ func clear_interaction(a:Vector2,b:Vector2)->bool:
 func use():
  var p=nearest()
  if p.is_empty():g.notify("Walk to a doorway, signpost, chest or workstation and press E.");return
+ if is_stair_point(p):begin_stair(p);return
  action(p.action)
+func is_stair_point(p:Dictionary)->bool:
+ return p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action))
+func begin_stair(p:Dictionary):
+ if not stair_trip.is_empty() or g.handworks.busy_hands():g.notify("Park your load at the landing before taking these town stairs.");return
+ stair_trip={"point":p.duplicate(),"age":0.0,"start":g.player,"changed":false}
+ g.walking_pose=false;g.velocity=Vector2.ZERO
+func tick_stair(dt:float):
+ var trip=stair_trip;trip.age+=dt
+ var anchor:Vector2=trip.point.p;var old=g.player
+ if trip.age<.2:g.player=trip.start.lerp(anchor+Vector2(0,18),trip.age/.2)
+ elif trip.age<.85:g.player=(anchor+Vector2(0,18)).lerp(anchor+Vector2(0,-54),(trip.age-.2)/.65)
+ elif not trip.changed:
+  var target=str(trip.point.action)
+  if target.begins_with("hold_stair:"):target=target.split(":")[1]
+  enter(target,anchor+Vector2(0,-54));g.player=anchor+Vector2(0,-54)
+  g.transition_left=0;g.transition_shade.visible=false;trip.changed=true;stair_trip=trip
+ else:g.player=(anchor+Vector2(0,-54)).lerp(anchor+Vector2(0,30),clampf((trip.age-.85)/.65,0,1))
+ var distance=old.distance_to(g.player)
+ g.walking_pose=distance>.01;direction=(g.player-old).normalized() if distance>.01 else direction
+ if distance<25:HoldDrawnLocomotion.advance(g,distance,"stone")
+ if trip.age>=1.5:
+  g.player=anchor+Vector2(0,30);stair_trip.clear();g.walking_pose=false;remember();g.save_game()
+func start_rest(point:Dictionary)->bool:
+ if point.is_empty() or point.action not in ["rest","house_rest"]:return false
+ if g.handworks.busy_hands():g.notify("Park or set down your load before resting.");return false
+ if not walkable(point.p) or not clear_interaction(g.player,point.p):return false
+ rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
+ g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
  if id=="leave":leave()
  elif id.begins_with("hold_stair:"):
-  var link=id.split(":");enter(link[1],Vector2(180 if link[2]=="west" else 1700,1420))
+  var link=id.split(":");enter(link[1],Vector2(180 if link[2]=="west" else 1700,1600))
  elif id=="mine":
   remember();g.state.surface.mine_return=area;g.change_zone("mine")
  elif id=="house_up":house.use_stairs(true)
  elif id=="house_down":house.use_stairs(false)
  elif id.begins_with("house:"):house.toggle(id.trim_prefix("house:"))
- elif id=="house_rest":
-  for d in g.state.surface.decor:
-   if house.local(d) and d.kind=="bed" and g.player.distance_to(Vector2(d.x,d.y))<85:house.rest(Vector2(d.x,d.y));break
- elif id=="rest":
-  if g.handworks.busy_hands():g.notify("Park or set down your load before resting.");return
-  rest_time=1.1;rest_elapsed=0;g.notify("Taking a breather · move to cancel")
+ elif id in ["rest","house_rest"]:
+  var point=nearest()
+  if id=="house_rest" and (point.is_empty() or not house.rest(point.bed)):return
+  start_rest(point)
+ elif id=="letter":g.open_panel("letter")
  elif id=="training_notes":g.lesson_id="training";g.open_panel("lesson")
  elif id=="training":g.enter_room("training")
  elif id=="private":g.notify("Folk homes · private quarters. Meet the neighbors in the streets and tavern.")
@@ -255,12 +293,18 @@ func walkable(p:Vector2,ignore:Dictionary={})->bool:
   if r.grow(FOOT_RADIUS).has_point(p):return false
  return true
 func move(dt:float):
+ if not stair_trip.is_empty():tick_stair(dt);return
  if g.handworks.approaching or g.fieldwork.moving:return
  var input=Input.get_vector("left","right","up","down")
  if input!=Vector2.ZERO and not (g.fight.enabled() and g.combat.armed):direction=input
  if rest_time>0:
-  if input!=Vector2.ZERO:rest_time=0;g.notify("Back on your feet.")
+  if input!=Vector2.ZERO:rest_time=0;rest_approach=Vector2.INF;g.notify("Back on your feet.")
   else:
+   if rest_approach!=Vector2.INF and g.player.distance_to(rest_approach)>1:
+    var old=g.player;var next=g.player.move_toward(rest_approach,90*dt)
+    if not walkable(next):rest_time=0;rest_approach=Vector2.INF;return
+    g.player=next;direction=(next-old).normalized();g.walking_pose=true;HoldDrawnLocomotion.advance(g,old.distance_to(next),"wood");return
+   direction=(rest_bed-g.player).normalized()
    rest_time=maxf(0,rest_time-dt);rest_elapsed+=dt;g.walking_pose=false
    if rest_time<=0:
     g.state.surface.facts.rest=true;g.state.combat.health=100;g.notify("Rested · health restored · fortune saved")
@@ -283,6 +327,7 @@ func move(dt:float):
  house.update(dt)
 func input(e:InputEvent)->bool:
  if not active() or g.panel_id!="":return false
+ if not stair_trip.is_empty():return true
  if e is InputEventKey and e.pressed and not e.echo:
   if e.keycode==KEY_E:
    if e.shift_pressed and area=="claim":house.use_stairs(false)
@@ -325,7 +370,8 @@ func furniture_valid(p:Vector2,kind:String)->bool:
  if not (area=="claim" or area.begins_with("home:")):return false
  if not HoldFurnishings.ITEMS.has(kind) or p.distance_to(g.player)>140:return false
  var base=HoldFurnishings.footprint(kind,p)
- if kind in ["chest","bed"] and not walkable(p+Vector2(0,25),moving_furnishing):return false
+ if kind=="chest" and not walkable(p+Vector2(0,25),moving_furnishing):return false
+ if kind=="bed" and not (walkable(HoldFurnishings.bedside(p,1),moving_furnishing) or walkable(HoldFurnishings.bedside(p,-1),moving_furnishing)):return false
  for corner in [base.position,Vector2(base.end.x,base.position.y),base.end,Vector2(base.position.x,base.end.y),base.get_center()]:
   if not walkable(corner,moving_furnishing):return false
  for obstacle in obstacles(moving_furnishing):
@@ -337,7 +383,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
     if not house.on_floor(Vector2(x,y),house.level()):return false
  for point in points():
   if not moving_furnishing.is_empty() and point.action.begins_with("chest:") and g.state.surface.chests.get(point.action.trim_prefix("chest:"),{})==moving_furnishing:continue
-  if moving_furnishing.get("kind","")=="bed" and point.action=="house_rest" and point.p==Vector2(moving_furnishing.x,moving_furnishing.y+25):continue
+  if moving_furnishing.get("kind","")=="bed" and point.action=="house_rest" and point.get("bed",Vector2.INF)==Vector2(moving_furnishing.x,moving_furnishing.y):continue
   if point.action.begins_with("chest:") or point.action=="house_rest":
    var approach=Rect2(point.p+Vector2(-16,10 if point.action.begins_with("chest:") else -10),Vector2(32,24))
    if base.grow(FOOT_RADIUS).intersects(approach):return false
@@ -522,7 +568,10 @@ func draw():
  objects.append_array(g.handworks.objects())
  objects.append_array(g.fieldwork.objects())
  if g.opening_scene is HoldArrivalEscort:objects.append({"p":g.opening_scene.guide,"kind":"escort"})
- objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.p.y<b.p.y)
+ # Stair treads are floor, not an upright prop drawn over a climbing Dwarf.
+ for o in objects:
+  if o.kind=="landmark" and o.art in [1,2]:o.sort_y=o.p.y-125
+ objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))
  for o in objects:
   g.draw_set_transform(-cam)
   if o.kind=="building":world.draw_building(o)
@@ -589,7 +638,7 @@ func draw():
  g.fieldwork.draw()
  g.fight.overlay()
  if rest_time>0:
-  g.draw_rect(Rect2(0,74,960,424),Color(.04,.08,.10,sin(rest_elapsed/1.1*PI)*.6))
+  g.draw_rect(Rect2(0,74,960,424),Color(.04,.08,.10,sin(rest_elapsed/1.4*PI)*.6))
   A.text(g,Vector2(340,300),"A moment by your own hearth…",18,Color("efcf95"))
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.04,.055,.48))
 func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
@@ -616,7 +665,7 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
   elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
   elif g.handworks.pushing():animation="push"
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
- if is_player and animation=="" and action<0 and not g.opening_scene is HoldArrivalEscort:animation=g.hotbar.pose()
+ if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not g.opening_scene is HoldArrivalEscort:animation=g.hotbar.pose()
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
  g.draw_set_transform(-cam)
  if is_player:

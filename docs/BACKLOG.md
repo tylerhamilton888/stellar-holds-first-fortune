@@ -1,3 +1,9 @@
+## After 0.62.1
+- Player acceptance of town side-walk cycles and stair continuity. Female identity 5 repeats its accepted passing pose on both passing beats; all figures remain whole painted frames. Do not redraw the accepted player gait.
+- The lower-ward view is a clipped architectural cutaway. Fully continuous multi-floor occlusion, richer inhabited galleries and all-level population schedules are not complete.
+- Bedside rest uses a short fade, not a new lying-down animation. A first letter home is implemented; recurring correspondence is not.
+- Windows device performance/audio and remaining art acceptance require player feedback. Current changes do not rebalance Deepworks or timber work.
+
 0.62.0: Residential galleries, nine enterable two-floor hearths, connected neighborhood stairs and continuous interior/ward floors implemented. Legacy private houses remain closed. Neighbor schedules are simple street/hearth cycles; full occupational simulation, broader architectural variety and a Windows export remain follow-ups. User visual acceptance remains required; do not describe the entire hold art backlog as complete.
 
 0.61.3: Shared placement grid/validity, fine furniture placement and safe repositioning implemented. Broader animation coverage, environment scale/art acceptance and Windows packaging remain separate follow-ups. Test placement around doors, on upper storeys and beside storage in player sessions.

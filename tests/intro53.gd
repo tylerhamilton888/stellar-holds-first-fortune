@@ -37,7 +37,7 @@ func run():
   if b.text.contains("I am ready to work"):can_skip=true
  check(not can_skip,"Ivar reminds the player to settle before introductions")
  g.close_panel();g.surface.enter("room:home");settle()
- at(Vector2(290,455));key(KEY_E);await frames(70)
+ at(Vector2(328,388));key(KEY_E);await frames(100)
  check(HoldOnboarding.ensure(g.state).get("settle_bed",false),"E at the visible bed records resting")
  at(Vector2(650,460));key(KEY_E)
  check(g.panel_id=="storage" and HoldOnboarding.stage(g.state)==2 and not HoldOnboarding.settling(g.state),"Checking the real chest unlocks introductions after resting")
@@ -56,7 +56,7 @@ func run():
  check(g.opening_scene==null and HoldOnboarding.stage(g.state)==5 and g.state.inventory==pack,"Existing fortunes are not pulled backwards into the new tutorial")
  g.start_game(false);g.opening_scene.finish();await process_frame;scene=g.opening_scene;scene.set_process(false);scene.finish();await process_frame
  check(g.opening_scene==null and g.surface.area=="room:home" and HoldOnboarding.settling(g.state),"Skip walk arrives safely in quarters and retains usable objectives")
- at(Vector2(650,460));key(KEY_E);g.close_panel();at(Vector2(290,455));key(KEY_E);await frames(70)
+ at(Vector2(650,460));key(KEY_E);g.close_panel();at(Vector2(328,388));key(KEY_E);await frames(100)
  check(HoldOnboarding.stage(g.state)==2,"Bed and chest objectives work in either order after skipping")
  await snap("06-ready-to-meet")
  print("INTRO53: ",passed," passed / ",failed," failed")

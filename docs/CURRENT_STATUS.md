@@ -1,3 +1,13 @@
+# 0.62.1 — Town motion and physical continuity
+
+Player walk art and ordinary stride timing are preserved. Town residents and Ivar use whole-character side passing poses, with the same distance clock as the player. NPC-only selection prevents these poses from changing player or portrait frames. All fourteen town identities keep the existing palette pipeline and full male beards.
+
+Painted facade wall bodies now block feet; the southern homes were moved clear of story-door approaches, and citizen routes avoid the fountain. Bed interactions approach the side. The starting writing desk and crafted desks offer an optional letter home, stored once with a readable journal copy; inventories and quest stage are preserved. Wardrobe/home management remains available at the desk.
+
+Town/household stair interactions take 1.5 seconds along the painted flight, with solid rails/top caps and matching XY landings across Z. Treads render behind the climbing Dwarf. Gallery openings crop real lower-ward architecture with a fixed visual drop; only the active ward simulates. This is a bounded cutaway, not completion of a fully continuous stacked hold. Deepworks and player-built floor systems remain intact.
+
+Native source verification: 254 distinct passing checks plus a 35-check final repeat. Locomotion/export evidence is recorded in testing/continuity66.md. Windows release delivery uses the pinned official runtime and requires full native gameplay, pack inventory/ZIP integrity, and exact-pack tests. See RELEASE_NOTES.md. Prior versions and saves are preserved.
+
 # 0.62.0 — Keldrath galleries and collision refinement (source)
 
 Keldrath's three existing Z wards now extend south across guarded gallery bridges into residential streets. Nine enterable family homes have distinct neighbors, furnished hearths and upper rooms; matching stair coordinates connect each room pair and the residential wards. Upper rooms have no phantom ground-level exit. Original story doors, the Ivar arrival, royal audience, trade, claims and Deepworks routes remain in place.

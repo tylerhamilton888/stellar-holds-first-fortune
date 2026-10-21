@@ -240,7 +240,7 @@ func shelter(p:Vector2)->Dictionary:
   if map.has(k) and map[k].get("wall","")=="":floors+=1
  return {"enclosed":enclosed and doors>0 and floors>=4,"roofed":roofed,"floor_count":floors,"cells":seen}
 func rest(p:Vector2)->bool:
- var room=shelter(p+Vector2(0,25))
+ var room=shelter(s.g.player)
  if not room.enclosed or not room.roofed:g.notify("A home needs walls, a door and a roof over the floor around its bed.");return false
  data().facts.home=true;g.save_game();g.notify("Under a roof you raised yourself. Rested; fortune saved.");return true
 func panel():

@@ -6,7 +6,7 @@ const ROYAL=Vector2(180,850)
 const FORGE=Vector2(1700,850)
 const LIFT=Vector2(1700,550)
 const GATE=Vector2(1270,950)
-const DOORS={1:Vector2(960,460),4:Vector2(1380,800),7:Vector2(350,450),8:Vector2(780,450),9:Vector2(1230,450),10:Vector2(970,790),12:Vector2(1450,800),13:GATE,15:Vector2(580,450),17:Vector2(1250,450)}
+const DOORS={1:Vector2(960,460),4:Vector2(1380,950),7:Vector2(350,450),8:Vector2(780,450),9:Vector2(1230,450),10:Vector2(970,790),12:Vector2(1450,950),13:GATE,15:Vector2(580,450),17:Vector2(1250,450)}
 var surface_ref:WeakRef
 var s:
  get:return surface_ref.get_ref()
@@ -24,22 +24,26 @@ var speech_until=0.0
 func _init(surface):surface_ref=weakref(surface);g=surface.g
 static func ward(id:String)->bool:return id in WARDS
 static func door(i:int)->Vector2:return DOORS[i]
-func buildings()->Array:
+func buildings(area_id:String="")->Array:
+ if area_id=="":area_id=s.area
+ var ward_level=WARDS.find(area_id)
  var result=[]
  for i in HoldDistrictMap.DOORS:
-  if int(i)/7!=s.level() or i in [10,13]:continue
+  if int(i)/7!=ward_level or i in [10,13]:continue
   var kind={1:3,4:5,7:0,8:1,9:2,12:6,15:4,17:7}[i]
   result.append({"p":door(i),"kind":"building","art":kind,"width":400.0 if i==1 else 370.0 if i in [8,15] else 310.0,"id":i})
- # Homes belong to the streets; their occupants are represented by the citizens.
- if s.area=="hearthward":result.append({"p":Vector2(460,830),"kind":"building","art":0,"width":310.0,"id":-1})
- else:
-  for p in [Vector2(350,450),Vector2(450,820)]:
-   if s.area=="forgeward" and p.y<500:continue
-   result.append({"p":p,"kind":"building","art":0,"width":310.0,"id":-1})
- result.append_array(HoldNeighborhood.buildings(s.area))
+ # Enterable family galleries replace the closed houses which overlapped streets.
+ if area_id=="crownward":result.append({"p":Vector2(350,450),"kind":"building","art":0,"width":310.0,"id":-1})
+ result.append_array(HoldNeighborhood.buildings(area_id))
  return result
 static func building_footprint(b:Dictionary)->Rect2:
- return Rect2(b.p-Vector2(b.width*.44,b.width*.5),Vector2(b.width*.88,b.width*.5-20))
+ # The painted wall mass is solid, not a narrow strip under an enormous facade.
+ var visual=building_rect(b)
+ return Rect2(visual.position+Vector2(8,12),Vector2(visual.size.x-16,b.p.y-18-visual.position.y-12))
+static func facade_index(b:Dictionary)->int:return {0:0,1:1,2:2,3:3,4:4,5:5,6:5,7:3}[b.art]
+static func building_rect(b:Dictionary)->Rect2:
+ var i=facade_index(b);var source=FACADE_RECTS[i];var scale=b.width/source.size.x
+ return Rect2(b.p-(FACADE_DOORS[i]-source.position)*scale,source.size*scale)
 func obstacles()->Array:
  if collision_cache.has(s.area):return collision_cache[s.area].duplicate()
  var result=HoldNeighborhood.obstacles()
@@ -92,7 +96,7 @@ func people(at_time:float=-1)->Array:
  if not ward(s.area):return []
  if at_time<0 and people_frame==Engine.get_process_frames() and people_area==s.area:return people_cache
  var time=g.state.elapsed if at_time<0 else at_time
- var route=[Vector2(270,550),Vector2(780,550),Vector2(1450,550),Vector2(1450,580),Vector2(780,580),Vector2(780,650),Vector2(270,650)]
+ var route=[Vector2(270,530),Vector2(780,530),Vector2(1140,530),Vector2(1140,570),Vector2(780,570),Vector2(780,680),Vector2(270,680)]
  var names=[["Yrsa","Hakon","Inga","Viggo","Tova","Arvid"],["Runa","Torsten","Sigrid","Dori","Edda","Brynjar"],["Kara","Tormund","Hilda","Odd","Alva","Gunnar"]][s.level()]
  var roles=["Stonecarver","Lamplighter","Courier","Baker","Apprentice","Shift worker"]
  var result=[]
@@ -109,7 +113,7 @@ func people(at_time:float=-1)->Array:
   var key=str(g.state.seed_value)+":"+str(s.level())+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+5100+i+s.level()*101,1 if i%3==0 else 0)
   var profile=profiles[key]
-  result.append({"p":p,"kind":"citizen","profile":profile,"aim":aim,"walking":walking,"name":names[i],"role":roles[i],"index":i,"time":time+i*.7,"gait":distance/95.0+i*.13})
+  result.append({"p":p,"kind":"citizen","profile":profile,"aim":aim,"walking":walking,"name":names[i],"role":roles[i],"index":i,"time":time+i*.7,"gait":HoldDrawnLocomotion.time_for_distance(distance)+i*.13})
  result.append_array(HoldNeighborhood.people(self,time))
  if at_time<0:people_cache=result;people_frame=Engine.get_process_frames();people_area=s.area
  return result
@@ -123,7 +127,7 @@ func draw_citizen(c:Dictionary):
  if not Rect2(g.camera-Vector2(80,0),Vector2(1120,650)).has_point(c.p):return
  var cam=g.camera.round()
  g.draw_set_transform(c.p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,17,Color(0,0,0,.25))
- HoldDirectional.draw(g,c.p-cam,c.profile,c.aim,c.walking,c.gait,.85,-cam)
+ HoldDrawnAnimation.paint(g,c.p-cam,c.profile,c.aim,c.walking,c.gait,.85,-cam,"town_walk")
  g.draw_set_transform(-cam)
 func draw_ground():
  g.draw_rect(Rect2(0,0,1880,1080),Color("28393b"))
@@ -142,6 +146,27 @@ func draw_ground():
  for y in [520,740,980]:
   g.draw_line(Vector2(115,y),Vector2(1770,y),Color("6d786a"),3)
  HoldNeighborhood.draw_gallery(self)
+func draw_lower_gallery():
+ # Clip the actual neighboring ward's architecture through the open floor.
+ # No second simulation, viewport, texture readback, or off-floor actor updates.
+ var below=WARDS.find(s.area)+1
+ if below>=WARDS.size():return
+ # Project one storey's drop into screen Y; world XY and stair links stay shared.
+ var offset=Vector2(0,650)
+ var tint=Color(.48,.54,.59,1)
+ for opening in [Rect2(110,1028,760,94),Rect2(1050,1028,720,94)]:
+  var floor_rect=Rect2(80,180,1720,840);floor_rect.position+=offset
+  var visible=floor_rect.intersection(opening)
+  if visible.has_area():tile(0,visible,100,Color("515e5c"))
+  for b in buildings(WARDS[below]):
+   var dest=building_rect(b);dest.position+=offset
+   var clip=dest.intersection(opening)
+   if not clip.has_area():continue
+   var source=FACADE_RECTS[facade_index(b)]
+   var ratio=source.size/dest.size
+   var crop=Rect2(source.position+(clip.position-dest.position)*ratio,clip.size*ratio)
+   g.draw_texture_rect_region(FACADES,clip,crop,tint)
+  g.draw_rect(opening,Color(.025,.055,.09,.22))
 func street_furnishings()->Array:
  var result=[]
  for p in [Vector2(180,450),Vector2(1700,450),Vector2(600,800),Vector2(1210,820)]:result.append(furn("lamp",p.x,p.y))

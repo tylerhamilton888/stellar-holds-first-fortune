@@ -1,3 +1,12 @@
+# Physical continuity — 0.62.1
+
+- scripts/letters.gd: optional writing-desk story and journal copy.
+- scripts/surface.gd: bedside anchors, stair trips and actor/tread sorting.
+- scripts/world_zones.gd / hold_neighborhood.gd: facade coverage, clear streets, actual lower-floor cutaways.
+- assets/town-walk66 / scripts/whole_frames.gd: NPC-only passing poses; player frames unchanged.
+- tests/continuity66.gd / docs/testing/continuity66.md: native mechanical and visual evidence.
+- tools/install_windows_runtime.py / check_pack.py / .github/workflows/windows-release.yml: pinned single-ZIP release delivery.
+
 # Keldrath galleries — 0.62.0
 
 - scripts/hold_neighborhood.gd: residential galleries, connected home floors, painted stair envelopes, neighbors.

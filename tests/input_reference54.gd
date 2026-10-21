@@ -8,7 +8,7 @@ func run():
  await snap("01-hearthward")
  var before=g.player;Input.action_press("up");Input.action_press("right");await frames(30);Input.action_release("up");Input.action_release("right")
  check(g.player.x>before.x and g.player.y<before.y and g.player.distance_to(before)<100,"Eight-way movement has normalized diagonal speed and no gravity")
- at(Vector2(1450,840));key(KEY_E);settle()
+ at(HoldWorldZones.door(12)+Vector2(0,35));key(KEY_E);settle()
  check(g.room_id=="commission" and g.surface.area=="room:commission","Physical foreman's doorway opens a local interior")
  at(Vector2(620,400));key(KEY_E)
  check(g.panel_id=="conversation" and g.talk_id=="ivar","Existing Ivar conversation remains local and available")
@@ -77,7 +77,7 @@ func run():
  g.surface.placing="";g.surface.home_panel() if false else null
  g.open_panel("homestead");button("Improve cottage");g.close_panel();await snap("10-improved-home")
  check(g.state.surface.homes.old_delving.level==1,"Cottage improvement pays once and changes the home")
- at(Vector2(290,450));key(KEY_E);await frames(70);check(g.state.surface.facts.get("rest",false),"Bed interaction rests and saves")
+ at(Vector2(328,388));key(KEY_E);await frames(100);check(g.state.surface.facts.get("rest",false),"Bed interaction rests and saves")
  g.surface.enter("claim",Vector2(710,770));settle();key(KEY_O);await snap("11-homestead-board")
  g.close_panel();g.surface.enter("home:old_delving",Vector2(480,500));settle();g.save_game()
  var saved=g.state.surface.duplicate(true);g.start_game(true);settle()

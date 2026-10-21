@@ -1,0 +1,50 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 10.18
+  },
+  {
+    "test": "continuity",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 63.51
+  },
+  {
+    "test": "hold",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 80,
+    "seconds": 64.53
+  },
+  {
+    "test": "orientation",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 45.46
+  },
+  {
+    "test": "world",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 79.52
+  },
+  {
+    "test": "modular",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 28,
+    "seconds": 35.41
+  }
+]

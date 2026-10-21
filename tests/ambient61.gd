@@ -25,7 +25,7 @@ func run():
     if not moved.has(c.index):moved[c.index]=[];keys[c.index]={}
     if c.walking:
      moved[c.index].append(c.p)
-     var a=HoldWholeFrames.descriptor(c.profile,c.aim,true,c.gait,"",0)
+     var a=HoldWholeFrames.descriptor(c.profile,c.aim,true,c.gait,"town_walk",0)
      keys[c.index][a.index]=true
   for i in 6:check(moved[i].size()>4 and keys[i].size()>=3,ward+" citizen "+str(i)+" travels with at least three distinct painted walk keys")
   check(not g.surface.walkable(Vector2(970,635)) and g.surface.walkable(Vector2(1080,680)),ward+" fountain basin blocks feet while surrounding paving stays walkable")
@@ -58,7 +58,7 @@ func run():
  for i in 60:
   scene.tick(1.0/60)
   var a=HoldWholeFrames.descriptor(g.state.appearance,g.surface.direction,g.walking_pose,g.gait_clock,"",0)
-  var b=HoldWholeFrames.descriptor(g.state.npc("ivar"),scene.guide_direction,scene.ivar_walking,scene.guide_gait,"",0)
+  var b=HoldWholeFrames.descriptor(g.state.npc("ivar"),scene.guide_direction,scene.ivar_walking,scene.guide_gait,"town_walk",0)
   player_keys[a.index]=true;guide_keys[b.index]=true
  check(player_keys.size()>=4 and guide_keys.size()>=4,"Player and Ivar both cycle complete walk frames during the real escort")
  await snap("escort");scene.finish();await process_frame;settle()
