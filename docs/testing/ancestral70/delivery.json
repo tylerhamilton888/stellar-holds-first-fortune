@@ -1,0 +1,19 @@
+{
+  "source": "c9958797c2a453bbc26934c5832d1db3d36c0f3d",
+  "merge": "3bb211b335c940ddd877c8103e788fbf320af9da",
+  "source_run": 39679087059,
+  "release_run": 39679089395,
+  "conclusion": "success",
+  "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.64.0/Stellar-Holds-First-Fortune-0.64.0-Windows.zip",
+  "bytes": 705278506,
+  "sha256": "717d5ba55b3bf01be61731b247901b51157601db8b630b45e9979ace35b79f46",
+  "tag_verified": true,
+  "package_cases": [
+    "ambient",
+    "continuity",
+    "living",
+    "civic",
+    "firstshift",
+    "ancestral"
+  ]
+}

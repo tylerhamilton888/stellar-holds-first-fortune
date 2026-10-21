@@ -1,3 +1,15 @@
+# 0.64.0 — Published and verified
+
+One complete [Windows ZIP](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.64.0/Stellar-Holds-First-Fortune-0.64.0-Windows.zip) is published. Size: 705,278,506 bytes; SHA-256 `717d5ba55b3bf01be61731b247901b51157601db8b630b45e9979ace35b79f46` matches the clean hosted build report. Release tag v0.64.0 points to verified source c9958797c2a453bbc26934c5832d1db3d36c0f3d. All fifteen hosted gameplay cases and all six exact-export cases passed. Source run 39679087059; release run 39679089395. PR #11 merged at 3bb211b335c940ddd877c8103e788fbf320af9da with an identical tree. Earlier releases remain intact.
+
+Includes the Three Hearths civic refinement, the practical mine worksite with protected hold stock, and The Stone Remembers: physical rescue, Eldric's evidence-based charter research, Overseer appointment and development-gated investiture as Thane. Existing purchased mountains, excavation and other progress remain preserved. Research and appointment use the existing conversations and journal. Local verification included 239 related source checks, 23 quest/UI checks and 203 exact-package checks. Windows hardware performance/audio and artistic acceptance still require the player's device.
+
+Next: discuss experience gains and readable personal development trees/charts. Current work counters and nine research methods are preserved; no full skill-tree redesign is implemented. See PROGRESSION_NEXT.md, PLAYTEST_GUIDE.md and testing/ancestral70.
+
+Continue from GitHub main. Local history is a recovery graph; never force-replace the remote. Pre-ancestral70 / b2df6bb1eaa541150eaa08c4e87a6e60e939ee37 and earlier bundles are preserved. Verified-ancestral70-pack / 6998163ceb56fc889e229f4b61b03906afa0448c records source/local evidence. The final delivery checkpoint adds hosted evidence and is saved separately as verified-ancestral70-delivery with an incremental bundle requiring pre-ancestral70. The persistent release tag preserves complete delivered source.
+
+Efficiency: finish the exact-pack harness before launching the cold hosted gates. Fixture inlining cannot retain a duplicate helper name; firstshift69 uses press(), leaving the shared key() helper intact. Do not push docs onto an active runtime PR: its diff retriggers full validation. Final evidence belongs in a separate docs-only PR after runtime validation. Cold import plus the complete suite took about 30 minutes; publication ran the six package cases after reusing that exact-source gate. Do not claim pending checks passed.
+
 # Ancestral charter — Overseer to Thane
 
 The Stone Remembers is an additive quest stored in outpost.ancestral_claim. Ivar offers a rescue after the first paid shift and initial audience/next-work conversation. The quest uses an existing depth-1 hold cavern and never overwrites excavated terrain. Open a continuous walkable bypass, speak to the miners with E, and keep their route clear until both reach the entrance. Saved positions/path progress support mid-rescue reloads. The recovered slab then goes to Eldric.

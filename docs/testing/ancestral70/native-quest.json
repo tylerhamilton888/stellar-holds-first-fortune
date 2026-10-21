@@ -1,0 +1,18 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 9.16
+  },
+  {
+    "test": "ancestral",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 23,
+    "seconds": 46.44
+  }
+]

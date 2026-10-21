@@ -1,5 +1,6 @@
 # 0.64.0 — The Hold of Three Hearths
 
+- Kept conversation responses inside the scrollable panel so research and investiture choices stay accessible.
 - Added The Stone Remembers: physical crew rescue, evidence-based tablet research, ancestral Overseer appointment and development-gated investiture as Thane. Existing claims and communal ownership are preserved.
 
 - Added a practical mine lesson with loan benches, player-excavated loads and real stockpile/processing/construction steps.

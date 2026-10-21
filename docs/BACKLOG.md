@@ -1,3 +1,9 @@
+## After ancestral recognition
+- Discuss and implement a readable personal development screen. Preserve existing productive-work counters; separate mastery, researched knowledge and civic standing. See PROGRESSION_NEXT.md.
+- Expand the two-stage tablet investigation with bespoke narrative art or further field evidence only when it improves play. Current investigation and investiture use normal conversations, not new cinematics.
+- Rescue workers are a bounded saved walking objective, not a general disaster simulation. No timed deaths or terrain resets.
+- Player acceptance of the Thane development threshold: completed camp works, two crew, and provisions. Full governance, laws, taxation and communal-reserve authority are not implemented.
+
 ## After the Three Hearths refinement
 - Player acceptance of ward identity, scenic depth and reduced captions; Windows hardware performance/audio still require device testing.
 - Distant Works Below are scenery, not a playable fourth ward. New pressure machinery and training racks are decorations, not new production/combat systems.
