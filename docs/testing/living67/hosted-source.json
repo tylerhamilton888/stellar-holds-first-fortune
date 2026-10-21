@@ -1,0 +1,25 @@
+{
+  "run_id": 39650360972,
+  "conclusion": "success",
+  "head": "8ef6a2874d69c83646cc78df597b684654370696",
+  "tested_merge": "d49c21f173717cf479e171f097f5e3b0f1b276df",
+  "tested_merge_has_identical_tree": true,
+  "merged_main": "09666eaf2ba6f06598b3f0ac52249615243d3be2",
+  "passed": [
+    "import",
+    "loading",
+    "menus",
+    "orientation",
+    "ambient",
+    "equipment",
+    "mining",
+    "handworks",
+    "world",
+    "modular",
+    "hold",
+    "continuity",
+    "living"
+  ],
+  "artifact_id": 12371330012,
+  "artifact_sha256": "6bbce03b9017542b7dcc1941795be2f1114e4babf36a4f2c50417b04a3ddb14b"
+}

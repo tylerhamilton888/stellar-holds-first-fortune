@@ -1,3 +1,7 @@
+# Corrected final candidate
+
+The final shared-stair visibility correction is covered in living67/visibility.md. Its native living case passed 51 checks and its corrected exported package passed 97 checks. The baseline records below are retained for traceability; the earlier local build is superseded. Corrected full hosted validation/publication are still pending.
+
 # Living terraces 67 — verification
 
 Native Godot 4.4.1, 1280×720 Linux llvmpipe rendering, isolated saves. 303 distinct focused checks passed across living (48), households (81), continuity (35), orientation (20), world travel (35), modular placement (28), ambient animation (36) and equipment (20). The final animation run also repeated the 35 continuity checks. The legacy forge-hearth camera assertion was updated to walk north into the expanded hall; fireplace animation then passed. Results and logs are in living67/. 94 checks also passed against the exact exported PCK: ambient (11), continuity (35), living (48). The first run completed two cases before a transient exec-server disconnect; the unfinished case passed on a fresh native display after a stale display lock blocked its first restart. Source and package failures were not observed in those interruptions. Hosted full gameplay and its independent exact-export run remain release gates.
