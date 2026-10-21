@@ -1,5 +1,7 @@
 # Living terraces — 0.63.0
 
+Published v0.63.0: `testing/living67/hosted-build.json`, `delivery.json` and `hosted-source-visibility.json` record the verified package, tag and source gates. Final local recovery tag: `verified-living67-delivery`; GitHub retains the complete published source and previous releases.
+
 - scripts/hold_terraces.gd: shared projected ward coordinates, normal-movement stairs, rails and camera continuity.
 - scripts/hold_routines.gd: compiled household/work/tavern journeys sampled from saved time.
 - scripts/room_layout.gd: expanded forge plan, bounds, exit, camera and furnishing positions.

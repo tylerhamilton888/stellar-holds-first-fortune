@@ -1,4 +1,4 @@
-# 0.63.0 — Living terraces (source)
+# 0.63.0 — Living terraces (published)
 
 Keldrath's Crownward, Hearthward and Forgeward now connect through long walkable Great Stairs. Normal movement crosses the ward boundary without a fade or input lock, keeping the camera, gait and loaded handcart continuous. Painted masonry provides retaining walls, balustrades, columns and a wider forge exterior. Existing enclosed service stairs and lift remain useful shortcuts.
 
@@ -6,7 +6,7 @@ Nine household residents now travel from upper rooms, down their household stair
 
 Borin's forge has a larger accessible workshop wing, camera-following floor plan and matching doorway. Houses and other shops retain separate compact interiors. Carved stone pillars and low workshop tables use the same craft/place/collision/save catalogue as existing player furniture. Materials and old progress remain compatible.
 
-Verification and release status: see testing/living67.md and SESSION_HANDOFF.md. This is a bounded continuous-terrace implementation, not arbitrary 3D architecture or a rebuild of every interior. Player art is unchanged. Native Windows performance, sound and artistic acceptance still need the player's machine.
+Published [v0.63.0](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.63.0): one complete Windows ZIP, 701,152,760 bytes. Full hosted gameplay and exact exported-package gates passed. GitHub's asset digest matches the clean build report; source, evidence and previous versions are recoverable. See testing/living67.md and SESSION_HANDOFF.md. This is a bounded continuous-terrace implementation, not arbitrary 3D architecture or a rebuild of every interior. Player art is unchanged. Native Windows performance, sound and artistic acceptance still need the player's machine.
 
 # 0.62.1 — Town motion and physical continuity
 

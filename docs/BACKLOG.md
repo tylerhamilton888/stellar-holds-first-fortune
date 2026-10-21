@@ -1,4 +1,5 @@
 ## After 0.63.0
+Published and verified; remaining items below are follow-ups, not incomplete release gates.
 - Player acceptance of Great Stair travel, hold scale, forge contact and nine household schedules. Target Windows performance/audio remain unverified locally.
 - Expand other interiors and architectural variation after this playable forge/terrace milestone; distinct interior spaces remain intentional.
 - Ordinary street rovers and story hosts do not have the new household schedule. New resident work is ambient, not economic production or an NPC hauling rewrite.

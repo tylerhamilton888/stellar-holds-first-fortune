@@ -11,3 +11,5 @@ Player walk artwork, inventory, quests, mining, timber and industrial systems ar
 Try the southern gallery bridge on Hearthward, turn east past the family homes, then walk down to Forgeward. Follow a household neighbor, visit the expanded forge, haul a loaded cart across the stair, and reload to check persistence. See docs/PLAYTEST_GUIDE.md for the complete acceptance route.
 
 This release is one complete Windows ZIP. Extract it fully and run FirstFortune.exe beside FirstFortune.pck. Earlier releases remain available. Publication requires full native gameplay, package integrity and exact exported-game checks with isolated saves. Windows hardware performance, sound and final artistic acceptance still need player testing.
+
+Verified publication: full source validation and all exact-package cases passed. ZIP size: 701,152,760 bytes. SHA-256: `f273ba088776f8a8bd52ae56ae7c941d3b2c68ff614cd34b98791734ee975eb3`.

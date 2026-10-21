@@ -1,6 +1,6 @@
-# Corrected final candidate
+# Published corrected build
 
-The final shared-stair visibility correction is covered in living67/visibility.md. Its native living case passed 51 checks and its corrected exported package passed 97 checks. The baseline records below are retained for traceability; the earlier local build is superseded. Corrected full hosted validation/publication are still pending.
+The final shared-stair visibility correction is covered in living67/visibility.md. Its native living case passed 51 checks and its corrected exported package passed 97 checks. The baseline records below are retained for traceability; the earlier local build is superseded. Corrected full hosted source run 39656307242 and release run 39656676389 passed. PR #9 merged at e8a62f08f9ea6a950ba0176bc0bd071927292707; the published tag points to 472e12bf47c0784c84f3e763da7778dc9cbe740e. Published asset size/digest and tag match the clean hosted report. See living67/hosted-source-visibility.json, hosted-build.json and delivery.json. Final recovery: verified-living67-delivery and its new verified incremental bundle; older checkpoints are preserved.
 
 # Living terraces 67 — verification
 
