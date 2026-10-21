@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          fetch-depth: 2
+          fetch-depth: 8
       - name: Check version and preserve existing releases
         env:
           GH_TOKEN: ${{ github.token }}
@@ -43,11 +43,23 @@ jobs:
           VERIFIED=""
           # A release-only/documentation commit may reuse the existing full gate
           # only when every other tracked file is byte-identical to its source.
-          for SOURCE in "$GITHUB_SHA" "$(git rev-parse HEAD^)"; do
+          for SOURCE in $(git log -8 --format=%H); do
             if ! git diff --quiet "$SOURCE" HEAD -- . ':(exclude)docs/**' ':(exclude)SESSION_HANDOFF.md' ':(exclude).github/workflows/windows-release.yml'; then
               continue
             fi
-            RUN=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/runs" -f head_sha="$SOURCE" -f event=pull_request --jq '.workflow_runs[] | select(.path == ".github/workflows/validate.yml" and .status == "completed" and .conclusion == "success") | .html_url' | head -1)
+            CHECK=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/runs" -f head_sha="$SOURCE" -f event=pull_request --jq '[.workflow_runs[] | select(.path == ".github/workflows/validate.yml")][0] // empty')
+            test -n "$CHECK" || continue
+            # Wait for that exact source instead of launching a duplicate suite.
+            for ATTEMPT in $(seq 1 80); do
+              test "$(echo "$CHECK" | jq -r .status)" = completed && break
+              sleep 15
+              CHECK=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$(echo "$CHECK" | jq -r .id)")
+            done
+            if test "$(echo "$CHECK" | jq -r .conclusion)" != success; then
+              echo "The identical source gate did not pass; release remains blocked."
+              exit 1
+            fi
+            RUN=$(echo "$CHECK" | jq -r .html_url)
             if test -n "$RUN"; then
               VERIFIED="$SOURCE $RUN"
               break
