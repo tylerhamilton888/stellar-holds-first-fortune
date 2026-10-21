@@ -364,7 +364,8 @@ func draw_neighbors():
   if not Rect2(offset+Vector2(0,-420),Vector2(1880,2100)).intersects(Rect2(g.camera,Vector2(960,540))):continue
   view_area=id;view_offset=offset;g.draw_set_transform(offset-g.camera.round())
   draw_ground()
-  var objects=buildings()+landmarks()+street_furnishings()+routines.people(id,g.state.elapsed)
+  var neighbors=routines.people(id,g.state.elapsed).filter(func(c):return not HoldTerraces.on_stair(id,c.p))
+  var objects=buildings()+landmarks()+street_furnishings()+neighbors
   objects.sort_custom(func(a,b):return a.p.y<b.p.y)
   for o in objects:
    g.draw_set_transform(offset-g.camera.round())
@@ -373,6 +374,18 @@ func draw_neighbors():
    elif o.kind=="furnishing":draw_furnishing(o)
    elif o.kind=="citizen":draw_citizen(o)
  view_area="";view_offset=Vector2.ZERO;g.draw_set_transform(-g.camera.round())
+func neighbor_stair_people()->Array:
+ # A shared flight is foreground floor. Its far-half residents must join the
+ # active actor sort, after the treads, rather than be buried by the next plate.
+ var result=[]
+ for id in WARDS:
+  if id==s.area or abs(WARDS.find(id)-WARDS.find(s.area))!=1:continue
+  var offset=HoldTerraces.origin(id)-HoldTerraces.origin(s.area)
+  for c in routines.people(id,g.state.elapsed):
+   if not HoldTerraces.on_stair(id,c.p):continue
+   c.p+=offset
+   if Rect2(g.camera-Vector2(80,80),Vector2(1120,700)).has_point(c.p):result.append(c)
+ return result
 func navigation_clear(area_id:String,p:Vector2)->bool:
  if ward(area_id):
   if HoldTerraces.envelope(area_id,p):return HoldTerraces.on_stair(area_id,p)

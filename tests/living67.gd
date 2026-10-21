@@ -80,6 +80,17 @@ func run():
  check(s.area=="forgeward","Expanded forge exits at its own actual doorway")
  # Follow the exact same named resident across the street, stair and interior.
  var oskar=routines.plans.filter(func(p):return p.ward=="hearthward" and p.index==0)[0]
+ var approach=oskar.steps.filter(func(step):return step.area=="hearthward" and step.a==Vector2(1700,1590) and step.b==Vector2(1700,1740))[0]
+ g.state.elapsed=approach.start+approach.duration*.7-oskar.offset
+ s.enter("forgeward");settle();at(Vector2(1700,100))
+ var far=s.world.neighbor_stair_people().filter(func(c):return c.interaction=="resident:hearthward:0")
+ check(far.size()==1 and far[0].p.distance_to(Vector2(1700,-45))<.01,"Far-half stair resident joins the active foreground at the same world coordinate")
+ check(not s.world.people(g.state.elapsed).any(func(c):return c.get("interaction","")=="resident:hearthward:0"),"Far-half stair resident is drawn once without changing area ownership")
+ await snap("resident-upper-stair")
+ g.state.elapsed+=1.0
+ var arrived=s.world.people(g.state.elapsed).filter(func(c):return c.get("interaction","")=="resident:hearthward:0")
+ check(arrived.size()==1 and arrived[0].p.y>0 and not s.world.neighbor_stair_people().any(func(c):return c.interaction=="resident:hearthward:0"),"Resident crosses the seam without duplicate actors or a visibility gap")
+ await snap("resident-lower-stair")
  var captured={}
  for step in oskar.steps:
   var key=step.area
