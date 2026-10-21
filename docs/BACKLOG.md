@@ -1,4 +1,5 @@
 ## After 0.62.1
+- Build efficiency: cold editor asset import took about 8–11 minutes on GitHub. Consider a versioned imported-asset cache; never cache saves. Identical-source gate reuse is now implemented, so release jobs need not duplicate full gameplay validation.
 - Player acceptance of town side-walk cycles and stair continuity. Female identity 5 repeats its accepted passing pose on both passing beats; all figures remain whole painted frames. Do not redraw the accepted player gait.
 - The lower-ward view is a clipped architectural cutaway. Fully continuous multi-floor occlusion, richer inhabited galleries and all-level population schedules are not complete.
 - Bedside rest uses a short fade, not a new lying-down animation. A first letter home is implemented; recurring correspondence is not.
