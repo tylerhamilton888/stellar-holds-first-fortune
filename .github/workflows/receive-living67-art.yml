@@ -1,0 +1,32 @@
+name: Receive verified living-hold artwork
+on:
+  push:
+    branches: [asset/living67-masonry]
+permissions:
+  contents: write
+jobs:
+  receive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Reassemble exact original image and register Git blob
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, json, os, subprocess
+          parts=sorted(Path("asset-transfer/living67").glob("part-*.b64"))
+          assert len(parts)==35, len(parts)
+          encoded="".join(p.read_text() for p in parts)
+          data=base64.b64decode(encoded,validate=True)
+          assert len(data)==1639593
+          assert hashlib.sha256(data).hexdigest()=="3f8208b3bd7bb588f20676e53d6f180bf3705f86398afa7427d9d5fcca9a8cd8"
+          payload=Path(os.environ["RUNNER_TEMP"])/"masonry-blob.json"
+          payload.write_text(json.dumps({"content":encoded,"encoding":"base64"}))
+          r=json.loads(subprocess.check_output(["gh","api","--method","POST","repos/"+os.environ["GITHUB_REPOSITORY"]+"/git/blobs","--input",str(payload)],text=True))
+          assert r["sha"]=="7357b9bc5bc95f187dda81f1f2ed997e2a2060c9",r["sha"]
+          print("Verified original masonry PNG: "+r["sha"])
+          Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("Original PNG verified byte-for-byte and registered as Git blob "+r["sha"]+". No branch or release changed.")
+          PY
