@@ -1,3 +1,15 @@
+# 0.62.1 focused playtest
+
+The normal player walk is deliberately unchanged. Watch town residents and Ivar from the side: their boots should visibly pass beneath the body, with whole-character poses and no hovering tool. Residents still pause at route stops.
+
+1. Push against the Copper Kettle, exchange and house facades from several angles. The wall body should stop you; approach the painted doorway and use E to enter.
+2. Take the western Royal stairs and return, then try a family home's upper room. E starts a short visible walk on the stair flight; the destination is the same XY on the connected Z. You should stay visible and cannot walk through the top cap.
+3. Cross a residential gallery bridge. The shaft is blocked and you can glimpse the actual ward below. This cutaway is the first step toward a more continuous hold, not free travel between every visible floor.
+4. In your starting quarters, approach the side of the bed and press E. The foot of the bed should not start the rest. Rest restores health and saves.
+5. Use the writing desk on the right, seal your letter home, then read its copy in J. Save/reload: the letter should remain sent, with your pack and existing quest progress intact. The desk also links to wardrobe/quarters management.
+
+Please report the area, approach direction and selected item for any remaining clipping or sliding, ideally with a short capture. Windows performance/audio and final animation feel still need your playtest.
+
 # 0.61.0 — check these first
 
 1. Start a spare save: finish the illustrated road prologue, then follow Ivar to your room. Watch both pairs of boots and the inside transition.

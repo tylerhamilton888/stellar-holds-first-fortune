@@ -1,0 +1,14 @@
+[
+  {
+    "test": "ambient",
+    "passed": true,
+    "checks": 11,
+    "errors": []
+  },
+  {
+    "test": "continuity",
+    "passed": true,
+    "checks": 35,
+    "errors": []
+  }
+]

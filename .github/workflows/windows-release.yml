@@ -5,9 +5,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: release-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   windows:
     if: startsWith(github.ref, 'refs/heads/release/')
@@ -15,6 +16,8 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 8
       - name: Check version and preserve existing releases
         env:
           GH_TOKEN: ${{ github.token }}
@@ -34,7 +37,40 @@ jobs:
       - name: Native gameplay and save verification
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
-        run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/release
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VERIFIED=""
+          # A release-only/documentation commit may reuse the existing full gate
+          # only when every other tracked file is byte-identical to its source.
+          for SOURCE in $(git log -8 --format=%H); do
+            if ! git diff --quiet "$SOURCE" HEAD -- . ':(exclude)docs/**' ':(exclude)SESSION_HANDOFF.md' ':(exclude).github/workflows/windows-release.yml'; then
+              continue
+            fi
+            CHECK=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/runs" -f head_sha="$SOURCE" -f event=pull_request --jq '[.workflow_runs[] | select(.path == ".github/workflows/validate.yml")][0] // empty')
+            test -n "$CHECK" || continue
+            # Wait for that exact source instead of launching a duplicate suite.
+            for ATTEMPT in $(seq 1 80); do
+              test "$(echo "$CHECK" | jq -r .status)" = completed && break
+              sleep 15
+              CHECK=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$(echo "$CHECK" | jq -r .id)")
+            done
+            if test "$(echo "$CHECK" | jq -r .conclusion)" != success; then
+              echo "The identical source gate did not pass; release remains blocked."
+              exit 1
+            fi
+            RUN=$(echo "$CHECK" | jq -r .html_url)
+            if test -n "$RUN"; then
+              VERIFIED="$SOURCE $RUN"
+              break
+            fi
+          done
+          if test -n "$VERIFIED"; then
+            mkdir -p test-results
+            echo "Identical source passed full native gameplay: $VERIFIED" | tee test-results/release-source.txt
+          else
+            xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/release
+          fi
       - name: Build one complete Windows ZIP
         run: python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
       - name: Test the exact exported pack

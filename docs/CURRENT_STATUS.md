@@ -6,7 +6,9 @@ Painted facade wall bodies now block feet; the southern homes were moved clear o
 
 Town/household stair interactions take 1.5 seconds along the painted flight, with solid rails/top caps and matching XY landings across Z. Treads render behind the climbing Dwarf. Gallery openings crop real lower-ward architecture with a fixed visual drop; only the active ward simulates. This is a bounded cutaway, not completion of a fully continuous stacked hold. Deepworks and player-built floor systems remain intact.
 
-Native source verification: 254 distinct passing checks plus a 35-check final repeat. Locomotion/export evidence is recorded in testing/continuity66.md. Windows release delivery uses the pinned official runtime and requires full native gameplay, pack inventory/ZIP integrity, and exact-pack tests. See RELEASE_NOTES.md. Prior versions and saves are preserved.
+Native source verification: 254 distinct passing checks plus a 35-check final repeat. Another 46 checks passed against the exact exported pack; PCK and ZIP integrity passed. Evidence is recorded in testing/continuity66.md. Windows release delivery uses the pinned official runtime and requires full native gameplay, pack inventory/ZIP integrity, and exact-pack tests. See RELEASE_NOTES.md. Full hosted gameplay validation 39611887147 passed and PR #6 merged as 285a2bc41c827b415a51ce3c284e3335b5342d43. Prior versions and saves are preserved.
+
+Published Windows release: [v0.62.1](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.62.1), one complete ZIP, 700,029,838 bytes. SHA-256 `38a2918a4ce9436174b8741088a395378e01e0b0a186e07000f0cb7589124283`. GitHub's asset size and digest match the hosted build report. Tag target: `7c51669f17b94ceb835b99fa9572f03e75cad880`; tracked source was clean. Release run 39614387128 passed the reused identical-source gate, all 3,147 PCK-entry checks, ZIP integrity, and both exported-game harnesses before publication. Older releases were not replaced.
 
 # 0.62.0 — Keldrath galleries and collision refinement (source)
 
