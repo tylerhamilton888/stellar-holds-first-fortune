@@ -6,7 +6,7 @@ Painted facade wall bodies now block feet; the southern homes were moved clear o
 
 Town/household stair interactions take 1.5 seconds along the painted flight, with solid rails/top caps and matching XY landings across Z. Treads render behind the climbing Dwarf. Gallery openings crop real lower-ward architecture with a fixed visual drop; only the active ward simulates. This is a bounded cutaway, not completion of a fully continuous stacked hold. Deepworks and player-built floor systems remain intact.
 
-Native source verification: 254 distinct passing checks plus a 35-check final repeat. Locomotion/export evidence is recorded in testing/continuity66.md. Windows release delivery uses the pinned official runtime and requires full native gameplay, pack inventory/ZIP integrity, and exact-pack tests. See RELEASE_NOTES.md. Prior versions and saves are preserved.
+Native source verification: 254 distinct passing checks plus a 35-check final repeat. Another 46 checks passed against the exact exported pack; PCK and ZIP integrity passed. Evidence is recorded in testing/continuity66.md. Windows release delivery uses the pinned official runtime and requires full native gameplay, pack inventory/ZIP integrity, and exact-pack tests. See RELEASE_NOTES.md. Full hosted gameplay validation 39611887147 passed and PR #6 merged as 285a2bc41c827b415a51ce3c284e3335b5342d43. Prior versions and saves are preserved.
 
 # 0.62.0 — Keldrath galleries and collision refinement (source)
 

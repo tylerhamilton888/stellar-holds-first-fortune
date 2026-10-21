@@ -1,0 +1,14 @@
+{
+  "version": "0.62.1",
+  "remote_runtime_source": "7d7e7d75c4e07de37ed49b0c1817441f48b5158b",
+  "local_runtime_source": "aa75c504bd12da926a2323ba514c3a0ae5ed23a5",
+  "source_checks_distinct": 254,
+  "source_final_repeat_checks": 35,
+  "exact_pack_checks": 46,
+  "pck_entries": 3147,
+  "runtime_sha256": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+  "remote_changed_paths_verified": 46,
+  "remote_blob_mismatches": 0,
+  "windows_native_execution": false,
+  "renderer": "Godot 4.4.1 OpenGL compatibility, Linux llvmpipe, 1280x720"
+}
