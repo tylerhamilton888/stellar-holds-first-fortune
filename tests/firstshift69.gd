@@ -1,5 +1,5 @@
 extends "res://tests/support/game_fixture.gd"
-func key(k:int,shift:bool=false):
+func press(k:int,shift:bool=false):
  var e=InputEventKey.new();e.keycode=k;e.physical_keycode=k;e.shift_pressed=shift;e.pressed=true;g._unhandled_input(e)
 func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
@@ -20,19 +20,19 @@ func run():
   world.set_cell(c,2)
   for i in 8:
    if world.at(c)!=0:g.deep.hit(c)
- at(Vector2(500,460));key(KEY_E)
- at(Vector2(260,420));key(KEY_E)
+ at(Vector2(500,460));press(KEY_E)
+ at(Vector2(260,420));press(KEY_E)
  at(Vector2(540,460))
- key(KEY_E)
+ press(KEY_E)
  check(h.data().carry.size()==1 and q.facts.get("lift",false),"E lifts excavated material and advances the practical lesson")
  await snap("01-lift")
- at(Vector2(260,420));key(KEY_E)
+ at(Vector2(260,420));press(KEY_E)
  check(h.data().carry.is_empty() and HoldFirstShift.station(g,"rack").raw.size()==2,"E stocks a real raw load")
  at(Vector2(220,345));Input.action_press("interact");await frames(300);Input.action_release("interact")
  var bench=HoldFirstShift.station(g,"bench")
  check(int(bench.cargo.get("stone",0))==8 and q.facts.get("process",false),"Held work navigates around the solid bench and processes the stocked sample")
  await snap("02-worksite")
- key(KEY_E,true)
+ press(KEY_E,true)
  check(HoldFirstShift.step(g)==4 and bench.cargo.is_empty(),"Collecting output advances to equipment placement")
  at(Vector2(310,180));check(h.build("stone_pile",Vector2(340,160)),"Usable stone crafts a player-owned rack in clear floor")
  at(Vector2(260,180));check(h.build("breaker",Vector2(220,200)),"Player builds a second real stonebreaker")
@@ -54,7 +54,7 @@ func run():
  for i in 300:HoldFirstShift.tick(g,.05)
  check(int(crewbench.cargo.get("stone",0))==total,"Idle crew cannot generate infinite materials")
  at(Vector2(350,400));await snap("03-crew-bay")
- key(KEY_J);await snap("04-worksite-journal");g.close_panel()
+ press(KEY_J);await snap("04-worksite-journal");g.close_panel()
  # A developed old layout keeps its own objects and receives no duplicate equipment.
  q.started=false;var existing=h.data().facilities.size();HoldFirstShift.enter(g)
  check(h.data().facilities.size()==existing,"Occupied bay positions never replace player equipment")
