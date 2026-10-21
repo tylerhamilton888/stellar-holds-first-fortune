@@ -29,6 +29,10 @@ python tools/build.py --godot /path/to/godot --windows-runtime /path/to/verified
 
 The runtime must be the unchanged official 4.4.1 template already shipped in 0.61.0. The tool checks its hash before packaging. Build output includes PCK integrity results, source identification and file hashes. Successful packaging does not replace gameplay or Windows playtesting.
 
+## Current chapter
+
+The Hold of Three Hearths combines Keldrath refinement, a practical first-shift mine lesson and The Stone Remembers: rescue, ancestral research, Overseer appointment and investiture as Thane. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [verification record](docs/testing/ancestral70.md) and [personal progression proposal](docs/PROGRESSION_NEXT.md). The proposed skill-tree redesign is not part of this implementation.
+
 ## Project map
 
 - `scripts/`: runtime systems; `main.gd` coordinates the game.

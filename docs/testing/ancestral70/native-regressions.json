@@ -1,0 +1,58 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 10.18
+  },
+  {
+    "test": "firstshift",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 19,
+    "seconds": 52.53
+  },
+  {
+    "test": "handworks",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 32,
+    "seconds": 59.49
+  },
+  {
+    "test": "mining",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 38,
+    "seconds": 68.72
+  },
+  {
+    "test": "world",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 76.66
+  },
+  {
+    "test": "civic",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 65.8
+  },
+  {
+    "test": "living",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 51,
+    "seconds": 65.45
+  }
+]

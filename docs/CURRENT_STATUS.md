@@ -1,3 +1,11 @@
+# 0.64.0 — Published and verified
+
+One complete [Windows ZIP](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.64.0/Stellar-Holds-First-Fortune-0.64.0-Windows.zip) is published. Size: 705,278,506 bytes; SHA-256 `717d5ba55b3bf01be61731b247901b51157601db8b630b45e9979ace35b79f46` matches the clean hosted build report. Release tag v0.64.0 points to verified source c9958797c2a453bbc26934c5832d1db3d36c0f3d. All fifteen hosted gameplay cases and all six exact-export cases passed. Source run 39679087059; release run 39679089395. PR #11 merged at 3bb211b335c940ddd877c8103e788fbf320af9da with an identical tree. Earlier releases remain intact.
+
+Includes the Three Hearths civic refinement, the practical mine worksite with protected hold stock, and The Stone Remembers: physical rescue, Eldric's evidence-based charter research, Overseer appointment and development-gated investiture as Thane. Existing purchased mountains, excavation and other progress remain preserved. Research and appointment use the existing conversations and journal. Local verification included 239 related source checks, 23 quest/UI checks and 203 exact-package checks. Windows hardware performance/audio and artistic acceptance still require the player's device.
+
+Next: discuss experience gains and readable personal development trees/charts. Current work counters and nine research methods are preserved; no full skill-tree redesign is implemented. See PROGRESSION_NEXT.md, PLAYTEST_GUIDE.md and testing/ancestral70.
+
 # Ancestral charter — Overseer to Thane
 
 The Stone Remembers is an additive quest stored in outpost.ancestral_claim. Ivar offers a rescue after the first paid shift and initial audience/next-work conversation. The quest uses an existing depth-1 hold cavern and never overwrites excavated terrain. Open a continuous walkable bypass, speak to the miners with E, and keep their route clear until both reach the entrance. Saved positions/path progress support mid-rescue reloads. The recovered slab then goes to Eldric.
