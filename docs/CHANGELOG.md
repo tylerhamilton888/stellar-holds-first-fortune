@@ -5,6 +5,8 @@
 - Enlarged Borin's workshop interior and exterior wing with shared masonry, modestly scaled benches, storage and painted work poses.
 - Added craftable/placable carved pillars and low workshop tables through the existing furniture system.
 - Updated directions and quest markers; kept enclosed service stairs and lift shortcuts, existing stories, player art, mining, timber and industrial systems.
+- Kept adjacent-ward residents visible on shared stair flights without duplicate drawing or changes to saved ownership.
+- Published one complete verified Windows ZIP; preserved all previous releases and recovery points.
 - Added native route/contact/export coverage; fixed tutorial test timing to wait for the visible loader after skipping the escort.
 
 ## 0.62.1

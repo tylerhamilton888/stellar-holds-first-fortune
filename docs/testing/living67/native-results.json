@@ -1,0 +1,70 @@
+{
+  "checks": 303,
+  "cases": [
+    {
+      "test": "living",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 48,
+      "seconds": 59.48
+    },
+    {
+      "test": "hold",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 81,
+      "seconds": 45.49
+    },
+    {
+      "test": "continuity",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 48.5
+    },
+    {
+      "test": "orientation",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 20,
+      "seconds": 70.49
+    },
+    {
+      "test": "world",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 65.57
+    },
+    {
+      "test": "modular",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 28,
+      "seconds": 47.5
+    },
+    {
+      "test": "ambient",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 36,
+      "seconds": 75.53
+    },
+    {
+      "test": "equipment",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 20,
+      "seconds": 55.48
+    }
+  ],
+  "prior_failed_runs": "Retained outside repository; superseded fixture/camera failures documented in living67.md"
+}

@@ -1,0 +1,42 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Existing saves use the Copperkettle family name for both spouses
+PASS Orla retains her cast identity, sculpt and palette
+PASS Name update preserves pack and player appearance on reload
+PASS crownward citizen 0 travels with at least three distinct painted walk keys
+PASS crownward citizen 1 travels with at least three distinct painted walk keys
+PASS crownward citizen 2 travels with at least three distinct painted walk keys
+PASS crownward citizen 3 travels with at least three distinct painted walk keys
+PASS crownward citizen 4 travels with at least three distinct painted walk keys
+PASS crownward citizen 5 travels with at least three distinct painted walk keys
+PASS crownward fountain basin blocks feet while surrounding paving stays walkable
+PASS hearthward citizen 0 travels with at least three distinct painted walk keys
+PASS hearthward citizen 1 travels with at least three distinct painted walk keys
+PASS hearthward citizen 2 travels with at least three distinct painted walk keys
+PASS hearthward citizen 3 travels with at least three distinct painted walk keys
+PASS hearthward citizen 4 travels with at least three distinct painted walk keys
+PASS hearthward citizen 5 travels with at least three distinct painted walk keys
+PASS hearthward fountain basin blocks feet while surrounding paving stays walkable
+PASS forgeward citizen 0 travels with at least three distinct painted walk keys
+PASS forgeward citizen 1 travels with at least three distinct painted walk keys
+PASS forgeward citizen 2 travels with at least three distinct painted walk keys
+PASS forgeward citizen 3 travels with at least three distinct painted walk keys
+PASS forgeward citizen 4 travels with at least three distinct painted walk keys
+PASS forgeward citizen 5 travels with at least three distinct painted walk keys
+PASS forgeward fountain basin blocks feet while surrounding paving stays walkable
+PASS Native fountain rendering changes with the game clock
+PASS Fountain stays still when its game clock is paused
+PASS Native home hearth has painted fire movement and glow
+PASS Native tavern hearth has painted fire movement and glow
+PASS Native forge hearth has painted fire movement and glow
+PASS Player constructs a real hearth through the existing furnishing system
+PASS Player-built hearth uses the same painted animation as town hearths
+PASS Constructed hearth persists through reload
+PASS Player hearth keeps the shared construction cost and physical footprint
+PASS Escort queues the next area's actor frames
+PASS Escort cannot move unseen behind character warm-up
+PASS Player and Ivar both cycle complete walk frames during the real escort
+AMBIENT61: 36 passed / 0 failed; native sequences complete

@@ -1,0 +1,59 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+ROUTINE COMPILATION ms=945 grids=0 routes=109
+PASS Nine households have persistent daily journeys
+PASS Navigation grids are released after compiling schedules
+PASS Bjarne Granitehand stays on actual floor and clears architecture
+PASS Bjarne Granitehand visits home, work and tavern
+PASS Astrid Copperbraid stays on actual floor and clears architecture
+PASS Astrid Copperbraid visits home, work and tavern
+PASS Halvar Deepmantle stays on actual floor and clears architecture
+PASS Halvar Deepmantle visits home, work and tavern
+PASS Oskar Granitehand stays on actual floor and clears architecture
+PASS Oskar Granitehand visits home, work and tavern
+PASS Freya Copperbraid stays on actual floor and clears architecture
+PASS Freya Copperbraid visits home, work and tavern
+PASS Sten Deepmantle stays on actual floor and clears architecture
+PASS Sten Deepmantle visits home, work and tavern
+PASS Einar Granitehand stays on actual floor and clears architecture
+PASS Einar Granitehand visits home, work and tavern
+PASS Bodil Copperbraid stays on actual floor and clears architecture
+PASS Bodil Copperbraid visits home, work and tavern
+PASS Haldor Deepmantle stays on actual floor and clears architecture
+PASS Haldor Deepmantle visits home, work and tavern
+PASS Walk continuously down to hearthward
+PASS Great Stair preserves gait and never locks controls
+PASS Save restores the same stair position
+PASS Walk continuously back to crownward
+PASS Visible balustrade blocks lateral movement
+PASS Walk continuously down to forgeward
+PASS Great Stair preserves gait and never locks controls
+PASS Save restores the same stair position
+PASS Walk continuously back to hearthward
+PASS Visible balustrade blocks lateral movement
+PASS Camera preserves the exact screen-space crossing
+PASS Loaded handcart and its contents cross with the player
+PASS Continuous crossing never triggers character preparation
+PASS The painted quarters doorway enters the player's home
+PASS Starting quarters lead back into the living hold
+PASS Actual player movement reaches the Great Stair across the gallery bridge
+PASS Actual movement continues to Borin's painted door
+PASS The continuous route enters the expanded workshop
+PASS Forge has a full-sized accessible workshop wing
+PASS Expanded forge exits at its own actual doorway
+PASS Far-half stair resident joins the active foreground at the same world coordinate
+PASS Far-half stair resident is drawn once without changing area ownership
+PASS Resident crosses the seam without duplicate actors or a visibility gap
+PASS One consistent Oskar in hearthward
+PASS One consistent Oskar in forgeward
+PASS One consistent Oskar in room:forge
+PASS One consistent Oskar in room:tavern
+PASS Reload preserves resident location, activity and appearance
+PERFORMANCE67 {"compiled_paths":109,"p50_ms":14.253,"p95_ms":20.374,"renderer":"Linux llvmpipe native 1280x720; frame interval includes display scheduling","route_compile_ms":945}
+PASS The town's painted column is craftable and placeable with normal materials
+PASS Placed column's painted base blocks feet
+PASS Shared architectural decoration persists on reload
+LIVING67: 51 passed / 0 failed

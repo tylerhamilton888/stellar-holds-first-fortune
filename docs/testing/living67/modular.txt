@@ -1,0 +1,34 @@
+Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
+OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+PASS Fine furnishing grid aligns preview and committed placement
+PASS Furnished tea table is crafted and placed
+PASS Table consumes its recipe exactly once
+PASS Tabletop dressing shares the table's physical geometry
+PASS Painted table base blocks feet while its front approach remains open
+PASS Placed table can be selected for repositioning
+PASS Table moves to valid nearby ground
+PASS Moving neither charges nor duplicates furniture
+PASS Collision follows the moved table
+PASS Cancel leaves the original placement intact
+PASS Player crafts a movable storage chest
+PASS Filled player chest can be selected
+PASS Filled chest can be repositioned on the fine grid
+PASS Repositioning preserves chest identity, contents and materials
+PASS Storage chests can form a close row while keeping front access
+PASS Overlapping painted bases cannot be built
+PASS Clear affordable placement previews green
+PASS Occupied footprint previews red
+PASS Missing materials preview red even on clear ground
+PASS Affordable foundation previews green
+PASS Green foundation can actually be built
+PASS Duplicate foundation previews red
+PASS Clear foundation accepts connected stairs
+PASS Stair landing cannot preview a blocking wall as valid
+PASS Decor positions and chest contents survive save/reload
+PASS Town tables use the same furnished variant as player construction
+PASS Wall sliding faces the actual travel direction
+PASS Blocked movement stops the walking gait
+MODULAR64: 28 passed / 0 failed

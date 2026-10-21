@@ -1,0 +1,26 @@
+{
+  "version": "0.63.0",
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.63.0",
+  "download_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.63.0/Stellar-Holds-First-Fortune-0.63.0-Windows.zip",
+  "source_commit": "472e12bf47c0784c84f3e763da7778dc9cbe740e",
+  "source_pr": 9,
+  "source_merge": "e8a62f08f9ea6a950ba0176bc0bd071927292707",
+  "source_run": 39656307242,
+  "source_conclusion": "success",
+  "release_run": 39656676389,
+  "release_conclusion": "success",
+  "published_asset_id": 663538819,
+  "published_zip_bytes": 701152760,
+  "published_zip_sha256": "f273ba088776f8a8bd52ae56ae7c941d3b2c68ff614cd34b98791734ee975eb3",
+  "asset_matches_hosted_build": true,
+  "tag_matches_hosted_build": true,
+  "pack_entries_verified": 3157,
+  "exported_cases_passed": [
+    "ambient",
+    "continuity",
+    "living"
+  ],
+  "evidence_artifact_id": 12373841489,
+  "evidence_artifact_sha256": "9b0632523a3c8ac26588cc670b4efc0fd341f1367e1fcadfb57f8ecc4b9acb47",
+  "windows_native_execution_tested": false
+}

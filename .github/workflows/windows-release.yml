@@ -13,7 +13,8 @@ jobs:
   windows:
     if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    # Includes waiting for the full source gate, a cold art import and exact-pack checks.
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -34,6 +35,9 @@ jobs:
         run: |
           python3 tools/install_engine.py "$RUNNER_TEMP/godot"
           python3 tools/install_windows_runtime.py "$RUNNER_TEMP/windows_release_x86_64.exe"
+      # Prepare the clean package while the identical-source gate runs elsewhere.
+      - name: Build one complete Windows ZIP
+        run: python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
       - name: Native gameplay and save verification
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
@@ -71,8 +75,6 @@ jobs:
           else
             xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/release
           fi
-      - name: Build one complete Windows ZIP
-        run: python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
       - name: Test the exact exported pack
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'

@@ -1,0 +1,7 @@
+{
+  "compiled_paths": 109,
+  "p50_ms": 17.593,
+  "p95_ms": 34.57,
+  "renderer": "Linux llvmpipe native 1280x720; frame interval includes display scheduling",
+  "route_compile_ms": 1000
+}
