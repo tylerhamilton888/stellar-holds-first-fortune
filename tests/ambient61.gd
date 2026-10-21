@@ -36,7 +36,9 @@ func run():
  check(still.get_data()!=water.get_data(),"Native fountain rendering changes with the game clock")
  var frozen=await image_now();check(water.get_data()==frozen.get_data(),"Fountain stays still when its game clock is paused")
  for id in ["home","tavern","forge"]:
-  g.surface.enter("room:"+id);settle();g.camera=g.surface.camera_target();g.clock=0
+  g.surface.enter("room:"+id);settle()
+  if id=="forge":at(Vector2(800,450)) # The expanded hall's hearths are north of its entry camera.
+  g.camera=g.surface.camera_target();g.clock=0
   var a=await image_now();a.save_png(output+"/"+id+"-0.png")
   g.clock=.28;var b=await image_now();b.save_png(output+"/"+id+"-1.png")
   check(a.get_data()!=b.get_data(),"Native "+id+" hearth has painted fire movement and glow")

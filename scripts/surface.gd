@@ -61,7 +61,7 @@ func ensure():
   var id="claim:"+g.state.claim_id+":starter"
   s.chests[id]={"area":"home:"+g.state.claim_id,"x":650.0,"y":380.0,"items":{}}
 func room()->bool:return area.begins_with("room:") or area.begins_with("home:")
-func size()->Vector2:return ROOM_SIZE if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else SIZE
+func size()->Vector2:return HoldRoomLayout.size(area) if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else SIZE
 func label()->String:
  if HoldNeighborhood.is_home(area):return HoldNeighborhood.title(area)
  if area.begins_with("home:"):return "Your hearth · "+HoldOutpost.title(g.state)
@@ -90,6 +90,7 @@ func restore():
   g.player=spawn(area)
  g.grounded=true;g.camera=camera_target();g.velocity=Vector2.ZERO
 func spawn(id:String)->Vector2:
+ if id=="room:forge":return HoldRoomLayout.exit_point(id)-Vector2(0,70)
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
  return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
 func enter(id:String,at:Vector2=Vector2.INF):
@@ -126,7 +127,8 @@ func leave():
  var p=g.state.surface.positions.get(back,[])
  enter(back,Vector2(p[0],p[1])+Vector2(0,35) if p.size()==2 else spawn(back))
 func camera_target()->Vector2:
- if room():return Vector2(0,135)
+ if room():return HoldRoomLayout.camera(area,g.player)
+ if HoldWorldZones.ward(area):return HoldTerraces.camera(area,g.player)
  return (g.player-Vector2(480,300)).clamp(Vector2(0,-65),Vector2(maxf(0,size().x-960),maxf(-65,size().y-480)))
 func level()->int:return 0 if area=="crownward" else 2 if area=="forgeward" else 1
 func points()->Array:
@@ -139,12 +141,12 @@ func points()->Array:
   result=[spot(180,790,"High Trail · Keldrath","trail"),spot(500,440,"Your home","home:"+g.state.claim_id),spot(1280,345,"Your Deepworks","mine"),spot(970,690,"Founding stones","camp"),spot(1370,760,"Workshop","room:forge"),spot(1650,840,"Launchyard","ship"),spot(740,780,"Homestead workbench","homestead")]
  elif area=="pinewood":result=[spot(180,650,"High Trail","trail"),spot(300,790,"Woodcutter's field board","pinewood_panel")]
  elif room():
-  result=[spot(480,620,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
+  var exit_point=HoldRoomLayout.exit_point(area)
+  result=[spot(exit_point.x,exit_point.y,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
   if HoldNeighborhood.is_home(area):
    var parts=HoldNeighborhood.parts(area)
    if parts[2]=="1":result=[] # Upper rooms leave by their real stair, never a ground-level door.
    result.append(spot(700,550,"Stairs · "+("upper rooms" if parts[2]=="0" else "family hearth"),HoldNeighborhood.home_id(parts[0],int(parts[1]),1-int(parts[2]))))
-   for c in HoldNeighborhood.people(world):result.append({"p":c.p,"name":c.name,"action":"citizen:"+str(c.index)})
   elif area.begins_with("home:") or area=="room:home":
    result.append({"p":HoldFurnishings.bedside(Vector2(290,420)),"name":"Bed · rest and save","action":"rest","bed":Vector2(290,420)});result.append(spot(735,537,"Writing desk · write home","letter"))
   elif area=="room:training":
@@ -156,6 +158,8 @@ func points()->Array:
    if g.room_id=="tavern":
     var guests=HoldNpcPresence.tavern_guests(g.state)
     for i in mini(3,guests.size()):result.append(spot(270+i*170,550,"Speak with "+g.state.npc(guests[i]).first_name,"talk:"+guests[i]))
+ if room():
+  for c in world.routines.people(area,g.state.elapsed):result.append({"p":c.p,"name":c.name+" · "+c.role,"action":c.interaction})
  if area=="claim" and house.level()==0:
   var index=0
   for id in g.state.outpost.get("crew",{}):
@@ -180,7 +184,7 @@ func nearest()->Dictionary:
   var d=g.player.distance_to(p.p)
   if p.action in ["rest","house_rest"] and (d>46 or absf(g.player.y-p.p.y)>25):continue
   if p.action=="letter" and (d>48 or g.player.y<p.p.y-8):continue
-  if p.action.begins_with("citizen:"):d+=38 # Do not let a passing neighbor steal a doorway interaction.
+  if p.action.begins_with("citizen:") or p.action.begins_with("resident:"):d+=38 # Doors retain priority.
   if (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
   if p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action)):
    if not HoldNeighborhood.stair_access(g.player,p.p,96 if HoldNeighborhood.is_home(area) else 140):continue
@@ -199,6 +203,7 @@ func clear_interaction(a:Vector2,b:Vector2)->bool:
 func use():
  var p=nearest()
  if p.is_empty():g.notify("Walk to a doorway, signpost, chest or workstation and press E.");return
+ if p.action.begins_with("terrace:"):g.notify("Walk along the Great Stair · movement stays in your hands.");return
  if is_stair_point(p):begin_stair(p);return
  action(p.action)
 func is_stair_point(p:Dictionary)->bool:
@@ -247,6 +252,7 @@ func action(id:String):
  elif id=="training":g.enter_room("training")
  elif id=="private":g.notify("Folk homes · private quarters. Meet the neighbors in the streets and tavern.")
  elif id.begins_with("citizen:"):world.speak(int(id.trim_prefix("citizen:")))
+ elif id.begins_with("resident:"):world.routines.speak(id)
  elif id.begins_with("talk:"):HoldConversation.start(g,id.trim_prefix("talk:"))
  elif id.begins_with("chest:"):
   selected_chest=id.trim_prefix("chest:")
@@ -284,9 +290,10 @@ func obstacles(ignore:Dictionary={})->Array:
 func walkable(p:Vector2,ignore:Dictionary={})->bool:
  if area=="claim" and house.level()>0 and not house.on_floor(p,house.level()):return false
  if HoldWorldZones.ward(area):
+  if HoldTerraces.envelope(area,p):return HoldTerraces.on_stair(area,p)
   if not HoldNeighborhood.BOUNDS.has_point(p):return false
  elif room():
-  if not Rect2(175,290,610,345).has_point(p):return false
+  if not HoldRoomLayout.bounds(area).has_point(p):return false
  elif not Rect2(90,210,1700,750).has_point(p):return false
  if area=="trail" and p.x>1170 and p.x<1300 and (p.y<665 or p.y>735):return false
  for r in obstacles(ignore):
@@ -322,6 +329,14 @@ func move(dt:float):
  if g.walking_pose:
   if not (g.fight.enabled() and g.combat.armed):direction=(g.player-before).normalized()
   HoldDrawnLocomotion.advance(g,g.player.distance_to(before),"wood" if room() else "stone")
+ if HoldWorldZones.ward(area):
+  var crossing=HoldTerraces.crossing(area,g.player)
+  if not crossing.is_empty():
+   # Same world coordinate, camera and gait: no scene load, fade or input lock.
+   var cart=g.handworks.attached();var old_origin=HoldTerraces.origin(area)
+   remember();area=crossing.area;g.player=crossing.p;g.camera+=old_origin-HoldTerraces.origin(area)
+   g.handworks.arrive(cart)
+   g.state.surface.area=area;world.speech="";remember();g.save_game()
  cut_flash=maxf(0,cut_flash-dt)
  if area=="pinewood":chop(dt)
  house.update(dt)
@@ -481,8 +496,8 @@ func lift_panel():
   g.button(g.panel_body,NAMES[id],func():enter(id,HoldWorldZones.LIFT+Vector2(0,30)))
 func guide_panel():
  g.label(g.panel_body,"FOLLOW THE PATHS",22,Color("edc98a"))
- g.label(g.panel_body,"Walk with WASD or arrows. Press E at doors, stairs, trail signs and workstations. You are here: "+label()+".",16)
- for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Western Royal stairs → Crownward (Z +1): Lord Eirik and the survey office.","Eastern Forge stairs → Forgeward (Z -1): Borin’s forge and practice bay.","King’s Gate → High Trail → Old Workings, Pinewood and your claim.","Keldrath: cross the southern gallery bridge to visit nine family hearths and their upper rooms.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
+ g.label(g.panel_body,"Walk with WASD or arrows, including along the Great Stair. E uses doors, household stairs, trail signs and workstations. You are here: "+label()+".",16)
+ for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Crownward (Z +1): take the Great Stair at Hearthward’s northwest wall to the royal gallery.","Forgeward (Z -1): cross Hearthward’s southern gallery bridge, turn east past the family homes, and walk down the Great Stair. Borin’s workshop is on Forgeward’s north street.","The enclosed Royal/Forge service stairs and the hold lift remain useful shortcuts.","King’s Gate → High Trail → Old Workings, Pinewood and your claim.","Neighbors leave their family hearths for work and the Copper Kettle. You can follow them through doors and between wards.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
   g.label(g.panel_body,text,16)
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
@@ -530,7 +545,9 @@ func draw():
  var cam=g.camera.round();g.draw_set_transform(-cam)
  var near=nearest()
  if area in ["hearthward","crownward","forgeward"]:
+  world.draw_neighbors()
   world.draw_ground()
+  for link in HoldTerraces.links(area):HoldTerraces.draw_connection(world,link,area)
  elif room():draw_room()
  else:draw_outdoors()
  if area=="claim" and house.level()>0:g.draw_rect(Rect2(Vector2.ZERO,SIZE),Color(.02,.06,.08,.5))
@@ -540,7 +557,7 @@ func draw():
   objects.append_array(world.buildings());objects.append_array(world.people());objects.append_array(world.landmarks())
   objects.append_array(world.street_furnishings())
  if room():objects.append_array(world.room_objects())
- if HoldNeighborhood.is_home(area):objects.append_array(HoldNeighborhood.people(world))
+ if room():objects.append_array(world.routines.people(area,g.state.elapsed))
  if area in ["claim","pinewood"] and house.level()==0:objects.append(world.furn("desk",740 if area=="claim" else 300,780 if area=="claim" else 790))
  if area in ["claim","trail"]:objects.append_array(world.exterior_objects())
  if area=="claim":
@@ -571,6 +588,8 @@ func draw():
  # Stair treads are floor, not an upright prop drawn over a climbing Dwarf.
  for o in objects:
   if o.kind=="landmark" and o.art in [1,2]:o.sort_y=o.p.y-125
+ if area=="room:forge":
+  for r in HoldRoomLayout.obstacles(area):objects.append({"p":Vector2(r.get_center().x,r.end.y),"kind":"furnishing","furnishing":"stone_pillar"})
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))
  for o in objects:
   g.draw_set_transform(-cam)
@@ -606,12 +625,12 @@ func draw():
  if area in ["hearthward","crownward","forgeward"]:
   for point in points():
    # Only the nearby door is captioned; the painted architecture stays readable.
-   if not point.action.begins_with("citizen:") and point.p.distance_to(g.player)<180 and point.p.distance_to(g.player)>78:plaque(point.p+Vector2(0,-72),point.name)
+   if not point.action.begins_with("citizen:") and not point.action.begins_with("resident:") and point.p.distance_to(g.player)<180 and point.p.distance_to(g.player)>78:plaque(point.p+Vector2(0,-72),point.name)
  else:
   for point in points():
    if point.action.begins_with("chest:") or point.action.begins_with("talk:") or point.action.begins_with("house:") or point.action in ["house_rest","house_up","house_down"]:continue
    if not room():signpost(point.p,point.name)
- if not near.is_empty() and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
+ if not near.is_empty() and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
   g.draw_arc(near.p+Vector2(0,6),23,0,TAU,24,Color("dfbd76"),2)
   # The footer already names this action; keep the actor and footwork unobscured.
  house.preview()
@@ -629,7 +648,7 @@ func draw():
   for i in HoldDistrictMap.DOORS:
    if HoldDistrictMap.DOORS[i].id==target:
     var here=int(i)/7==level()
-    var dest=HoldWorldZones.door(i) if here else (HoldWorldZones.ROYAL if level()==0 or (level()==1 and int(i)/7==0) else HoldWorldZones.FORGE)
+    var dest=HoldWorldZones.door(i) if here else HoldTerraces.waypoint(area,HoldWorldZones.WARDS[int(i)/7])
     var screen=(dest-cam).clamp(Vector2(130,105),Vector2(830,445))
     if dest.distance_to(g.player)<180:continue
     plaque(screen,g.state.npc(g.state.tracked_npc).first_name+" · "+("door" if here else "take stairs"))

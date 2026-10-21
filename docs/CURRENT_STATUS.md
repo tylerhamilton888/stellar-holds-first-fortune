@@ -1,3 +1,13 @@
+# 0.63.0 — Living terraces (source)
+
+Keldrath's Crownward, Hearthward and Forgeward now connect through long walkable Great Stairs. Normal movement crosses the ward boundary without a fade or input lock, keeping the camera, gait and loaded handcart continuous. Painted masonry provides retaining walls, balustrades, columns and a wider forge exterior. Existing enclosed service stairs and lift remain useful shortcuts.
+
+Nine household residents now travel from upper rooms, down their household stairs, through actual doorways, across wards, to work, the Copper Kettle and home. Journeys and appearance are deterministic from the existing seed and saved world clock. Forge workers use whole painted hammer poses with stone on low benches. Story services remain available; the six ordinary street rovers per ward still use their established public routes. This is ambient occupational life, not new economic automation.
+
+Borin's forge has a larger accessible workshop wing, camera-following floor plan and matching doorway. Houses and other shops retain separate compact interiors. Carved stone pillars and low workshop tables use the same craft/place/collision/save catalogue as existing player furniture. Materials and old progress remain compatible.
+
+Verification and release status: see testing/living67.md and SESSION_HANDOFF.md. This is a bounded continuous-terrace implementation, not arbitrary 3D architecture or a rebuild of every interior. Player art is unchanged. Native Windows performance, sound and artistic acceptance still need the player's machine.
+
 # 0.62.1 — Town motion and physical continuity
 
 Player walk art and ordinary stride timing are preserved. Town residents and Ivar use whole-character side passing poses, with the same distance clock as the player. NPC-only selection prevents these poses from changing player or portrait frames. All fourteen town identities keep the existing palette pipeline and full male beards.

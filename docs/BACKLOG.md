@@ -1,3 +1,10 @@
+## After 0.63.0
+- Player acceptance of Great Stair travel, hold scale, forge contact and nine household schedules. Target Windows performance/audio remain unverified locally.
+- Expand other interiors and architectural variation after this playable forge/terrace milestone; distinct interior spaces remain intentional.
+- Ordinary street rovers and story hosts do not have the new household schedule. New resident work is ambient, not economic production or an NPC hauling rewrite.
+- Arbitrary overlapping floor occlusion, a full lighting/day simulation and seamless interiors remain future work. The implemented approach bounds rendering to active/visible adjacent wards.
+- Cold preparation still does real work. Compiled navigation grids are discarded; further imported-asset caching should be measured independently.
+
 ## After 0.62.1
 - Build efficiency: cold editor asset import took about 8–11 minutes on GitHub. Consider a versioned imported-asset cache; never cache saves. Identical-source gate reuse is now implemented, so release jobs need not duplicate full gameplay validation.
 - Player acceptance of town side-walk cycles and stair continuity. Female identity 5 repeats its accepted passing pose on both passing beats; all figures remain whole painted frames. Do not redraw the accepted player gait.

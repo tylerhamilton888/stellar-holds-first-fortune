@@ -17,6 +17,8 @@ def main():
     fixture = (ROOT/'tests/support/game_fixture.gd').read_text()
     body = (ROOT/'tests/continuity66.gd').read_text().split('\n', 1)[1]
     cases.append(('continuity', fixture+'\n'+body, 'CONTINUITY66'))
+    body = (ROOT/'tests/living67.gd').read_text().split('\n', 1)[1]
+    cases.append(('living', fixture+'\n'+body, 'LIVING67'))
     results = []
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()

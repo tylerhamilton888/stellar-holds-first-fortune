@@ -17,7 +17,7 @@ static func panel(g):
    b.disabled=not local
    if not local:g.label(g.panel_body,"Visit Ivar's office beside the pithead. Follow his location marker and press E at the door.",15)
   2:
-   g.label(g.panel_body,"'Meet the people you will be relying on. Borin's forge is down the eastern stairs in Forgeward. Orla's exchange and the Copper Kettle are on Hearthward's north street. Introduce yourself properly.'",17)
+   g.label(g.panel_body,"'Meet the people you will be relying on. Borin's forge is below us in Forgeward. Cross the southern gallery bridge and take the eastern Great Stair; the enclosed service stair is a quicker route. Orla's exchange and the Copper Kettle are on Hearthward's north street. Introduce yourself properly.'",17)
    for id in ["borin","orla","hedrik"]:
     g.button(g.panel_body,("Met: " if q.met.has(id) else "Find: ")+s.npc(id).name,func():s.tracked_npc=id;g.save_game();g.close_panel())
    g.label(g.panel_body,"After all three introductions, your coal commission begins. Step outside and press G for regional travel. Walk northeast to Old Workings, then press E to enter. J keeps the route and mining controls.",16)
