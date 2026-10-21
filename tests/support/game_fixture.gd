@@ -8,6 +8,7 @@ func check(ok:bool,label:String):
  if ok:passed+=1;print("PASS ",label)
  else:failed+=1;push_error(label)
 func settle():
+ while not g.surface.stair_trip.is_empty():g.surface.tick_stair(.05)
  while HoldFolk.warming():HoldFolk.warm_step()
  g.transition_left=0;g.transition_shade.visible=false;g.close_panel();g.notice_time=0
 func key(k:int):

@@ -17,7 +17,8 @@
       "handworks",
       "world",
       "modular",
-      "hold"
+      "hold",
+      "continuity"
     ],
     "modular": [
       "modular",
@@ -33,6 +34,18 @@
       "ambient",
       "world",
       "modular"
+    ],
+    "continuity": [
+      "continuity",
+      "hold",
+      "orientation",
+      "world",
+      "modular"
+    ],
+    "locomotion": [
+      "continuity",
+      "ambient",
+      "equipment"
     ]
   },
   "cases": {
@@ -75,6 +88,10 @@
     "hold": {
       "script": "tests/hold65.gd",
       "marker": "HOLD65"
+    },
+    "continuity": {
+      "script": "tests/continuity66.gd",
+      "marker": "CONTINUITY66"
     }
   }
 }

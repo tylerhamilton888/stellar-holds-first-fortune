@@ -1,0 +1,57 @@
+name: Verified Windows release
+on:
+  push:
+    branches: ['release/*']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  windows:
+    if: startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Check version and preserve existing releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VERSION=$(python3 -c 'from tools.build import metadata; print(metadata()["VERSION"])')
+          test "$GITHUB_REF_NAME" = "release/$VERSION"
+          if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release already exists; refusing to replace it."
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+      - name: Install and verify official engine and Windows runtime
+        run: |
+          python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+          python3 tools/install_windows_runtime.py "$RUNNER_TEMP/windows_release_x86_64.exe"
+      - name: Native gameplay and save verification
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/release
+      - name: Build one complete Windows ZIP
+        run: python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
+      - name: Test the exact exported pack
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a python3 tools/check_pack.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --pack "$RUNNER_TEMP/windows-build/FirstFortune.pck" --output test-results/pack
+      - name: Publish the verified version without replacing older builds
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release create "v$VERSION" "$RUNNER_TEMP/windows-build/Stellar-Holds-First-Fortune-$VERSION-Windows.zip" "$RUNNER_TEMP/windows-build/build.json" \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "The Stellar Holds — $VERSION" --notes-file docs/RELEASE_NOTES.md
+      - name: Retain native evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-release-evidence-${{ github.sha }}
+          path: test-results/
+          retention-days: 14

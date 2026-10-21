@@ -1,0 +1,34 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 9.16
+  },
+  {
+    "test": "continuity",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 62.48
+  },
+  {
+    "test": "ambient",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 36,
+    "seconds": 91.57
+  },
+  {
+    "test": "equipment",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 41.54
+  }
+]

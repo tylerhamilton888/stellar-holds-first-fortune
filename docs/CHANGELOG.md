@@ -1,3 +1,10 @@
+## 0.62.1
+- NPC-only whole-character passing poses; shared distance-based gait, preserving the player walk.
+- Solid facade wall coverage and collision-checked streets/door approaches.
+- Bedside access and an optional, persistent first letter home at writing desks.
+- Visible stair traversal at matching Z landings; lower-ward architectural cutaways.
+- Verified single-ZIP Windows delivery with official runtime and exported-game gates.
+
 ## 0.62.0 (source)
 - Extend all three Keldrath wards with bridged residential galleries and additional inter-ward stairs.
 - Nine furnished family homes with connected upstairs rooms, persistent location and distinct neighbors.

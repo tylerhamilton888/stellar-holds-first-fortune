@@ -161,6 +161,7 @@ static func journal(g):
   g.label(g.panel_body,"BRANN’S STONEWORK · Turn a sound block into a lasting floor.",17)
   g.button(g.panel_body,"Masonry lesson · quarry → stockpile → bench → build",func():g.deep.works.page="Masonry";g.open_panel("living"))
  var s=g.state;var q=ensure(s)
+ HoldLetters.journal(g)
  if primary(s)!="":g.label(g.panel_body,primary(s),17)
  if settling(s):
   g.label(g.panel_body,"IVAR · A PLACE TO BEGIN",20,Color("edc98a"))

@@ -38,6 +38,9 @@ static func draw(n:Node2D,p:Vector2,kind:String,tint:Color=Color.WHITE):
   HoldAmbientProps.hearth(n,p,float(clock) if clock!=null else 0.0,tint)
  else:n.draw_texture_rect_region(ATLAS,silhouette(kind,p),CROPS[item.art],tint)
  for detail in ITEMS.get(kind,ITEMS.table).get("dressing",[]):draw(n,p+detail[1],detail[0],tint)
+# Service anchors are on the usable side of the physical prop.
+static func bedside(p:Vector2,side:int=1)->Vector2:return p+Vector2(side*38,-32)
+static func desk_access(p:Vector2)->Vector2:return p+Vector2(0,22)
 static func cost_text(kind:String)->String:
  var parts=PackedStringArray()
  for resource in ITEMS[kind].cost:parts.append(str(ITEMS[kind].cost[resource])+" "+("timber" if resource=="wood" else resource))

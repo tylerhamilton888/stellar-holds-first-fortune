@@ -1135,7 +1135,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- if id in ["fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
+ if id in ["letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1170,6 +1170,7 @@ func open_panel(id:String,remember:bool=true):
   "fieldwork":fieldwork.panel()
   "handworks":handworks.panel()
   "homestead":surface.home_panel()
+  "letter":HoldLetters.panel(self)
   "house_build":surface.house.panel()
   "wayfinding":surface.guide_panel()
   "camp":camp_panel()
