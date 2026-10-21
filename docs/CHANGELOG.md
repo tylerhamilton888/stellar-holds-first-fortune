@@ -1,3 +1,11 @@
+# 0.64.0 — The Hold of Three Hearths
+
+- Composed the existing wards around an oath court, common hearth and iron terrace; added household details and original distant mountain works.
+- Added shared craft/place catalogue art for a memorial, orrery, notice board, pressure display and training rack. Freight chests retain real contents through existing storage saves.
+- Reframed interior exits above the hotbar with painted open thresholds and physical side leaves.
+- Removed automatic floating door/name/destination captions and large interaction rings; retained nearby E cues, contextual HUD and guide.
+- Kept Great Stairs, NPC routes, existing quests, player walk and previous save progress.
+
 # 0.63.0 — The Living Terraces
 
 - Connected all three Keldrath wards with continuous walking along painted Great Stairs; preserved camera, gait, saves and loaded handcarts at crossings.

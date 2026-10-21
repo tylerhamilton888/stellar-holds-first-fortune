@@ -56,7 +56,7 @@ func obstacles(area_id:String="")->Array:
  var result=HoldNeighborhood.obstacles()
  for b in buildings(area_id):result.append(building_footprint(b))
  # Central memorial fountain has a tangible basin, with broad streets around it.
- result.append(Rect2(895,595,150,70))
+ if area_id=="hearthward":result.append(Rect2(895,595,150,70))
  for o in landmarks(area_id):
   if o.art in [1,2]:result.append_array(HoldNeighborhood.stair_rails(o.p))
   elif o.art in [0,4]:
@@ -64,7 +64,7 @@ func obstacles(area_id:String="")->Array:
     if o.art==0:result.append(Rect2(o.p+Vector2(side*o.width*.32-o.width*.14,-o.width*.34),Vector2(o.width*.28,o.width*.42)))
     else:result.append(Rect2(o.p+Vector2(side*o.width*.4-10,-o.width*.6),Vector2(20,o.width*.6)))
   elif o.art==5:result.append(Rect2(o.p-Vector2(50,20),Vector2(100,20)))
- for o in street_furnishings():result.append(furn_footprint(o))
+ for o in street_furnishings(area_id):result.append(furn_footprint(o))
  result.append_array(HoldTerraces.rails(area_id))
  collision_cache[area_id]=result
  return result.duplicate()
@@ -86,6 +86,7 @@ func points()->Array:
   if b.has("home"):result.append({"p":b.p,"name":HoldNeighborhood.title(b.home),"action":b.home})
   elif b.id==-1:result.append({"p":b.p,"name":"Folk homes · private quarters","action":"private"})
  result.append_array(HoldTerraces.points(s.area))
+ result.append_array(HoldWardDesign.points(s.area))
  for c in people():result.append({"p":c.p,"name":c.name+" · "+c.role,"action":c.get("interaction","citizen:"+str(c.index))})
  return result
 func arrival(old:String,id:String)->Vector2:
@@ -108,7 +109,7 @@ func people(at_time:float=-1,area_id:String="")->Array:
  var time=g.state.elapsed if at_time<0 else at_time
  var route=[Vector2(270,530),Vector2(780,530),Vector2(1140,530),Vector2(1140,570),Vector2(780,570),Vector2(780,680),Vector2(270,680)]
  var names=[["Yrsa","Hakon","Inga","Viggo","Tova","Arvid"],["Runa","Torsten","Sigrid","Dori","Edda","Brynjar"],["Kara","Tormund","Hilda","Odd","Alva","Gunnar"]][floor_index]
- var roles=["Stonecarver","Lamplighter","Courier","Baker","Apprentice","Shift worker"]
+ var roles=HoldWardDesign.roles(area_id)
  var result=[]
  var cycle=3.0*route.size()
  for j in route.size():cycle+=route[j].distance_to(route[(j+1)%route.size()])/62.0
@@ -140,11 +141,10 @@ func draw_citizen(c:Dictionary):
  HoldDrawnAnimation.paint(g,c.p-cam,c.profile,c.aim,c.walking,c.gait,.85,-cam,c.get("pose","town_walk"),c.get("phase",0.0))
  g.draw_set_transform(-cam)
 func draw_ground():
- g.draw_rect(Rect2(0,0,1880,1080),Color("28393b"))
  tile(0,Rect2(80,180,1720,840),100,Color("aab5ae") if current_area()=="forgeward" else Color("d3d4bd"))
  if current_area()=="crownward":g.draw_texture_rect(VAULT,Rect2(45,-365,1790,597),false)
  else:
-  HoldMasonryArt.wall(g,Rect2(80,-80,1720,275))
+  HoldMasonryArt.wall(g,Rect2(80,140,1720,65))
  # The inhabited wards sit beneath the ancestral mountain vault.
  # Broad shadow and coping follow the collision envelope, without thin repeated strips.
  for x in range(90,1780,170):
@@ -158,6 +158,8 @@ func draw_ground():
  for y in [520,740,980]:
   g.draw_line(Vector2(115,y),Vector2(1770,y),Color("6d786a"),3)
  HoldNeighborhood.draw_gallery(self)
+ HoldWardDesign.ground(self)
+ HoldWardDesign.boundary(self)
 func draw_lower_gallery():
  # Clip the actual neighboring ward's architecture through the open floor.
  # No second simulation, viewport, texture readback, or off-floor actor updates.
@@ -179,12 +181,8 @@ func draw_lower_gallery():
    var crop=Rect2(source.position+(clip.position-dest.position)*ratio,clip.size*ratio)
    g.draw_texture_rect_region(FACADES,clip,crop,tint)
   g.draw_rect(opening,Color(.025,.055,.09,.22))
-func street_furnishings()->Array:
- var result=[]
- for p in [Vector2(180,450),Vector2(1700,450),Vector2(600,800),Vector2(1210,820)]:result.append(furn("lamp",p.x,p.y))
- for p in [Vector2(800,1180),Vector2(1120,1180),Vector2(230,1380),Vector2(1620,1380)]:result.append(furn("lamp",p.x,p.y))
- result.append_array([furn("tea_table",1120,1330),furn("chair",1065,1345),furn("chair",1175,1345),furn("hearth",1250,1270)])
- return result
+func street_furnishings(area_id:String="")->Array:
+ return HoldWardDesign.furnishings(self,current_area() if area_id=="" else area_id)
 func stone_style(color:Color)->StyleBoxFlat:
  if styles.has(color):return styles[color]
  var style=StyleBoxFlat.new();styles[color]=style;style.bg_color=color;style.border_color=color.darkened(.35);style.set_border_width_all(2);style.set_corner_radius_all(5);return style
@@ -211,7 +209,8 @@ func draw_building(b:Dictionary):
  if ward(current_area()):
   if b.get("id",-1)==15:HoldMasonryArt.wing(g,Rect2(b.p-Vector2(310,230),Vector2(620,230)))
   var i={0:0,1:1,2:2,3:3,4:4,5:5,6:5,7:3}[b.art]
-  image_at(FACADES,FACADE_RECTS[i],FACADE_DOORS[i],b.p,b.width,true);return
+  image_at(FACADES,FACADE_RECTS[i],FACADE_DOORS[i],b.p,b.width,true)
+  HoldWardDesign.frontage(self,b);return
  if b.art>=6:
   var r=Rect2(0,110,710,710) if b.art==6 else Rect2(735,140,795,675)
   var anchor=Vector2(365,800) if b.art==6 else Vector2(1130,800)
@@ -219,11 +218,11 @@ func draw_building(b:Dictionary):
  image_at(BUILDINGS,BUILD_RECTS[b.art],BUILD_ANCHORS[b.art],b.p,b.width,true)
 func landmarks(area_id:String="")->Array:
  if area_id=="":area_id=current_area()
- var result=[{"p":Vector2(970,665),"kind":"landmark","art":3,"width":180.0},{"p":LIFT,"kind":"landmark","art":4,"width":125.0}]
+ var result=[{"p":LIFT,"kind":"landmark","art":4,"width":125.0}]
+ if area_id=="hearthward":result.append({"p":Vector2(970,665),"kind":"landmark","art":3,"width":180.0})
  if area_id in ["hearthward","crownward"]:result.append({"p":ROYAL,"kind":"landmark","art":1 if area_id=="hearthward" else 2,"width":150.0})
  if area_id in ["hearthward","forgeward"]:result.append({"p":FORGE,"kind":"landmark","art":2 if area_id=="hearthward" else 1,"width":150.0})
  if area_id=="hearthward":result.append({"p":GATE,"kind":"landmark","art":0,"width":240.0})
- for p in [Vector2(680,800),Vector2(1130,820)]:result.append({"p":p+Vector2(0,15),"kind":"landmark","art":5,"width":110.0})
  return result
 func draw_landmark(o:Dictionary):
  if o.art in [1,2]:HoldNeighborhood.draw_stairs(self,o.p,o.art==1);return
@@ -251,6 +250,7 @@ func furn(kind:String,x:float,y:float)->Dictionary:return {"kind":"furnishing","
 func room_obstacles(area_id:String="")->Array:
  if area_id=="":area_id=s.area
  var result=HoldRoomLayout.obstacles(area_id)
+ if HoldCivicArt.has_exit(area_id):result.append_array(HoldCivicArt.exit_sides(area_id))
  for o in room_objects(area_id):result.append(furn_footprint(o))
  if HoldNeighborhood.is_home(area_id):
   result.append_array(HoldNeighborhood.stair_rails(HoldNeighborhood.STAIR,96))
@@ -262,6 +262,8 @@ func room_obstacles(area_id:String="")->Array:
  return result
 func furn_footprint(o:Dictionary)->Rect2:return HoldFurnishings.footprint(o.furnishing,o.p)
 func draw_furnishing(o:Dictionary):
+ # Active public lockboxes are rendered by the persistent storage system once.
+ if o.furnishing=="chest" and ward(current_area()) and current_area()==s.area and HoldWardDesign.STORES.get(s.area,[]).has(o.p):return
  HoldFurnishings.draw(g,o.p,o.furnishing)
  if s.area=="room:forge" and o.furnishing=="worktable":
   var index=[Vector2(970,550),Vector2(970,755),Vector2(680,755)].find(o.p)
@@ -281,7 +283,7 @@ func draw_room_floor():
   g.draw_style_box(stone_style(Color("a1a38b")),Rect2(x,204,54,15))
  for x in [150,floor_area.end.x-10]:g.draw_style_box(stone_style(Color("68766f")),Rect2(x,260,20,floor_area.size.y))
  for r in [Rect2(160,floor_area.end.y-10,280,18),Rect2(520,floor_area.end.y-10,floor_area.end.x-520,18)]:g.draw_style_box(stone_style(Color("9ca18c")),r)
- g.draw_style_box(stone_style(Color("baac8b")),Rect2(exit_point-Vector2(40,5),Vector2(80,30)))
+ HoldCivicArt.exit_floor(g,s.area)
 
  if HoldNeighborhood.is_home(s.area):
   HoldNeighborhood.draw_stairs(self,HoldNeighborhood.STAIR,HoldNeighborhood.parts(s.area)[2]=="0",96)

@@ -1,3 +1,13 @@
+# 0.64.0 — The Hold of Three Hearths (source verified)
+
+Work branch polish/keldrath68; start local 84141d65c35c4bed6f593d736dbfb096b50674dc, remote main 2130a077612d3a70c0e67e01ac4db2c30539f97f. Pre-edit tag pre-keldrath68 and verified incremental recovery/pre-keldrath68.bundle preserve the baseline; previous backups are untouched. Never force-push restored local history over GitHub.
+
+Read CURRENT_STATUS and testing/civic68.md. HoldWardDesign owns authored ward pockets, stable distant painting and cached stone paving. HoldCivicArt owns original atlas crops and exit side geometry. Furnishings shares new prop art/cost/footprints with player construction. Surface adds fixed freight storage using existing chest records, notices, and restrained interaction cues. Latest user direction: reduce captions; architecture must communicate doors and routes. Preserve the approved player gait and functional Great Stairs.
+
+Run suite civic and the exact-pack checker (now includes civic68). Verify Ivar's escort after moving the quarters lamp away from his route. Test freight deposit/reload/recovery from a valid approach, five interior exits, all wards and resident/public routes. Native visual captures are local QA artifacts, not runtime assets. New art provenance and exact prompts live in assets/hold-kit68.
+
+Native source verification passed all 315 checks. A clean Windows export passed the audit of all 3,165 packed entries; exact-pack gameplay verification is running. Publication remains pending. GitHub main and v0.63.0 are the previous verified delivery. Large image transfer is isolated on an asset branch; verify content hashes before using binary blobs in the runtime tree. Do not include transfer chunks in the game branch.
+
 # 0.63.0 — Living terraces (published and verified)
 
 Published v0.63.0: one complete Windows ZIP at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.63.0. Release source 472e12bf47c0784c84f3e763da7778dc9cbe740e; hosted run 39656676389 passed all publication gates. The uploaded ZIP is 701,152,760 bytes and SHA-256 f273ba088776f8a8bd52ae56ae7c941d3b2c68ff614cd34b98791734ee975eb3; both match the clean hosted build report. Tag target matches the build source. See testing/living67/hosted-build.json and delivery.json. Earlier releases are preserved.

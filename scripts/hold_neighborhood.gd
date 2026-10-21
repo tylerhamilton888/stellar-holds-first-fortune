@@ -35,7 +35,7 @@ static func draw_gallery(w):
  var g=w.g
  w.tile(0,Rect2(80,1000,1720,640),100,Color("b8c5bc") if w.current_area()=="crownward" else Color("bca78c") if w.current_area()=="forgeward" else Color("cfbea0"))
  # A real open shaft separates public streets from the inhabited gallery.
- g.draw_rect(Rect2(110,1020,1660,110),Color("101e26"))
+ HoldWardDesign.shaft(w,Rect2(110,1020,1660,110))
  w.draw_lower_gallery()
  w.tile(0,BRIDGE,80,Color("e0cbaa"))
  for r in rails():

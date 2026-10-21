@@ -1,3 +1,13 @@
+# 0.64.0 — The Hold of Three Hearths (source verified)
+
+Keldrath retains its three wards, Great Stairs, homes, interiors and established routes. Authored civic, social and industrial pockets now give each ward a distinct purpose: the Oath Court has a memorial and founders’ orrery; the Common Hearth has grouped tavern seating and trade lockboxes; the Iron Terrace separates workshop, freight and training equipment. Domestic lamps, household plaques and communal seating reinforce the Kin Galleries.
+
+Original illustrated distant galleries and pumping works replace the empty perimeter. These are non-playable scenery behind the existing boundaries. New civic furnishings share the player's crafting, placement and collision catalogue. Fixed freight chests use existing persistent storage, with no free supplies or new economy.
+
+Interior exits have painted open doors, solid side leaves, a clear threshold and camera framing above the hotbar. Automatic door captions, tracked-destination banners and overhead names are removed. A small nearby E cue and the existing contextual footer/guide supply interaction information; physical building signs remain. Player artwork and gait are unchanged.
+
+Native source verification passed 315 checks across civic, living, hold, orientation, world, modular and ambient cases, with no script errors. No 0.64.0 release is published yet; v0.63.0 remains the last verified download. See testing/civic68.md and SESSION_HANDOFF.md.
+
 # 0.63.0 — Living terraces (published)
 
 Keldrath's Crownward, Hearthward and Forgeward now connect through long walkable Great Stairs. Normal movement crosses the ward boundary without a fade or input lock, keeping the camera, gait and loaded handcart continuous. Painted masonry provides retaining walls, balustrades, columns and a wider forge exterior. Existing enclosed service stairs and lift remain useful shortcuts.

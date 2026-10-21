@@ -1,3 +1,12 @@
+# The Hold of Three Hearths — 0.64.0
+
+- scripts/hold_ward_design.gd: deterministic civic, social, industrial and domestic composition; cached paving; scenic mountain depth.
+- scripts/hold_civic_art.gd / assets/hold-kit68: original art, measured crops and open exit side geometry; production.md records provenance.
+- scripts/furnishings.gd: five new craftable civic/industrial decorations using shared footprints.
+- scripts/surface.gd: additive fixed freight storage, public notices, proximity key cues without floating destination captions.
+- scripts/room_layout.gd: exit camera framing; existing room/return coordinates retained.
+- tests/civic68.gd / docs/testing/civic68.md: route, exit, furniture, storage and save regression evidence.
+
 # Living terraces — 0.63.0
 
 Published v0.63.0: `testing/living67/hosted-build.json`, `delivery.json` and `hosted-source-visibility.json` record the verified package, tag and source gates. Final local recovery tag: `verified-living67-delivery`; GitHub retains the complete published source and previous releases.

@@ -19,7 +19,8 @@
       "modular",
       "hold",
       "continuity",
-      "living"
+      "living",
+      "civic"
     ],
     "modular": [
       "modular",
@@ -57,6 +58,15 @@
       "modular",
       "ambient",
       "equipment"
+    ],
+    "civic": [
+      "civic",
+      "living",
+      "hold",
+      "orientation",
+      "world",
+      "modular",
+      "ambient"
     ]
   },
   "cases": {
@@ -107,6 +117,10 @@
     "living": {
       "script": "tests/living67.gd",
       "marker": "LIVING67"
+    },
+    "civic": {
+      "script": "tests/civic68.gd",
+      "marker": "CIVIC68"
     }
   }
 }

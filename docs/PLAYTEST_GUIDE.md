@@ -1,3 +1,9 @@
+## Three Hearths playtest
+
+Walk from the Lord's Hall past the memorial and orrery, descend the Great Stairs to the commons, then continue to Borin's forge and the freight lift. Look for distinct civic, domestic and industrial activity without floating destination labels. G retains directions; the footer identifies the nearby E action.
+
+Try a family home and the starting quarters: the open exit threshold should be visible above the hotbar, with collision at the door leaves and a clear center. Inspect the southern Forgeward overlook for distant mountain works. Deposit materials in a freight chest, save/reload and recover them. Start a fresh game to check Ivar's walk, then revisit an existing save to confirm quests and inventory remain intact.
+
 # 0.63.0 — Living hold acceptance route
 
 1. Load a copy of an existing fortune or finish/skip Ivar's welcome. Check that bed, chest, letter home and introductions still work.

@@ -1,0 +1,66 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 10.19
+  },
+  {
+    "test": "civic",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 57.5
+  },
+  {
+    "test": "living",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 51,
+    "seconds": 58.46
+  },
+  {
+    "test": "hold",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 81,
+    "seconds": 45.23
+  },
+  {
+    "test": "orientation",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 69.71
+  },
+  {
+    "test": "world",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 66.49
+  },
+  {
+    "test": "modular",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 28,
+    "seconds": 48.2
+  },
+  {
+    "test": "ambient",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 36,
+    "seconds": 82.49
+  }
+]

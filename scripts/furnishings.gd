@@ -6,6 +6,11 @@ const ATLAS=preload("res://assets/furnishings-v56/interior.png")
 const CROPS=[Rect2(40,83,316,237),Rect2(424,22,308,300),Rect2(805,57,326,271),Rect2(1250,36,210,289),Rect2(15,429,407,224),Rect2(442,397,320,258),Rect2(805,376,325,282),Rect2(1180,328,323,340),Rect2(54,661,288,342),Rect2(491,668,188,334),Rect2(853,751,257,226),Rect2(1204,698,280,291)]
 # size is the visible silhouette; base is its ground-plane occupied rectangle.
 const ITEMS={
+ "orrery":{"title":"Founders’ orrery","size":Vector2(76,94),"base":Rect2(-31,-25,62,25),"cost":{"stone":8,"iron":6,"crystal":2}},
+ "notice_board":{"title":"Public notice board","size":Vector2(78,72),"base":Rect2(-36,-16,72,16),"cost":{"wood":8,"stone":4}},
+ "oath_stone":{"title":"Ancestral oath-stone","size":Vector2(144,132),"base":Rect2(-68,-48,136,48),"cost":{"stone":20,"dressed_stone":8}},
+ "pressure_manifold":{"title":"Pressure manifold display","size":Vector2(100,92),"base":Rect2(-46,-28,92,28),"cost":{"stone":8,"iron":12}},
+ "training_rack":{"title":"Training weapon rack","size":Vector2(92,72),"base":Rect2(-43,-18,86,18),"cost":{"wood":8,"iron":4}},
  "worktable":{"title":"Workshop table","art":4,"size":Vector2(108,34),"base":Rect2(-51,-18,102,18),"cost":{"wood":8,"stone":2}},
  "stone_pillar":{"title":"Carved stone pillar","size":Vector2(54,124),"base":Rect2(-25,-22,50,22),"cost":{"stone":12,"dressed_stone":4}},
  "tea_table":{"title":"Tea table","base_kind":"table","cost":{"wood":4,"stone":2},"dressing":[["kettle",Vector2(0,-30)],["mug",Vector2(-16,-29)],["mug",Vector2(16,-29)]]},
@@ -23,7 +28,7 @@ const ITEMS={
  "mug":{"title":"Copper mug","art":10,"size":Vector2(6,6),"base":Rect2(),"cost":{}},
  "kettle":{"title":"Tea kettle","art":11,"size":Vector2(12,12),"base":Rect2(),"cost":{}}
 }
-const BUILDABLE=["chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","worktable","hearth","stone_pillar"]
+const BUILDABLE=["chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","worktable","hearth","stone_pillar","orrery","notice_board","oath_stone","pressure_manifold","training_rack"]
 static func geometry(kind:String)->Dictionary:
  var item=ITEMS.get(kind,ITEMS.table)
  return ITEMS[item.base_kind] if item.has("base_kind") else item
@@ -35,7 +40,8 @@ static func silhouette(kind:String,p:Vector2)->Rect2:
  return Rect2(p-Vector2(size.x*.5,size.y),size)
 static func draw(n:Node2D,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
- if kind=="stone_pillar":HoldMasonryArt.pillar(n,p,124,tint)
+ if HoldCivicArt.CROPS.has(kind):HoldCivicArt.draw(n,p,kind,tint)
+ elif kind=="stone_pillar":HoldMasonryArt.pillar(n,p,124,tint)
  elif kind=="hearth":
   var clock=n.get("clock")
   HoldAmbientProps.hearth(n,p,float(clock) if clock!=null else 0.0,tint)

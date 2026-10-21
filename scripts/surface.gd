@@ -56,6 +56,11 @@ func ensure():
  if not s.has("decor"):s.decor=[]
  if not s.chests.has("keldrath:quarters"):
   s.chests["keldrath:quarters"]={"area":"room:home","x":650.0,"y":420.0,"items":{},"fixed":true}
+ # Shared freight lockboxes use existing persistent storage, with no free stock.
+ for ward in HoldWardDesign.STORES:
+  for index in HoldWardDesign.STORES[ward].size():
+   var id="keldrath:freight:"+ward+":"+str(index);var at=HoldWardDesign.STORES[ward][index]
+   if not s.chests.has(id):s.chests[id]={"area":ward,"x":at.x,"y":at.y,"items":{},"fixed":true}
  if g.state.claim_id!="" and not s.homes.has(g.state.claim_id):
   s.homes[g.state.claim_id]={"level":0,"lesson":false}
   var id="claim:"+g.state.claim_id+":starter"
@@ -203,6 +208,7 @@ func clear_interaction(a:Vector2,b:Vector2)->bool:
 func use():
  var p=nearest()
  if p.is_empty():g.notify("Walk to a doorway, signpost, chest or workstation and press E.");return
+ if p.action.begins_with("ward_notice:"):g.notify(HoldWardDesign.notice(p.action.trim_prefix("ward_notice:")));world.speech=HoldWardDesign.notice(p.action.trim_prefix("ward_notice:"));world.speech_until=g.clock+18;return
  if p.action.begins_with("terrace:"):g.notify("Walk along the Great Stair · movement stays in your hands.");return
  if is_stair_point(p):begin_stair(p);return
  action(p.action)
@@ -435,7 +441,7 @@ func transfer(item:String,n:int,deposit:bool)->int:
 func recover_chest()->bool:
  cancel_placement()
  var c=g.state.surface.chests.get(selected_chest,{})
- if c.get("fixed",false):g.notify("This chest belongs to your borrowed quarters. Its contents are yours.");return false
+ if c.get("fixed",false):g.notify("This chest is fixed in place. Its contents are yours.");return false
  if c.is_empty() or not house.local(c) or g.player.distance_to(Vector2(c.x,c.y))>85:return false
  for value in c.items.values():
   if int(value)>0:g.notify("Empty the chest before taking it apart.");return false
@@ -545,6 +551,7 @@ func draw():
  var cam=g.camera.round();g.draw_set_transform(-cam)
  var near=nearest()
  if area in ["hearthward","crownward","forgeward"]:
+  HoldWardDesign.backdrop(g,area)
   world.draw_neighbors()
   world.draw_ground()
   for link in HoldTerraces.links(area):HoldTerraces.draw_connection(world,link,area)
@@ -611,7 +618,6 @@ func draw():
     A.draw_offset=-cam;HoldNpcActivity.social(g,o.p,g.clock+(0 if o.id=="hedrik" else posmod(hash(o.id),11)),-1,g.state.npc(o.id),true);A.draw_offset=Vector2.ZERO
    else:actor(o.p,g.state.npc(o.id),false,-1,g.clock)
    g.draw_set_transform(-cam);
-   if near.get("action","")=="talk:"+o.id or g.state.tracked_npc==o.id:A.text(g,o.p+Vector2(-25,-103 if o.id=="eirik" else -68),g.state.npc(o.id).first_name,12,Color("e8ce93"))
   elif o.kind=="wall":house.wall_draw(o.c)
   elif o.kind=="tree":draw_fir(o.p,int(o.i))
   else:furniture(o.p,o.kind)
@@ -623,17 +629,16 @@ func draw():
  house.roof_draw()
  if g.opening_scene is HoldArrivalEscort:
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
- if area in ["hearthward","crownward","forgeward"]:
-  for point in points():
-   # Only the nearby door is captioned; the painted architecture stays readable.
-   if not point.action.begins_with("citizen:") and not point.action.begins_with("resident:") and point.p.distance_to(g.player)<180 and point.p.distance_to(g.player)>78:plaque(point.p+Vector2(0,-72),point.name)
- else:
+ if area not in ["hearthward","crownward","forgeward"] and not room():
   for point in points():
    if point.action.begins_with("chest:") or point.action.begins_with("talk:") or point.action.begins_with("house:") or point.action in ["house_rest","house_up","house_down"]:continue
-   if not room():signpost(point.p,point.name)
- if not near.is_empty() and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
-  g.draw_arc(near.p+Vector2(0,6),23,0,TAU,24,Color("dfbd76"),2)
-  # The footer already names this action; keep the actor and footwork unobscured.
+   signpost(point.p,point.name)
+ if g.panel_id=="" and not near.is_empty() and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not str(near.action).begins_with("terrace:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
+  # One small object-local keycap replaces the ground-radius interaction ring.
+  var offset=Vector2(-94,-25) if near.action=="leave" else Vector2(28,-28)
+  var r=Rect2(near.p+offset,Vector2(20,20))
+  g.draw_style_box(world.stone_style(Color("19383c")),r)
+  A.text(g,r.position+Vector2(6,15),"E",12,Color("ead4a0"))
  house.preview()
  if placing!="" and not placing.begins_with("house:"):
   var p=snap_furnishing(g.get_global_mouse_position()+g.camera)
@@ -644,15 +649,6 @@ func draw():
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
  g.draw_rect(Rect2(0,0,960,48),Color(.06,.14,.18,.94));g.draw_line(Vector2(20,47),Vector2(940,47),Color("6e796b"))
  g.draw_rect(Rect2(0,498,960,42),Color("10232d"))
- if g.panel_id=="" and area in ["hearthward","crownward","forgeward"] and g.state.tracked_npc!="":
-  var target=HoldNpcPresence.room_for(g.state,g.state.tracked_npc)
-  for i in HoldDistrictMap.DOORS:
-   if HoldDistrictMap.DOORS[i].id==target:
-    var here=int(i)/7==level()
-    var dest=HoldWorldZones.door(i) if here else HoldTerraces.waypoint(area,HoldWorldZones.WARDS[int(i)/7])
-    var screen=(dest-cam).clamp(Vector2(130,105),Vector2(830,445))
-    if dest.distance_to(g.player)<180:continue
-    plaque(screen,g.state.npc(g.state.tracked_npc).first_name+" · "+("door" if here else "take stairs"))
  world.speech_overlay()
  g.handworks.overlay()
  g.fieldwork.draw()
@@ -700,7 +696,6 @@ func plaque(p:Vector2,text:String):
  A.text(g,p-Vector2(width/2-9,0),text,13,Color("ead4a0"))
 func signpost(p:Vector2,text:String):
  HoldWorldDetails.prop(g,p+Vector2(-48,4),"waystone",62)
- if p.distance_to(g.player)<300 and not g.handworks.busy_hands():plaque(p+Vector2(0,-65),text)
 func prop(p:Vector2,index:int,width:float):
  var cell=Vector2(PROPS.get_width()/3.0,PROPS.get_height()/2.0)
  g.draw_texture_rect_region(PROPS,Rect2(p-Vector2(width/2,width*.94),Vector2(width,width)),Rect2(Vector2(index%3,index/3)*cell,cell))
