@@ -1,3 +1,21 @@
+# Ancestral charter — Overseer to Thane
+
+The Stone Remembers is an additive quest stored in outpost.ancestral_claim. Ivar offers a rescue after the first paid shift and initial audience/next-work conversation. The quest uses an existing depth-1 hold cavern and never overwrites excavated terrain. Open a continuous walkable bypass, speak to the miners with E, and keep their route clear until both reach the entrance. Saved positions/path progress support mid-rescue reloads. The recovered slab then goes to Eldric.
+
+Eldric preserves the tablet; the Lord supplies an archive comparison and Ivar the family registration. Eldric authenticates the ancestral reclamation right to nearby Old Delving, not Keldrath. The Lord appoints an Overseer without a charter purchase. Existing saves keep their selected claim and camp stage. Commercial charters remain an alternative. Complete the workshop/beacon, recruit two Folk and hold 12 food plus 12 water to petition for investiture as Thane. Recognition grants no access to communal stock. This is a playable staged conversation and fieldwork quest, not a bespoke cinematic or a new political simulation.
+
+Personal progression audit: Handworks saves miner/mason/forester/smith counters. Mining awards productive faces; processing awards masonry/forestry jobs. Strong shoulders unlock at 12 miner faces or 8 masonry/forestry jobs; Miner 40 adds controlled section work and cart capacity. The smith counter has no comparable developed branch yet. Technology has nine existing prerequisite-linked methods. Neither is currently a comprehensive personal skill tree. Preserve counters when designing the next progression pass.
+
+New test: ancestral70 in the full gameplay and exact-pack gates. It exercises actual excavation/path connectivity, walking evacuation, mid-rescue saves, evidence prerequisites, local-only interactions, appointment, investiture and old-claim preservation. Verification results must be recorded before release.
+
+# 0.64.0 candidate — Practical first shift
+
+The mine introduction uses your own excavated material, loan equipment and an optional timber allowance issued by Ivar in person. A separate hold crew hauls and processes its own finite work order; its raw stock and finished output cannot be taken or automatically consumed by player benches. There is no early communal-reserve privilege.
+
+The lesson teaches real excavation, carrying, stocking, processing, collecting and crafting/placement through existing systems. Equipment and lesson progress persist, occupied old layouts are preserved, and station bases block movement with usable work approaches. The civic pass adds restrained lamp illumination and vent motion while preserving approved character art and Great Stairs.
+
+Candidate verification and publication are in progress. See SESSION_HANDOFF.md and testing/firstshift69.md; do not treat this paragraph as a release announcement.
+
 # 0.64.0 — The Hold of Three Hearths (source verified)
 
 Keldrath retains its three wards, Great Stairs, homes, interiors and established routes. Authored civic, social and industrial pockets now give each ward a distinct purpose: the Oath Court has a memorial and founders’ orrery; the Common Hearth has grouped tavern seating and trade lockboxes; the Iron Terrace separates workshop, freight and training equipment. Domestic lamps, household plaques and communal seating reinforce the Kin Galleries.

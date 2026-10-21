@@ -21,6 +21,10 @@ def main():
     cases.append(('living', fixture+'\n'+body, 'LIVING67'))
     body = (ROOT/'tests/civic68.gd').read_text().split('\n', 1)[1]
     cases.append(('civic', fixture+'\n'+body, 'CIVIC68'))
+    body = (ROOT/'tests/firstshift69.gd').read_text().split('\n', 1)[1]
+    cases.append(('firstshift', fixture+'\n'+body, 'FIRSTSHIFT69'))
+    body = (ROOT/'tests/ancestral70.gd').read_text().split('\n', 1)[1]
+    cases.append(('ancestral', fixture+'\n'+body, 'ANCESTRAL70'))
     results = []
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()

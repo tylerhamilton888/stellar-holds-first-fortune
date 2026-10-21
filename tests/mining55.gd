@@ -61,13 +61,13 @@ func run():
  var rack=h.facility();check(rack.raw.size()==1 and rack.raw[0].id==raw_id and h.data().carry.is_empty(),"Rack transfer retains mineral identity and unique ownership")
  await snap("06-stockpile-ore")
  g.player=Vector2(728,355);Input.action_press("interact");await frames(34);await snap("07-stonebreaker-ore");await frames(72);Input.action_release("interact")
- var pallet=h.data().facilities[2]
+ var pallet=h.data().facilities.filter(func(f):return f.kind=="store")[0]
  check(rack.raw.is_empty() and int(pallet.cargo.get("iron_ore",0))==expected,"Stonebreaker draws from nearby rack and delivers exact ore to existing pallet")
  g.player=Vector2(840,440);var iron=g.state.count("iron_ore");var e=InputEventKey.new();e.keycode=KEY_E;e.pressed=true;e.shift_pressed=true;g._unhandled_input(e)
  check(g.state.count("iron_ore")==iron+expected and pallet.cargo.is_empty(),"Shift+E collects processed mineral for existing crafting")
  check(g.state.craft("iron"),"Recovered material enters unchanged forge recipe");g.state.tick(6)
  # E is a useful batch gather, not eight individual pickup trips.
- var cart=h.data().facilities[3];g.player=h.pos(cart)
+ var cart=h.data().facilities.filter(func(f):return f.kind=="cart")[0];g.player=h.pos(cart)
  for i in 3:h.spawn("stone",g.player+Vector2(i*12,0),4,"test", "copper_ore")
  key(KEY_E);check(cart.raw.size()==3 and h.data().loose.is_empty(),"Parked cart gathers nearby loose loads with one deliberate interaction")
  await snap("08-loaded-cart")

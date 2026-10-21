@@ -158,7 +158,7 @@ func draw_ground():
  for y in [520,740,980]:
   g.draw_line(Vector2(115,y),Vector2(1770,y),Color("6d786a"),3)
  HoldNeighborhood.draw_gallery(self)
- HoldWardDesign.ground(self)
+ HoldWardDesign.ground(self);HoldWardDesign.light_pools(self)
  HoldWardDesign.boundary(self)
 func draw_lower_gallery():
  # Clip the actual neighboring ward's architecture through the open floor.

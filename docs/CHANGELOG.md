@@ -1,5 +1,11 @@
 # 0.64.0 — The Hold of Three Hearths
 
+- Added The Stone Remembers: physical crew rescue, evidence-based tablet research, ancestral Overseer appointment and development-gated investiture as Thane. Existing claims and communal ownership are preserved.
+
+- Added a practical mine lesson with loan benches, player-excavated loads and real stockpile/processing/construction steps.
+- Added a protected hold crew work order; hold stock and output are unavailable to the player. Ivar may issue a small explicit timber allowance.
+- Matched mine equipment bases to collision and improved automatic work approaches. Added soft ward lighting and subtle industrial motion.
+
 - Composed the existing wards around an oath court, common hearth and iron terrace; added household details and original distant mountain works.
 - Added shared craft/place catalogue art for a memorial, orrery, notice board, pressure display and training rack. Freight chests retain real contents through existing storage saves.
 - Reframed interior exits above the hotbar with painted open thresholds and physical side leaves.

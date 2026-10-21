@@ -1,3 +1,23 @@
+# Ancestral charter — Overseer to Thane
+
+The Stone Remembers is an additive quest stored in outpost.ancestral_claim. Ivar offers a rescue after the first paid shift and initial audience/next-work conversation. The quest uses an existing depth-1 hold cavern and never overwrites excavated terrain. Open a continuous walkable bypass, speak to the miners with E, and keep their route clear until both reach the entrance. Saved positions/path progress support mid-rescue reloads. The recovered slab then goes to Eldric.
+
+Eldric preserves the tablet; the Lord supplies an archive comparison and Ivar the family registration. Eldric authenticates the ancestral reclamation right to nearby Old Delving, not Keldrath. The Lord appoints an Overseer without a charter purchase. Existing saves keep their selected claim and camp stage. Commercial charters remain an alternative. Complete the workshop/beacon, recruit two Folk and hold 12 food plus 12 water to petition for investiture as Thane. Recognition grants no access to communal stock. This is a playable staged conversation and fieldwork quest, not a bespoke cinematic or a new political simulation.
+
+Personal progression audit: Handworks saves miner/mason/forester/smith counters. Mining awards productive faces; processing awards masonry/forestry jobs. Strong shoulders unlock at 12 miner faces or 8 masonry/forestry jobs; Miner 40 adds controlled section work and cart capacity. The smith counter has no comparable developed branch yet. Technology has nine existing prerequisite-linked methods. Neither is currently a comprehensive personal skill tree. Preserve counters when designing the next progression pass.
+
+New test: ancestral70 in the full gameplay and exact-pack gates. It exercises actual excavation/path connectivity, walking evacuation, mid-rescue saves, evidence prerequisites, local-only interactions, appointment, investiture and old-claim preservation. Verification results must be recorded before release.
+
+# 0.64.0 candidate — First shift and final civic polish
+
+Continue from polish/keldrath68 / PR #11. Pre-edit local tag pre-firstshift69 and recovery/pre-firstshift69.bundle preserve e928483c79f8ff112ba509c027f1344d10d0c5ec. Do not overwrite earlier bundles or force-replace remote history.
+
+FirstShift extends the existing Ivar commission owner, retaining its original panel. The real hold mine now establishes loan Handworks benches and a separate hold-owned crew bay once, without replacing occupied equipment or excavated terrain. New worlds have a larger clear entrance bay; old cell arrays are preserved. The lesson records actual lifting, stocking, processing, collecting and construction events in existing Handworks saves. Ivar can explicitly issue a once-only timber allowance in person. Crew stock, work orders and output remain hold property; no early Lord authority or public reserve access is implemented.
+
+The two painted workers move finite raw records through a real rack and breaker, then rest. This is a bounded demonstration, not a new economy or renewable giveaway. Player benches exclude hold-owned inputs. Visible facility bases participate in player/navigation collision; work approaches go around them. Soft authored lamp pools and restrained vent motion finish the civic composition. Fake inventory-mirroring mine storage art and overlapping context bars were removed.
+
+Run suite firstshift and the exact-pack checker, which now includes the practical introduction. Review all wards, mine work and the J lesson. Source tests, package verification and release publication must be recorded before claiming delivery. The earlier hosted civic gate was cancelled, not passed. v0.63.0 remains the last published build until the new release is verified.
+
 # 0.64.0 — The Hold of Three Hearths (source verified)
 
 Work branch polish/keldrath68; start local 84141d65c35c4bed6f593d736dbfb096b50674dc, remote main 2130a077612d3a70c0e67e01ac4db2c30539f97f. Pre-edit tag pre-keldrath68 and verified incremental recovery/pre-keldrath68.bundle preserve the baseline; previous backups are untouched. Never force-push restored local history over GitHub.

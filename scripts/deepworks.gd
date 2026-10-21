@@ -55,8 +55,8 @@ static func generate(seed_number:int)->Dictionary:
    var rare=j==5 and z>=3
    features.append({"x":c.x,"y":c.y,"type":j%3,"rare":rare,"name":("The First King's Survey Stone" if z==3 else "The Heart of the Mountain") if rare else ["The Hollow Bell","Prismatic Cathedral","Oathkeeper's Refuge"][j%3]+" · "+str(z+1),"found":false})
   if z==0:
-   for y in range(5,12):
-    for x in range(4,12):cells[y*W+x]=0
+   for y in range(3,12):
+    for x in range(3,12):cells[y*W+x]=0
    # Coal and iron within the first few swings, with a cavern beyond.
    for y in range(7,11):cells[y*W+12]=5
    for x in range(6,10):cells[12*W+x]=3
@@ -138,12 +138,18 @@ func terrain_walkable(c:Vector2i,z:int=-1)->bool:
  var f=data.get("living",{}).get("furniture",{}).get(link_key(c,depth() if z<0 else z),{})
  return not f.get("solid",false)
 func walkable(c:Vector2i,z:int=-1)->bool:
- return terrain_walkable(c,z) and not landmark_solid(center(c),z)
+ return terrain_walkable(c,z) and not landmark_solid(center(c),z) and not equipment_solid(center(c),z)
 func terrain_solid(p:Vector2,z:int=-1)->bool:
  for d in [Vector2(-10,-8),Vector2(10,-8),Vector2(-10,8),Vector2(10,8)]:
   if not terrain_walkable(cell(p+d),z):return true
  return false
-func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or landmark_solid(p,z)
+func equipment_solid(p:Vector2,z:int=-1)->bool:
+ var context="mine:"+state.active_site+":"+str(depth() if z<0 else z)
+ for f in state.hauling.get("hands",{}).get("facilities",[]):
+  if f.get("area","")!=context or f.get("hitched",false):continue
+  if Rect2(Vector2(f.x,f.y)-Vector2(30,12),Vector2(60,16)).grow(10).has_point(p):return true
+ return false
+func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or landmark_solid(p,z) or equipment_solid(p,z)
 func clear_step(a:Vector2,b:Vector2,z:int=-1)->bool:
  for i in range(1,9):
   if solid(a.lerp(b,i/8.0),z):return false

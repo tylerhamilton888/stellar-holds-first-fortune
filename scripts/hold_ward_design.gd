@@ -3,6 +3,7 @@ extends RefCounted
 # Authored activity pockets around established doors/routes. No seed-dependent decor.
 const DEPTH=preload("res://assets/hold-kit68/works-below.png")
 static var paving={}
+static var lamp_pool:GradientTexture2D
 const STORES={"hearthward":[Vector2(1050,940),Vector2(1110,940)],"forgeward":[Vector2(520,765),Vector2(520,815),Vector2(1510,800),Vector2(1570,800)]}
 const TITLES={"crownward":"The Oath Court","hearthward":"The Common Hearth","forgeward":"The Iron Terrace"}
 static func roles(area:String)->Array:
@@ -90,6 +91,19 @@ static func ground(w):
  for i in 3:
   var p=HoldNeighborhood.home_door(i)
   plaza(g,Rect2(p+Vector2(-62,4),Vector2(124,61)),[Color("817963"),Color("6d8074"),Color("737b75")][i],Color("b5a17b"))
+static func light_pools(w):
+ if lamp_pool==null:
+  var ramp=Gradient.new();ramp.colors=PackedColorArray([Color(1,.67,.27,.19),Color(1,.67,.27,0)])
+  lamp_pool=GradientTexture2D.new();lamp_pool.gradient=ramp;lamp_pool.width=128;lamp_pool.height=64;lamp_pool.fill=GradientTexture2D.FILL_RADIAL;lamp_pool.fill_from=Vector2(.5,.5);lamp_pool.fill_to=Vector2(1,.5)
+ for f in furnishings(w,w.current_area()):
+  if f.furnishing=="lamp":w.g.draw_texture_rect(lamp_pool,Rect2(f.p-Vector2(70,25),Vector2(140,70)),false)
+static func motion(g):
+ if g.surface.area!="forgeward":return
+ for p in [Vector2(970,665),Vector2(1540,695)]:
+  for i in 3:
+   var t=fposmod(g.clock*.28+i*.33,1.0)
+   var at=p+Vector2(30+sin(t*4+i)*5,-75-t*36)
+   g.draw_circle(at,3+t*5,Color(.65,.76,.74,sin(t*PI)*.09))
 static func boundary(w):
  var g=w.g
  # Outside the walkable envelope: service conduits follow the real retaining piers.

@@ -627,6 +627,7 @@ func draw():
    HoldDrawnAnimation.work_foreground(g,g.player,g.state.appearance,g.handworks.work_direction(station),.85,-cam,"saw" if station.kind=="saw" else "hammer",fmod(float(station.job.progress),.42)/.42)
  g.draw_set_transform(-cam)
  house.roof_draw()
+ HoldWardDesign.motion(g)
  if g.opening_scene is HoldArrivalEscort:
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area not in ["hearthward","crownward","forgeward"] and not room():

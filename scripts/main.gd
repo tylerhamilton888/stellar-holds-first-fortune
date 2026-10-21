@@ -308,7 +308,7 @@ func _process(dt):
   if completed!="":notify(completed);sound.effect("build")
   if zone!="mine" and not surface.active():combat.update(dt)
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
-   fight.update(dt);handworks.update(dt)
+   fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt)
    if zone=="mine":deep.move(dt);deep.mine(dt)
    elif surface.active():surface.move(dt)
    else:move_player(dt)
@@ -362,6 +362,7 @@ func _unhandled_input(e):
  if not playing or transition_left>0:return
  if fight.input(e):get_viewport().set_input_as_handled();return
  if fieldwork.input(e):get_viewport().set_input_as_handled();return
+ if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldAncestralClaim.interact(self):get_viewport().set_input_as_handled();return
  if handworks.input(e):get_viewport().set_input_as_handled();return
  if hotbar.handle(e):get_viewport().set_input_as_handled();return
  if deep.input(e):get_viewport().set_input_as_handled();return
@@ -827,6 +828,8 @@ func nearest_station()->Dictionary:
   if absf(station.x-player.x)<absf(best.x-player.x):best=station
  return best
 func goal()->String:
+ var shift_goal=HoldFirstShift.goal(self)
+ if shift_goal!="":return shift_goal
  var primary=HoldOnboarding.primary(state)
  if primary!="":return primary
  if state.opening==0:return "A NEW SHIFT: Introduce yourself to Ivar at the foreman's office."
@@ -859,7 +862,7 @@ func update_hud():
  elif construction.selected!="":footer.text="BUILD: "+HoldConstruction.OPTIONS[construction.selected].name+"   LMB PLACE   1–4 CANCEL   V OPTIONS"
  elif zone=="road":footer.text=HoldForestry.hint(self)
  elif zone=="approach":footer.text="HIGH TRAIL LOOKOUT   |   G BASIN MAP   E PLAN JOURNEY   A/D WALK"
- elif zone=="mine":footer.text="WASD move   LMB mine   E interact   O rooms   H haulage   X survey   F1 help"
+ elif zone=="mine":footer.text=HoldFirstShift.goal(self) if HoldFirstShift.goal(self)!="" else "WASD move   LMB mine   E interact   O rooms   H haulage   X survey   F1 help"
  else:
   var nearest=nearest_station()
   footer.text="E  "+nearest.name.to_upper()+"    |    A/D MOVE   I PACK   M CREW   F1 HELP" if absf(nearest.x-player.x)<95 else "A/D MOVE   E INTERACT   C CHARACTER   I PACK   M CREW   F1 HELP"
@@ -1245,6 +1248,7 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Keep my existing hold",close_panel)
 
  if id=="living":panel.set_deferred("size",Vector2(720,452))
+ elif id=="conversation":panel.set_deferred("size",Vector2(840,452))
 
 func inventory_panel():
  var top=row(panel_body)
@@ -1381,6 +1385,7 @@ func forge_panel():
   label(panel_body,"Steel pick: "+("Owned" if state.steel else ("Ready to forge" if state.tech.has("extraction") else "Research Tempered steel"))+"\nMOTE-1: "+("Built" if state.automaton else ("Ready to build" if state.tech.has("automation") else "Research Clockwork industry")),16)
  label(panel_body,"Timber feeds provisions and construction. Water fills canteens and cools your future drive.",14,Color("9ac4ba"))
 func research_panel():
+ HoldAncestralClaim.journal(self)
  compact_person("eldric","Bring samples, funding and a little ambition.")
  var tabs=row(panel_body)
  for i in 3:
@@ -1549,6 +1554,8 @@ func ivar_welcome_panel():
  label(panel_body,"Ivar’s advice",18)
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel():
+ HoldFirstShift.journal(self)
+ HoldAncestralClaim.journal(self)
  button(panel_body,"River & Root · fishing and gardening",func():open_panel("fieldwork"))
  button(panel_body,"Hands of the Dwarf · workshop lesson",func():open_panel("handworks"))
  if state.claim_id!="":
@@ -1591,6 +1598,7 @@ func gate_panel():
  label(panel_body,"Walk to Old Workings for coal, Pinewood for timber, or your chartered mountain. WASD / arrows move you across the basin; E enters the nearby landmark.",16)
  label(panel_body,"Travel is free. Your work in each mine is preserved. Keldrath remains open for trade, research and fellowship.",14,Color("a3c8bb"))
 func charters_panel():
+ HoldAncestralClaim.journal(self)
  if HoldOnboarding.ensure(state).fresh and HoldOnboarding.stage(state)<5:
   label(panel_body,"A charter requires a royal reference. Begin with Ivar and your first shift.",17);return
  label(panel_body,"THE VALLEY BELOW KELDRATH",20,Color("e7c389"))
@@ -1618,6 +1626,7 @@ func open_charter_confirmation(c:Dictionary):
    save_game();travel_claim();open_panel("camp");sound.effect("crystal");notify("A mountain of your own. Your founding charter bears "+state.appearance.name+"."))
  button(panel_body,"Return to the surveys",func():open_panel("charters"))
 func camp_panel():
+ HoldAncestralClaim.journal(self)
  if state.claim_id=="":
   label(panel_body,"You have not purchased a mountain charter yet. Complete Ivar's commissions, then review mountain charters at the survey office.",17)
   button(panel_body,"Review mountain charters",func():open_panel("charters"));return

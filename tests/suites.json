@@ -20,7 +20,9 @@
       "hold",
       "continuity",
       "living",
-      "civic"
+      "civic",
+      "firstshift",
+      "ancestral"
     ],
     "modular": [
       "modular",
@@ -67,6 +69,17 @@
       "world",
       "modular",
       "ambient"
+    ],
+    "firstshift": [
+      "firstshift",
+      "handworks",
+      "mining",
+      "world",
+      "civic",
+      "living"
+    ],
+    "ancestral": [
+      "ancestral"
     ]
   },
   "cases": {
@@ -121,6 +134,14 @@
     "civic": {
       "script": "tests/civic68.gd",
       "marker": "CIVIC68"
+    },
+    "firstshift": {
+      "script": "tests/firstshift69.gd",
+      "marker": "FIRSTSHIFT69"
+    },
+    "ancestral": {
+      "script": "tests/ancestral70.gd",
+      "marker": "ANCESTRAL70"
     }
   }
 }
