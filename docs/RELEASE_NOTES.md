@@ -1,13 +1,11 @@
-# The Stellar Holds — 0.64.0: The Hold of Three Hearths
+# The Stellar Holds — 0.65.0: Work & Knowledge
 
-Keldrath's existing wards now have clearer civic, social and industrial identities, with original memorial, orrery and workshop art, domestic details and distant carved galleries suggesting a much larger mountain hold.
+Open Disciplines with **Y**, or through your inventory, pause menu or the Survey Office. Thirteen clearly labeled tabs have original stone-and-brass emblems, readable benefits, work progress and explicit unlock requirements. The world pauses while you browse. Tab/Enter and Escape are supported; underground U unloading and T crew assignment remain unchanged.
 
-Interior exits have clear painted thresholds above the hotbar. Floating door labels and destination captions are replaced by restrained proximity cues and the existing contextual HUD. Six fixed freight lockboxes use normal persistent storage. Five new decorative furnishings are craftable and placeable through the existing building system.
+Twelve disciplines now earn mastery from completed work. Thirteen optional techniques improve ore recovery, stone and timber output, metal/engineering production, harvests, fishing, gathering, dodge recovery, staffing and hauling capacity. Existing research methods appear in the relevant paths and retain their established equipment and construction unlocks.
 
-The Old Workings now introduce a real material workflow: excavate your own stone, carry it to loan benches, process it and craft/place your own equipment. J explains the current step. Ivar can issue a small timber allowance in person. A separate hold crew demonstrates hauling and processing; its stock and finished output remain hold property. Equipment and lesson progress save normally.
+Forestry and Woodworking earn separate credit. Existing work, research, hauling milestones, inventories, quests and saves are preserved. Learning a technique does not consume experience. Overseer skill does not grant a civic title or permission to take communal stock.
 
-The Stone Remembers adds a crew rescue and an ancient charter investigation. Eldric authenticates evidence from the archives and your family record. Earn appointment as Overseer of a nearby holding, then develop it and seek investiture as Thane. Existing purchased claims remain intact.
+This is an expandable first tier. Brewing has a clearly marked tab awaiting its dedicated production loop; a full brewing system and endgame discipline trees are not included.
 
-Great Stairs, homes, NPC routines, quests, approved character artwork and existing saves are preserved. Extract the complete ZIP to a new folder and run FirstFortune.exe beside FirstFortune.pck. Earlier releases remain available.
-
-The Works Below are non-playable scenery. Native Linux rendering and exported-pack checks do not establish performance or sound quality on every Windows device.
+Extract the complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. Earlier releases remain available. Native Linux rendering and exact-package checks do not establish performance or audible quality on every Windows device.

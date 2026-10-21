@@ -1,3 +1,7 @@
+# Disciplines71 — local verification complete
+
+Source 62639b28f3b838b4249e8010a6d70c97a5b443ee is preserved in PR #13; all 53 uploaded files match local Git blob hashes. Local source ca2406f passed 193 targeted native checks. Its clean Windows export passed the 3,197-entry audit and 240 exact-pack checks. Full hosted source validation 39696445457 remains pending; do not claim publication until release evidence is verified. The release preparation contains only documentation changes over that runtime.
+
 # 0.65.0 — Work & Knowledge (source candidate)
 
 Thirteen discipline tabs are integrated into the existing game. Open with Y, the inventory, pause menu or Survey Office. Y deliberately leaves underground U unloading and T crew assignment intact. The menu pauses play, keeps its discipline tabs separate from the scrolling details, supports keyboard focus and uses thirteen original vector emblems. Each technique displays its effect, work threshold, research and prerequisite. Learning retains lifetime experience; there is no universal spendable XP currency.
