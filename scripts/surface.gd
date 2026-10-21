@@ -555,6 +555,7 @@ func draw():
  var objects=[]
  if HoldWorldZones.ward(area):
   objects.append_array(world.buildings());objects.append_array(world.people());objects.append_array(world.landmarks())
+  objects.append_array(world.neighbor_stair_people())
   objects.append_array(world.street_furnishings())
  if room():objects.append_array(world.room_objects())
  if room():objects.append_array(world.routines.people(area,g.state.elapsed))
