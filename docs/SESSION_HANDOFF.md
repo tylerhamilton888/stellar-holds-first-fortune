@@ -1,4 +1,4 @@
-# 0.63.0 — Living terraces (verification in progress)
+# 0.63.0 — Living terraces (local verification complete)
 
 Work branch world/living-hold67. Started from remote main 7fa8479904295103d16d1aedbbe8121419f45587 and restored local 1401303d8bfd0bda6ccd4e8a30244580aae49f3a. Local tag pre-living-hold67 and its verified incremental bundle preserve the starting state; older releases and backups are untouched. Local history differs from remote history: publish changed blobs on the verified remote parent, never force-push the restored local history.
 
@@ -6,7 +6,7 @@ HoldTerraces projects the three saved wards into one continuous terrace space (s
 
 HoldRoomLayout owns the expanded forge floor, exit, camera and furnishings. HoldMasonryArt uses the original assets/hold-kit67 atlas. Shared carved pillars and low workshop tables are craftable furnishing catalogue entries; tables are decorative, not duplicate processing systems. WholeFrames.prepare warms town routes; player animation descriptors and artwork are unchanged. Keep the approved player walk.
 
-Read testing/living67.md for gates, observed fixes and limitations. Run suite living; full gameplay and exact-pack gates are required before release. tests/intro53 now waits for the existing loading gate before sending skipped-intro gameplay inputs. No save schema, mining, economy or forestry changes. Latest published release remains 0.62.1 until publication is verified.
+303 distinct native checks passed; source PR #8 is 8ef6a2874d69c83646cc78df597b684654370696. All changed blobs match local hashes. A clean Windows package passed 3,157 entry checks, but local exact-pack completion is unconfirmed after exec-server disconnection. Hosted full gameplay and exact-pack gates remain required. Read testing/living67.md for gates, observed fixes and limitations. Run suite living; full gameplay and exact-pack gates are required before release. tests/intro53 now waits for the existing loading gate before sending skipped-intro gameplay inputs. No save schema, mining, economy or forestry changes. Latest published release remains 0.62.1 until publication is verified.
 
 # 0.62.1 session handoff
 

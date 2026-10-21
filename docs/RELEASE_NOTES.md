@@ -1,17 +1,13 @@
 # 0.63.0 — The Living Terraces
 
-Source milestone undergoing final verification; the existing 0.62.1 download remains available until a new release is published.
+Keldrath now has walkable Great Stairs between Crownward, Hearthward and Forgeward. Use normal movement to climb and descend; your camera, stride and loaded handcart continue across the boundary. The enclosed service stairs and lift remain shortcuts.
 
-Walk Keldrath's Great Stairs directly between all three wards, follow nine neighbors between home, work and the tavern, and visit Borin's enlarged workshop. Original painted retaining walls, stairways and pillars strengthen the hold's scale. Build the same carved pillars and low workshop tables at your claim. Existing player animations, inventories, quests, mining, forestry and automation are preserved.
+Nine household neighbors now travel between their upper rooms, work, the Copper Kettle and home. Their routes use actual stairs and doors, and their location and appearance survive reload. Borin's forge has a larger workshop hall and a wider exterior wing, with low benches, stonework and painted hammer animations.
 
-Building interiors remain distinct spaces, and only the forge is enlarged in this milestone. Scheduled work is ambient; ordinary rovers/story hosts retain prior behavior. Windows hardware/audio and player art acceptance remain follow-ups.
+New original masonry includes retaining walls, stairways and carved pillars. You can craft and place the same pillars and workshop tables at your claim through the existing furniture system. The table is decorative furniture; existing processing stations retain their jobs.
 
-Town Dwarfs now have explicit passing-foot poses and share the player's distance-based stride timing. The player's existing walk artwork and ordinary movement remain unchanged.
+Player walk artwork, inventory, quests, mining, timber and industrial systems are preserved. Interiors remain distinct spaces; the forge is the enlarged interior in this milestone. Resident work is ambient, not new economic automation. Public street rovers and story hosts retain their existing behavior.
 
-Painted building facades have solid coverage, town routes clear the fountain, and house approaches stay open. Beds are used from the side. Use the writing desk in your starting quarters to keep your promise to write home; the sealed letter persists in your journal.
+Try the southern gallery bridge on Hearthward, turn east past the family homes, then walk down to Forgeward. Follow a household neighbor, visit the expanded forge, haul a loaded cart across the stair, and reload to check persistence. See docs/PLAYTEST_GUIDE.md for the complete acceptance route.
 
-Town and household stairs now animate travel along their visible flight to the matching location on the connected floor. Gallery openings show architecture from the ward below without another live town simulation. This is a cutaway view of connected floors, not a fully seamless stacked-world renderer.
-
-This build also includes the previously source-only modular placement grids, movable furniture/chests, continuous floors, and nine residential homes with upstairs rooms.
-
-Download the single Windows ZIP, extract all its files into a new folder, then run FirstFortune.exe. Existing save locations are preserved. Previous releases remain available. Native Linux source and exact-pack checks gate this release; Windows-device performance, audio and final visual acceptance remain player checks.
+This release is one complete Windows ZIP. Extract it fully and run FirstFortune.exe beside FirstFortune.pck. Earlier releases remain available. Publication requires full native gameplay, package integrity and exact exported-game checks with isolated saves. Windows hardware performance, sound and final artistic acceptance still need player testing.
