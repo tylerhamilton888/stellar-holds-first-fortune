@@ -1,4 +1,8 @@
-# Appearance continuity — 0.67.1 candidate
+# Published delivery — 0.67.1
+
+Source run 39837733726 passed 704 checks in 19 cases. Release run 39837735551 attempt 2 passed 397 checks in 10 exact-package cases and published the complete Windows ZIP. Asset size and SHA256 match hosted-build.json; delivery.json records the immutable source, identical merge tree and download. Earlier pending notes below are development history. Existing saves and previous releases are preserved. Final delivery recovery is verified-appearance74-delivery.
+
+# Appearance continuity — 0.67.1 development record
 
 Baseline: published 0.67.0, remote main 634778d30d6b261e552093ed6ddedc3690f5aecd. Pre-change recovery: recovery/pre-appearance74 and verified local pre-appearance74.bundle (requires pre-firsthour73).
 

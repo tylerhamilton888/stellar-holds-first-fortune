@@ -42,6 +42,8 @@ No special architecture or assistant-specific instruction file is needed: all co
 
 The GitHub validation workflow has read-only repository access. Publishing remains a deliberate release step after native visual and exact-pack review. CI screenshots and software rendering do not establish player-device performance or audible quality.
 
+GitHub status can lag actual execution. During 0.67.1 both API and browser reported a queued job while later logs showed passing cases. Do not restart solely because a status display says queued: inspect available job logs and artifact timestamps, and allow the expected native-run duration. A cancellation correctly blocks the dependent release gate. Keep final evidence/documentation on a separate docs branch so it does not restart an active runtime PR's checks.
+
 ## Next refactors, only with evidence
 
 1. Expand current save migration fixtures as systems change.

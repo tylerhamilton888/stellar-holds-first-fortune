@@ -1,6 +1,12 @@
-# 0.67.1 — Familiar Faces: work in progress
+# 0.67.1 — Familiar Faces: published and verified
 
-Appearance continuity repair in progress; 0.67.0 remains the published build. See testing/appearance74.md. Confirmed stale town contact source references bypassed corrected hair/beard art; fixed inheritance, shared rendering, measured pigment/scale calibration, two complete side-walk redraws and creator pose/turn controls are implemented locally. Final verification and publication pending. Pre-change recovery/pre-appearance74 and local incremental bundle preserve 0.67.0. Native appearance checks passed 64 assertions; related core checks passed 104. Original source art was verified by isolated GitHub import run 39836928263. Hosted source/export gates and publication remain pending.
+One complete Windows ZIP is available at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.67.1. Its 708,989,468 bytes and SHA256 a521b291b52e43789d6d61905868c8390ce2a987fa6ad916273a93c106c72bdb match the clean hosted build report.
+
+Town walk contacts now inherit canonical corrected artwork, preventing retired beard/hair drawings from reappearing. Measured hair and passing-pose calibration, complete bare-crown/high-ponytail side walks, corrected greatbeard utility crops and shared whole-character rendering preserve identity. Character creation previews standing, walking, working and carrying with turn controls. Existing saves, names, sculpts, inventories and work mechanics are unchanged; corrected derived artwork prepares a new cache on first use.
+
+Native appearance checks passed 64 assertions and related core checks passed 104; the same 64 appearance checks also passed against the local exported PCK. All fourteen identity boards plus creator, town and tavern scenes were visually reviewed. Hosted source run 39837733726 passed 704 checks across 19 cases. Release run 39837735551 attempt 2 passed 10 exact-package cases (397 checks) and published successfully. Release source e6f23d7829ad121b82475350bc4edbe6c4588d85 and PR #19 merge e9b8239f9a959e4ff2fbc6895aec9a6d79271a88 share tree 96510cc5e2023b03aa82011e17e919fba9a720fd.
+
+Continue from GitHub main. Pre-change recovery/pre-appearance74 and all older versions remain intact. Final recovery checkpoint: verified-appearance74-delivery (separately verified local incremental bundle requiring pre-firsthour73, plus persistent GitHub recovery branch). Evidence: testing/appearance74. Windows device performance, sound and final artistic acceptance remain player testing. This repairs source selection and specific poses; it is not a redraw of the entire animation library.
 
 # 0.67.0 — A Good Day’s Work: published and verified
 

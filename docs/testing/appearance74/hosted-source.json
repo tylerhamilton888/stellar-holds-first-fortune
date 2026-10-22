@@ -1,0 +1,13 @@
+{
+  "runtime_commit": "e6f23d7829ad121b82475350bc4edbe6c4588d85",
+  "runtime_tree": "96510cc5e2023b03aa82011e17e919fba9a720fd",
+  "validated_merge": "f3ac917fb5b238e379bdaf8b018c0c434f72a5fe",
+  "run": 39837733726,
+  "attempt": 2,
+  "job": 120039284340,
+  "conclusion": "success",
+  "checks": 704,
+  "cases": 19,
+  "artifact": 12453873916,
+  "artifact_sha256": "c0933818dd3f44396d8e687707eaf391c3101a438ae21ad43f506424a9f9e8fb"
+}

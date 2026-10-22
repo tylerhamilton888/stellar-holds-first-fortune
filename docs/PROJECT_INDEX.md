@@ -1,5 +1,7 @@
 # Appearance continuity — 0.67.1
 
+Published v0.67.1. testing/appearance74 records native, hosted source, exact-package and delivery evidence. Recovery: verified-appearance74-delivery.
+
 - scripts/whole_frames.gd: canonical contact inheritance, measured palette and scale correction.
 - assets/appearance74: complete side-walk replacements and calibration metadata.
 - tests/appearance74.gd and docs/testing/appearance74.md: native identity, creator and background-NPC verification.
