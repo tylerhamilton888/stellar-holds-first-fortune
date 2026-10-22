@@ -1,6 +1,6 @@
 # Roads & Hearths follow-up
 
-Player review: physical crossing readability, countryside density, first-visit preparation time and recurring order prices. Broader regions, cross-region NPC work schedules, autonomous farm/forestry production, seasons and a streamed planet remain future work. Current local residents are ambient, and eastern farm crops are protected scenery. Retain the approved whole-character art and existing player-built sites.
+Player review: physical crossing readability, countryside density, first-visit preparation time and recurring order prices. Broader regions, cross-region NPC work schedules, autonomous farm/forestry production, seasons and a streamed planet remain future work. Current local residents are ambient, and eastern farm crops are protected scenery. Retain the approved whole-character art and existing player-built sites. At 1280×720, work-board panels can extend the bottom keyboard-help footer below the viewport; delivery, lease, guide and close controls remain visible. Bound the shared shell in a focused UI follow-up.
 
 # First-hour player feedback
 

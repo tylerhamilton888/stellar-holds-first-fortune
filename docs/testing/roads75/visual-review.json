@@ -1,0 +1,47 @@
+{
+  "renderer": "Godot 4.4.1 native Linux llvmpipe, Xvfb 1280x720; isolated saves",
+  "review": "Gameplay-scale composition, character parity, clear doors and paths, furniture placement, work boards and kitchen controls reviewed. Captures remain outside runtime source.",
+  "captures": [
+    {
+      "scene": "01-stonebridge",
+      "sha256": "16f77cfe4855ccfba9cb4c937f64bbde0e01a2a88f9f8350cb65bbfe78956ba8",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/exported3/roads/01-stonebridge.png"
+    },
+    {
+      "scene": "02-pinewood-workyard",
+      "sha256": "137fbf9ca100f23fd53455aaea02d5d4e06a80278f47cf6c1cfcf50ac7ac0e53",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/exported3/roads/02-pinewood-workyard.png"
+    },
+    {
+      "scene": "03-greenhearth",
+      "sha256": "cc26e3d277a5568acce56c199e8aec84895320684372db4da8b422883d6f0792",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/exported3/roads/03-greenhearth.png"
+    },
+    {
+      "scene": "04-wayfarers-hearth",
+      "sha256": "c117f8352d8eb0b17ae48481876131b50a4e3261d9eb5916c28fbe8ea3a7294d",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/exported3/roads/04-wayfarers-hearth.png"
+    },
+    {
+      "scene": "05-farmhouse",
+      "sha256": "6f784cea4748470c36bf1083aaf680f2d1116cd9e362806bdaa8f04de3c1fc3f",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/exported3/roads/05-farmhouse.png"
+    },
+    {
+      "scene": "06-local-work",
+      "sha256": "3a7710cc47dee6958f126cf6286bc2ea15ca03142ebb27b281cacd91f8b5c19e",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/exported3/roads/06-local-work.png"
+    },
+    {
+      "scene": "07-kitchen",
+      "sha256": "f09cfbe52dc98045801154780f415a452fd2cc75628ecc775b8dcbf23d0e64af",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/services/07-kitchen.png"
+    },
+    {
+      "scene": "08-farm-work",
+      "sha256": "aee3e1f39f38d4efb8610465b43aa2c636bc676f9b12d7b70ff6a8a7f1f04c94",
+      "source": "/workspace/scratch/e70a3a957e2c/qa75/services/08-farm-work.png"
+    }
+  ],
+  "minor_follow_up": "Work-board keyboard-help footer extends below the 1280x720 viewport; primary delivery/lease/guide/close controls are visible and tested."
+}

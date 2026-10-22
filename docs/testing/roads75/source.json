@@ -1,0 +1,103 @@
+{
+  "checks": 536,
+  "cases": 12,
+  "runtime_source": "209408538d2fe62773175b27d6313a17db8a8cff",
+  "results": [
+    {
+      "test": "mining",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 38,
+      "seconds": 57.46
+    },
+    {
+      "test": "handworks",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 32,
+      "seconds": 55.39
+    },
+    {
+      "test": "world",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 63.5
+    },
+    {
+      "test": "living",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 51,
+      "seconds": 53.45
+    },
+    {
+      "test": "civic",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 64,
+      "seconds": 54.5
+    },
+    {
+      "test": "firstshift",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 19,
+      "seconds": 50.43
+    },
+    {
+      "test": "ancestral",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 44.95
+    },
+    {
+      "test": "disciplines",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 37,
+      "seconds": 39.88
+    },
+    {
+      "test": "polish",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 75,
+      "seconds": 57.46
+    },
+    {
+      "test": "firsthour",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 18,
+      "seconds": 45.51
+    },
+    {
+      "test": "appearance",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 64,
+      "seconds": 58.8
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 80,
+      "seconds": 96.44
+    }
+  ]
+}

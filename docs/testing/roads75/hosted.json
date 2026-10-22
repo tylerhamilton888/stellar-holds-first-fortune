@@ -1,0 +1,23 @@
+{
+  "version": "0.68.0",
+  "baseline_main": "1e2374f2cd87f9a4830923c4dc31136e0638eb03",
+  "local_runtime": "c48a058d928fff73d8625b4899e0ab8a1c0b0da4",
+  "remote_runtime": "a64af2e41dd5d645833173f1020ecafe452fe649",
+  "runtime_tree": "441ba3da8dfa177cb546e6e3888d2aa10a80730d",
+  "pull_request": 21,
+  "source_run": 39870961710,
+  "source_job": 120144988451,
+  "release_run": 39870964362,
+  "release_job": 120144997996,
+  "status": "Runtime PR21 merged with exact tree match after full source success. Release is running exact-package tests.",
+  "user_authorization": "Explicit approval to merge following the combined upload, checked merge and single-ZIP release proposal.",
+  "prior_source_run": 39866784698,
+  "prior_release_run": 39866867875,
+  "ci_budget_correction": "Only time budgets changed: source45min, release80min with45min source wait. Game/scripts/assets/tests/tools unchanged. Fresh full gates started.",
+  "merge_commit": "ea38817cb27fe90ae531b1f037926b0be2af2c73",
+  "source_status": "success",
+  "source_checks": 784,
+  "source_cases": 20,
+  "source_artifact": 12466519260,
+  "source_artifact_sha256": "9a2214c0e484759c18f441427cb2b2630f908ec2b80f823d976173fa6a881852"
+}

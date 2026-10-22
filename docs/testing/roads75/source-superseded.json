@@ -1,0 +1,171 @@
+{
+  "status": "superseded before held-input runtime fixes",
+  "runtime_commits": [
+    "f9163257e8f22b7263a57311c2b67b0ae52a1e28",
+    "f237c9add366964f714a874a6ce98ef4afd8a913"
+  ],
+  "note": "Both commits have the same runtime scripts/assets and PCK hash; only the doorway test/documentation changed between batches. These are not final-runtime full-source results.",
+  "checks": 780,
+  "results": [
+    {
+      "test": "loading",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 19,
+      "seconds": 65.53
+    },
+    {
+      "test": "menus",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 9,
+      "seconds": 37.77
+    },
+    {
+      "test": "orientation",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 20,
+      "seconds": 59.46
+    },
+    {
+      "test": "ambient",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 36,
+      "seconds": 75.46
+    },
+    {
+      "test": "equipment",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 20,
+      "seconds": 50.5
+    },
+    {
+      "test": "mining",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 38,
+      "seconds": 58.47
+    },
+    {
+      "test": "handworks",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 32,
+      "seconds": 54.3
+    },
+    {
+      "test": "world",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 65.5
+    },
+    {
+      "test": "modular",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 28,
+      "seconds": 43.45
+    },
+    {
+      "test": "hold",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 81,
+      "seconds": 42.42
+    },
+    {
+      "test": "continuity",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 46.18
+    },
+    {
+      "test": "living",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 51,
+      "seconds": 58.89
+    },
+    {
+      "test": "civic",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 64,
+      "seconds": 54.41
+    },
+    {
+      "test": "firstshift",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 19,
+      "seconds": 51.43
+    },
+    {
+      "test": "ancestral",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 45.37
+    },
+    {
+      "test": "disciplines",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 37,
+      "seconds": 38.92
+    },
+    {
+      "test": "polish",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 75,
+      "seconds": 55.37
+    },
+    {
+      "test": "firsthour",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 18,
+      "seconds": 43.49
+    },
+    {
+      "test": "appearance",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 64,
+      "seconds": 59.43
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 76,
+      "seconds": 74.49
+    }
+  ]
+}

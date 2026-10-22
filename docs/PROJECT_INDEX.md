@@ -1,4 +1,4 @@
-# Roads & Hearths — 0.68.0 candidate
+# Roads & Hearths — 0.68.0
 
 - scripts/roads.gd: physical region connections, smallholder/wayside life, delivery boards, loans and allotment leasing.
 - scripts/surface.gd / deepworks_play.gd: movement thresholds, reciprocal mine exits and existing work/cargo integration.
