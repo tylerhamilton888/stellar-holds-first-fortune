@@ -284,6 +284,8 @@ func pause_for_focus_loss():
  if playing and panel_id!="pause" and not is_instance_valid(creator):open_panel("pause")
 
 func _process(dt):
+ if playing:
+  surface.roads.poll_input();deep.poll_arrival_input()
  if HoldFolk.warming():
   HoldFolk.warm_step();queue_redraw();return
  if is_instance_valid(anniversary_scene) or is_instance_valid(opening_scene):return
@@ -310,7 +312,9 @@ func _process(dt):
   if zone!="mine" and not surface.active():combat.update(dt)
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
    fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt)
-   if zone=="mine":deep.move(dt);deep.mine(dt)
+   if zone=="mine":
+    deep.move(dt)
+    if zone=="mine":deep.mine(dt)
    elif surface.active():surface.move(dt)
    else:move_player(dt)
    if zone=="mine":pass
@@ -1140,7 +1144,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id in ["inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]
+ menu_paused=id in ["inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1168,6 +1172,8 @@ func open_panel(id:String,remember:bool=true):
   "commission":commission_panel()
   "charters":charters_panel()
   "pinewood":HoldForestry.panel(self)
+  "road_order":surface.roads.panel()
+  "road_kitchen":surface.roads.kitchen_panel()
   "gate":world_map_panel()
   "world_map":world_map_panel()
   "basin_map":world_map_panel(true)

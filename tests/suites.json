@@ -26,7 +26,8 @@
       "disciplines",
       "polish",
       "firsthour",
-      "appearance"
+      "appearance",
+      "roads"
     ],
     "modular": [
       "modular",
@@ -125,6 +126,31 @@
     ],
     "appearance": [
       "appearance"
+    ],
+    "roads": [
+      "roads"
+    ],
+    "roads-regression": [
+      "world",
+      "handworks",
+      "firsthour",
+      "ancestral",
+      "living",
+      "appearance"
+    ],
+    "roads-final": [
+      "mining",
+      "handworks",
+      "world",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads"
     ]
   },
   "cases": {
@@ -203,6 +229,10 @@
     "appearance": {
       "script": "tests/appearance74.gd",
       "marker": "APPEARANCE74"
+    },
+    "roads": {
+      "script": "tests/roads75.gd",
+      "marker": "ROADS75"
     }
   }
 }

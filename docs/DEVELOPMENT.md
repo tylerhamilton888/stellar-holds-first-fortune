@@ -63,3 +63,7 @@ The foundation pass does not alter mining balance, movement, economy or save sch
 Whole-frame textures use `HoldWholeFrames.CACHE_REVISION`, independent of the game release number. Bump it whenever source artwork, crop metadata or palette conversion changes. The 0.66 fallback is deliberately gated to its compatible artwork revision; it must not be reused for a new revision. These files are derived artwork, never player saves. Room preparation includes current local residents; outdoor preparation retains the adjoining-ward cast.
 
 Starter-quarter plans live in `HoldQuarters` and reuse `HoldFurnishings` costs/art/footprints plus existing `surface.decor`, `surface.chests` and additive `surface.facts`. Keep fixed hold furniture protected and preserve the doorway aisle and service approaches.
+
+## Connected countryside
+
+`scripts/roads.gd` owns directional path/door thresholds, local resident routes, fixed loan initialization, delivery orders and the allotment lease. `surface.gd` calls its movement crossing once after collision resolution; gates remain in Surface. Rooms and outdoor areas retain separate active scenes. Reuse HomesteadLife beds, Handworks facilities and State recipes/inventory. Keep IDs stable, ownership explicit, arrival positions outside the outbound plane and room access clear. Old saves receive an exact pre-roads backup before migration. The roads75 source/exact-package case checks movement, cargo, local services and preservation.

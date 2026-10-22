@@ -20,7 +20,10 @@ func data()->Dictionary:
  g.surface.ensure()
  if not g.state.surface.has("fieldwork"):g.state.surface.fieldwork={"version":1,"kit":false,"beds":[],"next":1,"facts":{},"catches":0,"harvests":0}
  return g.state.surface.fieldwork
-func local(b:Dictionary)->bool:return g.surface.active() and g.surface.area=="claim" and g.surface.house.level()==0 and b.claim==g.state.claim_id
+func local(b:Dictionary)->bool:
+ if not g.surface.active():return false
+ if b.get("area","")=="greenfields":return g.surface.area=="greenfields"
+ return g.surface.area=="claim" and g.surface.house.level()==0 and b.claim==g.state.claim_id
 func pos(b:Dictionary)->Vector2:return Vector2(b.x,b.y)
 func bed()->Dictionary:
  for b in data().beds:

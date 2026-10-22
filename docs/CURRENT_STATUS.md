@@ -1,3 +1,11 @@
+# 0.68.0 — Roads & Hearths: candidate
+
+The countryside now connects through physical path edges, arches and doorways. Stonebridge adds a wayside hearth, storage/kitchen, bridge supply orders and a mine staging yard. Pinewood retains its trees/log records and adds loan timber processing and a local order. Greenhearth adds a paid permanent four-bed allotment using existing planting, watering, harvest and discipline mechanics, a farmhouse kitchen/storage, and a produce order. Six deterministic local residents use the approved whole-character backend. G remains optional directions, never a map avatar or destination selector.
+
+Preserves existing character art, identities, claim ownership, excavation, materials, construction and progression. New state is additive under surface.roads; allotments reuse fieldwork.beds and loans reuse hauling.hands. Orders consume real pack materials once per 600 seconds of world time. Carts and shoulder loads pass between outdoor zones. Scenes still load individually; this is a connected local region, not a fully streamed planet or an NPC economic simulation.
+
+Baseline is GitHub main 1e2374f2cd87f9a4830923c4dc31136e0638eb03, tree b8193d8692611605d4e6412fa1909fd26fb26063, identical to local 4f2907a. Recovery/pre-world75 is confirmed on GitHub; the separately verified local pre-world75.bundle requires pre-firsthour73. All older releases/checkpoints remain intact. Work branch world/roads75. Verification and single-ZIP publication are pending; 0.67.1 remains the last published release. See testing/roads75.md.
+
 # 0.67.1 — Familiar Faces: published and verified
 
 One complete Windows ZIP is available at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.67.1. Its 708,989,468 bytes and SHA256 a521b291b52e43789d6d61905868c8390ce2a987fa6ad916273a93c106c72bdb match the clean hosted build report.

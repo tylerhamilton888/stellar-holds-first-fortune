@@ -8,6 +8,10 @@ func snap(name:String):
  for i in 10:g.queue_redraw();await process_frame
  await RenderingServer.frame_post_draw
  root.get_texture().get_image().save_png(OUT+"/"+name+".png")
+func local_station(kind:String)->Dictionary:
+ for facility in g.handworks.data().facilities:
+  if g.handworks.local(facility) and facility.kind==kind:return facility
+ return {}
 func run():
  var args=OS.get_cmdline_user_args()
  if not args.is_empty():OUT=args[0]
@@ -30,25 +34,25 @@ func run():
  await snap("01-shoulder")
  key(KEY_Q);check(h.data().carry.is_empty() and h.data().loose.size()==1,"Q places persistent chunk on ground")
  key(KEY_E);at(Vector2(840,650));key(KEY_E)
- var pile=h.data().facilities[1];check(pile.raw.size()==1 and h.data().carry.is_empty(),"E deposits only into compatible local stockpile")
+ var pile=local_station("stone_pile");check(pile.raw.size()==1 and h.data().carry.is_empty(),"E deposits only into compatible local stockpile")
  at(Vector2(760,730));h.spawn("log",g.player,2,"test-tree");key(KEY_E);at(Vector2(840,650));key(KEY_E)
  check(h.data().carry.size()==1 and pile.raw.size()==1,"Stone stockpile refuses logs without loss")
  at(Vector2(1160,530));key(KEY_E);check(h.data().carry.is_empty(),"Timber rack accepts log")
  at(Vector2(940,650));key(KEY_E);Input.action_press("interact");await frames(82);Input.action_release("interact")
- var breaker=h.data().facilities[0];check(not breaker.job.is_empty() and pile.raw.is_empty(),"Station reserves exactly one nearby raw input")
+ var breaker=local_station("breaker");check(not breaker.job.is_empty() and pile.raw.is_empty(),"Station reserves exactly one nearby raw input")
  await snap("02-stonebreaking")
- g.save_game();g.start_game(true);settle();h=g.handworks;breaker=h.data().facilities[0]
+ g.save_game();g.start_game(true);settle();h=g.handworks;breaker=local_station("breaker")
  check(not breaker.job.is_empty() and float(breaker.job.progress)>.4,"Partial work and input ownership survive actual reload")
  at(Vector2(940,650));Input.action_press("interact");await frames(100);Input.action_release("interact")
- var output=h.data().facilities[2]
+ var output=local_station("store")
  check(breaker.job.is_empty() and int(output.cargo.get("stone",0))==1,"Completed stone goes once to nearby output pallet")
  var stone=g.state.count("stone");at(Vector2(1040,650));key(KEY_E,true)
  check(g.state.count("stone")==stone+1 and output.cargo.is_empty(),"Shift+E returns actual output to existing inventory")
  check(g.surface.house.build(Vector2(1040,700),"stone_floor") and g.state.count("stone")==stone,"Processed stone builds a real house floor at its normal cost")
  at(Vector2(1160,650));Input.action_press("interact");await frames(55);await snap("03-sawing");await frames(130);Input.action_release("interact")
- var saw=h.data().facilities[3];check(int(output.cargo.get("wood",0))==2,"Timber workflow preserves explicit two-unit yield")
+ var saw=local_station("saw");check(int(output.cargo.get("wood",0))==2,"Timber workflow preserves explicit two-unit yield")
  at(Vector2(760,730));h.spawn("stone",g.player,1,"cart-load");key(KEY_E);at(Vector2(1060,860));key(KEY_E)
- var cart=h.data().facilities[5];check(cart.raw.size()==1 and h.data().carry.is_empty(),"Cart receives raw material without duplication")
+ var cart=local_station("cart");check(cart.raw.size()==1 and h.data().carry.is_empty(),"Cart receives raw material without duplication")
  key(KEY_C);Input.action_press("right");await frames(25);Input.action_release("right");await snap("04-handcart")
  check(cart.hitched and h.pos(cart).distance_to(g.player)<40,"Pushed cart visibly follows player's clear path")
  key(KEY_C);key(KEY_E,true);check(cart.raw.is_empty() and h.data().carry.size()==1,"Cart unloads back to shoulders")
@@ -60,7 +64,7 @@ func run():
  h.data().skills.mason=7;h.data().skills.forester=1
  check(h.capacity()==2,"Strong shoulders unlocks at eight productive work credits")
  g.save_game();g.start_game(true);settle();h=g.handworks
- check(h.data().facilities.size()==6 and h.capacity()==2 and not h.data().loose.is_empty(),"Equipment ground cargo and handling upgrade persist")
+ check(h.data().facilities.filter(func(f):return h.local(f)).size()==6 and h.capacity()==2 and not h.data().loose.is_empty(),"Equipment ground cargo and handling upgrade persist")
  # Fell a real Pinewood tree with held input; preserve the existing regrowth data.
  g.surface.enter("pinewood",Vector2(370,460));settle();g.hotbar.select(2)
  g.state.road_trees[0]=1;var timber=g.state.count("wood");var ground_before=h.data().loose.size()

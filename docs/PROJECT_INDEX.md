@@ -1,3 +1,10 @@
+# Roads & Hearths — 0.68.0 candidate
+
+- scripts/roads.gd: physical region connections, smallholder/wayside life, delivery boards, loans and allotment leasing.
+- scripts/surface.gd / deepworks_play.gd: movement thresholds, reciprocal mine exits and existing work/cargo integration.
+- scripts/homestead_life.gd / state.gd: local allotment scope and exact old-save backup; existing crop mechanics remain authoritative.
+- tests/roads75.gd / docs/testing/roads75.md: source and exported-game acceptance.
+
 # Appearance continuity — 0.67.1
 
 Published v0.67.1. testing/appearance74 records native, hosted source, exact-package and delivery evidence. Recovery: verified-appearance74-delivery.

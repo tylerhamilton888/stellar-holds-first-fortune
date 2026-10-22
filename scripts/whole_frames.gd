@@ -194,6 +194,8 @@ static func prepare(g:Node):
    for person in g.surface.world.routines.people(g.surface.area,g.state.elapsed):people.append({"profile":person.profile,"player":false,"walk_only":true,"drink":true})
   else:
    for plan in g.surface.world.routines.plans:people.append({"profile":plan.person.profile,"player":false,"walk_only":plan.index!=0})
+ if g.surface.active():
+  for person in g.surface.roads.people(g.surface.area):people.append({"profile":person.profile,"player":false,"walk_only":true})
  for a in g.agents:
   if a.type=="worker":people.append({"profile":g.state.npc(a.id),"player":false})
  var queued={}
