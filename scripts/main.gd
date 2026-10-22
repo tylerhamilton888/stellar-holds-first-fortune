@@ -1180,20 +1180,7 @@ func open_panel(id:String,remember:bool=true):
   "house_build":surface.house.panel()
   "wayfinding":surface.guide_panel()
   "camp":camp_panel()
-  "home":
-   player_card(panel_body)
-   button(panel_body,"Wardrobe & name - customize your character",func():open_creator(false))
-   label(panel_body,"A narrow bed. A good lock. Room to dream of your own mountain.",17)
-   label(panel_body,"Lord Eirik provides these quarters and access to the old gallery. Commission deliveries earn wages; surplus ore belongs to you. J opens your work journal.")
-   button(panel_body,"Work journal & charter progress",func():open_panel("commission"))
-   button(panel_body,"Save your progress",func():save_game();notify("Hold saved.");close_panel())
-   button(panel_body,"Meet the hold - character portraits",func():open_panel("roster"))
-   button(panel_body,"Read the prospector's handbook",func():open_panel("help"))
-   button(panel_body,"Fill canteens at the courtyard pump (+6 water)",func():
-    if state.count("water")>=30:notify("You already have 30 canteens. Plenty for now.")
-    else:state.add("water",mini(6,30-state.count("water")));notify("Fresh water drawn from the hold's well.")
-    refresh_panel())
-   label(panel_body,"WASD moves. E opens nearby doors. Leave by the King’s Gate and follow the High Trail to Old Workings. F5 saves anywhere.",14,Color("97c6bb"))
+  "home":HoldQuarters.panel(self)
   "tavern":
    compact_person("hedrik","Food, drink and company")
    button(panel_body,"Share a round - 8 crowns",func():

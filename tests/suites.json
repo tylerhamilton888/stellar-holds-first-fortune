@@ -24,7 +24,8 @@
       "firstshift",
       "ancestral",
       "disciplines",
-      "polish"
+      "polish",
+      "firsthour"
     ],
     "modular": [
       "modular",
@@ -101,6 +102,22 @@
       "orientation",
       "equipment",
       "disciplines"
+    ],
+    "firsthour": [
+      "firsthour",
+      "firstshift",
+      "orientation",
+      "handworks",
+      "loading",
+      "polish"
+    ],
+    "firsthour-only": [
+      "firsthour"
+    ],
+    "firsthour-regression": [
+      "handworks",
+      "loading",
+      "polish"
     ]
   },
   "cases": {
@@ -171,6 +188,10 @@
     "polish": {
       "script": "tests/polish72.gd",
       "marker": "POLISH72"
+    },
+    "firsthour": {
+      "script": "tests/firsthour73.gd",
+      "marker": "FIRSTHOUR73"
     }
   }
 }

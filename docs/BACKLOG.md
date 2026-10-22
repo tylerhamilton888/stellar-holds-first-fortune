@@ -1,3 +1,7 @@
+# First-hour player feedback
+
+Test planted axe/pick work, supplied station approaches, lesson clarity and furnishing the starter room. Measure Windows transitions with an existing 0.66 cache and a fresh character. No promise of zero cold-load time: whole painted frames still need initial preparation. Full brewing, new animation redraws and additional progression systems remain separate tasks.
+
 # Hearth & Stone follow-up
 
 Player acceptance of gait cadence and architecture remains important. This pass reuses whole painted action frames; it is not a full new animation set. Roofs depict existing solid building mass; no roof-access gameplay is added. Rugs currently dress authored interiors; a textile economy and player rug crafting remain future scope.

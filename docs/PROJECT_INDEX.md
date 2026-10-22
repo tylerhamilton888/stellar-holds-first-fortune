@@ -1,3 +1,11 @@
+# A Good Day’s Work — 0.67.0
+
+- scripts/quarters.gd: starter-room plans using the existing furnishing catalogue and surface save records.
+- scripts/surface.gd / handworks.gd: physical station bases, safe work approaches, quarters placement and batched storage saves.
+- scripts/first_shift.gd: contextual lesson guidance and worksite allowance tracking.
+- scripts/whole_frames.gd: artwork-revision cache and location-specific preparation.
+- tests/firsthour73.gd / docs/testing/firsthour73.md: quarters, letter, equipment and persistence verification.
+
 # Hearth & Stone — 0.66.0
 
 - scripts/whole_frames.gd / drawn_locomotion.gd: shared complete side-walk passing drawings and distance-calibrated stride.
