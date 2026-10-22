@@ -1,10 +1,12 @@
-# 0.67.0 — A Good Day’s Work candidate
+# 0.67.0 — A Good Day’s Work: published and verified
 
-Four-part first-hour refinement: physical work and outdoor equipment collision; contextual first-shift guidance and stockpile connection previews; craftable starter-quarter furnishings; reduced interaction and animation-preparation overhead. Uses existing resources, whole-painted actors, work rates and save records. No new compulsory chores or free access to hold-owned supplies.
+One complete Windows ZIP is available at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.67.0. Its 707,638,184 bytes and SHA256 d77216cc175bc2f3729ced90c666aa27c8678fbdf4397ab14e00b26aa0d5951b match the clean hosted build report.
 
-Recovery: GitHub recovery/pre-firsthour73 preserves 94b2b2e1edb34e6766e6c4e0b677947105456498. Local pre-firsthour73 preserves the exact source tree 9fd4c99920fb94f43dafd7f0e67d2800d0ddaf58, restored from verified source archive chunks. Prior releases remain untouched. Work branch polish/firsthour73.
+Includes physical outdoor workstations and safe work approaches; contextual first-shift guidance and stockpile connection previews; eight starter-quarter furnishing plans (O); reduced interaction and animation-preparation overhead. Existing saves, work yields and approved whole-painted actors are preserved.
 
-Native targeted verification passed 221 checks, and the clean local Windows package passed 333 checks across nine cases plus its 3,201-entry integrity audit. Local package recovery is verified-firsthour73-pack, incremental from pre-firsthour73. Hosted verification/publication remain pending; 0.66.0 remains the published build until delivery verification. See testing/firsthour73.md. Windows hardware performance and audio require player-device testing.
+Hosted source run 39795166172 passed 640 checks across eighteen cases. Release run 39795998750 attempt 2 passed all nine exact-package cases and published successfully. Local verification passed 401 targeted checks and 333 exact-package checks; native visuals were inspected. The release tag preserves e94f475ca66d363149a89a776728833fa4e2b496. PR #17 merged at 977a1d9b571eb0fef45525f4246e2070f19878b7 with identical tree 5716fad4574e715b134f36b733f9ae19307f3d12.
+
+Continue from GitHub main. Recovery/pre-firsthour73, prior releases and archives remain intact. Final recovery: verified-firsthour73-delivery (local incremental bundle and persistent GitHub branch). Evidence: testing/firsthour73 and testing/firsthour73.md. Next: player feedback on work approaches, lesson clarity, furnishing and repeat transitions. Windows device performance/audio remain playtest items.
 
 # 0.66.0 — Hearth & Stone: published and verified
 

@@ -13,7 +13,7 @@
     "exit_code": 0,
     "errors": [],
     "checks": 20,
-    "seconds": 61.47
+    "seconds": 60.51
   },
   {
     "test": "firsthour",
@@ -54,5 +54,37 @@
     "errors": [],
     "checks": 38,
     "seconds": 62.52
+  },
+  {
+    "test": "hold",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 81,
+    "seconds": 46.42
+  },
+  {
+    "test": "ambient",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 36,
+    "seconds": 76.49
+  },
+  {
+    "test": "world",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 67.46
+  },
+  {
+    "test": "modular",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 28,
+    "seconds": 46.53
   }
 ]
