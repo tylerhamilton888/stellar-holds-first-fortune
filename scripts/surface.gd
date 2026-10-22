@@ -11,7 +11,7 @@ const ATLAS=preload("res://assets/overworld-v26/scenery.png")
 const SIZE=Vector2(1880,1080)
 const ROOM_SIZE=Vector2(960,720)
 const FIR=preload("res://assets/pinewood-v40/silver-fir.png")
-const NAMES={"hearthward":"Keldrath · Hearthward · Z 0","crownward":"Keldrath · Crownward · Z +1","forgeward":"Keldrath · Forgeward · Z -1","trail":"The High Trail","pinewood":"Pinewood","claim":"Your mountain homestead"}
+const NAMES={"hearthward":"Keldrath · Hearthward · Z 0","crownward":"Keldrath · Crownward · Z +1","forgeward":"Keldrath · Forgeward · Z -1","trail":"The High Trail · Stonebridge","pinewood":"Pinewood","greenfields":"Greenhearth","claim":"Your mountain homestead"}
 const TREES=[Vector2(430,430),Vector2(690,610),Vector2(930,370),Vector2(1190,620),Vector2(1430,420),Vector2(1630,690),Vector2(1550,860)]
 var g
 var area="hearthward"
@@ -38,9 +38,10 @@ var ground_cache={}
 var bed_bounds=Rect2i()
 var house
 var world
+var roads
 
 func _init(game):
- g=game;house=HoldHearthcraft.new(self);world=HoldWorldZones.new(self)
+ g=game;house=HoldHearthcraft.new(self);world=HoldWorldZones.new(self);roads=HoldRoads.new(self)
 func active()->bool:return g.playing and g.zone!="mine"
 func ensure():
  HoldForestry.ensure(g.state)
@@ -65,9 +66,12 @@ func ensure():
   s.homes[g.state.claim_id]={"level":0,"lesson":false}
   var id="claim:"+g.state.claim_id+":starter"
   s.chests[id]={"area":"home:"+g.state.claim_id,"x":650.0,"y":380.0,"items":{}}
+ roads.ensure()
 func room()->bool:return area.begins_with("room:") or area.begins_with("home:")
 func size()->Vector2:return HoldRoomLayout.size(area) if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else SIZE
 func label()->String:
+ if area=="greenfields":return "Greenhearth · the holdfarms"
+ if area in HoldRoads.ROOMS:return HoldRoads.ROOMS[area]
  if HoldNeighborhood.is_home(area):return HoldNeighborhood.title(area)
  if area.begins_with("home:"):return "Your hearth · "+HoldOutpost.title(g.state)
  if area.begins_with("room:"):return HoldInteriors.ROOMS.get(g.room_id,{"name":"Keldrath"}).name
@@ -85,7 +89,7 @@ func restore():
  var desired=str(g.state.surface.get("area","hearthward"))
  if g.zone=="claim" and not desired.begins_with("home:"):desired="claim"
  elif g.zone=="road":desired="pinewood"
- elif g.zone=="approach":desired="trail"
+ elif g.zone=="approach" and desired not in ["trail","greenfields"]:desired="trail"
  area=desired;return_area=str(g.state.surface.get("return_area","hearthward"))
  g.room_id="home" if area.begins_with("home:") else (area.trim_prefix("room:") if area.begins_with("room:") else "")
  var p=g.state.surface.positions.get(area,[])
@@ -97,13 +101,14 @@ func restore():
 func spawn(id:String)->Vector2:
  if id=="room:forge":return HoldRoomLayout.exit_point(id)-Vector2(0,70)
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
- return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
+ return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"greenfields":Vector2(940,285),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
 func enter(id:String,at:Vector2=Vector2.INF):
  ensure()
  if id=="claim" and g.state.claim_id=="":g.open_panel("charters");return
  if id=="room:throne" and HoldOnboarding.ensure(g.state).fresh and HoldOnboarding.stage(g.state)<4:g.notify("Ivar's first-shift reference opens the royal audience.");return
- if id in ["trail","pinewood","claim"] and g.state.opening==0:g.notify(g.region_travel_hint());return
+ if id in HoldRoads.OUTDOORS and g.state.opening==0:g.notify(g.region_travel_hint());return
  if g.room_id=="training":g.state.resident_visits.erase("borin")
+ if g.zone=="mine":g.deep.depart()
  var travelling_cart=g.handworks.passage(id)
  world.speech="";rest_time=0
  remember();var old=area
@@ -115,7 +120,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
   elif id!=old:return_area="claim" if claim_site else ("crownward" if id in ["room:throne","room:research"] else "forgeward" if id in ["room:forge","room:practice"] else "hearthward")
  if old=="claim" and id!="claim":house.data().z=0
  area=id
- g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id=="trail" else "hub")
+ g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id in ["trail","greenfields"] else "hub")
  g.room_id="home" if id.begins_with("home:") else id.trim_prefix("room:") if id.begins_with("room:") else ""
  var landing=world.arrival(old,id) if at==Vector2.INF else at
  g.player=spawn(id) if landing==Vector2.INF else landing
@@ -144,7 +149,7 @@ func points()->Array:
   result=[spot(220,690,"Keldrath's gate","hearthward"),spot(950,300,"Old Workings · enter mine","mine"),spot(470,920,"Pinewood trail","pinewood"),spot(1650,700,"Your claim" if g.state.claim_id!="" else "Unclaimed mountain · charter required","claim")]
  elif area=="claim":
   result=[spot(180,790,"High Trail · Keldrath","trail"),spot(500,440,"Your home","home:"+g.state.claim_id),spot(1280,345,"Your Deepworks","mine"),spot(970,690,"Founding stones","camp"),spot(1370,760,"Workshop","room:forge"),spot(1650,840,"Launchyard","ship"),spot(740,780,"Homestead workbench","homestead")]
- elif area=="pinewood":result=[spot(180,650,"High Trail","trail"),spot(300,790,"Woodcutter's field board","pinewood_panel")]
+ elif area=="pinewood":result=[spot(180,650,"High Trail","trail")]
  elif room():
   var exit_point=HoldRoomLayout.exit_point(area)
   result=[spot(exit_point.x,exit_point.y,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
@@ -154,6 +159,7 @@ func points()->Array:
    result.append(spot(700,550,"Stairs · "+("upper rooms" if parts[2]=="0" else "family hearth"),HoldNeighborhood.home_id(parts[0],int(parts[1]),1-int(parts[2]))))
   elif area.begins_with("home:") or area=="room:home":
    result.append({"p":HoldFurnishings.bedside(Vector2(290,420)),"name":"Bed · rest and save","action":"rest","bed":Vector2(290,420)});result.append(spot(735,537,"Writing desk · write home","letter"))
+  elif area in HoldRoads.ROOMS:pass
   elif area=="room:training":
    result.append(spot(660,570,"Borin’s training notes","training_notes"))
   else:
@@ -163,6 +169,7 @@ func points()->Array:
    if g.room_id=="tavern":
     var guests=HoldNpcPresence.tavern_guests(g.state)
     for i in mini(3,guests.size()):result.append(spot(270+i*170,550,"Speak with "+g.state.npc(guests[i]).first_name,"talk:"+guests[i]))
+ result.append_array(roads.points())
  if room():
   for c in world.routines.people(area,g.state.elapsed):result.append({"p":c.p,"name":c.name+" · "+c.role,"action":c.interaction})
  if area=="claim" and house.level()==0:
@@ -189,7 +196,7 @@ func nearest()->Dictionary:
   var d=g.player.distance_to(p.p)
   if p.action in ["rest","house_rest"] and (d>46 or absf(g.player.y-p.p.y)>25):continue
   if p.action=="letter" and (d>48 or g.player.y<p.p.y-8):continue
-  if p.action.begins_with("citizen:") or p.action.begins_with("resident:"):d+=38 # Doors retain priority.
+  if p.action.begins_with("citizen:") or p.action.begins_with("resident:") or p.action.begins_with("road_folk:"):d+=38 # Doors retain priority.
   if (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
   if p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action)):
    if not HoldNeighborhood.stair_access(g.player,p.p,96 if HoldNeighborhood.is_home(area) else 140):continue
@@ -243,6 +250,9 @@ func start_rest(point:Dictionary)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="road_kitchen":g.open_panel("road_kitchen");return
+ if id=="road_order":g.open_panel("road_order");return
+ if id.begins_with("road_folk:"):roads.speak(int(id.trim_prefix("road_folk:")));return
  if id=="leave":leave()
  elif id.begins_with("hold_stair:"):
   var link=id.split(":");enter(link[1],Vector2(180 if link[2]=="west" else 1700,1600))
@@ -287,6 +297,7 @@ func base_obstacles()->Array:
  return list
 func obstacles(ignore:Dictionary={})->Array:
  var list=base_obstacles()
+ if not room():list.append_array(roads.obstacles(area))
  if area in ["claim","pinewood"] and house.level()==0:list.append(HoldFurnishings.footprint("desk",Vector2(740,780) if area=="claim" else Vector2(300,790)))
  list.append_array(house.obstacles())
  if g.handworks:list.append_array(g.handworks.surface_obstacles())
@@ -346,6 +357,7 @@ func move(dt:float):
    remember();area=crossing.area;g.player=crossing.p;g.camera+=old_origin-HoldTerraces.origin(area)
    g.handworks.arrive(cart)
    g.state.surface.area=area;world.speech="";remember();g.save_game()
+ if roads.moved(before,dt):return
  cut_flash=maxf(0,cut_flash-dt)
  if area=="pinewood":chop(dt)
  house.update(dt)
@@ -512,8 +524,8 @@ func lift_panel():
   g.button(g.panel_body,NAMES[id],func():enter(id,HoldWorldZones.LIFT+Vector2(0,30)))
 func guide_panel():
  g.label(g.panel_body,"FOLLOW THE PATHS",22,Color("edc98a"))
- g.label(g.panel_body,"Walk with WASD or arrows, including along the Great Stair. E uses doors, household stairs, trail signs and workstations. You are here: "+label()+".",16)
- for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Crownward (Z +1): take the Great Stair at Hearthward’s northwest wall to the royal gallery.","Forgeward (Z -1): cross Hearthward’s southern gallery bridge, turn east past the family homes, and walk down the Great Stair. Borin’s workshop is on Forgeward’s north street.","The enclosed Royal/Forge service stairs and the hold lift remain useful shortcuts.","King’s Gate → High Trail → Old Workings, Pinewood and your claim.","Neighbors leave their family hearths for work and the Copper Kettle. You can follow them through doors and between wards.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
+ g.label(g.panel_body,"Walk with WASD or arrows, including along the Great Stair. Walk through the outdoor arches, paths and farmhouse thresholds to travel. Doorways also open as you walk into them. E uses household stairs, people and workstations. You are here: "+label()+".",16)
+ for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Crownward (Z +1): take the Great Stair at Hearthward’s northwest wall to the royal gallery.","Forgeward (Z -1): cross Hearthward’s southern gallery bridge, turn east past the family homes, and walk down the Great Stair. Borin’s workshop is on Forgeward’s north street.","The enclosed Royal/Forge service stairs and the hold lift remain useful shortcuts.","King’s Gate opens onto Stonebridge: a wayside hearth, paid bridge orders, fishing and a northern mine staging yard. Follow the south path into Pinewood, or cross the bridge for Greenhearth and your claim.","Greenhearth: lease four permanent garden plots at the farm board; bring your field tools, seed and water. Local boards pay for real deliveries once each workday.","Neighbors leave their family hearths for work and the Copper Kettle. You can follow them through doors and between wards.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
   g.label(g.panel_body,text,16)
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
@@ -555,7 +567,7 @@ func hud():
  g.hud.text=label().to_upper()+"   %d CROWNS" % g.state.money
  if g.panel_id=="":
   var p=nearest()
-  g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else ("E · "+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
+  g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
   if g.notice_time>0:g.footer.text=g.notice
   if g.handworks.busy_hands():g.footer.text="Shift+B · Workshop lesson & crafting   Q · Set down   Shift+E · Collect"
 func draw():
@@ -600,6 +612,9 @@ func draw():
   g.draw_set_transform(-cam);HoldAnniversary.station(g,HoldWorldZones.door(10),g.clock)
  if area=="pinewood":
   for i in TREES.size():objects.append({"p":TREES[i],"kind":"tree","i":i})
+ objects.append_array(roads.buildings(area))
+ if not room():objects.append_array(roads.furnishings(area))
+ objects.append_array(roads.people(area))
  objects.append_array(g.fight.objects())
  objects.append_array(g.handworks.objects())
  objects.append_array(g.fieldwork.objects())
@@ -644,9 +659,10 @@ func draw():
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area not in ["hearthward","crownward","forgeward"] and not room():
   for point in points():
+   if roads.is_link(point.action) or point.action.begins_with("road_folk:") or point.action=="road_order":continue
    if point.action.begins_with("chest:") or point.action.begins_with("talk:") or point.action.begins_with("house:") or point.action in ["house_rest","house_up","house_down"]:continue
    signpost(point.p,point.name)
- if g.panel_id=="" and not near.is_empty() and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not str(near.action).begins_with("terrace:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
+ if g.panel_id=="" and not near.is_empty() and not roads.is_link(near.action) and not near.action.begins_with("road_folk:") and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not str(near.action).begins_with("terrace:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
   # One small object-local keycap replaces the ground-radius interaction ring.
   var offset=Vector2(-94,-25) if near.action=="leave" else Vector2(28,-28)
   var r=Rect2(near.p+offset,Vector2(20,20))
@@ -716,15 +732,20 @@ func furniture(p:Vector2,kind:String):
  HoldFurnishings.draw(g,p,kind)
 func draw_outdoors():
  world.tile(2,Rect2(Vector2.ZERO,SIZE),200,Color("adb99e"))
- for edge in [Rect2(0,0,1880,200),Rect2(0,200,80,880),Rect2(1800,200,80,880),Rect2(0,970,1880,110)]:world.tile(3,edge,180,Color("bac1ae"))
- var roads=[PackedVector2Array([Vector2(170,790),Vector2(500,690),Vector2(960,690),Vector2(1650,790)]),PackedVector2Array([Vector2(500,690),Vector2(500,440)]),PackedVector2Array([Vector2(960,690),Vector2(1280,345)])] if area=="claim" else [PackedVector2Array([Vector2(180,650),Vector2(700,690),Vector2(1100,700),Vector2(1650,700)]),PackedVector2Array([Vector2(700,690),Vector2(950,300)]),PackedVector2Array([Vector2(700,690),Vector2(470,920)])]
+ for edge in [Rect2(0,0,1880,200),Rect2(0,200,80,880),Rect2(1800,200,80,880),Rect2(0,970,1880,110)]:
+  if area=="greenfields" and edge.position.y==0:continue
+  if area in ["pinewood","claim"] and edge.position==Vector2(0,200):continue
+  if area=="trail" and edge.position.x==1800:continue
+  world.tile(3,edge,180,Color("bac1ae"))
+ var paths=[PackedVector2Array([Vector2(0,790),Vector2(500,690),Vector2(960,690),Vector2(1650,790)]),PackedVector2Array([Vector2(500,690),Vector2(500,440)]),PackedVector2Array([Vector2(960,690),Vector2(1280,345)])] if area=="claim" else [PackedVector2Array([Vector2(180,650),Vector2(700,690),Vector2(1100,700),Vector2(1650,700)]),PackedVector2Array([Vector2(700,690),Vector2(950,300)]),PackedVector2Array([Vector2(700,690),Vector2(470,920)])]
+ if not roads.roads(area).is_empty():paths=roads.roads(area)
  if not ground_cache.has(area):
   var img=Image.create(940,540,false,Image.FORMAT_RGBA8)
   var noise=FastNoiseLite.new();noise.seed=g.state.seed_value;noise.frequency=.023
   for y in 540:
    for x in 940:
     var p=Vector2(x*2,y*2);var dist=10000.0
-    for path in roads:
+    for path in paths:
      for j in path.size()-1:dist=minf(dist,p.distance_to(Geometry2D.get_closest_point_to_segment(p,path[j],path[j+1])))
     var n=noise.get_noise_2d(p.x,p.y);var grain=HoldTerrainView.grain(x,y)
     if dist<48+n*11:
@@ -743,6 +764,8 @@ func draw_outdoors():
  elif area=="pinewood":
   for i in 9:
    var p=Vector2(170+i*190,250+sin(i)*30);g.draw_texture_rect(FIR,Rect2(p-Vector2(90,210),Vector2(180,230)),false,Color("8ca291"))
+
+ roads.ground()
 
 func scenery(p:Vector2,index:int,width:float):
  var cell=Vector2(ATLAS.get_width()/4.0,ATLAS.get_height()/2.0)

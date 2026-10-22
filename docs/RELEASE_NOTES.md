@@ -1,9 +1,9 @@
-# The Stellar Holds — 0.67.1: Familiar Faces
+# 0.68.0 — Roads & Hearths
 
-Town walks and character creation now retain the corrected character artwork. Historical contact poses could bypass later beard and hairstyle repairs, causing a visible switch between old and modern drawings mid-stride.
+Walk out of Keldrath and follow the roads. Gates, countryside paths, mine arches and ordinary doorways now change areas through movement. G offers directions; it does not select destinations.
 
-Hair pigmentation is calibrated across animation sheets, passing-pose scale is steadier, and the bald-crown and high-ponytail designs have matching complete side-walk sequences. The greatbeard utility crops retain the full figure and boots. Derived artwork caches refresh automatically.
+Stonebridge has a wayside hearth with a bunk, a kitchen and storage, a bridge-crew delivery board, fishing and an Old Workings staging yard. Pinewood keeps your existing trees and timber work, with loan saw/rack facilities and support-timber orders. Greenhearth offers a permanent four-bed allotment for 12 crowns, farmhouse cooking/storage, and produce deliveries. Six local residents keep their approved complete-character appearance as they move about these places.
 
-Character creation now previews standing, walking, working and carrying, with a Turn button. Existing names, appearance choices, saves and gameplay progression are preserved.
+Use your own materials at fixed loan equipment. Field tools, seeds, water, crop growth, harvests, cooking and work experience use the existing systems. Orders pay once per 10 minutes of world time and have no deadline. Claims, excavation, inventories, loaded carts, shoulder loads, character identity and old recovery checkpoints are preserved.
 
-Extract the complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. The first visit after this artwork correction prepares fresh cached frames.
+Extract the complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. This release uses connected scenes and short transitions, not a fully streamed world. Local residents are ambient, not an autonomous production economy. Windows hardware performance/audio and final artistic acceptance remain player testing.

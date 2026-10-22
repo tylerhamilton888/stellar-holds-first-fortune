@@ -31,7 +31,11 @@ static func rug(w,r:Rect2,tint:Color):
  w.g.draw_texture_rect_region(HoldMasonryArt.SURFACES,r,HoldMasonryArt.surface_region(index))
 static func dressing(w,area:String):
  # Rugs group ordinary furniture into useful domestic/work areas; no collision.
- if area=="room:home":
+ if area in ["room:wayfarer","room:greenhearth"]:
+  rug(w,Rect2(210,345,140,220),Color("486c6b"))
+  rug(w,Rect2(470,387,274,122),Color("756344"))
+  rug(w,Rect2(455,540,50,75),Color("526f62"))
+ elif area=="room:home":
   rug(w,Rect2(247,342,95,143),Color("486c6b"))
   rug(w,Rect2(373,368,186,112),Color("58756c"))
   rug(w,Rect2(594,476,174,93),Color("636f64"))

@@ -1,3 +1,10 @@
+# 0.68.0 — Roads & Hearths
+
+- Walk through path edges, mine arches and real doors; optional directions keep control in the world.
+- Stonebridge wayside services and mine staging, Pinewood loan processing, Greenhearth allotments and farm services.
+- Real local deliveries, cooking/storage/rest and canonical local residents.
+- Existing artwork, excavation, saves, resource ownership and earlier releases preserved.
+
 # 0.67.1 — Familiar Faces
 
 - Town contacts inherit current canonical beard/hair corrections instead of old PNG paths.

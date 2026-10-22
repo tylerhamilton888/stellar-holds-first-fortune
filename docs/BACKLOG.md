@@ -1,3 +1,7 @@
+# Roads & Hearths follow-up
+
+Player review: physical crossing readability, countryside density, first-visit preparation time and recurring order prices. Broader regions, cross-region NPC work schedules, autonomous farm/forestry production, seasons and a streamed planet remain future work. Current local residents are ambient, and eastern farm crops are protected scenery. Retain the approved whole-character art and existing player-built sites.
+
 # First-hour player feedback
 
 Test planted axe/pick work, supplied station approaches, lesson clarity and furnishing the starter room. Measure Windows transitions with an existing 0.66 cache and a fresh character. No promise of zero cold-load time: whole painted frames still need initial preparation. Full brewing, new animation redraws and additional progression systems remain separate tasks.

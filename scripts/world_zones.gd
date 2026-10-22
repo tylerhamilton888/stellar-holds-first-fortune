@@ -247,6 +247,7 @@ func room_objects(area_id:String="")->Array:
  elif id=="home":result=[furn("table",650,330),furn("bed",290,420),furn("desk",735,515),furn("hearth",440,335)]
  for x in [220,740]:result.append(furn("lamp",x,305))
  result.append_array(HoldRoomLayout.objects(self,area_id))
+ result.append_array(s.roads.furnishings(area_id))
  return result
 func furn(kind:String,x:float,y:float)->Dictionary:return {"kind":"furnishing","furnishing":{"table":"tea_table","counter":"serving_counter"}.get(kind,kind),"p":Vector2(x,y)}
 func room_obstacles(area_id:String="")->Array:
@@ -277,7 +278,7 @@ func draw_furnishing(o:Dictionary):
 func draw_room_floor():
  g.draw_rect(Rect2(Vector2.ZERO,s.size()),Color("182a30"))
  var floor_area=HoldRoomLayout.floor_rect(s.area);var exit_point=HoldRoomLayout.exit_point(s.area)
- var warm=g.room_id in ["home","tavern","commission"] or HoldNeighborhood.is_home(s.area)
+ var warm=g.room_id in ["home","tavern","commission","wayfarer","greenhearth"] or HoldNeighborhood.is_home(s.area)
  tile(1 if warm else 0,floor_area,110,Color("ddd4bb") if warm else Color("cbd1c5"))
  # Load-bearing walls and a single south doorway share the collision envelope.
  for x in range(150,int(floor_area.end.x+10),55):
@@ -342,7 +343,7 @@ func exterior_objects()->Array:
  return []
 
 func speech_overlay():
- if speech=="" or g.clock>speech_until or (not ward(s.area) and not s.room()) or g.panel_id!="":return
+ if speech=="" or g.clock>speech_until or g.panel_id!="":return
  var lines=PackedStringArray();var line=""
  for word in speech.split(" "):
   if (line+word).length()>52:lines.append(line);line=""

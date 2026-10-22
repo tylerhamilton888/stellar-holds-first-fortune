@@ -27,12 +27,14 @@ var sparks:Array=[]
 var messages:Array=[]
 var stair_work=0.0
 var passage_kind="stair"
+var arrival_up_held=false
 func _init(game):g=game
 func ensure():
  if world==null or site!=g.state.active_site or not is_same(world.data,g.state.deepworks.get(g.state.active_site,{})):
   site=g.state.active_site;world=Deepworks.new(g.state);haul=DeepHaul.new(g.state,world);works=LivingPlay.new(g,world)
 func enter(resume:bool=false):
  ensure()
+ arrival_up_held=not resume and Input.is_action_pressed("up")
  if not resume:haul.park();world.data.depth=0;world.data.position=[Deepworks.center(Deepworks.ENTRY).x,Deepworks.center(Deepworks.ENTRY).y]
  works.cancel()
  g.player=Vector2(world.data.position[0],world.data.position[1]);g.grounded=true
@@ -138,9 +140,12 @@ func crew_entry(agent:Dictionary)->Dictionary:
  ensure()
  if not world.data.crew.has(agent.id):world.data.crew[agent.id]={"depth":0,"assigned":0,"x":Deepworks.center(Deepworks.ENTRY).x,"y":Deepworks.center(Deepworks.ENTRY).y}
  return world.data.crew[agent.id]
+func poll_arrival_input():
+ if not Input.is_action_pressed("up"):arrival_up_held=false
 func move(dt:float):
  if g.handworks.approaching:return
  ensure();var axis=Input.get_vector("left","right","up","down")
+ if not Input.is_action_pressed("up") or g.player.distance_to(Deepworks.center(Deepworks.ENTRY))>90:arrival_up_held=false
  if axis!=Vector2.ZERO and strike_left>0 and works.pending.is_empty():strike_left=0;contact_hold=0
  if axis!=Vector2.ZERO and not g.combat.armed:g.surface.direction=axis
  g.velocity=Vector2.ZERO if strike_left>0 and not g.combat.armed else g.fight.movement(axis);var old=g.player
@@ -150,10 +155,19 @@ func move(dt:float):
   if not world.solid(next):g.player=next
   next=g.player+Vector2(0,step.y)
   if not world.solid(next):g.player=next
+ # The cave's north exit faces the same input as its outdoor arch. Continuing
+ # that entry key must not immediately undo the crossing; release to return.
+ if arrival_up_held and world.depth()==0 and absf(g.player.x-Deepworks.center(Deepworks.ENTRY).x)<35:g.player.y=maxf(300,g.player.y)
  g.grounded=true;g.walking_pose=g.player.distance_to(old)>.01
  if absf(axis.x)>.05:g.face=1 if axis.x>0 else -1
  if g.walking_pose:
   HoldDrawnLocomotion.advance(g,g.player.distance_to(old),"stone")
+ if world.depth()==0 and old.y>=300 and g.player.y<300 and absf(g.player.x-Deepworks.center(Deepworks.ENTRY).x)<35:
+  unload();haul.park()
+  if g.state.active_site=="hold":g.surface.enter("trail",Vector2(950,355))
+  else:g.surface.enter("claim",Vector2(1280,400))
+  g.surface.roads.hold_return("mine")
+  g.transition_left=.18;g.surface.roads.portal_cooldown=.35;return
  if stair_work>0:
   if g.walking_pose:stair_work=0;g.notify("Passage work cancelled. Stand still to finish.")
   else:
@@ -475,7 +489,7 @@ func draw():
    g.draw_line(tread.position+Vector2(0,9),tread.end,Color("b2b5a6"),1)
   lamp(entry+Vector2(-58,0));lamp(entry+Vector2(58,0))
   draw_worksite(entry)
-  if world.entrance(g.player):A.text(g,entry+Vector2(-5,-55),"E",12,Color("edcd8a"))
+  if world.entrance(g.player):A.text(g,entry+Vector2(-5,-55),"Walk north · surface",12,Color("edcd8a"))
  works.draw()
  draw_haulage()
  var actors:Array=[]

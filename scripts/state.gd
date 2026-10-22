@@ -200,6 +200,11 @@ func load_world(geo:Geology)->Dictionary:
   var backup=save_path()+".pre-labor-51-"+str(Time.get_ticks_usec())+".bak"
   while FileAccess.file_exists(backup):backup+=".bak"
   if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
+ # New connected-area IDs are unknown to older executables: retain exact prior bytes.
+ if not d.get("surface",{}).has("roads"):
+  var backup=save_path()+".pre-roads-75-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  surface=d.get("surface",{})
  deepworks=d.get("deepworks",{})
  hauling=d.get("hauling",{})
