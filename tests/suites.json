@@ -118,6 +118,9 @@
       "handworks",
       "loading",
       "polish"
+    ],
+    "mining-only": [
+      "mining"
     ]
   },
   "cases": {

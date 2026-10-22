@@ -1,0 +1,58 @@
+[
+  {
+    "test": "firstshift",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 19,
+    "seconds": 54.8
+  },
+  {
+    "test": "orientation",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 61.47
+  },
+  {
+    "test": "firsthour",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 18,
+    "seconds": 43.66
+  },
+  {
+    "test": "handworks",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 32,
+    "seconds": 54.54
+  },
+  {
+    "test": "loading",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 19,
+    "seconds": 67.62
+  },
+  {
+    "test": "polish",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 75,
+    "seconds": 60.15
+  },
+  {
+    "test": "mining",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 38,
+    "seconds": 62.52
+  }
+]
