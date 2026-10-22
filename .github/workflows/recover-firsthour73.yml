@@ -1,0 +1,96 @@
+name: Recover verified 0.66 source snapshot
+on:
+  push:
+    branches: ['recovery/export-firsthour73']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 94b2b2e1edb34e6766e6c4e0b677947105456498
+      - name: Archive exact verified source
+        run: |
+          mkdir -p "$RUNNER_TEMP/recovery"
+          git archive --format=tar HEAD | gzip -1 | split -b 300M -d - "$RUNNER_TEMP/recovery/source.part-"
+          cd "$RUNNER_TEMP/recovery"
+          sha256sum source.part-* > SHA256SUMS
+          cat SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-00
+          path: ${{ runner.temp }}/recovery/source.part-00
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-01
+          path: ${{ runner.temp }}/recovery/source.part-01
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-02
+          path: ${{ runner.temp }}/recovery/source.part-02
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-03
+          path: ${{ runner.temp }}/recovery/source.part-03
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-04
+          path: ${{ runner.temp }}/recovery/source.part-04
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-05
+          path: ${{ runner.temp }}/recovery/source.part-05
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-06
+          path: ${{ runner.temp }}/recovery/source.part-06
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-07
+          path: ${{ runner.temp }}/recovery/source.part-07
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-08
+          path: ${{ runner.temp }}/recovery/source.part-08
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-09
+          path: ${{ runner.temp }}/recovery/source.part-09
+          if-no-files-found: ignore
+          retention-days: 7
+          compression-level: 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source73-checksums
+          path: ${{ runner.temp }}/recovery/SHA256SUMS
+          retention-days: 7
