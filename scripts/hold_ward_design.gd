@@ -113,6 +113,20 @@ static func boundary(w):
   for y in [400,640,880]:
    g.draw_rect(Rect2(x-7,y-5,14,10),Color("b99a61"))
    g.draw_line(Vector2(x-4,y),Vector2(x+4,y),Color("4b5b59"),2)
+static func mountain(w):
+ # Painted bedrock abutments continue beyond the camera. The inhabited terraces
+ # are carved into these masses; open shafts still reveal the distant works.
+ var g=w.g
+ for side in [0,1]:
+  var edge=80.0 if side==0 else 1800.0
+  var x=-190.0 if side==0 else 1780.0
+  for i in 5:
+   var y=130+i*310
+   var rect=Rect2(x,y,290,330)
+   if not rect.intersects(Rect2(w.view_camera(),Vector2(960,540))):continue
+   g.draw_texture_rect_region(HoldMasonryArt.SURFACES,rect,HoldMasonryArt.surface_region(0),Color("a7b0a8"))
+   HoldMasonryArt.wall(g,Rect2(edge-22,y+250,44,90))
+ HoldMasonryArt.wall(g,Rect2(80,145,1720,65))
 static func frontage(w,b:Dictionary):
  var g=w.g;var p=b.p
  if b.has("home"):

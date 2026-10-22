@@ -141,6 +141,7 @@ func draw_citizen(c:Dictionary):
  HoldDrawnAnimation.paint(g,c.p-cam,c.profile,c.aim,c.walking,c.gait,.85,-cam,c.get("pose","town_walk"),c.get("phase",0.0))
  g.draw_set_transform(-cam)
 func draw_ground():
+ HoldWardDesign.mountain(self)
  tile(0,Rect2(80,180,1720,840),100,Color("aab5ae") if current_area()=="forgeward" else Color("d3d4bd"))
  if current_area()=="crownward":g.draw_texture_rect(VAULT,Rect2(45,-365,1790,597),false)
  else:
@@ -207,9 +208,10 @@ func image_at(tex:Texture2D,source:Rect2,anchor:Vector2,p:Vector2,width:float,fa
  g.draw_texture_rect_region(tex,rect,source,Color(1,1,1,alpha))
 func draw_building(b:Dictionary):
  if ward(current_area()):
+  HoldMasonryArt.building_volume(self,b)
   if b.get("id",-1)==15:HoldMasonryArt.wing(g,Rect2(b.p-Vector2(310,230),Vector2(620,230)))
   var i={0:0,1:1,2:2,3:3,4:4,5:5,6:5,7:3}[b.art]
-  image_at(FACADES,FACADE_RECTS[i],FACADE_DOORS[i],b.p,b.width,true)
+  image_at(FACADES,FACADE_RECTS[i],FACADE_DOORS[i],b.p,b.width,false)
   HoldWardDesign.frontage(self,b);return
  if b.art>=6:
   var r=Rect2(0,110,710,710) if b.art==6 else Rect2(735,140,795,675)
@@ -283,6 +285,7 @@ func draw_room_floor():
   g.draw_style_box(stone_style(Color("a1a38b")),Rect2(x,204,54,15))
  for x in [150,floor_area.end.x-10]:g.draw_style_box(stone_style(Color("68766f")),Rect2(x,260,20,floor_area.size.y))
  for r in [Rect2(160,floor_area.end.y-10,280,18),Rect2(520,floor_area.end.y-10,floor_area.end.x-520,18)]:g.draw_style_box(stone_style(Color("9ca18c")),r)
+ HoldRoomLayout.dressing(self,s.area)
  HoldCivicArt.exit_floor(g,s.area)
 
  if HoldNeighborhood.is_home(s.area):
@@ -368,7 +371,7 @@ func draw_neighbors():
   draw_ground()
   var neighbors=routines.people(id,g.state.elapsed).filter(func(c):return not HoldTerraces.on_stair(id,c.p))
   var objects=buildings()+landmarks()+street_furnishings()+neighbors
-  objects.sort_custom(func(a,b):return a.p.y<b.p.y)
+  objects.sort_custom(func(a,b):return (building_footprint(a).end.y if a.kind=="building" else a.p.y)<(building_footprint(b).end.y if b.kind=="building" else b.p.y))
   for o in objects:
    g.draw_set_transform(offset-g.camera.round())
    if o.kind=="building":draw_building(o)

@@ -1,3 +1,7 @@
+# Hearth & Stone playtest
+
+Walk sideways with free hands, pickaxe selected and stone carried. Compare both directions and stop/start transitions. Walk along the front and around each building; the wall should remain solid while your Dwarf stays visible outside it. Inspect roof mass and the rock around the ward edges. Visit quarters, tavern, exchange and offices; test bedside rest, writing desk, hosts and exits. Cross Great Stairs and residential bridges. Open I, search for stone, switch Pack/Gear/Skills/Journal, learn or inspect a technique, and close with Esc. Save and reload the same fortune.
+
 # Work & Knowledge source playtest
 
 Open Disciplines with **Y** (also Pack, Pause or Survey Office). Try each left-hand tab and scroll its techniques. Learn a ready technique; locked ones must say what is missing. Research a method and check the normal workshop/building recipe becomes available. Confirm tabs and controls remain accessible with Tab/Enter and Escape closes normally.

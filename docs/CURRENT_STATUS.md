@@ -1,3 +1,11 @@
+# 0.66.0 — Hearth & Stone candidate
+
+Local baseline pre-polish72 preserves b8859ccd38b86adc099fdb37af0e85c3e0115514; verified recovery/pre-polish72.bundle requires pre-disciplines71. GitHub recovery/pre-polish72 preserves e9ce5175679b5295fe1e9ab79b8c6396fa4a1ad4. Earlier releases remain untouched. Work branch polish/hold72.
+
+Player and resident free-hand side walking now share the complete passing drawings. Distance-driven stride is 57.2 units per cycle (formerly 78), retaining movement speed, tools and whole painted actors. Building draw order follows the physical front edge so a player outside the wall remains visible. Painted slate roofs, side masonry and rear coping show the existing full collision envelope; mountain bedrock anchors the outer boundaries. Rooms retain their dimensions and saved placements, gaining grouped seating, shelves, lighting and original woven rugs.
+
+Menus have consistent selected peer tabs including Skills, shallow peer navigation, ordinary Back for nested screens, pack search, keyboard-following scroll and explicit personal-menu pause behavior. Art provenance and exact prompt: assets/hold-kit72/README.md. Native targeted suite passed 311 checks, including all wards, representative interiors, escort, resident routes, stairs, held equipment, menus, disciplines and reload. Visuals inspected at gameplay scale. Exact export and hosted publication still pending; v0.65.0 remains the published release until separately verified.
+
 # 0.65.0 — Work & Knowledge: published and verified
 
 The complete Windows ZIP is published at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.65.0. Uploaded size 705,326,179 bytes and SHA-256 f6899cf79ba4696720bbe74734fdba052efb4cdcdbfc4a94c49d369eb01b815f match the clean hosted build report. Tag v0.65.0 points to release source 29f73c9ea10630503df56e5c79822e4788f70f44. Runtime PR #13 merged at 29099653e6566003cbf8ee93bc4fbcfc2e28462f with the identical verified tree.

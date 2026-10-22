@@ -9,7 +9,7 @@ func run():
    var profile=HoldAppearance.defaults();profile.gender=gender;profile.sculpt=sculpt
    var player=HoldWholeFrames.descriptor(profile,Vector2.RIGHT,true,.14,"",0)
    var citizen=HoldWholeFrames.descriptor(profile,Vector2.RIGHT,true,.14,"town_walk",0)
-   check(player.sheet.ends_with("-core") and citizen.sheet.ends_with("-town") and player.frame==citizen.frame,"NPC passing pose is isolated from player art: %s/%s"%[gender,sculpt])
+   check(player.sheet.ends_with("-town") and citizen.sheet==player.sheet and player.frame==citizen.frame,"Player and citizen share complete passing poses: %s/%s"%[gender,sculpt])
  for ward in HoldWorldZones.WARDS:
   s.enter(ward);settle()
   var solid=true

@@ -1140,7 +1140,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- if id in ["disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
+ menu_paused=id in ["inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1254,23 +1254,27 @@ func open_panel(id:String,remember:bool=true):
  elif id=="conversation":panel.set_deferred("size",Vector2(840,452))
 
 func inventory_panel():
- small_button(panel_body,"Disciplines · Y",func():open_panel("disciplines"))
  var top=row(panel_body)
  label(top,"%d crowns  •  Carried supplies" % state.money,18,Color("edc98a"))
  small_button(top,"Show all resources" if inventory_owned_only else "Show carried resources",func():inventory_owned_only=not inventory_owned_only;refresh_panel())
- label(panel_body,"Your pack supplies crafting and trading. Chest contents stay where you put them; withdraw before use. Underground buckets and marked stockpiles remain separate.",16)
+ var search=LineEdit.new();search.placeholder_text="Search your pack…";search.clear_button_enabled=true;search.custom_minimum_size.y=34;panel_body.add_child(search)
+ label(panel_body,"Carried materials supply crafting and trade. Chest and stockpile contents stay on site.",16,Color("b4c9c4"))
  var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",10);grid.add_theme_constant_override("v_separation",8);panel_body.add_child(grid)
- var count=0
+ var count=0;var cards=[]
  for k in HoldData.ITEMS:
   if inventory_owned_only and state.count(k)==0:continue
   count+=1
   var card=section(grid,"");card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  cards.append({"node":card.get_parent(),"name":str(HoldData.ITEMS[k].name).to_lower()})
   var r=row(card);HoldItemArt.icon(r,k);label(r,HoldData.ITEMS[k].name,16)
   var bind=OptionButton.new();bind.add_item("Pin to bar…")
   for slot in range(5,10):bind.add_item("Slot "+str((slot+1)%10))
   r.add_child(bind);bind.item_selected.connect(func(index):
    if index>0:hotbar.assign(k,index+4);bind.select(0))
   var amount=label(r,str(state.count(k)),18,Color("edc98a"));amount.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;amount.size_flags_horizontal=0;amount.custom_minimum_size.x=38
+ search.text_changed.connect(func(query):
+  for card in cards:card.node.visible=query.strip_edges().to_lower() in card.name
+  menu_scroll.scroll_vertical=0)
  if count==0:label(panel_body,"Your pack is empty. Dig loose earth or stone to gather your first materials.",16)
  label(panel_body,"1 Pickaxe  •  2 Shovel  •  3 Axe  •  4 Hammer
 5 Slagcaster (when unlocked) • 6–0 pinned supplies. Click a slot or press its number.

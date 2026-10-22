@@ -16,8 +16,29 @@ static func camera(area:String,p:Vector2)->Vector2:
  target.y=maxf(target.y,lerpf(115,max_y,clampf((p.y-(r.end.y-220))/110.0,0,1)))
  return target.clamp(Vector2(0,115),Vector2(380 if area=="room:forge" else 0,max_y))
 static func objects(w,area:String)->Array:
+ if area=="room:home":return [w.furn("bookcase",245,325),w.furn("bookcase",735,335),w.furn("chair",399,420),w.furn("chair",529,420),w.furn("tea_table",464,440),w.furn("chair",650,366),w.furn("bookcase",625,530),w.furn("lamp",690,505)]
+ if area=="room:tavern":return [w.furn("counter",735,450),w.furn("bookcase",560,330),w.furn("bookcase",635,330),w.furn("chair",317,540),w.furn("chair",487,540),w.furn("chair",657,540),w.furn("tea_table",270,410),w.furn("chair",222,425),w.furn("chair",318,425),w.furn("lamp",735,575)]
+ if area=="room:market":return [w.furn("counter",515,390),w.furn("bookcase",365,335),w.furn("bookcase",645,335),w.furn("worktable",285,510),w.furn("tea_table",700,530),w.furn("chair",747,550),w.furn("lamp",225,570)]
+ if area in ["room:commission","room:research"]:return [w.furn("bookcase",420,345),w.furn("bookcase",735,345),w.furn("tea_table",310,520),w.furn("chair",263,540),w.furn("chair",357,540),w.furn("lamp",735,510),w.furn("bookcase",735,575)]
  if area!="room:forge":return []
  return [w.furn("hearth",1010,355),w.furn("worktable",970,550),w.furn("worktable",970,755),w.furn("worktable",680,755),w.furn("chest",1080,485),w.furn("chest",1080,735),w.furn("lamp",1140,320),w.furn("lamp",1140,850),w.furn("bookcase",780,335)]
 static func obstacles(area:String)->Array:
  if area!="room:forge":return []
  return [HoldFurnishings.footprint("stone_pillar",Vector2(800,578)),HoldFurnishings.footprint("stone_pillar",Vector2(800,823))]
+
+static func rug(w,r:Rect2,tint:Color):
+ var index=3 if tint.r>tint.g else 2
+ w.g.draw_texture_rect_region(HoldMasonryArt.SURFACES,r,HoldMasonryArt.surface_region(index))
+static func dressing(w,area:String):
+ # Rugs group ordinary furniture into useful domestic/work areas; no collision.
+ if area=="room:home":
+  rug(w,Rect2(247,342,95,143),Color("486c6b"))
+  rug(w,Rect2(373,368,186,112),Color("58756c"))
+  rug(w,Rect2(594,476,174,93),Color("636f64"))
+ elif area=="room:tavern":
+  rug(w,Rect2(205,467,475,105),Color("756344"))
+  rug(w,Rect2(211,371,120,79),Color("526f62"))
+ elif area in ["room:commission","room:research"]:
+  rug(w,Rect2(232,476,155,98),Color("526c69"))
+  rug(w,Rect2(565,336,120,105),Color("626c58"))
+ elif area=="room:market":rug(w,Rect2(648,483,120,92),Color("746346"))

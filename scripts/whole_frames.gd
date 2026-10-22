@@ -37,7 +37,7 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  var view=HoldDirectional.view(d);var key=posmod(int(time/CYCLE*4),4)
  var sheet=identity(p)+"-core";var index=view
  if walking:index=4+view*4+([0,1,2,1][key] if view==2 else key)
- if walking and action=="town_walk" and view==1:sheet=identity(p)+"-town"
+ if walking and action in ["","town_walk"] and view==1:sheet=identity(p)+"-town"
  if action in ["pick","axe","hammer"]:
   index={"pick":20,"axe":24,"hammer":28}[action]+contact_frame(phase);view=1
   if action=="pick" and absf(d.y)>absf(d.x)*1.35:
@@ -172,7 +172,7 @@ static func prepare(g:Node):
  var queued={}
  for entry in people:
   var p=HoldAppearance.normalized(entry.profile)
-  for kind in (["core","utility","handling","equipped","motion"] if entry.player else ["core","utility","town"]):
+  for kind in (["core","town","utility","handling","equipped","motion"] if entry.player else ["core","utility","town"]):
    var sheet=identity(p)+"-"+kind
    if not metadata.has(sheet):continue
    if kind=="equipped" and metadata.has(identity(p)+"-motion"):continue

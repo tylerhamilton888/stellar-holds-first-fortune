@@ -22,7 +22,7 @@ static func bounds(sheet:String,index:int)->Rect2i:
  var r=metadata[sheet][index];return Rect2i(r[0],r[1],r[2],r[3])
 static func phase(time:float)->float:return fposmod(time/CYCLE,1)
 static func frame(time:float)->int:return mini(3,int(phase(time)*4))
-static func time_for_distance(distance:float)->float:return distance/150.0
+static func time_for_distance(distance:float)->float:return distance/110.0
 static func advance(g:Node,distance:float,material:String):
  if distance<=.01:return
  var before=int(g.gait_clock/(CYCLE*.5));g.gait_clock+=time_for_distance(distance)
