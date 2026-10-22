@@ -1,0 +1,9 @@
+{
+  "test": "appearance",
+  "passed": true,
+  "checks": 64,
+  "pack_sha256": "a2cb5d732288610dd44ccc9af3c0e40e07ac238237284830e359b84269b53c01",
+  "source_commit": "c14821a31026ec601bfc74512dd3bcc8f78c967b",
+  "source_tree": "96510cc5e2023b03aa82011e17e919fba9a720fd",
+  "environment": "Godot 4.4.1 native Linux, software renderer, exported Windows PCK, isolated save and working directory"
+}
