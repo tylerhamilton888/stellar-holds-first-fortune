@@ -51,3 +51,9 @@ The foundation pass does not alter mining balance, movement, economy or save sch
 ## Discipline progression owner
 
 `scripts/disciplines.gd` contains stable path/node IDs, migration, eligibility, completed-work credit and recipe modifiers. `scripts/discipline_view.gd` is presentation and explicit learn/research actions only. Adding a path requires a definition, an actual completed-work event, an implemented effect and a behavioral test; never advertise a placeholder as a usable unlock. Keep technology in state.tech and appointments in ancestral_claim. No new top-level save field is needed. Do not remove legacy hauling counters while existing mechanics consume them. Unlocks do not spend experience or impose new locks on previously usable features.
+
+## Derived animation cache
+
+Whole-frame textures use `HoldWholeFrames.CACHE_REVISION`, independent of the game release number. Bump it whenever source artwork, crop metadata or palette conversion changes. The 0.66 fallback is deliberately gated to its compatible artwork revision; it must not be reused for a new revision. These files are derived artwork, never player saves. Room preparation includes current local residents; outdoor preparation retains the adjoining-ward cast.
+
+Starter-quarter plans live in `HoldQuarters` and reuse `HoldFurnishings` costs/art/footprints plus existing `surface.decor`, `surface.chests` and additive `surface.facts`. Keep fixed hold furniture protected and preserve the doorway aisle and service approaches.

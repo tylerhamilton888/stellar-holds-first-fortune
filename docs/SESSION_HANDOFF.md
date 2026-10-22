@@ -4,7 +4,7 @@ Four-part first-hour refinement: physical work and outdoor equipment collision; 
 
 Recovery: GitHub recovery/pre-firsthour73 preserves 94b2b2e1edb34e6766e6c4e0b677947105456498. Local pre-firsthour73 preserves the exact source tree 9fd4c99920fb94f43dafd7f0e67d2800d0ddaf58, restored from verified source archive chunks. Prior releases remain untouched. Work branch polish/firsthour73.
 
-Native targeted verification passed 221 checks, and the clean local Windows package passed 333 checks across nine cases plus its 3,201-entry integrity audit. Local package recovery is verified-firsthour73-pack, incremental from pre-firsthour73. Hosted verification/publication remain pending; 0.66.0 remains the published build until delivery verification. See testing/firsthour73.md. Windows hardware performance and audio require player-device testing.
+Native targeted verification passed 401 checks; the clean local Windows package passed 333 checks across nine cases and its 3,201-entry integrity audit. Hosted source run 39795166172 passed all 640 checks across eighteen cases. PR #17 head e94f475ca66d363149a89a776728833fa4e2b496 has tree 5716fad4574e715b134f36b733f9ae19307f3d12, matching the local verified source. Release run 39795998750 attempt 2 is retrying after its first attempt exhausted the wait for GitHub’s final source status. Publication and main merge remain pending; automatic approval review requires hosted exact-package completion before merging. Source recovery: verified-firsthour73-source; prior checkpoints remain intact. 0.66.0 remains the published build until delivery verification. See testing/firsthour73.md. Windows hardware performance and audio require player-device testing.
 
 # 0.66.0 — Hearth & Stone: published and verified
 
