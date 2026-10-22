@@ -1,4 +1,4 @@
-# 0.65.0 — Work & Knowledge (source candidate)
+# 0.65.0 — Work & Knowledge
 
 Thirteen discipline tabs are integrated into the existing game. Open with Y, the inventory, pause menu or Survey Office. Y deliberately leaves underground U unloading and T crew assignment intact. The menu pauses play, keeps its discipline tabs separate from the scrolling details, supports keyboard focus and uses thirteen original vector emblems. Each technique displays its effect, work threshold, research and prerequisite. Learning retains lifetime experience; there is no universal spendable XP currency.
 

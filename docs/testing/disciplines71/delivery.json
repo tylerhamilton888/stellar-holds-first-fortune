@@ -1,0 +1,21 @@
+{
+  "release": "v0.65.0",
+  "source": "29f73c9ea10630503df56e5c79822e4788f70f44",
+  "run": 39696891128,
+  "job": 119556345097,
+  "conclusion": "success",
+  "zip_bytes": 705326179,
+  "zip_sha256": "f6899cf79ba4696720bbe74734fdba052efb4cdcdbfc4a94c49d369eb01b815f",
+  "asset_digest_matches": true,
+  "tag_matches": true,
+  "pack_cases": [
+    "ambient",
+    "continuity",
+    "living",
+    "civic",
+    "firstshift",
+    "ancestral",
+    "disciplines"
+  ],
+  "limitations": "Native Linux visual and exact-package gameplay verification; Windows hardware performance/audio require player testing."
+}
