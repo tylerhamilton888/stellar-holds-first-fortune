@@ -1,4 +1,12 @@
-# 0.65.0 — Work & Knowledge (source candidate)
+# 0.65.0 — Work & Knowledge: published and verified
+
+The complete Windows ZIP is published at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.65.0. Uploaded size 705,326,179 bytes and SHA-256 f6899cf79ba4696720bbe74734fdba052efb4cdcdbfc4a94c49d369eb01b815f match the clean hosted build report. Tag v0.65.0 points to release source 29f73c9ea10630503df56e5c79822e4788f70f44. Runtime PR #13 merged at 29099653e6566003cbf8ee93bc4fbcfc2e28462f with the identical verified tree.
+
+Full hosted source validation 39696445457 passed import and all sixteen gameplay cases. Release run 39696891128 passed the 3,197-entry package audit and all seven exact-export cases. Local verification passed 193 targeted source checks and 240 exact-package checks, with native menu visual review. See testing/disciplines71 for evidence. Windows hardware performance/audio and player acceptance remain device testing.
+
+Continue from GitHub main. Final local checkpoint verified-disciplines71-delivery has a separately verified incremental bundle requiring pre-disciplines71; earlier bundles and releases remain intact. The release tag preserves complete delivered source. Next: player feedback on work pacing, unlock clarity and menu navigation; future dedicated Brewing production and deeper branches remain scoped follow-up work.
+
+# Implemented progression
 
 Thirteen discipline tabs are integrated into the existing game. Open with Y, the inventory, pause menu or Survey Office. Y deliberately leaves underground U unloading and T crew assignment intact. The menu pauses play, keeps its discipline tabs separate from the scrolling details, supports keyboard focus and uses thirteen original vector emblems. Each technique displays its effect, work threshold, research and prerequisite. Learning retains lifetime experience; there is no universal spendable XP currency.
 
@@ -6,7 +14,7 @@ Twelve paths have live work sources; Brewing is explicitly reserved for a future
 
 HoldDisciplines owns definitions, eligibility, one-time migration and saved progress in hauling.disciplines. Completed-work hooks stay in gameplay owners. Legacy Miner/Mason/Forester/Smith counters and automatic hauling unlocks remain; the historically combined forestry counter seeds both Forestry and Woodworking once. Existing harvests, catches, cleared threats and crew counts receive credit. New sawing awards Woodworking separately from felling. Overseer mastery is separate from civic appointment and grants no communal stock permission.
 
-Pre-edit local tag/bundle pre-disciplines71 preserves e5759a89376a3d1e08fe0c5c5ef616ca264d37c4 (bundle requires pre-ancestral70). GitHub recovery/pre-disciplines71 preserves remote main 87cc8846a8681e044230ed2853680041927aa072. Old releases and backups remain intact. Read testing/disciplines71.md for verification status. The published Windows release remains v0.64.0 until separately verified and published.
+Pre-edit local tag/bundle pre-disciplines71 preserves e5759a89376a3d1e08fe0c5c5ef616ca264d37c4 (bundle requires pre-ancestral70). GitHub recovery/pre-disciplines71 preserves remote main 87cc8846a8681e044230ed2853680041927aa072. Old releases and backups remain intact. Read testing/disciplines71.md for verification status. The published Windows release is v0.65.0.
 
 # 0.64.0 — Published and verified
 

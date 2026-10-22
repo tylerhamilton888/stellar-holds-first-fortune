@@ -31,7 +31,7 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
-The Hold of Three Hearths combines Keldrath refinement, a practical first-shift mine lesson and The Stone Remembers: rescue, ancestral research, Overseer appointment and investiture as Thane. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [verification record](docs/testing/ancestral70.md) and [personal progression proposal](docs/PROGRESSION_NEXT.md). The next source milestone adds [discipline progression](docs/PROGRESSION_NEXT.md), with [verification and limits](docs/testing/disciplines71.md). The published download remains 0.64.0 until a new release is verified.
+Work & Knowledge (0.65.0) adds thirteen illustrated discipline tabs, twelve active paths, thirteen optional techniques and the eight established research methods. Press **Y** to browse. Brewing is reserved for its future production loop. Existing saves and earned abilities are preserved. Keldrath, the first-shift lesson and ancestral Overseer-to-Thane quest remain integrated. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [progression architecture](docs/PROGRESSION_NEXT.md) and [verification record](docs/testing/disciplines71.md).
 
 ## Project map
 
