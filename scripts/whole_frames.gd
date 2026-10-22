@@ -3,6 +3,8 @@ extends RefCounted
 # A single whole painted figure per key, including head, limbs and gripping hands.
 const HEIGHT=62.0
 const CYCLE=.52
+# Bump only when whole-frame artwork, crops or palette conversion change.
+const CACHE_REVISION="whole58-motion59-town66-palette1"
 static var metadata:Dictionary={}
 static var sources:Dictionary={}
 static var cache:Dictionary={}
@@ -11,11 +13,11 @@ static var warm_jobs:Array=[]
 static var warm_total=0
 static var disk_hits=0
 static var cache_directory=""
-# Release-scoped derived textures: never save data. Changing artwork or palette
-# code requires a version bump, just like a shipping build.
+# Derived textures are not save data. Bump CACHE_REVISION for changed artwork,
+# crop metadata or palette logic; ordinary releases retain compatible frames.
 static func disk_path(key:String)->String:
  if cache_directory=="":
-  cache_directory="user://animation-cache/"+HoldBuild.VERSION
+  cache_directory="user://animation-cache/"+CACHE_REVISION
   DirAccess.make_dir_recursive_absolute(cache_directory)
  return cache_directory+"/"+key.sha256_text()+".png"
 static func progress()->float:
@@ -85,9 +87,12 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
  if cache.has(key):return cache[key]
  if not full:
   var path=disk_path(key)
-  if FileAccess.file_exists(path):
+  var cached_path=path
+  if CACHE_REVISION=="whole58-motion59-town66-palette1" and not FileAccess.file_exists(cached_path):cached_path="user://animation-cache/0.66.0/"+key.sha256_text()+".png"
+  if FileAccess.file_exists(cached_path):
    var ready=Image.new()
-   if ready.load(path)==OK and not ready.is_empty():
+   if ready.load(cached_path)==OK and not ready.is_empty():
+    if cached_path!=path:DirAccess.copy_absolute(cached_path,path)
     var saved=ImageTexture.create_from_image(ready);remember(key,saved);disk_hits+=1;return saved
  var m=metadata[sheet][index];var r=m.rect;var img=source(m.get("source",sheet)).get_region(Rect2i(r[0],r[1],r[2],r[3]))
  # Atlas extraction removes neighboring figures' disconnected fragments, never
@@ -166,7 +171,10 @@ static func prepare(g:Node):
    for id in HoldNpcPresence.tavern_guests(g.state):people.append({"profile":g.state.npc(id),"player":false})
  if g.surface.active() and (HoldWorldZones.ward(g.surface.area) or g.surface.room()):
   g.surface.world.routines.ensure()
-  for plan in g.surface.world.routines.plans:people.append({"profile":plan.person.profile,"player":false,"walk_only":plan.index!=0})
+  if g.surface.room():
+   for person in g.surface.world.routines.people(g.surface.area,g.state.elapsed):people.append({"profile":person.profile,"player":false,"walk_only":true,"drink":true})
+  else:
+   for plan in g.surface.world.routines.plans:people.append({"profile":plan.person.profile,"player":false,"walk_only":plan.index!=0})
  for a in g.agents:
   if a.type=="worker":people.append({"profile":g.state.npc(a.id),"player":false})
  var queued={}
@@ -180,7 +188,7 @@ static func prepare(g:Node):
     if kind=="town" and index not in range(8,12):continue
     if entry.get("walk_only",false) and kind=="core" and index>=20:continue
     if kind=="handling" and metadata.has(identity(p)+"-motion") and index<40 and index not in range(8,16):continue
-    if not entry.player and kind=="utility" and index not in range(8,12):continue
+    if not entry.player and kind=="utility" and ((entry.get("walk_only",false) and not entry.get("drink",false)) or index not in range(8,12)):continue
     var key=cache_key(p,sheet,index)
     if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index]);queued[key]=true
  warm_total=warm_jobs.size()

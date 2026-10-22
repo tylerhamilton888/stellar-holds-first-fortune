@@ -147,7 +147,7 @@ func equipment_solid(p:Vector2,z:int=-1)->bool:
  var context="mine:"+state.active_site+":"+str(depth() if z<0 else z)
  for f in state.hauling.get("hands",{}).get("facilities",[]):
   if f.get("area","")!=context or f.get("hitched",false):continue
-  if Rect2(Vector2(f.x,f.y)-Vector2(30,12),Vector2(60,16)).grow(10).has_point(p):return true
+  if HoldHandworks.footprint(f).grow(10).has_point(p):return true
  return false
 func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or landmark_solid(p,z) or equipment_solid(p,z)
 func clear_step(a:Vector2,b:Vector2,z:int=-1)->bool:

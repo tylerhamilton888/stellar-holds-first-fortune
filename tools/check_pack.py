@@ -29,6 +29,8 @@ def main():
     cases.append(('disciplines', fixture+'\n'+body, 'DISCIPLINES71'))
     body = (ROOT/'tests/polish72.gd').read_text().split('\n', 1)[1]
     cases.append(('polish', fixture+'\n'+body, 'POLISH72'))
+    body = (ROOT/'tests/firsthour73.gd').read_text().split('\n', 1)[1]
+    cases.append(('firsthour', fixture+'\n'+body, 'FIRSTHOUR73'))
     results = []
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()

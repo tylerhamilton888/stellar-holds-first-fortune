@@ -1,3 +1,14 @@
+# 0.67.0: the first working day
+
+Existing saves remain supported. A fresh character is useful for testing Ivar’s arrival and the first-shift introduction; it is not required for furnishing your quarters.
+
+1. Walk, carry and work. Try tools and shoulder loads, doors, stairs and the side of a workbench. Walking interrupts woodcutting; holding work should approach the correct stance without walking through equipment.
+2. Follow the first shift. Travel from Hearthward through King’s Gate to Old Workings. Excavate, lift with E, stock the western loan rack, hold E at its stonebreaker, and collect with Shift+E. Use Shift+B to place your own rack and bench. Ask Ivar in his office if you need the worksite timber allowance; reserved crew stock is not yours.
+3. Make the room yours. O opens furnishing plans in the starting quarters. Place a chair or lamp on green floor, move it, then use the original chest, bedside and writing desk. The exit aisle must remain clear. Reload and check the furniture, stored items and posted letter.
+4. Compare transitions. Revisit quarters, tavern, mine and wards after their first preparation. Report a repeatable hitch with the area, direction of travel and whether this was a new character or existing save. First-time artwork preparation is still visible; compatible cached frames should be reused.
+
+Focus feedback on work approach/weight, whether the next lesson step is clear, useful room space and repeated-loading behavior. Windows hardware performance and audible quality are not established by native software-rendered checks.
+
 # Hearth & Stone playtest
 
 Walk sideways with free hands, pickaxe selected and stone carried. Compare both directions and stop/start transitions. Walk along the front and around each building; the wall should remain solid while your Dwarf stays visible outside it. Inspect roof mass and the rock around the ward edges. Visit quarters, tavern, exchange and offices; test bedside rest, writing desk, hosts and exits. Cross Great Stairs and residential bridges. Open I, search for stone, switch Pack/Gear/Skills/Journal, learn or inspect a technique, and close with Esc. Save and reload the same fortune.

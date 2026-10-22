@@ -14,7 +14,11 @@ static func step(g)->int:
   if not f.get(["lift","stock","process","collect","rack","bench"][i],false):return i
  return 6
 static func event(g,id:String):
- if active(g) and data(g).started:data(g).facts[id]=true
+ if active(g) and data(g).started:
+  var previous=step(g);data(g).facts[id]=true
+  if step(g)>previous:
+   g.sound.effect("quest",-22)
+   g.notify("First shift · "+STEPS[step(g)])
 static func station(g,id:String)->Dictionary:
  for f in g.handworks.data().facilities:
   if str(f.id)=="firstshift:"+id:return f
@@ -60,10 +64,27 @@ static func journal(g):
  g.label(g.panel_body,"YOUR FIRST WORKSITE",18)
  g.label(g.panel_body,STEPS[n],16,Color("edc98a"));g.label(g.panel_body,HELP[n],15)
  if station(g,"bench").is_empty():g.label(g.panel_body,"Your existing mine layout occupies the loan bay. Keep your equipment; use an existing stonebreaker or build one through Shift+B. Ivar can issue a small construction allowance at his office.",14)
- if not data(g).kit:g.label(g.panel_body,"Use your own timber, or ask Ivar at his office for a small worksite allowance. Hold crew stock is not yours to take.",14)
+ if not data(g).kit:
+  g.label(g.panel_body,"Use your own timber, or ask Ivar at his office for a small worksite allowance. Hold crew stock is not yours to take.",14)
+  g.small_button(g.panel_body,"Track Ivar for timber",func():g.state.tracked_npc="ivar";g.save_game();g.close_panel();g.notify("Ivar’s office · Hearthward, southeast of the commons."))
  if active(g):g.button(g.panel_body,"Open equipment plans",func():g.open_panel("handworks"))
 static func goal(g)->String:
- return "FIRST SHIFT: "+STEPS[step(g)]+" · J: lesson" if active(g) and data(g).started and step(g)<6 else ""
+ return "First shift · %d/6 · " % (step(g)+1)+STEPS[step(g)] if active(g) and data(g).started and step(g)<6 else ""
+static func context_hint(g)->String:
+ if not active(g) or not data(g).started or step(g)>=6:return ""
+ var n=step(g);var h=g.handworks
+ if n==0:return "Hold LMB at an exposed rock face · stop moving to plant the pick"
+ if n==1:return "Carry the freed stone to the western rack · E stocks it"
+ if n==2:
+  var rack=station(g,"rack")
+  if not rack.is_empty() and rack.raw.is_empty():return "The rack is empty · bring another chunk, or carry one to the stonebreaker"
+  return "Western stonebreaker · hold E to work · release whenever you like"
+ if n==3:return "Your useful stone is on the bench · Shift+E collects it"
+ var kind="stone_pile" if n==4 else "breaker"
+ if not g.state.afford(h.SPECS[kind].cost):
+  if g.state.count("wood")<int(h.SPECS[kind].cost.get("wood",0)) and not data(g).kit:return "Short of timber? Ask Ivar for your worksite allowance · J keeps the lesson"
+  return "Process another load for construction supplies · Shift+E collects the output"
+ return "Shift+B · craft your "+h.SPECS[kind].name.to_lower()+" · green fits, right click cancels"
 static func crew_ready(g)->bool:
  return active(g) and not station(g,"crewbench").is_empty() and not station(g,"crewrack").is_empty()
 static func tick(g,dt:float):

@@ -45,7 +45,7 @@ func run():
  var stone=g.state.count("stone");at(Vector2(1040,650));key(KEY_E,true)
  check(g.state.count("stone")==stone+1 and output.cargo.is_empty(),"Shift+E returns actual output to existing inventory")
  check(g.surface.house.build(Vector2(1040,700),"stone_floor") and g.state.count("stone")==stone,"Processed stone builds a real house floor at its normal cost")
- at(Vector2(1160,650));Input.action_press("interact");await frames(55);await snap("03-sawing");await frames(55);Input.action_release("interact")
+ at(Vector2(1160,650));Input.action_press("interact");await frames(55);await snap("03-sawing");await frames(130);Input.action_release("interact")
  var saw=h.data().facilities[3];check(int(output.cargo.get("wood",0))==2,"Timber workflow preserves explicit two-unit yield")
  at(Vector2(760,730));h.spawn("stone",g.player,1,"cart-load");key(KEY_E);at(Vector2(1060,860));key(KEY_E)
  var cart=h.data().facilities[5];check(cart.raw.size()==1 and h.data().carry.is_empty(),"Cart receives raw material without duplication")

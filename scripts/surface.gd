@@ -194,13 +194,15 @@ func nearest()->Dictionary:
   if p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action)):
    if not HoldNeighborhood.stair_access(g.player,p.p,96 if HoldNeighborhood.is_home(area) else 140):continue
   if p.action=="leave" and absf(g.player.x-p.p.x)>34:continue
+  if d>=distance:continue
   if not clear_interaction(g.player,p.p):continue
   if d<distance:distance=d;found=p
  return found
 func clear_interaction(a:Vector2,b:Vector2)->bool:
+ var solids=obstacles()
  for i in range(1,10):
   var p=a.lerp(b,i/10.0)
-  for r in obstacles():
+  for r in solids:
    # The bar is solid underfoot, but Hedrik can talk across its counter.
    if area=="room:tavern" and b.distance_to(Vector2(620,410))<1 and r==HoldFurnishings.footprint("counter",Vector2(620,450)):continue
    if not r.has_point(b) and r.has_point(p):return false
@@ -251,7 +253,7 @@ func action(id:String):
  elif id.begins_with("house:"):house.toggle(id.trim_prefix("house:"))
  elif id in ["rest","house_rest"]:
   var point=nearest()
-  if id=="house_rest" and (point.is_empty() or not house.rest(point.bed)):return
+  if id=="house_rest" and not room() and (point.is_empty() or not house.rest(point.bed)):return
   start_rest(point)
  elif id=="letter":g.open_panel("letter")
  elif id=="training_notes":g.lesson_id="training";g.open_panel("lesson")
@@ -287,6 +289,7 @@ func obstacles(ignore:Dictionary={})->Array:
  var list=base_obstacles()
  if area in ["claim","pinewood"] and house.level()==0:list.append(HoldFurnishings.footprint("desk",Vector2(740,780) if area=="claim" else Vector2(300,790)))
  list.append_array(house.obstacles())
+ if g.handworks:list.append_array(g.handworks.surface_obstacles())
  if g.fieldwork:list.append_array(g.fieldwork.obstacles())
  for c in g.state.surface.chests.values():
   if house.local(c) and (ignore.is_empty() or c!=ignore):list.append(HoldFurnishings.footprint("chest",Vector2(c.x,c.y)))
@@ -321,7 +324,7 @@ func move(dt:float):
    rest_time=maxf(0,rest_time-dt);rest_elapsed+=dt;g.walking_pose=false
    if rest_time<=0:
     g.state.surface.facts.rest=true;g.state.combat.health=100;g.notify("Rested · health restored · fortune saved")
-    if area=="room:home":HoldOnboarding.settle(g,"bed")
+    if area=="room:home":g.state.surface.facts.quarters_rest=true;HoldOnboarding.settle(g,"bed")
     g.save_game()
    return
  var delta=g.fight.movement(input)*dt
@@ -355,6 +358,7 @@ func input(e:InputEvent)->bool:
    else:use()
    return true
   if e.keycode==KEY_G:g.open_panel("wayfinding");return true
+  if e.keycode==KEY_O and area=="room:home":g.open_panel("home");return true
   if e.keycode==KEY_O and (area=="claim" or area.begins_with("home:")):g.open_panel("homestead");return true
   if e.keycode in [KEY_SPACE,KEY_V,KEY_X,KEY_P,KEY_F,KEY_Q]:return true
  if e is InputEventMouseButton and e.pressed:
@@ -370,8 +374,9 @@ func cancel_placement():
 func start_placement(kind:String):
  cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
  g.notify("Place on the fine grid. LMB builds; right click cancels. Keep approaches clear.")
+func can_furnish()->bool:return area=="room:home" or area=="claim" or area.begins_with("home:")
 func move_nearby_furnishing()->bool:
- if not (area=="claim" or area.begins_with("home:")):return false
+ if not can_furnish():return false
  var best:Dictionary={};var kind="";var distance=85.0
  for d in g.state.surface.decor:
   if house.local(d) and not d.get("fixed",false) and g.player.distance_to(Vector2(d.x,d.y))<distance:
@@ -388,7 +393,7 @@ func furniture_ready(p:Vector2,kind:String)->bool:
 func build_bounds()->Rect2:
  return Rect2(175,290,610,345) if room() else Rect2(90,210,1700,750)
 func furniture_valid(p:Vector2,kind:String)->bool:
- if not (area=="claim" or area.begins_with("home:")):return false
+ if not can_furnish():return false
  if not HoldFurnishings.ITEMS.has(kind) or p.distance_to(g.player)>140:return false
  var base=HoldFurnishings.footprint(kind,p)
  if kind=="chest" and not walkable(p+Vector2(0,25),moving_furnishing):return false
@@ -398,6 +403,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
  for obstacle in obstacles(moving_furnishing):
   if base.grow(6).intersects(obstacle):return false
  # Check the entire base, not just its corners, across upper-floor tile seams.
+ if area=="room:home" and base.grow(FOOT_RADIUS+4).intersects(Rect2(455,480,50,150)):return false
  if area=="claim" and house.level()>0:
   for x in range(int(base.position.x),int(base.end.x)+1,5):
    for y in range(int(base.position.y),int(base.end.y)+1,5):
@@ -413,7 +419,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
  return not base.grow(8).has_point(g.player)
 func place(p:Vector2)->bool:
  ensure();p=snap_furnishing(p)
- if not (area=="claim" or area.begins_with("home:")):g.notify("Build around your own hearth and claim.");return false
+ if not can_furnish():g.notify("Furnish your own quarters, hearth or claim.");return false
  if not furniture_valid(p,placing):g.notify("Choose clear ground within reach; leave room for the entire furnishing.");return false
  if not moving_furnishing.is_empty():
   moving_furnishing.x=p.x;moving_furnishing.y=p.y
@@ -428,8 +434,9 @@ func place(p:Vector2)->bool:
   var id="chest:"+str(serial)
   g.state.surface.chests[id]={"area":area,"z":house.level(),"x":p.x,"y":p.y,"items":{}}
  else:g.state.surface.decor.append({"area":area,"z":house.level(),"x":p.x,"y":p.y,"kind":placing})
+ if area=="room:home":g.state.surface.facts.quarters_build=true
  g.state.surface.facts.build=true;placing="";g.sound.effect("build");g.save_game();return true
-func transfer(item:String,n:int,deposit:bool)->int:
+func transfer(item:String,n:int,deposit:bool,save:bool=true)->int:
  var c=g.state.surface.chests.get(selected_chest,{})
  if c.is_empty() or not house.local(c) or g.player.distance_to(Vector2(c.x,c.y))>85:return 0
  var source=g.state.inventory if deposit else c.items;var target=c.items if deposit else g.state.inventory
@@ -437,7 +444,10 @@ func transfer(item:String,n:int,deposit:bool)->int:
  if moved<=0:return 0
  source[item]=int(source.get(item,0))-moved;target[item]=int(target.get(item,0))+moved
  if source[item]==0:source.erase(item)
- g.state.surface.facts.storage=true;g.save_game();return moved
+ if area=="room:home":g.state.surface.facts.quarters_storage=true
+ g.state.surface.facts.storage=true
+ if save:g.save_game()
+ return moved
 func recover_chest()->bool:
  cancel_placement()
  var c=g.state.surface.chests.get(selected_chest,{})
@@ -450,7 +460,7 @@ func recover_decor()->bool:
  cancel_placement()
  for i in g.state.surface.decor.size():
   var d=g.state.surface.decor[i]
-  if house.local(d) and g.player.distance_to(Vector2(d.x,d.y))<85:
+  if house.local(d) and not d.get("fixed",false) and g.player.distance_to(Vector2(d.x,d.y))<85:
    g.state.surface.decor.remove_at(i)
    for item in HoldFurnishings.ITEMS.get(d.kind,HoldFurnishings.ITEMS.table).cost:g.state.add(item,HoldFurnishings.ITEMS.get(d.kind,HoldFurnishings.ITEMS.table).cost[item])
    g.save_game();g.close_panel();return true
@@ -462,11 +472,11 @@ func chest_panel():
  g.label(g.panel_body,"Stored items stay here. Withdraw materials into your pack before crafting or selling. Mines keep their own buckets and stockpiles.",14)
  var row=g.row(g.panel_body)
  g.small_button(row,"Store all carried resources",func():
-  for k in g.state.inventory.keys():transfer(k,g.state.count(k),true)
-  g.open_panel("storage",false))
+  for k in g.state.inventory.keys():transfer(k,g.state.count(k),true,false)
+  g.save_game();g.open_panel("storage",false))
  g.small_button(row,"Take all",func():
-  for k in c.items.keys():transfer(k,int(c.items[k]),false)
-  g.open_panel("storage",false))
+  for k in c.items.keys():transfer(k,int(c.items[k]),false,false)
+  g.save_game();g.open_panel("storage",false))
  if not c.get("fixed",false):g.small_button(g.panel_body,"Dismantle empty chest · recover 4 timber",recover_chest)
  for item in HoldData.ITEMS:
   if g.state.count(item)+int(c.items.get(item,0))==0:continue
@@ -509,7 +519,7 @@ func guide_panel():
 func chop(dt:float):
  cut_approach=false
  HoldForestry.ensure(g.state)
- if g.hotbar.blocked_work() or g.tool!=2 or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):cut_clock=0;cut_target=-1;return
+ if Input.get_vector("left","right","up","down")!=Vector2.ZERO or g.hotbar.blocked_work() or g.tool!=2 or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):cut_clock=0;cut_target=-1;return
  var aim=g.get_global_mouse_position()+g.camera;var best=-1;var dist=80.0
  for i in TREES.size():
   if g.state.road_trees[i]<=0 and HoldForestry.logs(g.state,i)<=0:continue
@@ -522,7 +532,8 @@ func chop(dt:float):
  if Input.get_vector("left","right","up","down")==Vector2.ZERO and g.player.distance_to(stance)>3:
   var step=g.player.move_toward(stance,150*dt)
   if walkable(step):
-   direction=(stance-g.player).normalized();HoldDrawnLocomotion.advance(g,g.player.distance_to(step),"wood");g.player=step;g.walking_pose=true;cut_approach=true;cut_clock=0;cut_struck=false;return
+   direction=(stance-g.player).normalized();HoldDrawnLocomotion.advance(g,g.player.distance_to(step),"wood");g.player=step;g.walking_pose=true;cut_approach=true
+  cut_clock=0;cut_struck=false;return
  cut_clock+=dt
  if cut_clock>=.64:cut_clock=fmod(cut_clock,.64);cut_struck=false
  if cut_clock<.35 or cut_struck:return
@@ -644,7 +655,7 @@ func draw():
  house.preview()
  if placing!="" and not placing.begins_with("house:"):
   var p=snap_furnishing(g.get_global_mouse_position()+g.camera)
-  if area=="claim" or area.begins_with("home:"):HoldBuildPreview.grid(g,g.camera,FURNITURE_GRID,build_bounds())
+  if can_furnish():HoldBuildPreview.grid(g,g.camera,FURNITURE_GRID,build_bounds())
   var ok=furniture_ready(p,placing);var tint=HoldBuildPreview.color(ok)
   HoldFurnishings.draw(g,p,placing,Color(tint,.65))
   HoldBuildPreview.outline(g,HoldFurnishings.footprint(placing,p),ok)

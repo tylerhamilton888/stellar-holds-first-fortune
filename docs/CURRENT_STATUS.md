@@ -1,3 +1,11 @@
+# 0.67.0 — A Good Day’s Work candidate
+
+Four-part first-hour refinement: physical work and outdoor equipment collision; contextual first-shift guidance and stockpile connection previews; craftable starter-quarter furnishings; reduced interaction and animation-preparation overhead. Uses existing resources, whole-painted actors, work rates and save records. No new compulsory chores or free access to hold-owned supplies.
+
+Recovery: GitHub recovery/pre-firsthour73 preserves 94b2b2e1edb34e6766e6c4e0b677947105456498. Local pre-firsthour73 preserves the exact source tree 9fd4c99920fb94f43dafd7f0e67d2800d0ddaf58, restored from verified source archive chunks. Prior releases remain untouched. Work branch polish/firsthour73.
+
+Native targeted verification passed 221 checks, and the clean local Windows package passed 333 checks across nine cases plus its 3,201-entry integrity audit. Local package recovery is verified-firsthour73-pack, incremental from pre-firsthour73. Hosted verification/publication remain pending; 0.66.0 remains the published build until delivery verification. See testing/firsthour73.md. Windows hardware performance and audio require player-device testing.
+
 # 0.66.0 — Hearth & Stone: published and verified
 
 One complete Windows ZIP is published at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.66.0. Uploaded size 707,549,210 bytes and SHA256 5a1312685202057d74448d759e487770868aa5e0725d25adcdea137a63f31d4a match the clean hosted build report. Tag v0.66.0 points to release source 5af5f8e546546b4e0b06940516afa4aa5b4f57fd. PR #15 merged at 87afd5ee79dbae4b17bcb13bfdf1e58dd5e7da46 with the identical verified tree.

@@ -85,10 +85,19 @@ func rock(result:Dictionary,c:Vector2i)->bool:
  if result.kind not in [2,3,4,5,6,7] or result.item in ["iron_slag","copper_slag"] or result.count<=0:return false
  spawn("stone",Deepworks.center(c),int(result.count)+(1 if result.kind in [3,4,5,6] and HoldDisciplines.has(g.state,"ore_sorting") else 0),"rock:"+str(g.deep.world.depth())+":"+str(c),result.item)
  award("miner");return true
+static func footprint(f:Dictionary)->Rect2:return Rect2(Vector2(f.x,f.y)-Vector2(30,12),Vector2(60,16))
+func surface_obstacles()->Array:
+ var result=[]
+ for f in data().facilities:
+  if local(f) and not f.get("hitched",false):result.append(footprint(f))
+ return result
 func clear_line(a:Vector2,b:Vector2)->bool:
  if g.zone=="mine":return g.deep.world.visible(a,b)
- for i in 8:
-  if not g.surface.walkable(a.lerp(b,float(i+1)/8)):return false
+ var solids=g.surface.obstacles()
+ for r in solids:
+  if r.has_point(a) or r.has_point(b):continue
+  for i in range(1,9):
+   if r.has_point(a.lerp(b,i/8.0)):return false
  return true
 func stance_clear(a:Vector2,b:Vector2)->bool:
  for i in range(1,maxi(2,ceili(a.distance_to(b)/5.0))+1):
@@ -117,7 +126,7 @@ func nearby_cart()->Dictionary:
   if vehicle(f):carts.append(f)
  return closest(carts,100)
 func can_place(p:Vector2)->bool:
- if g.player.distance_to(p)>140:return false
+ if g.player.distance_to(p)>140 or footprint({"x":p.x,"y":p.y}).grow(10).has_point(g.player):return false
  if g.zone=="mine":
   if g.deep.world.entrance(p):return false
   for offset in [Vector2.ZERO,Vector2(24,0),Vector2(-24,0),Vector2(0,20),Vector2(0,-20)]:
@@ -276,10 +285,15 @@ func update(dt:float):
  var side=-1 if g.player.x<=f.x else 1
  var stance=Vector2.INF;var approach=Vector2.INF
  for sign in [side,-side]:
-  var candidate=pos(f)+Vector2(sign*(56 if f.kind=="breaker" else 34),-55 if f.kind=="breaker" else -22)
+  var candidate=pos(f)+Vector2(sign*(56 if f.kind=="breaker" else 34),-55 if f.kind=="breaker" else -24)
   if stance_clear(g.player,candidate):stance=candidate;approach=candidate;break
   var corner=pos(f)+Vector2(sign*60,35)
   if stance_clear(g.player,corner) and stance_clear(corner,candidate):stance=candidate;approach=corner;break
+  # Saw stance sits beside the top edge. Walk around both corners of its solid
+  # base, rather than cutting diagonally through the visible bench.
+  var rear=pos(f)+Vector2(sign*60,-30)
+  if stance_clear(g.player,rear) and stance_clear(rear,candidate):stance=candidate;approach=rear;break
+  if stance_clear(g.player,corner) and stance_clear(corner,rear) and stance_clear(rear,candidate):stance=candidate;approach=corner;break
  if stance==Vector2.INF:return
  if g.player.distance_to(stance)>3:
   var before_pos=g.player;g.player=g.player.move_toward(approach,150*dt);active_anchor=g.player;g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(approach-before_pos).normalized();approaching=true
@@ -426,7 +440,11 @@ func overlay():
   if g.zone=="mine" or g.surface.area in ["claim","pinewood"] or g.surface.area.begins_with("home:"):
    HoldBuildPreview.grid(g,g.camera,20,Rect2(g.player-Vector2(180,180),Vector2(360,360)) if g.zone=="mine" else g.surface.build_bounds())
   sprite(SPECS[placing].art,p,85,.55)
-  HoldBuildPreview.outline(g,Rect2(p-Vector2(28,22),Vector2(56,44)),ok)
+  HoldBuildPreview.outline(g,footprint({"x":p.x,"y":p.y}),ok)
+  if placing in ["breaker","saw"]:
+   for stock in data().facilities:
+    if local(stock) and stock.get("owner","")!="hold" and stock.kind in (["stone_pile","cart","wagon"] if placing=="breaker" else ["timber_pile","cart","wagon"]) and pos(stock).distance_to(p)<150 and clear_line(pos(stock),p):
+     g.draw_dashed_line(p,pos(stock),Color("97c6bb"),2,6)
  var f=facility();var raw=closest(data().loose,65);var text=""
  if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · Shift+E collect" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
@@ -434,6 +452,7 @@ func overlay():
  elif not data().carry.is_empty():text="Carrying %d / %d · Q put down · E deliver" % [data().carry.size(),capacity()]
  if not f.is_empty() and f.get("owner","")=="hold":text="Hold crew · reserved stock and work order"
  if placing!="":text="Placing "+SPECS[placing].name+" · LMB build · Right click cancel"
+ if text=="":text=HoldFirstShift.context_hint(g)
  g.draw_set_transform(Vector2.ZERO)
  if text!="":
   var width=minf(924,ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+24)

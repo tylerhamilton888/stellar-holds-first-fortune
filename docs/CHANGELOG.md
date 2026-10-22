@@ -1,3 +1,10 @@
+# 0.67.0 — A Good Day’s Work
+
+- Outdoor equipment has solid bases and reachable work poses; woodcutting stops when moving or blocked from its stance.
+- First-shift prompts explain the current physical task, timber allowance and material ownership; placement previews show nearby compatible stockpile connections.
+- Starting quarters support eight existing furnishing plans, safe placement, moving, recovery and persistent comfort progress. Bed, chest and letter remain physical interactions.
+- Interaction queries avoid repeated obstacle reconstruction; rooms warm only relevant residents. Compatible animation caches survive ordinary releases, and bulk chest transfers save once.
+
 # 0.66.0 — Hearth & Stone
 
 - Shared complete side-walk passing poses and shorter distance-calibrated stride.
