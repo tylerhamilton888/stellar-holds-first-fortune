@@ -1,0 +1,16 @@
+{
+  "version": "0.66.0",
+  "commit": "5af5f8e546546b4e0b06940516afa4aa5b4f57fd",
+  "dirty": false,
+  "engine": "4.4.1.stable.official.49a5bc7b6",
+  "files": {
+    "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+    "FirstFortune.pck": "e54ec6a4602a30fbf048b6dc4b6e9cbb74fb4dec058d3b6132651681c2d63927",
+    "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+    "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+    "version.txt": "359ab1ee8951b6a54f7eb66d2bce862a754b844532ea7fbb8c57151e727227de",
+    "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+  },
+  "zip_sha256": "5a1312685202057d74448d759e487770868aa5e0725d25adcdea137a63f31d4a",
+  "zip_bytes": 707549210
+}
