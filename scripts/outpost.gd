@@ -90,7 +90,7 @@ static func ensure(s):
  if s.worker and not s.outpost.crew.has("brann"):s.outpost.crew.brann={"role":"miner","priority":"iron_ore","fuel":0,"grain_work":0}
  if not s.outpost.has("chronicle"):s.outpost.chronicle=[]
  s.worker=s.outpost.crew.has("brann")
-static func capacity(s)->int:return [0,2,4,6][clampi(s.camp_stage,0,3)]
+static func capacity(s)->int:return [0,2,4,6][clampi(s.camp_stage,0,3)]+(1 if s.camp_stage>0 and HoldDisciplines.has(s,"crew_planning") else 0)
 static func title(s)->String:
  ensure(s)
  return str(s.outpost.get("name","")) if str(s.outpost.get("name",""))!="" else HoldCampaign.claim(s.claim_id).name
@@ -100,6 +100,7 @@ static func recruit(s,id:String)->bool:
  if not s.pay({"food":2},member(s,id).fee):return false
  s.outpost.crew[id]={"role":member(s,id).specialty if s.camp_stage>=2 else "miner","priority":"iron_ore","fuel":0,"grain_work":0}
  s.worker=s.outpost.crew.has("brann")
+ HoldDisciplines.award(s,"overseer",1,id)
  personality(s,id)
  record(s,"joined_"+id,member(s,id).name+" joined the founding crew: "+describe(s,id).to_lower()+".")
  return true

@@ -22,7 +22,8 @@
       "living",
       "civic",
       "firstshift",
-      "ancestral"
+      "ancestral",
+      "disciplines"
     ],
     "modular": [
       "modular",
@@ -80,6 +81,15 @@
     ],
     "ancestral": [
       "ancestral"
+    ],
+    "disciplines": [
+      "disciplines",
+      "handworks",
+      "mining",
+      "firstshift",
+      "ancestral",
+      "menus",
+      "world"
     ]
   },
   "cases": {
@@ -142,6 +152,10 @@
     "ancestral": {
       "script": "tests/ancestral70.gd",
       "marker": "ANCESTRAL70"
+    },
+    "disciplines": {
+      "script": "tests/disciplines71.gd",
+      "marker": "DISCIPLINES71"
     }
   }
 }

@@ -1,3 +1,13 @@
+# 0.65.0 — Work & Knowledge (source candidate)
+
+Thirteen discipline tabs are integrated into the existing game. Open with Y, the inventory, pause menu or Survey Office. Y deliberately leaves underground U unloading and T crew assignment intact. The menu pauses play, keeps its discipline tabs separate from the scrolling details, supports keyboard focus and uses thirteen original vector emblems. Each technique displays its effect, work threshold, research and prerequisite. Learning retains lifetime experience; there is no universal spendable XP currency.
+
+Twelve paths have live work sources; Brewing is explicitly reserved for a future dedicated work loop, with no fake unlocks. Thirteen optional techniques improve physical recovery, processing output, production efficiency, farming/fishing yield, dodge recovery, crew capacity or cart capacity. The eight existing research methods are also shown in their relevant paths and still unlock the existing equipment, construction and industry. Existing research costs and access remain intact. This is an expandable first tier, not a complete endgame tree.
+
+HoldDisciplines owns definitions, eligibility, one-time migration and saved progress in hauling.disciplines. Completed-work hooks stay in gameplay owners. Legacy Miner/Mason/Forester/Smith counters and automatic hauling unlocks remain; the historically combined forestry counter seeds both Forestry and Woodworking once. Existing harvests, catches, cleared threats and crew counts receive credit. New sawing awards Woodworking separately from felling. Overseer mastery is separate from civic appointment and grants no communal stock permission.
+
+Pre-edit local tag/bundle pre-disciplines71 preserves e5759a89376a3d1e08fe0c5c5ef616ca264d37c4 (bundle requires pre-ancestral70). GitHub recovery/pre-disciplines71 preserves remote main 87cc8846a8681e044230ed2853680041927aa072. Old releases and backups remain intact. Read testing/disciplines71.md for verification status. The published Windows release remains v0.64.0 until separately verified and published.
+
 # 0.64.0 — The Hold of Three Hearths
 
 - Kept conversation responses inside the scrollable panel so research and investiture choices stay accessible.

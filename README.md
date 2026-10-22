@@ -31,7 +31,7 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
-The Hold of Three Hearths combines Keldrath refinement, a practical first-shift mine lesson and The Stone Remembers: rescue, ancestral research, Overseer appointment and investiture as Thane. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [verification record](docs/testing/ancestral70.md) and [personal progression proposal](docs/PROGRESSION_NEXT.md). The proposed skill-tree redesign is not part of this implementation.
+The Hold of Three Hearths combines Keldrath refinement, a practical first-shift mine lesson and The Stone Remembers: rescue, ancestral research, Overseer appointment and investiture as Thane. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [verification record](docs/testing/ancestral70.md) and [personal progression proposal](docs/PROGRESSION_NEXT.md). The next source milestone adds [discipline progression](docs/PROGRESSION_NEXT.md), with [verification and limits](docs/testing/disciplines71.md). The published download remains 0.64.0 until a new release is verified.
 
 ## Project map
 

@@ -90,6 +90,7 @@ var help_tab=0
 var trade_tab="sell"
 var forge_tab=0
 var research_tab=0
+var discipline_tab="mining"
 var panel_body:VBoxContainer
 var hud:Label
 var footer:Label
@@ -376,6 +377,7 @@ func _unhandled_input(e):
   if e.is_action_pressed("pause"):
    if panel_id!="":back_panel()
    else:open_panel("pause")
+  elif e.keycode==KEY_Y:toggle_panel("disciplines")
   elif e.keycode==KEY_K:toggle_panel("field_notes")
   elif e.keycode==KEY_X and panel_id=="":begin_field_sample()
   elif e.keycode==KEY_P and panel_id=="":
@@ -1138,10 +1140,11 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- if id in ["letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
+ if id in ["disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood"]:menu_paused=true
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
+  "disciplines":HoldDisciplineView.panel(self)
   "conversation":HoldConversation.panel(self)
   "field_notes":
    if zone=="mine":deep.panel()
@@ -1228,7 +1231,7 @@ func open_panel(id:String,remember:bool=true):
   "ship":ship_panel()
   "pause":
    var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",12);panel_body.add_child(grid)
-   for entry in [["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Sound & comfort",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
+   for entry in [["Disciplines · Y",func():open_panel("disciplines")],["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Sound & comfort",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
     var b=button(grid,entry[0],entry[1]);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
    label(panel_body,"The world is paused. Take your time. Switching away from the game also pauses it; return when ready.",16,Color("b4c9c4"))
   "settings":settings_panel()
@@ -1251,6 +1254,7 @@ func open_panel(id:String,remember:bool=true):
  elif id=="conversation":panel.set_deferred("size",Vector2(840,452))
 
 func inventory_panel():
+ small_button(panel_body,"Disciplines · Y",func():open_panel("disciplines"))
  var top=row(panel_body)
  label(top,"%d crowns  •  Carried supplies" % state.money,18,Color("edc98a"))
  small_button(top,"Show all resources" if inventory_owned_only else "Show carried resources",func():inventory_owned_only=not inventory_owned_only;refresh_panel())
@@ -1385,6 +1389,7 @@ func forge_panel():
   label(panel_body,"Steel pick: "+("Owned" if state.steel else ("Ready to forge" if state.tech.has("extraction") else "Research Tempered steel"))+"\nMOTE-1: "+("Built" if state.automaton else ("Ready to build" if state.tech.has("automation") else "Research Clockwork industry")),16)
  label(panel_body,"Timber feeds provisions and construction. Water fills canteens and cools your future drive.",14,Color("9ac4ba"))
 func research_panel():
+ small_button(panel_body,"Personal disciplines · Y",func():open_panel("disciplines"))
  HoldAncestralClaim.journal(self)
  compact_person("eldric","Bring samples, funding and a little ambition.")
  var tabs=row(panel_body)

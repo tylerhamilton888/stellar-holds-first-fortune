@@ -97,6 +97,8 @@ func update(dt:float):
   if Input.is_action_pressed("interact"):
    if elapsed>=4.7:
     var count=2 if int(data().catches)%4==3 else 1
+    if HoldDisciplines.has(g.state,"river_lore") and int(data().catches)%3==2:count+=1
+    HoldDisciplines.award(g.state,"fishing")
     g.state.add("river_fish",count);data().catches=int(data().catches)+1;data().facts.fish=true
     g.sound.effect("water",-12);g.notify("River trout ×%d · sell at Orla's or cook provisions at the forge." % count);reward();g.save_game();cancel()
   else:elapsed=3.8
@@ -108,7 +110,7 @@ func update(dt:float):
   if action=="hoe" and not b.planted and g.state.pay({"turnip_seed":1}):b.planted=true;data().facts.plant=true;g.sound.effect("wood",-18)
   elif action=="water" and b.planted and not b.watered and g.state.pay({"water":1}):b.watered=true;b.at=g.state.elapsed;data().facts.water=true;g.sound.effect("water",-17)
   elif action=="harvest" and ripe(b):
-   g.state.add("turnip",3 if int(data().harvests)>=8 else 2);g.state.add("turnip_seed",1);data().harvests=int(data().harvests)+1;data().facts.harvest=true
+   HoldDisciplines.award(g.state,"farming");g.state.add("turnip",(3 if int(data().harvests)>=8 else 2)+(1 if HoldDisciplines.has(g.state,"seed_selection") else 0));g.state.add("turnip_seed",1);data().harvests=int(data().harvests)+1;data().facts.harvest=true
    b.planted=false;b.watered=false;g.sound.effect("build",-20);g.notify("Turnips harvested · seed saved for the next crop. Eight harvests improve the yield.")
   reward();g.save_game()
  if elapsed>=.8:cancel()
