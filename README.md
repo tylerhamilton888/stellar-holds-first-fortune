@@ -31,7 +31,7 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
-Hearth & Stone (0.66.0) refines walking, architectural depth, room furnishing and menu navigation. [Download the complete Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.66.0). See [verification](docs/testing/polish72.md).
+A Good Day’s Work (0.67.0) refines physical work, first-shift guidance, starter-quarter furnishing and loading. [Download the complete Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.67.0). See [verification](docs/testing/firsthour73.md).
 
 Work & Knowledge (0.65.0) adds thirteen illustrated discipline tabs, twelve active paths, thirteen optional techniques and the eight established research methods. Press **Y** to browse. Brewing is reserved for its future production loop. Existing saves and earned abilities are preserved. Keldrath, the first-shift lesson and ancestral Overseer-to-Thane quest remain integrated. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [progression architecture](docs/PROGRESSION_NEXT.md) and [verification record](docs/testing/disciplines71.md).
 

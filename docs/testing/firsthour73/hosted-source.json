@@ -1,0 +1,13 @@
+{
+  "runtime_commit": "e94f475ca66d363149a89a776728833fa4e2b496",
+  "runtime_tree": "5716fad4574e715b134f36b733f9ae19307f3d12",
+  "run": 39795166172,
+  "job": 119880552033,
+  "conclusion": "success",
+  "checks": 640,
+  "cases": 18,
+  "artifact": 12434279145,
+  "artifact_sha256": "a07e7497605dc6d827fc5ea1799cc219f8eb06d1f0d2136709b4409298235889",
+  "initial_run": 39791760681,
+  "initial_issue": "Old test placed facilities under the player; corrected clear-floor fixture passed all 38 mining checks."
+}

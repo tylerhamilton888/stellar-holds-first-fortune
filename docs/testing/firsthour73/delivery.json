@@ -1,0 +1,14 @@
+{
+  "version": "0.67.0",
+  "source": "e94f475ca66d363149a89a776728833fa4e2b496",
+  "source_tree": "5716fad4574e715b134f36b733f9ae19307f3d12",
+  "main_merge": "977a1d9b571eb0fef45525f4246e2070f19878b7",
+  "source_checks": 640,
+  "release_run": 39795998750,
+  "release_attempt": 2,
+  "release_conclusion": "success",
+  "exact_package_cases": 9,
+  "zip_sha256": "d77216cc175bc2f3729ced90c666aa27c8678fbdf4397ab14e00b26aa0d5951b",
+  "zip_bytes": 707638184,
+  "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.67.0"
+}
