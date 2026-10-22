@@ -1,0 +1,74 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 10.18
+  },
+  {
+    "test": "polish",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 75,
+    "seconds": 57.47
+  },
+  {
+    "test": "menus",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 9,
+    "seconds": 41.87
+  },
+  {
+    "test": "continuity",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 49.51
+  },
+  {
+    "test": "civic",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 59.48
+  },
+  {
+    "test": "living",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 51,
+    "seconds": 57.42
+  },
+  {
+    "test": "orientation",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 72.2
+  },
+  {
+    "test": "equipment",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 54.5
+  },
+  {
+    "test": "disciplines",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 37,
+    "seconds": 42.48
+  }
+]

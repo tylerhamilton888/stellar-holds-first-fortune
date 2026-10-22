@@ -4,13 +4,13 @@ extends RefCounted
 static func panel(g):
  g.label(g.panel_body,"Useful work earns mastery. Research opens methods. Choose techniques when ready.",16,Color("b4c9c4"))
  var layout=g.row(g.panel_body)
- var nav=ScrollContainer.new();nav.follow_focus=true;nav.custom_minimum_size=Vector2(170,310);nav.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;layout.add_child(nav)
+ var nav=ScrollContainer.new();nav.follow_focus=true;nav.custom_minimum_size=Vector2(170,266);nav.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;layout.add_child(nav)
  var tabs=VBoxContainer.new();tabs.size_flags_horizontal=Control.SIZE_EXPAND_FILL;nav.add_child(tabs)
  for id in HoldDisciplines.PATHS:
   var b=g.small_button(tabs,HoldDisciplines.PATHS[id][0],func():g.discipline_tab=id;g.open_panel("disciplines",false))
   b.toggle_mode=true;b.button_pressed=g.discipline_tab==id;b.tooltip_text=HoldDisciplines.PATHS[id][1]
   if b.button_pressed:nav.set_deferred("scroll_vertical",maxi(0,int(HoldDisciplines.PATHS.keys().find(id))*37-120))
- var scroll=ScrollContainer.new();scroll.follow_focus=true;scroll.custom_minimum_size=Vector2(0,310);scroll.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;layout.add_child(scroll)
+ var scroll=ScrollContainer.new();scroll.follow_focus=true;scroll.custom_minimum_size=Vector2(0,266);scroll.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;layout.add_child(scroll)
  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",10);scroll.add_child(body)
  var path=g.discipline_tab;var info=HoldDisciplines.PATHS[path]
  var hero=g.row(body);var art=TextureRect.new();art.texture=load("res://assets/disciplines71/"+path+".svg");art.custom_minimum_size=Vector2(94,94);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;hero.add_child(art)

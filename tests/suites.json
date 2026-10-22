@@ -23,7 +23,8 @@
       "civic",
       "firstshift",
       "ancestral",
-      "disciplines"
+      "disciplines",
+      "polish"
     ],
     "modular": [
       "modular",
@@ -90,6 +91,16 @@
       "ancestral",
       "menus",
       "world"
+    ],
+    "polish": [
+      "polish",
+      "menus",
+      "continuity",
+      "civic",
+      "living",
+      "orientation",
+      "equipment",
+      "disciplines"
     ]
   },
   "cases": {
@@ -156,6 +167,10 @@
     "disciplines": {
       "script": "tests/disciplines71.gd",
       "marker": "DISCIPLINES71"
+    },
+    "polish": {
+      "script": "tests/polish72.gd",
+      "marker": "POLISH72"
     }
   }
 }

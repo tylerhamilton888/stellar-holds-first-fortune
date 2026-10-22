@@ -596,6 +596,7 @@ func draw():
  # Stair treads are floor, not an upright prop drawn over a climbing Dwarf.
  for o in objects:
   if o.kind=="landmark" and o.art in [1,2]:o.sort_y=o.p.y-125
+  elif o.kind=="building" and HoldWorldZones.ward(area):o.sort_y=HoldWorldZones.building_footprint(o).end.y
  if area=="room:forge":
   for r in HoldRoomLayout.obstacles(area):objects.append({"p":Vector2(r.get_center().x,r.end.y),"kind":"furnishing","furnishing":"stone_pillar"})
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))

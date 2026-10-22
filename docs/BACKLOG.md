@@ -1,3 +1,7 @@
+# Hearth & Stone follow-up
+
+Player acceptance of gait cadence and architecture remains important. This pass reuses whole painted action frames; it is not a full new animation set. Roofs depict existing solid building mass; no roof-access gameplay is added. Rugs currently dress authored interiors; a textile economy and player rug crafting remain future scope.
+
 # Discipline follow-ups
 
 - Brewing: dedicated production loop before earnable mastery and unlocks.

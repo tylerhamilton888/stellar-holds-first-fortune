@@ -26,11 +26,11 @@ static func section(parent:Node,title:String)->VBoxContainer:
 static func make_theme()->Theme:
  var theme=Theme.new();theme.default_font=ThemeDB.fallback_font;theme.default_font_size=16
  for type in ["Button","PanelContainer"]:
-  var style=StyleBoxFlat.new();style.bg_color=Color("152731");style.border_color=Color("8c784f");style.set_border_width_all(1);style.set_content_margin_all(14);style.set_corner_radius_all(3)
+  var style=StyleBoxFlat.new();style.bg_color=Color("152731");style.border_color=Color("8c784f");style.set_border_width_all(1);style.set_content_margin_all(11);style.set_corner_radius_all(6)
   theme.set_stylebox("normal" if type=="Button" else "panel",type,style)
   if type=="Button":
    var hover=style.duplicate();hover.bg_color=Color("34565b");hover.border_color=Color("e2b96d");theme.set_stylebox("hover",type,hover)
-   var pressed=style.duplicate();pressed.bg_color=Color("496561");theme.set_stylebox("pressed",type,pressed)
+   var pressed=style.duplicate();pressed.bg_color=Color("355c58");pressed.border_color=Color("e7c789");theme.set_stylebox("pressed",type,pressed)
    var disabled=style.duplicate();disabled.bg_color=Color("202d36");disabled.border_color=Color("3e4a50");theme.set_stylebox("disabled",type,disabled)
    theme.set_color("font_color","Button",Color("f0dbaf"));theme.set_color("font_disabled_color","Button",Color("a5b2b7"))
    var focus=StyleBoxFlat.new();focus.bg_color=Color(0,0,0,0);focus.border_color=Color("a7dfcb");focus.set_border_width_all(2);theme.set_stylebox("focus","Button",focus)
@@ -45,13 +45,14 @@ static func build_shell(g,id:String):
  var top=row(outer)
  if not g.menu_history.is_empty():small_button(top,"‹ Back",g.back_panel)
  var names={"fieldwork":"RIVER & ROOT","handworks":"HANDS OF THE DWARF","wayfinding":"PATHS & DOORWAYS","storage":"YOUR STORAGE CHEST","house_build":"BUILD YOUR HEARTH","homestead":"YOUR HOMESTEAD","living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"THE LOWER WORKS","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
- label(top,names.get(id,"Claim business" if id=="claim_stories" else id.to_upper()),22,Color("e9c586"))
- small_button(top,"Close ×",g.close_panel)
- if g.playing and id not in ["disciplines","fieldwork","handworks","living","haulage","projects","deepworks","briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","commission","claim_stories","field_notes","pinewood"]:
+ names["disciplines"]="Disciplines"
+ label(top,names.get(id,"Claim business" if id=="claim_stories" else id).capitalize(),22,Color("e9c586"))
+ var close=small_button(top,"×",g.close_panel);close.tooltip_text="Close menu · Esc";close.custom_minimum_size.x=36
+ if g.playing and id not in ["fieldwork","handworks","living","haulage","projects","deepworks","briefing","new_confirm","rescue","victory","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","build_status","claim_stories","field_notes","pinewood"]:
   var nav=row(outer)
-  for entry in [["commission","Journal · J"],["inventory","Pack · I"],["equipment","Gear · B"],["roster","People · N"],["wayfinding","Directions · G"],["help","Guide · F1"]]:
-   var tab=small_button(nav,entry[1],func():g.open_panel(entry[0]));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-   if id==entry[0]:tab.modulate=Color("a7e2ce")
- var scroll=ScrollContainer.new();scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;outer.add_child(scroll);g.menu_scroll=scroll
+  for entry in [["commission","Journal · J"],["inventory","Pack · I"],["equipment","Gear · B"],["disciplines","Skills · Y"],["roster","People · N"],["wayfinding","Directions · G"],["help","Guide · F1"]]:
+   var tab=small_button(nav,entry[1],func():g.menu_history.clear();g.open_panel(entry[0],false));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=id==entry[0];tab.alignment=HORIZONTAL_ALIGNMENT_CENTER
+   tab.tooltip_text="Open "+entry[1].split(" · ")[0]
+ var scroll=ScrollContainer.new();scroll.follow_focus=true;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;outer.add_child(scroll);g.menu_scroll=scroll
  g.panel_body=VBoxContainer.new();g.panel_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;g.panel_body.add_theme_constant_override("separation",6 if id in ["commission","lesson","social"] else 9);scroll.add_child(g.panel_body)
  g.menu_footer(outer)

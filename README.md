@@ -31,6 +31,8 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
+Hearth & Stone (0.66.0 candidate) refines walking, architectural depth, room furnishing and menu navigation. See [verification](docs/testing/polish72.md). Last verified download remains 0.65.0 until publication.
+
 Work & Knowledge (0.65.0) adds thirteen illustrated discipline tabs, twelve active paths, thirteen optional techniques and the eight established research methods. Press **Y** to browse. Brewing is reserved for its future production loop. Existing saves and earned abilities are preserved. Keldrath, the first-shift lesson and ancestral Overseer-to-Thane quest remain integrated. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [progression architecture](docs/PROGRESSION_NEXT.md) and [verification record](docs/testing/disciplines71.md).
 
 ## Project map
