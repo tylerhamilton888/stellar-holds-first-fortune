@@ -1,0 +1,25 @@
+{
+  "source_run": 39837733726,
+  "source_attempt_1": {
+    "job": 120030362607,
+    "result": "cancelled",
+    "reason": "GitHub API and browser showed queued / Starting job for about 15 minutes. After cancellation, completed logs revealed import, loading, menus, orientation and ambient checks had actually passed. The live status was stale; the restart added time. Original partial evidence is retained as artifact 12452532083."
+  },
+  "source_attempt_2_job": 120039284340,
+  "release_run": 39837735551,
+  "release_attempt_1": {
+    "job": 120030368339,
+    "result": "failure",
+    "reason": "Packaging succeeded. The required identical-source gate correctly blocked publication when the queued validation was cancelled. No gameplay failure or unchecked release was published."
+  },
+  "source_attempt_2": {
+    "job": 120039284340,
+    "result": "success",
+    "artifact": 12453873916
+  },
+  "release_attempt_2": {
+    "job": 120044235083,
+    "result": "success",
+    "artifact": 12455367030
+  }
+}

@@ -1,4 +1,8 @@
-# Appearance continuity — 0.67.1 candidate
+# Published delivery — 0.67.1
+
+Source run 39837733726 passed 704 checks in 19 cases. Release run 39837735551 attempt 2 passed 397 checks in 10 exact-package cases and published the complete Windows ZIP. Asset size and SHA256 match hosted-build.json; delivery.json records the immutable source, identical merge tree and download. Earlier pending notes below are development history. Existing saves and previous releases are preserved. Final delivery recovery is verified-appearance74-delivery.
+
+# Appearance continuity — 0.67.1 development record
 
 Baseline: published 0.67.0, remote main 634778d30d6b261e552093ed6ddedc3690f5aecd. Pre-change recovery: recovery/pre-appearance74 and verified local pre-appearance74.bundle (requires pre-firsthour73).
 
@@ -9,3 +13,5 @@ Source-pigment calibration aligns hair brightness/saturation across frame famili
 Native identity boards, creator, town and tavern captures are in qa74 outside the repository. Initial checks found excessive male5 passing-pose height variation; corrected registration passed the final rerun. The greatbeard utility atlas also had truncated crops; complete component registration restores the boots and anatomical scale. Final native appearance checks: 64 passed. Related native loading/menu/orientation/ambient/equipment checks: 104 passed. All fourteen identity boards and actual creator/town/tavern scenes were visually inspected. Do not claim release acceptance until source and exact-package checks complete. Original saves, names, sculpts, work mechanics, inventories and source artwork are preserved.
 
 Original artwork was transferred in small verified chunks after interrupted large calls. Isolated import run 39836928263 succeeded and registered the expected source blob 9bbe65e7fc1ac2a1084008bfdebed118600a0535; transfer helpers stay outside runtime/main. Source SHA256: 7e3ed8b8fb87eddf590f4ba82cb2bfeb21f090a2e5c17edd4a8194b14eaf5999.
+
+Clean local Windows packaging passed all 3,206 PCK integrity entries. The standalone appearance fixture also passed all 64 checks against that exact exported PCK from an empty working directory and isolated save. See local-build.json and local-pack-appearance.json. Runtime source tree 96510cc5e2023b03aa82011e17e919fba9a720fd is identical in local c14821a31026ec601bfc74512dd3bcc8f78c967b and GitHub e6f23d7829ad121b82475350bc4edbe6c4588d85. PR #19, source run 39837733726 and release run 39837735551 carry that immutable snapshot; hosted acceptance/publication remains pending.

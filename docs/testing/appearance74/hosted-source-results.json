@@ -1,0 +1,162 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 492.36
+  },
+  {
+    "test": "loading",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 19,
+    "seconds": 144.23
+  },
+  {
+    "test": "menus",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 9,
+    "seconds": 49.57
+  },
+  {
+    "test": "orientation",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 81.69
+  },
+  {
+    "test": "ambient",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 36,
+    "seconds": 88.66
+  },
+  {
+    "test": "equipment",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 64.67
+  },
+  {
+    "test": "mining",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 38,
+    "seconds": 93.47
+  },
+  {
+    "test": "handworks",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 32,
+    "seconds": 75.63
+  },
+  {
+    "test": "world",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 79.68
+  },
+  {
+    "test": "modular",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 28,
+    "seconds": 53.58
+  },
+  {
+    "test": "hold",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 81,
+    "seconds": 51.58
+  },
+  {
+    "test": "continuity",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 61.63
+  },
+  {
+    "test": "living",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 51,
+    "seconds": 69.61
+  },
+  {
+    "test": "civic",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 70.99
+  },
+  {
+    "test": "firstshift",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 19,
+    "seconds": 71.6
+  },
+  {
+    "test": "ancestral",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 23,
+    "seconds": 53.1
+  },
+  {
+    "test": "disciplines",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 37,
+    "seconds": 49.6
+  },
+  {
+    "test": "polish",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 75,
+    "seconds": 70.64
+  },
+  {
+    "test": "firsthour",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 18,
+    "seconds": 51.94
+  },
+  {
+    "test": "appearance",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 71.5
+  }
+]
