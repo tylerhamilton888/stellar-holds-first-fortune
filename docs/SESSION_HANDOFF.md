@@ -1,3 +1,7 @@
+# 0.67.1 — Familiar Faces: work in progress
+
+Appearance continuity repair in progress; 0.67.0 remains the published build. See testing/appearance74.md. Confirmed stale town contact source references bypassed corrected hair/beard art; fixed inheritance, shared rendering, measured pigment/scale calibration, two complete side-walk redraws and creator pose/turn controls are implemented locally. Final verification and publication pending. Pre-change recovery/pre-appearance74 and local incremental bundle preserve 0.67.0. Native appearance checks passed 64 assertions; related core checks passed 104. Original source art was verified by isolated GitHub import run 39836928263. Hosted source/export gates and publication remain pending.
+
 # 0.67.0 — A Good Day’s Work: published and verified
 
 One complete Windows ZIP is available at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.67.0. Its 707,638,184 bytes and SHA256 d77216cc175bc2f3729ced90c666aa27c8678fbdf4397ab14e00b26aa0d5951b match the clean hosted build report.

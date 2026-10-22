@@ -4,8 +4,9 @@ extends RefCounted
 const HEIGHT=62.0
 const CYCLE=.52
 # Bump only when whole-frame artwork, crops or palette conversion change.
-const CACHE_REVISION="whole58-motion59-town66-palette1"
+const CACHE_REVISION="whole58-motion59-town74-palette2"
 static var metadata:Dictionary={}
+static var pigment:Dictionary={}
 static var sources:Dictionary={}
 static var cache:Dictionary={}
 static var order:Array=[]
@@ -33,6 +34,21 @@ static func data():
   var motion_path="res://assets/whole-motion59/runtime.json"
   if FileAccess.file_exists(motion_path):metadata.merge(JSON.parse_string(FileAccess.get_file_as_string(motion_path)))
   metadata.merge(JSON.parse_string(FileAccess.get_file_as_string("res://assets/town-walk66/frames.json")))
+  # Historical town metadata captured old PNG paths, bypassing corrected beard
+  # and hair drawings. Contact keys inherit the current canonical core frames.
+  for gender in ["male","female"]:
+   for sculpt in 7:
+    var id=gender+str(sculpt)
+    for index in [8,10]:
+     var current:Dictionary=metadata[id+"-core"][index].duplicate(true)
+     if not current.has("source"):current.source=id+"-core"
+     metadata[id+"-town"][index]=current
+  metadata.merge(JSON.parse_string(FileAccess.get_file_as_string("res://assets/appearance74/frames.json")),true)
+  pigment=JSON.parse_string(FileAccess.get_file_as_string("res://assets/appearance74/palette.json"))
+  var scales:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/appearance74/scale.json"))
+  for key in scales:
+   var parts=key.split(":")
+   metadata[parts[0]][int(parts[1])].height=scales[key]
 static func identity(p:Dictionary)->String:return ("female" if p.gender else "male")+str(int(p.sculpt))
 static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
  data()
@@ -100,6 +116,9 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
  for span in m.get("omit",[]):img.fill_rect(Rect2i(span[0],span[1],span[2],1),Color.TRANSPARENT)
  var ratio=1.0 if full else minf(1,HEIGHT/maxf(1,float(m.height))*2.6)
  var hair=HoldAppearance.hair(p);var cloth=HoldAppearance.cloth(p);var skin=HoldAppearance.skin(p)
+ # Preserve shading inside each painting, but use the same hair material when
+ # changing source sheets. Calibration is measured from reserved hair pigment.
+ var calibration=pigment[sheet][index]
  for y in img.get_height():
   for x in img.get_width():
    var c=img.get_pixel(x,y)
@@ -111,7 +130,7 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
     var pigment=minf(c.r-c.g,c.b-c.g)
     var coverage=clampf(2.0*(c.b-c.g)/maxf(c.r-c.g,1.0/255.0),0,1)*clampf(pigment*64.0,0,1)
     var clean=Color(c.r,c.g,minf(c.b,c.g),c.a)
-    var dyed=Color.from_hsv(hair.h,hair.s*clampf(c.s/.32,.65,1.15),clampf(hair.v*c.v/.58,0,1),c.a)
+    var dyed=Color.from_hsv(hair.h,hair.s*clampf(c.s/(.32*float(calibration[1])),.65,1.15),clampf(hair.v*c.v/(.58*float(calibration[0])),0,1),c.a)
     c=clean.lerp(dyed,coverage)
     # Blending a warm fringe with cool grey can itself make mauve. Preserve
     # the shaded value while keeping this hair-only blend free of magenta.

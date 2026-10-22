@@ -1,3 +1,9 @@
+# Appearance continuity — 0.67.1
+
+- scripts/whole_frames.gd: canonical contact inheritance, measured palette and scale correction.
+- assets/appearance74: complete side-walk replacements and calibration metadata.
+- tests/appearance74.gd and docs/testing/appearance74.md: native identity, creator and background-NPC verification.
+
 # A Good Day’s Work — 0.67.0
 
 - scripts/quarters.gd: starter-room plans using the existing furnishing catalogue and surface save records.

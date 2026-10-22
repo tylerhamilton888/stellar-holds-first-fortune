@@ -24,7 +24,14 @@ func _ready():
  sprite=HoldSpritePreview.new();sprite.position=Vector2(184,235);sprite.size=Vector2(96,96);sprite.profile=profile;holder.add_child(sprite)
  summary=Label.new();summary.position=Vector2(7,216);summary.size=Vector2(174,75);summary.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;summary.add_theme_font_size_override("font_size",14);holder.add_child(summary)
  var walk=Button.new();walk.text="Preview: walking";walk.position=Vector2(4,313);walk.size=Vector2(158,28);walk.add_theme_font_size_override("font_size",14);compact_button(walk);holder.add_child(walk)
- walk.pressed.connect(func():sprite.motion="work" if sprite.motion=="walk" else "walk";walk.text="Preview: working" if sprite.motion=="work" else "Preview: walking")
+ walk.pressed.connect(func():
+  var modes=["walk","work","carry","idle"]
+  sprite.motion=modes[(modes.find(sprite.motion)+1)%modes.size()]
+  walk.text="Preview: "+{"walk":"walking","work":"working","carry":"carrying","idle":"standing"}[sprite.motion])
+ var turn=Button.new();turn.text="Turn";turn.position=Vector2(185,313);turn.size=Vector2(94,28);compact_button(turn);holder.add_child(turn)
+ turn.pressed.connect(func():
+  var views=[Vector2(1,.45),Vector2.DOWN,Vector2(-1,.45),Vector2(-1,-.7),Vector2.UP,Vector2(1,-.7)]
+  sprite.direction=views[(views.find(sprite.direction)+1)%views.size()])
  var baseline=Button.new();baseline.text="Baseline look";baseline.position=Vector2(4,278);baseline.size=Vector2(158,28);baseline.add_theme_font_size_override("font_size",14);compact_button(baseline);holder.add_child(baseline)
  baseline.pressed.connect(func():
   var defaults=HoldAppearance.defaults()

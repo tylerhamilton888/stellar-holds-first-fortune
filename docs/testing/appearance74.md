@@ -1,0 +1,11 @@
+# Appearance continuity — 0.67.1 candidate
+
+Baseline: published 0.67.0, remote main 634778d30d6b261e552093ed6ddedc3690f5aecd. Pre-change recovery: recovery/pre-appearance74 and verified local pre-appearance74.bundle (requires pre-firsthour73).
+
+Confirmed defect: town-walk contact metadata copied historical source paths instead of inheriting current core corrections. Male5 alternated between the retired moustache-only painting and the corrected full beard. Contacts now inherit the canonical complete pose, including source overrides and crop exclusions. Generic art.dwarf no longer falls back to composite actors outside surface/mine contexts.
+
+Source-pigment calibration aligns hair brightness/saturation across frame families while preserving painted shading. It is measured offline and does not alter source pixels. The derived cache revision changes; old 0.66 frames cannot be reused. Passing-pose scale is corrected; bald-crown male6 and ponytail female6 receive complete replacement side-walk sequences. Creator gains idle/work/carry previews and turn controls, using the same whole-character backend.
+
+Native identity boards, creator, town and tavern captures are in qa74 outside the repository. Initial checks found excessive male5 passing-pose height variation; corrected registration passed the final rerun. The greatbeard utility atlas also had truncated crops; complete component registration restores the boots and anatomical scale. Final native appearance checks: 64 passed. Related native loading/menu/orientation/ambient/equipment checks: 104 passed. All fourteen identity boards and actual creator/town/tavern scenes were visually inspected. Do not claim release acceptance until source and exact-package checks complete. Original saves, names, sculpts, work mechanics, inventories and source artwork are preserved.
+
+Original artwork was transferred in small verified chunks after interrupted large calls. Isolated import run 39836928263 succeeded and registered the expected source blob 9bbe65e7fc1ac2a1084008bfdebed118600a0535; transfer helpers stay outside runtime/main. Source SHA256: 7e3ed8b8fb87eddf590f4ba82cb2bfeb21f090a2e5c17edd4a8194b14eaf5999.

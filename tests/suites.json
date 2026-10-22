@@ -25,7 +25,8 @@
       "ancestral",
       "disciplines",
       "polish",
-      "firsthour"
+      "firsthour",
+      "appearance"
     ],
     "modular": [
       "modular",
@@ -121,6 +122,9 @@
     ],
     "mining-only": [
       "mining"
+    ],
+    "appearance": [
+      "appearance"
     ]
   },
   "cases": {
@@ -195,6 +199,10 @@
     "firsthour": {
       "script": "tests/firsthour73.gd",
       "marker": "FIRSTHOUR73"
+    },
+    "appearance": {
+      "script": "tests/appearance74.gd",
+      "marker": "APPEARANCE74"
     }
   }
 }

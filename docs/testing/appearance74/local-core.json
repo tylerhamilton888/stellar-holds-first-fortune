@@ -1,0 +1,42 @@
+[
+  {
+    "test": "loading",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 19,
+    "seconds": 67.09
+  },
+  {
+    "test": "menus",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 9,
+    "seconds": 42.1
+  },
+  {
+    "test": "orientation",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 62.45
+  },
+  {
+    "test": "ambient",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 36,
+    "seconds": 74.46
+  },
+  {
+    "test": "equipment",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 20,
+    "seconds": 51.56
+  }
+]

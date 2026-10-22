@@ -1,3 +1,10 @@
+# 0.67.1 — Familiar Faces
+
+- Town contacts inherit current canonical beard/hair corrections instead of old PNG paths.
+- Shared whole-character previews and generic NPC rendering; creator pose and turn controls.
+- Measured hair pigment and passing-pose scale calibration, two complete walk redraws, and corrected greatbeard utility crops.
+- Versioned derived cache refresh; saved identities and gameplay systems remain intact.
+
 # 0.67.0 — A Good Day’s Work
 
 - Outdoor equipment has solid bases and reachable work poses; woodcutting stops when moving or blocked from its stance.

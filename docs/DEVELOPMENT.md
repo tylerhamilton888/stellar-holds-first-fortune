@@ -1,3 +1,7 @@
+## Character continuity owner
+
+Town contact poses inherit current core metadata, including corrected source overrides; never copy historical PNG paths back into a second animation table. appearance74 frames override full sequences/crops only where authored. Hair calibration is measured by tools/calibrate_appearance74.py after registration; regenerate it when source selection changes. Keep tests/appearance74.gd in source and exact-export acceptance. Preview, actors and generic art.dwarf use the whole-character backend.
+
 # Development workflow
 
 ## One source of truth

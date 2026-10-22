@@ -1,9 +1,9 @@
-# The Stellar Holds — 0.67.0: A Good Day’s Work
+# The Stellar Holds — 0.67.1: Familiar Faces
 
-A focused first-hour pass: grounded work interactions, clearer first-shift guidance, a room you can furnish, and less unnecessary work during interactions and area preparation.
+Town walks and character creation now retain the corrected character artwork. Historical contact poses could bypass later beard and hairstyle repairs, causing a visible switch between old and modern drawings mid-stride.
 
-Hold E works supplied stations; Shift+E collects output. Shift+B crafts equipment, with a placement preview showing nearby compatible stockpiles. Hold-owned supplies remain reserved. Woodcutting plants the Dwarf before striking and stops when you move.
+Hair pigmentation is calibrated across animation sheets, passing-pose scale is steadier, and the bald-crown and high-ponytail designs have matching complete side-walk sequences. The greatbeard utility crops retain the full figure and boots. Derived artwork caches refresh automatically.
 
-In your starting quarters, O opens illustrated furnishing plans. Craft and place chairs, lanterns, tables, chests, shelves, desks or beds using materials in your pack. Green fits; red is blocked. Your original bed, chest and letter-writing desk remain usable, and the entrance aisle stays clear.
+Character creation now previews standing, walking, working and carrying, with a Turn button. Existing names, appearance choices, saves and gameplay progression are preserved.
 
-Existing saves and approved whole-painted characters are preserved. No new stamina chores, brewing rewrite or wholesale animation redraw is included. Extract the complete Windows ZIP into a new folder and keep FirstFortune.exe beside FirstFortune.pck.
+Extract the complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. The first visit after this artwork correction prepares fresh cached frames.
