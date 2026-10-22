@@ -3,6 +3,7 @@ extends Control
 var profile:Dictionary=HoldAppearance.defaults()
 var clock=0.0
 var motion="walk"
+var direction=Vector2(1,.45)
 var viewport:SubViewport
 var canvas:Node2D
 func _ready():
@@ -15,4 +16,5 @@ func render():
  canvas.draw_rect(Rect2(2,83,92,7),Color("526c69"))
  canvas.draw_rect(Rect2(2,90,92,6),Color("2b454e"))
  for i in 7:canvas.draw_rect(Rect2(3+i*14,84,12,1),Color("95a080"))
- HoldDrawnAnimation.paint(canvas,Vector2(48,83),profile,Vector2(1,.45),motion=="walk",clock,1.15,Vector2.ZERO,"pick" if motion=="work" else "",fposmod(clock,.64)/.64)
+ var action="pick" if motion=="work" else "carry_stone" if motion=="carry" else ""
+ HoldWholeFrames.paint(canvas,Vector2(48,83),profile,direction,motion in ["walk","carry"],clock,1.15,Vector2.ZERO,action,fposmod(clock,.64)/.64)

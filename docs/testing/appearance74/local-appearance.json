@@ -1,0 +1,10 @@
+[
+  {
+    "test": "appearance",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 57.47
+  }
+]

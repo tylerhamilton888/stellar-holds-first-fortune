@@ -1,3 +1,7 @@
+# 0.67.1 appearance check
+
+Try the grand moustache/full-beard, bare-crown, cropped-hair and high-ponytail designs in character creation. Switch hair colors, cycle walking/work/carry/standing and turn the preview. Watch neighbors walk, stop and drink; their beard, hairstyle, color and stature should remain recognizable. Check the greatbeard Dwarf's boots while drinking or working. Existing saves are supported; the first artwork preparation uses a new cache revision.
+
 # 0.67.0: the first working day
 
 Existing saves remain supported. A fresh character is useful for testing Ivar’s arrival and the first-shift introduction; it is not required for furnishing your quarters.
