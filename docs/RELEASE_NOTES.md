@@ -1,11 +1,13 @@
-# The Stellar Holds — 0.65.0: Work & Knowledge
+# The Stellar Holds — 0.66.0: Hearth & Stone
 
-Open Disciplines with **Y**, or through your inventory, pause menu or the Survey Office. Thirteen clearly labeled tabs have original stone-and-brass emblems, readable benefits, work progress and explicit unlock requirements. The world pauses while you browse. Tab/Enter and Escape are supported; underground U unloading and T crew assignment remain unchanged.
+Free-hand side walking now shares the complete passing poses used by town residents. The distance-calibrated stride is shorter, reducing sliding without slowing movement. Existing whole painted tool and carrying frames remain intact.
 
-Twelve disciplines now earn mastery from completed work. Thirteen optional techniques improve ore recovery, stone and timber output, metal/engineering production, harvests, fishing, gathering, dodge recovery, staffing and hauling capacity. Existing research methods appear in the relevant paths and retain their established equipment and construction unlocks.
+Buildings now sort at their physical front edge, keeping your Dwarf visible outside the wall. Painted slate roofs, stone sides and rear coping depict the full solid building mass. Painted mountain bedrock anchors the outer ward boundaries while the distant works remain visible through shafts.
 
-Forestry and Woodworking earn separate credit. Existing work, research, hauling milestones, inventories, quests and saves are preserved. Learning a technique does not consume experience. Overseer skill does not grant a civic title or permission to take communal stock.
+Quarters, the tavern, exchange and offices gain deliberate seating, shelving and lighting groups, with original woven rugs. Room dimensions and saved furnishing positions are retained. Beds, writing desks, hosts, stairs and exits remain usable.
 
-This is an expandable first tier. Brewing has a clearly marked tab awaiting its dedicated production loop; a full brewing system and endgame discipline trees are not included.
+Menus gain consistent selected tabs, direct switching among Journal/Pack/Gear/Skills/People/Directions/Guide, pack search, keyboard-following scroll and explicit pause behavior for personal menus. Nested screens retain Back; repeated peer-tab switching no longer accumulates history.
 
-Extract the complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. Earlier releases remain available. Native Linux rendering and exact-package checks do not establish performance or audible quality on every Windows device.
+This is a presentation and usability pass. Existing progression, mining, resources and save structure are preserved. Roof access and a new textile crafting system are not introduced.
+
+Extract the complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. Native rendering and exported-package checks do not establish Windows hardware performance or audio quality on every device.

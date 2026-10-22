@@ -1,10 +1,20 @@
-# 0.66.0 — Hearth & Stone candidate
+# 0.66.0 — Hearth & Stone: published and verified
+
+One complete Windows ZIP is published at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.66.0. Uploaded size 707,549,210 bytes and SHA256 5a1312685202057d74448d759e487770868aa5e0725d25adcdea137a63f31d4a match the clean hosted build report. Tag v0.66.0 points to release source 5af5f8e546546b4e0b06940516afa4aa5b4f57fd. PR #15 merged at 87afd5ee79dbae4b17bcb13bfdf1e58dd5e7da46 with the identical verified tree.
+
+Hosted source run 39707677406 passed import and all seventeen gameplay cases. Release run 39707717931 passed all 3,199 PCK integrity entries and all eight exact-export cases. Local verification passed 311 source checks and 315 exact-package checks; gameplay-scale native visuals were inspected. Evidence: testing/polish72. Windows hardware performance/audio and artistic acceptance remain player-device testing.
+
+Continue from GitHub main. Final local recovery tag verified-polish72-delivery has a separately verified incremental bundle requiring pre-polish72. Earlier backups and releases remain intact. The release tag preserves the delivered source. The user explicitly approved the original texture-sheet upload and isolated import workflow within the agreed scope; import run 39707494879 verified its hashes. Transfer helpers remain on asset/hold72 and are excluded from main and the runtime.
+
+Next: player feedback on free-hand side-walk cadence, front-door collision/readability, room composition and menu navigation. This pass refines existing complete action frames; it does not redraw the entire animation library. No new roof-access gameplay or textile economy was introduced.
+
+# 0.66.0 — implementation record
 
 Local baseline pre-polish72 preserves b8859ccd38b86adc099fdb37af0e85c3e0115514; verified recovery/pre-polish72.bundle requires pre-disciplines71. GitHub recovery/pre-polish72 preserves e9ce5175679b5295fe1e9ab79b8c6396fa4a1ad4. Earlier releases remain untouched. Work branch polish/hold72.
 
 Player and resident free-hand side walking now share the complete passing drawings. Distance-driven stride is 57.2 units per cycle (formerly 78), retaining movement speed, tools and whole painted actors. Building draw order follows the physical front edge so a player outside the wall remains visible. Painted slate roofs, side masonry and rear coping show the existing full collision envelope; mountain bedrock anchors the outer boundaries. Rooms retain their dimensions and saved placements, gaining grouped seating, shelves, lighting and original woven rugs.
 
-Menus have consistent selected peer tabs including Skills, shallow peer navigation, ordinary Back for nested screens, pack search, keyboard-following scroll and explicit personal-menu pause behavior. Art provenance and exact prompt: assets/hold-kit72/README.md. Native targeted suite passed 311 checks, including all wards, representative interiors, escort, resident routes, stairs, held equipment, menus, disciplines and reload. Visuals inspected at gameplay scale. Exact export and hosted publication still pending; v0.65.0 remains the published release until separately verified.
+Menus have consistent selected peer tabs including Skills, shallow peer navigation, ordinary Back for nested screens, pack search, keyboard-following scroll and explicit personal-menu pause behavior. Art provenance and exact prompt: assets/hold-kit72/README.md. Native targeted suite passed 311 checks, including all wards, representative interiors, escort, resident routes, stairs, held equipment, menus, disciplines and reload. Visuals inspected at gameplay scale. Exact export and hosted delivery subsequently passed; see the verified delivery record above.
 
 # 0.65.0 — Work & Knowledge: published and verified
 

@@ -1,3 +1,12 @@
+# Hearth & Stone — 0.66.0
+
+- scripts/whole_frames.gd / drawn_locomotion.gd: shared complete side-walk passing drawings and distance-calibrated stride.
+- scripts/hold_masonry_art.gd / assets/hold-kit72: painted full building envelopes, slate roofing and original surface-sheet provenance.
+- scripts/hold_ward_design.gd: mountain bedrock adjoining the playable wards.
+- scripts/room_layout.gd: grouped furnishings and woven rugs, retaining saved room dimensions and service anchors.
+- scripts/menu_view.gd / main.gd / discipline_view.gd: selected peer tabs, shallow navigation, pack search and personal-menu pause behavior.
+- tests/polish72.gd / docs/testing/polish72.md: source, exact-package, geometry and visual-review evidence.
+
 # The Hold of Three Hearths — 0.64.0
 
 - scripts/hold_ward_design.gd: deterministic civic, social, industrial and domestic composition; cached paving; scenic mountain depth.

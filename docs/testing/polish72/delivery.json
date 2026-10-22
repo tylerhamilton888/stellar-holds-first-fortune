@@ -1,0 +1,27 @@
+{
+  "version": "0.66.0",
+  "source_run": 39707677406,
+  "release_run": 39707717931,
+  "release_job": 119591563418,
+  "release_commit": "5af5f8e546546b4e0b06940516afa4aa5b4f57fd",
+  "merge_commit": "87afd5ee79dbae4b17bcb13bfdf1e58dd5e7da46",
+  "tag": "v0.66.0",
+  "tag_verified": true,
+  "asset": "Stellar-Holds-First-Fortune-0.66.0-Windows.zip",
+  "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.66.0/Stellar-Holds-First-Fortune-0.66.0-Windows.zip",
+  "size": 707549210,
+  "sha256": "5a1312685202057d74448d759e487770868aa5e0725d25adcdea137a63f31d4a",
+  "digest_matches_build": true,
+  "clean_build": true,
+  "pack_cases_passed": [
+    "ambient",
+    "continuity",
+    "living",
+    "civic",
+    "firstshift",
+    "ancestral",
+    "disciplines",
+    "polish"
+  ],
+  "original_art_sha256": "8b103bc1a813dff9dc0563c204488439feabd049aad874dea821b131c33b8281"
+}
