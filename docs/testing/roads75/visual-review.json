@@ -43,5 +43,19 @@
       "source": "/workspace/scratch/e70a3a957e2c/qa75/services/08-farm-work.png"
     }
   ],
-  "minor_follow_up": "Work-board keyboard-help footer extends below the 1280x720 viewport; primary delivery/lease/guide/close controls are visible and tested."
+  "minor_follow_up": "Work-board keyboard-help footer extends below the 1280x720 viewport; primary delivery/lease/guide/close controls are visible and tested.",
+  "published_pack_spot_review": {
+    "release_run": 39870964362,
+    "review": "Stonebridge and Greenhearth native screenshots from the published package reviewed at gameplay scale; character scale, paths and buildings match the accepted composition.",
+    "captures": [
+      {
+        "name": "01-stonebridge.png",
+        "sha256": "59b9998e1f383ce3a07ef409d40b6f1abe14026f1da7c30f93b2fcfff990bc53"
+      },
+      {
+        "name": "03-greenhearth.png",
+        "sha256": "893ee74980add4e04df08746ca25de1ff3eda4b2f73012dba67d213ab3cf13f9"
+      }
+    ]
+  }
 }

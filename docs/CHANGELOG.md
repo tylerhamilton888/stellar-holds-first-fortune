@@ -4,6 +4,7 @@
 - Stonebridge wayside services and mine staging, Pinewood loan processing, Greenhearth allotments and farm services.
 - Real local deliveries, cooking/storage/rest and canonical local residents.
 - Existing artwork, excavation, saves, resource ownership and earlier releases preserved.
+- Full cold validation and release budgets expanded; all existing verification and publication gates remain enforced.
 
 # 0.67.1 — Familiar Faces
 

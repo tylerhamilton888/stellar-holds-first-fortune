@@ -1,5 +1,7 @@
 # Roads & Hearths — 0.68.0
 
+Published v0.68.0. testing/roads75 records native, hosted source, exact-package and delivery evidence. Recovery: verified-world75-delivery.
+
 - scripts/roads.gd: physical region connections, smallholder/wayside life, delivery boards, loans and allotment leasing.
 - scripts/surface.gd / deepworks_play.gd: movement thresholds, reciprocal mine exits and existing work/cargo integration.
 - scripts/homestead_life.gd / state.gd: local allotment scope and exact old-save backup; existing crop mechanics remain authoritative.
