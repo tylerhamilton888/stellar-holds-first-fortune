@@ -1,0 +1,56 @@
+{
+  "version": "0.68.0",
+  "baseline_main": "1e2374f2cd87f9a4830923c4dc31136e0638eb03",
+  "local_runtime": "c48a058d928fff73d8625b4899e0ab8a1c0b0da4",
+  "remote_runtime": "a64af2e41dd5d645833173f1020ecafe452fe649",
+  "runtime_tree": "441ba3da8dfa177cb546e6e3888d2aa10a80730d",
+  "pull_request": 21,
+  "source_run": 39870961710,
+  "source_job": 120144988451,
+  "release_run": 39870964362,
+  "release_job": 120144997996,
+  "status": "Published and verified; runtime PR21 merged with exact tree match.",
+  "user_authorization": "Explicit approval to merge following the combined upload, checked merge and single-ZIP release proposal.",
+  "prior_source_run": 39866784698,
+  "prior_release_run": 39866867875,
+  "ci_budget_correction": "Only time budgets changed: source45min, release80min with45min source wait. Game/scripts/assets/tests/tools unchanged. Fresh full gates started.",
+  "merge_commit": "ea38817cb27fe90ae531b1f037926b0be2af2c73",
+  "source_status": "success",
+  "source_checks": 784,
+  "source_cases": 20,
+  "source_artifact": 12466519260,
+  "source_artifact_sha256": "9a2214c0e484759c18f441427cb2b2630f908ec2b80f823d976173fa6a881852",
+  "release_status": "success",
+  "release_checks": 477,
+  "release_cases": 11,
+  "release_artifact": 12467702513,
+  "release_artifact_sha256": "24b34a222fcfc843435976ade3e00fb9aeeaf73a3fcef36e571fe21a0a08c184",
+  "pck_entries": 3208,
+  "release": {
+    "id": 421311687,
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.68.0",
+    "tag": "v0.68.0",
+    "target": "a64af2e41dd5d645833173f1020ecafe452fe649",
+    "assets": [
+      {
+        "id": 667432766,
+        "name": "build.json",
+        "size": 822,
+        "digest": "sha256:6e10bfb3b1b0e2588e935d8192d7098aa5fd26eb242b122b4fb704408dc5eb9a",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.68.0/build.json"
+      },
+      {
+        "id": 667432765,
+        "name": "Stellar-Holds-First-Fortune-0.68.0-Windows.zip",
+        "size": 709006709,
+        "digest": "sha256:6381876c2532a492dfe3ebc0ebca5d3b9ef93c61340cc31d598eb6a8a139284b",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.68.0/Stellar-Holds-First-Fortune-0.68.0-Windows.zip"
+      }
+    ]
+  },
+  "tag_commit": "a64af2e41dd5d645833173f1020ecafe452fe649",
+  "zip_sha256": "6381876c2532a492dfe3ebc0ebca5d3b9ef93c61340cc31d598eb6a8a139284b",
+  "zip_bytes": 709006709,
+  "build_metadata_digest_verified": true,
+  "hosted_error_or_leak_lines": 0
+}
