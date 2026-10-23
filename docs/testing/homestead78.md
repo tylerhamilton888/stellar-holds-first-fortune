@@ -11,3 +11,10 @@ Local source/regression: 492 assertions across 12 cases passed. Local exported h
 PR #26 merged at f058b996473324ad15f7edfc6956c6fdad86c3f0, tree 35109513bc14533c7cb3ccd2e10229e28e2af3d4 identical to source 6f595bac649ac266c989a1fe2e3d45c0bed52fb9. Publication alone failed with GitHub HTTP 500; no release existed on inspection and the failed job was retried. Attempt 2 publication and final asset digest verification remain pending. Attempt-1 unpublished ZIP: 719,947,150 bytes, SHA256 ff4f87479897b5f9fa1ceafbed4eb3c2fe9a7d47d7ad46d9759db30cfc16177f. Do not treat that as a published asset.
 
 Verified local incremental bundle qa78/homestead78-remote-source.bundle preserves source 6f595ba and requires main baseline 80edbc4. Earlier source archives/bundles and recovery/pre-homestead78 remain intact. Windows device performance/audio remain player testing.
+
+
+## Final delivery
+
+Hosted source run 39979630313 passed import and all 23 gameplay cases. Release run 39980955955 attempt 2 passed all 14 exact-export cases and published one complete Windows ZIP. Uploaded size 719,947,148 bytes and SHA256 61f85acd1c343c2b9386c0a7842adbc265f719ea9aa4a108562cc32ef0b7d2d2 match the hosted build report and release asset digest. Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.70.0. The first attempt's GitHub HTTP 500 was resolved by retrying; no old release was replaced.
+
+The verified source tree and gameplay are unchanged between attempts. Local verified-homestead78 bundle (requiring 80edbc4) and remote recovery/verified-homestead78 remain available; final delivery documentation has its own checkpoint. Windows hardware performance/audio remain player testing.

@@ -22,4 +22,4 @@ HoldHearth owns the small additive surface.hearth78 record, comfort presentation
 
 Original SVG crop/fish/meal illustrations: assets/hearth78. Approved whole-character hoe/watering/harvest/fishing artwork is reused; planting/tending use the complete hoe poses. New animation anatomy is outside this milestone.
 
-Verification status and evidence belong in testing/homestead78.md. Source and exported gameplay are verified; publication retry status is recorded there.
+Verification status and evidence belong in testing/homestead78.md. Source, exported gameplay and the published single-ZIP release are verified.

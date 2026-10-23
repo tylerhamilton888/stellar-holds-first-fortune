@@ -1,8 +1,8 @@
-# 0.70.0 — Hearth & Homestead: verified source, merged; publication retry pending
+# 0.70.0 — Hearth & Homestead: published, verified and merged
 
 Continue from main f058b996473324ad15f7edfc6956c6fdad86c3f0 (PR #26). Its tree 35109513bc14533c7cb3ccd2e10229e28e2af3d4 matches verified source 6f595bac649ac266c989a1fe2e3d45c0bed52fb9. Rivers replace the proposed isolated pools: fish along accessible banks at the claim, Stonebridge and Greenhearth. Four forgiving crops, four meals, home comfort, mastery techniques and Hedrik's optional supper favor are implemented. Existing saves and approved characters remain intact.
 
-Hosted source run 39979630313 passed import and all 23 gameplay cases. Release run 39980955955 attempt 1 passed the 3,252-entry pack audit and all 14 exact-export cases (621 assertions), then GitHub returned HTTP 500 while creating the release. No v0.70.0 release existed when checked; the failed job was retried. Check attempt 2 before claiming publication. Latest verified downloadable release remains v0.69.0 until the retry succeeds and its ZIP digest is compared with the build log. Do not replace any existing release.
+Hosted source run 39979630313 passed import and all 23 gameplay cases. Release run 39980955955 attempt 2 passed all 14 exact-export cases and published one complete Windows ZIP. Uploaded size 719,947,148 bytes and SHA256 61f85acd1c343c2b9386c0a7842adbc265f719ea9aa4a108562cc32ef0b7d2d2 match the hosted build report and release asset digest. Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.70.0. The first attempt's GitHub HTTP 500 was resolved by retrying; no old release was replaced.
 
 Local focused/regression checks passed 492 assertions across 12 cases; exact-export homestead passed 69. Hosted export gardening, watering, riverbank, kitchen and home visuals reviewed. Downloaded attempt-1 evidence SHA256: 8c6be951b8e79feeb515ae3d89f086fac7bb29439d9e34bcd1c571fc06a3adb7. Prior checkpoints remain intact. See testing/homestead78.md for recovery and limitations.
 
