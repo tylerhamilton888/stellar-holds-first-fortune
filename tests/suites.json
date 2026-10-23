@@ -29,7 +29,8 @@
       "appearance",
       "roads",
       "work",
-      "keldrath"
+      "keldrath",
+      "homestead"
     ],
     "modular": [
       "modular",
@@ -187,6 +188,19 @@
       "continuity",
       "polish",
       "work"
+    ],
+    "homestead-preview": [
+      "homestead"
+    ],
+    "homestead-regression": [
+      "roads",
+      "polish",
+      "work",
+      "disciplines",
+      "keldrath",
+      "world",
+      "handworks",
+      "mining"
     ]
   },
   "cases": {
@@ -277,6 +291,10 @@
     "keldrath": {
       "script": "tests/keldrath77.gd",
       "marker": "KELDRATH77"
+    },
+    "homestead": {
+      "script": "tests/homestead78.gd",
+      "marker": "HOMESTEAD78"
     }
   }
 }

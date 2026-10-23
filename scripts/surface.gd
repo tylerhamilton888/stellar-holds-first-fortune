@@ -103,6 +103,7 @@ func spawn(id:String)->Vector2:
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
  return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"greenfields":Vector2(940,285),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
 func enter(id:String,at:Vector2=Vector2.INF):
+ if g.fieldwork:g.fieldwork.cancel()
  ensure()
  if id=="claim" and g.state.claim_id=="":g.open_panel("charters");return
  if id=="room:throne" and HoldOnboarding.ensure(g.state).fresh and HoldOnboarding.stage(g.state)<4:g.notify("Ivar's first-shift reference opens the royal audience.");return
@@ -171,6 +172,7 @@ func points()->Array:
    if g.room_id=="tavern":
     var guests=HoldNpcPresence.tavern_guests(g.state)
     for i in mini(3,guests.size()):result.append(spot(270+i*170,550,"Speak with "+g.state.npc(guests[i]).first_name,"talk:"+guests[i]))
+ result.append_array(g.hearth.points())
  result.append_array(roads.points())
  result.append_array(HoldHouseholds.points(self))
  if room():
@@ -256,6 +258,7 @@ func start_rest(point:Dictionary)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="hearth":g.open_panel("hearth");return
  if id=="road_kitchen":g.open_panel("road_kitchen");return
  if id=="road_order":g.open_panel("road_order");return
  if id.begins_with("road_folk:"):roads.speak(int(id.trim_prefix("road_folk:")));return
@@ -390,6 +393,8 @@ static func snap_furnishing(p:Vector2)->Vector2:return (p/FURNITURE_GRID).round(
 func cancel_placement():
  placing="";moving_furnishing={}
 func start_placement(kind:String):
+ if kind in ["pantry","hearth_table"] and not g.state.tech.has("hearthkeeping"):
+  g.notify("Research Hearthkeeping for these plans. Ordinary shelves and tables provide the same comfort.");return
  cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
  g.notify("Place on the fine grid. LMB builds; right click cancels. Keep approaches clear.")
 func can_furnish()->bool:return area=="room:home" or area=="claim" or area.begins_with("home:")
@@ -427,6 +432,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
    for y in range(int(base.position.y),int(base.end.y)+1,5):
     if not house.on_floor(Vector2(x,y),house.level()):return false
  for point in points():
+  if point.action=="hearth":continue
   if not moving_furnishing.is_empty() and point.action.begins_with("chest:") and g.state.surface.chests.get(point.action.trim_prefix("chest:"),{})==moving_furnishing:continue
   if moving_furnishing.get("kind","")=="bed" and point.action=="house_rest" and point.get("bed",Vector2.INF)==Vector2(moving_furnishing.x,moving_furnishing.y):continue
   if point.action.begins_with("chest:") or point.action=="house_rest":
@@ -442,9 +448,11 @@ func place(p:Vector2)->bool:
  if not moving_furnishing.is_empty():
   moving_furnishing.x=p.x;moving_furnishing.y=p.y
   cancel_placement();g.sound.effect("build");g.save_game();return true
+ if placing in ["pantry","hearth_table"] and not g.state.tech.has("hearthkeeping"):return false
  var cost=HoldFurnishings.ITEMS[placing].cost
  if not g.state.afford(cost):g.notify("Bring "+HoldFurnishings.cost_text(placing)+" in your pack.");return false
  for k in cost:g.state.add(k,-cost[k])
+ HoldDisciplines.award(g.state,"woodworking")
  if placing=="chest":
   var serial=int(g.state.surface.get("next_chest",0))
   while g.state.surface.chests.has("chest:"+str(serial)):serial+=1
@@ -503,6 +511,7 @@ func chest_panel():
   g.small_button(line,"Store 10",func():transfer(key,10,true);g.open_panel("storage",false))
   g.small_button(line,"Take 10",func():transfer(key,10,false);g.open_panel("storage",false))
 func home_panel():
+ g.button(g.panel_body,"Hearth & Homestead · meals and comfort",func():g.open_panel("hearth"))
  g.button(g.panel_body,"River & Root · fishing and gardening",func():g.open_panel("fieldwork"))
  g.button(g.panel_body,"Craft workstations & stockpiles · Shift+B",func():g.open_panel("handworks"))
  ensure();g.label(g.panel_body,"A HEARTH OF YOUR OWN",22,Color("edc98a"))
@@ -687,6 +696,7 @@ func draw():
  world.speech_overlay()
  g.handworks.overlay()
  g.fieldwork.draw()
+ g.hearth.draw_table()
  g.fight.overlay()
  if rest_time>0:
   g.draw_rect(Rect2(0,74,960,424),Color(.04,.08,.10,sin(rest_elapsed/1.4*PI)*.6))
@@ -716,6 +726,7 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
   elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
   elif g.handworks.pushing():animation="push"
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
+ if animation in ["plant","tend"]:animation="hoe"
  if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not g.opening_scene is HoldArrivalEscort:animation=g.hotbar.pose()
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
  g.draw_set_transform(-cam)
@@ -771,6 +782,7 @@ func draw_outdoors():
   for i in 9:
    var p=Vector2(170+i*190,250+sin(i)*30);g.draw_texture_rect(FIR,Rect2(p-Vector2(90,210),Vector2(180,230)),false,Color("8ca291"))
 
+ g.hearth.draw_water()
  roads.ground()
 
 func scenery(p:Vector2,index:int,width:float):

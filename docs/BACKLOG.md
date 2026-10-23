@@ -1,3 +1,7 @@
+# Hearth & Homestead follow-up
+
+0.70.0 implementation in progress. Player acceptance: crop readability, riverbank access, meal pacing, comfort clarity and household art alongside the approved Dwarfs. More crops, seasonal systems, brewing production and underground farming remain separate future work. Preserve the low-pressure sandbox: no penalties for leaving a hobby alone.
+
 # Keldrath household and building identity
 
 Implemented in Stone & Hearth: individual household identities/fronts/interiors, separate public façades, the Hall of Names and shared Copperkettle quarters with a double bed. Preserve the three wards, Great Stairs, real routes, services and saves. Player review should assess architectural weight and room composition. Broader city expansion and simulated household spouses/children remain future work; the existing nine residents and canonical couple are preserved.

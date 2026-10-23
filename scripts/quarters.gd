@@ -1,8 +1,9 @@
 class_name HoldQuarters
 extends RefCounted
 # The starting room uses the existing furnishing catalogue and saved surface records.
-const PLANS=["chair","lamp","table","tea_table","chest","bookcase","desk","bed"]
+const PLANS=["pantry","hearth_table","hearth","chair","lamp","table","tea_table","chest","bookcase","desk","bed"]
 static func panel(g):
+ g.button(g.panel_body,"Hearth & Homestead · meals and comfort",func():g.open_panel("hearth"))
  var local=g.surface.area=="room:home"
  g.label(g.panel_body,"A hearth to come home to",21,Color("edc98a"))
  var facts=g.state.surface.facts

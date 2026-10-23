@@ -1,9 +1,11 @@
-# 0.69.0 — Stone & Hearth
+# 0.70.0 — Hearth & Homestead
 
-Keldrath's Kin Galleries now have nine recognizable households, with individual names, original stone/timber/copper frontages and varied interiors. The survey office, foreman's office and practice hall each have their own identity. Larger structural piers and practical street channels reinforce the mountain hold.
+Grow turnips, copper carrots, barley and hearthcaps: loosen soil, plant, water once and optionally tend for an earlier harvest. Ripe crops wait for you without withering. Barley is ready for future brewing; brewing itself remains future work.
 
-Visit the Hall of Names in Crownward, or take the Copper Kettle's stairs to Hedrik and Orla's shared quarters. Married households have a proper double bed with two pillows; selected family rooms retain a separate spare bed.
+Cast along the mountain tributary, Stonebridge current or Greenhearth riverbank. Local waters offer different catches; a bite waits until you are ready to reel in.
 
-Existing saves, approved whole-character art, work systems, public services and walking connections are preserved. Extract the complete Windows ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. Do not overwrite an older build folder.
+Cook root hotpot, barley bread, fish chowder and roasted char at home or a public kitchen. Serve supper at your own table for modest temporary benefits. Furnish for six kinds of comfort, with no need to repeat furniture or follow one style. Farming, fishing and woodworking offer new techniques; Hearthkeeping adds pantry and table plans. Hedrik has an optional supper favor. Every ingredient and meal can also be traded for.
 
-Native software-rendered checks and visual review cover household access, routes, stairs and save continuity. Windows device performance/audio and final artistic acceptance remain player testing.
+Existing saves, approved whole-character art, Keldrath, walking connections, mines, combat, quests and automation are preserved. No mandatory sleep, daily schedule or food decay is introduced.
+
+Extract the complete Windows ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. Do not overwrite an older build folder. Windows device performance/audio remain player testing.
