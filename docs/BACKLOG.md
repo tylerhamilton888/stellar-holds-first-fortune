@@ -1,6 +1,6 @@
 # Keldrath household and building identity
 
-Confirmed player report: all wards repeat the same three household labels and domestic façade/layout; King's Hall/Practice Bay and Survey Office/Foreman's Office reuse public fronts. Services themselves have unique entrances. See KELDRATH_IDENTITY_AUDIT.md for source evidence and bounded follow-up. Give existing households recognizable names/frontages/interiors and public buildings appropriate identities while retaining room IDs, doors, residents, saved furnishings and services. This is not yet implemented.
+Implemented in Stone & Hearth: individual household identities/fronts/interiors, separate public façades, the Hall of Names and shared Copperkettle quarters with a double bed. Preserve the three wards, Great Stairs, real routes, services and saves. Player review should assess architectural weight and room composition. Broader city expansion and simulated household spouses/children remain future work; the existing nine residents and canonical couple are preserved.
 
 # Workshop visual and interaction pass
 

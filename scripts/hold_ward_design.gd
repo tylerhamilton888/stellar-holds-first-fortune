@@ -134,6 +134,6 @@ static func frontage(w,b:Dictionary):
   # Small household nameplate beside the existing door, not an extra interaction.
   var r=Rect2(p+Vector2(42,-48),Vector2(55,18))
   g.draw_style_box(w.stone_style(Color("344749")),r)
-  HoldSurface.A.text(g,r.position+Vector2(5,12),["GRANITE","COPPER","DEEPMANTLE"][index],8,color)
+  HoldSurface.A.text(g,r.position+Vector2(5,12),HoldHouseholds.FIRST_NAMES[HoldNeighborhood.parts(b.home)[0]][index].to_upper(),8,color)
  elif b.get("id",-1)==8:
   HoldSurface.A.text(g,p+Vector2(-51,-69),"COPPER KETTLE",11,Color("edd3a1"))

@@ -1,3 +1,13 @@
+# 0.69.0 — Stone & Hearth: implementation, delivery pending
+
+Keldrath's nine households now have individual resident names, original ward-specific frontages and authored interiors. Crownward stone, Hearthward timber and Forgeward copper ventilation distinguish the Kin Galleries. Survey, foreman and practice buildings have separate painted identities. Great structural piers and flush service channels reinforce the inhabited mountain hold; existing doors, collision masses, routes and Great Stairs remain stable.
+
+The former closed Crownward frontage opens the Hall of Names, with a readable household register. Hedrik and Orla share upstairs quarters above the Copper Kettle, reached by a real stair, with one double bed and two pillows. Family upper rooms use shared double beds; selected spare beds remain separate. Canonical quest hosts stay at their services. This does not add player marriage or change existing player furnishings.
+
+Local native verification passed 379 checks across Keldrath, hold, living, civic, continuity, polish and work. A final focused rerun passed 47 checks after moving the couple's chest and improving review captures. Native household/frontage/room visuals reviewed. Exact-package and hosted gates remain pending; no release claim yet. Existing saves, whole-character artwork and work systems are preserved.
+
+Baseline f333b66eca1914ddf3b699b3cb21da3f4c27f67d is protected by recovery/pre-keldrath77 and a verified complete local source archive. Art provenance: assets/hold77/production.json. New tests: tests/keldrath77.gd. Owner authorization includes merge after checks and visual review.
+
 # 0.68.1 — Honest Work: published, verified and runtime merged
 
 The extra player bucket and legacy rock/arm overlay are removed. Existing personal cargo, shoulder loads and approved whole-character artwork remain intact. Five fixed workshop props now have level fronts and upright supports, shared by live equipment, construction previews and the workshop board.

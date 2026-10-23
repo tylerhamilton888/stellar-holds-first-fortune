@@ -1,3 +1,12 @@
+# 0.69.0 — Stone & Hearth
+
+- Nine distinct household fronts, resident nameplates and individual room arrangements across the three wards.
+- Separate survey office, foreman's office and practice hall artwork.
+- Monumental structural piers and practical street drainage reinforce the mountain hold.
+- Hall of Names opens the former unused Crownward frontage with a household register.
+- Hedrik and Orla share upstairs quarters and one proper double bed; family upper rooms gain double beds.
+- Existing room IDs, doors, resident routes, saves, characters and work systems remain compatible.
+
 # 0.68.1 — Honest Work
 
 - Removed the redundant player bucket and legacy rock overlay while retaining saved cargo.

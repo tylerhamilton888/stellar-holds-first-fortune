@@ -1,3 +1,7 @@
+# Implementation follow-up — Stone & Hearth
+
+The diagnosis below is historical. The nine homes now use unique original frontages and resident-qualified titles; room IDs and clan surnames remain stable. Public shared-front pairs now have separate art. Household lower floors have distinct arrangements; upper floors have one double bed plus selected spare beds. The former closed Crownward house is the Hall of Names. Hedrik and Orla share new upstairs quarters above their inn. No residents, story hosts or saved homes were reassigned.
+
 # Keldrath building repetition
 
 Player report during Honest Work delivery: buildings appear in multiple places, or carry repeated labels. Audited the current 0.68.1 layout and native 1280×720 civic captures. This is a confirmed presentation/content issue; no building runtime changes are included in 0.68.1.

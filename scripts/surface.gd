@@ -117,7 +117,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.state.switch_site("claim" if claim_site else "hold",g.geo)
  if id.begins_with("room:") or id.begins_with("home:"):
   if not room():return_area=old
-  elif id!=old:return_area="claim" if claim_site else ("crownward" if id in ["room:throne","room:research"] else "forgeward" if id in ["room:forge","room:practice"] else "hearthward")
+  elif id!=old:return_area="claim" if claim_site else ("crownward" if id in ["room:throne","room:research",HoldHouseholds.ARCHIVE] else "forgeward" if id in ["room:forge","room:practice"] else "hearthward")
  if old=="claim" and id!="claim":house.data().z=0
  area=id
  g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id in ["trail","greenfields"] else "hub")
@@ -159,6 +159,8 @@ func points()->Array:
    result.append(spot(700,550,"Stairs · "+("upper rooms" if parts[2]=="0" else "family hearth"),HoldNeighborhood.home_id(parts[0],int(parts[1]),1-int(parts[2]))))
   elif area.begins_with("home:") or area=="room:home":
    result.append({"p":HoldFurnishings.bedside(Vector2(290,420)),"name":"Bed · rest and save","action":"rest","bed":Vector2(290,420)});result.append(spot(735,537,"Writing desk · write home","letter"))
+  elif area==HoldHouseholds.LOFT:result=[]
+  elif area==HoldHouseholds.ARCHIVE:pass
   elif area in HoldRoads.ROOMS:pass
   elif area=="room:training":
    result.append(spot(660,570,"Borin’s training notes","training_notes"))
@@ -170,6 +172,7 @@ func points()->Array:
     var guests=HoldNpcPresence.tavern_guests(g.state)
     for i in mini(3,guests.size()):result.append(spot(270+i*170,550,"Speak with "+g.state.npc(guests[i]).first_name,"talk:"+guests[i]))
  result.append_array(roads.points())
+ result.append_array(HoldHouseholds.points(self))
  if room():
   for c in world.routines.people(area,g.state.elapsed):result.append({"p":c.p,"name":c.name+" · "+c.role,"action":c.interaction})
  if area=="claim" and house.level()==0:
@@ -198,8 +201,8 @@ func nearest()->Dictionary:
   if p.action=="letter" and (d>48 or g.player.y<p.p.y-8):continue
   if p.action.begins_with("citizen:") or p.action.begins_with("resident:") or p.action.begins_with("road_folk:"):d+=38 # Doors retain priority.
   if (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
-  if p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action)):
-   if not HoldNeighborhood.stair_access(g.player,p.p,96 if HoldNeighborhood.is_home(area) else 140):continue
+  if is_stair_point(p):
+   if not HoldNeighborhood.stair_access(g.player,p.p,96 if room() else 140):continue
   if p.action=="leave" and absf(g.player.x-p.p.x)>34:continue
   if d>=distance:continue
   if not clear_interaction(g.player,p.p):continue
@@ -217,11 +220,14 @@ func clear_interaction(a:Vector2,b:Vector2)->bool:
 func use():
  var p=nearest()
  if p.is_empty():g.notify("Walk to a doorway, signpost, chest or workstation and press E.");return
+ if p.action.begins_with("household_note:"):world.speech=HoldHouseholds.note(p.action.trim_prefix("household_note:"));world.speech_until=g.clock+18;g.notify(world.speech);return
  if p.action.begins_with("ward_notice:"):g.notify(HoldWardDesign.notice(p.action.trim_prefix("ward_notice:")));world.speech=HoldWardDesign.notice(p.action.trim_prefix("ward_notice:"));world.speech_until=g.clock+18;return
  if p.action.begins_with("terrace:"):g.notify("Walk along the Great Stair · movement stays in your hands.");return
  if is_stair_point(p):begin_stair(p);return
  action(p.action)
 func is_stair_point(p:Dictionary)->bool:
+ if area=="room:tavern" and p.action==HoldHouseholds.LOFT:return true
+ if area==HoldHouseholds.LOFT and p.action=="room:tavern":return true
  return p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action))
 func begin_stair(p:Dictionary):
  if not stair_trip.is_empty() or g.handworks.busy_hands():g.notify("Park your load at the landing before taking these town stairs.");return

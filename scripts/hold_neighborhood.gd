@@ -12,7 +12,7 @@ static func parts(area:String)->PackedStringArray:return area.trim_prefix("room:
 static func home_door(index:int)->Vector2:return Vector2([350,690,1490][index],1500)
 static func title(area:String)->String:
  var p=parts(area);var z={"crownward":1,"hearthward":0,"forgeward":-1}[p[0]]+int(p[2])
- return FAMILIES[int(p[1])]+" hearth · "+("upper rooms" if p[2]=="1" else "family room")+" · Z %+d" % z
+ return HoldHouseholds.title(area)+" · Z %+d" % z
 static func buildings(ward:String)->Array:
  var result=[]
  for i in 3:result.append({"p":home_door(i),"kind":"building","art":0,"width":[260.0,240.0,280.0][i],"id":-2,"home":home_id(ward,i)})
@@ -52,14 +52,7 @@ static func draw_gallery(w):
   w.s.house.material(3,Rect2(x,1620,80,40))
 static func room_objects(w,area_id:String="")->Array:
  if area_id=="":area_id=w.s.area
- var p=parts(area_id);var index=int(p[1]);var upper=p[2]=="1"
- var result=[w.furn("lamp",220,305),w.furn("lamp",740,305)]
- if upper:
-  result.append_array([w.furn("bed",290,410),w.furn("bed",430,410),w.furn("desk",570,360),w.furn("bookcase",270,560)])
- else:
-  result.append_array([w.furn("hearth",340,335),w.furn("tea_table",450,475),w.furn("chair",385,490),w.furn("chair",515,490),w.furn("counter",650,365),w.furn("bookcase",265,360)])
- if index==1:result.append(w.furn("lamp",570,570))
- return result
+ return HoldHouseholds.family_objects(w,area_id)
 static func resident(w,index:int,p:Vector2,walking:bool=false,aim:Vector2=Vector2.DOWN,gait:float=0,ward:String="")->Dictionary:
  if ward=="":ward=parts(w.s.area)[0] if is_home(w.s.area) else w.s.area
  var key="house:"+str(w.g.state.seed_value)+ward+str(index)
