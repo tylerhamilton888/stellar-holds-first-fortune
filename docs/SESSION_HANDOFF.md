@@ -1,3 +1,7 @@
+# 0.71.0 — Beneath the Stone Crown: locally verified, publication pending
+
+Recovered the frozen session into isolated branch feature/royal79-recovered. Expanded King's Hall, royal walking/sitting, the in-world audience, mounted signs, grounded ward surrounds and the relocated King's Gate are implemented. Fixed dialogue advancement restarting the player's entrance. Native royal verification passes 72 assertions; all 15 exact-export cases pass 693 assertions. Original artwork, progression and saves are preserved. Full hosted source/release gates and publication remain pending explicit repository/payload authorization required by automatic approval review. See ROYAL_HALL.md and testing/royal79.md.
+
 # 0.70.0 — Hearth & Homestead: published, verified and merged
 
 Continue from main f058b996473324ad15f7edfc6956c6fdad86c3f0 (PR #26). Its tree 35109513bc14533c7cb3ccd2e10229e28e2af3d4 matches verified source 6f595bac649ac266c989a1fe2e3d45c0bed52fb9. Rivers replace the proposed isolated pools: fish along accessible banks at the claim, Stonebridge and Greenhearth. Four forgiving crops, four meals, home comfort, mastery techniques and Hedrik's optional supper favor are implemented. Existing saves and approved characters remain intact.

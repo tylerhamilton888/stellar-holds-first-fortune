@@ -1,11 +1,11 @@
-# 0.70.0 — Hearth & Homestead
+# 0.71.0 — Beneath the Stone Crown
 
-Grow turnips, copper carrots, barley and hearthcaps: loosen soil, plant, water once and optionally tend for an earlier harvest. Ripe crops wait for you without withering. Barley is ready for future brewing; brewing itself remains future work.
+Enter a larger King's Hall with an ancestral relief, raised throne dais, long processional aisle, monumental columns, braziers and a brass astronomical display.
 
-Cast along the mountain tributary, Stonebridge current or Greenhearth riverbank. Local waters offer different catches; a bite waits until you are ready to reel in.
+Lord Eirik now stands, walks, hears petitioners and sits in his throne using complete painted poses matching his established appearance. The earned royal audience takes place in the actual top-down hall with your own character and Ivar. Continue respects the short movements; Skip remains available throughout.
 
-Cook root hotpot, barley bread, fish chowder and roasted char at home or a public kitchen. Serve supper at your own table for modest temporary benefits. Furnish for six kinds of comfort, with no need to repeat furniture or follow one style. Farming, fishing and woodworking offer new techniques; Hearthkeeping adds pantry and table plans. Hedrik has an optional supper favor. Every ingredient and meal can also be traded for.
+Keldrath's trade signs are attached to buildings, household seals sit beside doors, and King's Gate opens through the northern bedrock. Mountain surrounds and retaining walls ground the three wards. Roof, shaft and vault textures keep their proportions.
 
-Existing saves, approved whole-character art, Keldrath, walking connections, mines, combat, quests and automation are preserved. No mandatory sleep, daily schedule or food decay is introduced.
+Existing saves, quest rewards, Great Stairs, household interiors and the Hearth & Homestead systems are preserved. This pass adds the King's sit/stand sequence; general lying-down animations remain future work.
 
-Extract the complete Windows ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. Do not overwrite an older build folder. Windows device performance/audio remain player testing.
+Extract the complete Windows ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. Windows device performance and audio still need player testing.

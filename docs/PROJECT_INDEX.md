@@ -1,3 +1,11 @@
+# Royal Hall and grounded Keldrath — 0.71.0 candidate
+
+- ROYAL_HALL.md: scope, visual direction and limits.
+- scripts/royal_stage.gd / opening_scene.gd: royal poses and live audience.
+- scripts/hold_grounding.gd: mountain, texture proportions, physical signs and gate setting.
+- assets/royal79/production.json: original art and exact prompts.
+- tests/royal79.gd / testing/royal79.md: behavior, visual evidence and delivery gates.
+
 # Hearth & Homestead — 0.70.0 candidate
 
 - HEARTH_HOMESTEAD.md: scope, player loop, ownership and limits.

@@ -28,12 +28,12 @@ static func building_volume(w,b:Dictionary):
  var roof=Rect2(r.position,r.size-Vector2(0,60))
  g.draw_style_box(w.stone_style(Color("4d6260")),r)
  wall(g,Rect2(r.position+Vector2(0,r.size.y-62),Vector2(r.size.x,62)))
- g.draw_texture_rect_region(SURFACES,roof,surface_region(1))
+ HoldGrounding.pattern(g,SURFACES,roof,surface_region(1))
  for x in [r.position.x+7,r.end.x-7]:
   g.draw_line(Vector2(x,r.position.y+8),Vector2(x,r.end.y-8),Color("273d40"),12)
   g.draw_line(Vector2(x-2,r.position.y+8),Vector2(x-2,r.end.y-8),Color("a39b79"),3)
  # Heavy rear coping ties the roof into the mountain, rather than a paper frontage.
- wall(g,Rect2(r.position-Vector2(0,22),Vector2(r.size.x,32)))
+ g.draw_style_box(w.stone_style(Color("838b82")),Rect2(r.position-Vector2(0,12),Vector2(r.size.x,18)))
 
 static func surface_region(index:int)->Rect2:
  var half=SURFACES.get_size()/2.0
