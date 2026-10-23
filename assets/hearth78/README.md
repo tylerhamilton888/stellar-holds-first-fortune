@@ -1,0 +1,1 @@
+Original code-authored SVG illustrations for Hearth & Homestead, 2026-10-23. No borrowed or stock assets. Crop stages scale these authored silhouettes above the existing approved soil bed; actors retain complete painted work poses. Meals and fish share inventory and in-world identifiers. Existing source art is retained.

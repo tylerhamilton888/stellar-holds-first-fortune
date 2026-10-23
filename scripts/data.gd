@@ -2,6 +2,19 @@ class_name HoldData
 extends RefCounted
 
 const ITEMS = {
+ "barley":{"name":"Hold barley","price":4,"color":"d9ba65"},
+ "barley_seed":{"name":"Barley seed","price":1,"color":"d9ba65"},
+ "carrot":{"name":"Copper carrot","price":4,"color":"d89652"},
+ "carrot_seed":{"name":"Carrot seed","price":1,"color":"d89652"},
+ "hearthcap":{"name":"Hearthcap mushroom","price":5,"color":"b99e79"},
+ "hearthcap_seed":{"name":"Hearthcap spawn","price":2,"color":"b99e79"},
+ "pond_perch":{"name":"Golden perch","price":5,"color":"dbb771"},
+ "silver_char":{"name":"Silver char","price":8,"color":"a9cbd6"},
+ "root_hotpot":{"name":"Root & hearthcap hotpot","price":15,"color":"d18b64"},
+ "barley_bread":{"name":"Hearth barley bread","price":14,"color":"c6a16a"},
+ "fish_chowder":{"name":"Creamy fish & root chowder","price":18,"color":"ded4ab"},
+ "char_plate":{"name":"Char with roasted roots","price":20,"color":"bd9f78"},
+
  "river_fish":{"name":"River trout","price":6,"color":"83c9bf"},
  "turnip":{"name":"Turnip","price":4,"color":"bd81bb"},
  "turnip_seed":{"name":"Turnip seed","price":1,"color":"c6ad78"},
@@ -27,6 +40,11 @@ const ITEMS = {
  "assembly": {"name":"Drive assembly", "price":95, "color":"a6dfc7"}
 }
 const RECIPES = {
+ "root_hotpot":{"name":"Root & hearthcap hotpot","cost":{"turnip":1,"hearthcap":1,"water":1},"out":{"root_hotpot":1},"time":4.0,"tech":""},
+ "barley_bread":{"name":"Hearth barley bread","cost":{"barley":2,"water":1},"out":{"barley_bread":1},"time":4.0,"tech":""},
+ "fish_chowder":{"name":"Creamy fish & root chowder","cost":{"pond_perch":1,"carrot":1,"water":1},"out":{"fish_chowder":1},"time":4.0,"tech":""},
+ "char_plate":{"name":"Char with roasted roots","cost":{"silver_char":1,"carrot":1,"wood":1},"out":{"char_plate":1},"time":4.0,"tech":""},
+
  "trout_supper":{"name":"Roast trout provisions","cost":{"river_fish":1,"wood":1},"out":{"food":3},"time":3.0,"tech":""},
  "turnip_stew":{"name":"Turnip stew provisions","cost":{"turnip":2,"water":1},"out":{"food":3},"time":3.0,"tech":""},
  "energy_cell":{"name":"Charge 3 runic cells","cost":{"crystal":1,"copper":1,"coal":2},"out":{"energy_cell":3},"time":6.0,"tech":"thermal"},
@@ -42,6 +60,7 @@ const RECIPES = {
  "food": {"name":"Pack provisions", "cost":{"water":2,"wood":1},"out":{"food":2},"time":3.0,"tech":""}
 }
 const RESEARCH = {
+ "hearthkeeping":{"name":"Hearthkeeping","desc":"Longer shared-meal benefits and carved pantry furnishings. Any home style is welcome.","cost":{"wood":6,"stone":6},"money":15,"requires":""},
  "stoneworking":{"name":"Stoneworking","desc":"Smooth walls, lay flagstones and build pillars. Nearby pillars brace controlled fracture work.","cost":{"stone":12,"wood":3},"money":15,"requires":""},
  "furnishings":{"name":"Dwarven furnishings","desc":"Carved chairs make practical rooms comfortable without forcing a different architectural style.","cost":{"wood":10,"iron":2},"money":20,"requires":"stoneworking"},
  "fine_masonry":{"name":"Fine masonry","desc":"Copper inlay, runic stonework and ancestral pillars for distinctive chambers.","cost":{"stone":24,"copper":2},"money":30,"requires":"stoneworking"},

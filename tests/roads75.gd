@@ -84,6 +84,8 @@ func run():
  g.state.add("wood",3);g.state.add("iron",1);g.fieldwork.craft_kit();g.state.add("water",3)
  var b=g.fieldwork.data().beds.back();at(Vector2(b.x-65,b.y-18));var seed=g.state.count("turnip_seed")
  key(KEY_E);await frames(60)
+ check(b.get("prepared",false) and not b.planted,"Soil preparation preserves seed until planting")
+ key(KEY_E);await frames(60)
  check(b.planted and g.state.count("turnip_seed")==seed-1,"Physical planting spends the same carried seed as claim gardens")
  key(KEY_E);await frames(60);check(b.watered,"Allotment watering uses the existing field-work action")
  var crops=g.state.count("turnip");g.state.elapsed+=181;key(KEY_E);await frames(60)

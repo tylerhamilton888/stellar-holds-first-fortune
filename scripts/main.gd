@@ -14,6 +14,7 @@ const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinew
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
 var loading_view:HoldLoadingView
+var hearth:HoldHearth
 var fieldwork:HoldHomesteadLife
 var handworks:HoldHandworks
 var hotbar:HoldHotbar
@@ -122,7 +123,7 @@ func _ready():
  forest_view=preload("res://scripts/forestry_view.gd").new();forest_view.host=self;forest_view.z_index=-5;add_child(forest_view)
  sprite_atlas=HoldSpriteAtlas.new();add_child(sprite_atlas)
  fight=HoldSkirmish.new(self);combat=HoldCombat.new(self);construction=HoldConstruction.new(self);mining_gun=HoldMiningGun.new(self)
- deep=DeepworksPlay.new(self);surface=HoldSurface.new(self);handworks=HoldHandworks.new(self);fieldwork=HoldHomesteadLife.new(self)
+ deep=DeepworksPlay.new(self);surface=HoldSurface.new(self);handworks=HoldHandworks.new(self);fieldwork=HoldHomesteadLife.new(self);hearth=HoldHearth.new(self)
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
  setup_ui()
@@ -1144,7 +1145,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id in ["inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id in ["hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1173,6 +1174,7 @@ func open_panel(id:String,remember:bool=true):
   "charters":charters_panel()
   "pinewood":HoldForestry.panel(self)
   "road_order":surface.roads.panel()
+  "hearth":hearth.panel()
   "road_kitchen":surface.roads.kitchen_panel()
   "gate":world_map_panel()
   "world_map":world_map_panel()
@@ -1305,7 +1307,7 @@ func market_panel():
  if trade_tab!="contracts":
   label(panel_body,"Sell your surplus. Prices below are per item." if trade_tab=="sell" else "Buy supplies for your next expedition. Prices below are per item.",16,Color("b4c9c4"))
   var shown=0
-  for k in ["stone","iron_ore","copper_ore","coal","wood","water","food","iron","copper","parts","crystal","assembly","ammo","scrap","shell"]:
+  for k in ["stone","iron_ore","copper_ore","coal","wood","water","food","iron","copper","parts","crystal","assembly","ammo","scrap","shell"]+HoldHearth.TRADE:
    if trade_tab=="sell" and state.count(k)==0:continue
    shown+=1
    var r=row(panel_body);HoldItemArt.icon(r,k)

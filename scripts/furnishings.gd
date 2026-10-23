@@ -7,6 +7,8 @@ const ATLAS=preload("res://assets/furnishings-v56/interior.png")
 const CROPS=[Rect2(40,83,316,237),Rect2(424,22,308,300),Rect2(805,57,326,271),Rect2(1250,36,210,289),Rect2(15,429,407,224),Rect2(442,397,320,258),Rect2(805,376,325,282),Rect2(1180,328,323,340),Rect2(54,661,288,342),Rect2(491,668,188,334),Rect2(853,751,257,226),Rect2(1204,698,280,291)]
 # size is the visible silhouette; base is its ground-plane occupied rectangle.
 const ITEMS={
+ "pantry":{"title":"Carved pantry shelf","base_kind":"bookcase","cost":{"wood":6,"stone":2},"dressing":[["kettle",Vector2(-10,-30)],["mug",Vector2(10,-30)]]},
+ "hearth_table":{"title":"Family supper table","base_kind":"table","cost":{"wood":6,"stone":2},"dressing":[["kettle",Vector2(0,-30)],["mug",Vector2(-17,-29)],["mug",Vector2(17,-29)]]},
  "double_bed":{"title":"Shared oak double bed","size":Vector2(86,77),"base":Rect2(-41,-62,82,62),"cost":{"wood":10,"stone":4}},
  "orrery":{"title":"Founders’ orrery","size":Vector2(76,94),"base":Rect2(-31,-25,62,25),"cost":{"stone":8,"iron":6,"crystal":2}},
  "notice_board":{"title":"Public notice board","size":Vector2(78,72),"base":Rect2(-36,-16,72,16),"cost":{"wood":8,"stone":4}},
@@ -30,7 +32,7 @@ const ITEMS={
  "mug":{"title":"Copper mug","art":10,"size":Vector2(6,6),"base":Rect2(),"cost":{}},
  "kettle":{"title":"Tea kettle","art":11,"size":Vector2(12,12),"base":Rect2(),"cost":{}}
 }
-const BUILDABLE=["chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","worktable","hearth","stone_pillar","orrery","notice_board","oath_stone","pressure_manifold","training_rack"]
+const BUILDABLE=["pantry","hearth_table","chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","worktable","hearth","stone_pillar","orrery","notice_board","oath_stone","pressure_manifold","training_rack"]
 static func geometry(kind:String)->Dictionary:
  var item=ITEMS.get(kind,ITEMS.table)
  return ITEMS[item.base_kind] if item.has("base_kind") else item

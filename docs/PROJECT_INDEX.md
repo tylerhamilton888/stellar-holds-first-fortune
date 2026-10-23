@@ -1,3 +1,11 @@
+# Hearth & Homestead — 0.70.0 candidate
+
+- HEARTH_HOMESTEAD.md: scope, player loop, ownership and limits.
+- scripts/hearth.gd / homestead_life.gd: meals, comfort, favor, gardening and fishing.
+- assets/hearth78: original SVG crop, fish and meal illustrations.
+- tests/homestead78.gd: real-input garden-to-supper-to-neighbor loop and migration.
+- testing/homestead78.md: validation and delivery status.
+
 # Honest Work — 0.68.1 candidate
 
 - assets/workshop76: five upright props, intact generated sources and exact production prompts.

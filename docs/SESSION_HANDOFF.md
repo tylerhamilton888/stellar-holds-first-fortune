@@ -1,14 +1,10 @@
-# 0.69.0 — Stone & Hearth: locally verified, upload blocked
+# Hearth & Homestead — implementation in progress
 
-Implemented nine individual household fronts/names and authored interiors, distinct survey/foreman/practice fronts, structural piers and street channels. The Hall of Names opens the former closed Crownward frontage. Hedrik and Orla share upstairs Copper Kettle quarters, reached by real stairs, with one double bed and two pillows; family upper rooms have double beds and selected spare beds. Existing room IDs, service hosts, whole-character artwork, resident routes, work systems and saves remain stable.
+Working branch feature/homestead78 begins from verified 0.69.0 source ba2c55f0e6a5b7297716c1fc19d6f6ab631d6f89. Scope: forgiving varied crops, local fishing, shared meals, home comfort and one optional neighbor favor. Preserve existing saves and gameplay. This milestone is not yet verified or released.
 
-Local native source regressions passed 379 assertions; the final focused rerun passed 47. The final clean Windows candidate passed all 13 exact-package cases (550 assertions) and the 3,230-entry PCK audit. Native source and exported visuals were reviewed; bedside crowding and lower-floor rug alignment were corrected. See testing/keldrath77.md. Windows hardware performance/audio and final artistic acceptance remain player testing.
+# 0.69.0 — Stone & Hearth: published and merged
 
-The complete Windows candidate was built from 93e4fb49a17ad06bc58566cd9761ed13583a1951. ZIP: 719,961,962 bytes, SHA256 baab66e56d8491b93290f2ebe7f7c9369696dd01def8ae5c88adc7f86671d9b9. This is NOT a published release and has NOT been merged. Hosted full source and release gates remain pending.
-
-Automatic approval review rejected uploading the encoded incremental source bundle to tylerhamilton888/stellar-holds-first-fortune twice, including after its 31 changed files were verified as requested code/art/tests/docs with no saves, out-of-scope files or credential-pattern matches. The reviewer explicitly requires end-user approval of this source payload and destination despite the owner's standing merge authorization. Do not retry, change transport or route around the rejection until that approval is obtained. Six unattached transfer blobs exist, but no new remote branch/PR was created. The helper/chunk draft targets an older local commit and must be refreshed after approval.
-
-Current local workspace: /workspace/scratch/e70a3a957e2c/stellar-holds, branch polish/keldrath77. Build/evidence: sibling build77-final and qa77/pack-final. Full baseline archive and verified incremental bundles are in sibling recovery77. Persistent recovery/pre-keldrath77 protects baseline f333b66eca1914ddf3b699b3cb21da3f4c27f67d; current implementation remains local pending upload approval. Earlier releases/recovery are intact. Art prompts/provenance: assets/hold77/production.json (built-in image generation, three original PNGs).
+Source run 39963593854 and release run 39963621454 passed. Published single Windows ZIP: 719,902,750 bytes; SHA256 d08e3a3d73a07fc5935b2afe1fd90709fcfdb8df310507c99b72025ceb0054fb, matching hosted build report and asset digest. PR #25 merged at 80edbc423f50de8e3cedaa80f47f72a719149660; tree 6d79f1670a2e8fcd3f9ec3f64b850f37f733f469 matches the locally reviewed source/export. The earlier upload block was resolved by explicit owner approval. Recovery/pre-homestead78 and local pre-homestead78 preserve the complete released source; prior recovery archives/bundles remain intact.
 
 # 0.68.1 — Honest Work: published, verified and runtime merged
 

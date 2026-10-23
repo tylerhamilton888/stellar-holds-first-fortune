@@ -206,18 +206,13 @@ func panel():
  elif s.area=="pinewood":g.label(g.panel_body,"The loan saw and timber rack stand in the southern yard. Use your own logs; fixed equipment stays here.",16)
  else:g.label(g.panel_body,"Old Workings and the loan breaker lie north. A bunk is inside the Wayfarer's Hearth. Fishing lies along the west riverbank.",16)
 func cook(id:String)->bool:
- if id not in ["turnip_stew","trout_supper"] or s.area not in ROOMS:return false
+ if id not in ["turnip_stew","trout_supper"]+HoldHearth.MEALS.keys() or s.area not in ROOMS:return false
  var at=Vector2(400,525) if s.area=="room:wayfarer" else Vector2(350,475)
  if g.player.distance_to(at)>75 or not s.clear_interaction(g.player,at):return false
  if not g.state.craft(id):return false
  g.save_game();return true
 func kitchen_panel():
- g.label(g.panel_body,"The hearth kitchen",23)
- g.label(g.panel_body,"Bring your own ingredients. Meals finish while you work and go into your pack.",16)
- for id in ["turnip_stew","trout_supper"]:
-  var recipe=HoldData.RECIPES[id]
-  g.label(g.panel_body,recipe.name+" · "+("2 turnips + 1 water" if id=="turnip_stew" else "1 river trout + 1 timber")+" → 3 provisions",16)
-  g.button(g.panel_body,"Cook "+recipe.name,func():cook(id);g.open_panel("road_kitchen",false)).disabled=not g.state.afford(recipe.cost) or g.state.queue.size()>=12
+ g.hearth.cooking_panel()
 func ground():
  if s.area=="greenfields":
   for y in [585,735]:

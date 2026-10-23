@@ -1,3 +1,7 @@
+# 0.70.0 — Hearth & Homestead (candidate)
+
+Four forgiving crops with soil preparation, planting, watering, optional tending and readable growth. Three fishing locations with local catches and forgiving bite feedback. Four shared meals connect home comfort, ordinary provisions and modest temporary benefits. Hearthkeeping plans and three mastery techniques reward useful work. Orla trades all ingredients and meals; Hedrik offers one optional welcoming-table favor. Existing garden timers, saves, artwork, industry and quests are preserved.
+
 # 0.69.0 — Stone & Hearth
 
 - Nine distinct household fronts, resident nameplates and individual room arrangements across the three wards.
