@@ -6,4 +6,8 @@ Focused native source case: 69 assertions passed with Godot 4.4.1 and isolated s
 
 Gameplay-scale visuals reviewed: watering with the complete approved actor pose, four ripe crop silhouettes, all three riverbanks, served meal, comfort board, kitchen and improved cottage. Continuous water texture coordinates remove narrow repeating strips. The generated pool was rejected and is excluded from the candidate.
 
-Broader source regression, exact-package verification and hosted delivery remain pending. PR #26 backs up the candidate; its initial tree matches the local checkpoint exactly. Windows device performance/audio remain player testing.
+Local source/regression: 492 assertions across 12 cases passed. Local exported homestead: 69 passed. Hosted source run 39979630313 passed import and all 23 cases. Hosted release run 39980955955 attempt 1 audited 3,252 pack entries and passed 14 exported cases / 621 assertions; downloaded logs contain no script errors. Evidence ZIP SHA256 8c6be951b8e79feeb515ae3d89f086fac7bb29439d9e34bcd1c571fc06a3adb7 matches the hosted artifact digest. Hosted exported gardening, watering, river fishing, kitchen and home screenshots were reviewed at gameplay scale.
+
+PR #26 merged at f058b996473324ad15f7edfc6956c6fdad86c3f0, tree 35109513bc14533c7cb3ccd2e10229e28e2af3d4 identical to source 6f595bac649ac266c989a1fe2e3d45c0bed52fb9. Publication alone failed with GitHub HTTP 500; no release existed on inspection and the failed job was retried. Attempt 2 publication and final asset digest verification remain pending. Attempt-1 unpublished ZIP: 719,947,150 bytes, SHA256 ff4f87479897b5f9fa1ceafbed4eb3c2fe9a7d47d7ad46d9759db30cfc16177f. Do not treat that as a published asset.
+
+Verified local incremental bundle qa78/homestead78-remote-source.bundle preserves source 6f595ba and requires main baseline 80edbc4. Earlier source archives/bundles and recovery/pre-homestead78 remain intact. Windows device performance/audio remain player testing.
