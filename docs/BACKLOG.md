@@ -1,3 +1,7 @@
+# Workshop visual and interaction pass
+
+Implemented upright fixed station art, removal of the redundant player bucket/rock overlay and automatic player bench output. Review the five props beside the approved Dwarf at gameplay scale and check the new output flow in an existing save. Deliberate storage withdrawal, field dressing and crew ownership remain unchanged. Broader work animations and transport redraws remain separate tasks.
+
 # Roads & Hearths follow-up
 
 Player review: physical crossing readability, countryside density, first-visit preparation time and recurring order prices. Broader regions, cross-region NPC work schedules, autonomous farm/forestry production, seasons and a streamed planet remain future work. Current local residents are ambient, and eastern farm crops are protected scenery. Retain the approved whole-character art and existing player-built sites. At 1280×720, work-board panels can extend the bottom keyboard-help footer below the viewport; delivery, lease, guide and close controls remain visible. Bound the shared shell in a focused UI follow-up.

@@ -1,3 +1,10 @@
+# Honest Work — 0.68.1 candidate
+
+- assets/workshop76: five upright props, intact generated sources and exact production prompts.
+- scripts/handworks.gd: shared prop rendering and automatic player output; explicit storage transfer.
+- scripts/deepworks_play.gd: canonical whole-character player rendering without legacy cargo overlays.
+- tests/work76.gd / docs/testing/work76.md: saved output, interrupted work, ownership, mastery and native visual evidence.
+
 # Roads & Hearths — 0.68.0
 
 Published v0.68.0. testing/roads75 records native, hosted source, exact-package and delivery evidence. Recovery: verified-world75-delivery.

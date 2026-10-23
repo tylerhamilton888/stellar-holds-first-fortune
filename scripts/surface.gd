@@ -481,7 +481,7 @@ func chest_panel():
  var c=g.state.surface.chests.get(selected_chest,{})
  if c.is_empty() or not house.local(c) or g.player.distance_to(Vector2(c.x,c.y))>85:g.label(g.panel_body,"Walk to your chest and press E.");return
  g.label(g.panel_body,"YOUR CHEST · YOUR SUPPLIES",20,Color("edc98a"))
- g.label(g.panel_body,"Stored items stay here. Withdraw materials into your pack before crafting or selling. Mines keep their own buckets and stockpiles.",14)
+ g.label(g.panel_body,"Stored items stay here. Withdraw materials into your pack before crafting or selling. Mines keep their own cargo and stockpiles.",14)
  var row=g.row(g.panel_body)
  g.small_button(row,"Store all carried resources",func():
   for k in g.state.inventory.keys():transfer(k,g.state.count(k),true,false)
@@ -569,7 +569,7 @@ func hud():
   var p=nearest()
   g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
   if g.notice_time>0:g.footer.text=g.notice
-  if g.handworks.busy_hands():g.footer.text="Shift+B · Workshop lesson & crafting   Q · Set down   Shift+E · Collect"
+  if g.handworks.busy_hands():g.footer.text="Shift+B · Workshop lesson & crafting   Q · Set down   Shift+E · Take from storage"
 func draw():
  var cam=g.camera.round();g.draw_set_transform(-cam)
  var near=nearest()

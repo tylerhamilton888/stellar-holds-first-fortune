@@ -1,7 +1,5 @@
 class_name DeepworksPlay
 extends RefCounted
-const BUCKET_ART=preload("res://assets/tavern-v492/mining-bucket.png")
-var bucket_texture:AtlasTexture
 const STONE=preload("res://assets/animation-v51/geology.png")
 const A=preload("res://scripts/art.gd")
 var g
@@ -109,7 +107,7 @@ func panel():
  g.label(g.panel_body,"Survey [X] shows the ground immediately beneath your feet. Stairs connect the exact same location on both levels and stay open permanently. E goes down, Shift+E goes up.",16)
  g.button(g.panel_body,"Carve descending stair · free · hold still for 1.2 seconds",func():
   g.close_panel();passage_kind="stair";stair_work=1.2;g.notify("Carving a safe stair landing… stay still."))
- g.button(g.panel_body,"Fit timber ladder shaft · 2 timber · bucket and Dwarfs only",func():
+ g.button(g.panel_body,"Fit timber ladder shaft · 2 timber · personal cargo and Dwarfs only",func():
   g.close_panel();passage_kind="ladder";stair_work=1.2;g.notify("Fitting an anchored ladder… stay still."))
  g.label(g.panel_body,"Ladders make a compact one-tile shaft. Stairs open a wider landing for carts and MOTE-1. Carve stairs at a ladder’s upper landing to upgrade it. Descend and return to prove a safe route for Ivar.",16)
  g.button(g.panel_body,"Place warm work lamp · 1 timber + 1 coal",func():
@@ -120,7 +118,7 @@ func panel():
   g.close_panel())
  g.button(g.panel_body,"Assign mining crew to this depth [T]",func():assign_crew();g.close_panel())
  g.label(g.panel_body,"Crew walk excavated tunnels and use connected stairs. Their existing mineral priorities, provisions, coal and industrial unlocks still apply. M manages recruitment and priorities. Basalt needs Tempered steel. Lamps illuminate work areas.",16)
- g.button(g.panel_body,"Haulage [H] · bucket / wheelbarrow / stockpiles",func():g.open_panel("haulage"))
+ g.button(g.panel_body,"Haulage [H] · personal cargo / wheelbarrow / stockpiles",func():g.open_panel("haulage"))
  g.button(g.panel_body,"Living Works [O] · rooms / finishing / furnishings",func():g.open_panel("living"))
  g.button(g.panel_body,"Project ledger [L]",func():g.open_panel("projects"))
  g.label(g.panel_body,"Discoveries: "+(", ".join(world.data.discoveries) if not world.data.discoveries.is_empty() else "Follow seams into untouched rock."),16)
@@ -129,7 +127,7 @@ func panel():
   var depths=[]
   for d in note.depths:depths.append(str(int(d)+1))
   g.label(g.panel_body,"%s · depths %s · %d loads / %d recoverable units" % [note.name,", ".join(depths),note.loads,note.units],14)
- g.label(g.panel_body,"IVAR’S WORKSITE LESSON · Free a load → lift or field-dress it → place a rack and breaker → hold E to work → Shift+E collect → follow your seam down a surveyed stair. Existing workshop lesson progress is recorded on Shift+B.",15)
+ g.label(g.panel_body,"IVAR’S WORKSITE LESSON · Free a load → lift or field-dress it → place a rack and breaker → hold E to work → output enters your pack → follow your seam down a surveyed stair. Existing workshop lesson progress is recorded on Shift+B.",15)
 func assign_crew():
  ensure()
  if g.agents.is_empty():g.notify("Recruit and assign miners at your claimed mountain first. M opens your crew ledger.");return
@@ -533,9 +531,7 @@ func draw():
    if animation=="" or (strike_left>0 and g.mining_gun.selected):animation=g.hotbar.pose()
    HoldDrawnAnimation.paint(g,pose+offset,profile,facing_dir,g.walking_pose and strike_left<=0,g.gait_clock,1.0,offset,animation,action)
    g.draw_set_transform(offset)
-   if strike_left<=0:works.masonry.carry(p,g.face,haul.bucket())
    g.handworks.carried(pose)
-   if bucket_visible():draw_bucket(p+Vector2(-g.face*22,5),haul.bucket(),DeepHaul.BUCKET)
    if strike_left>0 and g.mining_gun.selected:g.draw_line(pose+HoldFolk.muzzle(profile,facing_dir),contact,Color("c4f4e2"),3)
   else:
    var a=actor.agent
@@ -574,7 +570,7 @@ func draw():
  elif g.panel_id=="" and not g.combat.armed:A.text(g,Vector2(680,485),tool_name+" · 1–4 change tool",12,Color("b9d0c8"))
  if g.panel_id=="" and g.handworks.facility().is_empty() and g.handworks.closest(g.handworks.data().loose,65).is_empty() and g.handworks.data().carry.is_empty() and g.handworks.placing=="":
   g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
-  A.text(g,Vector2(30,99),"H · Bucket %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
+  A.text(g,Vector2(30,99),"H · Cargo %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
  if survey_open and g.panel_id=="":draw_survey()
  works.hud()
@@ -630,11 +626,11 @@ func depart():
 func haulage_panel():
  ensure()
  if g.zone!="mine":
-  g.label(g.panel_body,"Enter the Deepworks to handle containers. Your bucket retains: "+DeepHaul.contents(haul.bucket()),16)
+  g.label(g.panel_body,"Enter the Deepworks to handle containers. Your personal cargo retains: "+DeepHaul.contents(haul.bucket()),16)
   return
  g.button(g.panel_body,"Raw loads · craft stockpiles, stonebreakers and handcarts [Shift+B]",func():g.open_panel("handworks"))
  g.label(g.panel_body,"Dress raw loads at a breaker or hold Shift+E in the field. This board handles finished loose materials and existing bulk wheelbarrows.",15)
- g.label(g.panel_body,"BUCKET · %d / %d units" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET],20)
+ g.label(g.panel_body,"PERSONAL CARGO · %d / %d units" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET],20)
  g.label(g.panel_body,DeepHaul.contents(haul.bucket()),16)
  g.label(g.panel_body,"U: unload / cache · Shift+U: load piles · C: take / park cart. Overflow stays safe.",14)
  g.button(g.panel_body,"Unload [U]",func():unload();g.open_panel("haulage",false))
@@ -650,10 +646,10 @@ func haulage_panel():
   g.label(g.panel_body,DeepHaul.contents(cart.cargo),16)
   g.button(g.panel_body,"Take / park wheelbarrow [C]",func():g.notify(haul.toggle_cart(g.player));g.save_game();g.close_panel())
   g.button(g.panel_body,"Tip nearby wheelbarrow into local stockpile",func():g.notify("Cached %d units." % haul.cache_cart(g.player));g.save_game();g.open_panel("haulage",false))
- g.button(g.panel_body,"Load nearby stockpiles into cart / bucket",func():g.notify("Loaded %d units." % haul.load_pile(g.player));g.save_game();g.open_panel("haulage",false))
+ g.button(g.panel_body,"Load nearby stockpiles into cart / personal cargo",func():g.notify("Loaded %d units." % haul.load_pile(g.player));g.save_game();g.open_panel("haulage",false))
  for a in haul.data.piles.values():
   if DeepHaul.amount(a.cargo)>0:g.label(g.panel_body,"Pile · D%d (%d, %d) · %s" % [int(a.depth)+1,a.x,a.y,DeepHaul.contents(a.cargo)],14)
- g.label(g.panel_body,"Stores use the existing inventory and recipes. Entrance deliveries are available to forge, construction and trade. Returning home unloads your bucket and a nearby cart. Crews retain their provisioned delivery service. Parked equipment stays at its recorded location.",16)
+ g.label(g.panel_body,"Stores use the existing inventory and recipes. Entrance deliveries are available to forge, construction and trade. Returning home unloads your personal cargo and a nearby cart. Crews retain their provisioned delivery service. Parked equipment stays at its recorded location.",16)
  g.button(g.panel_body,"Living Works [O] · rooms / finishing / furnishings",func():g.open_panel("living"))
  g.button(g.panel_body,"Project ledger [L]",func():g.open_panel("projects"))
 func project_panel():
@@ -671,16 +667,6 @@ func project_panel():
  for goal in [["bench","Workbench"],["anvil","Forge"],["rune","Ancestral pillar"],["stoneworking","Stoneworking"]]:
   g.small_button(building_choices,"Track · "+goal[1],func():g.state.hauling.project=goal[0];g.save_game();g.open_panel("projects",false))
  g.button(g.panel_body,"Open existing workshop / project",func():g.open_panel(project.panel))
-func bucket_visible()->bool:
- return DeepHaul.amount(haul.bucket())>0 and strike_left<=0 and not g.handworks.busy_hands()
-func draw_bucket(p:Vector2,cargo:Dictionary,capacity:int):
- if bucket_texture==null:
-  bucket_texture=AtlasTexture.new();bucket_texture.atlas=BUCKET_ART;bucket_texture.region=BUCKET_ART.get_image().get_used_rect()
- g.draw_texture_rect(bucket_texture,Rect2(p-Vector2(11,24),Vector2(22,32)),false)
- if DeepHaul.amount(cargo)>0:
-  var item=str(cargo.keys()[0]);var width=8.0+clampf(float(DeepHaul.amount(cargo))/capacity,0,1)*5
-  if item in ["stone","rough_block","dressed_stone"]:g.handworks.sprite(6 if item=="rough_block" else 8,p+Vector2(0,-7),width)
-  else:HoldItemArt.draw(g,Rect2(p-Vector2(width/2,15),Vector2(width,8)),HoldItemArt.item_index(item),HoldItemArt.tint(item))
 func cargo_art(cargo:Dictionary,p:Vector2,limit:int=8):
  var slot=0
  for item in cargo:

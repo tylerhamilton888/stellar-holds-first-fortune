@@ -1,3 +1,11 @@
+# 0.68.1 — Honest Work
+
+- Removed the redundant player bucket and legacy rock overlay while retaining saved cargo.
+- Redrew five fixed work props with level front edges and upright supports.
+- Completed player bench output enters the pack automatically; E recovers older bench output.
+- Preserved storage ownership, unfinished jobs, yields, mastery bonuses, saves and approved character artwork.
+- Updated the first-shift lesson and work prompts for automatic collection.
+
 # 0.68.0 — Roads & Hearths
 
 - Walk through path edges, mine arches and real doors; optional directions keep control in the world.

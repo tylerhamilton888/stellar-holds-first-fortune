@@ -60,11 +60,11 @@ func run():
  g.player=Vector2(660,450);key(KEY_E)
  var rack=h.facility();check(rack.raw.size()==1 and rack.raw[0].id==raw_id and h.data().carry.is_empty(),"Rack transfer retains mineral identity and unique ownership")
  await snap("06-stockpile-ore")
+ var iron=g.state.count("iron_ore")
  g.player=Vector2(728,355);Input.action_press("interact");await frames(34);await snap("07-stonebreaker-ore");await frames(72);Input.action_release("interact")
  var pallet=h.data().facilities.filter(func(f):return f.kind=="store")[0]
- check(rack.raw.is_empty() and int(pallet.cargo.get("iron_ore",0))==expected,"Stonebreaker draws from nearby rack and delivers exact ore to existing pallet")
- g.player=Vector2(840,490);var iron=g.state.count("iron_ore");var e=InputEventKey.new();e.keycode=KEY_E;e.pressed=true;e.shift_pressed=true;g._unhandled_input(e)
- check(g.state.count("iron_ore")==iron+expected and pallet.cargo.is_empty(),"Shift+E collects processed mineral for existing crafting")
+ check(rack.raw.is_empty() and pallet.cargo.is_empty(),"Stonebreaker consumes the nearby raw input without stranding output")
+ check(g.state.count("iron_ore")==iron+expected,"Finished mineral enters existing crafting inventory once without Shift+E")
  check(g.state.craft("iron"),"Recovered material enters unchanged forge recipe");g.state.tick(6)
  # E is a useful batch gather, not eight individual pickup trips.
  var cart=h.data().facilities.filter(func(f):return f.kind=="cart")[0];g.player=h.pos(cart)+Vector2(0,50)
