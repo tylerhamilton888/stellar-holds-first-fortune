@@ -1,8 +1,8 @@
 class_name HoldFirstShift
 extends RefCounted
 # The teaching bay uses ordinary Handworks records; no second inventory or crafting system.
-const STEPS=["Excavate stone, then lift a load · E", "Carry it to the stockpile · E", "Work at the stonebreaker · hold E", "Collect the finished stone · Shift+E", "Craft and place a stockpile · Shift+B", "Build your own stonebreaker · Shift+B", "Your first worksite is ready · follow the coal seam"]
-const HELP=["Work an exposed stone face with held pickaxe strokes. E lifts the freed load onto your shoulder. The western loan benches are available for your own material; the eastern crew stock belongs to the hold.","Walk beside the western stone rack and press E. Its visible contents come from the loads you actually deposit.","Stand beside the western stonebreaker and hold E. It draws a load from a rack within reach. Your Dwarf steps into a working stance and breaks it into useful stone.","Stand beside that stonebreaker and press Shift+E. Finished stone moves into your pack, ready for construction. Raw loads and usable materials are different stages of the same workflow.","Open Shift+B, choose Stone stockpile, then Craft & place. Move the preview to clear floor near the seam: green is valid, red is blocked. Left click builds; right click cancels without spending.","Open Shift+B and craft a Stonebreaker beside your new stockpile. Leave space for your boots and keep the entrance clear. Racks feed benches within 150 units; expanding your operation now uses the same tools.","You have made a working production line. Follow the nearby coal seam for Ivar's commission. The hold crew processes its own loads at the eastern benches. Its stock and finished output belong to the hold, not your pack. Later, your hired Folk and carts can take over familiar work."]
+const STEPS=["Excavate stone, then lift a load · E", "Carry it to the stockpile · E", "Work at the stonebreaker · hold E", "Finished stone goes into your pack", "Craft and place a stockpile · Shift+B", "Build your own stonebreaker · Shift+B", "Your first worksite is ready · follow the coal seam"]
+const HELP=["Work an exposed stone face with held pickaxe strokes. E lifts the freed load onto your shoulder. The western loan benches are available for your own material; the eastern crew stock belongs to the hold.","Walk beside the western stone rack and press E. Its visible contents come from the loads you actually deposit.","Stand beside the western stonebreaker and hold E. It draws a load from a rack within reach. Your Dwarf steps into a working stance and breaks it into useful stone.","Finished work goes straight into your pack, ready for construction. For stone left on a bench from an earlier shift, press E beside it. Raw loads and usable materials are different stages of the same workflow.","Open Shift+B, choose Stone stockpile, then Craft & place. Move the preview to clear floor near the seam: green is valid, red is blocked. Left click builds; right click cancels without spending.","Open Shift+B and craft a Stonebreaker beside your new stockpile. Leave space for your boots and keep the entrance clear. Racks feed benches within 150 units; expanding your operation now uses the same tools.","You have made a working production line. Follow the nearby coal seam for Ivar's commission. The hold crew processes its own loads at the eastern benches. Its stock and finished output belong to the hold, not your pack. Later, your hired Folk and carts can take over familiar work."]
 static func data(g)->Dictionary:
  var h=g.handworks.data()
  if not h.has("first_shift"):h.first_shift={"version":1,"started":false,"kit":false,"facts":{}}
@@ -79,11 +79,11 @@ static func context_hint(g)->String:
   var rack=station(g,"rack")
   if not rack.is_empty() and rack.raw.is_empty():return "The rack is empty · bring another chunk, or carry one to the stonebreaker"
   return "Western stonebreaker · hold E to work · release whenever you like"
- if n==3:return "Your useful stone is on the bench · Shift+E collects it"
+ if n==3:return "Stone left on the bench? Press E · new work goes straight into your pack"
  var kind="stone_pile" if n==4 else "breaker"
  if not g.state.afford(h.SPECS[kind].cost):
   if g.state.count("wood")<int(h.SPECS[kind].cost.get("wood",0)) and not data(g).kit:return "Short of timber? Ask Ivar for your worksite allowance · J keeps the lesson"
-  return "Process another load for construction supplies · Shift+E collects the output"
+  return "Process another load for construction supplies · output goes into your pack"
  return "Shift+B · craft your "+h.SPECS[kind].name.to_lower()+" · green fits, right click cancels"
 static func crew_ready(g)->bool:
  return active(g) and not station(g,"crewbench").is_empty() and not station(g,"crewrack").is_empty()

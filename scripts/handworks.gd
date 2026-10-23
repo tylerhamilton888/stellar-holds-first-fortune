@@ -3,6 +3,7 @@ extends RefCounted
 # Raw records have exactly one owner: ground, shoulders, a rack or a vehicle.
 # Processed output uses existing resource dictionaries and DeepHaul.transfer.
 const ART=preload("res://assets/animation-v51/workshop.png")
+const STATIONS=[preload("res://assets/workshop76/stonebreaker.png"),preload("res://assets/workshop76/sawbench.png"),preload("res://assets/workshop76/stone-rack.png"),preload("res://assets/workshop76/timber-rack.png"),preload("res://assets/workshop76/materials-pallet.png")]
 const SPECS={
  "breaker":{"name":"Stonebreaker","cost":{"wood":3,"stone":4},"art":0,"accept":"stone","capacity":4},
  "saw":{"name":"Sawbench","cost":{"wood":5,"stone":2},"art":1,"accept":"log","capacity":4},
@@ -181,12 +182,18 @@ func deposit(f:Dictionary)->int:
    g.state.add(k,-n);moved+=n
  if moved>0:lift=0;data().facts.stockpile=true;HoldFirstShift.event(g,"stock");g.sound.effect("wood",-15)
  return moved
+func collect_output(f:Dictionary)->int:
+ # Finished player work goes to the existing pack. Storage and raw loads remain
+ # deliberate transfers; the hold crew keeps ownership of its own output.
+ if f.get("owner","")=="hold" or not local(f):return 0
+ var moved=DeepHaul.transfer(f.cargo,g.state.inventory)
+ if moved>0:HoldFirstShift.event(g,"collect")
+ return moved
 func withdraw(f:Dictionary)->int:
  if f.get("owner","")=="hold":g.notify("These materials belong to the hold. Your worksite uses your own output.");return 0
  var moved=0
  if not f.cargo.is_empty():
-  moved=DeepHaul.transfer(f.cargo,g.state.inventory)
-  if moved>0:HoldFirstShift.event(g,"collect")
+  moved=collect_output(f)
  elif not f.raw.is_empty() and data().carry.size()<capacity():data().carry.append(f.raw.pop_back());setting_down={};moved=1;lift=.35
  return moved
 func drop()->bool:
@@ -242,10 +249,12 @@ func input(e:InputEvent)->bool:
    return true
  return false
 func begin(f:Dictionary)->bool:
- if f.get("owner","")=="hold":return false
+ if f.get("owner","")=="hold" or not local(f) or f.kind not in ["breaker","saw"]:return false
+ # Plain E also recovers output left on a bench by an older save, even if
+ # there is no fresh input. Never clear nearby pallets or unfinished jobs.
+ if collect_output(f)>0:g.save_game()
  g.surface.house.impact=0;g.surface.cut_target=-1;g.surface.cut_clock=0
  if not f.job.is_empty():return true
- if DeepHaul.amount(f.cargo)>=180:g.notify("Output full. Shift+E collects finished materials.");return false
  var inputs=[data().carry,f.raw]
  for stock in data().facilities:
   if stock.get("owner","")!="hold" and local(stock) and stock.kind in ["stone_pile","timber_pile","cart","wagon"] and pos(stock).distance_to(pos(f))<150 and clear_line(pos(stock),pos(f)):inputs.append(stock.raw)
@@ -309,9 +318,8 @@ func update(dt:float):
  if raw.kind=="log":
   HoldDisciplines.data(g.state);data().skills.forester=int(data().skills.forester)+1;HoldDisciplines.award(g.state,"woodworking")
  else:award("mason")
+ collect_output(f)
  d.facts.process=true;HoldFirstShift.event(g,"process")
- for store in d.facilities:
-  if local(store) and store.kind=="store" and pos(store).distance_to(pos(f))<150 and clear_line(pos(store),pos(f)):DeepHaul.transfer(f.cargo,store.cargo,200);break
  g.sound.effect("build",-20);g.save_game()
 func recover():
  var f=facility()
@@ -326,7 +334,7 @@ func cancel_job(f:Dictionary):
  f.raw.append(f.job.raw);f.job={};g.save_game();g.open_panel("handworks",false)
 func panel():
  var d=data()
- g.label(g.panel_body,"E lift / deliver · Q set down · Shift+E collect · C push cart",15,Color("a7dac5"))
+ g.label(g.panel_body,"E lift / deliver · Q set down · Shift+E take from storage · C push cart",15,Color("a7dac5"))
  g.label(g.panel_body,"Craft here, then place nearby. Hold E at a supplied bench to work.",15)
  var grid=GridContainer.new();grid.columns=3;grid.add_theme_constant_override("h_separation",10);grid.add_theme_constant_override("v_separation",8);g.panel_body.add_child(grid)
  for kind in SPECS:
@@ -336,22 +344,21 @@ func panel():
   var icon=TextureRect.new();icon.texture=texture(SPECS[id].art);icon.custom_minimum_size=Vector2(200,36);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;card.add_child(icon)
   g.label(card,HoldData.cost_text(SPECS[id].cost),13,Color("edc98a"))
   g.small_button(card,"Craft & place",func():g.surface.cancel_placement();placing=id;g.close_panel();g.notify("LMB places nearby; right click cancels. Materials charged only on valid placement."))
- g.label(g.panel_body,"Stonebreakers dress stone, ore, coal and crystal chunks into their original materials. Racks within 150 units feed the bench; nearby pallets catch its output. E at a rack or parked cart gathers nearby loose loads. Shift+E collects finished materials.",14)
+ g.label(g.panel_body,"Stonebreakers dress stone, ore, coal and crystal chunks into their original materials. Racks within 150 units feed the bench. Finished work goes straight into your pack. E at a rack or parked cart gathers nearby loose loads; pallets store materials you deposit.",14)
  g.label(g.panel_body,"Prospecting without a station? Away from equipment, hold Shift+E beside a chunk or while carrying it: three field-dressing blows preserve its full yield. Benches process batches faster; powered workshop technology improves them further.",14)
  g.small_button(g.panel_body,"Recover empty equipment · full material refund",recover)
  var f=facility()
  if not f.is_empty() and not f.job.is_empty():g.small_button(g.panel_body,"Return unfinished input to this station",func():cancel_job(f))
  g.label(g.panel_body,"Strong shoulders · %d / 8 masonry / forestry jobs OR %d / 12 mined faces · capacity %d" % [mini(8,int(d.skills.mason)+int(d.skills.forester)),mini(12,int(d.skills.miner)),capacity()],15)
  g.label(g.panel_body,"Miner · %d productive faces · 12: strong shoulders & joint reading · 40: controlled sections & four extra cart loads" % int(d.skills.miner),15)
- for step in [["build","Craft and place a station or stockpile"],["extract","Free a raw chunk or log"],["lift","Lift it with E; Q sets it down"],["stockpile","Deliver it to a suitable rack"],["process","Hold E at the matching bench; collect with Shift+E"]]:g.label(g.panel_body,("✓ " if d.facts.get(step[0],false) else "○ ")+step[1],15)
+ for step in [["build","Craft and place a station or stockpile"],["extract","Free a raw chunk or log"],["lift","Lift it with E; Q sets it down"],["stockpile","Deliver it to a suitable rack"],["process","Hold E at the matching bench; output enters your pack"]]:g.label(g.panel_body,("✓ " if d.facts.get(step[0],false) else "○ ")+step[1],15)
 func texture(index:int)->Texture2D:
  if textures.has(index):return textures[index]
- # The painted objects slightly cross mathematical thirds; explicit atlas bounds
- # avoid drawing fragments of the neighboring row above an otherwise empty rack.
- var regions=[Rect2i(35,30,430,330),Rect2i(540,40,460,325),Rect2i(1030,20,490,340),Rect2i(0,360,490,335),Rect2i(525,390,485,305),Rect2i(1030,365,495,335),Rect2i(80,700,390,315),Rect2i(530,700,480,310),Rect2i(1060,705,440,310)]
+ # Upright work props share this path for placement, menus and the live world.
+ # Historical vehicle/raw art retains its canonical atlas bounds.
  if index==9:
   var tex=ImageTexture.create_from_image(preload("res://assets/animation-v51/field-tools.png").get_image().get_region(HoldDrawnAnimation.bounds("field-tools",5)));textures[index]=tex;return tex
- var img=(preload("res://assets/animation-v51/homestead-props.png").get_image().get_region(HoldDrawnAnimation.bounds("homestead-props",index-6)) if index in [6,7,8] else ART.get_image().get_region(HoldDrawnAnimation.bounds("workshop",index)));var cell=img.get_size();var lo=cell;var hi=Vector2i.ZERO
+ var img=STATIONS[index].get_image() if index<STATIONS.size() else (preload("res://assets/animation-v51/homestead-props.png").get_image().get_region(HoldDrawnAnimation.bounds("homestead-props",index-6)) if index in [6,7,8] else ART.get_image().get_region(HoldDrawnAnimation.bounds("workshop",index)));var cell=img.get_size();var lo=cell;var hi=Vector2i.ZERO
  for y in img.get_height():
   for x in img.get_width():
    if img.get_pixel(x,y).a>.3:lo=lo.min(Vector2i(x,y));hi=hi.max(Vector2i(x,y))
@@ -446,7 +453,7 @@ func overlay():
     if local(stock) and stock.get("owner","")!="hold" and stock.kind in (["stone_pile","cart","wagon"] if placing=="breaker" else ["timber_pile","cart","wagon"]) and pos(stock).distance_to(p)<150 and clear_line(pos(stock),p):
      g.draw_dashed_line(p,pos(stock),Color("97c6bb"),2,6)
  var f=facility();var raw=closest(data().loose,65);var text=""
- if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · Shift+E collect" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
+ if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · output to pack" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
  elif f.is_empty() and not raw.is_empty():text="E · Lift "+raw_name(raw)+" · %d units" % int(raw.units)+(" · Hold Shift+E dress" if g.zone=="mine" and raw.kind=="stone" else "")
  elif not data().carry.is_empty():text="Carrying %d / %d · Q put down · E deliver" % [data().carry.size(),capacity()]

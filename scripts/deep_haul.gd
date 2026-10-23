@@ -45,7 +45,7 @@ func collect(item:String,n:int,p:Vector2)->String:
  if near_cart(p):transfer(incoming,cart().cargo,CART)
  transfer(incoming,bucket(),BUCKET)
  if not incoming.is_empty():transfer(incoming,pile(Deepworks.cell(p)).cargo);return "cached at your feet"
- return "wheelbarrow" if near_cart(p) else "bucket"
+ return "wheelbarrow" if near_cart(p) else "personal cargo"
 func build_cart(p:Vector2)->bool:
  if not cart().is_empty() or w.solid(p) or not s.pay(CART_COST):return false
  data.cart={"x":p.x,"y":p.y,"depth":w.depth(),"cargo":{},"hitched":false}

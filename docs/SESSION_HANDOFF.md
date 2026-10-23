@@ -1,3 +1,11 @@
+# 0.68.1 — Honest Work: candidate verification
+
+The extra player bucket and legacy rock/arm overlay are removed. Existing personal cargo, shoulder loads and approved whole-character artwork remain intact. Five fixed workshop props now have level fronts and upright supports, shared by live equipment, construction previews and the workshop board.
+
+Player-operated stonebreakers and sawbenches deliver completed output directly into the pack, including normal mastery bonuses. Plain E collects older output left on a bench. Racks, pallets and carts retain deliberate storage transfers; hold crew materials remain protected. Partial jobs, recipes, work credit and saves keep their existing records. First-shift guidance advances on automatic collection.
+
+Local focused verification and native visual review are in progress; the new work76 case has passed 26 assertions. No 0.68.1 release is verified yet. Published v0.68.0 and all earlier checkpoints remain available. Baseline: local pre-work76 at 53cdc61845e8eaebacc65a4d6ac287fc832bb8f3; verified incremental bundle requires 209408538d2fe62773175b27d6313a17db8a8cff. Persistent recovery/verified-world75-delivery preserves remote main 13c17b3dc55a465d57a4492c2cc4ff7332051371. See testing/work76.md.
+
 # 0.68.0 — Roads & Hearths: published and verified
 
 The giant-avatar travel map is no longer part of play. Walk through character-scale paths, gates, mine arches and ordinary doorways; G opens directions. Stonebridge has a wayside hearth, kitchen/storage, bridge supplies and mine staging; Pinewood adds loan processing and timber orders; Greenhearth adds a permanent four-bed allotment, farmhouse services and produce orders. Six residents use the approved whole-character artwork. Existing saves, excavation, inventory, cargo, claims and progression are preserved.

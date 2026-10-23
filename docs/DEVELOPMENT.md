@@ -1,3 +1,7 @@
+## Player bench output
+
+Handworks owns finished player output through collect_output. begin also recovers older bench cargo with plain E, independently of whether a new input is available. Do not restore the extra Shift+E collection step or automatically drain nearby stored materials. First-shift crew output stays in its hold-owned bench. Internal legacy bucket keys/capacity remain save-compatible; its old player overlay is retired. Upright workshop props use the shared Handworks texture path; preserve original atlases and approved whole-character sources.
+
 ## Character continuity owner
 
 Town contact poses inherit current core metadata, including corrected source overrides; never copy historical PNG paths back into a second animation table. appearance74 frames override full sequences/crops only where authored. Hair calibration is measured by tools/calibrate_appearance74.py after registration; regenerate it when source selection changes. Keep tests/appearance74.gd in source and exact-export acceptance. Preview, actors and generic art.dwarf use the whole-character backend.

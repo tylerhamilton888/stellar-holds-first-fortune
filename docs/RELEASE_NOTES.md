@@ -1,9 +1,9 @@
-# 0.68.0 — Roads & Hearths
+# 0.68.1 — Honest Work
 
-Walk out of Keldrath and follow the roads. Gates, countryside paths, mine arches and ordinary doorways now change areas through movement. G offers directions; it does not select destinations.
+Workstations sit squarely in the world: the stonebreaker, sawbench, stone rack, timber rack and materials pallet have level fronts and upright supports. The extra bucket and legacy rock drawing no longer appear alongside the Dwarf's supported shoulder load.
 
-Stonebridge has a wayside hearth with a bunk, a kitchen and storage, a bridge-crew delivery board, fishing and an Old Workings staging yard. Pinewood keeps your existing trees and timber work, with loan saw/rack facilities and support-timber orders. Greenhearth offers a permanent four-bed allotment for 12 crowns, farmhouse cooking/storage, and produce deliveries. Six local residents keep their approved complete-character appearance as they move about these places.
+Hold E to work at a supplied stonebreaker or sawbench. Finished materials go straight into your pack. For output left on a bench by an older save, press E beside it. The first-shift lesson advances automatically when your output arrives.
 
-Use your own materials at fixed loan equipment. Field tools, seeds, water, crop growth, harvests, cooking and work experience use the existing systems. Orders pay once per 10 minutes of world time and have no deadline. Claims, excavation, inventories, loaded carts, shoulder loads, character identity and old recovery checkpoints are preserved.
+Your stored supplies stay where you put them; Shift+E still takes materials from storage. Field dressing keeps its existing hold Shift+E control. Hold crew stock remains protected. Existing saves, personal cargo, unfinished jobs, mastery bonuses, character artwork and previous releases are preserved.
 
-Extract the complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. This release uses connected scenes and short transitions, not a fully streamed world. Local residents are ambient, not an autonomous production economy. Windows hardware performance/audio and final artistic acceptance remain player testing.
+Extract the single complete ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck. The character-scale walking world from 0.68.0 is included. Windows hardware performance/audio and final artistic acceptance remain player testing.
