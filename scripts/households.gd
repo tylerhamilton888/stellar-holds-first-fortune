@@ -63,6 +63,8 @@ static func dressing(w,area:String):
  if HoldNeighborhood.is_home(area):
   var p=HoldNeighborhood.parts(area);var i=int(p[1])
   if p[2]=="1":HoldRoomLayout.rug(w,Rect2(235,350,250,120),Color("526e69"))
-  else:HoldRoomLayout.rug(w,Rect2([285,300,440][i],430,210,105),Color("8b7153") if p[0]=="hearthward" else Color("526e69"))
+  else:
+   var table=family_objects(w,area).filter(func(o):return o.furnishing=="tea_table")[0].p
+   HoldRoomLayout.rug(w,Rect2(table+Vector2(-85,-48),Vector2(170,100)),Color("8b7153") if p[0]=="hearthward" else Color("526e69"))
  elif area==LOFT:HoldRoomLayout.rug(w,Rect2(245,345,180,130),Color("526e69"));HoldRoomLayout.rug(w,Rect2(415,445,170,95),Color("8b7153"))
  elif area==ARCHIVE:HoldRoomLayout.rug(w,Rect2(510,345,165,240),Color("526e69"))
