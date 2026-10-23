@@ -1,0 +1,72 @@
+[
+  {
+    "asset": "assets/workshop76/materials-pallet.png",
+    "sha256": "44673c8b717fb567a56b33288e757843ff54ccaf36ecaaf673fac9582941b450",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "transparent_pixels": 1089674,
+    "alpha_range": [
+      0,
+      254
+    ]
+  },
+  {
+    "asset": "assets/workshop76/sawbench.png",
+    "sha256": "323b7b7d11c0f28180b2fab041399fb8838433b4d849176b0055ae257b659c85",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "transparent_pixels": 977926,
+    "alpha_range": [
+      0,
+      254
+    ]
+  },
+  {
+    "asset": "assets/workshop76/stone-rack.png",
+    "sha256": "9630afb3a2612407822b1f76d2c54332a8c72b922f0b84999ad9025299f1fbb2",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "transparent_pixels": 922661,
+    "alpha_range": [
+      0,
+      254
+    ]
+  },
+  {
+    "asset": "assets/workshop76/stonebreaker.png",
+    "sha256": "6e955e609cead5c7f9032f67521b7f709dc1842062fc76ef049b0b17891346ed",
+    "size": [
+      1536,
+      1024
+    ],
+    "mode": "RGBA",
+    "transparent_pixels": 864975,
+    "alpha_range": [
+      0,
+      254
+    ]
+  },
+  {
+    "asset": "assets/workshop76/timber-rack.png",
+    "sha256": "b7ff8eb81a2f09328c6d5b96602caa9d93e85435e28ca4050a530bdf74da228b",
+    "size": [
+      1330,
+      1182
+    ],
+    "mode": "RGBA",
+    "transparent_pixels": 1158945,
+    "alpha_range": [
+      0,
+      255
+    ]
+  }
+]

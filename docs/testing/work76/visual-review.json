@@ -1,0 +1,35 @@
+{
+  "runtime_tree": "8e253d392ad1a6423a3ba6ab916e80f96b073309",
+  "renderer": "native Godot 4.4.1, compatibility, llvmpipe",
+  "viewport": [
+    1280,
+    720
+  ],
+  "reviewed": [
+    "empty five-prop workshop",
+    "full stone and timber racks, real pallet contents",
+    "stonebreaker and saw contact",
+    "single and two-load carry",
+    "underground down/right/up carrying with legacy cargo retained",
+    "workshop crafting board",
+    "exported first-shift mine scene and automatic lesson progression",
+    "exported empty five-prop workshop",
+    "exported stone contact",
+    "exported workshop controls",
+    "exported single shoulder load with legacy cargo"
+  ],
+  "baseline": "qa75/acceptance/handworks/02-stonebreaking.png and docs/testing/portraits60/handworks/03-sawing.png",
+  "findings": [
+    "Level front edges and upright supports replace diagonal station rotation.",
+    "Transparent surroundings display cleanly on grass and mine floors.",
+    "Existing approaches and tool/raw contacts remain readable.",
+    "Canonical shoulder load shows alone; no bucket or procedural rock/arms.",
+    "Workshop crafting board and keyboard footer fit 1280x720."
+  ],
+  "limits": [
+    "Windows device performance and audio untested in Linux software renderer.",
+    "Separate countryside order-board footer issue remains a prior backlog item.",
+    "Final artistic acceptance remains player review."
+  ],
+  "local_exact_pack_sha256": "55b192472380de6c9cb946889a2756764b7abdaa1c7028a2d8e715556e7b47ae"
+}

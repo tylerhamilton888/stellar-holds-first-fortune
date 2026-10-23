@@ -1,0 +1,90 @@
+[
+  {
+    "test": "work",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 26,
+    "seconds": 59.42,
+    "evidence": "acceptance/results.json",
+    "log": "acceptance/work.log",
+    "error_and_leak_lines": []
+  },
+  {
+    "test": "handworks",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 32,
+    "seconds": 61.49,
+    "evidence": "regression/results.json",
+    "log": "regression/handworks.log",
+    "error_and_leak_lines": []
+  },
+  {
+    "test": "mining",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 38,
+    "seconds": 63.51,
+    "evidence": "regression/results.json",
+    "log": "regression/mining.log",
+    "error_and_leak_lines": []
+  },
+  {
+    "test": "firstshift",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 19,
+    "seconds": 57.48,
+    "evidence": "regression/results.json",
+    "log": "regression/firstshift.log",
+    "error_and_leak_lines": []
+  },
+  {
+    "test": "firsthour",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 18,
+    "seconds": 49.46,
+    "evidence": "remaining/results.json",
+    "log": "remaining/firsthour.log",
+    "error_and_leak_lines": []
+  },
+  {
+    "test": "disciplines",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 37,
+    "seconds": 45.5,
+    "evidence": "remaining/results.json",
+    "log": "remaining/disciplines.log",
+    "error_and_leak_lines": []
+  },
+  {
+    "test": "appearance",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 62.87,
+    "evidence": "remaining/results.json",
+    "log": "remaining/appearance.log",
+    "error_and_leak_lines": []
+  },
+  {
+    "test": "roads",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 80,
+    "seconds": 107.54,
+    "evidence": "remaining/results.json",
+    "log": "remaining/roads.log",
+    "error_and_leak_lines": []
+  }
+]

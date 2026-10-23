@@ -4,7 +4,7 @@ The extra player bucket and legacy rock/arm overlay are removed. Existing person
 
 Player-operated stonebreakers and sawbenches deliver completed output directly into the pack, including normal mastery bonuses. Plain E collects older output left on a bench. Racks, pallets and carts retain deliberate storage transfers; hold crew materials remain protected. Partial jobs, recipes, work credit and saves keep their existing records. First-shift guidance advances on automatic collection.
 
-Local focused verification and native visual review are in progress; the new work76 case has passed 26 assertions. No 0.68.1 release is verified yet. Published v0.68.0 and all earlier checkpoints remain available. Baseline: local pre-work76 at 53cdc61845e8eaebacc65a4d6ac287fc832bb8f3; verified incremental bundle requires 209408538d2fe62773175b27d6313a17db8a8cff. Persistent recovery/verified-world75-delivery preserves remote main 13c17b3dc55a465d57a4492c2cc4ff7332051371. See testing/work76.md.
+Local focused verification passed 314 assertions across eight cases, and all twelve exact-package cases passed 503 assertions. Accepted logs contain no script errors or leaks. The clean build passed its 3,219-entry PCK audit, and native source/exported visuals were reviewed. Hosted source run 39879928695 and release run 39880976032 are still running. No 0.68.1 release is verified yet. Published v0.68.0 and all earlier checkpoints remain available. Baseline: local pre-work76 at 53cdc61845e8eaebacc65a4d6ac287fc832bb8f3; verified incremental bundle requires 209408538d2fe62773175b27d6313a17db8a8cff. Persistent recovery/verified-world75-delivery preserves remote main 13c17b3dc55a465d57a4492c2cc4ff7332051371. See testing/work76.md.
 
 # 0.68.0 — Roads & Hearths: published and verified
 
