@@ -1,0 +1,25 @@
+name: Restore verified Keldrath source
+on:
+  push:
+    branches: ['asset/keldrath77-transfer']
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 2
+      - name: Verify and restore exact source onto a new branch
+        run: |
+          set -euo pipefail
+          cat transfer77/chunk-*.b64 | base64 --decode > "$RUNNER_TEMP/keldrath77.bundle"
+          echo "5f3391fec7a9a861f3f441a673ada1464e3bdef8098a2fcbb0ec83f9f218a85f  $RUNNER_TEMP/keldrath77.bundle" | sha256sum --check
+          git bundle verify "$RUNNER_TEMP/keldrath77.bundle"
+          git fetch "$RUNNER_TEMP/keldrath77.bundle" HEAD:refs/heads/polish/keldrath77
+          test "$(git rev-parse polish/keldrath77)" = ba2c55f0e6a5b7297716c1fc19d6f6ab631d6f89
+          test "$(git rev-parse polish/keldrath77~3)" = f333b66eca1914ddf3b699b3cb21da3f4c27f67d
+          git push origin refs/heads/polish/keldrath77
+          echo "Recovered exact local commit ba2c55f0e6a5b7297716c1fc19d6f6ab631d6f89; transfer helper is not part of its tree." >> "$GITHUB_STEP_SUMMARY"
