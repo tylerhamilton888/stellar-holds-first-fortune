@@ -27,9 +27,85 @@ jobs:
           python3 tools/install_windows_runtime.py "$RUNNER_TEMP/restored/windows_release_x86_64.exe"
           cd "$RUNNER_TEMP/restored"
           sha256sum source.tar.gz windows_release_x86_64.exe godot/Godot_v4.4.1-stable_linux.x86_64 > SHA256SUMS
+          split -b 400M source.tar.gz source.part-
+          sha256sum source.part-* >> SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: verified-keldrath77-workspace
-          path: ${{ runner.temp }}/restored/
+          name: keldrath77-tools-and-manifest
+          path: |
+            ${{ runner.temp }}/restored/godot/
+            ${{ runner.temp }}/restored/windows_release_x86_64.exe
+            ${{ runner.temp }}/restored/source.txt
+            ${{ runner.temp }}/restored/SHA256SUMS
           compression-level: 0
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-aa
+          path: ${{ runner.temp }}/restored/source.part-aa
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-ab
+          path: ${{ runner.temp }}/restored/source.part-ab
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-ac
+          path: ${{ runner.temp }}/restored/source.part-ac
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-ad
+          path: ${{ runner.temp }}/restored/source.part-ad
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-ae
+          path: ${{ runner.temp }}/restored/source.part-ae
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-af
+          path: ${{ runner.temp }}/restored/source.part-af
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-ag
+          path: ${{ runner.temp }}/restored/source.part-ag
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-ah
+          path: ${{ runner.temp }}/restored/source.part-ah
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-ai
+          path: ${{ runner.temp }}/restored/source.part-ai
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: keldrath77-source-aj
+          path: ${{ runner.temp }}/restored/source.part-aj
+          compression-level: 0
+          if-no-files-found: ignore
           retention-days: 14
