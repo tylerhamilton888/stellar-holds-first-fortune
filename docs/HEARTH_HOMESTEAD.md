@@ -1,4 +1,4 @@
-# Hearth & Homestead — 0.70.0 candidate
+# Hearth & Homestead — 0.70.0
 
 A relaxed day connects existing gardens, fishing, the production queue, furniture and mastery. No spoilage, mandatory sleep, daily watering, timed favors or exclusive professions.
 
@@ -22,4 +22,4 @@ HoldHearth owns the small additive surface.hearth78 record, comfort presentation
 
 Original SVG crop/fish/meal illustrations: assets/hearth78. Approved whole-character hoe/watering/harvest/fishing artwork is reused; planting/tending use the complete hoe poses. New animation anatomy is outside this milestone.
 
-Verification status and evidence belong in testing/homestead78.md. Do not describe this candidate as a published or verified build until those gates pass.
+Verification status and evidence belong in testing/homestead78.md. Source and exported gameplay are verified; publication retry status is recorded there.
