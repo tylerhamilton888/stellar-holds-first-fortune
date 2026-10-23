@@ -206,6 +206,11 @@
     "royal-preview": [
       "royal"
     ],
+    "royal-traversal": [
+      "world",
+      "modular",
+      "hold"
+    ],
     "royal-regression": [
       "civic",
       "living",

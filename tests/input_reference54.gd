@@ -27,7 +27,7 @@ func run():
  at(Vector2(620,405));key(KEY_E);check(g.panel_id=="conversation" and g.talk_id=="borin","Borin's crafting service remains reachable");g.close_panel()
  g.surface.enter("forgeward",Vector2(1700,580));settle();key(KEY_E);button("Keldrath · Hearthward");settle()
  check(g.surface.area=="hearthward" and g.player==Vector2(1700,580),"Hold lift connects matching landings without map travel")
- g.surface.enter("hearthward",Vector2(1270,960));settle();key(KEY_E);settle();check(g.surface.area=="trail","King's Gate reaches a full-sized local trail")
+ g.surface.enter("hearthward",HoldWorldZones.GATE+Vector2(0,45));settle();key(KEY_E);settle();check(g.surface.area=="trail","King's Gate reaches a full-sized local trail")
  at(Vector2(930,700));await snap("05-high-trail")
  at(Vector2(950,340));key(KEY_E);settle();check(g.zone=="mine","Trail mine entrance reaches existing Deepworks")
  var w=g.deep.world;var c=Deepworks.ENTRY+Vector2i.RIGHT
