@@ -1,0 +1,39 @@
+{
+  "version": "0.68.1",
+  "source": "6da44ffe28fb6b4cf8f1f639293b872285944ac4",
+  "tree": "8e253d392ad1a6423a3ba6ab916e80f96b073309",
+  "tag": "v0.68.1",
+  "tag_target_verified": "6da44ffe28fb6b4cf8f1f639293b872285944ac4",
+  "release_id": 421359860,
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.68.1",
+  "source_run": 39879928695,
+  "release_run": 39880976032,
+  "source_cases": 21,
+  "source_checks": 810,
+  "pack_cases": 12,
+  "pack_checks": 503,
+  "pck_entries": 3219,
+  "assets": [
+    {
+      "id": 667614850,
+      "name": "build.json",
+      "bytes": 822,
+      "sha256": "c16758c0c67cc86f5a0a2ddd0a151ae3a01301304aa50231812f07c78136fc51",
+      "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.68.1/build.json"
+    },
+    {
+      "id": 667614848,
+      "name": "Stellar-Holds-First-Fortune-0.68.1-Windows.zip",
+      "bytes": 714596045,
+      "sha256": "af5774d5d3379fe4fd72fbda0767ab1adb8774bf7227dd597b7e1665e9af22bd",
+      "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.68.1/Stellar-Holds-First-Fortune-0.68.1-Windows.zip"
+    }
+  ],
+  "zip_asset_matches_build": true,
+  "pr": 23,
+  "merged": false,
+  "merge_approval_pending": true,
+  "verified_main": "13c17b3dc55a465d57a4492c2cc4ff7332051371",
+  "docs_branch": "docs/work76-delivery",
+  "recovery_branch": "recovery/verified-work76-delivery"
+}

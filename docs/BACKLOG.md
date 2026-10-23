@@ -1,3 +1,7 @@
+# Keldrath household and building identity
+
+Confirmed player report: all wards repeat the same three household labels and domestic façade/layout; King's Hall/Practice Bay and Survey Office/Foreman's Office reuse public fronts. Services themselves have unique entrances. See KELDRATH_IDENTITY_AUDIT.md for source evidence and bounded follow-up. Give existing households recognizable names/frontages/interiors and public buildings appropriate identities while retaining room IDs, doors, residents, saved furnishings and services. This is not yet implemented.
+
 # Workshop visual and interaction pass
 
 Implemented upright fixed station art, removal of the redundant player bucket/rock overlay and automatic player bench output. Review the five props beside the approved Dwarf at gameplay scale and check the new output flow in an existing save. Deliberate storage withdrawal, field dressing and crew ownership remain unchanged. Broader work animations and transport redraws remain separate tasks.
