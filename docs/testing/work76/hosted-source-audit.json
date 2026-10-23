@@ -1,0 +1,13 @@
+{
+  "run": 39879928695,
+  "job": 120174579400,
+  "artifact": 12470982133,
+  "artifact_sha256": "09ed97708f79b5282dfc0df36d0b41f02eaa0feb30ad4098cd14b113e15651fb",
+  "cases": 21,
+  "checks": 810,
+  "import_passed": true,
+  "errors_and_leaks": [],
+  "source": "6da44ffe28fb6b4cf8f1f639293b872285944ac4",
+  "tested_merge_commit": "013f1002d245ff015a6d62b347d35b0e9d620b0b",
+  "identical_tree": "8e253d392ad1a6423a3ba6ab916e80f96b073309"
+}

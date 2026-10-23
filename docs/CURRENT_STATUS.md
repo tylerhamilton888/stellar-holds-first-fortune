@@ -1,10 +1,18 @@
-# 0.68.1 — Honest Work: candidate verification
+# 0.68.1 — Honest Work: published, verified and runtime merged
 
 The extra player bucket and legacy rock/arm overlay are removed. Existing personal cargo, shoulder loads and approved whole-character artwork remain intact. Five fixed workshop props now have level fronts and upright supports, shared by live equipment, construction previews and the workshop board.
 
 Player-operated stonebreakers and sawbenches deliver completed output directly into the pack, including normal mastery bonuses. Plain E collects older output left on a bench. Racks, pallets and carts retain deliberate storage transfers; hold crew materials remain protected. Partial jobs, recipes, work credit and saves keep their existing records. First-shift guidance advances on automatic collection.
 
-Local focused verification and native visual review are in progress; the new work76 case has passed 26 assertions. No 0.68.1 release is verified yet. Published v0.68.0 and all earlier checkpoints remain available. Baseline: local pre-work76 at 53cdc61845e8eaebacc65a4d6ac287fc832bb8f3; verified incremental bundle requires 209408538d2fe62773175b27d6313a17db8a8cff. Persistent recovery/verified-world75-delivery preserves remote main 13c17b3dc55a465d57a4492c2cc4ff7332051371. See testing/work76.md.
+One complete Windows ZIP is published at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.68.1. Its 714,596,045 bytes and SHA-256 af5774d5d3379fe4fd72fbda0767ab1adb8774bf7227dd597b7e1665e9af22bd match the clean hosted build report and uploaded asset digest. Tag v0.68.1 preserves source 6da44ffe28fb6b4cf8f1f639293b872285944ac4, tree 8e253d392ad1a6423a3ba6ab916e80f96b073309.
+
+Hosted source run 39879928695 passed import and all 21 gameplay cases: 810 assertions. Release run 39880976032 passed the 3,219-entry PCK audit and all 12 exact-package cases: 503 assertions. Downloaded evidence digests were verified and accepted logs contain no script errors or leaks. Local focused verification passed 314 assertions and local exact-package verification passed 503. Native source, local export and hosted export visuals were reviewed. See testing/work76.md and testing/work76.
+
+PR #23 merged at 045486ddeb1e560eebccb052143b96377d5ffcf0 with the identical verified runtime tree 8e253d392ad1a6423a3ba6ab916e80f96b073309. Continue from GitHub main after integrating the separate delivery documentation. On 2026-10-23 the owner explicitly authorized merging directed work after required testing and review; no separate routine merge confirmation is needed.
+
+Baseline: local pre-work76 at 53cdc61845e8eaebacc65a4d6ac287fc832bb8f3; its verified incremental bundle requires 209408538d2fe62773175b27d6313a17db8a8cff. Final delivery checkpoint: verified-work76-delivery, with a local incremental bundle requiring pre-work76 and a persistent GitHub recovery branch. Earlier checkpoints/releases remain intact. Windows hardware performance/audio and final visual acceptance remain player testing.
+
+Latest player feedback: Keldrath buildings feel repeated. The audit confirms repeated household names/fronts/interior templates and two shared public-façade pairs; public service doors are unique. See KELDRATH_IDENTITY_AUDIT.md. This diagnosis is recorded for a focused town identity pass, not claimed fixed by Honest Work.
 
 # 0.68.0 — Roads & Hearths: published and verified
 

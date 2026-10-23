@@ -1,0 +1,17 @@
+{
+  "run_id": 39880976032,
+  "artifact_id": 12471492910,
+  "artifact_bytes": 92768451,
+  "artifact_sha256": "9275560908b57ec67fe78ecf979f3ea4591a5d5de9b859cac50c7cb0b108d50f",
+  "digest_verified": true,
+  "cases": 12,
+  "checks": 503,
+  "logs_scanned": 12,
+  "errors": [],
+  "native_visual_review": [
+    "work/01-empty-workshop.png",
+    "work/04-full-workshop.png",
+    "work/06-workshop-board.png",
+    "work/07-carry-0.png"
+  ]
+}
