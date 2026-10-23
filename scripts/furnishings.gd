@@ -2,10 +2,12 @@ class_name HoldFurnishings
 extends RefCounted
 # One catalogue for town props, player construction, previews and physical bases.
 # Source crops are measured, with no painted room/floor baked into them.
+const DOUBLE_BED=preload("res://assets/hold77/double-bed.png")
 const ATLAS=preload("res://assets/furnishings-v56/interior.png")
 const CROPS=[Rect2(40,83,316,237),Rect2(424,22,308,300),Rect2(805,57,326,271),Rect2(1250,36,210,289),Rect2(15,429,407,224),Rect2(442,397,320,258),Rect2(805,376,325,282),Rect2(1180,328,323,340),Rect2(54,661,288,342),Rect2(491,668,188,334),Rect2(853,751,257,226),Rect2(1204,698,280,291)]
 # size is the visible silhouette; base is its ground-plane occupied rectangle.
 const ITEMS={
+ "double_bed":{"title":"Shared oak double bed","size":Vector2(86,77),"base":Rect2(-41,-62,82,62),"cost":{"wood":10,"stone":4}},
  "orrery":{"title":"Founders’ orrery","size":Vector2(76,94),"base":Rect2(-31,-25,62,25),"cost":{"stone":8,"iron":6,"crystal":2}},
  "notice_board":{"title":"Public notice board","size":Vector2(78,72),"base":Rect2(-36,-16,72,16),"cost":{"wood":8,"stone":4}},
  "oath_stone":{"title":"Ancestral oath-stone","size":Vector2(144,132),"base":Rect2(-68,-48,136,48),"cost":{"stone":20,"dressed_stone":8}},
@@ -41,6 +43,7 @@ static func silhouette(kind:String,p:Vector2)->Rect2:
 static func draw(n:Node2D,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
  if HoldCivicArt.CROPS.has(kind):HoldCivicArt.draw(n,p,kind,tint)
+ elif kind=="double_bed":n.draw_texture_rect_region(DOUBLE_BED,silhouette(kind,p),Rect2(31,33,1250,1114),tint)
  elif kind=="stone_pillar":HoldMasonryArt.pillar(n,p,124,tint)
  elif kind=="hearth":
   var clock=n.get("clock")

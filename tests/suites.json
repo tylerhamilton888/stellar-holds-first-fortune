@@ -28,7 +28,8 @@
       "firsthour",
       "appearance",
       "roads",
-      "work"
+      "work",
+      "keldrath"
     ],
     "modular": [
       "modular",
@@ -174,6 +175,18 @@
       "disciplines",
       "appearance",
       "roads"
+    ],
+    "keldrath-preview": [
+      "keldrath"
+    ],
+    "keldrath-final": [
+      "keldrath",
+      "hold",
+      "living",
+      "civic",
+      "continuity",
+      "polish",
+      "work"
     ]
   },
   "cases": {
@@ -260,6 +273,10 @@
     "work": {
       "script": "tests/work76.gd",
       "marker": "WORK76"
+    },
+    "keldrath": {
+      "script": "tests/keldrath77.gd",
+      "marker": "KELDRATH77"
     }
   }
 }

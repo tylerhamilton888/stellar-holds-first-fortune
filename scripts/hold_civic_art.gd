@@ -12,7 +12,7 @@ static func exit_sides(area:String)->Array:
  var p=HoldRoomLayout.exit_point(area)
  return [Rect2(p+Vector2(-72,-18),Vector2(33,58)),Rect2(p+Vector2(39,-18),Vector2(33,58))]
 static func has_exit(area:String)->bool:
- return not HoldNeighborhood.is_home(area) or HoldNeighborhood.parts(area)[2]!="1"
+ return area!=HoldHouseholds.LOFT and (not HoldNeighborhood.is_home(area) or HoldNeighborhood.parts(area)[2]!="1")
 static func exit_floor(g,area:String):
  if not has_exit(area):return
  var p=HoldRoomLayout.exit_point(area)
