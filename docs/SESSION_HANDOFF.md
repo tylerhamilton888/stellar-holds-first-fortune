@@ -1,4 +1,4 @@
-# 0.68.1 — Honest Work: published and verified; merge pending
+# 0.68.1 — Honest Work: published, verified and runtime merged
 
 The extra player bucket and legacy rock/arm overlay are removed. Existing personal cargo, shoulder loads and approved whole-character artwork remain intact. Five fixed workshop props now have level fronts and upright supports, shared by live equipment, construction previews and the workshop board.
 
@@ -8,7 +8,7 @@ One complete Windows ZIP is published at https://github.com/tylerhamilton888/ste
 
 Hosted source run 39879928695 passed import and all 21 gameplay cases: 810 assertions. Release run 39880976032 passed the 3,219-entry PCK audit and all 12 exact-package cases: 503 assertions. Downloaded evidence digests were verified and accepted logs contain no script errors or leaks. Local focused verification passed 314 assertions and local exact-package verification passed 503. Native source, local export and hosted export visuals were reviewed. See testing/work76.md and testing/work76.
 
-PR #23 remains open and unmerged. Automatic approval review rejected merging this new runtime PR because the earlier owner merge approval covered the world update. Do not retry or bypass without explicit new owner approval. GitHub main remains 13c17b3dc55a465d57a4492c2cc4ff7332051371. Continue work from the verified release source/docs branch while preserving that distinction; after approval, merge the runtime PR and then its separate delivery documentation.
+PR #23 merged at 045486ddeb1e560eebccb052143b96377d5ffcf0 with the identical verified runtime tree 8e253d392ad1a6423a3ba6ab916e80f96b073309. Continue from GitHub main after integrating the separate delivery documentation. On 2026-10-23 the owner explicitly authorized merging directed work after required testing and review; no separate routine merge confirmation is needed.
 
 Baseline: local pre-work76 at 53cdc61845e8eaebacc65a4d6ac287fc832bb8f3; its verified incremental bundle requires 209408538d2fe62773175b27d6313a17db8a8cff. Final delivery checkpoint: verified-work76-delivery, with a local incremental bundle requiring pre-work76 and a persistent GitHub recovery branch. Earlier checkpoints/releases remain intact. Windows hardware performance/audio and final visual acceptance remain player testing.
 

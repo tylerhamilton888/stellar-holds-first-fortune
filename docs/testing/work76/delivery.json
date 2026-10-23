@@ -31,9 +31,11 @@
   ],
   "zip_asset_matches_build": true,
   "pr": 23,
-  "merged": false,
-  "merge_approval_pending": true,
-  "verified_main": "13c17b3dc55a465d57a4492c2cc4ff7332051371",
+  "merged": true,
+  "merge_approval_pending": false,
+  "verified_main": "045486ddeb1e560eebccb052143b96377d5ffcf0",
   "docs_branch": "docs/work76-delivery",
-  "recovery_branch": "recovery/verified-work76-delivery"
+  "recovery_branch": "recovery/verified-work76-delivery",
+  "runtime_merge": "045486ddeb1e560eebccb052143b96377d5ffcf0",
+  "owner_authorization": "2026-10-23: directed work includes authorization to merge after testing and review."
 }
