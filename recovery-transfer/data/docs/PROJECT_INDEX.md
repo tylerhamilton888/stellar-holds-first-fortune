@@ -1,0 +1,133 @@
+# Royal Hall and grounded Keldrath — 0.71.0 candidate
+
+- ROYAL_HALL.md: scope, visual direction and limits.
+- scripts/royal_stage.gd / opening_scene.gd: royal poses and live audience.
+- scripts/hold_grounding.gd: mountain, texture proportions, physical signs and gate setting.
+- assets/royal79/production.json: original art and exact prompts.
+- tests/royal79.gd / testing/royal79.md: behavior, visual evidence and delivery gates.
+
+# Hearth & Homestead — 0.70.0 candidate
+
+- HEARTH_HOMESTEAD.md: scope, player loop, ownership and limits.
+- scripts/hearth.gd / homestead_life.gd: meals, comfort, favor, gardening and fishing.
+- assets/hearth78: original SVG crop, fish and meal illustrations.
+- tests/homestead78.gd: real-input garden-to-supper-to-neighbor loop and migration.
+- testing/homestead78.md: validation and delivery status.
+
+# Honest Work — 0.68.1 candidate
+
+- assets/workshop76: five upright props, intact generated sources and exact production prompts.
+- scripts/handworks.gd: shared prop rendering and automatic player output; explicit storage transfer.
+- scripts/deepworks_play.gd: canonical whole-character player rendering without legacy cargo overlays.
+- tests/work76.gd / docs/testing/work76.md: saved output, interrupted work, ownership, mastery and native visual evidence.
+
+# Roads & Hearths — 0.68.0
+
+Published v0.68.0. testing/roads75 records native, hosted source, exact-package and delivery evidence. Recovery: verified-world75-delivery.
+
+- scripts/roads.gd: physical region connections, smallholder/wayside life, delivery boards, loans and allotment leasing.
+- scripts/surface.gd / deepworks_play.gd: movement thresholds, reciprocal mine exits and existing work/cargo integration.
+- scripts/homestead_life.gd / state.gd: local allotment scope and exact old-save backup; existing crop mechanics remain authoritative.
+- tests/roads75.gd / docs/testing/roads75.md: source and exported-game acceptance.
+
+# Appearance continuity — 0.67.1
+
+Published v0.67.1. testing/appearance74 records native, hosted source, exact-package and delivery evidence. Recovery: verified-appearance74-delivery.
+
+- scripts/whole_frames.gd: canonical contact inheritance, measured palette and scale correction.
+- assets/appearance74: complete side-walk replacements and calibration metadata.
+- tests/appearance74.gd and docs/testing/appearance74.md: native identity, creator and background-NPC verification.
+
+# A Good Day’s Work — 0.67.0
+
+- scripts/quarters.gd: starter-room plans using the existing furnishing catalogue and surface save records.
+- scripts/surface.gd / handworks.gd: physical station bases, safe work approaches, quarters placement and batched storage saves.
+- scripts/first_shift.gd: contextual lesson guidance and worksite allowance tracking.
+- scripts/whole_frames.gd: artwork-revision cache and location-specific preparation.
+- tests/firsthour73.gd / docs/testing/firsthour73.md: quarters, letter, equipment and persistence verification.
+
+# Hearth & Stone — 0.66.0
+
+- scripts/whole_frames.gd / drawn_locomotion.gd: shared complete side-walk passing drawings and distance-calibrated stride.
+- scripts/hold_masonry_art.gd / assets/hold-kit72: painted full building envelopes, slate roofing and original surface-sheet provenance.
+- scripts/hold_ward_design.gd: mountain bedrock adjoining the playable wards.
+- scripts/room_layout.gd: grouped furnishings and woven rugs, retaining saved room dimensions and service anchors.
+- scripts/menu_view.gd / main.gd / discipline_view.gd: selected peer tabs, shallow navigation, pack search and personal-menu pause behavior.
+- tests/polish72.gd / docs/testing/polish72.md: source, exact-package, geometry and visual-review evidence.
+
+# The Hold of Three Hearths — 0.64.0
+
+- scripts/hold_ward_design.gd: deterministic civic, social, industrial and domestic composition; cached paving; scenic mountain depth.
+- scripts/hold_civic_art.gd / assets/hold-kit68: original art, measured crops and open exit side geometry; production.md records provenance.
+- scripts/furnishings.gd: five new craftable civic/industrial decorations using shared footprints.
+- scripts/surface.gd: additive fixed freight storage, public notices, proximity key cues without floating destination captions.
+- scripts/room_layout.gd: exit camera framing; existing room/return coordinates retained.
+- tests/civic68.gd / docs/testing/civic68.md: route, exit, furniture, storage and save regression evidence.
+
+# Living terraces — 0.63.0
+
+Published v0.63.0: `testing/living67/hosted-build.json`, `delivery.json` and `hosted-source-visibility.json` record the verified package, tag and source gates. Final local recovery tag: `verified-living67-delivery`; GitHub retains the complete published source and previous releases.
+
+- scripts/hold_terraces.gd: shared projected ward coordinates, normal-movement stairs, rails and camera continuity.
+- scripts/hold_routines.gd: compiled household/work/tavern journeys sampled from saved time.
+- scripts/room_layout.gd: expanded forge plan, bounds, exit, camera and furnishing positions.
+- scripts/hold_masonry_art.gd / assets/hold-kit67: original painted architecture and measured crops.
+- scripts/furnishings.gd: craftable carved pillars and low workshop tables.
+- tests/living67.gd / docs/testing/living67.md: route clearance, loaded crossings, persistence and rendered contact evidence.
+
+# Physical continuity — 0.62.1
+
+- scripts/letters.gd: optional writing-desk story and journal copy.
+- scripts/surface.gd: bedside anchors, stair trips and actor/tread sorting.
+- scripts/world_zones.gd / hold_neighborhood.gd: facade coverage, clear streets, actual lower-floor cutaways.
+- assets/town-walk66 / scripts/whole_frames.gd: NPC-only passing poses; player frames unchanged.
+- tests/continuity66.gd / docs/testing/continuity66.md: native mechanical and visual evidence.
+- tools/install_windows_runtime.py / check_pack.py / .github/workflows/windows-release.yml: pinned single-ZIP release delivery.
+
+# Keldrath galleries — 0.62.0
+
+- scripts/hold_neighborhood.gd: residential galleries, connected home floors, painted stair envelopes, neighbors.
+- scripts/floor_pattern.gd: continuous cached timber/stone floor drawing.
+- scripts/world_zones.gd / surface.gd: ward geometry, doorstep links, interaction selection and bounds.
+- tests/hold65.gd / testing/hold65.md: collision, doors, Z traversal, persistence and native visual QA.
+
+# Modular building refinement — 0.61.3
+
+- scripts/build_preview.gd: shared world-space grid, valid/blocked footprint and labels.
+- scripts/furnishings.gd: canonical furniture art, geometry, recipes and dressed variants.
+- scripts/surface.gd: snapped placement, safe repositioning and wall-slide facing.
+- scripts/hearthcraft.gd / handworks.gd: construction/equipment preview eligibility.
+- tests/modular64.gd / docs/testing/modular64.md: focused checks and evidence.
+
+Title/loading presentation: scripts/loading_view.gd; frame cache: scripts/whole_frames.gd; regression and evidence: tests/loading63.gd and docs/testing/loading63.md.
+
+# Foundation development index — 0.61.1
+
+- DEVELOPMENT.md: contributor workflow, architecture boundaries, builds and releases.
+- TESTING.md / ../tests/suites.json: current native acceptance gates.
+- testing/foundation62.md: local mechanical/visual/export verification.
+- ../scripts/menu_view.gd: shared presentation; ../scripts/build_info.gd: version source.
+- ../tools/check.py / build.py: reproducible verification and packaging.
+- ../.github/workflows/: source-history import and routine validation.
+- CURRENT_STATUS.md / SESSION_HANDOFF.md: verified GitHub source migration and next work.
+
+# Current development index — 0.61.0
+
+| Item | Purpose |
+|---|---|
+| SESSION_HANDOFF.md / CURRENT_STATUS.md | Current implementation, recovery and remaining boundaries |
+| testing/ambient61.md | Current native gameplay/export verification and visual evidence |
+| scripts/ambient_props.gd / furnishings.gd | Shared animated hearths; fountain water effects |
+| scripts/arrival_escort.gd / opening_scene.gd | Prepared, distance-timed scene actors |
+| scripts/whole_frames.gd / world_zones.gd | Whole-frame preparation and town gait |
+| scripts/appearance.gd | Canonical Copperkettle family names |
+| tests/ambient61.gd / pack_ambient61.gd | Focused native source/export checks |
+| tests/intro53.gd / grips58.gd | Orientation and equipped/cargo regressions |
+| ART_DIRECTION.md | Existing approved whole-character visual authority |
+| PLAYTEST_GUIDE.md | Player acceptance route |
+| Stellar-Holds-First-Fortune-0.61.0-Windows.zip | One complete playable Windows download |
+| Stellar-Holds-0.61.0-Recovery.bundle + Recovery.txt | Incremental source checkpoint and exact restoration metadata |
+
+Private delivery repository: `tylerhamilton888/stellar-holds-first-fortune`. Its main branch holds delivery documentation, not the full editable game. Source checkpoint tags/commits in recovery files are authoritative. Older releases remain available.
+
+Preserve the full .51 baseline and all increments: .52, .53, .53.1, .54, .55, .55.1, .56, .57, whole-figure-study58, whole-integration-wip58, palette-fix58, animation-refinement58, folk-quality58, whole-motion59, portraits60, and .60 delivery. The .61 increment starts at .60 delivery `19e2795c1e4170ac118485c58e0f6be9e4163820`. Historical test/art records remain under `docs/testing` and `docs/art`; previous source documents remain in Git history.

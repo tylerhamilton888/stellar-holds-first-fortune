@@ -1,0 +1,18 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 125.24
+  },
+  {
+    "test": "royal",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 72,
+    "seconds": 53.56
+  }
+]

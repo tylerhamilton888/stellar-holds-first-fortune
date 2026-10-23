@@ -1,0 +1,256 @@
+{
+  "base": "92751bd7660a00eb688720e2c1145d978b00677f",
+  "tree": "dc402093dee82e93dab3177a8c585f07a59e880f",
+  "files": [
+    {
+      "path": "assets/royal79/bedrock.png",
+      "sha256": "ddfff7a134b6688e07c8594b17989927dad3533e9c79a2a15f48587ba07c3321",
+      "parts": [
+        "recovery-transfer/data/assets/royal79/bedrock.png.part000",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part001",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part002",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part003",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part004",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part005",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part006-group",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part009-group",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part012-group",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part015-group",
+        "recovery-transfer/data/assets/royal79/bedrock.png.part018-group"
+      ]
+    },
+    {
+      "path": "assets/royal79/bedrock.png.import",
+      "sha256": "9e5b2414f1bd4a5829874e4d4e7cdfc4250be05786a35aae29acc21d32f41b58",
+      "parts": [
+        "recovery-transfer/data/assets/royal79/bedrock.png.import"
+      ]
+    },
+    {
+      "path": "assets/royal79/eirik-poses.png",
+      "sha256": "6f96305ff57f015d342d5812cbfaa2065bad802cff44e9bbd03619dbca7be205",
+      "parts": [
+        "recovery-transfer/data/assets/royal79/eirik-poses.png.part000-group",
+        "recovery-transfer/data/assets/royal79/eirik-poses.png.part003-group",
+        "recovery-transfer/data/assets/royal79/eirik-poses.png.part006-group",
+        "recovery-transfer/data/assets/royal79/eirik-poses.png.part009-group",
+        "recovery-transfer/data/assets/royal79/eirik-poses.png.part012-group"
+      ]
+    },
+    {
+      "path": "assets/royal79/eirik-poses.png.import",
+      "sha256": "dca6c296ecf14b8dd54ae494dcb56ed62a2ac099b292d833672dabebd3a5bad0",
+      "parts": [
+        "recovery-transfer/data/assets/royal79/eirik-poses.png.import"
+      ]
+    },
+    {
+      "path": "assets/royal79/hall-kit.png",
+      "sha256": "114eb46fe1a83dabf5e1d715ab338971f34956795ac8f6582d71ec23a1bd47e8",
+      "parts": [
+        "recovery-transfer/data/assets/royal79/hall-kit.png.part000-group",
+        "recovery-transfer/data/assets/royal79/hall-kit.png.part003-group",
+        "recovery-transfer/data/assets/royal79/hall-kit.png.part006-group",
+        "recovery-transfer/data/assets/royal79/hall-kit.png.part009-group",
+        "recovery-transfer/data/assets/royal79/hall-kit.png.part012-group",
+        "recovery-transfer/data/assets/royal79/hall-kit.png.part015-group"
+      ]
+    },
+    {
+      "path": "assets/royal79/hall-kit.png.import",
+      "sha256": "9956ba7ce8f49cb7876dadd1f962d466340b80b8d81ec62f9a378e16acb38baa",
+      "parts": [
+        "recovery-transfer/data/assets/royal79/hall-kit.png.import"
+      ]
+    },
+    {
+      "path": "assets/royal79/production.json",
+      "sha256": "1ebb707866d06eb5b8d8a5ae7560ea9ac68197973885acb24241dd4473f933e0",
+      "parts": [
+        "recovery-transfer/data/assets/royal79/production.json"
+      ]
+    },
+    {
+      "path": "docs/BACKLOG.md",
+      "sha256": "c2447c18070d8a9981c15e9cba7502475eb8f533a5111615e91edf08dd9b2e1e",
+      "parts": [
+        "recovery-transfer/data/docs/BACKLOG.md"
+      ]
+    },
+    {
+      "path": "docs/CHANGELOG.md",
+      "sha256": "71a81ea2fc657d00b2a99de1b95235f163aa76e0521bbf196ca112829a5bb6b6",
+      "parts": [
+        "recovery-transfer/data/docs/CHANGELOG.md"
+      ]
+    },
+    {
+      "path": "docs/CURRENT_STATUS.md",
+      "sha256": "bdf175e67199304cc5766630f6aba45090ffbc3c4f175bd6ba728655f5789440",
+      "parts": [
+        "recovery-transfer/data/docs/CURRENT_STATUS.md"
+      ]
+    },
+    {
+      "path": "docs/PROJECT_INDEX.md",
+      "sha256": "7325ae6aeb4ae2b9b9106c87a4db11a4d1a05aad601eee6f261cc47e138c808e",
+      "parts": [
+        "recovery-transfer/data/docs/PROJECT_INDEX.md"
+      ]
+    },
+    {
+      "path": "docs/RELEASE_NOTES.md",
+      "sha256": "2f27a894baffb55fbcd3522a52104a4c3d21b52c612dd8ea7b25c6c832c03c4b",
+      "parts": [
+        "recovery-transfer/data/docs/RELEASE_NOTES.md"
+      ]
+    },
+    {
+      "path": "docs/ROYAL_HALL.md",
+      "sha256": "75b1bc72f230594e76ba67682465728cbe1a9ded980d6b70722262ec71362fed",
+      "parts": [
+        "recovery-transfer/data/docs/ROYAL_HALL.md"
+      ]
+    },
+    {
+      "path": "docs/SESSION_HANDOFF.md",
+      "sha256": "4751147cb15ffa0f0352155a360cb891a27a65cdd1510bcb325adbba03cea3b3",
+      "parts": [
+        "recovery-transfer/data/docs/SESSION_HANDOFF.md"
+      ]
+    },
+    {
+      "path": "docs/testing/royal79.md",
+      "sha256": "570a8afcd0008330c005d39c71ee8739c5241cf12020c6269db8941ca3e48666",
+      "parts": [
+        "recovery-transfer/data/docs/testing/royal79.md"
+      ]
+    },
+    {
+      "path": "docs/testing/royal79/local-pack-results.json",
+      "sha256": "fde44ff02f4a47bbc4afcdd5f1a86b52f8445f96ec021ab44878f36fd7fad350",
+      "parts": [
+        "recovery-transfer/data/docs/testing/royal79/local-pack-results.json"
+      ]
+    },
+    {
+      "path": "docs/testing/royal79/local-royal-results.json",
+      "sha256": "a4a38d143956eba9b5534276ec66fe91c156299ddd5d669b786fbacb8000df0b",
+      "parts": [
+        "recovery-transfer/data/docs/testing/royal79/local-royal-results.json"
+      ]
+    },
+    {
+      "path": "scripts/build_info.gd",
+      "sha256": "b07d3c5c4417faf7f830983f6d05634ba5eb16becc6838ef158b39785c82dc7a",
+      "parts": [
+        "recovery-transfer/data/scripts/build_info.gd"
+      ]
+    },
+    {
+      "path": "scripts/hold_grounding.gd",
+      "sha256": "6c15fb9d9459d4eb7493ec609f80e85e1006b2f99f8ddee035de6645dc843719",
+      "parts": [
+        "recovery-transfer/data/scripts/hold_grounding.gd"
+      ]
+    },
+    {
+      "path": "scripts/hold_grounding.gd.uid",
+      "sha256": "b7dcedb2172785b9aa04b59fdf2e1e6e80c6466c1de629788865e96a53d7a3d3",
+      "parts": [
+        "recovery-transfer/data/scripts/hold_grounding.gd.uid"
+      ]
+    },
+    {
+      "path": "scripts/hold_masonry_art.gd",
+      "sha256": "15b8c337376931e36881162d85ad9c054c4f0b0c03003cecc9a4f6c0d8d531d0",
+      "parts": [
+        "recovery-transfer/data/scripts/hold_masonry_art.gd"
+      ]
+    },
+    {
+      "path": "scripts/hold_ward_design.gd",
+      "sha256": "a53b245649f172343db12e88843baa6d9e7230d8d7b8ea4ddabaf92ad527bc45",
+      "parts": [
+        "recovery-transfer/data/scripts/hold_ward_design.gd"
+      ]
+    },
+    {
+      "path": "scripts/opening_scene.gd",
+      "sha256": "b0d71bfac1a62df77398978d7fa737ef83e514121d4213e179e9a680f8820437",
+      "parts": [
+        "recovery-transfer/data/scripts/opening_scene.gd"
+      ]
+    },
+    {
+      "path": "scripts/room_layout.gd",
+      "sha256": "28067d0811478b25983cd6b580cc78dfacf430b37b20f71f3143e7f1a4960495",
+      "parts": [
+        "recovery-transfer/data/scripts/room_layout.gd"
+      ]
+    },
+    {
+      "path": "scripts/royal_stage.gd",
+      "sha256": "2a46ab81178f71dd62fa9b5663835dd8d80b84a8ecc50fd5a630ef462ae1cda1",
+      "parts": [
+        "recovery-transfer/data/scripts/royal_stage.gd"
+      ]
+    },
+    {
+      "path": "scripts/royal_stage.gd.uid",
+      "sha256": "c7e30f34c54e9038384febb64c57b0359fb152aeee0b9f54c62fa564e4d416d4",
+      "parts": [
+        "recovery-transfer/data/scripts/royal_stage.gd.uid"
+      ]
+    },
+    {
+      "path": "scripts/surface.gd",
+      "sha256": "e108ace862e8ee8c62c268629cea94027358b4bbf2a87953f821633c5849bbf9",
+      "parts": [
+        "recovery-transfer/data/scripts/surface.gd"
+      ]
+    },
+    {
+      "path": "scripts/world_zones.gd",
+      "sha256": "5ad57041069badbdec9ec9d478180c5ba15660a37a71c26dc794c0f57d9c0234",
+      "parts": [
+        "recovery-transfer/data/scripts/world_zones.gd"
+      ]
+    },
+    {
+      "path": "tests/pack_ambient61.gd",
+      "sha256": "bd0305959940d9c90f651b301fb23dd812ff19dea9ffd941cf9728ffd760e6ea",
+      "parts": [
+        "recovery-transfer/data/tests/pack_ambient61.gd"
+      ]
+    },
+    {
+      "path": "tests/royal79.gd",
+      "sha256": "2f77a01969d62b469901bb7ef0c1156a1c80cd31cfb0395bac5a3d15583a2b78",
+      "parts": [
+        "recovery-transfer/data/tests/royal79.gd"
+      ]
+    },
+    {
+      "path": "tests/royal79.gd.uid",
+      "sha256": "a96555e1877fa81b09a5124622b7aedfb09f7395dc09363f2f1400cda26a4d58",
+      "parts": [
+        "recovery-transfer/data/tests/royal79.gd.uid"
+      ]
+    },
+    {
+      "path": "tests/suites.json",
+      "sha256": "505cb9f6cb0aaa1947c99f041404d85321ee7f0781b4f54a634b860fcc272bcf",
+      "parts": [
+        "recovery-transfer/data/tests/suites.json"
+      ]
+    },
+    {
+      "path": "tools/check_pack.py",
+      "sha256": "b050859d6ab0504a8fc939a8a0473bf80c42cd83f64ed4da033b07537a9a0569",
+      "parts": [
+        "recovery-transfer/data/tools/check_pack.py"
+      ]
+    }
+  ]
+}

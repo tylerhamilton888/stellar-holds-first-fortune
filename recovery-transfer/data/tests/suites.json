@@ -1,0 +1,316 @@
+{
+  "suites": {
+    "core": [
+      "loading",
+      "menus",
+      "orientation",
+      "ambient",
+      "equipment"
+    ],
+    "gameplay": [
+      "loading",
+      "menus",
+      "orientation",
+      "ambient",
+      "equipment",
+      "mining",
+      "handworks",
+      "world",
+      "modular",
+      "hold",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal"
+    ],
+    "modular": [
+      "modular",
+      "orientation",
+      "ambient",
+      "equipment",
+      "handworks",
+      "world"
+    ],
+    "hold": [
+      "hold",
+      "orientation",
+      "ambient",
+      "world",
+      "modular"
+    ],
+    "continuity": [
+      "continuity",
+      "hold",
+      "orientation",
+      "world",
+      "modular"
+    ],
+    "locomotion": [
+      "continuity",
+      "ambient",
+      "equipment"
+    ],
+    "living": [
+      "living",
+      "hold",
+      "continuity",
+      "orientation",
+      "world",
+      "modular",
+      "ambient",
+      "equipment"
+    ],
+    "civic": [
+      "civic",
+      "living",
+      "hold",
+      "orientation",
+      "world",
+      "modular",
+      "ambient"
+    ],
+    "firstshift": [
+      "firstshift",
+      "handworks",
+      "mining",
+      "world",
+      "civic",
+      "living"
+    ],
+    "ancestral": [
+      "ancestral"
+    ],
+    "disciplines": [
+      "disciplines",
+      "handworks",
+      "mining",
+      "firstshift",
+      "ancestral",
+      "menus",
+      "world"
+    ],
+    "polish": [
+      "polish",
+      "menus",
+      "continuity",
+      "civic",
+      "living",
+      "orientation",
+      "equipment",
+      "disciplines"
+    ],
+    "firsthour": [
+      "firsthour",
+      "firstshift",
+      "orientation",
+      "handworks",
+      "loading",
+      "polish"
+    ],
+    "firsthour-only": [
+      "firsthour"
+    ],
+    "firsthour-regression": [
+      "handworks",
+      "loading",
+      "polish"
+    ],
+    "mining-only": [
+      "mining"
+    ],
+    "appearance": [
+      "appearance"
+    ],
+    "roads": [
+      "roads"
+    ],
+    "roads-regression": [
+      "world",
+      "handworks",
+      "firsthour",
+      "ancestral",
+      "living",
+      "appearance"
+    ],
+    "roads-final": [
+      "mining",
+      "handworks",
+      "world",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads"
+    ],
+    "work-preview": [
+      "work"
+    ],
+    "work-final": [
+      "work",
+      "handworks",
+      "mining",
+      "firstshift",
+      "firsthour",
+      "disciplines",
+      "appearance",
+      "roads"
+    ],
+    "work-regression": [
+      "handworks",
+      "mining",
+      "firstshift",
+      "firsthour",
+      "disciplines",
+      "appearance",
+      "roads"
+    ],
+    "keldrath-preview": [
+      "keldrath"
+    ],
+    "keldrath-final": [
+      "keldrath",
+      "hold",
+      "living",
+      "civic",
+      "continuity",
+      "polish",
+      "work"
+    ],
+    "homestead-preview": [
+      "homestead"
+    ],
+    "homestead-regression": [
+      "roads",
+      "polish",
+      "work",
+      "disciplines",
+      "keldrath",
+      "world",
+      "handworks",
+      "mining"
+    ],
+    "royal-preview": [
+      "royal"
+    ],
+    "royal-regression": [
+      "civic",
+      "living",
+      "continuity",
+      "appearance",
+      "keldrath",
+      "homestead"
+    ]
+  },
+  "cases": {
+    "menus": {
+      "script": "tests/menu_foundation62.gd",
+      "marker": "MENUS62"
+    },
+    "orientation": {
+      "script": "tests/intro53.gd",
+      "marker": "INTRO53"
+    },
+    "ambient": {
+      "script": "tests/ambient61.gd",
+      "marker": "AMBIENT61"
+    },
+    "equipment": {
+      "script": "tests/grips58.gd",
+      "marker": "WHOLE58"
+    },
+    "mining": {
+      "script": "tests/mining55.gd",
+      "marker": "MINING55"
+    },
+    "handworks": {
+      "script": "tests/handworks55.gd",
+      "marker": "HANDWORKS55"
+    },
+    "world": {
+      "script": "tests/input_reference54.gd",
+      "marker": "REFERENCE54 JOURNEY"
+    },
+    "loading": {
+      "script": "tests/loading63.gd",
+      "marker": "LOADING63"
+    },
+    "modular": {
+      "script": "tests/modular64.gd",
+      "marker": "MODULAR64"
+    },
+    "hold": {
+      "script": "tests/hold65.gd",
+      "marker": "HOLD65"
+    },
+    "continuity": {
+      "script": "tests/continuity66.gd",
+      "marker": "CONTINUITY66"
+    },
+    "living": {
+      "script": "tests/living67.gd",
+      "marker": "LIVING67"
+    },
+    "civic": {
+      "script": "tests/civic68.gd",
+      "marker": "CIVIC68"
+    },
+    "firstshift": {
+      "script": "tests/firstshift69.gd",
+      "marker": "FIRSTSHIFT69"
+    },
+    "ancestral": {
+      "script": "tests/ancestral70.gd",
+      "marker": "ANCESTRAL70"
+    },
+    "disciplines": {
+      "script": "tests/disciplines71.gd",
+      "marker": "DISCIPLINES71"
+    },
+    "polish": {
+      "script": "tests/polish72.gd",
+      "marker": "POLISH72"
+    },
+    "firsthour": {
+      "script": "tests/firsthour73.gd",
+      "marker": "FIRSTHOUR73"
+    },
+    "appearance": {
+      "script": "tests/appearance74.gd",
+      "marker": "APPEARANCE74"
+    },
+    "roads": {
+      "script": "tests/roads75.gd",
+      "marker": "ROADS75"
+    },
+    "work": {
+      "script": "tests/work76.gd",
+      "marker": "WORK76"
+    },
+    "keldrath": {
+      "script": "tests/keldrath77.gd",
+      "marker": "KELDRATH77"
+    },
+    "homestead": {
+      "script": "tests/homestead78.gd",
+      "marker": "HOMESTEAD78"
+    },
+    "royal": {
+      "script": "tests/royal79.gd",
+      "marker": "ROYAL79"
+    }
+  }
+}
