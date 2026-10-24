@@ -2,7 +2,7 @@
 
 - Implemented: expanded hall, shared royal standing/walking/sitting poses, top-down audience, mounted signs, gate bedrock and proportional architectural crops.
 - Fixed during recovery: advancing audience dialogue no longer restarts the player's entrance.
-- Remaining: complete hosted source/release gates after publication authorization, plus player review. General lying-down poses across the character roster remain future work.
+- Published and verified. Remaining: player review of hall composition, movement pacing, mounted signs and gate readability. General lying-down poses across the character roster remain future work.
 
 # Hearth & Homestead follow-up
 

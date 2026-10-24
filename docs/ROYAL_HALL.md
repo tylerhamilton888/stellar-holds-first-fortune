@@ -1,4 +1,4 @@
-# Beneath the Stone Crown — 0.71.0 candidate
+# Beneath the Stone Crown — 0.71.0
 
 The King's Hall now has a long nave, an ancestral relief, a raised throne dais, paired columns and braziers, a record desk and an astronomical display. Existing Crownward entry, quest IDs and commission rewards are retained. Lord Eirik's fixed white beard, crown, teal robes and fur mantle are shared by his new complete-body walking, standing and sitting drawings; his matching approved portrait remains intact.
 
@@ -10,4 +10,4 @@ Keldrath's three wards and Great Stairs remain. King’s Gate moves to a bedrock
 
 Ownership: scripts/royal_stage.gd owns the royal actor and hall art; room_layout.gd owns bounds and entry; opening_scene.gd owns audience staging; hold_grounding.gd owns bedrock, fitted texture crops and mounted signs. Production prompts and original generated art are retained in assets/royal79/production.json. Previous art remains at its original paths.
 
-Validation and release status: testing/royal79.md. Do not describe the candidate as released until the release gates complete.
+Published release and verification: testing/royal79.md.
