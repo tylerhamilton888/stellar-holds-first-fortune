@@ -10,6 +10,7 @@ const TOPICS={
  "eirik":[["What makes a good freeholder?","A sound roof, a fair wage, and the patience to hear bad news before it becomes worse. Gold will buy machinery. It will not make your people trust you."],["Has Keldrath always reached for the stars?","Our oldest songs speak of stone. Our oldest engines remember the sky. I see no reason a dwarf should have to choose between them."]]
 }
 static func local(g,id:String)->bool:
+ if HoldPeople.background(id):return not HoldPeople.nearby(g,id).is_empty()
  if HoldNpcPresence.HOMES.has(id):return HoldOnboarding.local(g,id)
  if id.begins_with("visitor_"):return g.zone=="hub" and g.room_id=="" and g.player.distance_to(g.visitor_position(int(id.trim_prefix("visitor_"))))<75
  if g.room_id=="tavern":return HoldNpcPresence.tavern_guests(g.state).has(id)
@@ -20,7 +21,10 @@ static func local(g,id:String)->bool:
  if g.zone=="claim":return g.state.outpost.get("crew",{}).has(id) and g.player.distance_to(HoldOutpostUI.position(g.state,id))<75
  return false
 static func start(g,id:String):
- if not local(g,id):g.notify("Find "+g.state.npc(id).first_name+" at "+g.npc_where(id).label+".");return
+ if not local(g,id):
+  var place=HoldRoadCharacters.whereabouts(id) if HoldRoadCharacters.CAST.has(id) else g.npc_where(id).label
+  g.notify("Find "+g.state.npc(id).first_name+" at "+place+".");return
+ HoldPeople.meet(g,id)
  g.talk_id=id;g.talk_topic="";g.talk_line="";g.menu_history.clear();g.open_panel("conversation",false)
 static func header(g,parent:Node,id:String,text:String,compact:bool=false):
  var line=g.row(parent);line.add_theme_constant_override("separation",22)
@@ -29,7 +33,7 @@ static func header(g,parent:Node,id:String,text:String,compact:bool=false):
  portrait.custom_minimum_size=Vector2(96,96) if compact else Vector2(132,132);line.add_child(portrait)
  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",4 if compact else 8);line.add_child(body)
  g.label(body,g.state.npc(id).name,22 if compact else 24,Color("edc98a"))
- g.label(body,HoldAppearance.NPC_ROLES.get(id,"A dwarf of Keldrath"),14,Color("a7c7c6"))
+ g.label(body,HoldPeople.role(g.state,id),14,Color("a7c7c6"))
  g.label(body,HoldCulture.render(g.state,text),16 if compact else 18)
  var rule=HSeparator.new();parent.add_child(rule)
 static func responses(g):
@@ -55,6 +59,8 @@ static func choose(g,text:String,fn:Callable,quest:bool=false)->Button:
  return b
 static func greeting(g,id:String)->String:
  if g.talk_line!="":return g.talk_line
+ if id.begins_with("road_folk:"):return HoldRoadCharacters.greeting(g,id)
+ if id.begins_with("resident:"):return "A moment away from the shift? Gladly. What is on your mind?"
  var stage=HoldOnboarding.stage(g.state)
  if id=="ivar" and HoldOnboarding.settling(g.state):return "Your room is waiting on the northwestern street. Rest your feet and check the chest. There is time enough for introductions afterwards."
  if id=="ivar":return {1:"Newly of age, are you? Give me your name. You need a shift, and I need someone who listens before swinging a pick.",2:"Meet the folk who will keep you fed, supplied and properly equipped. Then we can begin.",3:"Eight coal for Borin. Keep the surplus. How did you fare?",4:"Sound coal and a safe return. I have sent your name to the Lord. He will hear you now.",5:"A fine room, isn't it? I prefer ceilings I can inspect without a telescope. Now, about those lift footings."}.get(stage,"Good to see you back. What have you brought me?")
@@ -63,7 +69,15 @@ static func greeting(g,id:String)->String:
 static func panel(g):
  var id=g.talk_id;var s=g.state;var q=HoldOnboarding.ensure(s)
  if not local(g,id):g.label(g.panel_body,"This conversation has ended. Visit the resident to speak again.");return
- if g.talk_topic.begins_with("fluff"):
+ if g.talk_topic=="person":
+  HoldPeople.panel(g,id)
+ elif g.talk_topic=="road_story":
+  HoldRoadCharacters.panel(g,id)
+ elif g.talk_topic=="favor":
+  HoldPeople.favor(g,id)
+ elif g.talk_topic=="gift":
+  HoldPeople.gifts(g,id)
+ elif g.talk_topic.begins_with("fluff"):
   header(g,g.panel_body,id,TOPICS[id][int(g.talk_topic.trim_prefix("fluff"))][1])
   choose(g,"There was something else…",func():g.talk_topic="";g.refresh_panel())
  elif g.talk_topic=="ancestral":
@@ -101,6 +115,7 @@ static func panel(g):
   if SERVICES.has(id) and id!="ivar":choose(g,SERVICES[id][0],func():g.open_panel(SERVICES[id][1]))
   for i in TOPICS.get(id,[]).size():
    choose(g,TOPICS[id][i][0],func():g.talk_topic="fluff"+str(i);g.refresh_panel())
+  HoldPeople.options(g,id)
   if HoldOutpost.has_member(s,id):choose(g,"Tell me about yourself",func():g.talk_line=HoldOutpost.line(s,id,true);g.refresh_panel())
  choose(g,"Good fortune. I'll leave you to it.",g.close_panel)
 static func ivar_options(g):
@@ -127,3 +142,4 @@ static func ivar_options(g):
   if s.afford(job.cost):
    choose(g,"Deliver "+HoldData.cost_text(job.cost),func():
     if s.finish_commission():g.save_game();g.sound.effect("quest",-10);g.talk_line=job.result;g.refresh_panel(),true)
+

@@ -1,3 +1,25 @@
+## Staffed roadside Hearth — pending validation
+
+Dagna now walks a clear interior route at the Wayfarer's Hearth rather than leaving it empty while she stands outside. Bram directs travelers inside. Six authored familiarity greetings acknowledge returning friends while retaining practical directions; the People notebook records where each countryside regular can be found. Existing kitchen, bunk, storage, names and identities remain intact. Romance remains dormant as requested.
+
+Latest retry of run 40135393882 failed before any steps started (jobs 120997557788 and 120997557965). The Actions capacity blocker remains; no new playable release or merge is claimed. Local GDScript syntax and sampled fixed-furniture route checks pass. Native conversation/route assertions, staffed-wayfarer and dagna-familiar-welcome captures are added but unrun. Resume from the latest feature/folk82 head; full native, visual and exact-export gates still apply.
+
+## Countryside character follow-up — pending validation
+
+The pending feature/folk82 branch now gives all six countryside residents authored personalities and twelve local story topics, including Dagna and the Wayfarer's Hearth community. Added dormant adult/relationship/candidate metadata for Dagna, Ragnhild, Torvik and Ketil; no dating gameplay or romance progression. Existing acquaintance preferences, favors and history are preserved. See [COUNTRYSIDE_CAST.md](COUNTRYSIDE_CAST.md) for cast and future relationship design.
+
+Syntax/content checks pass; new native conversation/migration/candidate checks and Dagna dialogue visual remain unrun. The Actions budget blocker below remains unresolved. Do not merge/release yet; 0.71.2 remains the published game. The older runtime SHA below is the preceding checkpoint, not this follow-up. Resume from the latest feature/folk82 head and update the release branch only after verification.
+
+# 0.72.0 — Faces of the Hold: implemented, release blocked
+
+PR #35 (feature/folk82) contains the pick continuity correction, shared mine-mouth geometry and readable entrances, authored principal personalities, persistent supporting acquaintances, gifts, paid favors and a People notebook. Latest runtime source: a1a78ba577b1339c475d7862382742a5f12a24e7; runtime tree 567b0d70aa5b02620ca2eeaafb13e30c60fc591c.
+
+Preliminary native preview on cb1ee36d4ba928145388a50927c2bc37355528e2 (run 40133184007, job 120989155104) passed 256 assertions and failed two full-record save/reload comparisons. Actual captured notebook retained the relationships. Final code normalizes JSON numeric counters and moves favor terms to a dedicated screen; those fixes have passed syntax parsing but have NOT yet passed a native rerun. Reviewed preliminary visuals: both entrances, seven male pick sequences, Ivar/neighbor conversations, gift picker and notebook.
+
+GitHub blocked final validation run 40133925376 and the release build before any steps started: “The job was not started because an Actions budget is preventing further use.” Observed directly in the signed-in Actions UI. No billing settings were changed. Complete-source ZIP recovery through the signed-in browser timed out twice; there is no complete local playable checkout.
+
+Do not merge or publish as verified yet. After the owner restores Actions capacity: run full native gameplay (26 cases) and people-preview; review the new favor-details screen; run the exact-export gate (16 cases); verify ZIP/digest and runtime tree; merge PR #35 and record delivery. release/0.72.0 currently points to the runtime source above, and no v0.72.0 release was created. The last published build remains v0.71.2. Local partial-edit bundle folk82-edits.bundle and complete remote recovery/pending-folk82 preserve this checkpoint. Earlier releases/backups remain intact.
+
 # Workstation quest — delivered in 0.71.2
 
 Optional Ivar introduction, one-time timber, saved checklist, pause/resume and objective markers are implemented and verified. Next: fresh-player feedback on discoverability and clarity. Worksite construction remains optional; coal commissions do not require the lesson.
@@ -216,3 +238,4 @@ Player acceptance/Windows validation; room-board usability; optional tavern/stor
 - SKILL-01: Personal skill progression and richer equipment discoveries, separate from hold research.
 ## Long-term ambitions
 Procedural civilizations, diplomacy, acquisitions, galactic markets, corporate/national empire management, immortal Greatbeard, and Dwarven Worldforging. These are vision items, not current commitments or finished systems.
+

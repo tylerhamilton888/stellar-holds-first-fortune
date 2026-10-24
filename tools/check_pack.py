@@ -43,6 +43,8 @@ def main():
     cases.append(('homestead', fixture+'\n'+body, 'HOMESTEAD78'))
     body = (ROOT/'tests/royal79.gd').read_text().split('\n', 1)[1]
     cases.append(('royal', fixture+'\n'+body, 'ROYAL79'))
+    body = (ROOT/'tests/people82.gd').read_text().split('\n', 1)[1]
+    cases.append(('people', fixture+'\n'+body, 'PEOPLE82'))
     results = []
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()
@@ -63,3 +65,4 @@ def main():
         if not ok: print(log[-5000:]); raise SystemExit(1)
 
 if __name__ == '__main__': main()
+

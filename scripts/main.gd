@@ -1200,6 +1200,7 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Meet the hiring bench • six prospective crewmates",func():outpost_tab=2;open_panel("manage"))
    HoldCulture.panel(self)
   "roster":
+   HoldPeople.notebook(self)
    for key in HoldAppearance.NPC_NAMES:
     if key=="eirik" and HoldOnboarding.ensure(state).fresh and HoldOnboarding.stage(state)<4:continue
     character_card(panel_body,key,"A familiar face in Keldrath.")
@@ -1246,7 +1247,7 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Keep my existing hold",close_panel)
 
  if id=="living":panel.set_deferred("size",Vector2(720,452))
- elif id in ["conversation","commission","guidance"]:panel.set_deferred("size",Vector2(840,452))
+ elif id in ["conversation","commission","guidance","roster"]:panel.set_deferred("size",Vector2(840,452))
 
 func inventory_panel():
  var top=row(panel_body)
@@ -1910,3 +1911,4 @@ func reveal_discoveries():
    deposit.seen=true;state.money+=20
    popups.append({"p":center,"text":"A SEALED AETHER GEODE • +20 survey crowns","life":3.0})
    notify("An intact geode! Shift + pick preserves more crystal. Follow the pale mineral seam.")
+

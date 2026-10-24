@@ -296,12 +296,13 @@ func base_obstacles()->Array:
  if HoldWorldZones.ward(area):return world.obstacles()
  if room():return world.room_obstacles()
  if area=="trail":
-  for pair in [[Vector2(220,690),330.0],[Vector2(950,300),240.0]]:
+  for pair in [[Vector2(220,690),330.0]]:
    for side in [-1,1]:list.append(Rect2(pair[0]+Vector2(side*pair[1]*.32-pair[1]*.14,-pair[1]*.34),Vector2(pair[1]*.28,pair[1]*.42)))
+  list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
   list.append_array([Rect2(1134,643,202,12),Rect2(1134,745,202,12)])
  elif area=="claim":
   list=[Rect2(346,265,308,155),Rect2(1255,630,230,110)]
-  for side in [-1,1]:list.append(Rect2(Vector2(1280,345)+Vector2(side*260*.32-260*.14,-260*.34),Vector2(260*.28,260*.42)))
+  list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
  elif area=="pinewood":
   for i in TREES.size():
    if g.state.road_trees[i]>0:list.append(Rect2(TREES[i]-Vector2(17,24),Vector2(34,30)))
@@ -609,7 +610,9 @@ func draw():
  if is_instance_valid(g.opening_scene) and g.opening_scene.mode=="audience":objects.append({"p":g.opening_scene.ivar_p,"kind":"royal_guide"})
  if room():objects.append_array(world.routines.people(area,g.state.elapsed))
  if area in ["claim","pinewood"] and house.level()==0:objects.append(world.furn("desk",740 if area=="claim" else 300,780 if area=="claim" else 790))
- if area in ["claim","trail"]:objects.append_array(world.exterior_objects())
+ if area in ["claim","trail"]:
+  g.draw_set_transform(-cam);HoldMineEntrance.ground(g,HoldMineEntrance.position(area))
+  objects.append_array(world.exterior_objects())
  if area=="claim":
   for k in house.tiles():
    if house.tiles()[k].get("wall","")!="":objects.append({"p":house.center(house.coords(k))+Vector2(0,20),"kind":"wall","c":house.coords(k)})
@@ -648,6 +651,7 @@ func draw():
  for o in objects:
   g.draw_set_transform(-cam)
   if o.kind=="building":world.draw_building(o)
+  elif o.kind=="mine_entrance":HoldMineEntrance.draw(g,o.p)
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":world.draw_furnishing(o)
   elif o.kind=="royal_prop":HoldRoyalStage.draw_prop(g,o,g.clock)
@@ -825,3 +829,4 @@ func draw_fir(p:Vector2,i:int):
 func draw_room():
  world.draw_room_floor()
  return
+
