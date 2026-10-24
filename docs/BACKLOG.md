@@ -1,3 +1,7 @@
+# Workstation quest — delivered in 0.71.2
+
+Optional Ivar introduction, one-time timber, saved checklist, pause/resume and objective markers are implemented and verified. Next: fresh-player feedback on discoverability and clarity. Worksite construction remains optional; coal commissions do not require the lesson.
+
 # 0.71.1 — A Clearer Path: published and verified
 
 Quest journal hierarchy, status-grouped lessons, correct introduction targets, ancestral contact markers, paused quest browsing and readable footer are implemented. Existing saves/rewards and original artwork are preserved. Local final focused verification passed 117 assertions; journal, pack and settings screenshots reviewed at 1280×720. Hosted source run 40046866977 passed all 25 gameplay cases; release run 40046874975 passed the 3,263-entry PCK audit and all 15 exact-export cases.
