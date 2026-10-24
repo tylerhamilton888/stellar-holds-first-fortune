@@ -19,6 +19,11 @@ const DISLIKES=["coal","iron_slag","turnip","gold"]
 const WORK=["wood","stone","coal","turnip"]
 static func records(s)->Dictionary:
  if not s.surface.has("people"):s.surface.people={}
+ # JSON restores numbers as floats. Keep saved counters canonical, just as
+ # inventory and appearance normalization do, without changing their values.
+ for d in s.surface.people.values():
+  for key in ["bond","chat_day","gift_day","work_day"]:
+   d[key]=int(d.get(key,0 if key=="bond" else -1))
  return s.surface.people
 static func background(id:String)->bool:return id.begins_with("resident:") or id.begins_with("road_folk:")
 static func nearby(g,id:String)->Dictionary:
@@ -93,15 +98,24 @@ static func panel(g,id:String):
  if d.known:g.label(g.panel_body,"Enjoys "+HoldData.ITEMS[p.like].name.to_lower()+" · Not fond of "+HoldData.ITEMS[p.dislike].name.to_lower(),15)
  HoldConversation.choose(g,"What do you enjoy?",func():d.known=true;g.save_game();g.talk_line="I am always glad of "+HoldData.ITEMS[p.like].name.to_lower()+". "+HoldData.ITEMS[p.dislike].name+" isn't for me, though. A visit is welcome either way.";g.refresh_panel())
  HoldConversation.choose(g,"Give a gift from my pack",func():g.talk_topic="gift";g.refresh_panel())
- var day=int(g.state.elapsed/600.0)
- if d.work_day==day:g.label(g.panel_body,"You have helped today. Thank you. There is no more work needed right now.",14)
- else:
-  g.label(g.panel_body,p.reason+" · 2 "+HoldData.ITEMS[p.work].name.to_lower()+" · Repaid "+str(2*int(HoldData.ITEMS[p.work].price))+" crowns",15)
-  var b=HoldConversation.choose(g,"Help with this small job",func():
-   g.talk_line="That will make a difference. Thank you for following through." if help(g,id) else "Bring the materials when you have them. There is no hurry.";g.refresh_panel())
-  b.disabled=g.state.count(p.work)<2
- g.label(g.panel_body,"No deadline. Conversation, one gift and one small job can each build familiarity once per workday. Time passes while playing.",13,Color("a7b4b0"))
+ HoldConversation.choose(g,"Any small jobs need doing?",func():g.talk_topic="favor";g.refresh_panel())
  HoldConversation.return_choice(g,id)
+static func favor(g,id:String):
+ var d=records(g.state).get(id,{})
+ if d.is_empty():return
+ var p=d.persona;var day=int(g.state.elapsed/600.0)
+ HoldConversation.header(g,g.panel_body,id,p.reason+". There is no hurry.",true)
+ if d.work_day==day:
+  g.label(g.panel_body,"You have helped today. Thank you. Nothing more is needed right now.",17)
+ else:
+  g.label(g.panel_body,"Bring 2 "+HoldData.ITEMS[p.work].name.to_lower()+" from your pack · You carry "+str(g.state.count(p.work)),17)
+  g.label(g.panel_body,"Payment: "+str(2*int(HoldData.ITEMS[p.work].price))+" crowns. Helping also builds familiarity.",16)
+  g.label(g.panel_body,"No deadline. One small job per workday (10 minutes of play). Stored and communal materials stay where they are.",14,Color("a7b4b0"))
+  var b=HoldConversation.choose(g,"Deliver 2 "+HoldData.ITEMS[p.work].name.to_lower(),func():
+   if help(g,id):g.talk_line="That will make a difference. Thank you for following through."
+   g.refresh_panel())
+  b.disabled=g.state.count(p.work)<2
+ HoldConversation.choose(g,"Back to our conversation",func():g.talk_topic="person";g.refresh_panel())
 static func gifts(g,id:String):
  var d=records(g.state).get(id,{})
  if d.is_empty():return

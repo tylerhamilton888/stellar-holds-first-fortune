@@ -69,6 +69,8 @@ static func panel(g):
  if not local(g,id):g.label(g.panel_body,"This conversation has ended. Visit the resident to speak again.");return
  if g.talk_topic=="person":
   HoldPeople.panel(g,id)
+ elif g.talk_topic=="favor":
+  HoldPeople.favor(g,id)
  elif g.talk_topic=="gift":
   HoldPeople.gifts(g,id)
  elif g.talk_topic.begins_with("fluff"):
