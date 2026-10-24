@@ -1,3 +1,9 @@
+# 0.73.0 — Steel & Footwork: implementation, validation pending
+
+Combat foundation of Steel & Spoils: live Warrior credit and Sure footing, persistent new encounter pairs, distinct enemy timing, spacing and committed-attack limits, matching telegraph/hit geometry, shield versus brace, bounded hammer stagger, nearest-target carbine and cancellation on equipment changes. Existing encounter records and cleared passages are preserved. No stamina or crafting/equipment-instance rewrite.
+
+Branch feature/combat73 starts at verified master c744d001feb57f8521129c2b3e59f589ed8fabf6. The 0.72.0 release and recovery bundles remain intact. Focused native assertions and visual review precede the full 27-case source and 17-case exact-export gates. Do not label this release published until those gates and publication finish. See testing/combat83.md.
+
 # 0.72.0 — Faces of the Hold: published, verified and merged
 
 Twelve authored characters now have motives, concerns, tastes and personal dialogue; the countryside cast adds twelve local story topics. Dagna staffs the Wayfarer's Hearth inside. Gifts, paid favors, familiar greetings and the People notebook preserve relationship history. Other residents retain stable generated personalities. Four future romance candidates have dormant metadata only; dating and marriage remain disabled.

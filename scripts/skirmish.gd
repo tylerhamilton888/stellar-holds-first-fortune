@@ -1,6 +1,8 @@
 class_name HoldSkirmish
 extends RefCounted
 # One top-down combat controller for the practice room and persistent deep encounters.
+const ATTACK_RADIUS=88.0
+const ATTACK_HALF_ANGLE=.9
 var g
 var enemies=[]
 var key=""
@@ -23,6 +25,8 @@ var lesson_announced=false
 func _init(game):g=game
 func practice()->bool:return g.room_id=="training"
 func enabled()->bool:return practice() or (g.zone=="mine" and HoldOnboarding.combat_ready(g.state))
+func cancel_actions():
+ swing=0;buffered=0;guard=false;guard_was=false;parry=0;dodge=0;g.combat.riposte=0
 func reset():
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;parry_wait=0;dodge=0;dodge_wait=0;hurt_wait=0;key="";enemies.clear();lesson_announced=false
 func open_at(p:Vector2)->bool:
@@ -54,13 +58,24 @@ func spawn():
     if sites.size()==2:break
    if sites.size()==2:break
   w.layer().encounters=sites
+  # Only new encounter records gain companions; old cleared passages stay cleared.
+  w.layer().encounter_companions={}
+  for i in sites.size():
+   var home=Vector2(sites[i][0],sites[i][1])
+   for off in [Vector2(64,0),Vector2(-64,0),Vector2(0,64),Vector2(0,-64)]:
+    if body_open(home+off) and clear(home,home+off):
+     w.layer().encounter_companions[str(i)]=[home.x+off.x,home.y+off.y];break
  for i in w.layer().encounters.size():
   var id="deep53/"+str(g.state.seed_value)+"/"+context+"/"+str(i)
-  if g.state.combat.cleared.has(id):continue
-  var p=w.layer().encounters[i];enemies.append(make_enemy(id,Vector2(p[0],p[1]),i%2))
+  var p=w.layer().encounters[i];var home=Vector2(p[0],p[1])
+  if not g.state.combat.cleared.has(id):enemies.append(make_enemy(id,home,i%2))
+  var companions=w.layer().get("encounter_companions",{})
+  if companions.has(str(i)):
+   var companion=id+"/companion";var pos=companions[str(i)]
+   if not g.state.combat.cleared.has(companion):enemies.append(make_enemy(companion,Vector2(pos[0],pos[1]),1-i%2))
 func make_enemy(id:String,p:Vector2,kind:int)->Dictionary:
  var hp=64.0 if kind==0 else 84.0
- return {"id":id,"p":p,"home":p,"kind":kind,"hp":float(g.state.combat.wounds.get(id,hp)),"max":hp,"state":"idle","time":0.0,"dir":Vector2.LEFT,"walk":false,"gait":0.0,"flash":0.0}
+ return {"id":id,"p":p,"home":p,"kind":kind,"hp":float(g.state.combat.wounds.get(id,hp)),"max":hp,"state":"idle","time":0.0,"dir":Vector2.LEFT,"walk":false,"gait":0.0,"flash":0.0,"stagger_wait":0.0}
 func input(e:InputEvent)->bool:
  if not enabled() or g.panel_id!="":return false
  if e is InputEventKey and e.pressed and not e.echo:
@@ -79,7 +94,7 @@ func evade():
  if dodge_vector==Vector2.ZERO:dodge_vector=aim
  for e in enemies:
   if e.state=="windup" and e.time<.4 and e.p.distance_to(g.player)<110:e.evaded=true
- dodge=.20;dodge_wait=.65;swing=0;guard=false;buffered=0
+ dodge=.20;dodge_wait=.58 if HoldDisciplines.has(g.state,"sure_footing") else .72;swing=0;guard=false;buffered=0
  g.sound.effect("swing",-18)
 func movement(axis:Vector2)->Vector2:
  if not enabled() or not g.combat.armed:return axis*g.handworks.travel_speed()
@@ -108,15 +123,15 @@ func update(dt:float):
   if not struck and swing<=g.combat.weapon().time*.60:struck=true;resolve()
  for e in enemies:
   if e.hp<=0:continue
-  e.flash=maxf(0,e.flash-dt);e.walk=false
+  e.flash=maxf(0,e.flash-dt);e.stagger_wait=maxf(0,e.get("stagger_wait",0.0)-dt);e.walk=false
   var toward=g.player-e.p
   if e.state=="windup":
    e.time-=dt
    if e.time<=0:
-    if toward.length()<88 and toward.normalized().dot(e.dir)>.45 and clear(e.p,g.player):receive(e)
+    if toward.length()<ATTACK_RADIUS and toward.normalized().dot(e.dir)>cos(ATTACK_HALF_ANGLE) and clear(e.p,g.player):receive(e)
     elif practice() and e.get("evaded",false):HoldOnboarding.fact(g.state,"practice_dodge");say("Clean dodge")
     e.evaded=false
-    if e.state=="windup":e.state="recover";e.time=.75
+    if e.state=="windup":e.state="recover";e.time=.75 if e.kind==0 else 1.0
    continue
   if e.state in ["recover","stun"]:
    e.time-=dt
@@ -125,20 +140,39 @@ func update(dt:float):
   if toward.length()>290 or not clear(e.p,g.player) or g.player.distance_to(e.home)>360:continue
   if practice() and not g.combat.armed:continue
   e.dir=toward.normalized()
-  if toward.length()<78:e.state="windup";e.time=.72;e.evaded=false;continue
-  var next=e.p.move_toward(g.player,75*dt)
-  if open_at(next):e.gait+=e.p.distance_to(next)/185;e.p=next;e.walk=true
+  if toward.length()<78:
+   if attack_slot(e):e.state="windup";e.time=.72 if e.kind==0 else 1.05;e.evaded=false
+   continue
+  var next=e.p.move_toward(g.player,(90 if e.kind==0 else 60)*dt)
+  var spaced=true
+  for other in enemies:
+   if other!=e and other.hp>0 and next.distance_to(other.p)<38:spaced=false
+  if spaced and body_open(next):e.gait+=e.p.distance_to(next)/185;e.p=next;e.walk=true
  if practice() and not lesson_announced and HoldOnboarding.progress(g.state,"training").ready:
   lesson_announced=true;g.save_game();say("Good footwork. E at the south bench reports your training.")
+func body_open(p:Vector2)->bool:
+ for offset in [Vector2.ZERO,Vector2(12,0),Vector2(-12,0),Vector2(0,12),Vector2(0,-12)]:
+  if not open_at(p+offset):return false
+ return true
+func attack_slot(candidate:Dictionary)->bool:
+ # One nearby committed attack at a time, including its recovery window.
+ for other in enemies:
+  if other!=candidate and other.hp>0 and other.state in ["windup","recover"] and other.p.distance_to(candidate.p)<220:return false
+ return true
+func stagger(e:Dictionary,duration:float):
+ if e.get("stagger_wait",0.0)>0:return
+ e.state="stun";e.time=duration;e.stagger_wait=duration+1.0
 func resolve():
  var weapon=g.combat.weapon();var ranged=g.state.combat.weapon=="gun"
  if ranged:g.state.pay({"ammo":1});g.sound.effect("carbine",-14)
  var hit=false
- for e in enemies:
+ var targets=enemies.duplicate()
+ if ranged:targets.sort_custom(func(a,b):return g.player.distance_squared_to(a.p)<g.player.distance_squared_to(b.p))
+ for e in targets:
   if e.hp<=0:continue
   var delta=e.p-g.player
-  var in_arc=delta.length()<=weapon.reach+18 and (delta.length()<20 or delta.normalized().dot(locked_aim)>.35)
-  if ranged:in_arc=Geometry2D.get_closest_point_to_segment(e.p,g.player,g.player+locked_aim*weapon.reach).distance_to(e.p)<22
+  var in_arc=delta.length()<=weapon.reach+18 and (delta.length()<20 or delta.normalized().dot(locked_aim)>(.65 if g.state.combat.weapon=="hammer" else .35))
+  if ranged:in_arc=delta.dot(locked_aim)>0 and delta.dot(locked_aim)<=weapon.reach and Geometry2D.get_closest_point_to_segment(e.p,g.player,g.player+locked_aim*weapon.reach).distance_to(e.p)<22
   if not in_arc or not clear(g.player,e.p):continue
   hit=true;e.flash=.18
   if practice():
@@ -148,10 +182,12 @@ func resolve():
    if e.kind==1 and g.state.combat.weapon!="hammer":damage*=.8
    e.hp=maxf(0,e.hp-damage);g.state.combat.wounds[e.id]=e.hp;g.sound.effect("metal",-16)
    if e.hp<=0:
+    HoldDisciplines.data(g.state) # Initialize legacy credit before recording this new defeat.
+    HoldDisciplines.award(g.state,"warrior",1,e.id)
     g.state.combat.cleared[e.id]=true;g.state.combat.wounds.erase(e.id)
     for item in ({"scrap":3,"copper_ore":2} if e.kind==0 else {"shell":2,"iron_ore":2}):g.state.add(item,3 if item=="scrap" else 2)
-    HoldOnboarding.fact(g.state,"deep_combat");g.save_game();say("Passage cleared · salvage recovered")
-   elif g.state.combat.weapon=="hammer" or g.combat.riposte>0:e.state="stun";e.time=.65
+    HoldOnboarding.fact(g.state,"deep_combat");g.save_game();say("Foe defeated · salvage recovered")
+   elif g.state.combat.weapon=="hammer" or g.combat.riposte>0:stagger(e,.65)
   if ranged:break
  if hit:g.combat.riposte=0
 func receive(e:Dictionary):
@@ -161,8 +197,11 @@ func receive(e:Dictionary):
  var front=aim.dot((e.p-g.player).normalized())>.15
  if guard and front:
   if practice():HoldOnboarding.fact(g.state,"practice_guard")
-  if parry>0:e.state="stun";e.time=1.0;g.combat.riposte=1.25;g.sound.effect("parry",-15);say("Parried · opening for a counter")
-  else:g.sound.effect("metal",-18);say("Guard held")
+  if parry>0:stagger(e,1.0);g.combat.riposte=1.25;g.sound.effect("parry",-15);say("Parried · opening for a counter")
+  elif g.state.combat.weapon=="axe" or practice():g.sound.effect("metal",-18);say("Shield held" if g.state.combat.weapon=="axe" else "Practice guard")
+  else:
+   g.state.combat.health-=6*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));say("Braced · reduced damage")
+   if g.state.combat.health<=0:g.perform_rescue("Defeated · crew rescue")
   hurt_wait=.25;return
  if practice():say("Watch the amber arc. Face Borin to guard, or dodge sideways.");return
  g.state.combat.health-=16*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));hurt_wait=.65;g.sound.effect("stone",-15);say("Hit · %d health remaining" % maxi(0,int(g.state.combat.health)))
@@ -178,8 +217,8 @@ func draw_enemy(e:Dictionary):
  g.draw_set_transform(-cam)
  if e.state=="windup":
   var points=PackedVector2Array([p]);var angle=e.dir.angle()
-  for i in 17:points.append(p+Vector2.from_angle(angle-.9+1.8*i/16)*88)
-  g.draw_colored_polygon(points,Color(1,.64,.2,.18));g.draw_arc(p,88,angle-.9,angle+.9,24,Color("e5b86c"),2)
+  for i in 17:points.append(p+Vector2.from_angle(angle-ATTACK_HALF_ANGLE+2*ATTACK_HALF_ANGLE*i/16)*ATTACK_RADIUS)
+  g.draw_colored_polygon(points,Color(1,.64,.2,.18));g.draw_arc(p,ATTACK_RADIUS,angle-ATTACK_HALF_ANGLE,angle+ATTACK_HALF_ANGLE,24,Color("e5b86c"),2)
  g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,19,Color(0,0,0,.25));g.draw_set_transform(-cam)
  if practice():
   var phase=.15*(1-e.time/.72) if e.state=="windup" else .38+(1-e.time/.75)*.6 if e.state=="recover" else 0.0

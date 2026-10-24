@@ -6,8 +6,8 @@ const EQUIPMENT=preload("res://assets/combat-v14/weapons.png")
 const ENEMIES=preload("res://assets/combat-v14/enemies.png")
 const WEAPONS={
  "axe":{"name":"Holdguard axe & shield","damage":24,"reach":76.0,"time":.48,"cost":{},"tech":"","desc":"Quick cuts; strong shield. Parry for a punishing reply."},
- "hammer":{"name":"Piston warhammer","damage":42,"reach":84.0,"time":.86,"cost":{"iron":5,"parts":2},"tech":"metallurgy","desc":"Slow, heavy impact. Long stagger; breaks the beetle's shell."},
- "gun":{"name":"Brasslock carbine","damage":34,"reach":420.0,"time":.72,"cost":{"iron":4,"copper":3,"parts":2},"tech":"metallurgy","desc":"Aim with the mouse. One cartridge per shot; stone stops bullets."}}
+ "hammer":{"name":"Piston warhammer","damage":42,"reach":84.0,"time":.86,"cost":{"iron":5,"parts":2},"tech":"metallurgy","desc":"Slow, heavy impact. Breaks shell armor; stagger has recovery. Guard reduces damage."},
+ "gun":{"name":"Brasslock carbine","damage":34,"reach":420.0,"time":.72,"cost":{"iron":4,"copper":3,"parts":2},"tech":"metallurgy","desc":"Aim with the mouse. One cartridge per shot; hits the nearest target. Guard reduces damage."}}
 const ARMOR={
  "clothes":{"name":"Travelling clothes","reduction":0.0,"look":0,"cost":{},"tech":""},
  "mail":{"name":"Riveted holdguard mail","reduction":.25,"look":1,"cost":{"iron":5,"wood":2},"tech":""},
@@ -54,6 +54,7 @@ func profile()->Dictionary:
  return p
 func active()->bool:return g.playing and g.panel_id=="" and not is_instance_valid(g.creator) and g.transition_left<=0
 func reset_actions():
+ if g.fight!=null:g.fight.cancel_actions()
  guard_reaction=0;guard_parried=false;attack_left=0;dodge_left=0;guard=false;guard_was=false;parry_left=0;traces.clear()
 func toggle():
  if not HoldOnboarding.combat_ready(g.state) and not HoldPractice.allowed(g):g.notify("Borin will introduce weapons after your return-route lesson and the lift repairs.");return
@@ -309,5 +310,5 @@ func panel():
    g.label(body,"Materials: "+HoldData.cost_text(item.cost)+"\n"+reason,16,Color("b4c9c4"))
    var b=g.button(body,"Forge & equip "+item.name,func():
     if g.room_id!="forge" or (g.state.active_site=="hold" and g.state.opening<2) or (item.tech!="" and not g.state.tech.has(item.tech)):return
-    if g.state.pay(item.cost):g.state.combat.owned.append(id);g.state.combat[slot]=id;g.sound.effect("build");g.save_game();g.refresh_panel())
+    if g.state.pay(item.cost):g.state.combat.owned.append(id);g.state.combat[slot]=id;reset_actions();g.sound.effect("build");g.save_game();g.refresh_panel())
    b.disabled=reason!="Ready"
