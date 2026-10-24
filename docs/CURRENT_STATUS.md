@@ -1,3 +1,12 @@
+# 0.71.2 — Your First Worksite: published and verified
+
+Ivar offers an optional workstation quest before the first mine trip, with one-time starter timber. A saved checklist follows real lifting, stocking, processing/output and equipment construction. Guidance can be paused and resumed; a gold marker identifies the current load or station. Completed journals stay within the viewport. Existing saves, terrain, equipment, material ownership and original artwork are preserved.
+
+Source run 40124472557 passed all 25 gameplay cases plus the focused worksite-preview job. Offer, briefing, marker and completed-journal screenshots were reviewed. Release run 40124470758 passed the 3,263-entry PCK audit and all 15 exact-export cases. Release source a663393419275d7e7410f960cec98f20ffb32972 and PR #33 merge d0813ded310c057a8bef60ae07b82fbc72b3e646 share tree 45743125c13397db767d75b6de2d4a51effac7ca.
+
+Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.71.2
+Windows ZIP: 725,127,977 bytes; SHA256 ec368d4e2b1038d5e4f1deba6a14406d005d17b0c1a4a387df6a966576acc276, matching the build report and uploaded digest. Verification evidence accompanies the release. Windows device performance/audio remain player testing. Prior releases and recovery branches remain intact.
+
 # 0.71.1 — A Clearer Path: published and verified
 
 Quest journal hierarchy, status-grouped lessons, correct introduction targets, ancestral contact markers, paused quest browsing and readable footer are implemented. Existing saves/rewards and original artwork are preserved. Local final focused verification passed 117 assertions; journal, pack and settings screenshots reviewed at 1280×720. Hosted source run 40046866977 passed all 25 gameplay cases; release run 40046874975 passed the 3,263-entry PCK audit and all 15 exact-export cases.
