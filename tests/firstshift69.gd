@@ -72,7 +72,9 @@ func run():
  for i in 300:HoldFirstShift.tick(g,.05)
  check(int(crewbench.cargo.get("stone",0))==total,"Idle crew cannot generate infinite materials")
  at(Vector2(350,400));await snap("03-crew-bay")
- press(KEY_J);await snap("04-worksite-journal");g.close_panel()
+ press(KEY_J);await snap("04-worksite-journal")
+ check(g.panel.get_rect().end.y<=g.get_viewport_rect().size.y and g.panel.get_rect().end.x<=g.get_viewport_rect().size.x,"Completed worksite journal stays within the viewport")
+ g.close_panel()
  # A developed old layout keeps its own objects and receives no duplicate equipment.
  q.started=false;var existing=h.data().facilities.size();HoldFirstShift.enter(g)
  check(h.data().facilities.size()==existing,"Occupied bay positions never replace player equipment")
