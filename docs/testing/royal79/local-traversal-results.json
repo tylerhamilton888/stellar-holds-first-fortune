@@ -1,0 +1,26 @@
+[
+  {
+    "test": "world",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 35,
+    "seconds": 70.5
+  },
+  {
+    "test": "modular",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 28,
+    "seconds": 46.83
+  },
+  {
+    "test": "hold",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 81,
+    "seconds": 44.47
+  }
+]

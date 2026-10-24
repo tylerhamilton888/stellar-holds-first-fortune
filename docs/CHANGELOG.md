@@ -1,4 +1,4 @@
-# 0.71.0 — Beneath the Stone Crown (candidate)
+# 0.71.0 — Beneath the Stone Crown
 
 Expanded royal hall; consistent royal walking and sit/stand poses; top-down audience in the actual room. Mounted trade signs, bedrock surroundings, fitted architectural texture crops and a north-wall King’s Gate replace floating labels and detached scenery. Existing progression, saves, households and Great Stairs preserved.
 

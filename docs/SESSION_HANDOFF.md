@@ -1,6 +1,10 @@
-# 0.71.0 — Beneath the Stone Crown: locally verified, publication pending
+# 0.71.0 — Beneath the Stone Crown: published, verified and merged
 
-Recovered the frozen session into isolated branch feature/royal79-recovered. Expanded King's Hall, royal walking/sitting, the in-world audience, mounted signs, grounded ward surrounds and the relocated King's Gate are implemented. Fixed dialogue advancement restarting the player's entrance. Native royal verification passes 72 assertions; all 15 exact-export cases pass 693 assertions. Original artwork, progression and saves are preserved. Full hosted source/release gates and publication remain pending explicit repository/payload authorization required by automatic approval review. See ROYAL_HALL.md and testing/royal79.md.
+The expanded King's Hall, Eirik's whole-character walk/stand/sit poses, actual top-down royal audience, mounted signs, grounded ward surrounds and northern King's Gate are complete. Advancing audience dialogue preserves the player's position. Existing saves, progression and original artwork remain intact. General lying-down poses remain future work.
+
+PR #29 merged at 9d992e0f3abe38d49bf05ca72d4c250f9d76eb1c. Its tree f280a3b4ceeca5282fd5e3bc099c1c1448771988 matches verified release source 56260aa1d4b1204ec695b5dd171108e74799f8c3. Hosted source run 40038598002 passed import and all 24 gameplay cases. Release run 40038600939 passed the 3,263-entry PCK audit and all 15 exact-export cases. One complete Windows ZIP is published at https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.71.0. Its 725,124,940 bytes and SHA256 540fe880913e2658f7c8f903b7e5034b5032a305d87813fe2542fb71e00447c4 match the hosted build report and uploaded asset digest.
+
+Local native royal verification passed 72 assertions; the complete local exact-export gate passed 693. Hall, audience, seated king, gate and ward visuals were reviewed. Actions artifact storage was full, so exported verification evidence is retained with the release; all gameplay checks remained mandatory. Continue from GitHub main. Prior releases and recovery checkpoints remain intact. See testing/royal79.md for evidence and limitations.
 
 # 0.70.0 — Hearth & Homestead: published, verified and merged
 
