@@ -30,7 +30,8 @@
       "roads",
       "work",
       "keldrath",
-      "homestead"
+      "homestead",
+      "royal"
     ],
     "modular": [
       "modular",
@@ -201,6 +202,22 @@
       "world",
       "handworks",
       "mining"
+    ],
+    "royal-preview": [
+      "royal"
+    ],
+    "royal-traversal": [
+      "world",
+      "modular",
+      "hold"
+    ],
+    "royal-regression": [
+      "civic",
+      "living",
+      "continuity",
+      "appearance",
+      "keldrath",
+      "homestead"
     ]
   },
   "cases": {
@@ -295,6 +312,10 @@
     "homestead": {
       "script": "tests/homestead78.gd",
       "marker": "HOMESTEAD78"
+    },
+    "royal": {
+      "script": "tests/royal79.gd",
+      "marker": "ROYAL79"
     }
   }
 }

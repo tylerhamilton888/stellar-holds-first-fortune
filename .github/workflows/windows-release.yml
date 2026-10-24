@@ -84,10 +84,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          # Release assets preserve exact-pack evidence even when the separate
+          # Actions artifact allowance is full.
+          tar -czf "$RUNNER_TEMP/windows-build/verification-evidence.tar.gz" test-results
           gh release create "v$VERSION" "$RUNNER_TEMP/windows-build/Stellar-Holds-First-Fortune-$VERSION-Windows.zip" "$RUNNER_TEMP/windows-build/build.json" \
+            "$RUNNER_TEMP/windows-build/verification-evidence.tar.gz" \
             --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "The Stellar Holds — $VERSION" --notes-file docs/RELEASE_NOTES.md
       - name: Retain native evidence
         if: always()
+        continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: windows-release-evidence-${{ github.sha }}

@@ -99,6 +99,7 @@ func restore():
   g.player=spawn(area)
  g.grounded=true;g.camera=camera_target();g.velocity=Vector2.ZERO
 func spawn(id:String)->Vector2:
+ if id=="room:throne":return Vector2(650,1005)
  if id=="room:forge":return HoldRoomLayout.exit_point(id)-Vector2(0,70)
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
  return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"greenfields":Vector2(940,285),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
@@ -167,7 +168,8 @@ func points()->Array:
    result.append(spot(660,570,"Borin’s training notes","training_notes"))
   else:
    var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
-   result.append(spot(620,410,HoldInteriors.ROOMS.get(g.room_id,{"action":"Rest and supplies"}).action,"talk:"+host if host!="" and g.state.active_site=="hold" else "training" if g.room_id=="practice" else g.room_id))
+   var host_point=HoldRoyalStage.current(g).p+Vector2(0,45) if host=="eirik" else Vector2(620,410)
+   result.append(spot(host_point.x,host_point.y,HoldInteriors.ROOMS.get(g.room_id,{"action":"Rest and supplies"}).action,"talk:"+host if host!="" and g.state.active_site=="hold" else "training" if g.room_id=="practice" else g.room_id))
    if g.room_id in ["forge","practice"]:result.append(spot(740,490,"Practice bay","training"))
    if g.room_id=="tavern":
     var guests=HoldNpcPresence.tavern_guests(g.state)
@@ -603,6 +605,8 @@ func draw():
   objects.append_array(world.neighbor_stair_people())
   objects.append_array(world.street_furnishings())
  if room():objects.append_array(world.room_objects())
+ if area=="room:throne":objects.append_array(HoldRoyalStage.objects())
+ if is_instance_valid(g.opening_scene) and g.opening_scene.mode=="audience":objects.append({"p":g.opening_scene.ivar_p,"kind":"royal_guide"})
  if room():objects.append_array(world.routines.people(area,g.state.elapsed))
  if area in ["claim","pinewood"] and house.level()==0:objects.append(world.furn("desk",740 if area=="claim" else 300,780 if area=="claim" else 790))
  if area in ["claim","trail"]:objects.append_array(world.exterior_objects())
@@ -615,7 +619,7 @@ func draw():
   if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind})
  if room() and not area.begins_with("home:") and area!="room:training":
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
-  if host!="" and g.state.active_site=="hold":objects.append({"p":Vector2(620,370 if host=="eirik" else 410),"kind":"npc","id":host})
+  if host!="" and g.state.active_site=="hold":objects.append({"p":HoldRoyalStage.current(g).p if host=="eirik" else Vector2(620,410),"kind":"npc","id":host})
   if g.room_id=="tavern":
    var guests=HoldNpcPresence.tavern_guests(g.state)
    for i in mini(3,guests.size()):objects.append({"p":Vector2(270+i*170,550),"kind":"npc","id":guests[i]})
@@ -646,6 +650,9 @@ func draw():
   if o.kind=="building":world.draw_building(o)
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":world.draw_furnishing(o)
+  elif o.kind=="royal_prop":HoldRoyalStage.draw_prop(g,o,g.clock)
+  elif o.kind=="royal_guide":
+   HoldDrawnAnimation.paint(g,o.p-cam,g.state.npc("ivar"),Vector2.UP,false,0,.85,-cam)
   elif o.kind=="citizen":world.draw_citizen(o)
   elif o.kind=="fighter":g.fight.draw_enemy(o.enemy)
   elif o.kind=="escort":g.opening_scene.draw_guide()
@@ -653,7 +660,7 @@ func draw():
   elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
   elif o.kind=="npc":
-   if o.id=="eirik":g.draw_texture_rect(HoldRoyalHall.SPRITE,Rect2(o.p-Vector2(40,88),Vector2(80,96)),false)
+   if o.id=="eirik":HoldRoyalStage.draw_actor(g,HoldRoyalStage.current(g))
    elif o.id=="borin" and g.room_id=="forge":
     A.draw_offset=-cam;HoldNpcActivity.smith(g,o.p,g.clock,g.state.opening>=2);A.draw_offset=Vector2.ZERO
    elif g.room_id=="tavern":
@@ -727,7 +734,7 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
   elif g.handworks.pushing():animation="push"
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
  if animation in ["plant","tend"]:animation="hoe"
- if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not g.opening_scene is HoldArrivalEscort:animation=g.hotbar.pose()
+ if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not is_instance_valid(g.opening_scene):animation=g.hotbar.pose()
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
  g.draw_set_transform(-cam)
  if is_player:

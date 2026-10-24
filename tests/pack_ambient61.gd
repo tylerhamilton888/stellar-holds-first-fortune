@@ -53,13 +53,14 @@ func run():
  var q=HoldOnboarding.ensure(g.state);q.stage=4;q.fresh=true;g.state.opening=2
  g.surface.enter("room:throne");settle();g.opening_scene=HoldOpeningScene.begin(g,"audience");scene=g.opening_scene;scene.set_process(false);scene.shot_age=1
  check(scene!=null,"Royal audience opens with the existing progression gate")
- keys={};guide_keys={};var start_x=scene.player_x
+ keys={};guide_keys={};before=g.player;var king_start=scene.king.p
  scene.step=1;scene.show_line();scene.shot_age=1
- for i in 100:
+ for i in 180:
+  scene.age+=1.0/60
   scene.update_staging(1.0/60)
-  keys[HoldWholeFrames.descriptor(g.state.appearance,Vector2.RIGHT,scene.walking,scene.player_gait,"",0).index]=true
-  guide_keys[HoldWholeFrames.descriptor(g.state.npc("ivar"),Vector2.RIGHT,scene.ivar_walking,scene.ivar_gait,"",0).index]=true
- check(scene.player_x>start_x and keys.size()>=4 and guide_keys.size()>=4,"Royal audience advances whole walk frames with movement for both actors")
+  if g.walking_pose:keys[HoldWholeFrames.descriptor(g.state.appearance,g.surface.direction,true,g.gait_clock,"",0).index]=true
+  if scene.king.moving:guide_keys[scene.king.gait]=true
+ check(g.surface.area=="room:throne" and g.player.y<before.y and keys.size()>=2 and scene.king.p.y>king_start.y and guide_keys.size()>1,"Exported top-down audience moves the petitioner and King with advancing walk poses")
  await snap("audience");scene.finish();await process_frame;settle()
  var inventory=g.state.inventory.duplicate(true);g.save_game();g.start_game(true);settle()
  check(g.state.inventory==inventory and g.state.npc("orla").family_name=="Copperkettle","Exact pack reload preserves inventory and the married surname")

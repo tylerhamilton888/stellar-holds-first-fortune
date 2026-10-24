@@ -1,3 +1,7 @@
+# 0.71.0 — Beneath the Stone Crown (candidate)
+
+Expanded royal hall; consistent royal walking and sit/stand poses; top-down audience in the actual room. Mounted trade signs, bedrock surroundings, fitted architectural texture crops and a north-wall King’s Gate replace floating labels and detached scenery. Existing progression, saves, households and Great Stairs preserved.
+
 # 0.70.0 — Hearth & Homestead (candidate)
 
 Four forgiving crops with soil preparation, planting, watering, optional tending and readable growth. Three fishing locations with local catches and forgiving bite feedback. Four shared meals connect home comfort, ordinary provisions and modest temporary benefits. Hearthkeeping plans and three mastery techniques reward useful work. Orla trades all ingredients and meals; Hedrik offers one optional welcoming-table favor. Existing garden timers, saves, artwork, industry and quests are preserved.

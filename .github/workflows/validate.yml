@@ -25,6 +25,9 @@ jobs:
         run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/ci
       - name: Retain evidence
         if: always()
+        # Test failures still fail the preceding step. An account artifact quota
+        # must not misreport a passing gameplay run as a gameplay failure.
+        continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: gameplay-evidence-${{ github.sha }}

@@ -22,6 +22,8 @@ var ivar_walking=false
 var shot_age=0.0
 var player_gait=0.0
 var ivar_gait=0.0
+var king=HoldRoyalStage.actor(HoldRoyalStage.THRONE-Vector2(0,17),14)
+var ivar_p=Vector2(565,540)
 static func begin(g,kind:String):
  if is_instance_valid(g.opening_scene):return null
  if kind=="audience" and HoldOnboarding.stage(g.state)!=4:return null
@@ -30,13 +32,18 @@ static func begin(g,kind:String):
  scene.layer=CanvasLayer.new();scene.layer.layer=30;g.add_child(scene.layer);scene.layer.add_child(scene)
  return scene
 func _ready():
- if mode=="audience":player_x=405.0;game.state.resident_visits.ivar="throne"
+ if mode=="audience":
+  game.surface.enter("room:throne",Vector2(650,570));game.surface.direction=Vector2.UP
+  game.transition_left=0;game.transition_shade.visible=false
+  game.state.resident_visits.ivar="throne"
+  game.camera=Vector2(170,150)
+  HoldRoyalStage.prepare()
  if mode=="audience":
   # The audience must not fall back to the retired side-view actor renderer.
   for p in [game.state.npc("ivar"),game.state.appearance]:
    for moving in [false,true]:
     for key in 4:
-     var pose=HoldWholeFrames.descriptor(p,Vector2.RIGHT,moving,key*HoldWholeFrames.CYCLE/4,"",0)
+     var pose=HoldWholeFrames.descriptor(p,Vector2.UP,moving,key*HoldWholeFrames.CYCLE/4,"",0)
      HoldWholeFrames.texture(p,pose.sheet,pose.index)
  var name=game.state.appearance.first_name;var female=int(game.state.appearance.gender)==1
  if mode=="arrival":
@@ -73,7 +80,7 @@ func show_line():
  if mode=="audience":royal_portrait.visible=step not in [0,6];foreman_portrait.visible=step in [0,6]
  next_button.text="Enter the hold" if mode=="arrival" and step==lines.size()-1 else "Return to work" if step==lines.size()-1 else "Continue"
 func advance():
- if age<.25:return
+ if age<.25 or (mode=="audience" and not staging_ready()):return
  if step==lines.size()-1:finish();return
  step+=1;show_line()
 func finish():
@@ -84,11 +91,13 @@ func finish():
   HoldOnboarding.arrived(game.state);game.zone="hub";game.room_id="";game.player=Vector2(1840,410);game.camera=Vector2(1360,0)
   game.notify("Find Ivar west of the pithead. A/D: walk. E: enter or speak. J: journal.")
  else:
+  game.state.surface.facts.royal_epoch=game.state.elapsed
   HoldOnboarding.audience(game.state);game.room_id="throne";game.player=Vector2(470,410);game.camera=Vector2.ZERO
   game.notify("Return to Ivar. Your next commission will open more work around the hold.")
  game.velocity=Vector2.ZERO;game.grounded=true;game.jump_buffer=0;game.movement_remainder=0;game.jump_was_held=Input.is_action_pressed("jump")
- game.surface.enter("hearthward",Vector2(1580,405)) if mode=="arrival" else game.surface.enter("room:throne",Vector2(480,440))
- game.opening_scene=null;game.sound.set_context("hub");game.save_game();layer.queue_free()
+ game.surface.enter("hearthward",Vector2(1580,405)) if mode=="arrival" else game.surface.enter("room:throne",Vector2(650,540))
+ game.walking_pose=false
+ game.opening_scene=null;game.sound.set_context("throne" if mode=="audience" else "hub");game.save_game();layer.queue_free()
  if mode=="arrival":game.opening_scene=HoldArrivalEscort.start(game)
 func _input(e):
  if e is InputEventKey:
@@ -104,25 +113,37 @@ func _process(dt):
 func update_staging(dt:float):
  if mode=="arrival":
   player_x=610.0;walking=false;ivar_walking=false;return
- var target=495.0 if mode=="audience" and step>=1 else 435.0 if mode=="audience" else 470.0
- var old=player_x;player_x=move_toward(player_x,target,48*dt);walking=absf(old-player_x)>.01
- player_gait+=absf(old-player_x)/150.0
- old=ivar_x;ivar_x=move_toward(ivar_x,295,42*dt);ivar_walking=absf(old-ivar_x)>.01
- ivar_gait+=absf(old-ivar_x)/150.0
+ var p=Vector2(650,570)
+ if step==1:p=p.move_toward(Vector2(650,540),minf(age,2)*25)
+ elif step>1:p=Vector2(650,540)
+ var old=game.player;game.player=p;game.walking_pose=old.distance_to(p)>.01
+ game.surface.direction=Vector2.UP
+ if game.walking_pose:game.gait_clock+=old.distance_to(p)/150.0
+ if step==0:king=HoldRoyalStage.actor(HoldRoyalStage.THRONE-Vector2(0,17),14)
+ elif step==1:
+  if age<.8:king=HoldRoyalStage.actor(HoldRoyalStage.THRONE-Vector2(0,17*(1-age/.8)),13)
+  else:
+   var q=HoldRoyalStage.THRONE.move_toward(Vector2(650,470),(age-.8)*60)
+   king=HoldRoyalStage.actor(q,12,Vector2.DOWN,(age-.8)*.4,q.y<470)
+ elif step==6:
+  var q=Vector2(650,470).move_toward(HoldRoyalStage.THRONE,age*60)
+  king=HoldRoyalStage.actor(q,12,Vector2.UP,age*.4,q.y>405)
+  if age>1.09:king=HoldRoyalStage.actor(HoldRoyalStage.THRONE-Vector2(0,17*clampf((age-1.09)/.8,0,1)),13 if age<1.89 else 14)
+ else:king=HoldRoyalStage.actor(Vector2(650,470))
+ game.camera=Vector2(170,150)
+ next_button.disabled=not staging_ready()
+ game.queue_redraw()
+func staging_ready()->bool:return age>=3.3 if step in [1,6] else age>=.25
 func _draw():
  A.draw_offset=Vector2.ZERO
  if mode=="audience":
-  HoldRoyalHall.draw(self,clock,game.state,false)
-  HoldCinematic.shadow(self,Vector2(ivar_x,410))
-  HoldCinematic.shadow(self,Vector2(player_x,410))
-  HoldWholeFrames.paint(self,Vector2(ivar_x,410),game.state.npc("ivar"),Vector2.RIGHT,ivar_walking,ivar_gait,1.65,Vector2.ZERO)
-  HoldWholeFrames.paint(self,Vector2(player_x,410),game.state.appearance,Vector2.LEFT if step==6 else Vector2.RIGHT,walking,player_gait,1.65,Vector2.ZERO)
-  HoldCinematic.focus(self,Vector2(ivar_x,260) if step in [0,6] else Vector2(639,265))
+  # The world underneath is the actual top-down hall, not a painted story plate.
+  pass
  else:
   var panel=0 if step<2 else 1 if step==2 else 2
   var height=ARRIVAL.get_height()/3.0
   draw_texture_rect_region(ARRIVAL,Rect2(0,74,960,340),Rect2(0,panel*height+2,ARRIVAL.get_width(),height-4))
- if shot_age<.75:A.rect(self,0,74,960,340,Color(.03,.06,.08,1-smoothstep(0.0,.75,shot_age)))
+ if mode=="arrival" and shot_age<.75:A.rect(self,0,74,960,340,Color(.03,.06,.08,1-smoothstep(0.0,.75,shot_age)))
  A.rect(self,0,0,960,74,Color("101f2b"))
  A.text(self,Vector2(28,33),"THE FIRST FORTUNE" if mode=="arrival" else "AN AUDIENCE EARNED",23)
  A.text(self,Vector2(28,59),"Space / Enter: continue   Esc: skip",14,Color("b2d1c4"))

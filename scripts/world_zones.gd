@@ -5,7 +5,7 @@ const WARDS=["crownward","hearthward","forgeward"]
 const ROYAL=Vector2(180,850)
 const FORGE=Vector2(1700,850)
 const LIFT=Vector2(1700,550)
-const GATE=Vector2(1270,950)
+const GATE=Vector2(1570,450)
 const DOORS={1:Vector2(960,460),4:Vector2(1380,950),7:Vector2(350,450),8:Vector2(780,450),9:Vector2(1230,450),10:Vector2(970,790),12:Vector2(1450,950),13:GATE,15:Vector2(580,450),17:Vector2(1250,450)}
 var surface_ref:WeakRef
 var s:
@@ -54,6 +54,8 @@ func obstacles(area_id:String="")->Array:
  if area_id=="":area_id=current_area()
  if collision_cache.has(area_id):return collision_cache[area_id].duplicate()
  var result=HoldNeighborhood.obstacles()
+ if area_id=="hearthward":
+  result.append_array([Rect2(GATE-Vector2(155,255),Vector2(310,195)),Rect2(GATE-Vector2(155,60),Vector2(55,80)),Rect2(GATE+Vector2(100,-60),Vector2(55,80))])
  for b in buildings(area_id):result.append(building_footprint(b))
  # Central memorial fountain has a tangible basin, with broad streets around it.
  if area_id=="hearthward":result.append(Rect2(895,595,150,70))
@@ -144,7 +146,7 @@ func draw_citizen(c:Dictionary):
 func draw_ground():
  HoldWardDesign.mountain(self)
  tile(0,Rect2(80,180,1720,840),100,Color("aab5ae") if current_area()=="forgeward" else Color("d3d4bd"))
- if current_area()=="crownward":g.draw_texture_rect(VAULT,Rect2(45,-365,1790,597),false)
+ if current_area()=="crownward":HoldGrounding.cover(g,VAULT,Rect2(45,-365,1790,597),Rect2(Vector2.ZERO,VAULT.get_size()))
  else:
   HoldMasonryArt.wall(g,Rect2(80,140,1720,65))
  # The inhabited wards sit beneath the ancestral mountain vault.
@@ -163,6 +165,7 @@ func draw_ground():
  HoldWardDesign.ground(self);HoldWardDesign.light_pools(self)
  HoldWardDesign.boundary(self)
  HoldKeldrathArt.structure(self)
+ HoldGrounding.gate_footing(self)
 func draw_lower_gallery():
  # Clip the actual neighboring ward's architecture through the open floor.
  # No second simulation, viewport, texture readback, or off-floor actor updates.
@@ -235,6 +238,7 @@ func draw_landmark(o:Dictionary):
   if rect.intersects(Rect2(view_camera(),Vector2(960,540))):HoldAmbientProps.fountain(g,o.p,g.clock,o.width/180.0,.35 if current_area()==s.area and rect.has_point(g.player) and g.player.y<o.p.y-25 else 1.0)
 func room_objects(area_id:String="")->Array:
  if area_id=="":area_id=s.area
+ if area_id=="room:throne":return [furn("desk",245,625),furn("bookcase",245,535),furn("chair",245,680),furn("orrery",1040,625),furn("tea_table",1040,840),furn("chair",1040,890)]
  if HoldNeighborhood.is_home(area_id):return HoldNeighborhood.room_objects(self,area_id)
  if area_id in [HoldHouseholds.LOFT,HoldHouseholds.ARCHIVE]:return HoldHouseholds.special_objects(self,area_id)
  var result=[];var id=area_id.trim_prefix("room:") if area_id.begins_with("room:") else "home"
@@ -263,9 +267,6 @@ func room_obstacles(area_id:String="")->Array:
  if area_id in ["room:tavern",HoldHouseholds.LOFT]:result.append_array(HoldNeighborhood.stair_rails(HoldHouseholds.KETTLE_STAIR,96))
  if area_id==HoldHouseholds.LOFT:result.append(Rect2(160,615,640,30))
  if area_id=="room:forge":result.append(Rect2(558,425,48,28))
- if area_id=="room:throne":
-  result.append(Rect2(586,350,68,32))
-  for x in [350,710]:result.append(Rect2(x-5,435,42,18))
  return result
 func furn_footprint(o:Dictionary)->Rect2:return HoldFurnishings.footprint(o.furnishing,o.p)
 func draw_furnishing(o:Dictionary):
@@ -280,6 +281,7 @@ func draw_furnishing(o:Dictionary):
    g.handworks.raw_sprite({"kind":"stone"},stance+impact+Vector2(0,7),22)
 
 func draw_room_floor():
+ if s.area=="room:throne":HoldRoyalStage.floor_draw(self);return
  g.draw_rect(Rect2(Vector2.ZERO,s.size()),Color("182a30"))
  var floor_area=HoldRoomLayout.floor_rect(s.area);var exit_point=HoldRoomLayout.exit_point(s.area)
  var warm=g.room_id in ["home","tavern","commission","wayfarer","greenhearth","kettle_loft"] or HoldNeighborhood.is_home(s.area)

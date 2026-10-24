@@ -33,15 +33,10 @@ static func points(area:String)->Array:
 static func notice(id:String)->String:
  return {"crownward":"THE STONE MUST BEAR. The Lord keeps audience beyond the Oath Court. The memorial honors the prospectors who founded these three hearths; their children still keep the mountain's measures.","hearthward":"THE FOLK MUST FLOURISH. Rest and company at the Copper Kettle; trade on the north street; charters with Ivar by King's Gate. Family hearths stand across the southern bridge. Keep their doorways clear.","forgeward":"THE WORK MUST FLOW. Borin's forge stands on the north street. Freight is marshalled beside the eastern lift; training belongs on the Iron Terrace. The deep pumps and ventilation keep the mountain habitable.","stars":"An ancestral survey instrument: brass orbits preserve the founders’ star bearings. Keldrath began with prospectors, but its measures were inherited from civilizations that learned to navigate far beyond one mountain.","works":"The Works Below: pump galleries, furnace flues and freight bridges disappear into the mountain. These distant levels are scenery in this chapter; the public Great Stair connects the three inhabited wards."}.get(id,"")
 static func backdrop(g,area:String):
- # One inexpensive distant painting, stable in shared terrace coordinates at seams.
- var global_y=g.camera.y+HoldTerraces.origin(area).y
- var drift=Vector2(g.camera.x*.035,fposmod(global_y*.018,90))
- g.draw_set_transform(Vector2.ZERO)
- g.draw_texture_rect(DEPTH,Rect2(Vector2(-120,-130)-drift,Vector2(1200,800)),false,Color(.66,.73,.78))
- g.draw_set_transform(-g.camera.round())
+ HoldGrounding.backdrop(g,area)
 static func shaft(w,rect:Rect2):
  var source=Rect2(140,260,1260,540) if w.current_area()!="forgeward" else Rect2(600,260,900,650)
- w.g.draw_texture_rect_region(DEPTH,rect,source,Color(.65,.72,.77))
+ HoldGrounding.cover(w.g,DEPTH,rect,source,Color(.65,.72,.77))
 static func plaza(g,r:Rect2,color:Color,trim:Color):
  var a=r.position;var b=r.end;var c=24.0
  var polygon=PackedVector2Array([a+Vector2(c,0),Vector2(b.x-c,a.y),Vector2(b.x,a.y+c),b-Vector2(0,c),b-Vector2(c,0),Vector2(a.x+c,b.y),Vector2(a.x,b.y-c),a+Vector2(0,c)])
@@ -114,26 +109,6 @@ static func boundary(w):
    g.draw_rect(Rect2(x-7,y-5,14,10),Color("b99a61"))
    g.draw_line(Vector2(x-4,y),Vector2(x+4,y),Color("4b5b59"),2)
 static func mountain(w):
- # Painted bedrock abutments continue beyond the camera. The inhabited terraces
- # are carved into these masses; open shafts still reveal the distant works.
- var g=w.g
- for side in [0,1]:
-  var edge=80.0 if side==0 else 1800.0
-  var x=-190.0 if side==0 else 1780.0
-  for i in 5:
-   var y=130+i*310
-   var rect=Rect2(x,y,290,330)
-   if not rect.intersects(Rect2(w.view_camera(),Vector2(960,540))):continue
-   g.draw_texture_rect_region(HoldMasonryArt.SURFACES,rect,HoldMasonryArt.surface_region(0),Color("a7b0a8"))
-   HoldMasonryArt.wall(g,Rect2(edge-22,y+250,44,90))
- HoldMasonryArt.wall(g,Rect2(80,145,1720,65))
+ HoldGrounding.mountain(w)
 static func frontage(w,b:Dictionary):
- var g=w.g;var p=b.p
- if b.has("home"):
-  var index=int(HoldNeighborhood.parts(b.home)[1]);var color=[Color("b99b5a"),Color("78a698"),Color("9b9cb2")][index]
-  # Small household nameplate beside the existing door, not an extra interaction.
-  var r=Rect2(p+Vector2(42,-48),Vector2(55,18))
-  g.draw_style_box(w.stone_style(Color("344749")),r)
-  HoldSurface.A.text(g,r.position+Vector2(5,12),HoldHouseholds.FIRST_NAMES[HoldNeighborhood.parts(b.home)[0]][index].to_upper(),8,color)
- elif b.get("id",-1)==8:
-  HoldSurface.A.text(g,p+Vector2(-51,-69),"COPPER KETTLE",11,Color("edd3a1"))
+ HoldGrounding.sign(w,b)

@@ -1,3 +1,9 @@
+# Royal Hall continuation — 0.71.0
+
+- Implemented: expanded hall, shared royal standing/walking/sitting poses, top-down audience, mounted signs, gate bedrock and proportional architectural crops.
+- Fixed during recovery: advancing audience dialogue no longer restarts the player's entrance.
+- Remaining: complete hosted source/release gates after publication authorization, plus player review. General lying-down poses across the character roster remain future work.
+
 # Hearth & Homestead follow-up
 
 0.70.0 implementation in progress. Player acceptance: crop readability, riverbank access, meal pacing, comfort clarity and household art alongside the approved Dwarfs. More crops, seasonal systems, brewing production and underground farming remain separate future work. Preserve the low-pressure sandbox: no penalties for leaving a hobby alone.
