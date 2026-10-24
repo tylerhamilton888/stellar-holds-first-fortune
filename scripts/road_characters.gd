@@ -76,7 +76,9 @@ static func whereabouts(id:String)->String:
  return {"road_folk:0":"Stonebridge road","road_folk:1":"Inside the Wayfarer's Hearth, Stonebridge","road_folk:2":"Pinewood timber yard","road_folk:3":"Greenhearth allotments","road_folk:4":"Greenhearth fields","road_folk:5":"Outside Old Workings, Stonebridge"}.get(id,"")
 
 static func upgrade_record(id:String,d:Dictionary):
- if not CAST.has(id) or int(d.get("road_story_version",0))>=1:return
+ if not CAST.has(id):return
+ d.road_story_version=int(d.get("road_story_version",0))
+ if d.road_story_version>=1:return
  # A known preference, gift history or unpaid favor must not change underneath
  # an existing acquaintance. Upgrade only the formerly generic narrative.
  for key in ["trait","want","worry","close"]:d.persona[key]=CAST[id][key]
