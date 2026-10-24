@@ -1,32 +1,36 @@
-## Staffed Hearth follow-up
-
-Added one-place-only host verification, 40 host/approach samples, familiarity greeting assertion and staffed-wayfarer/dagna-familiar-welcome screenshots. Also retain roads75 coverage for actual door traversal, cooking, rest and storage. Local static geometry checks sampled 242 route/approach points against fixed furniture and bounds; this does not replace native acceptance. Build retry again failed before test steps.
-
-## Countryside follow-up acceptance
-
-Added six actual local story-menu checks, preservation/idempotence coverage for pre-authored records, four candidate-direction checks and married/unreviewed exclusions. Capture dagna-road-story alongside the existing visuals. Native and exact-export runs remain pending; local gdparse and content consistency passed. No new test suite is needed: people82 already runs in both gates.
-
-# 0.72.0 — Faces of the Hold: implemented, release blocked
-
-PR #35 (feature/folk82) contains the pick continuity correction, shared mine-mouth geometry and readable entrances, authored principal personalities, persistent supporting acquaintances, gifts, paid favors and a People notebook. Latest runtime source: a1a78ba577b1339c475d7862382742a5f12a24e7; runtime tree 567b0d70aa5b02620ca2eeaafb13e30c60fc591c.
-
-Preliminary native preview on cb1ee36d4ba928145388a50927c2bc37355528e2 (run 40133184007, job 120989155104) passed 256 assertions and failed two full-record save/reload comparisons. Actual captured notebook retained the relationships. Final code normalizes JSON numeric counters and moves favor terms to a dedicated screen; those fixes have passed syntax parsing but have NOT yet passed a native rerun. Reviewed preliminary visuals: both entrances, seven male pick sequences, Ivar/neighbor conversations, gift picker and notebook.
-
-GitHub blocked final validation run 40133925376 and the release build before any steps started: “The job was not started because an Actions budget is preventing further use.” Observed directly in the signed-in Actions UI. No billing settings were changed. Complete-source ZIP recovery through the signed-in browser timed out twice; there is no complete local playable checkout.
-
-Do not merge or publish as verified yet. After the owner restores Actions capacity: run full native gameplay (26 cases) and people-preview; review the new favor-details screen; run the exact-export gate (16 cases); verify ZIP/digest and runtime tree; merge PR #35 and record delivery. release/0.72.0 currently points to the runtime source above, and no v0.72.0 release was created. The last published build remains v0.71.2. Local partial-edit bundle folk82-edits.bundle and complete remote recovery/pending-folk82 preserve this checkpoint. Earlier releases/backups remain intact.
-
 # Faces of the Hold — implementation and acceptance
 
-Baseline: main 93eba993e1dd522400145fba89b5bea5eda9be34 (0.71.2). PR #35 / feature/folk82.
+Runtime source: f241aee9c728e317572b67c294c45d657185c80d; tree 86fe3856349df5323a019124543e8fc5f7520cb9. PR #35 targets master (renamed from main).
 
-`people.gd` owns additive `surface.people` records, created on first local conversation. Six authored principal personas have motives, concerns, familiarity lines, preferences and work reasons. Supporting residents use seeded temperament templates and independent preferences; no per-frame personality generation. `npc_appearances` retains their existing rendered identity. Conversation checks locality for each transfer. The saved world clock supplies separate one-workday talk/gift/favor limits. Gifts consume one pack item; favors consume two requested items and reimburse their listed value. Nothing takes materials from facilities, chests or hold stock. Existing schedules, recruitment traits, services and quests retain their owners.
+Twelve authored personalities cover six principal characters and six countryside residents. Other household residents retain seeded, persistent personalities. Gifts consume real pack items; small favors consume two requested items and reimburse their listed value. Locality and one-world-day limits apply. The People notebook remembers discovered tastes, relationship history and countryside whereabouts. Dagna staffs the Wayfarer's Hearth inside; familiar greetings retain practical instructions. Four adult, single future romance candidates have dormant metadata only; no dating or marriage is enabled.
 
-`mine_entrance.gd` provides the shared footprint, mouth/crossing dimensions, approach tracks and original painted masonry modules. `roads.gd` uses a wider mine-only crossing plane. General room/road portals retain their thresholds.
+The shared mine footprint aligns masonry piers, opening, walk-in threshold and approach tracks at Old Workings and the claim. Pick rest/recovery frames use approved complete pick poses without changing original textures or identity palettes.
 
-Inspection found broad adze-like heads in male core 20/23 and utility 0/3/4/7. The approved whole-motion59 pick keys already show a consistent pointed head. Descriptor rest/recovery phases now select those complete frames, with original raised/contact frames retained. No source textures, palettes or cached-image contents changed; no cache invalidation is required. A generated candidate was rejected for missing an identity row and duplicating tools. It is not shipped. The source-inspection workflow records comparison boards.
+## Fixes and focused evidence
 
-Acceptance required: people82 source and exact-export case; full gameplay gate; actual entrance, conversation, gift, notebook and pick board review. Tests cover locality, real transfers, daily limits, preferences, familiarity dialogue, identity preservation and save/reload, plus centered/off-center movement and pier collision at both mines. Status pending until CI completes.
+JSON numeric story counters are normalized before the narrative-upgrade early return. Invalid prerelease item IDs are repaired without rerolling valid preferences, current valid favors or earned relationship history. All authored and generated preference/work item IDs are checked against the actual item catalogue.
 
-Recovery: complete baseline and feature branch are on GitHub. Local folk82 directory contains only retrieved/changed source and is not a complete game checkout. Preserve all older releases and recovery branches.
+Local native Godot 4.4.1 people-preview passed 380 assertions with zero script errors on the final source. Hosted people-preview passed in run 40137875448, job 121003221541. Coverage includes actual dialogue and transfers, six countryside story menus, staffed interior route, familiar greetings, notebook whereabouts, migration preservation/idempotence, invalid-item repair, dormant candidate eligibility/exclusions, centered/off-center mine entry and pier collision.
 
+Reviewed native captures: both entrances, seven male pick sequences, Ivar/neighbor personality, gift picker, favor terms, People notebook, Dagna's story and familiar welcome, and staffed Hearth. Screens use scrollable panels where necessary.
+
+## Player smoke test
+
+1. Load an existing save, visit the Wayfarer's Hearth, and speak with Dagna inside. Check the bunk, kitchen and storage.
+2. Ask a countryside resident about their life and preferences; give an item from your pack or fulfill a paid favor. Open N to find the remembered details and whereabouts.
+3. Save and reload, then confirm the same person retains their identity, discovered tastes and familiarity.
+4. Approach both mine entrances from the center and slightly off-center. Walk through the visible opening; the masonry piers should remain solid.
+5. Mine facing different directions and watch the complete pick swing, including recovery.
+6. On Windows, report display resolution, performance, audio issues and unclear menu/dialogue choices.
+
+## Recovery and limits
+
+Complete current source is retained locally in stellar-full and verified bundle stellar-full-verified-people.bundle, and remotely at recovery/people72-native-verified. The local clone/bundle contains the complete current checkout with shallow history, not a full historical mirror. Earlier bundles, recovery branches and releases remain intact.
+
+Native verification uses Linux software rendering and dummy audio. Windows device performance and audible quality still require player testing. Character ambitions described in dialogue are not additional implemented activities.
+
+## Published release verification
+
+Source run 40137875448 passed all 26 gameplay cases and focused people-preview. Release run 40137928083 passed the 3,269-entry PCK audit and all 16 exact-export cases: 1,082 assertions, including 380 in people. Downloaded verification-evidence.tar.gz matched SHA256 745581a8ef475e86d6ac9de0d6439eb49d562302ed0cc03f697acb6d37ed22f8; every packaged result passed with no script errors.
+
+Published v0.72.0 source and PR #35 merge c512e9ec1c1d3a1fbd8dfd5df1a751794719a372 share tree 86fe3856349df5323a019124543e8fc5f7520cb9. Windows ZIP is 725,151,889 bytes with SHA256 13666ead4d977760da6cb05f6eb2dd44d36847e755536a892b331cfec343381d, matching the clean build report and GitHub asset digest.
