@@ -39,9 +39,9 @@ static func draw_target(g):
  if item.is_empty():return
  var p=g.handworks.pos(item)
  var color=Color("f1ca79")
- g.draw_arc(p+Vector2(0,-12),42,0,TAU,40,color,2.0)
- g.draw_line(p+Vector2(-7,-76),p+Vector2(0,-68),color,2)
- g.draw_line(p+Vector2(0,-68),p+Vector2(7,-76),color,2)
+ g.draw_arc(p+Vector2(0,10),28,0,TAU,40,color,2.0)
+ g.draw_line(p+Vector2(-7,51),p+Vector2(0,43),color,2)
+ g.draw_line(p+Vector2(0,43),p+Vector2(7,51),color,2)
 static func active(g)->bool:return g.zone=="mine" and g.state.active_site=="hold" and g.deep.world.depth()==0
 static func step(g)->int:
  var f=data(g).facts
