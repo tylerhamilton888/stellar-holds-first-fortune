@@ -57,6 +57,16 @@ static func introduce(s,id:String)->bool:
   for next in ["borin","orla","hedrik"]:
    if not q.met.has(next):s.tracked_npc=next;break
  return true
+static func primary_host(s)->String:
+ if settling(s):return ""
+ var q=ensure(s)
+ if q.fresh and q.stage==2:
+  for id in ["borin","orla","hedrik"]:
+   if not q.met.has(id):return id
+  return ""
+ if q.fresh and q.stage==4:return "eirik"
+ return "ivar"
+
 static func primary(s)->String:
  var q=ensure(s)
  if settling(s):return "A PLACE TO BEGIN: "+("Check your chest" if q.get("settle_bed",false) else "Rest at your bed" if q.get("settle_chest",false) else "Rest at your bed and check your chest")+". E interacts · J: journal"
@@ -132,7 +142,7 @@ static func complete(s,id:String,is_local:bool)->bool:
 static func status(s,host:String)->String:
  var q=ensure(s)
  if q.fresh:
-  if host=="ivar" and q.stage in [1,5]:return "offer"
+  if host=="ivar" and q.stage in [1,5] and not settling(s):return "offer"
   if q.stage==2 and host in ["borin","orla","hedrik"] and not q.met.has(host):return "offer"
   if q.stage==4 and host=="eirik":return "ready"
  var found=""
@@ -173,7 +183,7 @@ static func journal(g):
   for id in ["borin","orla","hedrik"]:
    g.button(g.panel_body,("Met " if q.met.has(id) else "Find ")+s.npc(id).name,func():s.tracked_npc=id;g.save_game();g.close_panel())
  if q.fresh and q.stage==3:
-  g.label(g.panel_body,"FIRST TRIP: Step outside. Walk to the King’s Gate on eastern Hearthward and press E. Follow the High Trail northeast to Old Workings and press E at the entrance. WASD or arrows move; G lists directions. Old Delving is a separate claim that needs a charter.",16)
+  g.label(g.panel_body,"FIRST TRIP: Step outside. Walk to the King’s Gate in Hearthward’s northern bedrock and press E. Follow the High Trail northeast to Old Workings and press E at the entrance. WASD or arrows move; G lists directions. Old Delving is a separate claim that needs a charter.",16)
   g.label(g.panel_body,"At the mine, 1 equips your pick. Hold left mouse on nearby coal to free a load. Hold Shift+E beside the load to dress it into coal; E can lift it and Q sets it down. No workstation is needed for this first shift. V builds stairs or ladder shafts. E descends, Shift+E returns through the same passage. Carry 8 coal back through the mine mouth, then walk the High Trail back to Keldrath (G lists directions). Enter with E and return to Ivar.",16)
  elif q.fresh and q.stage==4:
   g.label(g.panel_body,"Your first wage is paid. Take the Royal stairs on Hearthward’s western terrace to Crownward and enter the King's hall. Speak to Lord Eirik before taking the lift commission.",16)
@@ -181,11 +191,20 @@ static func journal(g):
   g.label(g.panel_body,"Leave the throne room by its southern doorway, return to Ivar's desk and accept the lift commission. This opens the first-season lessons and local stories.",16)
  if side_stories(s):
   HoldAnniversary.journal(g)
-  for id in LESSONS:
-   if not unlocked(s,id):continue
-   var p=progress(s,id)
-   var status="Complete" if q.done.has(id) else "Ready to return" if q.accepted.has(id) and p.ready else "%d/%d" % [p.amount,p.need] if q.accepted.has(id) else "Available"
-   g.button(g.panel_body,LESSONS[id].name+"  |  "+status+"  |  "+s.npc(LESSONS[id].host).first_name,func():g.lesson_id=id;g.open_panel("lesson"))
+  for group in ["Ready to return","In progress","Available","Completed"]:
+   var entries=[]
+   for id in LESSONS:
+    if not unlocked(s,id):continue
+    var p=progress(s,id)
+    var category="Completed" if q.done.has(id) else "Ready to return" if q.accepted.has(id) and p.ready else "In progress" if q.accepted.has(id) else "Available"
+    if category==group:entries.append(id)
+   if entries.is_empty():continue
+   var section=HoldMenuView.section(g.panel_body,group+" · "+str(entries.size()))
+   for id in entries:
+    var p=progress(s,id)
+    var detail=" · %d/%d" % [p.amount,p.need] if group=="In progress" else ""
+    g.button(section,LESSONS[id].name+detail+"  ·  "+s.npc(LESSONS[id].host).first_name,func():g.lesson_id=id;g.open_panel("lesson"))
+
  else:g.label(g.panel_body,"More work opens as Ivar comes to trust you. You can explore, trade and build at your own pace.",16)
 static func lesson_panel(g):
  var s=g.state;var id=g.lesson_id

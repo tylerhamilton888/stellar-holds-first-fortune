@@ -1,3 +1,6 @@
+# 0.71.1 — A Clearer Path (verification in progress)
+Quest journal hierarchy, status-grouped lessons, correct introduction targets, ancestral contact markers, paused quest browsing and readable footer implemented. Existing saves/rewards preserved. Native screenshot review completed for first-pass journal, pack and settings; final regressions and hosted release gates pending.
+
 # 0.71.0 — Beneath the Stone Crown: published, verified and merged
 
 The expanded King's Hall, Eirik's whole-character walk/stand/sit poses, actual top-down royal audience, mounted signs, grounded ward surrounds and northern King's Gate are complete. Advancing audience dialogue preserves the player's position. Existing saves, progression and original artwork remain intact. General lying-down poses remain future work.

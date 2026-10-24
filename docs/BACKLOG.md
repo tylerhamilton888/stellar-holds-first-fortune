@@ -1,3 +1,6 @@
+# 0.71.1 — A Clearer Path (verification in progress)
+Quest journal hierarchy, status-grouped lessons, correct introduction targets, ancestral contact markers, paused quest browsing and readable footer implemented. Existing saves/rewards preserved. Native screenshot review completed for first-pass journal, pack and settings; final regressions and hosted release gates pending.
+
 # Royal Hall continuation — 0.71.0
 
 - Implemented: expanded hall, shared royal standing/walking/sitting poses, top-down audience, mounted signs, gate bedrock and proportional architectural crops.

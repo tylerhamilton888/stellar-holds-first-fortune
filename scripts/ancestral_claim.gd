@@ -133,6 +133,17 @@ static func journal(g):
  if q.stage==0:return
  g.label(g.panel_body,"THE STONE REMEMBERS"+(" · "+q.title if q.title!="" else ""),18,Color("edc98a"))
  g.label(g.panel_body,description(g.state),15)
+static func marker(s,id:String)->String:
+ var q=data(s)
+ if id=="ivar":
+  if q.stage==0 and eligible(s):return "offer"
+  if q.stage==4 and not q.family:return "ready"
+ if id=="eldric":
+  if q.stage==3 or (q.stage==4 and q.archive and q.family):return "ready"
+ if id=="eirik":
+  if (q.stage==4 and not q.archive) or q.stage==5 or (q.stage==6 and ready(s)):return "ready"
+ return ""
+
 static func options(g,id:String):
  var q=data(g.state)
  var choices=[]
