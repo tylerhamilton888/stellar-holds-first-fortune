@@ -442,6 +442,7 @@ func carried(p:Vector2):
 func overlay():
  if g.panel_id!="":return
  g.draw_set_transform(-g.camera)
+ HoldFirstShift.draw_target(g)
  if placing!="":
   var p=snap_build(g.get_global_mouse_position()+g.camera);var ok=placement_ready(placing,p)
   if g.zone=="mine" or g.surface.area in ["claim","pinewood"] or g.surface.area.begins_with("home:"):

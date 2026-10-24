@@ -225,6 +225,9 @@
       "menus",
       "firsthour",
       "homestead"
+    ],
+    "workstation-preview": [
+      "firstshift"
     ]
   },
   "cases": {

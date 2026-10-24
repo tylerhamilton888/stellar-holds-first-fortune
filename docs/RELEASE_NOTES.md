@@ -1,5 +1,5 @@
-# 0.71.1 — A Clearer Path
+# 0.71.2 — Your First Worksite
 
-The quest journal now leads with the current objective and groups first-season lessons by ready, active, available and completed status. Introduction tracking follows the next unmet resident; settling in no longer advertises a false Ivar quest. Ancestral investigation and appointment contacts now show quest markers at the appropriate stages. Directions reflect the northern King's Gate. Menu help uses separate lines to reduce crowding.
+Ivar now offers an optional hands-on workstation quest before the first mine trip. He issues starter timber once. The journal shows the next action, a checklist, directions to the borrowed equipment, and pause/resume controls. A restrained gold marker identifies the relevant raw load, stockpile or stonebreaker. Progress comes from actual lifting, depositing, processing and construction, and survives save/load. Finished output still enters the pack automatically; hold-owned stock remains protected.
 
-Existing saves, original artwork, rewards and progression are preserved. Extract the entire Windows ZIP into a new folder; run FirstFortune.exe beside FirstFortune.pck.
+Existing saves and original artwork are preserved. Extract the entire Windows ZIP into a new folder and run FirstFortune.exe beside FirstFortune.pck.

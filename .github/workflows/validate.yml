@@ -23,6 +23,9 @@ jobs:
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/ci
+      - name: Log workstation lesson visual evidence
+        if: always()
+        run: python3 tools/print_worksite_evidence.py
       - name: Retain evidence
         if: always()
         # Test failures still fail the preceding step. An account artifact quota
@@ -33,3 +36,17 @@ jobs:
           name: gameplay-evidence-${{ github.sha }}
           path: test-results/ci
           retention-days: 7
+  worksite-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install pinned official engine
+        run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+      - name: Verify and capture workstation quest
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite workstation-preview --output test-results/ci
+      - name: Retain readable visual evidence
+        if: always()
+        run: python3 tools/print_worksite_evidence.py

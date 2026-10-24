@@ -105,6 +105,10 @@ static func panel(g):
  choose(g,"Good fortune. I'll leave you to it.",g.close_panel)
 static func ivar_options(g):
  var s=g.state;var q=HoldOnboarding.ensure(s)
+ if HoldFirstShift.offered(g):
+  choose(g,"Teach me how workstations work",func():
+   if HoldFirstShift.accept(g):
+    g.talk_line="We will begin with stone. Lift a raw chunk, put it in the western stockpile, then hold E at the stonebreaker. Finished stone goes into your pack. I have issued starter timber for your own rack and bench. J keeps one step at a time; pause the lesson whenever you wish.";g.open_panel("commission"),true)
  if q.stage>=2 and not HoldFirstShift.data(g).kit:
   choose(g,"Request timber for my first worksite",func():HoldFirstShift.kit(g);g.talk_line="Six lengths, issued against your first shift. Use them to build your equipment. The loan benches are there for you; the crew’s stock and output belong to the hold.";g.refresh_panel())
  if HoldOnboarding.settling(s):

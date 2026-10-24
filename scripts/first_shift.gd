@@ -2,11 +2,46 @@ class_name HoldFirstShift
 extends RefCounted
 # The teaching bay uses ordinary Handworks records; no second inventory or crafting system.
 const STEPS=["Excavate stone, then lift a load · E", "Carry it to the stockpile · E", "Work at the stonebreaker · hold E", "Finished stone goes into your pack", "Craft and place a stockpile · Shift+B", "Build your own stonebreaker · Shift+B", "Your first worksite is ready · follow the coal seam"]
-const HELP=["Work an exposed stone face with held pickaxe strokes. E lifts the freed load onto your shoulder. The western loan benches are available for your own material; the eastern crew stock belongs to the hold.","Walk beside the western stone rack and press E. Its visible contents come from the loads you actually deposit.","Stand beside the western stonebreaker and hold E. It draws a load from a rack within reach. Your Dwarf steps into a working stance and breaks it into useful stone.","Finished work goes straight into your pack, ready for construction. For stone left on a bench from an earlier shift, press E beside it. Raw loads and usable materials are different stages of the same workflow.","Open Shift+B, choose Stone stockpile, then Craft & place. Move the preview to clear floor near the seam: green is valid, red is blocked. Left click builds; right click cancels without spending.","Open Shift+B and craft a Stonebreaker beside your new stockpile. Leave space for your boots and keep the entrance clear. Racks feed benches within 150 units; expanding your operation now uses the same tools.","You have made a working production line. Follow the nearby coal seam for Ivar's commission. The hold crew processes its own loads at the eastern benches. Its stock and finished output belong to the hold, not your pack. Later, your hired Folk and carts can take over familiar work."]
+const HELP=["Work an exposed stone face with held pickaxe strokes. E lifts the freed load onto your shoulder. A raw chunk is a shoulder load, not yet usable stone in your pack. The western loan benches are available for your own material; the eastern crew stock belongs to the hold.","Walk beside the western stone rack and press E. Its visible contents come from the loads you actually deposit.","Stand beside the western stonebreaker and hold E. It draws a load from a rack within reach. Your Dwarf steps into a working stance and breaks it into useful stone.","Finished work goes straight into your pack, ready for construction. For stone left on a bench from an earlier shift, press E beside it. Raw loads and usable materials are different stages of the same workflow.","Open Shift+B, choose Stone stockpile, then Craft & place. Move the preview to clear floor near the seam: green is valid, red is blocked. Left click builds; right click cancels without spending.","Open Shift+B and craft a Stonebreaker beside your new stockpile. Leave space for your boots and keep the entrance clear. Keep the stockpile close enough for a teal connection line to appear in the placement preview. Leave a clear path between them.","You have made a working production line. Follow the nearby coal seam for Ivar's commission. The hold crew processes its own loads at the eastern benches. Its stock and finished output belong to the hold, not your pack. Later, your hired Folk and carts can take over familiar work."]
 static func data(g)->Dictionary:
  var h=g.handworks.data()
  if not h.has("first_shift"):h.first_shift={"version":1,"started":false,"kit":false,"facts":{}}
  return h.first_shift
+static func offered(g)->bool:
+ return HoldOnboarding.stage(g.state)>=2 and not HoldOnboarding.settling(g.state) and step(g)<6
+static func accept(g)->bool:
+ if not offered(g) or not HoldConversation.local(g,"ivar"):return false
+ var q=data(g)
+ q.accepted=true;q.guided=true
+ kit(g);g.save_game()
+ return true
+static func guided(g)->bool:
+ return bool(data(g).get("guided",true))
+static func set_guided(g,value:bool):
+ data(g).guided=value;g.save_game();g.refresh_panel()
+static func target(g)->Dictionary:
+ if not active(g) or not guided(g) or step(g)>=4:return {}
+ var n=step(g);var h=g.handworks
+ if n==0:
+  var nearest={};var distance=INF
+  for raw in h.data().loose:
+   if h.local(raw) and raw.kind=="stone" and h.pos(raw).distance_to(g.player)<distance:
+    nearest=raw;distance=h.pos(raw).distance_to(g.player)
+  return nearest
+ var kind="stone_pile" if n==1 else "breaker"
+ var loan=station(g,"rack" if n==1 else "bench")
+ if not loan.is_empty():return loan
+ for f in h.data().facilities:
+  if h.local(f) and f.kind==kind and f.get("owner","")!="hold":return f
+ return {}
+static func draw_target(g):
+ var item=target(g)
+ if item.is_empty():return
+ var p=g.handworks.pos(item)
+ var color=Color("f1ca79")
+ g.draw_arc(p+Vector2(0,-12),42,0,TAU,40,color,2.0)
+ g.draw_line(p+Vector2(-7,-76),p+Vector2(0,-68),color,2)
+ g.draw_line(p+Vector2(0,-68),p+Vector2(7,-76),color,2)
 static func active(g)->bool:return g.zone=="mine" and g.state.active_site=="hold" and g.deep.world.depth()==0
 static func step(g)->int:
  var f=data(g).facts
@@ -18,7 +53,7 @@ static func event(g,id:String):
   var previous=step(g);data(g).facts[id]=true
   if step(g)>previous:
    g.sound.effect("quest",-22)
-   g.notify("First shift · "+STEPS[step(g)])
+   if guided(g):g.notify("First shift · "+STEPS[step(g)])
 static func station(g,id:String)->Dictionary:
  for f in g.handworks.data().facilities:
   if str(f.id)=="firstshift:"+id:return f
@@ -59,19 +94,39 @@ static func kit(g):
  if q.started and station(g,"bench").is_empty():g.state.add("wood",3);g.state.add("stone",4)
  g.save_game();g.notify("Ivar issues six lengths of timber for your first equipment. The crew stock remains hold property.")
 static func journal(g):
- if not data(g).started:return
+ var q=data(g)
+ if not q.started and not q.get("accepted",false):
+  if not offered(g):return
+  g.label(g.panel_body,"YOUR FIRST WORKSITE · Optional lesson",18,Color("edc98a"))
+  g.label(g.panel_body,"Ask Ivar to show you the worksite routine before your first mining trip. Learn how raw loads, stockpiles and workstations fit together.",16)
+  if HoldConversation.local(g,"ivar"):
+   g.button(g.panel_body,"Teach me to use a workstation",func():accept(g);g.refresh_panel())
+  else:g.small_button(g.panel_body,"Find Ivar · accept the lesson",func():g.state.tracked_npc="ivar";g.save_game();g.close_panel())
+  return
  var n=step(g)
- g.label(g.panel_body,"YOUR FIRST WORKSITE",18)
- g.label(g.panel_body,STEPS[n],16,Color("edc98a"));g.label(g.panel_body,HELP[n],15)
- if station(g,"bench").is_empty():g.label(g.panel_body,"Your existing mine layout occupies the loan bay. Keep your equipment; use an existing stonebreaker or build one through Shift+B. Ivar can issue a small construction allowance at his office.",14)
- if not data(g).kit:
-  g.label(g.panel_body,"Use your own timber, or ask Ivar at his office for a small worksite allowance. Hold crew stock is not yours to take.",14)
-  g.small_button(g.panel_body,"Track Ivar for timber",func():g.state.tracked_npc="ivar";g.save_game();g.close_panel();g.notify("Ivar’s office · Hearthward, southeast of the commons."))
- if active(g):g.button(g.panel_body,"Open equipment plans",func():g.open_panel("handworks"))
+ g.label(g.panel_body,"YOUR FIRST WORKSITE"+(" · Complete" if n==6 else " · Optional"),18,Color("edc98a"))
+ if n<6:
+  g.label(g.panel_body,"Step %d of 6 · " % (n+1)+STEPS[n],17,Color("edc98a"))
+  g.label(g.panel_body,HELP[n],16)
+  if not q.started:g.label(g.panel_body,"First, walk through the northern King's Gate, follow the High Trail to Old Workings, and enter the mine. The borrowed rack and stonebreaker are on the west side of the entrance bay.",16)
+  elif not active(g):g.label(g.panel_body,"Return to the entrance level of Old Workings to continue. Your progress is saved.",16)
+  g.small_button(g.panel_body,"Pause lesson guidance" if guided(g) else "Resume lesson guidance",func():set_guided(g,not guided(g)))
+  g.label(g.panel_body,"You can leave or pause whenever you like. Your coal commission does not require this lesson.",14)
+ else:g.label(g.panel_body,"Worksite ready. You turned a raw load into usable stone and built your own equipment. These same steps apply to timber and the sawbench. Your next commission remains in the journal.",16)
+ for i in 6:
+  var done=bool(q.facts.get(["lift","stock","process","collect","rack","bench"][i],false))
+  g.label(g.panel_body,("✓ " if done else "› " if i==n else "○ ")+STEPS[i],14,Color("a7dfcb") if done else Color("b8c9c9"))
+ if q.started and station(g,"bench").is_empty():g.label(g.panel_body,"Your existing mine layout occupies the loan bay. Use your own stonebreaker or build one through Shift+B; existing equipment is preserved.",14)
+ if n<6 and not q.kit:
+  g.small_button(g.panel_body,"Track Ivar for starter timber",func():g.state.tracked_npc="ivar";g.save_game();g.close_panel())
+ if active(g) and n in [4,5]:g.button(g.panel_body,"Open equipment plans · Shift+B",func():g.open_panel("handworks"))
 static func goal(g)->String:
- return "First shift · %d/6 · " % (step(g)+1)+STEPS[step(g)] if active(g) and data(g).started and step(g)<6 else ""
+ if not guided(g) or step(g)>=6:return ""
+ if active(g) and data(g).started:return "First worksite · %d/6 · " % (step(g)+1)+STEPS[step(g)]
+ if data(g).get("accepted",false) and HoldOnboarding.stage(g.state)==3:return "FIRST WORKSITE: Old Workings entrance bay · J: lesson"
+ return ""
 static func context_hint(g)->String:
- if not active(g) or not data(g).started or step(g)>=6:return ""
+ if not active(g) or not data(g).started or not guided(g) or step(g)>=6:return ""
  var n=step(g);var h=g.handworks
  if n==0:return "Hold LMB at an exposed rock face · stop moving to plant the pick"
  if n==1:return "Carry the freed stone to the western rack · E stocks it"
