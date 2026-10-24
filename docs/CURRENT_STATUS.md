@@ -1,24 +1,17 @@
-## Staffed roadside Hearth — pending validation
+# 0.72.0 — Faces of the Hold: published, verified and merged
 
-Dagna now walks a clear interior route at the Wayfarer's Hearth rather than leaving it empty while she stands outside. Bram directs travelers inside. Six authored familiarity greetings acknowledge returning friends while retaining practical directions; the People notebook records where each countryside regular can be found. Existing kitchen, bunk, storage, names and identities remain intact. Romance remains dormant as requested.
+Twelve authored characters now have motives, concerns, tastes and personal dialogue; the countryside cast adds twelve local story topics. Dagna staffs the Wayfarer's Hearth inside. Gifts, paid favors, familiar greetings and the People notebook preserve relationship history. Other residents retain stable generated personalities. Four future romance candidates have dormant metadata only; dating and marriage remain disabled.
 
-Latest retry of run 40135393882 failed before any steps started (jobs 120997557788 and 120997557965). The Actions capacity blocker remains; no new playable release or merge is claimed. Local GDScript syntax and sampled fixed-furniture route checks pass. Native conversation/route assertions, staffed-wayfarer and dagna-familiar-welcome captures are added but unrun. Resume from the latest feature/folk82 head; full native, visual and exact-export gates still apply.
+Mine entrances now have readable masonry openings, lamps and approach tracks aligned with walkable collision. Pick rest/recovery frames keep the approved pick silhouette. Final regression fixes normalize saved story counters and repair invalid prerelease item preferences without rerolling valid tastes or earned history.
 
-## Countryside character follow-up — pending validation
+Runtime source f241aee9c728e317572b67c294c45d657185c80d and PR #35 merge c512e9ec1c1d3a1fbd8dfd5df1a751794719a372 share tree 86fe3856349df5323a019124543e8fc5f7520cb9. Continue from master, the current default branch.
 
-The pending feature/folk82 branch now gives all six countryside residents authored personalities and twelve local story topics, including Dagna and the Wayfarer's Hearth community. Added dormant adult/relationship/candidate metadata for Dagna, Ragnhild, Torvik and Ketil; no dating gameplay or romance progression. Existing acquaintance preferences, favors and history are preserved. See [COUNTRYSIDE_CAST.md](COUNTRYSIDE_CAST.md) for cast and future relationship design.
+Source run 40137875448 passed all 26 gameplay cases and people-preview. Local focused native verification passed 380 assertions with zero script errors. Both entrances, seven male pick sequences, conversations, gift picker, favor terms, notebook, Dagna's story/familiar welcome and staffed Hearth were visually reviewed. Release run 40137928083 passed the 3,269-entry package audit and all 16 exact-export cases (1,082 assertions, including 380 people assertions).
 
-Syntax/content checks pass; new native conversation/migration/candidate checks and Dagna dialogue visual remain unrun. The Actions budget blocker below remains unresolved. Do not merge/release yet; 0.71.2 remains the published game. The older runtime SHA below is the preceding checkpoint, not this follow-up. Resume from the latest feature/folk82 head and update the release branch only after verification.
+Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.72.0
+Windows ZIP: 725,151,889 bytes; SHA256 13666ead4d977760da6cb05f6eb2dd44d36847e755536a892b331cfec343381d. Uploaded size/digest match the clean build report. Downloaded build report and verification evidence match their uploaded digests. Existing saves are supported; Windows device performance and audible quality remain player testing.
 
-# 0.72.0 — Faces of the Hold: implemented, release blocked
-
-PR #35 (feature/folk82) contains the pick continuity correction, shared mine-mouth geometry and readable entrances, authored principal personalities, persistent supporting acquaintances, gifts, paid favors and a People notebook. Latest runtime source: a1a78ba577b1339c475d7862382742a5f12a24e7; runtime tree 567b0d70aa5b02620ca2eeaafb13e30c60fc591c.
-
-Preliminary native preview on cb1ee36d4ba928145388a50927c2bc37355528e2 (run 40133184007, job 120989155104) passed 256 assertions and failed two full-record save/reload comparisons. Actual captured notebook retained the relationships. Final code normalizes JSON numeric counters and moves favor terms to a dedicated screen; those fixes have passed syntax parsing but have NOT yet passed a native rerun. Reviewed preliminary visuals: both entrances, seven male pick sequences, Ivar/neighbor conversations, gift picker and notebook.
-
-GitHub blocked final validation run 40133925376 and the release build before any steps started: “The job was not started because an Actions budget is preventing further use.” Observed directly in the signed-in Actions UI. No billing settings were changed. Complete-source ZIP recovery through the signed-in browser timed out twice; there is no complete local playable checkout.
-
-Do not merge or publish as verified yet. After the owner restores Actions capacity: run full native gameplay (26 cases) and people-preview; review the new favor-details screen; run the exact-export gate (16 cases); verify ZIP/digest and runtime tree; merge PR #35 and record delivery. release/0.72.0 currently points to the runtime source above, and no v0.72.0 release was created. The last published build remains v0.71.2. Local partial-edit bundle folk82-edits.bundle and complete remote recovery/pending-folk82 preserve this checkpoint. Earlier releases/backups remain intact.
+The repository is public and the Actions capacity blocker no longer prevents these runs. Full current source is available locally in stellar-full; stellar-full-verified-people.bundle is a verified complete current checkout with shallow history. Remote recovery/people72-native-verified retains the verified source. Preserve all older bundles, recovery branches and releases. See testing/people82.md and COUNTRYSIDE_CAST.md.
 
 # 0.71.2 — Your First Worksite: published and verified
 
