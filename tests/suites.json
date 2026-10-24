@@ -31,7 +31,8 @@
       "work",
       "keldrath",
       "homestead",
-      "royal"
+      "royal",
+      "quest_ui"
     ],
     "modular": [
       "modular",
@@ -218,6 +219,12 @@
       "appearance",
       "keldrath",
       "homestead"
+    ],
+    "quest_ui": [
+      "quest_ui",
+      "menus",
+      "firsthour",
+      "homestead"
     ]
   },
   "cases": {
@@ -316,6 +323,10 @@
     "royal": {
       "script": "tests/royal79.gd",
       "marker": "ROYAL79"
+    },
+    "quest_ui": {
+      "script": "tests/quest_navigation80.gd",
+      "marker": "QUEST_NAVIGATION80"
     }
   }
 }

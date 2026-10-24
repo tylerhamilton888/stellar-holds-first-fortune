@@ -3,14 +3,14 @@ extends RefCounted
 const A=preload("res://scripts/art.gd")
 static func status(s,id:String)->String:
  var anniversary=HoldAnniversary.status(s,id)
- var states=[anniversary,HoldOnboarding.status(s,id)]
+ var states=[anniversary,HoldOnboarding.status(s,id),HoldAncestralClaim.marker(s,id)]
  var matter=HoldClaimStories.ensure(s).active
  if not matter.is_empty() and matter.actor==id:states.append("offer" if matter.phase=="offer" else "active")
  HoldOutpost.ensure(s)
  if s.outpost.crew.has(id) and not s.outpost.favors.get(id,false):
   states.append("ready" if s.afford(HoldOutpost.project(s,id).cost) else "offer")
  if id=="ivar":
-  if s.opening==0 and (not HoldOnboarding.ensure(s).fresh or HoldOnboarding.stage(s)==1):states.append("offer")
+  if s.opening==0 and not HoldOnboarding.settling(s) and (not HoldOnboarding.ensure(s).fresh or HoldOnboarding.stage(s)==1):states.append("offer")
   elif s.opening in [1,2,3] and HoldOnboarding.commission_allowed(s):states.append("ready" if s.afford(HoldCampaign.JOBS[s.opening-1].cost) else "active")
  var c=HoldCulture.ensure(s)
  if HoldOnboarding.side_stories(s) and not c.done:

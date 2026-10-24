@@ -1132,7 +1132,7 @@ func compact_person(key:String,quote:String):
  if HoldConversation.local(self,key):small_button(r,"Talk",func():HoldConversation.start(self,key))
 
 func menu_footer(parent:Node):
- var bottom=row(parent)
+ var bottom=VBoxContainer.new();bottom.add_theme_constant_override("separation",2);parent.add_child(bottom)
  label(bottom,"Choose your fortune" if panel_id=="save_slots" else ("Paused" if menu_paused else "Safe to browse • production continues"),14,Color("a7c8bf"))
  var hint=label(bottom,"Tab: focus  •  Enter: select  •  Esc: back / close",14,Color("a7c8bf"));hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
 
@@ -1145,7 +1145,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id in ["hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1558,10 +1558,16 @@ func ivar_welcome_panel():
  label(panel_body,"Ivar’s advice",18)
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel():
+ var current=HoldOnboarding.primary(state)
+ if current!="":
+  var objective=HoldMenuView.section(panel_body,"Current objective")
+  label(objective,current,17)
+  small_button(objective,"View steps & local quests",func():open_panel("guidance"))
  HoldFirstShift.journal(self)
  HoldAncestralClaim.journal(self)
- button(panel_body,"River & Root · fishing and gardening",func():open_panel("fieldwork"))
- button(panel_body,"Hands of the Dwarf · workshop lesson",func():open_panel("handworks"))
+ if HoldOnboarding.side_stories(state):
+  button(panel_body,"River & Root · fishing and gardening",func():open_panel("fieldwork"))
+  button(panel_body,"Hands of the Dwarf · workshop lesson",func():open_panel("handworks"))
  if state.claim_id!="":
   label(panel_body,"YOUR OWN HEARTH · Build, furnish and climb your house. O opens plans on your claim.",16)
   small_button(panel_body,"House-building lesson & first-season work",func():open_panel("guidance"))
@@ -1570,9 +1576,9 @@ func commission_panel():
   if nearby:
    talk_id="ivar";talk_topic="";talk_line="";HoldConversation.panel(self)
   else:
-   label(panel_body,"WORK JOURNAL",22,Color("edc98a"))
-   label(panel_body,HoldOnboarding.primary(state),17)
-   HoldConversation.choose(self,"Track "+state.npc("ivar" if q.stage!=4 else "eirik").first_name,func():state.tracked_npc="eirik" if q.stage==4 else "ivar";save_game();close_panel())
+   var target=HoldOnboarding.primary_host(state)
+   if target!="":HoldConversation.choose(self,"Track "+state.npc(target).first_name,func():state.tracked_npc=target;save_game();close_panel())
+   if HoldOnboarding.settling(state):label(panel_body,"Your quarters · Hearthward. Rest at your bed and check your chest.",16)
    HoldConversation.choose(self,"First season journal",func():open_panel("guidance"))
   return
  if nearby:HoldConversation.header(self,panel_body,"ivar",HoldCampaign.JOBS[state.opening-1].story if state.opening in [1,2,3] else "Your reference is signed. A sound beginning, and your own mountain to come.",true)
