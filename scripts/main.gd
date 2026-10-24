@@ -1246,7 +1246,7 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Keep my existing hold",close_panel)
 
  if id=="living":panel.set_deferred("size",Vector2(720,452))
- elif id=="conversation":panel.set_deferred("size",Vector2(840,452))
+ elif id in ["conversation","commission","guidance"]:panel.set_deferred("size",Vector2(840,452))
 
 func inventory_panel():
  var top=row(panel_body)
