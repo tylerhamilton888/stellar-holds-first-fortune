@@ -1,6 +1,6 @@
 # Countryside cast and future relationships
 
-Implemented in the pending 0.72.0 branch, not yet released. The six road residents now have authored motives, worries, confidences, gift preferences, useful favors and two local conversation topics each. Stable actor IDs, generated surnames, approved appearances and current routes remain unchanged. Their stories describe a connected community; musical gatherings, a bakehouse and a seed collection are character ambitions, not advertised playable features.
+Implemented in the pending 0.72.0 branch, not yet released. The six road residents now have authored motives, worries, confidences, gift preferences, useful favors and two local conversation topics each. Stable actor IDs, generated surnames, approved appearances remain unchanged. Dagna now works inside the Wayfarer's Hearth on a clear interior route; other routes remain unchanged. Their stories describe a connected community; musical gatherings, a bakehouse and a seed collection are character ambitions, not advertised playable features.
 
 | Character | Place and personality | Connections and future story direction |
 | --- | --- | --- |
@@ -36,4 +36,4 @@ Possible scenes, not implemented: help Dagna accept an evening off; hear Torvik 
 
 First meetings use authored preferences and favor reasons. Existing road acquaintances receive a versioned narrative-only upgrade: their names, appearance, discovered tastes, current material request, bond, daily limits and memories remain intact. Returning saves never lose earned familiarity.
 
-Local GDScript syntax and content consistency checks pass. Added native regression coverage for all six conversations, migration preservation/idempotence, candidate directions, exclusions and dormant romance. These native checks and the Dagna dialogue screenshot have not run: the existing Actions budget blocker still prevents release acceptance. Full gameplay, focused visual and exact-export gates remain required. The last published build remains 0.71.2.
+Returning friends receive authored welcomes, and the notebook includes countryside whereabouts. Local GDScript syntax, content consistency and sampled fixed-furniture route checks pass. Added native regression coverage for all six conversations, migration preservation/idempotence, candidate directions, exclusions and dormant romance. These native checks and the Dagna dialogue screenshot have not run: the existing Actions budget blocker still prevents release acceptance. Full gameplay, focused visual and exact-export gates remain required. The last published build remains 0.71.2.

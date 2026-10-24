@@ -96,7 +96,21 @@ func run():
   button("How have you been?");button("Tell me about life here")
   var topic=HoldRoadCharacters.CAST[actor.interaction].topics[0]
   button(topic[0]);check(g.talk_line==topic[1],"Local story is reachable: "+spec.name)
-  if i==1:await snap("dagna-road-story")
+  if i==1:
+   await snap("dagna-road-story")
+   var copies=0
+   for area_id in ["trail","room:wayfarer"]:
+    for visible in g.surface.roads.people(area_id):
+     if visible.interaction==actor.interaction:copies+=1
+   check(copies==1 and spec.area=="room:wayfarer","Dagna staffs the Hearth without an outdoor duplicate")
+   for sample_time in range(0,40):
+    var host=g.surface.roads.people("room:wayfarer",sample_time)[0]
+    check(g.surface.walkable(host.p) and g.surface.walkable(host.p+Vector2(0,22)),"Host route and conversation approach stay clear")
+   g.close_panel();await snap("staffed-wayfarer")
+   at(actor.p+Vector2(0,22));HoldConversation.start(g,actor.interaction)
+   record.bond=5;g.talk_line=""
+   check(HoldConversation.greeting(g,actor.interaction).begins_with(HoldRoadCharacters.FAMILIAR_WELCOMES[actor.interaction]),"Established friendship receives a personal welcome")
+   g.refresh_panel();await snap("dagna-familiar-welcome")
   check(not record.has("romance") and not HoldRoadCharacters.ROMANCE_ENABLED,"Friendly talk creates no romance progression")
   g.close_panel()
  var old={"persona":{"trait":"Old generic trait","want":"Old want","worry":"Old worry","close":"Old confidence","like":"crystal","dislike":"coal","work":"stone","reason":"An existing promise"},"bond":7,"known":true,"gift_day":2,"work_day":3,"last":"An existing memory"}

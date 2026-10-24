@@ -1,3 +1,9 @@
+## Staffed roadside Hearth — pending validation
+
+Dagna now walks a clear interior route at the Wayfarer's Hearth rather than leaving it empty while she stands outside. Bram directs travelers inside. Six authored familiarity greetings acknowledge returning friends while retaining practical directions; the People notebook records where each countryside regular can be found. Existing kitchen, bunk, storage, names and identities remain intact. Romance remains dormant as requested.
+
+Latest retry of run 40135393882 failed before any steps started (jobs 120997557788 and 120997557965). The Actions capacity blocker remains; no new playable release or merge is claimed. Local GDScript syntax and sampled fixed-furniture route checks pass. Native conversation/route assertions, staffed-wayfarer and dagna-familiar-welcome captures are added but unrun. Resume from the latest feature/folk82 head; full native, visual and exact-export gates still apply.
+
 ## Countryside character follow-up — pending validation
 
 The pending feature/folk82 branch now gives all six countryside residents authored personalities and twelve local story topics, including Dagna and the Wayfarer's Hearth community. Added dormant adult/relationship/candidate metadata for Dagna, Ragnhild, Torvik and Ketil; no dating gameplay or romance progression. Existing acquaintance preferences, favors and history are preserved. See [COUNTRYSIDE_CAST.md](COUNTRYSIDE_CAST.md) for cast and future relationship design.

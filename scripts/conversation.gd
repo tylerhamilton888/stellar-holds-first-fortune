@@ -21,7 +21,9 @@ static func local(g,id:String)->bool:
  if g.zone=="claim":return g.state.outpost.get("crew",{}).has(id) and g.player.distance_to(HoldOutpostUI.position(g.state,id))<75
  return false
 static func start(g,id:String):
- if not local(g,id):g.notify("Find "+g.state.npc(id).first_name+" at "+g.npc_where(id).label+".");return
+ if not local(g,id):
+  var place=HoldRoadCharacters.whereabouts(id) if HoldRoadCharacters.CAST.has(id) else g.npc_where(id).label
+  g.notify("Find "+g.state.npc(id).first_name+" at "+place+".");return
  HoldPeople.meet(g,id)
  g.talk_id=id;g.talk_topic="";g.talk_line="";g.menu_history.clear();g.open_panel("conversation",false)
 static func header(g,parent:Node,id:String,text:String,compact:bool=false):
@@ -57,7 +59,7 @@ static func choose(g,text:String,fn:Callable,quest:bool=false)->Button:
  return b
 static func greeting(g,id:String)->String:
  if g.talk_line!="":return g.talk_line
- if id.begins_with("road_folk:"):return HoldRoads.FOLK[int(id.trim_prefix("road_folk:"))].line
+ if id.begins_with("road_folk:"):return HoldRoadCharacters.greeting(g,id)
  if id.begins_with("resident:"):return "A moment away from the shift? Gladly. What is on your mind?"
  var stage=HoldOnboarding.stage(g.state)
  if id=="ivar" and HoldOnboarding.settling(g.state):return "Your room is waiting on the northwestern street. Rest your feet and check the chest. There is time enough for introductions afterwards."

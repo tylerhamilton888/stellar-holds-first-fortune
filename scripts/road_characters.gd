@@ -1,8 +1,15 @@
 class_name HoldRoadCharacters
 extends RefCounted
-# Stable road_folk IDs retain their existing names, appearances and routes.
+# Stable road_folk IDs retain their existing names and appearances.
 # Romance is authoring metadata only. No gameplay consumes it yet.
 const ROMANCE_ENABLED=false
+const FAMILIAR_WELCOMES={
+ "road_folk:0":"Ah, a face I know. Come tell me something the bridge hasn't already heard.",
+ "road_folk:1":"There you are. No need to find an excuse to visit; your company will do.",
+ "road_folk:2":"I kept an interesting offcut to show you. It looks like nothing yet. That is the enjoyable part.",
+ "road_folk:3":"Good timing. I could use a second opinion, preferably one less stubborn than mine.",
+ "road_folk:4":"A friendly audience! Don't worry, I can manage a conversation without singing. Usually.",
+ "road_folk:5":"Good to see you back on your own two feet. That is always my preferred arrangement."}
 const CAST={
  "road_folk:0":{
   "trait":"Gruff, conscientious, secretly sentimental",
@@ -58,6 +65,15 @@ static func persona(id:String)->Dictionary:
  if not CAST.has(id):return result
  for key in ["trait","want","worry","close","like","dislike","work","reason"]:result[key]=CAST[id][key]
  return result
+
+static func greeting(g,id:String)->String:
+ var practical:String=HoldRoads.FOLK[int(id.trim_prefix("road_folk:"))].line
+ var d=HoldPeople.records(g.state).get(id,{})
+ if int(d.get("bond",0))>=5:return FAMILIAR_WELCOMES.get(id,"Good to see you again.")+"\n\n"+practical
+ return practical
+
+static func whereabouts(id:String)->String:
+ return {"road_folk:0":"Stonebridge road","road_folk:1":"Inside the Wayfarer's Hearth, Stonebridge","road_folk:2":"Pinewood timber yard","road_folk:3":"Greenhearth allotments","road_folk:4":"Greenhearth fields","road_folk:5":"Outside Old Workings, Stonebridge"}.get(id,"")
 
 static func upgrade_record(id:String,d:Dictionary):
  if not CAST.has(id) or int(d.get("road_story_version",0))>=1:return

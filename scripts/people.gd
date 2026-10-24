@@ -142,6 +142,7 @@ static func notebook(g):
  for id in all:
   var d=all[id]
   g.label(g.panel_body,g.state.npc(id).name+" · "+level(d),17)
+  if HoldRoadCharacters.CAST.has(id):g.label(g.panel_body,HoldRoadCharacters.whereabouts(id),14,Color("a7c7c6"))
   g.label(g.panel_body,d.persona.trait+". "+d.last,14)
   if d.known:g.label(g.panel_body,"Enjoys "+HoldData.ITEMS[d.persona.like].name.to_lower()+"; dislikes "+HoldData.ITEMS[d.persona.dislike].name.to_lower()+".",14)
   if HoldConversation.local(g,id):g.button(g.panel_body,"Talk to "+g.state.npc(id).first_name,func():HoldConversation.start(g,id))

@@ -1,3 +1,7 @@
+## Staffed Hearth follow-up
+
+Added one-place-only host verification, 40 host/approach samples, familiarity greeting assertion and staffed-wayfarer/dagna-familiar-welcome screenshots. Also retain roads75 coverage for actual door traversal, cooking, rest and storage. Local static geometry checks sampled 242 route/approach points against fixed furniture and bounds; this does not replace native acceptance. Build retry again failed before test steps.
+
 ## Countryside follow-up acceptance
 
 Added six actual local story-menu checks, preservation/idempotence coverage for pre-authored records, four candidate-direction checks and married/unreviewed exclusions. Capture dagna-road-story alongside the existing visuals. Native and exact-export runs remain pending; local gdparse and content consistency passed. No new test suite is needed: people82 already runs in both gates.

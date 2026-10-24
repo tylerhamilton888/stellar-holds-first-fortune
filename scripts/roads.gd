@@ -10,8 +10,8 @@ const ORDERS={
  "pinewood":{"name":"Timber for the mine supports","item":"wood","count":5,"pay":25,"p":Vector2(300,790)},
  "greenfields":{"name":"Roots for the Copper Kettle","item":"turnip","count":6,"pay":30,"p":Vector2(760,480)}}
 const FOLK=[
- {"area":"trail","name":"Bram","role":"Road keeper","a":Vector2(730,650),"b":Vector2(1020,650),"gender":0,"line":"The bridge crew needs stone. Check the board by our hearth; your own load, your own wages."},
- {"area":"trail","name":"Dagna","role":"Wayside host","a":Vector2(510,565),"b":Vector2(645,565),"gender":1,"line":"There is a free bunk inside the Wayfarer's Hearth. The mine is north, Pinewood south, and Greenhearth beyond the bridge."},
+ {"area":"trail","name":"Bram","role":"Road keeper","a":Vector2(730,650),"b":Vector2(1020,650),"gender":0,"line":"The bridge crew needs stone; the board has the terms. Dagna keeps the Wayfarer's Hearth west of here. Go inside if you need a kitchen, a bunk, or company."},
+ {"area":"room:wayfarer","name":"Dagna","role":"Wayside host","a":Vector2(380,430),"b":Vector2(500,430),"gender":1,"line":"Welcome to the Wayfarer's Hearth. The bunk is free, and you may use the kitchen with your own ingredients. Or stay a while and talk. Not every visit needs to be an errand."},
  {"area":"pinewood","name":"Torvik","role":"Timber worker","a":Vector2(470,765),"b":Vector2(700,765),"gender":0,"line":"Fell your trees, shoulder the logs, then use the loan saw and rack. Our board pays for finished timber; it does not take raw logs."},
  {"area":"greenfields","name":"Ragnhild","role":"Smallholder","a":Vector2(630,500),"b":Vector2(820,500),"gender":1,"line":"Lease the four beds by the farmhouse once. Bring your own seeds and water. No rent timer, and no crop withers while you are away."},
  {"area":"greenfields","name":"Ketil","role":"Field hand","a":Vector2(1110,790),"b":Vector2(1530,790),"gender":0,"line":"These fields feed the hold. We keep the cart lane clear; you can carry your harvest all the way to the Kettle's order board."},
