@@ -42,7 +42,12 @@ static func meet(g,id:String):
   if not PRINCIPALS.has(id):
    persona.like=LIKES[rng.randi_range(0,LIKES.size()-1)];persona.dislike=DISLIKES[rng.randi_range(0,DISLIKES.size()-1)]
    persona.work=WORK[rng.randi_range(0,WORK.size()-1)];persona.reason={"wood":"A shelf for the household's worn tools","stone":"Repairs to the family hearth","coal":"Fuel for a neighbor's small stove","turnip":"Supper for a shared work shift"}[persona.work]
-   if HoldOutpost.has_member(s,id):persona.trait=HoldOutpost.member(s,id).get("trait",persona.trait)
+   if HoldOutpost.has_member(s,id):
+    var member=HoldOutpost.member(s,id);persona.trait=HoldOutpost.describe(s,id)
+    var lines=member.get("lines",[])
+    if lines.size()>=3:persona.want=lines[0];persona.worry=lines[1];persona.close=lines[2]
+    if not member.get("wish",{}).is_empty():persona.like=member.wish.keys()[0]
+    if persona.dislike==persona.like:persona.dislike="iron_slag"
   all[id]={"persona":persona,"bond":0,"chat_day":-1,"gift_day":-1,"work_day":-1,"known":false,"last":"We have just met."}
  g.save_game()
 static func level(d:Dictionary)->String:

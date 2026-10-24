@@ -41,6 +41,7 @@ func run():
   at(mouth+Vector2(0,95));await snap("entrance-"+area)
  check(g.state.inventory==inventory,"Crossings preserve carried inventory")
  # Primary cast uses authored motives. An approach is required for every transfer.
+ g.surface.enter("hearthward");settle()
  g.surface.enter("room:commission",Vector2(620,465));settle()
  HoldConversation.start(g,"ivar");check(g.panel_id=="conversation","Ivar's existing conversation remains accessible")
  button("How have you been?");await snap("ivar-personality")
