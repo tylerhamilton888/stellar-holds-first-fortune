@@ -16,7 +16,7 @@ const CAST={
   "want":"A bridge my grandchildren can cross without knowing my name. That would be a decent life's work.",
   "worry":"The ledger calls a bridge finished when the last stone is paid for. I call it finished after the spring floods. We disagree every year.",
   "close":"My eldest sends drawings of bridges from other holds. I grumble about the fanciful arches, then keep every page flat under my best books.",
-  "like":"barley_bread","dislike":"gold","work":"stone","reason":"Sound stones for the bridge's worn approach",
+  "like":"barley_bread","dislike":"copper_slag","work":"stone","reason":"Sound stones for the bridge's worn approach",
   "topics":[["How did the Hearth get its name?","There was a brazier here before there was an inn. Dagna's mother kept it lit for the road crews. Dagna built walls around the same idea. Don't tell her I put it that nicely."],["Who keeps you company on the road?","Sten checks the mine loads; I check the bridge. Dagna checks whether either of us has eaten. My wife says she is the only sensible one of the three."]],
   "adult":true,"gender":0,"relationship":"married","romance_candidate":false},
  "road_folk:1":{
@@ -40,7 +40,7 @@ const CAST={
   "want":"A seed cupboard with a little of everything that will grow here. Not just the best-selling crop. A bad season has a way of teaching the value of the unfashionable ones.",
   "worry":"My family planted the same beds for generations. I keep the old methods in one notebook and my trials in another. Somehow everyone assumes one means I despise the other.",
   "close":"Grandmother's seed labels are nearly unreadable now. I copied every one, mistakes and all. When I try something new, I still catch myself turning to tell her.",
-  "like":"carrot","dislike":"gold","work":"wood","reason":"Dividers to keep the seed cupboard's varieties apart",
+  "like":"carrot","dislike":"copper_slag","work":"wood","reason":"Dividers to keep the seed cupboard's varieties apart",
   "topics":[["Why offer beds to newcomers?","Someone once lent my grandmother a patch of soil. Our family has been eating because of it ever since. Pay for the lease once, then make your own mistakes. The beds will wait for you."],["How do you and Ketil get along?","He says I argue with the weather. I say he flirts with an audience even when the audience is a row of turnips. He works hard, though. And he notices when someone needs cheering up."]],
   "adult":true,"gender":1,"relationship":"single","romance_candidate":true,"future_player_gender":0},
  "road_folk:4":{

@@ -8,14 +8,14 @@ const PRINCIPALS={
  "hedrik":{"trait":"Hospitable, observant, fond of gentle teasing","want":"I want the last person through my door to feel expected. Even if all I have left is the heel of a loaf.","worry":"I can tell who has had a bad shift by who jokes the loudest. Feeding them is easy. Getting them to sit long enough to talk takes practice.","close":"Orla wants to see the sea. So do I, though I've never admitted I cannot swim. I suppose there is time to learn before she buys the tickets.","like":"hearthcap","dislike":"coal","work":"turnip","reason":"Roots for a supper shared with the late shift"},
  "borin":{"trait":"Blunt, meticulous, proud of teaching","want":"I want an apprentice to make a tool better than mine and tell me exactly how. Preferably before my hands get too stiff to try it.","worry":"A bad joint can look beautiful. I would rather disappoint someone's eye than trust their weight to it.","close":"The first pick I made bent on its third strike. My teacher kept it above his bench. I hated that thing. Now I wish I had asked for it back.","like":"iron","dislike":"river_fish","work":"coal","reason":"Fuel for the apprentice's practice forge"},
  "eldric":{"trait":"Curious, patient, cheerfully absent-minded","want":"I want a map that says what we do not know as honestly as what we do. Blank spaces are invitations, not failures.","worry":"I once named a seam before checking the second sample. The correction took one line. Learning to write it took considerably longer.","close":"I keep my earliest notebook. Half of it is wrong. The other half asks better questions than I do now.","like":"crystal","dislike":"iron_slag","work":"stone","reason":"Reference pieces for the survey students"},
- "eirik":{"trait":"Measured, dutiful, privately restless","want":"I want a child born here to have a choice: a good life under this mountain, or a safe road beyond it. A hold should give roots without becoming a lock.","worry":"Everyone rehearses before speaking to a king. I worry most about the news they decide not to bring.","close":"When I was young I wanted a surveyor's boots, not a crown. I still keep a pair. They are embarrassingly clean.","like":"barley_bread","dislike":"gold","work":"dressed_stone","reason":"Replacement stones for the public stair"}}
+ "eirik":{"trait":"Measured, dutiful, privately restless","want":"I want a child born here to have a choice: a good life under this mountain, or a safe road beyond it. A hold should give roots without becoming a lock.","worry":"Everyone rehearses before speaking to a king. I worry most about the news they decide not to bring.","close":"When I was young I wanted a surveyor's boots, not a crown. I still keep a pair. They are embarrassingly clean.","like":"barley_bread","dislike":"copper_slag","work":"dressed_stone","reason":"Replacement stones for the public stair"}}
 const TEMPERAMENTS=[
  {"trait":"Quiet and practical","want":"A sound bench, a quiet evening, and time to finish one thing properly.","worry":"I mend things before they break. My family calls it worrying. I call it a peaceful evening.","close":"I do enjoy company. I just prefer the kind that lets a silence sit comfortably."},
  {"trait":"Sociable and generous","want":"A table long enough that nobody has to ask whether there is room.","worry":"I keep saying yes to helping. Then I wonder why my own chores are waiting at midnight.","close":"You remembered to stop and talk. That matters more than most people suppose."},
  {"trait":"Ambitious and competitive","want":"To do a piece of work that people still point out after I am gone.","worry":"I compare my work with everyone else's. Useful at the bench. Less useful when I am trying to sleep.","close":"I don't mind losing to someone good. I mind pretending it doesn't bother me."},
  {"trait":"Curious and independent","want":"To walk a road I haven't walked before and come home with something worth telling.","worry":"I have a shelf of unfinished projects. Every one seemed a sensible idea when I started it.","close":"I used to think leaving was the brave part. Sometimes coming back and asking for help takes more."}]
 const LIKES=["barley_bread","hearthcap","river_fish","carrot","crystal","iron"]
-const DISLIKES=["coal","iron_slag","turnip","gold"]
+const DISLIKES=["coal","iron_slag","turnip","copper_slag"]
 const WORK=["wood","stone","coal","turnip"]
 static func records(s)->Dictionary:
  if not s.surface.has("people"):s.surface.people={}
@@ -24,9 +24,17 @@ static func records(s)->Dictionary:
  for id in s.surface.people:
   var d=s.surface.people[id]
   HoldRoadCharacters.upgrade_record(id,d)
+  normalize_persona(d.persona)
   for key in ["bond","chat_day","gift_day","work_day"]:
    d[key]=int(d.get(key,0 if key=="bond" else -1))
  return s.surface.people
+static func normalize_persona(p:Dictionary):
+ # Repair invalid item IDs from prerelease saves without rerolling valid tastes.
+ for key in ["like","dislike","work"]:
+  if not HoldData.ITEMS.has(p.get(key,"")):
+   p[key]={"like":"barley_bread","dislike":"copper_slag","work":"wood"}[key]
+   if key=="work":p.reason="Replacement timber for household repairs"
+ if p.dislike==p.like:p.dislike="coal" if p.like!="coal" else "iron_slag"
 static func background(id:String)->bool:return id.begins_with("resident:") or id.begins_with("road_folk:")
 static func nearby(g,id:String)->Dictionary:
  if not background(id) or not g.surface.active():return {}
@@ -56,6 +64,7 @@ static func meet(g,id:String):
     if lines.size()>=3:persona.want=lines[0];persona.worry=lines[1];persona.close=lines[2]
     if not member.get("wish",{}).is_empty():persona.like=member.wish.keys()[0]
     if persona.dislike==persona.like:persona.dislike="iron_slag"
+  normalize_persona(persona)
   all[id]={"persona":persona,"bond":0,"chat_day":-1,"gift_day":-1,"work_day":-1,"known":false,"last":"We have just met."}
   HoldRoadCharacters.upgrade_record(id,all[id])
  g.save_game()

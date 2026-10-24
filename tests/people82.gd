@@ -14,6 +14,14 @@ func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
  g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false;g.state.claim_id="old_delving";g.state.camp_stage=3
+ for cast in [HoldPeople.PRINCIPALS,HoldRoadCharacters.CAST]:
+  for actor_id in cast:
+   for field in ["like","dislike","work"]:check(HoldData.ITEMS.has(cast[actor_id][field]),"Authored item exists: "+actor_id+" / "+field)
+ for choices in [HoldPeople.LIKES,HoldPeople.DISLIKES,HoldPeople.WORK]:
+  for item in choices:check(HoldData.ITEMS.has(item),"Generated preference or work item exists: "+item)
+ var invalid={"like":"carrot","dislike":"gold","work":"stone","reason":"A current promise"}
+ HoldPeople.normalize_persona(invalid)
+ check(invalid.like=="carrot" and invalid.dislike=="copper_slag" and invalid.work=="stone" and invalid.reason=="A current promise","Legacy invalid taste repaired without replacing valid preferences or favors")
  for gender in 2:
   for sculpt in 7:
    var profile=g.state.appearance.duplicate(true);profile.gender=gender;profile.sculpt=sculpt
