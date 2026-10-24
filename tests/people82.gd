@@ -83,6 +83,33 @@ func run():
  check(g.panel_id=="conversation" and HoldPeople.records(g.state).has(resident.interaction),"Scheduled household resident can become a persistent acquaintance")
  g.open_panel("roster");await snap("people-notebook")
  check(g.panel.get_rect().end.y<=g.get_viewport_rect().size.y,"Acquaintance notebook fits the viewport")
+ # Authored road cast: meet actual local actors, inspect their story menu,
+ # and keep friendship distinct from the disabled future romance metadata.
+ for i in HoldRoads.FOLK.size():
+  var spec=HoldRoads.FOLK[i];g.surface.enter(spec.area);settle()
+  var actor={}
+  for candidate in g.surface.roads.people(spec.area):
+   if candidate.index==i:actor=candidate;break
+  at(actor.p+Vector2(0,22));HoldConversation.start(g,actor.interaction)
+  var record=HoldPeople.records(g.state)[actor.interaction]
+  check(record.persona.trait==HoldRoadCharacters.CAST[actor.interaction].trait,"Road cast has authored identity: "+spec.name)
+  button("How have you been?");button("Tell me about life here")
+  var topic=HoldRoadCharacters.CAST[actor.interaction].topics[0]
+  button(topic[0]);check(g.talk_line==topic[1],"Local story is reachable: "+spec.name)
+  if i==1:await snap("dagna-road-story")
+  check(not record.has("romance") and not HoldRoadCharacters.ROMANCE_ENABLED,"Friendly talk creates no romance progression")
+  g.close_panel()
+ var old={"persona":{"trait":"Old generic trait","want":"Old want","worry":"Old worry","close":"Old confidence","like":"crystal","dislike":"coal","work":"stone","reason":"An existing promise"},"bond":7,"known":true,"gift_day":2,"work_day":3,"last":"An existing memory"}
+ HoldRoadCharacters.upgrade_record("road_folk:1",old)
+ check(old.persona.trait==HoldRoadCharacters.CAST["road_folk:1"].trait and old.persona.like=="crystal" and old.persona.work=="stone" and old.bond==7 and old.last=="An existing memory","Authored upgrade preserves preferences, favors and relationship history")
+ var upgraded=old.duplicate(true);HoldRoadCharacters.upgrade_record("road_folk:1",old)
+ check(old==upgraded,"Authored narrative upgrade is idempotent")
+ for candidate_id in ["road_folk:1","road_folk:3"]:
+  check(HoldRoadCharacters.future_candidate(candidate_id,0) and not HoldRoadCharacters.future_candidate(candidate_id,1),"Female future candidate is reserved for a male player")
+ for candidate_id in ["road_folk:2","road_folk:4"]:
+  check(HoldRoadCharacters.future_candidate(candidate_id,1) and not HoldRoadCharacters.future_candidate(candidate_id,0),"Male future candidate is reserved for a female player")
+ for excluded in ["orla","hedrik","road_folk:0","road_folk:5","resident:hearthward:0"]:
+  check(not HoldRoadCharacters.future_candidate(excluded,0) and not HoldRoadCharacters.future_candidate(excluded,1),"Established couples and unreviewed background residents are not candidates")
  # Migration is additive: a save without people starts with no fabricated history.
  var backup=g.state.surface.people.duplicate(true);g.state.surface.erase("people")
  check(HoldPeople.records(g.state).is_empty(),"Legacy saves receive an empty acquaintance registry")

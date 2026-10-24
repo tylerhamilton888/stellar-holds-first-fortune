@@ -21,7 +21,9 @@ static func records(s)->Dictionary:
  if not s.surface.has("people"):s.surface.people={}
  # JSON restores numbers as floats. Keep saved counters canonical, just as
  # inventory and appearance normalization do, without changing their values.
- for d in s.surface.people.values():
+ for id in s.surface.people:
+  var d=s.surface.people[id]
+  HoldRoadCharacters.upgrade_record(id,d)
   for key in ["bond","chat_day","gift_day","work_day"]:
    d[key]=int(d.get(key,0 if key=="bond" else -1))
  return s.surface.people
@@ -43,8 +45,9 @@ static func meet(g,id:String):
    s.npc_appearances[id]=profile
  if not all.has(id):
   var rng=RandomNumberGenerator.new();rng.seed=int(s.seed_value)+int(id.hash())
-  var persona=PRINCIPALS[id].duplicate(true) if PRINCIPALS.has(id) else TEMPERAMENTS[rng.randi_range(0,TEMPERAMENTS.size()-1)].duplicate(true)
-  if not PRINCIPALS.has(id):
+  var persona=PRINCIPALS[id].duplicate(true) if PRINCIPALS.has(id) else HoldRoadCharacters.persona(id)
+  if persona.is_empty():
+   persona=TEMPERAMENTS[rng.randi_range(0,TEMPERAMENTS.size()-1)].duplicate(true)
    persona.like=LIKES[rng.randi_range(0,LIKES.size()-1)];persona.dislike=DISLIKES[rng.randi_range(0,DISLIKES.size()-1)]
    persona.work=WORK[rng.randi_range(0,WORK.size()-1)];persona.reason={"wood":"A shelf for the household's worn tools","stone":"Repairs to the family hearth","coal":"Fuel for a neighbor's small stove","turnip":"Supper for a shared work shift"}[persona.work]
    if HoldOutpost.has_member(s,id):
@@ -54,6 +57,7 @@ static func meet(g,id:String):
     if not member.get("wish",{}).is_empty():persona.like=member.wish.keys()[0]
     if persona.dislike==persona.like:persona.dislike="iron_slag"
   all[id]={"persona":persona,"bond":0,"chat_day":-1,"gift_day":-1,"work_day":-1,"known":false,"last":"We have just met."}
+  HoldRoadCharacters.upgrade_record(id,all[id])
  g.save_game()
 static func level(d:Dictionary)->String:
  return "Trusted friend" if int(d.bond)>=12 else "Familiar face" if int(d.bond)>=5 else "Acquaintance"
@@ -99,6 +103,7 @@ static func panel(g,id:String):
  HoldConversation.choose(g,"What do you enjoy?",func():d.known=true;g.save_game();g.talk_line="I am always glad of "+HoldData.ITEMS[p.like].name.to_lower()+". "+HoldData.ITEMS[p.dislike].name+" isn't for me, though. A visit is welcome either way.";g.refresh_panel())
  HoldConversation.choose(g,"Give a gift from my pack",func():g.talk_topic="gift";g.refresh_panel())
  HoldConversation.choose(g,"Any small jobs need doing?",func():g.talk_topic="favor";g.refresh_panel())
+ if HoldRoadCharacters.CAST.has(id):HoldConversation.choose(g,"Tell me about life here",func():g.talk_line="";g.talk_topic="road_story";g.refresh_panel())
  HoldConversation.return_choice(g,id)
 static func favor(g,id:String):
  var d=records(g.state).get(id,{})

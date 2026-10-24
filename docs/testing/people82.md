@@ -1,3 +1,7 @@
+## Countryside follow-up acceptance
+
+Added six actual local story-menu checks, preservation/idempotence coverage for pre-authored records, four candidate-direction checks and married/unreviewed exclusions. Capture dagna-road-story alongside the existing visuals. Native and exact-export runs remain pending; local gdparse and content consistency passed. No new test suite is needed: people82 already runs in both gates.
+
 # 0.72.0 — Faces of the Hold: implemented, release blocked
 
 PR #35 (feature/folk82) contains the pick continuity correction, shared mine-mouth geometry and readable entrances, authored principal personalities, persistent supporting acquaintances, gifts, paid favors and a People notebook. Latest runtime source: a1a78ba577b1339c475d7862382742a5f12a24e7; runtime tree 567b0d70aa5b02620ca2eeaafb13e30c60fc591c.
@@ -21,3 +25,4 @@ Inspection found broad adze-like heads in male core 20/23 and utility 0/3/4/7. T
 Acceptance required: people82 source and exact-export case; full gameplay gate; actual entrance, conversation, gift, notebook and pick board review. Tests cover locality, real transfers, daily limits, preferences, familiarity dialogue, identity preservation and save/reload, plus centered/off-center movement and pier collision at both mines. Status pending until CI completes.
 
 Recovery: complete baseline and feature branch are on GitHub. Local folk82 directory contains only retrieved/changed source and is not a complete game checkout. Preserve all older releases and recovery branches.
+

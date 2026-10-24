@@ -1,3 +1,9 @@
+## Countryside character follow-up — pending validation
+
+The pending feature/folk82 branch now gives all six countryside residents authored personalities and twelve local story topics, including Dagna and the Wayfarer's Hearth community. Added dormant adult/relationship/candidate metadata for Dagna, Ragnhild, Torvik and Ketil; no dating gameplay or romance progression. Existing acquaintance preferences, favors and history are preserved. See [COUNTRYSIDE_CAST.md](COUNTRYSIDE_CAST.md) for cast and future relationship design.
+
+Syntax/content checks pass; new native conversation/migration/candidate checks and Dagna dialogue visual remain unrun. The Actions budget blocker below remains unresolved. Do not merge/release yet; 0.71.2 remains the published game. The older runtime SHA below is the preceding checkpoint, not this follow-up. Resume from the latest feature/folk82 head and update the release branch only after verification.
+
 # 0.72.0 — Faces of the Hold: implemented, release blocked
 
 PR #35 (feature/folk82) contains the pick continuity correction, shared mine-mouth geometry and readable entrances, authored principal personalities, persistent supporting acquaintances, gifts, paid favors and a People notebook. Latest runtime source: a1a78ba577b1339c475d7862382742a5f12a24e7; runtime tree 567b0d70aa5b02620ca2eeaafb13e30c60fc591c.
@@ -221,3 +227,4 @@ Animation PNGs are derived cache data under user://animation-cache/<version>/. *
 Verification: 190 existing gameplay checks plus 19 final feature checks; the same 19 checks passed against the exported pack. Hosted gameplay CI also passed (39484028846). See testing/loading63 for screenshots, logs, regression summary and build metadata. The initial 11-check loading case was superseded by the 19-check case and is not counted twice. All 3,134 PCK entries and ZIP integrity passed. GitHub asset size/SHA match local. Native Windows and audible mix have not been tested.
 
 Use tools/check.py with tests/suites.json, sequential native rendering and isolated save data. tools/build.py exports one complete Windows ZIP using the pinned official runtime. Full editable source is in GitHub; do not rerun the one-time import workflow or rewrite release tags. Earlier complete bundle remains in release foundation-0.61.1. Further changes should use focused branches and regression evidence.
+

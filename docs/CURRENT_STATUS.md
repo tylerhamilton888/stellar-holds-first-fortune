@@ -1,3 +1,9 @@
+## Countryside character follow-up — pending validation
+
+The pending feature/folk82 branch now gives all six countryside residents authored personalities and twelve local story topics, including Dagna and the Wayfarer's Hearth community. Added dormant adult/relationship/candidate metadata for Dagna, Ragnhild, Torvik and Ketil; no dating gameplay or romance progression. Existing acquaintance preferences, favors and history are preserved. See [COUNTRYSIDE_CAST.md](COUNTRYSIDE_CAST.md) for cast and future relationship design.
+
+Syntax/content checks pass; new native conversation/migration/candidate checks and Dagna dialogue visual remain unrun. The Actions budget blocker below remains unresolved. Do not merge/release yet; 0.71.2 remains the published game. The older runtime SHA below is the preceding checkpoint, not this follow-up. Resume from the latest feature/folk82 head and update the release branch only after verification.
+
 # 0.72.0 — Faces of the Hold: implemented, release blocked
 
 PR #35 (feature/folk82) contains the pick continuity correction, shared mine-mouth geometry and readable entrances, authored principal personalities, persistent supporting acquaintances, gifts, paid favors and a People notebook. Latest runtime source: a1a78ba577b1339c475d7862382742a5f12a24e7; runtime tree 567b0d70aa5b02620ca2eeaafb13e30c60fc591c.
@@ -211,3 +217,4 @@ Owned furniture and filled chests can be repositioned without paying again, losi
 [Download 0.61.2](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.61.2): one Windows ZIP, 698,806,969 bytes; SHA-256 `7a3b83aaf213bc4681a9eaa211ae9f1015b8d7058d0bf91d554d76e05874f6a2`. Release tag points to complete source `4169069d9f80e6fae3dc33deee855c8b16a13916`. Prior releases and the full foundation source bundle remain intact.
 
 First-time preparation still costs work; cached preparation was about 1.35 seconds for 488 frames on the Linux software renderer. This is not a Windows hardware performance guarantee. Windows execution/audio remain player-test limitations. Details, captures, logs and cache-invalidation rules: testing/loading63.md. Development workflow and foundation history: DEVELOPMENT.md and testing/foundation62.md.
+
