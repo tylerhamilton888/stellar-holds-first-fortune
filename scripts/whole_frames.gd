@@ -115,11 +115,6 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
    if ready.load(cached_path)==OK and not ready.is_empty():
     if cached_path!=path:DirAccess.copy_absolute(cached_path,path)
     var saved=ImageTexture.create_from_image(ready);remember(key,saved);disk_hits+=1;return saved
- # The old male rest/recovery keys contain an axe-like adze head. Reuse
- # the approved complete equipped pick pose, including both gripping hands.
- # Raised and contact keys retain their original authored anticipation/impact.
- if action=="pick" and int(p.gender)==0 and contact_frame(phase) in [0,3]:
-  sheet=identity(p)+"-motion";index=view*4
  var m=metadata[sheet][index];var r=m.rect;var img=source(m.get("source",sheet)).get_region(Rect2i(r[0],r[1],r[2],r[3]))
  # Atlas extraction removes neighboring figures' disconnected fragments, never
  # constructs the character from separate body parts.

@@ -21,9 +21,11 @@ func run():
     for phase in [.05,.3,.6,.9]:
      var pose=HoldWholeFrames.descriptor(profile,direction,false,0,"pick",phase)
      check(pose.action=="pick" and (pose.sheet.ends_with("-motion") if gender==0 and phase in [.05,.9] else not pose.sheet.ends_with("-motion")),"Pick identity through pose "+str([gender,sculpt,direction,phase]))
- var board=PickBoard.new();board.z_index=200;root.add_child(board);board.queue_redraw()
+ var board_layer=CanvasLayer.new();board_layer.layer=150;root.add_child(board_layer)
+ var board=PickBoard.new();board_layer.add_child(board);board.queue_redraw()
  await snap("pick-sequence")
- board.queue_free();await process_frame
+ board_layer.queue_free();await process_frame
+ HoldFirstShift.data(g).kit=true
  var inventory=g.state.inventory.duplicate(true)
  # Actual feet movement through both sides of the wider mouth, plus pier collision.
  for area in ["trail","claim"]:
