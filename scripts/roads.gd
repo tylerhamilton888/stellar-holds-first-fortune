@@ -62,10 +62,10 @@ func links(area:String)->Array:
   if area=="hearthward":result.append(connection(HoldWorldZones.GATE+Vector2(0,3),Vector2.UP,"trail",Vector2(220,735),"High Trail"))
   return result
  match area:
-  "trail":return [connection(Vector2(220,690),Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Keldrath"),connection(Vector2(950,305),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(Vector2(470,925),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(Vector2(510,520),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
+  "trail":return [connection(Vector2(220,690),Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Keldrath"),connection(HoldMineEntrance.position("trail")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(Vector2(470,925),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(Vector2(510,520),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
   "pinewood":return [connection(Vector2(100,650),Vector2.LEFT,"trail",Vector2(470,870),"High Trail")]
   "greenfields":return [connection(Vector2(940,235),Vector2.UP,"trail",Vector2(1540,870),"Stonebridge"),connection(Vector2(550,450),Vector2.UP,"room:greenhearth",Vector2(480,565),"Farmhouse")]
-  "claim":return [connection(Vector2(100,790),Vector2.LEFT,"trail",Vector2(1730,700),"Stonebridge"),connection(Vector2(1280,350),Vector2.UP,"mine",Vector2.ZERO,"Your Deepworks"),connection(Vector2(500,440),Vector2.UP,"home:"+g.state.claim_id,Vector2(480,565),"Your hearth")]
+  "claim":return [connection(Vector2(100,790),Vector2.LEFT,"trail",Vector2(1730,700),"Stonebridge"),connection(HoldMineEntrance.position("claim")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Your Deepworks"),connection(Vector2(500,440),Vector2.UP,"home:"+g.state.claim_id,Vector2(480,565),"Your hearth")]
  if area in ROOMS:return [connection(Vector2(480,595),Vector2.DOWN,"trail" if area=="room:wayfarer" else "greenfields",Vector2(510,565) if area=="room:wayfarer" else Vector2(550,495),"Outside")]
  if (area.begins_with("room:") or area.begins_with("home:")) and HoldCivicArt.has_exit(area):
   var back=s.return_area;var landing=Vector2.INF
@@ -84,7 +84,7 @@ func crossing(before:Vector2,after:Vector2)->Dictionary:
  for link in links(s.area):
   var a=(before-link.p).dot(link.normal);var b=(after-link.p).dot(link.normal)
   var sideways=absf((after-link.p).cross(link.normal))
-  if a<0 and b>=0 and sideways<38:return link
+  if a<0 and b>=0 and sideways<(HoldMineEntrance.CROSSING_HALF if link.target=="mine" else 38.0):return link
  return {}
 func hold_return(target:String):
  return_hold={"area":s.area,"target":target,"heading":Input.get_vector("left","right","up","down"),"origin":g.player}
@@ -160,7 +160,7 @@ func people(area:String,time:float=-1)->Array:
   var start:Vector2=f.a;var end:Vector2=f.b
   if phase>duration+7:phase-=duration+7;start=f.b;end=f.a
   var walking=phase<duration;var at=start.lerp(end,minf(1,phase/duration))
-  result.append({"kind":"citizen","p":at,"profile":profiles[key],"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
+  result.append({"kind":"citizen","p":at,"profile":profiles[key],"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profiles[key].family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
  return result
 func points()->Array:
  var result=[]
@@ -176,7 +176,7 @@ func points()->Array:
 func speak(index:int):
  for person in people(s.area):
   if person.index==index and g.player.distance_to(person.p)<85:
-   s.world.speech=person.name+" · "+FOLK[index].line;s.world.speech_until=g.clock+16;return
+   HoldConversation.start(g,person.interaction);return
 func board_near()->bool:return s.area in ORDERS and g.player.distance_to(ORDERS[s.area].p)<90 and s.clear_interaction(g.player,ORDERS[s.area].p)
 func deliver()->bool:
  if not board_near():return false
@@ -224,3 +224,4 @@ func ground():
   if link.target=="mine" or link.target.begins_with("room:") or link.target.begins_with("home:") or s.area in ROOMS or s.area=="hearthward":continue
   var side=Vector2(-link.normal.y,link.normal.x)*62
   s.signpost(link.p+side,link.title)
+

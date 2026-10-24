@@ -86,6 +86,11 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  var motion_row={"hold_pick":0,"hold_axe":1,"hold_hammer":2,"hold_shovel":3,"hold_supply":4,"hold_rifle":5,"carry_stone":6,"carry_log":7,"double_stone":8,"double_log":9,"double_mixed":10}.get(action,-1)
  if motion_row>=0 and metadata.has(motion_sheet):
   sheet=motion_sheet;view=HoldDirectional.view(d);index=motion_row*16+view*4+(key if walking else 0)
+ # The old male rest/recovery keys contain an axe-like adze head. Reuse
+ # the approved complete equipped pick pose, including both gripping hands.
+ # Raised and contact keys retain their original authored anticipation/impact.
+ if action=="pick" and int(p.gender)==0 and contact_frame(phase) in [0,3]:
+  sheet=identity(p)+"-motion";index=view*4
  var m=metadata[sheet][index];var r=m.rect
  var rect=Rect2(r[0],r[1],r[2],r[3]);var root=Vector2(m.root[0],m.root[1]);var scale=HEIGHT/maxf(1,float(m.height))
  return {"sheet":sheet,"index":index,"view":view,"frame":key,"rect":rect,"root":root,"scale":scale,"shape":Vector2.ONE*scale,"action":action,"phase":phase,"walking":walking,"destination":Rect2((rect.position-root)*scale,rect.size*scale)}
@@ -110,6 +115,11 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
    if ready.load(cached_path)==OK and not ready.is_empty():
     if cached_path!=path:DirAccess.copy_absolute(cached_path,path)
     var saved=ImageTexture.create_from_image(ready);remember(key,saved);disk_hits+=1;return saved
+ # The old male rest/recovery keys contain an axe-like adze head. Reuse
+ # the approved complete equipped pick pose, including both gripping hands.
+ # Raised and contact keys retain their original authored anticipation/impact.
+ if action=="pick" and int(p.gender)==0 and contact_frame(phase) in [0,3]:
+  sheet=identity(p)+"-motion";index=view*4
  var m=metadata[sheet][index];var r=m.rect;var img=source(m.get("source",sheet)).get_region(Rect2i(r[0],r[1],r[2],r[3]))
  # Atlas extraction removes neighboring figures' disconnected fragments, never
  # constructs the character from separate body parts.
@@ -235,3 +245,4 @@ static func warm_draw(n:Node2D):
  n.draw_set_transform(Vector2.ZERO);n.draw_rect(Rect2(0,0,960,540),Color("10232a"))
  HoldArt.text(n,Vector2(313,250),"Preparing the next stretch…",20,Color("ead3a6"))
  n.draw_rect(Rect2(300,278,360,4),Color("2d454b"));n.draw_rect(Rect2(300,278,360*(1.0-float(warm_jobs.size())/maxi(1,warm_total)),4),Color("c3a364"))
+

@@ -147,9 +147,4 @@ func all_profiles()->Array:
  for plan in plans:result.append(plan.person.profile)
  return result
 func speak(id:String):
- ensure()
- for plan in plans:
-  var c=sample(plan,w.g.state.elapsed)
-  if c.interaction!=id:continue
-  w.speech=c.name+" · "+c.role+". "+("I take the Great Stair to my shift. You can walk with me." if c.walking else "You'll find our family hearth across the gallery bridge. A warm corner after honest work.")
-  w.speech_until=w.g.clock+8;w.g.notify(c.name+" · "+c.role);return
+ if not HoldPeople.nearby(w.g,id).is_empty():HoldConversation.start(w.g,id)

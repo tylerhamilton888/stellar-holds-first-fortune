@@ -348,8 +348,8 @@ func tile(index:int,rect:Rect2,unit:float=160,tint:Color=Color.WHITE):
   y+=unit
 
 func exterior_objects()->Array:
- if s.area=="claim":return [{"p":Vector2(500,440),"kind":"building","art":0,"width":350.0},{"p":Vector2(1370,760),"kind":"building","art":4,"width":260.0},{"p":Vector2(1280,345),"kind":"landmark","art":0,"width":260.0}]
- if s.area=="trail":return [{"p":Vector2(220,690),"kind":"landmark","art":0,"width":330.0},{"p":Vector2(950,300),"kind":"landmark","art":0,"width":240.0}]
+ if s.area=="claim":return [{"p":Vector2(500,440),"kind":"building","art":0,"width":350.0},{"p":Vector2(1370,760),"kind":"building","art":4,"width":260.0},{"p":HoldMineEntrance.position("claim"),"kind":"mine_entrance"}]
+ if s.area=="trail":return [{"p":Vector2(220,690),"kind":"landmark","art":0,"width":330.0},{"p":HoldMineEntrance.position("trail"),"kind":"mine_entrance"}]
  return []
 
 func speech_overlay():
@@ -413,3 +413,4 @@ func navigation_clear(area_id:String,p:Vector2)->bool:
  for r in room_obstacles(area_id):
   if r.grow(11).has_point(p):return false
  return true
+
