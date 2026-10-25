@@ -14,6 +14,7 @@ const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinew
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
 var loading_view:HoldLoadingView
+var dev:HoldDevTesting
 var hearth:HoldHearth
 var fieldwork:HoldHomesteadLife
 var handworks:HoldHandworks
@@ -127,6 +128,7 @@ func _ready():
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
  setup_ui()
+ dev=HoldDevTesting.new(self)
  var loading_layer=CanvasLayer.new();loading_layer.layer=100;add_child(loading_layer)
  loading_view=HoldLoadingView.new();loading_view.game=self;loading_layer.add_child(loading_view)
  hotbar=HoldHotbar.new();hotbar.g=self;ui.add_child(hotbar)
@@ -191,6 +193,7 @@ func setup_ui():
  transition_label=Label.new();transition_label.position=Vector2(100,240);transition_label.size=Vector2(760,60);transition_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;transition_label.add_theme_font_size_override("font_size",25);transition_label.modulate=Color("edc98a");transition_shade.add_child(transition_label)
 
 func show_title():
+ dev.leave()
  playing=false;room_id="";transition_left=0;transition_shade.visible=false;sound.set_context("title")
  for n in [hud,status,objectives,footer]:n.visible=false
  close_panel()
@@ -202,16 +205,21 @@ func show_title():
  button(box,"Continue / choose a fortune",func():open_panel("save_slots"))
  button(box,"Begin a new fortune",func():open_panel("save_slots"))
  button(box,"Settings & sound",func():open_panel("settings"))
+ if HoldBuild.DEV_TESTING:button(box,"Dev Testing",func():open_panel("dev_testing"))
  button(box,"Quit",shutdown)
  for b in box.get_children():
-  b.add_theme_font_size_override("font_size",18)
+  b.custom_minimum_size.y=34 if HoldBuild.DEV_TESTING else 42
+  b.add_theme_font_size_override("font_size",16 if HoldBuild.DEV_TESTING else 18)
   for key in ["normal","hover","pressed","disabled"]:
-   var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=8;style.content_margin_bottom=8;b.add_theme_stylebox_override(key,style)
+   var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=6 if HoldBuild.DEV_TESTING else 8;style.content_margin_bottom=6 if HoldBuild.DEV_TESTING else 8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,459);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
  var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
-func start_game(load_saved:bool,custom_appearance:Dictionary={}):
+func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
+ if testing and not HoldBuild.DEV_TESTING:return
+ state.test_session=testing
+ surface.cancel_placement();handworks.placing=""
  fight.reset();fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}
  room_id="";room_return="";hold_room_return=false;briefing_topic="";impact_pause=0;impact_flashes.clear()
  jump_buffer=0;coyote_left=0;movement_remainder=0;jump_was_held=Input.is_action_pressed("jump");grounded=false
@@ -365,6 +373,10 @@ func _unhandled_input(e):
  if is_instance_valid(creator):return
  if not playing and panel_id!="" and e.is_action_pressed("pause"):
   back_panel();get_viewport().set_input_as_handled();return
+ if HoldBuild.DEV_TESTING and (not playing or dev.active()) and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_F9:
+  if panel_id=="dev_testing":close_panel()
+  else:open_panel("dev_testing")
+  get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
  if fight.input(e):get_viewport().set_input_as_handled();return
  if fieldwork.input(e):get_viewport().set_input_as_handled();return
@@ -876,6 +888,7 @@ func update_hud():
 
  if surface and surface.active():surface.hud()
  status.visible=false
+ dev.update_badge()
 
 func _draw():
  if playing and HoldFolk.warming():return
@@ -1145,10 +1158,11 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id=="dev_testing" or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
+  "dev_testing":dev.panel()
   "disciplines":HoldDisciplineView.panel(self)
   "conversation":HoldConversation.panel(self)
   "field_notes":
@@ -1229,6 +1243,7 @@ func open_panel(id:String,remember:bool=true):
    var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",12);panel_body.add_child(grid)
    for entry in [["Disciplines · Y",func():open_panel("disciplines")],["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Sound & comfort",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
     var b=button(grid,entry[0],entry[1]);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+   if dev.active():button(panel_body,"Dev Testing · F9",func():open_panel("dev_testing"))
    label(panel_body,"The world is paused. Take your time. Switching away from the game also pauses it; return when ready.",16,Color("b4c9c4"))
   "settings":settings_panel()
   "build_status":build_status_panel()

@@ -49,6 +49,8 @@ def main():
     cases.append(('combat', fixture+'\n'+body, 'COMBAT83'))
     body = (ROOT/'tests/enemies84.gd').read_text().split('\n', 1)[1]
     cases.append(('enemies', fixture+'\n'+body, 'ENEMIES84'))
+    body = (ROOT/'tests/dev_testing85.gd').read_text().split('\n', 1)[1]
+    cases.append(('dev_testing', fixture+'\n'+body, 'DEV_TESTING85'))
     results = []
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()
