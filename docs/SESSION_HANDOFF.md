@@ -1,8 +1,15 @@
-# 0.73.0 — Steel & Footwork: implementation, validation pending
+# 0.73.0 — Steel & Footwork: published, verified and merged
 
-Combat foundation of Steel & Spoils: live Warrior credit and Sure footing, persistent new encounter pairs, distinct enemy timing, spacing and committed-attack limits, matching telegraph/hit geometry, shield versus brace, bounded hammer stagger, nearest-target carbine and cancellation on equipment changes. Existing encounter records and cleared passages are preserved. No stamina or crafting/equipment-instance rewrite.
+Live Warrior credit and Sure footing now work in top-down combat. New deep encounter records can contain a fast scavenger and a slower armored beetle, with spacing and one nearby committed attack at a time. Amber telegraphs match hit geometry. Shield blocking, reduced-damage bracing, bounded hammer stagger, narrower hammer arcs and nearest-target carbine shots distinguish existing weapons. Equipment changes cancel live strikes; the gear panel fits the screen and scrolls to every choice.
 
-Branch feature/combat73 starts at verified master c744d001feb57f8521129c2b3e59f589ed8fabf6. The 0.72.0 release and recovery bundles remain intact. Focused native assertions and visual review precede the full 27-case source and 17-case exact-export gates. Do not label this release published until those gates and publication finish. See testing/combat83.md.
+Runtime source fc356766975c33af15440220a993bb430f946d10 and PR #37 merge 2b812f197a05531405c6b60f75c963724270b908 share tree 1bb1bebda840b49a30d62de4b8b38a303349923a. Source run 40144076473 passed all 27 gameplay cases and people-preview. Final local combat verification passed 31 assertions with zero script errors. Pair/shield, hammer, carbine and scrolling equipment views were reviewed at 1280×720.
+
+Release run 40144104224 passed the 3,269-entry PCK audit and all 17 exact-export cases: 1,113 assertions, including 31 combat assertions. Exported pair/shield and equipment screenshots were also reviewed. Downloaded build report and verification evidence match their GitHub digests; report, source and uploaded ZIP metadata agree.
+
+Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.73.0
+Windows ZIP: 725,152,730 bytes; SHA256 9d6b7d736cdfa990610d3124a6e3a2436d64f7e15526ac06c18694d3d616a2bc. Existing saves and recorded encounters are preserved. New companions are created only with first-time encounter records. Windows hardware performance/audio and player feedback on pacing remain hands-on testing.
+
+This is the combat foundation of Steel & Spoils. Equipment instances, schematics, salvage processing and the signature crafting expedition remain the next milestone. No stamina system or artwork replacement. Verified combat73-checkpoint.bundle and remote recovery/combat73-native-verified retain the source; preserve all older backups and releases. See testing/combat83.md.
 
 # 0.72.0 — Faces of the Hold: published, verified and merged
 
