@@ -1,8 +1,15 @@
-# 0.75.0 — The Testing Grounds: implementation, verification pending
+# 0.75.0 — The Testing Grounds: published, verified and merged
 
-A separate title-screen entry now launches prepared combat, construction, mining/workstation and farming/fishing/cooking scenarios through HoldDevTesting. Test saves use a dedicated path and marker; slots 1–3 are preserved. F9 controls are available only inside test sessions. Reset/restock, real gameplay controls, test reload and visible DEV TEST status make hands-on testing immediate. HoldBuild.DEV_TESTING can hide all temporary entry points later.
+Title screen > Dev Testing launches four standalone presets: combat, construction/decorating, mining/workstations and farming/fishing/cooking. Each supplies the location, unlocks and materials for immediate hands-on play. F9 and the DEV TEST badge open paused controls inside test sessions, including reset/restock and relevant shortcuts. The launcher refuses to replace active normal gameplay. One dedicated test save is separate from all three normal fortune slots. Combat encounters restart on reload; construction persists until reset. HoldBuild.DEV_TESTING can hide the temporary entry points later.
 
-Baseline master 217991b75e3878d047e643fba4097dcfcdc323a9 and release 0.74.0 remain preserved. Native save-isolation/behavior and visual review, full 29-case source gate and 19-case exact-export gate are required before delivery. See testing/dev-testing85.md. No new content milestone is started by this testing utility.
+Runtime source cf6fe48459d6c9a5c44707b57c1cb35c5c1ea25e and PR #41 merge 6922ad02060ce4d1c2476efdcb90472e93f24052 share tree 79de1b7391d5f4a670b0734f382153f4b3a9830f. Local native verification passed 80 assertions: developer testing 40, combat 31 and menus 9, with zero engine errors. Title, launcher, combat controls, arena, building, workshops and gardens were visually reviewed. Source run 40229901070 passed all 29 gameplay cases and people-preview.
+
+Release run 40229901891 passed the pack audit and all 19 exact-export cases (1,249 assertions), including all 40 developer-testing checks. Exported launcher and combat-control captures were reviewed. Downloaded build report and verification evidence match their GitHub digests; report, verified source and uploaded ZIP metadata agree. This is a clean 0.75.0 build.
+
+Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.75.0
+Windows ZIP: 729,865,829 bytes; SHA256 efa6b172edeab7cdfa994c24c3d413d9ef7ee79d00286da3ebb204c8ec2c63d3. Extract the complete archive into a fresh folder. Normal saves remain supported. Windows hardware performance/audio and subjective gameplay feel remain hands-on testing.
+
+Verified local dev-testing85-native-verified.bundle and confirmed remote recovery/dev-testing85-native-verified preserve the runtime source. Preserve all earlier remote backups and releases. This session began from a fresh checkout; historical local bundle paths below are not claims that those older local files still exist here. See testing/dev-testing85.md. Equipment instances, schematics and the signature crafting expedition remain the next Steel & Spoils milestone.
 
 # 0.74.0 — Foes Beneath the Hold: published, verified and merged
 

@@ -1,8 +1,8 @@
-# 0.75.0 — The Testing Grounds: implementation, verification pending
+# 0.75.0 — The Testing Grounds: delivered
 
-A separate title-screen entry now launches prepared combat, construction, mining/workstation and farming/fishing/cooking scenarios through HoldDevTesting. Test saves use a dedicated path and marker; slots 1–3 are preserved. F9 controls are available only inside test sessions. Reset/restock, real gameplay controls, test reload and visible DEV TEST status make hands-on testing immediate. HoldBuild.DEV_TESTING can hide all temporary entry points later.
+Added four standalone title-screen testing presets with immediate locations, unlocks and supplies: combat, construction/decorating, mining/workstations and farming/fishing/cooking. F9 inside tests exposes reset/restock, enemy selection and hitboxes, building/work plans, and garden/river/kitchen shortcuts. Existing gameplay rules are reused. A dedicated marked test save preserves all normal slots; normal gameplay does not expose the test shortcut. One build flag hides the temporary entry points.
 
-Baseline master 217991b75e3878d047e643fba4097dcfcdc323a9 and release 0.74.0 remain preserved. Native save-isolation/behavior and visual review, full 29-case source gate and 19-case exact-export gate are required before delivery. See testing/dev-testing85.md. No new content milestone is started by this testing utility.
+PR #41 merged after native visual review, 80 focused local assertions, all 29 source cases plus people-preview, and 19 exact-export cases / 1,249 assertions. Release 0.75.0 is published. See CURRENT_STATUS.md and testing/dev-testing85.md for source, evidence and hashes.
 
 # 0.74.0 — Foes Beneath the Hold: published, verified and merged
 
