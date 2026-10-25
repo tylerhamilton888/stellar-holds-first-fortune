@@ -1,10 +1,17 @@
-# 0.74.0 — Foes Beneath the Hold: implementation, validation pending
+# 0.74.0 — Foes Beneath the Hold: published, verified and merged
 
 Combat now uses explicit ground-plane body circles (player 10 px; goblin 12, beetle 14, orc 17, troll 26), shared sector geometry for hits and telegraphs, and a 3 px carbine projectile radius. Damage lands on the authored contact key at 52% of the action, once per strike, with direction locked through recovery. Brief 25–70 ms combat-only hit-stop, bounded wall-safe recoil, sparks and existing impact audio distinguish hits, blocks and parries. Hammers recoil farther; trolls resist displacement and retain stagger protection. F8 toggles a live hitbox inspection overlay. No global slowdown or camera shake is added.
 
 New goblin, orc and cave-troll whole-character sheets include movement, anticipation, impact and fallen poses in front/side/rear views. New encounter records persist a mixed fantasy roster; old identities, wounds and cleared passages remain supported. Orc armor rewards hammers; trolls have a longer, slower heavy blow with clear warnings and a long opening afterward. Ranged hits now alert distant enemies. Safe first-level and Borin practice remain intact.
 
-Branch feature/enemies84 starts at verified master 4c11910828c278215e17f6a12894aec03efda32f. The 0.73.0 release and recovery checkpoints remain intact. Final native visual/behavior verification, the full 28-case source gate and 18-case exact-export gate are required before delivery. See testing/enemies84.md and assets/enemies84/PRODUCTION.md.
+Runtime source 2c8919320ece292cb8760454bc5e58a617b0e99b and PR #39 merge f45c61eed282466da3c6e8e284bdbc14d087016f share tree 3d61bfdfe8dc98b12a0fd6d6c5751fdaccddd34a. Source run 40150630929 passed all 28 gameplay cases and people-preview. Local native verification passed 96 enemy/hitbox assertions and 31 combat assertions with zero script errors. A current-entry practice probe also passed held attacks, timed parry, directional dodge and harmless practice damage (5 checks). All 54 enemy poses, in-world scale, heavy warning/contact, movement keys, actual hitbox outlines and impact feedback were visually reviewed.
+
+Release run 40150628875 passed the pack audit and all 18 exact-export cases (1209 assertions). Exported hitbox and impact captures were reviewed. Downloaded build report and verification evidence match their GitHub asset digests; report, source and uploaded ZIP metadata agree.
+
+Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.74.0
+Windows ZIP: 729,852,489 bytes; SHA256 06781dfbd4cae4ae9a0b5d3c7d4ec42963077e2b557531804f5c8be1d069094b. Existing saves and cleared encounters remain supported. Extract the complete archive into a new folder. Windows hardware performance/audio and subjective combat pacing remain hands-on playtesting.
+
+Verified enemies84-impact-checkpoint.bundle and remote recovery/enemies84-impact-native-verified retain the runtime source. Preserve enemies84-checkpoint.bundle, recovery/enemies84-native-verified and all earlier backups/releases too. Equipment instances, schematics and the signature crafting expedition remain the next Steel & Spoils milestone. See testing/enemies84.md; art production and exact prompts are in assets/enemies84/PRODUCTION.md.
 
 # 0.73.0 — Steel & Footwork: published, verified and merged
 

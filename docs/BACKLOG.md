@@ -1,4 +1,6 @@
-# Fantasy enemy roster — 0.74.0 in verification
+# Fantasy enemy roster — delivered in 0.74.0
+
+PR #39 is merged; full source, native visual/behavior and exact-export gates passed. Release 0.74.0 is published.
 
 Combat now uses explicit ground-plane body circles (player 10 px; goblin 12, beetle 14, orc 17, troll 26), shared sector geometry for hits and telegraphs, and a 3 px carbine projectile radius. Damage lands on the authored contact key at 52% of the action, once per strike, with direction locked through recovery. Brief 25–70 ms combat-only hit-stop, bounded wall-safe recoil, sparks and existing impact audio distinguish hits, blocks and parries. Hammers recoil farther; trolls resist displacement and retain stagger protection. F8 toggles a live hitbox inspection overlay. No global slowdown or camera shake is added.
 
