@@ -1,3 +1,9 @@
+# Fantasy enemy roster — 0.74.0 in verification
+
+Combat now uses explicit ground-plane body circles (player 10 px; goblin 12, beetle 14, orc 17, troll 26), shared sector geometry for hits and telegraphs, and a 3 px carbine projectile radius. Damage lands on the authored contact key at 52% of the action, once per strike, with direction locked through recovery. Brief 25–70 ms combat-only hit-stop, bounded wall-safe recoil, sparks and existing impact audio distinguish hits, blocks and parries. Hammers recoil farther; trolls resist displacement and retain stagger protection. F8 toggles a live hitbox inspection overlay. No global slowdown or camera shake is added.
+
+Goblins, armored orcs and cave trolls have distinct art, animations, combat roles and material rewards. Preserve old encounters and the peaceful first mine floor. Next player feedback: movement readability, troll warning/defense clarity and difficulty of mixed encounters. More species, ranged enemy roles and bosses are later work; equipment instances and schematics remain the next Steel & Spoils milestone.
+
 # Steel & Spoils — combat foundation delivered in 0.73.0
 
 PR #37 is merged; source, native visual and exact-export gates passed and 0.73.0 is published. Next milestone: save-compatible equipment instances, material/workmanship definitions, salvage/study choices, persistent schematics and one memorable expedition feeding a useful crafted item. Preserve peaceful acquisition alternatives and the low-pressure sandbox. New weapon styles follow proven combat roles; no class or stamina rewrite. Seek player feedback on paired-enemy pacing and the shield/brace distinction.

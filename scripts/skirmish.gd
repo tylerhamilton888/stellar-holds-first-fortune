@@ -1,8 +1,9 @@
 class_name HoldSkirmish
 extends RefCounted
 # One top-down combat controller for the practice room and persistent deep encounters.
-const ATTACK_RADIUS=88.0
-const ATTACK_HALF_ANGLE=.9
+const PLAYER_BODY=10.0
+const SHOT_RADIUS=3.0
+const CONTACT_PHASE=.52
 var g
 var enemies=[]
 var key=""
@@ -22,12 +23,17 @@ var hurt_wait=0.0
 var feedback=""
 var feedback_time=0.0
 var lesson_announced=false
+var hit_stop=0.0
+var impacts=[]
+var show_hitboxes=false
 func _init(game):g=game
 func practice()->bool:return g.room_id=="training"
 func enabled()->bool:return practice() or (g.zone=="mine" and HoldOnboarding.combat_ready(g.state))
 func cancel_actions():
+ hit_stop=0;impacts.clear()
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;dodge=0;g.combat.riposte=0
 func reset():
+ hit_stop=0;impacts.clear()
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;parry_wait=0;dodge=0;dodge_wait=0;hurt_wait=0;key="";enemies.clear();lesson_announced=false
 func open_at(p:Vector2)->bool:
  return not g.deep.world.solid(p) if g.zone=="mine" else g.surface.walkable(p)
@@ -38,7 +44,7 @@ func clear(a:Vector2,b:Vector2)->bool:
 func spawn():
  var context="practice" if practice() else g.handworks.context()
  if key==context:return
- key=context;enemies.clear();swing=0;buffered=0;guard=false;guard_was=false;dodge=0;g.combat.riposte=0
+ key=context;enemies.clear();hit_stop=0;impacts.clear();swing=0;buffered=0;guard=false;guard_was=false;dodge=0;g.combat.riposte=0
  if practice():
   enemies.append(make_enemy("practice",Vector2(580,430),0));return
  var w=g.deep.world
@@ -54,31 +60,42 @@ func spawn():
      if w.at(c+off)!=0:roomy=false
     for site in sites:
      if p.distance_to(Vector2(site[0],site[1]))<450:roomy=false
+    if roomy and w.depth()>=2 and sites.size()==1:
+     for off in [Vector2(80,0),Vector2(-80,0),Vector2(0,80),Vector2(0,-80)]:
+      if not body_open(p+off,26):roomy=false
     if roomy:sites.append([p.x,p.y])
     if sites.size()==2:break
    if sites.size()==2:break
   w.layer().encounters=sites
   # Only new encounter records gain companions; old cleared passages stay cleared.
   w.layer().encounter_companions={}
+  w.layer().encounter_roster={}
   for i in sites.size():
    var home=Vector2(sites[i][0],sites[i][1])
+   var lead=0 if i==0 and w.depth()==1 else 3 if i==1 and w.depth()>=2 else 2
+   if lead==3:
+    for off in [Vector2(80,0),Vector2(-80,0),Vector2(0,80),Vector2(0,-80)]:
+     if not body_open(home+off,26):lead=2
+   w.layer().encounter_roster[str(i)]={"lead":lead,"companion":2 if lead==0 else 0}
    for off in [Vector2(64,0),Vector2(-64,0),Vector2(0,64),Vector2(0,-64)]:
     if body_open(home+off) and clear(home,home+off):
      w.layer().encounter_companions[str(i)]=[home.x+off.x,home.y+off.y];break
  for i in w.layer().encounters.size():
   var id="deep53/"+str(g.state.seed_value)+"/"+context+"/"+str(i)
   var p=w.layer().encounters[i];var home=Vector2(p[0],p[1])
-  if not g.state.combat.cleared.has(id):enemies.append(make_enemy(id,home,i%2))
+  var roster=w.layer().get("encounter_roster",{}).get(str(i),{"lead":i%2,"companion":1-i%2})
+  if not g.state.combat.cleared.has(id):enemies.append(make_enemy(id,home,int(roster.lead)))
   var companions=w.layer().get("encounter_companions",{})
   if companions.has(str(i)):
    var companion=id+"/companion";var pos=companions[str(i)]
-   if not g.state.combat.cleared.has(companion):enemies.append(make_enemy(companion,Vector2(pos[0],pos[1]),1-i%2))
+   if not g.state.combat.cleared.has(companion):enemies.append(make_enemy(companion,Vector2(pos[0],pos[1]),int(roster.companion)))
 func make_enemy(id:String,p:Vector2,kind:int)->Dictionary:
- var hp=64.0 if kind==0 else 84.0
- return {"id":id,"p":p,"home":p,"kind":kind,"hp":float(g.state.combat.wounds.get(id,hp)),"max":hp,"state":"idle","time":0.0,"dir":Vector2.LEFT,"walk":false,"gait":0.0,"flash":0.0,"stagger_wait":0.0}
+ var hp=float(HoldEnemyRoster.spec(kind).hp)
+ return {"id":id,"p":p,"home":p,"kind":kind,"hp":float(g.state.combat.wounds.get(id,hp)),"max":hp,"state":"idle","time":0.0,"dir":Vector2.LEFT,"walk":false,"gait":0.0,"flash":0.0,"stagger_wait":0.0,"dead_time":0.0,"alert":0.0}
 func input(e:InputEvent)->bool:
  if not enabled() or g.panel_id!="":return false
  if e is InputEventKey and e.pressed and not e.echo:
+  if e.keycode==KEY_F8:show_hitboxes=not show_hitboxes;return true
   if e.keycode==KEY_F:
    if g.handworks.busy_hands():say("Park the cart or set down your load first.");return true
    g.combat.armed=not g.combat.armed;g.mining_gun.selected=false;swing=0;guard=false;buffered=0;g.combat.riposte=0;return true
@@ -97,6 +114,7 @@ func evade():
  dodge=.20;dodge_wait=.58 if HoldDisciplines.has(g.state,"sure_footing") else .72;swing=0;guard=false;buffered=0
  g.sound.effect("swing",-18)
 func movement(axis:Vector2)->Vector2:
+ if enabled() and hit_stop>0:return Vector2.ZERO
  if not enabled() or not g.combat.armed:return axis*g.handworks.travel_speed()
  if dodge>0:return dodge_vector*420
  return axis*(100 if guard else 135 if swing>0 else 185)
@@ -108,7 +126,13 @@ func update(dt:float):
  feedback_time=maxf(0,feedback_time-dt)
  if not enabled():return
  if g.panel_id!="" or g.transition_left>0:return
- spawn();buffered=maxf(0,buffered-dt);parry=maxf(0,parry-dt);parry_wait=maxf(0,parry_wait-dt);dodge=maxf(0,dodge-dt);dodge_wait=maxf(0,dodge_wait-dt);hurt_wait=maxf(0,hurt_wait-dt);g.combat.riposte=maxf(0,g.combat.riposte-dt)
+ spawn()
+ if hit_stop>0:
+  var frozen=minf(dt,hit_stop);hit_stop=maxf(0,hit_stop-dt);dt-=frozen
+  if dt<=0:return
+ for effect in impacts:effect.life-=dt
+ impacts=impacts.filter(func(effect):return effect.life>0)
+ buffered=maxf(0,buffered-dt);parry=maxf(0,parry-dt);parry_wait=maxf(0,parry_wait-dt);dodge=maxf(0,dodge-dt);dodge_wait=maxf(0,dodge_wait-dt);hurt_wait=maxf(0,hurt_wait-dt);g.combat.riposte=maxf(0,g.combat.riposte-dt)
  var delta=g.get_global_mouse_position()+g.camera-(g.player-Vector2(0,25))
  if delta.length()>10:aim=delta.normalized()
  if g.combat.armed:
@@ -120,38 +144,43 @@ func update(dt:float):
  else:guard=false;guard_was=false;swing=0;buffered=0
  if swing>0:
   swing=maxf(0,swing-dt)
-  if not struck and swing<=g.combat.weapon().time*.60:struck=true;resolve()
+  if not struck and swing<=g.combat.weapon().time*(1-CONTACT_PHASE):
+   swing=g.combat.weapon().time*(1-CONTACT_PHASE);struck=true;resolve()
+   if hit_stop>0:return
  for e in enemies:
-  if e.hp<=0:continue
+  if e.hp<=0:e.dead_time=maxf(0,e.get("dead_time",0.0)-dt);continue
+  var spec=HoldEnemyRoster.spec(e.kind)
+  e.alert=maxf(0,e.get("alert",0.0)-dt)
   e.flash=maxf(0,e.flash-dt);e.stagger_wait=maxf(0,e.get("stagger_wait",0.0)-dt);e.walk=false
   var toward=g.player-e.p
   if e.state=="windup":
    e.time-=dt
    if e.time<=0:
-    if toward.length()<ATTACK_RADIUS and toward.normalized().dot(e.dir)>cos(ATTACK_HALF_ANGLE) and clear(e.p,g.player):receive(e)
+    e.state="recover";e.time=.75 if practice() else float(spec.recover)
+    if sector_hits(e.p,e.dir,float(spec.reach),float(spec.angle),g.player,PLAYER_BODY) and clear(e.p,g.player):receive(e)
     elif practice() and e.get("evaded",false):HoldOnboarding.fact(g.state,"practice_dodge");say("Clean dodge")
     e.evaded=false
-    if e.state=="windup":e.state="recover";e.time=.75 if e.kind==0 else 1.0
+    if hit_stop>0:return
    continue
   if e.state in ["recover","stun"]:
    e.time-=dt
    if e.time<=0:e.state="idle"
    continue
-  if toward.length()>290 or not clear(e.p,g.player) or g.player.distance_to(e.home)>360:continue
+  if toward.length()>(480 if e.alert>0 else 290) or not clear(e.p,g.player) or g.player.distance_to(e.home)>(520 if e.alert>0 else 360):continue
   if practice() and not g.combat.armed:continue
   e.dir=toward.normalized()
-  if toward.length()<78:
-   if attack_slot(e):e.state="windup";e.time=.72 if e.kind==0 else 1.05;e.evaded=false
+  if toward.length()<float(spec.reach)-10:
+   if attack_slot(e):e.state="windup";e.time=.72 if practice() else float(spec.windup);e.evaded=false
    continue
-  var next=e.p.move_toward(g.player,(90 if e.kind==0 else 60)*dt)
+  var next=e.p.move_toward(g.player,(90.0 if practice() else float(spec.speed))*dt)
   var spaced=true
   for other in enemies:
-   if other!=e and other.hp>0 and next.distance_to(other.p)<38:spaced=false
-  if spaced and body_open(next):e.gait+=e.p.distance_to(next)/185;e.p=next;e.walk=true
+   if other!=e and other.hp>0 and next.distance_to(other.p)<float(spec.body)+float(HoldEnemyRoster.spec(other.kind).body)+10:spaced=false
+  if spaced and body_open(next,float(spec.body)):e.gait+=e.p.distance_to(next)/185;e.p=next;e.walk=true
  if practice() and not lesson_announced and HoldOnboarding.progress(g.state,"training").ready:
   lesson_announced=true;g.save_game();say("Good footwork. E at the south bench reports your training.")
-func body_open(p:Vector2)->bool:
- for offset in [Vector2.ZERO,Vector2(12,0),Vector2(-12,0),Vector2(0,12),Vector2(0,-12)]:
+func body_open(p:Vector2,radius:float=12)->bool:
+ for offset in [Vector2.ZERO,Vector2(radius,0),Vector2(-radius,0),Vector2(0,radius),Vector2(0,-radius)]:
   if not open_at(p+offset):return false
  return true
 func attack_slot(candidate:Dictionary)->bool:
@@ -161,31 +190,37 @@ func attack_slot(candidate:Dictionary)->bool:
  return true
 func stagger(e:Dictionary,duration:float):
  if e.get("stagger_wait",0.0)>0:return
- e.state="stun";e.time=duration;e.stagger_wait=duration+1.0
+ e.state="stun";e.time=duration*(.5 if e.kind==3 else 1.0);e.stagger_wait=duration+(2.0 if e.kind==3 else 1.0)
 func resolve():
  var weapon=g.combat.weapon();var ranged=g.state.combat.weapon=="gun"
  if ranged:g.state.pay({"ammo":1});g.sound.effect("carbine",-14)
  var hit=false
  var targets=enemies.duplicate()
- if ranged:targets.sort_custom(func(a,b):return g.player.distance_squared_to(a.p)<g.player.distance_squared_to(b.p))
+ if ranged:targets.sort_custom(func(a,b):return shot_entry(a.p,float(HoldEnemyRoster.spec(a.kind).body))<shot_entry(b.p,float(HoldEnemyRoster.spec(b.kind).body)))
  for e in targets:
   if e.hp<=0:continue
-  var delta=e.p-g.player
-  var in_arc=delta.length()<=weapon.reach+18 and (delta.length()<20 or delta.normalized().dot(locked_aim)>(.65 if g.state.combat.weapon=="hammer" else .35))
-  if ranged:in_arc=delta.dot(locked_aim)>0 and delta.dot(locked_aim)<=weapon.reach and Geometry2D.get_closest_point_to_segment(e.p,g.player,g.player+locked_aim*weapon.reach).distance_to(e.p)<22
+  var body=float(HoldEnemyRoster.spec(e.kind).body)
+  var in_arc=sector_hits(g.player,locked_aim,weapon.reach,weapon_half_angle(),e.p,body)
+  if ranged:in_arc=shot_entry(e.p,body)<=weapon.reach
   if not in_arc or not clear(g.player,e.p):continue
   hit=true;e.flash=.18
+  var heavy=g.state.combat.weapon=="hammer"
+  impact(e.p-locked_aim*body,.065 if heavy else .035,Color("ffe0a0"),heavy)
+  if not practice():e.p=push_body(e.p,locked_aim,(22.0 if heavy else 8.0)*(.3 if e.kind==3 else 1.0),body)
   if practice():
    HoldOnboarding.fact(g.state,"practice_hit");g.sound.effect("wood",-18)
   else:
    var damage=float(weapon.damage)*(1.65 if g.combat.riposte>0 else 1.0)
-   if e.kind==1 and g.state.combat.weapon!="hammer":damage*=.8
+   if g.state.combat.weapon!="hammer":damage*=1-float(HoldEnemyRoster.spec(e.kind).armor)
+   e.alert=6.0
    e.hp=maxf(0,e.hp-damage);g.state.combat.wounds[e.id]=e.hp;g.sound.effect("metal",-16)
    if e.hp<=0:
     HoldDisciplines.data(g.state) # Initialize legacy credit before recording this new defeat.
     HoldDisciplines.award(g.state,"warrior",1,e.id)
+    e.dead_time=0.0 if e.kind==1 else 2.2;e.walk=false
     g.state.combat.cleared[e.id]=true;g.state.combat.wounds.erase(e.id)
-    for item in ({"scrap":3,"copper_ore":2} if e.kind==0 else {"shell":2,"iron_ore":2}):g.state.add(item,3 if item=="scrap" else 2)
+    var loot=HoldEnemyRoster.spec(e.kind).loot
+    for item in loot:g.state.add(item,int(loot[item]))
     HoldOnboarding.fact(g.state,"deep_combat");g.save_game();say("Foe defeated · salvage recovered")
    elif g.state.combat.weapon=="hammer" or g.combat.riposte>0:stagger(e,.65)
   if ranged:break
@@ -194,35 +229,43 @@ func receive(e:Dictionary):
  if dodge>0 or hurt_wait>0:
   if practice() and dodge>0:HoldOnboarding.fact(g.state,"practice_dodge");say("Clean dodge")
   return
+ var damage=float(HoldEnemyRoster.spec(e.kind).damage)
  var front=aim.dot((e.p-g.player).normalized())>.15
  if guard and front:
   if practice():HoldOnboarding.fact(g.state,"practice_guard")
-  if parry>0:stagger(e,1.0);g.combat.riposte=1.25;g.sound.effect("parry",-15);say("Parried · opening for a counter")
-  elif g.state.combat.weapon=="axe" or practice():g.sound.effect("metal",-18);say("Shield held" if g.state.combat.weapon=="axe" else "Practice guard")
+  if parry>0:impact(g.player,.05,Color("8fffe5"),false);stagger(e,1.0);g.combat.riposte=1.25;g.sound.effect("parry",-15);say("Parried · opening for a counter")
+  elif (g.state.combat.weapon=="axe" and e.kind!=3) or practice():impact(g.player,.025,Color("b8ddd8"),false);g.sound.effect("metal",-18);say("Shield held" if g.state.combat.weapon=="axe" else "Practice guard")
   else:
-   g.state.combat.health-=6*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));say("Braced · reduced damage")
+   impact(g.player,.055,Color("f7b27c"),e.kind==3)
+   g.player=push_body(g.player,e.dir,6,PLAYER_BODY)
+   g.state.combat.health-=damage*(.25 if g.state.combat.weapon=="axe" else .375)*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));say("Heavy blow · dodge or parry" if e.kind==3 else "Braced · reduced damage")
    if g.state.combat.health<=0:g.perform_rescue("Defeated · crew rescue")
   hurt_wait=.25;return
  if practice():say("Watch the amber arc. Face Borin to guard, or dodge sideways.");return
- g.state.combat.health-=16*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));hurt_wait=.65;g.sound.effect("stone",-15);say("Hit · %d health remaining" % maxi(0,int(g.state.combat.health)))
+ impact(g.player,.07 if e.kind==3 else .04,Color("ff997c"),e.kind==3)
+ g.player=push_body(g.player,e.dir,18 if e.kind==3 else 8,PLAYER_BODY)
+ g.state.combat.health-=damage*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));hurt_wait=.65;g.sound.effect("stone",-15);say("Hit · %d health remaining" % maxi(0,int(g.state.combat.health)))
  if g.state.combat.health<=0:g.perform_rescue("Defeated · crew rescue")
 func objects()->Array:
  if not enabled():return []
  var result=[]
  for e in enemies:
-  if e.hp>0:result.append({"p":e.p,"kind":"fighter","enemy":e})
+  if e.hp>0 or e.get("dead_time",0.0)>0:result.append({"p":e.p,"kind":"fighter","enemy":e})
  return result
 func draw_enemy(e:Dictionary):
- var cam=g.camera.round();var p=e.p
+ var cam=g.camera.round();var p=e.p;var spec=HoldEnemyRoster.spec(e.kind)
  g.draw_set_transform(-cam)
- if e.state=="windup":
+ if e.hp>0 and e.state=="windup":
+  var radius=float(spec.reach);var half=float(spec.angle)
   var points=PackedVector2Array([p]);var angle=e.dir.angle()
-  for i in 17:points.append(p+Vector2.from_angle(angle-ATTACK_HALF_ANGLE+2*ATTACK_HALF_ANGLE*i/16)*ATTACK_RADIUS)
-  g.draw_colored_polygon(points,Color(1,.64,.2,.18));g.draw_arc(p,ATTACK_RADIUS,angle-ATTACK_HALF_ANGLE,angle+ATTACK_HALF_ANGLE,24,Color("e5b86c"),2)
- g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,19,Color(0,0,0,.25));g.draw_set_transform(-cam)
+  for i in 17:points.append(p+Vector2.from_angle(angle-half+2*half*i/16)*radius)
+  g.draw_colored_polygon(points,Color(1,.64,.2,.18));g.draw_arc(p,radius,angle-half,angle+half,24,Color("e5b86c"),2)
+ g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,float(spec.body)+7,Color(0,0,0,.25));g.draw_set_transform(-cam)
  if practice():
-  var phase=.15*(1-e.time/.72) if e.state=="windup" else .38+(1-e.time/.75)*.6 if e.state=="recover" else 0.0
+  var phase=.15*(1-e.time/.72) if e.state=="windup" else CONTACT_PHASE+(1-e.time/.75)*(1-CONTACT_PHASE) if e.state=="recover" else 0.0
   HoldDrawnAnimation.paint(g,p-cam,g.state.npc("borin"),e.dir,e.walk,e.gait,.85,-cam,"axe" if e.state in ["windup","recover"] else "",phase)
+ elif e.kind!=1:
+  HoldEnemyRoster.draw(g,e)
  else:
   var frame=2 if e.state=="windup" else 3 if e.state=="recover" else int(e.gait*8)%2
   # Measured silhouettes, not equal cells: attack poses extend across old atlas divisions.
@@ -231,7 +274,11 @@ func draw_enemy(e:Dictionary):
   var source:Rect2=regions[frame];var scale=.16
   g.draw_set_transform(p-cam,0,Vector2(-1 if e.dir.x<0 else 1,1))
   g.draw_texture_rect_region(HoldCombat.ENEMIES,Rect2((source.position-roots[frame])*scale,source.size*scale),source,Color(1.3,1.2,1.1) if e.flash>0 else Color.WHITE);g.draw_set_transform(-cam)
-  g.draw_rect(Rect2(p+Vector2(-22,-76),Vector2(44,4)),Color("312b2a"));g.draw_rect(Rect2(p+Vector2(-22,-76),Vector2(44*e.hp/e.max,4)),Color("cf956c"))
+ if not practice() and e.hp>0:
+  var top=-float(spec.height)-18
+  g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44,4)),Color("312b2a"));g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44*e.hp/e.max,4)),Color("cf956c"))
+  HoldArt.text(g,p+Vector2(-44,top-5),spec.name,11,Color("ead6ac"))
+  if e.kind==3 and e.state=="windup":HoldArt.text(g,p+Vector2(-64,22),"Heavy · dodge / parry",12,Color("f0b97a"))
 func draw_player(p:Vector2,zoom:float,offset:Vector2):
  var action="hammer" if g.state.combat.weapon=="hammer" else "axe"
  var pose_action=action if swing>0 and g.state.combat.weapon!="gun" else "hold_rifle" if g.state.combat.weapon=="gun" else "hold_"+action
@@ -245,7 +292,9 @@ func draw_player(p:Vector2,zoom:float,offset:Vector2):
   g.draw_arc(center,22,aim.angle()-1.3,aim.angle()+1.3,20,Color("a7e0d6") if parry>0 else Color("c6b68d"),4)
  if dodge>0:g.draw_arc(p+Vector2(0,4),20,0,TAU,24,Color(.6,.9,.85,.5),2)
 func overlay():
- if not enabled() or not g.combat.armed:return
+ if not enabled():return
+ draw_impacts()
+ if not g.combat.armed:return
  g.draw_set_transform(Vector2.ZERO)
  var text="LMB strike · RMB guard / parry · Q directional dodge · F tools"
  if practice():
@@ -258,3 +307,63 @@ func overlay():
  else:
   g.draw_rect(Rect2(720,y,220,28),Color(.03,.08,.10,.93))
   HoldArt.text(g,Vector2(730,y+19),"%d HP · B gear" % g.state.combat.health,14,Color("afd2c5"))
+
+# All collision geometry lives on the ground plane at the character's feet.
+static func sector_hits(origin:Vector2,direction:Vector2,reach:float,half:float,center:Vector2,radius:float)->bool:
+ var delta=center-origin
+ if delta.length()<=radius:return true
+ if delta.length()>reach+radius:return false
+ if absf(direction.angle_to(delta))<=half:return true
+ for side in [-1,1]:
+  var end=origin+direction.rotated(half*side).normalized()*reach
+  if Geometry2D.get_closest_point_to_segment(center,origin,end).distance_to(center)<=radius:return true
+ return false
+func weapon_half_angle()->float:return acos(.65 if g.state.combat.weapon=="hammer" else .35)
+func shot_entry(center:Vector2,radius:float)->float:
+ var delta=center-g.player;var along=delta.dot(locked_aim);var across=absf(delta.cross(locked_aim));var width=radius+SHOT_RADIUS
+ if across>width:return INF
+ var extent=sqrt(maxf(0,width*width-across*across))
+ if along+extent<0:return INF
+ return maxf(0,along-extent)
+func push_body(origin:Vector2,direction:Vector2,distance:float,radius:float)->Vector2:
+ var result=origin;var steps=maxi(1,ceili(distance/2.0))
+ for i in steps:
+  var next=result+direction.normalized()*distance/steps
+  if not body_open(next,radius):break
+  result=next
+ return result
+func impact(at:Vector2,pause:float,color:Color,heavy:bool):
+ hit_stop=maxf(hit_stop,pause)
+ impacts.append({"p":at,"life":.20,"color":color,"heavy":heavy})
+ if impacts.size()>12:impacts.pop_front()
+func draw_sector(at:Vector2,direction:Vector2,reach:float,half:float,color:Color):
+ var angle=direction.angle()
+ g.draw_arc(at,reach,angle-half,angle+half,32,color,2)
+ for side in [-1,1]:g.draw_line(at,at+direction.rotated(half*side)*reach,color,1)
+func draw_impacts():
+ g.draw_set_transform(-g.camera.round())
+ for effect in impacts:
+  var phase=1-effect.life/.20;var color:Color=effect.color;color.a=1-phase
+  var radius=(12 if effect.heavy else 7)+phase*15
+  var at:Vector2=effect.p-Vector2(0,12)
+  for i in 6:
+   var direction=Vector2.from_angle(i*TAU/6+.3)
+   g.draw_line(at+direction*radius*.4,at+direction*radius,color,2)
+  if effect.heavy:g.draw_arc(effect.p,radius,0,TAU,24,color,1.5)
+ if swing>g.combat.weapon().time*(1-CONTACT_PHASE)-.10 and struck and g.state.combat.weapon!="gun":
+  draw_sector(g.player,locked_aim,g.combat.weapon().reach,weapon_half_angle(),Color(1,.84,.53,.25))
+ if not show_hitboxes:
+  g.draw_set_transform(Vector2.ZERO)
+  return
+ g.draw_arc(g.player,PLAYER_BODY,0,TAU,32,Color("7ce8ef"),2)
+ for e in enemies:
+  if e.hp<=0:continue
+  var spec=HoldEnemyRoster.spec(e.kind)
+  g.draw_arc(e.p,float(spec.body),0,TAU,32,Color("ef9690"),2)
+  if e.state=="windup":draw_sector(e.p,e.dir,float(spec.reach),float(spec.angle),Color("ffbe62"))
+ if g.combat.armed:
+  var direction=locked_aim if swing>0 else aim
+  if g.state.combat.weapon=="gun":g.draw_line(g.player,g.player+direction*g.combat.weapon().reach,Color(.5,.9,1,.4),SHOT_RADIUS*2)
+  else:draw_sector(g.player,direction,g.combat.weapon().reach,weapon_half_angle(),Color(.5,.9,1,.5))
+ g.draw_set_transform(Vector2.ZERO)
+ HoldArt.text(g,Vector2(28,150),"F8 hitboxes · cyan player / attack · red bodies · amber enemy attack",13,Color("aee6df"))

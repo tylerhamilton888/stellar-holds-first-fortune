@@ -1,13 +1,17 @@
-# 0.73.0 — Steel & Footwork
+# 0.74.0 — Foes Beneath the Hold
 
-Deep combat now advances Warrior mastery. Sure footing changes the live directional dodge from 0.72 to 0.58 seconds, and each defeated enemy grants experience and salvage once.
+Meet three distinct fantasy enemies with new whole-character artwork and drawn movement, windup, impact and fallen poses:
 
-New deep encounter records can contain a pair: a faster scavenger and a slower armored beetle. Nearby enemies space themselves and wait through a committed attack and its recovery before beginning the next. Amber attack arcs match the actual hit area. Already recorded encounters and cleared passages retain their previous occupants; new companions never appear retroactively in those records.
+- Goblin cutthroats are small, quick attackers with chipped cleavers.
+- Orc ironbreakers wear battered iron armor and carry heavy axes. The hammer bypasses their armor.
+- Cave trolls are large, slow creatures with longer reach and crushing club blows. Ordinary blocking reduces a heavy blow; a timed parry or dodge avoids it. Their clear windup and long recovery create openings.
 
-The axe and shield offer broad cuts and full frontal blocking. The hammer has a narrower heavy swing, ignores shell resistance and staggers enemies, with recovery between staggers. The carbine hits the nearest target in the line of fire; walls stop shots. Without a shield, an ordinary guard reduces damage rather than removing it. Timed parries still negate damage and open a counterattack. Changing equipment cancels a pending strike.
+New Copperfold encounters include goblins and orcs. Trolls occupy spacious new encounters deeper underground. Existing encounter identities, wounds and cleared passages are preserved; already recorded rooms do not gain new monsters. Existing goblins immediately use their new artwork, and old ironback beetles remain supported.
 
-Controls remain F to draw/stow, left mouse to strike, right mouse to guard/parry, Q to dodge and B for equipment. No stamina meter or new class restrictions. Borin's practice remains safe and cannot farm Warrior experience.
+Enemies have front, side and rear views, alternating movement poses and brief fallen bodies before fading. Their whole bodies and held weapons are drawn together. Enemy names and a specific heavy-blow warning make the roster readable. Shooting from beyond normal sight range alerts the enemy instead of allowing repeated unanswered hits.
 
-This is the combat foundation of Steel & Spoils. Individual equipment, schematics, salvage processing and the signature crafting expedition are later work.
+Defeated enemies return useful materials and one-time Warrior credit. The safe first mine level and Borin's existing practice lesson remain intact. No stamina, class restrictions, or mandatory combat in town.
 
-Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Existing saves are supported; previous releases remain available. Windows device performance and audible quality still need player testing.
+Combat contact is now tied to the drawn impact pose. Explicit body hitboxes and attack areas, short impact pauses, wall-safe knockback and visible sparks make hits easier to read. Hammers hit harder physically, trolls resist being pushed around, and blocks/parries have distinct feedback. Press F8 to inspect the hitboxes while testing.
+
+Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Existing saves are supported and earlier releases remain available. Windows hardware performance and audible quality still need player testing.

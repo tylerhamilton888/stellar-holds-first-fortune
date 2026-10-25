@@ -40,14 +40,14 @@ func run():
  f.dodge=0;g.combat.riposte=0;f.locked_aim=Vector2.RIGHT;e.hp=84;e.max=84;e.kind=1;e.stagger_wait=0
  f.resolve()
  check(e.hp==42 and e.state=="stun","Hammer bypasses shell and staggers")
- e.state="idle";e.hp=84;f.resolve()
+ e.p=g.player+Vector2(70,0);e.state="idle";e.hp=84;f.resolve()
  check(e.state=="idle","Repeated hammer contact cannot chain stun")
- g.state.combat.weapon="axe";e.hp=84;f.resolve()
+ g.state.combat.weapon="axe";e.p=g.player+Vector2(70,0);e.hp=84;f.resolve()
  check(is_equal_approx(e.hp,64.8),"Shell resists axe damage")
- e.hp=1;var xp=HoldDisciplines.xp(g.state,"warrior");var scrap=g.state.count("shell");f.resolve();f.resolve()
+ e.p=g.player+Vector2(70,0);e.hp=1;var xp=HoldDisciplines.xp(g.state,"warrior");var scrap=g.state.count("shell");f.resolve();f.resolve()
  check(HoldDisciplines.xp(g.state,"warrior")==xp+1 and g.state.count("shell")==scrap+2,"Real kill awards mastery and salvage exactly once")
  # First-ever live defeat must not be counted both by migration and the kill event.
- g.state.hauling.erase("disciplines");g.state.combat.cleared.clear();e.hp=1;f.resolve()
+ g.state.hauling.erase("disciplines");g.state.combat.cleared.clear();e.p=g.player+Vector2(70,0);e.hp=1;f.resolve()
  check(HoldDisciplines.xp(g.state,"warrior")==1,"First defeat initializes migration before awarding exactly one point")
  g.state.combat.weapon="gun";g.state.combat.owned.append("gun");g.state.combat.owned.append("hammer");g.state.add("ammo",5)
  var near=f.make_enemy("combat83/near",g.player+Vector2(100,0),0);var far=f.make_enemy("combat83/far",g.player+Vector2(180,0),0)
@@ -64,8 +64,8 @@ func run():
  near.state="windup";near.time=.5;g.open_panel("inventory");f.update(1)
  check(near.time==.5,"Menu pauses enemy commitment");g.close_panel()
  # Exercise the actual update path at both sides of the displayed cone boundary.
- f.enemies=[near];f.swing=0;f.guard=false;g.combat.armed=false;f.hurt_wait=0
- var origin=g.player;near.p=origin-Vector2.from_angle(.95)*70;near.home=near.p;near.dir=Vector2.RIGHT;near.state="windup";near.time=.01
+ f.enemies=[near];f.hit_stop=0;f.swing=0;f.guard=false;g.combat.armed=false;f.hurt_wait=0
+ var origin=g.player;near.p=origin-Vector2.from_angle(1.10)*70;near.home=near.p;near.dir=Vector2.RIGHT;near.state="windup";near.time=.01
  var hp=g.state.combat.health;f.update(.02)
  check(g.state.combat.health==hp,"Outside amber cone is safe at actual impact")
  near.p=origin-Vector2.from_angle(.85)*70;near.state="windup";near.time=.01;f.update(.02)
