@@ -35,7 +35,8 @@
       "quest_ui",
       "people",
       "combat",
-      "enemies"
+      "enemies",
+      "dev_testing"
     ],
     "modular": [
       "modular",
@@ -241,6 +242,11 @@
     "enemies-preview": [
       "enemies",
       "combat"
+    ],
+    "dev-preview": [
+      "dev_testing",
+      "combat",
+      "menus"
     ]
   },
   "cases": {
@@ -355,6 +361,10 @@
     "enemies": {
       "script": "tests/enemies84.gd",
       "marker": "ENEMIES84"
+    },
+    "dev_testing": {
+      "script": "tests/dev_testing85.gd",
+      "marker": "DEV_TESTING85"
     }
   }
 }

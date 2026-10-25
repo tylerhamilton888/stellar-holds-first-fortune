@@ -1,3 +1,9 @@
+# 0.75.0 — The Testing Grounds: implementation, verification pending
+
+A separate title-screen entry now launches prepared combat, construction, mining/workstation and farming/fishing/cooking scenarios through HoldDevTesting. Test saves use a dedicated path and marker; slots 1–3 are preserved. F9 controls are available only inside test sessions. Reset/restock, real gameplay controls, test reload and visible DEV TEST status make hands-on testing immediate. HoldBuild.DEV_TESTING can hide all temporary entry points later.
+
+Baseline master 217991b75e3878d047e643fba4097dcfcdc323a9 and release 0.74.0 remain preserved. Native save-isolation/behavior and visual review, full 29-case source gate and 19-case exact-export gate are required before delivery. See testing/dev-testing85.md. No new content milestone is started by this testing utility.
+
 # 0.74.0 — Foes Beneath the Hold: published, verified and merged
 
 Combat now uses explicit ground-plane body circles (player 10 px; goblin 12, beetle 14, orc 17, troll 26), shared sector geometry for hits and telegraphs, and a 3 px carbine projectile radius. Damage lands on the authored contact key at 52% of the action, once per strike, with direction locked through recovery. Brief 25–70 ms combat-only hit-stop, bounded wall-safe recoil, sparks and existing impact audio distinguish hits, blocks and parries. Hammers recoil farther; trolls resist displacement and retain stagger protection. F8 toggles a live hitbox inspection overlay. No global slowdown or camera shake is added.

@@ -1,17 +1,12 @@
-# 0.74.0 — Foes Beneath the Hold
+# 0.75.0 — The Testing Grounds
 
-Meet three distinct fantasy enemies with new whole-character artwork and drawn movement, windup, impact and fallen poses:
+Choose **Dev Testing** on the title screen to jump straight into a prepared test world. Inside a test session, press **F9** or use its pause menu to reopen testing controls. A DEV TEST badge stays visible while testing.
 
-- Goblin cutthroats are small, quick attackers with chipped cleavers.
-- Orc ironbreakers wear battered iron armor and carry heavy axes. The hammer bypasses their armor.
-- Cave trolls are large, slow creatures with longer reach and crushing club blows. Ordinary blocking reduces a heavy blow; a timed parry or dodge avoids it. Their clear windup and long recovery create openings.
+- **Combat arena:** all weapons and armor, ammunition, individual goblins/beetles/orcs/trolls or a mixed encounter. Heal/restock and toggle hitboxes. Normal damage, parry, guard and dodge remain active.
+- **Construction & decorating:** owned land and cottage, researched plans and ample supplies. Test buildings, stairs, furniture, storage and collision immediately.
+- **Mining & workstations:** exposed minerals, benches, racks, handcart and loose loads for hands-on mining, processing and hauling.
+- **Farming, fishing & cooking:** four garden stages, field tools, seeds and ingredients, with shortcuts to the riverbank and home kitchen.
 
-New Copperfold encounters include goblins and orcs. Trolls occupy spacious new encounters deeper underground. Existing encounter identities, wounds and cleared passages are preserved; already recorded rooms do not gain new monsters. Existing goblins immediately use their new artwork, and old ironback beetles remain supported.
+**Your three normal save slots stay separate.** The testing playground has its own save. Resume the last test, save/reload, reset the current preset, or start another. Starting/resetting a preset replaces only the test world. Combat encounters restart on reload; your test building work persists until you reset it.
 
-Enemies have front, side and rear views, alternating movement poses and brief fallen bodies before fading. Their whole bodies and held weapons are drawn together. Enemy names and a specific heavy-blow warning make the roster readable. Shooting from beyond normal sight range alerts the enemy instead of allowing repeated unanswered hits.
-
-Defeated enemies return useful materials and one-time Warrior credit. The safe first mine level and Borin's existing practice lesson remain intact. No stamina, class restrictions, or mandatory combat in town.
-
-Combat contact is now tied to the drawn impact pose. Explicit body hitboxes and attack areas, short impact pauses, wall-safe knockback and visible sparks make hits easier to read. Hammers hit harder physically, trolls resist being pushed around, and blocks/parries have distinct feedback. Press F8 to inspect the hitboxes while testing.
-
-Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Existing saves are supported and earlier releases remain available. Windows hardware performance and audible quality still need player testing.
+Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Existing normal saves are supported. These temporary testing entry points can be switched off for a later public build.

@@ -1,3 +1,9 @@
+# 0.75.0 — The Testing Grounds: implementation, verification pending
+
+A separate title-screen entry now launches prepared combat, construction, mining/workstation and farming/fishing/cooking scenarios through HoldDevTesting. Test saves use a dedicated path and marker; slots 1–3 are preserved. F9 controls are available only inside test sessions. Reset/restock, real gameplay controls, test reload and visible DEV TEST status make hands-on testing immediate. HoldBuild.DEV_TESTING can hide all temporary entry points later.
+
+Baseline master 217991b75e3878d047e643fba4097dcfcdc323a9 and release 0.74.0 remain preserved. Native save-isolation/behavior and visual review, full 29-case source gate and 19-case exact-export gate are required before delivery. See testing/dev-testing85.md. No new content milestone is started by this testing utility.
+
 # Fantasy enemy roster — delivered in 0.74.0
 
 PR #39 is merged; full source, native visual/behavior and exact-export gates passed. Release 0.74.0 is published.

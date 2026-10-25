@@ -2,6 +2,8 @@ class_name HoldState
 extends RefCounted
 const SAVE="user://first_fortune_v1.json"
 var save_slot:int=1
+# Runtime-only routing; normal slot numbers never represent developer saves.
+var test_session=false
 var region_travel:Dictionary={}
 var hold_travel:Dictionary={}
 var resident_visits:Dictionary={}
@@ -14,10 +16,10 @@ static func slot_summary(slot:int)->Dictionary:
  var f=FileAccess.open(path,FileAccess.READ)
  if not f:return {"exists":true,"valid":false}
  var d=JSON.parse_string(f.get_as_text())
- if not d is Dictionary or d.get("version",0)!=1 or d.get("cells",[]).size() not in [Geology.W*Geology.H,96*44]:return {"exists":true,"valid":false}
+ if not d is Dictionary or d.get("dev_testing",false) or d.get("version",0)!=1 or d.get("cells",[]).size() not in [Geology.W*Geology.H,96*44]:return {"exists":true,"valid":false}
  var p=HoldAppearance.normalized(d.get("appearance",{}))
  return {"exists":true,"valid":true,"name":p.name,"minutes":int(d.get("elapsed",0)/60),"zone":str(d.get("zone","hub")),"money":int(d.get("money",0))}
-func save_path()->String:return slot_path(save_slot)
+func save_path()->String:return HoldDevTesting.SAVE if test_session else slot_path(save_slot)
 var ladders:Dictionary={}
 var rescue_debt=0
 var combat:Dictionary=HoldCombat.defaults()
@@ -150,7 +152,7 @@ func ensure_dynasty():
 func save_world(geo:Geology,zone:String,pos:Vector2)->bool:
  ensure_dynasty()
  HoldOutpost.ensure(self)
- var data={"landmark_revision":551,"surface":surface,"hauling":hauling,"deepworks":deepworks,"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"forestry":forestry,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
+ var data={"dev_testing":test_session,"landmark_revision":551,"surface":surface,"hauling":hauling,"deepworks":deepworks,"hold_travel":hold_travel,"outpost":outpost,"region_travel":region_travel,"mountain":geo.mountain,"structures":geo.structures,"world_address":geo.world_address,"version":1,"ladders":ladders,"rescue_debt":rescue_debt,"combat":combat,"tracked_npc":tracked_npc,"npc_population_version":2,"dynasty":dynasty,"opening":opening,"claim_id":claim_id,"camp_stage":camp_stage,"active_site":active_site,"worlds":worlds,"road_trees":road_trees,"forestry":forestry,"appearance":appearance,"npc_appearances":npc_appearances,"inventory":inventory,"money":money,"tech":tech,"queue":queue,"market":market,"steel":steel,"worker":worker,"automaton":automaton,"priority":priority,"ship_stage":ship_stage,"launched":launched,"contract":contract,"bargain":bargain,"hospitality":hospitality,"elapsed":elapsed,"mined":mined,"seed_value":seed_value,"trees":trees,"discovered":discovered,"agents_enabled":agents_enabled,"volume":volume,"music_volume":music_volume,"ambience_volume":ambience_volume,"effects_volume":effects_volume,"footsteps_volume":footsteps_volume,"dialogue_volume":dialogue_volume,"shake":shake,"geo_seed":geo.seed_value,"cells":geo.cells,"damage":geo.damage,"geo_grid":Geology.TILE,"grain_bank":geo.grain_bank,"active_grains":geo.active_grains.keys(),"zone":zone,"x":pos.x,"y":pos.y}
  var f=FileAccess.open(save_path()+".tmp",FileAccess.WRITE)
  if not f:return false
  f.store_string(JSON.stringify(data));f.close()
@@ -163,6 +165,7 @@ func load_world(geo:Geology)->Dictionary:
  if not f:return {}
  var d=JSON.parse_string(f.get_as_text())
  if not d is Dictionary or d.get("version",0)!=1 or d.get("cells",[]).size() not in [Geology.W*Geology.H,96*44]:return {}
+ if bool(d.get("dev_testing",false))!=test_session:return {}
  # Preserve a pre-art save before new furniture footprints/placement definitions.
  if int(d.get("surface",{}).get("folk_revision",0))<56:
   var backup=save_path()+".pre-art-560-"+str(Time.get_ticks_usec())+".bak"
