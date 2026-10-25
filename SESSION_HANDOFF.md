@@ -1,3 +1,5 @@
+Current handoff: docs/SESSION_HANDOFF.md. Release 0.74.0 is published, verified and merged; the records below are historical.
+
 # 0.64.0 — The Hold of Three Hearths (source verified)
 
 Work branch polish/keldrath68; start local 84141d65c35c4bed6f593d736dbfb096b50674dc, remote main 2130a077612d3a70c0e67e01ac4db2c30539f97f. Pre-edit tag pre-keldrath68 and verified incremental recovery/pre-keldrath68.bundle preserve the baseline; previous backups are untouched. Never force-push restored local history over GitHub.
