@@ -33,7 +33,8 @@
       "homestead",
       "royal",
       "quest_ui",
-      "people"
+      "people",
+      "combat"
     ],
     "modular": [
       "modular",
@@ -232,6 +233,9 @@
     ],
     "people-preview": [
       "people"
+    ],
+    "combat-preview": [
+      "combat"
     ]
   },
   "cases": {
@@ -338,6 +342,10 @@
     "people": {
       "script": "tests/people82.gd",
       "marker": "PEOPLE82"
+    },
+    "combat": {
+      "script": "tests/combat83.gd",
+      "marker": "COMBAT83"
     }
   }
 }

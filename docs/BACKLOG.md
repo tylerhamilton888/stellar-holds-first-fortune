@@ -1,3 +1,7 @@
+# Steel & Spoils — staged delivery
+
+Combat foundation is implemented on feature/combat73; full verification and delivery pending. Next milestone: save-compatible equipment instances, material/workmanship definitions, salvage/study choices, persistent schematics and one memorable expedition feeding a useful crafted item. Preserve peaceful acquisition alternatives and the low-pressure sandbox. New weapon styles follow proven combat roles; no class or stamina rewrite.
+
 # Faces of the Hold — delivered in 0.72.0
 
 PR #35 is merged and 0.72.0 is published. Full source, focused native/visual and exact-export verification passed. See CURRENT_STATUS.md and testing/people82.md for the delivery record.
