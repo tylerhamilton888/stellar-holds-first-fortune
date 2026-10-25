@@ -1,5 +1,7 @@
 # 0.74.0 — Foes Beneath the Hold: implementation, validation pending
 
+Combat now uses explicit ground-plane body circles (player 10 px; goblin 12, beetle 14, orc 17, troll 26), shared sector geometry for hits and telegraphs, and a 3 px carbine projectile radius. Damage lands on the authored contact key at 52% of the action, once per strike, with direction locked through recovery. Brief 25–70 ms combat-only hit-stop, bounded wall-safe recoil, sparks and existing impact audio distinguish hits, blocks and parries. Hammers recoil farther; trolls resist displacement and retain stagger protection. F8 toggles a live hitbox inspection overlay. No global slowdown or camera shake is added.
+
 New goblin, orc and cave-troll whole-character sheets include movement, anticipation, impact and fallen poses in front/side/rear views. New encounter records persist a mixed fantasy roster; old identities, wounds and cleared passages remain supported. Orc armor rewards hammers; trolls have a longer, slower heavy blow with clear warnings and a long opening afterward. Ranged hits now alert distant enemies. Safe first-level and Borin practice remain intact.
 
 Branch feature/enemies84 starts at verified master 4c11910828c278215e17f6a12894aec03efda32f. The 0.73.0 release and recovery checkpoints remain intact. Final native visual/behavior verification, the full 28-case source gate and 18-case exact-export gate are required before delivery. See testing/enemies84.md and assets/enemies84/PRODUCTION.md.

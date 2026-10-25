@@ -11,8 +11,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   windows:
-    # Publication held while the owner-requested hitbox/reactivity pass is integrated.
-    if: false
+    if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-24.04
     # Includes waiting for the full source gate, a cold art import and exact-pack checks.
     timeout-minutes: 80

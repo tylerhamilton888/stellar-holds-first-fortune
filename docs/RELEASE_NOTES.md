@@ -12,4 +12,6 @@ Enemies have front, side and rear views, alternating movement poses and brief fa
 
 Defeated enemies return useful materials and one-time Warrior credit. The safe first mine level and Borin's existing practice lesson remain intact. No stamina, class restrictions, or mandatory combat in town.
 
+Combat contact is now tied to the drawn impact pose. Explicit body hitboxes and attack areas, short impact pauses, wall-safe knockback and visible sparks make hits easier to read. Hammers hit harder physically, trolls resist being pushed around, and blocks/parries have distinct feedback. Press F8 to inspect the hitboxes while testing.
+
 Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Existing saves are supported and earlier releases remain available. Windows hardware performance and audible quality still need player testing.
