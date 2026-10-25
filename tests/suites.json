@@ -34,7 +34,8 @@
       "royal",
       "quest_ui",
       "people",
-      "combat"
+      "combat",
+      "enemies"
     ],
     "modular": [
       "modular",
@@ -236,6 +237,10 @@
     ],
     "combat-preview": [
       "combat"
+    ],
+    "enemies-preview": [
+      "enemies",
+      "combat"
     ]
   },
   "cases": {
@@ -346,6 +351,10 @@
     "combat": {
       "script": "tests/combat83.gd",
       "marker": "COMBAT83"
+    },
+    "enemies": {
+      "script": "tests/enemies84.gd",
+      "marker": "ENEMIES84"
     }
   }
 }

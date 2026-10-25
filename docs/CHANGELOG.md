@@ -1,3 +1,9 @@
+# 0.74.0 — Foes Beneath the Hold: implementation, validation pending
+
+New goblin, orc and cave-troll whole-character sheets include movement, anticipation, impact and fallen poses in front/side/rear views. New encounter records persist a mixed fantasy roster; old identities, wounds and cleared passages remain supported. Orc armor rewards hammers; trolls have a longer, slower heavy blow with clear warnings and a long opening afterward. Ranged hits now alert distant enemies. Safe first-level and Borin practice remain intact.
+
+Branch feature/enemies84 starts at verified master 4c11910828c278215e17f6a12894aec03efda32f. The 0.73.0 release and recovery checkpoints remain intact. Final native visual/behavior verification, the full 28-case source gate and 18-case exact-export gate are required before delivery. See testing/enemies84.md and assets/enemies84/PRODUCTION.md.
+
 # 0.73.0 — Steel & Footwork: published, verified and merged
 
 Live Warrior credit and Sure footing now work in top-down combat. New deep encounter records can contain a fast scavenger and a slower armored beetle, with spacing and one nearby committed attack at a time. Amber telegraphs match hit geometry. Shield blocking, reduced-damage bracing, bounded hammer stagger, narrower hammer arcs and nearest-target carbine shots distinguish existing weapons. Equipment changes cancel live strikes; the gear panel fits the screen and scrolls to every choice.
