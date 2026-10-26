@@ -1,6 +1,6 @@
-# Architectural collections — 0.77.0 candidate
+# Architectural collections — delivered in 0.77.0
 
-Three compatible collections, independent finishes, matching interiors and visual construction menus are implemented. Native collection tests pass; release gates are pending. Review the actual mixed-material previews and room captures before accepting a new visual checkpoint.
+Three compatible collections, independent finishes, matching interiors and visual construction menus are published and merged in PR #45. Native visual review and all required source/export gates passed. The release preserves the original frontages and existing saves. See testing/architecture87.md for evidence.
 
 Future scope: individually repositionable exterior windows/doors, arbitrary roof shapes, and assigning NPC households or businesses to new addresses. The current original frontage is a preserved architectural component; it is not advertised as per-window editing. Large empty rooms remain player-furnished. No unrelated progression or combat work is included.
 

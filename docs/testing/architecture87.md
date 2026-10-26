@@ -19,7 +19,9 @@ Reviewed native plan cards, furniture groups, material studies, mixed choices, f
 - Exact Windows PCK: all 21 cases, including architecture86 and architecture87.
 - Verify clean source/build metadata and uploaded archive size/SHA256 before delivery.
 
-Runtime source 52e90de84fe2df330347fefbee98825cba1d96c3 has tree 19a8d8b9d23d5dba33a4bb1c221aeca49ac87cda. PR #45 is open; source run 40261718443 and release run 40261717625 are running. Hosted people-preview job 121375323185 passed. Full source, exact-export acceptance and publication remain pending. Windows-device frame rate, audio and subjective player preference remain hands-on testing. Passing assertions alone do not establish visual quality.
+Runtime source 52e90de84fe2df330347fefbee98825cba1d96c3 and PR #45 merge ce49bfe6b68383a28ae8f5304113b8eac28eb67f have identical tree 19a8d8b9d23d5dba33a4bb1c221aeca49ac87cda. Source run 40261718443 passed all 31 gameplay cases plus hosted people-preview. Release run 40261717625 passed all 21 exact-export cases: 1,610 assertions, including all 60 architecture87 checks. The published v0.77.0 tag points to the verified runtime. Exported mixed-material and Hearthstone/Oathhall room captures were reviewed.
+
+The downloaded build report and verification archive match their GitHub SHA256 digests. The clean report, tag and uploaded ZIP metadata agree: 733,838,675 bytes, SHA256 c4b874b7fc401afd597672a44fd8d39c60cf87aeb80491f843d620b4f54ad1b5. See architecture87/source-results.json, pack-results.json, hosted-build.json and delivery.json. Full exported captures remain in the release verification-evidence.tar.gz asset. Windows-device frame rate, audio and subjective player preference remain hands-on testing. Passing assertions alone do not establish visual quality.
 
 ## Recovery and controls
 

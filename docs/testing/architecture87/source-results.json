@@ -1,0 +1,136 @@
+{
+  "commit": "52e90de84fe2df330347fefbee98825cba1d96c3",
+  "run_id": 40261718443,
+  "job_id": 121375323405,
+  "import_passed": true,
+  "cases": [
+    {
+      "test": "loading",
+      "passed": true
+    },
+    {
+      "test": "menus",
+      "passed": true
+    },
+    {
+      "test": "orientation",
+      "passed": true
+    },
+    {
+      "test": "ambient",
+      "passed": true
+    },
+    {
+      "test": "equipment",
+      "passed": true
+    },
+    {
+      "test": "mining",
+      "passed": true
+    },
+    {
+      "test": "handworks",
+      "passed": true
+    },
+    {
+      "test": "world",
+      "passed": true
+    },
+    {
+      "test": "modular",
+      "passed": true
+    },
+    {
+      "test": "hold",
+      "passed": true
+    },
+    {
+      "test": "continuity",
+      "passed": true
+    },
+    {
+      "test": "living",
+      "passed": true
+    },
+    {
+      "test": "civic",
+      "passed": true
+    },
+    {
+      "test": "firstshift",
+      "passed": true
+    },
+    {
+      "test": "ancestral",
+      "passed": true
+    },
+    {
+      "test": "disciplines",
+      "passed": true
+    },
+    {
+      "test": "polish",
+      "passed": true
+    },
+    {
+      "test": "firsthour",
+      "passed": true
+    },
+    {
+      "test": "appearance",
+      "passed": true
+    },
+    {
+      "test": "roads",
+      "passed": true
+    },
+    {
+      "test": "work",
+      "passed": true
+    },
+    {
+      "test": "keldrath",
+      "passed": true
+    },
+    {
+      "test": "homestead",
+      "passed": true
+    },
+    {
+      "test": "royal",
+      "passed": true
+    },
+    {
+      "test": "quest_ui",
+      "passed": true
+    },
+    {
+      "test": "people",
+      "passed": true
+    },
+    {
+      "test": "combat",
+      "passed": true
+    },
+    {
+      "test": "enemies",
+      "passed": true
+    },
+    {
+      "test": "dev_testing",
+      "passed": true
+    },
+    {
+      "test": "architecture",
+      "passed": true
+    },
+    {
+      "test": "architecture_style",
+      "passed": true
+    }
+  ],
+  "people_preview": {
+    "job_id": 121375323185,
+    "passed": true
+  }
+}
