@@ -38,7 +38,8 @@
       "enemies",
       "dev_testing",
       "architecture",
-      "architecture_style"
+      "architecture_style",
+      "combat_art"
     ],
     "modular": [
       "modular",
@@ -271,6 +272,18 @@
       "homestead",
       "royal",
       "modular"
+    ],
+    "combat-art-preview": [
+      "combat_art"
+    ],
+    "combat-art-regression": [
+      "combat_art",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "roads",
+      "appearance",
+      "architecture_style"
     ]
   },
   "cases": {
@@ -397,6 +410,10 @@
     "architecture_style": {
       "script": "tests/architecture87.gd",
       "marker": "ARCHITECTURE87"
+    },
+    "combat_art": {
+      "script": "tests/combat88.gd",
+      "marker": "COMBAT88"
     }
   }
 }

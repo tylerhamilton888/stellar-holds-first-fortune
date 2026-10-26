@@ -4,7 +4,7 @@ extends RefCounted
 const HEIGHT=62.0
 const CYCLE=.52
 # Bump only when whole-frame artwork, crops or palette conversion change.
-const CACHE_REVISION="whole58-motion59-town74-palette2"
+const CACHE_REVISION="whole58-motion59-town74-combat88-palette3"
 static var metadata:Dictionary={}
 static var pigment:Dictionary={}
 static var sources:Dictionary={}
@@ -45,6 +45,11 @@ static func data():
      metadata[id+"-town"][index]=current
   metadata.merge(JSON.parse_string(FileAccess.get_file_as_string("res://assets/appearance74/frames.json")),true)
   pigment=JSON.parse_string(FileAccess.get_file_as_string("res://assets/appearance74/palette.json"))
+  metadata.merge(JSON.parse_string(FileAccess.get_file_as_string("res://assets/combat88/frames.json")))
+  pigment.merge(JSON.parse_string(FileAccess.get_file_as_string("res://assets/combat88/palette.json")))
+  var corrections:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/combat88/corrections.json"))
+  for key in corrections:
+   var parts=key.split(":");metadata[parts[0]][int(parts[1])]=corrections[key]
   var scales:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/appearance74/scale.json"))
   for key in scales:
    var parts=key.split(":")
@@ -91,6 +96,21 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  # Raised and contact keys retain their original authored anticipation/impact.
  if action=="pick" and int(p.gender)==0 and contact_frame(phase) in [0,3]:
   sheet=identity(p)+"-motion";index=view*4
+ # Combat axes are one-handed. These complete drawings retain the same axe,
+ # gripping hand and strapped shield through movement, strikes and guard.
+ # Work-tool poses remain independent of combat equipment.
+ if action in ["hold_combat_axe","combat_axe","guard_axe","parry_axe"]:
+  sheet=identity(p)+"-shield88";view=HoldDirectional.view(d)
+  index=view*8+(key if walking else 0)
+  if action=="combat_axe":
+   var attack=contact_frame(phase)
+   index=[[0,5,6,7],[8,13,14,15],[16,28,22,23],[24,28,30,31]][view][attack]
+   # The crown-braid and loose-wave sheets place their rear raised key in
+   # column six. Use that whole drawing rather than the resting neighbour.
+   if int(p.gender)==1 and int(p.sculpt) in [0,2] and view>=2 and attack==1:index=29
+  elif action=="guard_axe":index=[32,33,38,39][view]
+  elif action=="parry_axe":index=36+view
+  if int(p.gender)==0 and int(p.sculpt) in [3,4] and view==2 and action in ["guard_axe","parry_axe"]:index=39
  var m=metadata[sheet][index];var r=m.rect
  var rect=Rect2(r[0],r[1],r[2],r[3]);var root=Vector2(m.root[0],m.root[1]);var scale=HEIGHT/maxf(1,float(m.height))
  return {"sheet":sheet,"index":index,"view":view,"frame":key,"rect":rect,"root":root,"scale":scale,"shape":Vector2.ONE*scale,"action":action,"phase":phase,"walking":walking,"destination":Rect2((rect.position-root)*scale,rect.size*scale)}
@@ -206,7 +226,7 @@ static func prepare(g:Node):
  var queued={}
  for entry in people:
   var p=HoldAppearance.normalized(entry.profile)
-  for kind in (["core","town","utility","handling","equipped","motion"] if entry.player else ["core","utility","town"]):
+  for kind in (["core","town","utility","handling","equipped","motion","shield88"] if entry.player else ["core","utility","town"]):
    var sheet=identity(p)+"-"+kind
    if not metadata.has(sheet):continue
    if kind=="equipped" and metadata.has(identity(p)+"-motion"):continue

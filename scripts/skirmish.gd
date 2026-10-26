@@ -16,6 +16,7 @@ var guard=false
 var guard_was=false
 var parry=0.0
 var parry_wait=0.0
+var shield_recoil=0.0
 var dodge=0.0
 var dodge_wait=0.0
 var dodge_vector=Vector2.RIGHT
@@ -30,10 +31,10 @@ func _init(game):g=game
 func practice()->bool:return g.room_id=="training"
 func enabled()->bool:return practice() or (g.zone=="mine" and HoldOnboarding.combat_ready(g.state))
 func cancel_actions():
- hit_stop=0;impacts.clear()
+ hit_stop=0;impacts.clear();shield_recoil=0
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;dodge=0;g.combat.riposte=0
 func reset():
- hit_stop=0;impacts.clear()
+ hit_stop=0;impacts.clear();shield_recoil=0
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;parry_wait=0;dodge=0;dodge_wait=0;hurt_wait=0;key="";enemies.clear();lesson_announced=false
 func open_at(p:Vector2)->bool:
  return not g.deep.world.solid(p) if g.zone=="mine" else g.surface.walkable(p)
@@ -44,7 +45,7 @@ func clear(a:Vector2,b:Vector2)->bool:
 func spawn():
  var context="practice" if practice() else g.handworks.context()
  if key==context:return
- key=context;enemies.clear();hit_stop=0;impacts.clear();swing=0;buffered=0;guard=false;guard_was=false;dodge=0;g.combat.riposte=0
+ key=context;enemies.clear();hit_stop=0;impacts.clear();shield_recoil=0;swing=0;buffered=0;guard=false;guard_was=false;dodge=0;g.combat.riposte=0
  if practice():
   enemies.append(make_enemy("practice",Vector2(580,430),0));return
  var w=g.deep.world
@@ -132,6 +133,7 @@ func update(dt:float):
   if dt<=0:return
  for effect in impacts:effect.life-=dt
  impacts=impacts.filter(func(effect):return effect.life>0)
+ shield_recoil=maxf(0,shield_recoil-dt)
  buffered=maxf(0,buffered-dt);parry=maxf(0,parry-dt);parry_wait=maxf(0,parry_wait-dt);dodge=maxf(0,dodge-dt);dodge_wait=maxf(0,dodge_wait-dt);hurt_wait=maxf(0,hurt_wait-dt);g.combat.riposte=maxf(0,g.combat.riposte-dt)
  var delta=g.get_global_mouse_position()+g.camera-(g.player-Vector2(0,25))
  if delta.length()>10:aim=delta.normalized()
@@ -232,6 +234,7 @@ func receive(e:Dictionary):
  var damage=float(HoldEnemyRoster.spec(e.kind).damage)
  var front=aim.dot((e.p-g.player).normalized())>.15
  if guard and front:
+  shield_recoil=.18
   if practice():HoldOnboarding.fact(g.state,"practice_guard")
   if parry>0:impact(g.player,.05,Color("8fffe5"),false);stagger(e,1.0);g.combat.riposte=1.25;g.sound.effect("parry",-15);say("Parried · opening for a counter")
   elif (g.state.combat.weapon=="axe" and e.kind!=3) or practice():impact(g.player,.025,Color("b8ddd8"),false);g.sound.effect("metal",-18);say("Shield held" if g.state.combat.weapon=="axe" else "Practice guard")
@@ -262,8 +265,8 @@ func draw_enemy(e:Dictionary):
   g.draw_colored_polygon(points,Color(1,.64,.2,.18));g.draw_arc(p,radius,angle-half,angle+half,24,Color("e5b86c"),2)
  g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,float(spec.body)+7,Color(0,0,0,.25));g.draw_set_transform(-cam)
  if practice():
-  var phase=.15*(1-e.time/.72) if e.state=="windup" else CONTACT_PHASE+(1-e.time/.75)*(1-CONTACT_PHASE) if e.state=="recover" else 0.0
-  HoldDrawnAnimation.paint(g,p-cam,g.state.npc("borin"),e.dir,e.walk,e.gait,.85,-cam,"axe" if e.state in ["windup","recover"] else "",phase)
+  var phase=.18+.33*(1-e.time/.72) if e.state=="windup" else CONTACT_PHASE+(1-e.time/.75)*(1-CONTACT_PHASE) if e.state=="recover" else 0.0
+  HoldDrawnAnimation.paint(g,p-cam,g.state.npc("borin"),e.dir,e.walk,e.gait,.85,-cam,"combat_axe" if e.state in ["windup","recover"] else "hold_combat_axe",phase)
  elif e.kind!=1:
   HoldEnemyRoster.draw(g,e)
  else:
@@ -279,14 +282,18 @@ func draw_enemy(e:Dictionary):
   g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44,4)),Color("312b2a"));g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44*e.hp/e.max,4)),Color("cf956c"))
   HoldArt.text(g,p+Vector2(-44,top-5),spec.name,11,Color("ead6ac"))
   if e.kind==3 and e.state=="windup":HoldArt.text(g,p+Vector2(-64,22),"Heavy · dodge / parry",12,Color("f0b97a"))
+func player_pose()->String:
+ if g.state.combat.weapon=="axe":
+  if swing>0:return "combat_axe"
+  if shield_recoil>0:return "parry_axe"
+  if guard:return "guard_axe"
+  return "hold_combat_axe"
+ if g.state.combat.weapon=="gun":return "hold_rifle"
+ return "hammer" if swing>0 else "hold_hammer"
 func draw_player(p:Vector2,zoom:float,offset:Vector2):
- var action="hammer" if g.state.combat.weapon=="hammer" else "axe"
- var pose_action=action if swing>0 and g.state.combat.weapon!="gun" else "hold_rifle" if g.state.combat.weapon=="gun" else "hold_"+action
+ var pose_action=player_pose()
  HoldDrawnAnimation.paint(g,p+offset,g.combat.profile(),locked_aim if swing>0 else aim,g.walking_pose,g.gait_clock,zoom,offset,pose_action,1-swing/g.combat.weapon().time if swing>0 else 0)
  g.draw_set_transform(offset)
- if g.state.combat.weapon=="axe":
-  var shield=p+(aim*23+Vector2(0,-27) if guard else Vector2(16 if aim.x<-.3 else -16,-31))*zoom
-  g.draw_texture_rect_region(HoldCombat.EQUIPMENT,Rect2(shield-Vector2(15,16)*zoom,Vector2(30,32)*zoom),Rect2(720,665,515,515))
  if guard:
   var center=p+aim*26-Vector2(0,24)
   g.draw_arc(center,22,aim.angle()-1.3,aim.angle()+1.3,20,Color("a7e0d6") if parry>0 else Color("c6b68d"),4)

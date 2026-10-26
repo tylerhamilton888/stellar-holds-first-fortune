@@ -1,17 +1,9 @@
-# 0.77.0 — Stone, Timber & Tradition
+# 0.78.0 — Grip, Guard & Craft
 
-Build with three compatible dwarven collections:
+Axe-and-shield combat now uses complete drawn poses for all fourteen character appearances. The axe stays the same weapon through ready, swing, contact and recovery. Shields sit on the character’s forearm with painted grips, raised guards and block reactions. Borin uses the same equipment poses in practice. Eight clipped hammer frames also retain their complete hammer heads. Existing combat timing, damage, hitboxes and saves are preserved.
 
-- **Hearthstone:** warm limestone, bound oak, blue slate and cozy plank floors.
-- **Forgehold:** dark basalt, copper bindings and rugged workshop stone.
-- **Oathhall:** carved granite, teal slate, ancestral brass and inlaid floors.
+Roadside rune-stones, timber signs, lantern posts, barrels, crates and plinths are separate objects. Find all six in **Furniture & Architecture → Roadside**. Each can be placed, moved and recovered independently. Signs have small physical bases beside the paths, with proper depth sorting. Barrel and crate pieces are decorative; use storage chests for items.
 
-Mix masonry, roofs, trim and room finishes independently. New wings use properly proportioned walls and windows. Extra floors form a set-back upper structure while the original building frontage stays intact. All 22 familiar designs remain buildable.
-
-Browse visual building cards, inspect the full plan and its cost, and choose original furnishings or an empty shell. Furniture and construction pieces now have illustrated catalogues. The materials screen previews a combination and quotes the cost before you apply it. Painted floors, wall courses and coping give rooms a finished foundation for your furnishings.
-
-**Try it:** Title → Dev Testing → Construction & decorating → F9 → Go to eastern building grounds. Reopen **F9**, then choose **Building Book**. Build a plan, stand at its door or step inside, press **O**, and choose **Materials & finishes**. Freeform building also offers all three collections.
-
-Existing saves, rooms, stairs, furnishings and stored goods are preserved. Finishes affect rooms, new partitions and additions; the original signature façade remains intact. Individual exterior window placement and NPC household/business assignment are not included.
+**Try combat:** Title → Dev Testing → Combat. Equip axe and shield, hold RMB to guard, then release and strike with LMB. **Try decor:** Dev Testing → Construction & decorating → Furniture & Architecture → Roadside.
 
 Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck.

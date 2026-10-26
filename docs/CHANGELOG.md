@@ -1,3 +1,11 @@
+# 0.78.0 — Grip, Guard & Craft
+
+- Whole axe/shield poses for all fourteen saved identities; consistent combat weapon, forearm grip, guard and impact states; shared Borin practice poses.
+- Eight original hammer crops now include the whole hammer head instead of clipping it into a blade-like sliver.
+- Six independent roadside furnishing components with shared art, costs, previews, collision and save behavior.
+- Depth-sorted roadside signs stand clear of portal approaches; decorative crates and barrels are explicitly labelled.
+- Dedicated native visual, combat-state and decor transaction regression case included in source and exact-pack gates.
+
 # 0.77.0 — Stone, Timber & Tradition
 
 - Three compatible architectural collections with independently selectable masonry, roofs, trim and floor finishes.

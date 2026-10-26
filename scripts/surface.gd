@@ -776,7 +776,7 @@ func plaque(p:Vector2,text:String):
  g.draw_style_box(style,Rect2(p-Vector2(width/2,17),Vector2(width,24)))
  A.text(g,p-Vector2(width/2-9,0),text,13,Color("ead4a0"))
 func signpost(p:Vector2,text:String):
- HoldWorldDetails.prop(g,p+Vector2(-48,4),"waystone",62)
+ HoldFurnishings.draw(g,p+Vector2(-48,4),"signpost")
 func prop(p:Vector2,index:int,width:float):
  var cell=Vector2(PROPS.get_width()/3.0,PROPS.get_height()/2.0)
  g.draw_texture_rect_region(PROPS,Rect2(p-Vector2(width/2,width*.94),Vector2(width,width)),Rect2(Vector2(index%3,index/3)*cell,cell))

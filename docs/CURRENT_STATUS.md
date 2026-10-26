@@ -1,3 +1,9 @@
+# 0.78.0 — Grip, Guard & Craft: implementation under final verification
+
+Axe/shield drawing now uses complete equipped poses for every saved identity. Detached shield icons and work-tool combat poses are removed from active player/practice rendering. Six separated roadside props share the player catalogue, placement and collision. Baseline 0.77.0 remains preserved on recovery/pre-combat88 at 32822157cc76f4f2f954bad7d848794adab8456a.
+
+The dedicated native case has passed 123 assertions and all 14 shield/weapon contact sheets have been reviewed. Full source/export gates and release publication are still pending. Do not describe this as a delivered Windows build until the delivery record replaces this note. Continue from polish/combat88. See assets/combat88/PRODUCTION.md and tests/combat88.gd.
+
 # 0.77.0 — Stone, Timber & Tradition: published, verified and merged
 
 Three compatible architectural collections are available: Hearthstone (oak and warm limestone), Forgehold (basalt and copper), and Oathhall (carved granite, teal and brass). Mix masonry, roofs, trim and room finishes independently. Annexes retain measured bay widths and full-size masonry; added storeys form a set-back upper block behind the intact original frontage. All 22 familiar designs remain buildable.
