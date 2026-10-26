@@ -32,7 +32,7 @@ static func hearth_mesh(time:float)->ArrayMesh:
  var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=vertices;arrays[Mesh.ARRAY_TEX_UV]=uvs;arrays[Mesh.ARRAY_INDEX]=indices
  var mesh=ArrayMesh.new();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays);fire_meshes[key]=mesh
  return mesh
-static func hearth(n:Node2D,p:Vector2,time:float,tint:Color):
+static func hearth(n:CanvasItem,p:Vector2,time:float,tint:Color):
  var t=time+p.x*.019+p.y*.011;var origin=p+Vector2(2,-13)
  var pulse=.88+.08*sin(t*7)+.04*sin(t*13)
  n.draw_texture_rect(glow_texture(),Rect2(p-Vector2(49,42),Vector2(98,62)),false,Color(tint.r,tint.g,tint.b,tint.a*pulse))

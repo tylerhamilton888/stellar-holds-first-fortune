@@ -1,3 +1,9 @@
+# Architectural collections — 0.77.0 candidate
+
+Three compatible collections, independent finishes, matching interiors and visual construction menus are implemented. Native collection tests pass; release gates are pending. Review the actual mixed-material previews and room captures before accepting a new visual checkpoint.
+
+Future scope: individually repositionable exterior windows/doors, arbitrary roof shapes, and assigning NPC households or businesses to new addresses. The current original frontage is a preserved architectural component; it is not advertised as per-window editing. Large empty rooms remain player-furnished. No unrelated progression or combat work is included.
+
 # 0.76.0 — The Builders of Keldrath: published, verified and merged
 
 All 22 prepared designs now share plans, exterior rendering, room geometry and player furnishing components. The Building Book offers furnished plans or empty shells, editable interiors, side/rear bays, five connected floors, rename/relocate/recover, private storage and real household/workshop services. Original painted fronts and household identities remain intact. Eastern building grounds have matching river/cliff boundaries. Existing construction and normal/test saves are preserved; older saves receive an exact pre-architecture backup.

@@ -9,6 +9,7 @@ static func descriptor(b:Dictionary)->Dictionary:
  if p.is_empty():return b
  var d=p.duplicate(true);d.p=b.p
  for key in ["extend_x","extend_y","extra_storeys","owner_id"]:d[key]=b.get(key,0 if key!="owner_id" else "")
+ d.style87=HoldArchitectureStyles.resolve(b)
  return d
 static func original_footprint(b:Dictionary)->Rect2:
  var d=descriptor(b)
@@ -30,47 +31,58 @@ static func facade(b:Dictionary)->Dictionary:
   var art=HoldKeldrathArt.source(d);return {"texture":art.texture,"source":art.rect,"destination":HoldKeldrathArt.rect(d)}
  var source=HoldWorldZones.BUILD_RECTS[d.art];var anchor=HoldWorldZones.BUILD_ANCHORS[d.art];var scale=d.width/source.size.x
  return {"texture":HoldWorldZones.BUILDINGS,"source":source,"destination":Rect2(d.p-(anchor-source.position)*scale,source.size*scale)}
-static func facade_courses(g,art:Dictionary,floors:int,alpha:float):
- var src:Rect2=art.source;var dest:Rect2=art.destination;var tint=Color(1,1,1,alpha)
- if floors==0:g.draw_texture_rect_region(art.texture,dest,src,tint);return
- var cut=.58;var band=.18;var h=dest.size.y*band
- # Roof and upper frontage lift as complete paintings; the inserted middle
- # courses use the same original material, scale, light and ornament.
- g.draw_texture_rect_region(art.texture,Rect2(dest.position-Vector2(0,h*floors),Vector2(dest.size.x,dest.size.y*cut)),Rect2(src.position,Vector2(src.size.x,src.size.y*cut)),tint)
- for i in floors:
-  g.draw_texture_rect_region(art.texture,Rect2(dest.position+Vector2(0,dest.size.y*cut-h*(i+1)),Vector2(dest.size.x,h)),Rect2(src.position+Vector2(0,src.size.y*(cut-band)),Vector2(src.size.x,src.size.y*band)),tint)
- g.draw_texture_rect_region(art.texture,Rect2(dest.position+Vector2(0,dest.size.y*cut),Vector2(dest.size.x,dest.size.y*(1-cut))),Rect2(src.position+Vector2(0,src.size.y*cut),Vector2(src.size.x,src.size.y*(1-cut))),tint)
+static func visual_bounds(b:Dictionary)->Rect2:
+ var d=descriptor(b);var art=facade(d);var r=footprint(b).merge(art.destination)
+ var extra=int(d.get("extra_storeys",0))
+ if extra>0:r=r.merge(Rect2(art.destination.position-Vector2(0,extra*58+35),Vector2(art.destination.size.x,extra*58+100)))
+ return r.grow(14)
+static func elevation(g,b:Dictionary,alpha:float=1.0):
+ var d=descriptor(b);var art=facade(d);var original=original_footprint(d);var r=footprint(b)
+ var style=HoldArchitectureStyles.resolve(d);var tint=Color(1,1,1,alpha)
+ var extra=int(d.get("extra_storeys",0))
+ # Annexes have real wall heights, continuous roofs and repeated full-size bays.
+ # The last wall tile is cropped rather than squeezing a whole forge into 40px.
+ if int(d.get("extend_y",0))>0:
+  var rear=Rect2(r.position-Vector2(0,10),Vector2(r.size.x,original.position.y-r.position.y+80))
+  HoldArchitectureStyles.roof(g,rear,style,tint)
+ if int(d.get("extend_x",0))>0:
+  var wing=Rect2(original.end.x-30,r.position.y, r.end.x-original.end.x+30,r.size.y)
+  g.draw_rect(Rect2(wing.position+Vector2(5,6),wing.size),Color(0,0,0,.22*alpha))
+  var wall=Rect2(wing.position.x,wing.end.y-86,wing.size.x,86)
+  HoldArchitectureStyles.wall(g,wall,style,true,tint)
+  HoldArchitectureStyles.post(g,Vector2(wing.end.x-9,wing.end.y),88,style.trim,tint)
+  var roof=Rect2(wing.position-Vector2(7,12),Vector2(wing.size.x+14,maxf(40,wing.size.y-74)))
+  HoldArchitectureStyles.roof(g,roof,style,tint)
+ # New storeys form a coherent set-back tower. The complete original roof and
+ # frontage stay intact in front of it; no arbitrary horizontal image slicing.
+ if extra>0:
+  var width=clampf(art.destination.size.x*.68,140,290)
+  var base=art.destination.position.y+72
+  var tower=Rect2(d.p.x-width*.5,base-extra*58,width,extra*58)
+  HoldArchitectureStyles.wall(g,tower,style,false,tint)
+  for z in extra:
+   var course=Rect2(tower.position+Vector2(0,z*58),Vector2(width,58))
+   HoldArchitectureStyles.wall(g,course,style,true,tint)
+   g.draw_line(course.position+Vector2(0,course.size.y),course.end,HoldArchitectureStyles.FAMILIES[style.wall].accent*tint,3)
+  for z in extra:
+   for x in [tower.position.x+6,tower.end.x-6]:HoldArchitectureStyles.post(g,Vector2(x,tower.position.y+(z+1)*58),58,style.trim,tint)
+  HoldArchitectureStyles.roof(g,Rect2(tower.position-Vector2(8,35),Vector2(width+16,35)),style,tint)
+ g.draw_texture_rect_region(art.texture,art.destination,art.source,tint)
 static func draw(w,b:Dictionary,alpha:float=1.0):
- var d=descriptor(b);var art=facade(d);var r=footprint(b)
- var extra=int(d.get("extra_storeys",0));var visible=art.destination.grow(art.destination.size.y*.18*extra).merge(r)
- if not visible.intersects(Rect2(w.view_camera(),Vector2(960,540))):return
+ var d=descriptor(b);var art=facade(d)
+ if not visual_bounds(b).intersects(Rect2(w.view_camera(),Vector2(960,540))):return
  if d.get("ward",false):
   HoldMasonryArt.building_volume(w,d)
   if d.id==15:HoldMasonryArt.wing(w.g,Rect2(d.p-Vector2(310,230),Vector2(620,230)))
- if int(d.get("extend_x",0))>0 or int(d.get("extend_y",0))>0:
-  var original=original_footprint(d)
-  HoldGrounding.pattern(w.g,HoldMasonryArt.SURFACES,r,HoldMasonryArt.surface_region(1))
-  # A complete painted window bay from the same masonry kit as the forge.
-  for i in int(d.get("extend_x",0)):
-   var bay=Rect2(656,864,211,316)
-   w.g.draw_texture_rect_region(HoldMasonryArt.ATLAS,Rect2(original.end.x+i*40,r.end.y-60,40,60),bay,Color(1,1,1,alpha))
-  HoldMasonryArt.wall(w.g,Rect2(r.position-Vector2(0,12),Vector2(r.size.x,18)))
  if not d.get("ward",false) and alpha==1.0 and art.destination.has_point(w.g.player) and w.g.player.y<d.p.y-25:alpha=.35
- facade_courses(w.g,art,extra,alpha)
+ elevation(w.g,d,alpha)
  if d.get("ward",false):HoldWardDesign.frontage(w,d)
 static func room_floor(w,area:String):
  var plan=HoldBuildingPlans.geometry(area);var source=plan.template;var g=w.g
  if source=="room:throne":HoldRoyalStage.floor_draw(w,area);return
- g.draw_rect(Rect2(Vector2.ZERO,plan.size),Color("182a30"))
+ HoldArchitectureStyles.room_shell(w,area)
  var floor_area=plan.floor
  var room="home" if source.begins_with("home:") else source.trim_prefix("room:")
- var warm=room in ["home","tavern","commission","wayfarer","greenhearth","kettle_loft"] or HoldNeighborhood.is_home(source)
- w.tile(1 if warm else 0,floor_area,110,Color("ddd4bb") if warm else Color("cbd1c5"))
- for x in range(150,int(floor_area.end.x+10),55):
-  w.s.house.material(3,Rect2(x,210,54,70))
-  g.draw_style_box(w.stone_style(Color("a1a38b")),Rect2(x,204,54,15))
- for x in [150,floor_area.end.x-10]:g.draw_style_box(w.stone_style(Color("68766f")),Rect2(x,260,20,floor_area.size.y))
- for r in [Rect2(160,floor_area.end.y-10,280,18),Rect2(520,floor_area.end.y-10,floor_area.end.x-520,18)]:g.draw_style_box(w.stone_style(Color("9ca18c")),r)
  HoldRoomLayout.dressing(w,source);HoldHouseholds.dressing(w,source)
  if HoldBuildingPlans.has_stairs(area):
   var p=HoldBuildingPlans.stair_position(area);var up=HoldBuildingPlans.floor_number(area)==0
@@ -87,11 +99,12 @@ static func wall_piece(g,c:Vector2i,tiles:Dictionary):
  if kind=="":return
  var p=Vector2(c)*40+Vector2(20,20);var rect=Rect2(p-Vector2(20,46),Vector2(40,64))
  g.draw_rect(Rect2(rect.position+Vector2(4,5),rect.size),Color(0,0,0,.22))
- wall_panel(g,rect)
+ var style=HoldArchitectureStyles.room(g.surface.area)
+ HoldArchitectureStyles.wall(g,rect,style,false)
  g.draw_rect(Rect2(rect.position-Vector2(0,3),Vector2(40,7)),Color("a49d83"))
  if kind=="wall":return
  if kind=="window":
-  g.draw_texture_rect_region(HoldMasonryArt.ATLAS,rect,Rect2(656,864,211,316));return
+  g.draw_texture_rect_region(HoldArchitectureStyles.ATLAS,Rect2(rect.position+Vector2(0,10),Vector2(40,40)),HoldArchitectureStyles.WINDOWS[HoldArchitectureStyles.index(style.wall)]);return
  if kind=="door" and not t.get("open",false):
   var unit=HoldHearthcraft.MATERIALS.get_size()/Vector2(3,2)
   g.draw_texture_rect_region(HoldHearthcraft.MATERIALS,rect,Rect2(Vector2(2,1)*unit,unit));return

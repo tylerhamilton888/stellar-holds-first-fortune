@@ -2,8 +2,8 @@ class_name HoldBuild
 extends RefCounted
 
 # Authoritative metadata for the title screen, validation and packaging.
-const VERSION="0.76.0"
-const CHAPTER="THE BUILDERS OF KELDRATH"
+const VERSION="0.77.0"
+const CHAPTER="STONE, TIMBER & TRADITION"
 const ENGINE="4.4.1"
 
 

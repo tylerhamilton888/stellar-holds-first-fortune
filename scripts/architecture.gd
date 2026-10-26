@@ -16,6 +16,12 @@ var preview_key=""
 var preview_fits=false
 var preview_reason=""
 var preview_until=0
+var browse_only=false
+var collection="all"
+var details_group="Hearth"
+var draft_style={}
+var style_owner=""
+var plan_style={}
 func _init(surface):
  surface_ref=weakref(surface);g=surface.g;active_owner=weakref(self)
 static func current():return active_owner.get_ref() if active_owner!=null else null
@@ -31,6 +37,7 @@ func inside()->Dictionary:return record(HoldBuildingPlans.room_parts(s.area)[0])
 func current_floor()->int:return HoldBuildingPlans.floor_number(s.area)
 func building_object(b:Dictionary)->Dictionary:
  var o=HoldBuildingPlans.instance(b.plan,Vector2(b.x,b.y))
+ o.style87=HoldArchitectureStyles.resolve(b)
  o.owner_id=str(b.id);o.extend_x=b.get("extend_x",0);o.extend_y=b.get("extend_y",0)
  o.extra_storeys=maxi(0,b.get("rooms",HoldBuildingPlans.plan(b.plan).rooms).size()-HoldBuildingPlans.plan(b.plan).rooms.size())
  return o
@@ -167,12 +174,14 @@ func place(p:Vector2)->bool:
  p=(p/20).round()*20
  var b=record(moving);var o=building_object(b) if not b.is_empty() else HoldBuildingPlans.instance(selected,p)
  o.p=p
+ if b.is_empty() and not plan_style.is_empty():o.style87=plan_style.duplicate()
  if not valid(o,moving):g.notify(reason);return false
  if not b.is_empty():
   b.x=p.x;b.y=p.y;moving="";s.cancel_placement();g.save_game();return true
  if not g.state.pay(cost(selected)):g.notify("Bring "+HoldData.cost_text(cost(selected))+" in your pack.");return false
  var d=data();var id=str(int(d.next));d.next=int(d.next)+1
  b={"id":id,"plan":selected,"name":HoldBuildingPlans.plan(selected).name,"area":s.area,"x":p.x,"y":p.y,"extend_x":0,"extend_y":0,"rooms":HoldBuildingPlans.plan(selected).rooms.duplicate(),"construction":{},"shell_paid":HoldBuildingPlans.shell_cost(selected)}
+ b.style87=HoldArchitectureStyles.resolve(o)
  d.instances.append(b)
  for z in b.rooms.size():seed_room(b,z,furnish_plan)
  s.cancel_placement();g.sound.effect("build");g.save_game();g.notify(b.name+" built. Walk through its door; O opens renovation and furnishing plans.");return true
@@ -253,57 +262,41 @@ func recover()->bool:
  if not empty_for_recovery(b):g.notify("Empty every room, including furniture, storage, partitions and equipment, before recovering the shell.");return false
  for key in b.shell_paid:g.state.add(key,int(b.shell_paid[key]))
  data().instances.erase(b);g.save_game();g.refresh_panel();return true
-func panel():
- g.label(g.panel_body,"Build the architecture you see in Keldrath and the countryside, then make it your own.",16)
+func panel():HoldArchitectureView.book(self)
+func details_panel():HoldArchitectureView.furniture(self)
+func plan_panel():HoldArchitectureView.plan_page(self)
+func style_panel():HoldArchitectureView.style_page(self)
+func select_plan(id:String):
+ selected=id;plan_style=HoldArchitectureStyles.preset(HoldArchitectureStyles.family(id));g.open_panel("architecture_plan")
+func open_style():
  var b=nearby()
- if not b.is_empty():
-  var section=g.section(g.panel_body,"Your "+b.name)
-  var name=LineEdit.new();name.text=b.name;name.placeholder_text="Building name";name.max_length=48;section.add_child(name)
-  g.small_button(section,"Name this building",func():
-   var value=name.text.strip_edges()
-   if value!="":b.name=value;g.save_game();g.refresh_panel())
-  var row=GridContainer.new();row.columns=2;section.add_child(row)
-  if not interior():
-   g.small_button(row,"Add a side bay · 24 stone + 16 timber / floor",func():expand("extend_x"))
-   g.small_button(row,"Extend the rear · 24 stone + 16 timber / floor",func():expand("extend_y"))
-   g.small_button(row,"Move the whole building",move_building)
-   g.small_button(row,"Recover empty shell",recover)
-  var upstairs=g.small_button(row,"Add upper floor",add_floor);upstairs.disabled=b.rooms.size()>=5;upstairs.tooltip_text=HoldData.cost_text(floor_cost(b))+" · maximum five floors"
-  g.small_button(row,"Floors, partitions & doors",func():g.open_panel("house_build"))
-  g.small_button(row,"Furniture & architectural details",func():g.open_panel("architecture_details"))
-  g.small_button(row,"Move nearby furniture",s.move_nearby_furnishing)
-  g.small_button(row,"Recover nearby furniture",s.recover_decor)
-  g.small_button(row,"Workstations & storage racks",func():g.open_panel("handworks"))
-  g.label(section,"Next upper floor: "+HoldData.cost_text(floor_cost(b))+". Maximum five floors.",14)
-  g.label(section,"%d floors · %d side bays · %d rear bays. Room contents and building alterations are saved together." % [b.rooms.size(),int(b.extend_x),int(b.extend_y)],14)
- if interior():return
- g.label(g.panel_body,"Large halls fit on the eastern building grounds.",15)
- var tabs=g.row(g.panel_body)
- for group in ["Hearths","Industry","Civic"]:g.small_button(tabs,group,func():category=group;g.refresh_panel())
- var furnished=CheckBox.new();furnished.text="Include original furnishings";furnished.button_pressed=furnish_plan;tabs.add_child(furnished)
- furnished.toggled.connect(func(value):furnish_plan=value;g.refresh_panel())
- for id in HoldBuildingPlans.catalogue():
-  var plan=HoldBuildingPlans.plan(id)
-  if plan.category!=category:continue
-  var row=g.row(g.panel_body)
-  var art=HoldBuildingArt.facade(HoldBuildingPlans.instance(id,Vector2.ZERO))
-  var crop=AtlasTexture.new();crop.atlas=art.texture;crop.region=art.source
-  var thumbnail=TextureRect.new();thumbnail.texture=crop;thumbnail.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;thumbnail.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;thumbnail.custom_minimum_size=Vector2(64,72);row.add_child(thumbnail)
-  var text=g.label(row,plan.name+" · %d floor%s\n" % [plan.rooms.size(),"s" if plan.rooms.size()>1 else ""]+HoldData.cost_text(cost(id)),15)
-  text.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  var button=g.small_button(row,"Build",func():start(id));button.disabled=not g.state.afford(cost(id)) or s.area!="claim"
- g.small_button(g.panel_body,"Build freely · floors, walls, roofs and stairs",func():g.open_panel("house_build"))
-func details_panel():
- g.label(g.panel_body,"FURNITURE & ARCHITECTURAL DETAILS",21,Color("edc98a"))
- g.label(g.panel_body,"The same furnishings and royal stonework used in prepared buildings. Place them in your own rooms or on your land.",15)
- for id in HoldFurnishings.BUILDABLE:
-  var row=g.row(g.panel_body);var item=HoldFurnishings.ITEMS[id]
-  var label=g.label(row,item.title+" · "+HoldData.cost_text(item.cost),15);label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  var button=g.small_button(row,"Place",func():s.start_placement(id));button.disabled=not s.can_furnish() or not g.state.afford(item.cost)
+ if b.is_empty():return
+ style_owner=str(b.id);draft_style=HoldArchitectureStyles.resolve(b);g.open_panel("architecture_style")
+func style_cost(b:Dictionary)->Dictionary:
+ var old=HoldArchitectureStyles.resolve(b);var total={}
+ if old.wall!=draft_style.get("wall",old.wall):total.stone=12*b.rooms.size()
+ if old.roof!=draft_style.get("roof",old.roof):total.wood=8
+ if old.trim!=draft_style.get("trim",old.trim):total.iron=2*b.rooms.size()
+ if old.floor!=draft_style.get("floor",old.floor):
+  var r=HoldBuildingPlans.geometry(HoldBuildingPlans.room_id(str(b.id))).floor
+  var key="wood" if draft_style.floor=="oak" else "stone"
+  total[key]=int(total.get(key,0))+ceili(r.get_area()/6400.0)*b.rooms.size()
+ return total
+func apply_style()->bool:
+ var b=nearby()
+ if b.is_empty() or str(b.id)!=style_owner:return false
+ for key in HoldArchitectureStyles.OPTIONS:
+  if not HoldArchitectureStyles.OPTIONS[key].has(draft_style.get(key,"")):return false
+ var fee=style_cost(b)
+ if fee.is_empty():return false
+ if not g.state.pay(fee):g.notify("Bring "+HoldData.cost_text(fee)+" to refinish this building.");return false
+ b.style87=draft_style.duplicate();HoldBuildingPlans.add_cost(b.shell_paid,fee)
+ g.sound.effect("build");g.save_game();g.refresh_panel();g.notify("Finishes applied. Your original frontage and room contents are preserved.");return true
 func preview():
  if not s.placing.begins_with("blueprint:"):return
  var p=((g.get_global_mouse_position()+g.camera)/20).round()*20
  var old=record(moving);var o=building_object(old) if not old.is_empty() else HoldBuildingPlans.instance(selected,p);o.p=p
+ if old.is_empty() and not plan_style.is_empty():o.style87=plan_style
  var key=selected+":"+str(p)+":"+str((g.player/10).floor())+":"+moving
  if key!=preview_key or Time.get_ticks_msec()>preview_until:
   preview_fits=valid(o,moving);preview_reason=reason;preview_key=key;preview_until=Time.get_ticks_msec()+500

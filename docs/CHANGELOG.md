@@ -1,3 +1,11 @@
+# 0.77.0 — Stone, Timber & Tradition
+
+- Three compatible architectural collections with independently selectable masonry, roofs, trim and floor finishes.
+- Proportioned annex walls and windows; complete original façades preserved; extra floors use set-back upper rooms instead of arbitrary image slicing.
+- Painted oak, basalt and granite floors, matching room walls and perimeter detailing.
+- Visual plan, furnishing and structure catalogues; real building previews, explicit material studies and transactional refinishing.
+- Additive saved finishes preserve rooms, stairs, furniture, storage and paid shell recovery.
+
 # 0.76.0 — The Builders of Keldrath: published, verified and merged
 
 All 22 prepared designs now share plans, exterior rendering, room geometry and player furnishing components. The Building Book offers furnished plans or empty shells, editable interiors, side/rear bays, five connected floors, rename/relocate/recover, private storage and real household/workshop services. Original painted fronts and household identities remain intact. Eastern building grounds have matching river/cliff boundaries. Existing construction and normal/test saves are preserved; older saves receive an exact pre-architecture backup.

@@ -48,7 +48,7 @@ static func footprint(kind:String,p:Vector2)->Rect2:
 static func silhouette(kind:String,p:Vector2)->Rect2:
  var size:Vector2=geometry(kind).size
  return Rect2(p-Vector2(size.x*.5,size.y),size)
-static func draw(n:Node2D,p:Vector2,kind:String,tint:Color=Color.WHITE):
+static func draw(n:CanvasItem,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
  if kind.begins_with("royal_"):
   var index=["royal_throne","royal_pillar","royal_arch","royal_brazier"].find(kind)
@@ -62,7 +62,7 @@ static func draw(n:Node2D,p:Vector2,kind:String,tint:Color=Color.WHITE):
   HoldAmbientProps.hearth(n,p,float(clock) if clock!=null else 0.0,tint)
  else:n.draw_texture_rect_region(ATLAS,silhouette(kind,p),CROPS[item.art],tint)
  for detail in ITEMS.get(kind,ITEMS.table).get("dressing",[]):draw(n,p+detail[1],detail[0],tint)
-static func draw_anvil(n:Node2D,r:Rect2,tint:Color=Color.WHITE):n.draw_texture_rect(ANVIL,r,false,tint)
+static func draw_anvil(n:CanvasItem,r:Rect2,tint:Color=Color.WHITE):n.draw_texture_rect(ANVIL,r,false,tint)
 # Service anchors are on the usable side of the physical prop.
 static func bedside(p:Vector2,side:int=1,kind:String="bed")->Vector2:return p+Vector2(side*(geometry(kind).base.size.x*.5+16),-32)
 static func desk_access(p:Vector2)->Vector2:return p+Vector2(0,22)

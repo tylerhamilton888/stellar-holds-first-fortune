@@ -1,3 +1,7 @@
+# Compatible architecture — 0.77.0
+
+Hearthstone, Forgehold and Oathhall share module scale, light direction and placement rules. Use original fronts intact, full-size wall/window bays and cropped partial masonry tiles; never squeeze an entire forge into a small extension or slice an arbitrary strip through a roof. Add storeys as a coherent set-back upper structure. Mix masonry, roof and trim independently; a material study must be labelled as an example if it includes unbuilt additions. Painted room materials and coping must align with the existing walkable bounds. Judge additions and furniture beside the approved Dwarf at gameplay scale. Exact original image-generation prompts and source policy are in assets/architecture87/PRODUCTION.md.
+
 # Portrait parity — 0.60.0
 Dedicated whole portraits must match the current whole-character identities. All male chins/jaws are fully bearded; preserve each braid, fork, topknot, bare crown, bun, bob and ponytail. `assets/portraits60/production.json` records briefs and repaired selections. The Lord's fixed portrait matches his seated throne sprite. Do not use a different legacy face in dialogue or an older actor renderer in the audience.
 

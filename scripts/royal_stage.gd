@@ -60,8 +60,7 @@ static func obstacles()->Array:
  return out
 static func floor_draw(w,area:String="room:throne"):
  var geometry=HoldBuildingPlans.geometry(area);var floor_area=geometry.floor
- var g=w.g;g.draw_rect(Rect2(Vector2.ZERO,geometry.size),Color("14242b"))
- w.tile(0,floor_area,110,Color("a9b8ba"))
+ var g=w.g;HoldArchitectureStyles.room_shell(w,area)
  # Side galleries frame a broad, unobstructed processional aisle.
  for x in [185,865]:
   w.tile(0,Rect2(x,320,245,700),110,Color("79898b"))
@@ -76,9 +75,6 @@ static func floor_draw(w,area:String="room:throne"):
  var center=Vector2(650,1030)
  for i in 8:
   var angle=i*TAU/8;g.draw_line(center,center+Vector2.from_angle(angle)*30,Color("d0ae65"),3)
- for x in range(150,int(floor_area.end.x),55):w.s.house.material(3,Rect2(x,205,55,75))
- for x in [150,floor_area.end.x-10]:g.draw_style_box(w.stone_style(Color("68766f")),Rect2(x,260,20,floor_area.size.y))
- for r in [Rect2(160,floor_area.end.y-10,450,18),Rect2(690,floor_area.end.y-10,floor_area.end.x-690,18)]:g.draw_style_box(w.stone_style(Color("9ca18c")),r)
  if HoldBuildingPlans.has_stairs(area):HoldNeighborhood.draw_stairs(w,HoldBuildingPlans.stair_position(area),HoldBuildingPlans.floor_number(area)==0,96)
  HoldCivicArt.exit_floor(g,area)
 static func draw_prop(g,o:Dictionary,t:float,tint:Color=Color.WHITE):
