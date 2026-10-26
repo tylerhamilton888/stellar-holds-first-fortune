@@ -100,7 +100,7 @@ func input(e:InputEvent)->bool:
   if e.keycode==KEY_F:
    if g.handworks.busy_hands():say("Park the cart or set down your load first.");return true
    g.combat.armed=not g.combat.armed;g.mining_gun.selected=false;swing=0;guard=false;buffered=0;g.combat.riposte=0;return true
-  if e.keycode==KEY_Q and g.combat.armed:evade();return true
+  if e.is_action_pressed("dodge") and g.combat.armed:evade();return true
  if e is InputEventMouseButton and g.combat.armed and not g.hotbar.over():
   if e.button_index==MOUSE_BUTTON_LEFT and e.pressed:buffered=.16;return true
  return false
@@ -303,14 +303,14 @@ func overlay():
  draw_impacts()
  if not g.combat.armed:return
  g.draw_set_transform(Vector2.ZERO)
- var text="LMB strike · RMB guard / parry · Q directional dodge · F tools"
+ var text="LMB strike · RMB guard / parry · Space directional dodge · F tools"
  if practice():
   var f=HoldOnboarding.ensure(g.state).facts
   text="Practice · Blows %d/3   Guard %d/1   Evade a strike %d/1" % [mini(3,int(f.get("practice_hit",0))),mini(1,int(f.get("practice_guard",0))),mini(1,int(f.get("practice_dodge",0)))]
  var y=178.0 if g.hotbar.bar_y()<100 else 82.0
  g.draw_rect(Rect2(18,y,620,49 if practice() else 28),Color(.03,.08,.10,.93))
  HoldArt.text(g,Vector2(28,y+19),text,14,Color("ead6ac"))
- if practice():HoldArt.text(g,Vector2(28,y+39),"Mouse faces · hold LMB strike · RMB guard · Q dodge · F tools",13,Color("afd2c5"))
+ if practice():HoldArt.text(g,Vector2(28,y+39),"Mouse faces · hold LMB strike · RMB guard · Space dodge · F tools",13,Color("afd2c5"))
  else:
   g.draw_rect(Rect2(720,y,220,28),Color(.03,.08,.10,.93))
   HoldArt.text(g,Vector2(730,y+19),"%d HP · B gear" % g.state.combat.health,14,Color("afd2c5"))

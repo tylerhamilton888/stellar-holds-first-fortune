@@ -59,7 +59,7 @@ func reset_actions():
 func toggle():
  if not HoldOnboarding.combat_ready(g.state) and not HoldPractice.allowed(g):g.notify("Borin will introduce weapons after your return-route lesson and the lift repairs.");return
  armed=not armed;g.swing=0;reset_actions()
- g.notify("WEAPON READY — LMB attack • RMB guard / timed parry • Q dodge • B equipment" if armed else "Tools ready — 1–4 select tools. F draws your weapon.")
+ g.notify("WEAPON READY — LMB attack • RMB guard / timed parry • Space dodge • B equipment" if armed else "Tools ready — 1–4 select tools. F draws your weapon.")
 func solid(p:Vector2)->bool:
  if g.room_id=="training":return p.y>=410 or p.x<65 or p.x>890
  return g.geo.at_pos(p) not in [0,12]
@@ -289,7 +289,7 @@ func panel():
  var summary=VBoxContainer.new();summary.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(summary)
  g.label(summary,"%s  •  %s" % [WEAPONS[g.state.combat.weapon].name,ARMOR[g.state.combat.armor].name],18,Color("edc98a"))
  g.label(summary,"Health %d / 100  •  Cartridges %d" % [g.state.combat.health,g.state.count("ammo")],16)
- g.label(summary,"F draw / stow  •  Left click attack  •  Right click guard / parry  •  Q dodge",16)
+ g.label(summary,"F draw / stow  •  Left click attack  •  Right click guard / parry  •  Space dodge",16)
  var tabs=g.row(g.panel_body)
  for slot in ["weapon","armor"]:
   var tab=g.small_button(tabs,"Weapons" if slot=="weapon" else "Armor",func():g.gear_tab=slot;g.open_panel("equipment",false));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL

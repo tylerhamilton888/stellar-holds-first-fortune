@@ -8,6 +8,21 @@ func run():
   for x in range(14,30):w.set_cell(Vector2i(x,y),0)
  g.player=Deepworks.center(Vector2i(20,20));g.fight.spawn();g.combat.armed=true
  var f=g.fight
+ # Exercise the real event route, including modal suppression and jump conflict.
+ g.jump_buffer=0;f.aim=Vector2.RIGHT
+ Input.action_press("down");key(KEY_SPACE);Input.action_release("down")
+ check(f.dodge>0 and f.dodge_vector==Vector2.DOWN and g.jump_buffer==0,"Space dodges toward movement without also jumping")
+ var wait=f.dodge_wait;key(KEY_SPACE)
+ check(f.dodge_wait==wait,"Repeated Space cannot reset dodge cooldown")
+ f.dodge=0;f.dodge_wait=0;key(KEY_Q)
+ check(f.dodge==0,"Q no longer triggers combat dodge")
+ g.open_panel("inventory");key(KEY_SPACE)
+ check(f.dodge==0,"Space cannot dodge through an open menu");g.close_panel()
+ g.combat.armed=false;key(KEY_SPACE)
+ check(f.dodge==0,"Stowed weapons do not trigger combat dodge")
+ g.combat.armed=true;f.dodge_wait=0;key(KEY_SPACE)
+ check(f.dodge>0 and f.dodge_vector==Vector2.RIGHT,"Stationary Space dodge follows aim")
+ f.dodge=0;f.dodge_wait=0
  check(w.layer().has("encounter_companions"),"New encounter records persist companion positions")
  check(f.enemies.size()>=2 and f.enemies.size()<=4,"New deep chambers contain bounded pairs")
  var records=w.layer().encounters.duplicate(true);var companions=w.layer().encounter_companions.duplicate(true)

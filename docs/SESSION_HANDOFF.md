@@ -1,3 +1,9 @@
+# Spacebar dodge — source update
+
+Combat dodge now uses Space through a named input action. Q remains material set-down. HUD, training dialogue and equipment/help instructions match. The legacy armed input route consumes Space before jump buffering. Six real-event checks extend combat83; playability54 uses the new key. Native combat-preview passed all 37 assertions with zero errors; updated HUD reviewed at gameplay scale. Evidence: test-results/space-dodge-native2. No new Windows release yet.
+
+The five proposed combat improvements are an agreed direction; they are not implemented by this binding change. Audit existing buffering, riposte, stagger protection and enemy behaviors before extending them.
+
 # 0.78.0 — Grip, Guard & Craft: published, verified and merged
 
 Axe-and-shield combat now uses complete equipped drawings for all fourteen saved identities, including walking, strikes, guard and block reactions. The shield stays on the painted forearm and grip; practice Borin uses the same poses. Eight original hammer crops now retain their complete heads. Damage, hitboxes, timing, original assets and saved appearance choices remain preserved.
