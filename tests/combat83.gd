@@ -85,6 +85,24 @@ func run():
  check(g.state.combat.health==hp,"Outside amber cone is safe at actual impact")
  near.p=origin-Vector2.from_angle(.85)*70;near.state="windup";near.time=.01;f.update(.02)
  check(g.state.combat.health==hp-16,"Inside amber cone is hit at actual impact")
+ # Shield shove creates space but cannot be spammed, damage or farm mastery.
+ f.enemies=[near];g.combat.armed=true;g.state.combat.weapon="axe"
+ f.swing=0;f.dodge=0;f.bash_wait=0;f.aim=Vector2.RIGHT;f.hit_stop=0
+ near.p=g.player+Vector2(35,0);near.hp=64;near.kind=0;near.state="idle";near.stagger_wait=0
+ var shove_start:Vector2=near.p
+ f.shield_bash()
+ check(near.p.x>shove_start.x and near.hp==64 and near.state=="stun","Shield shove displaces and interrupts without free damage")
+ var shove_end:Vector2=near.p;f.shield_bash()
+ check(near.p==shove_end,"Shield shove cooldown prevents repeated displacement")
+ near.stagger_wait=0;near.state="idle";near.poise=0
+ f.pressure(near,24);f.pressure(near,24)
+ check(near.state=="idle","Light pressure requires several hits to break poise")
+ f.pressure(near,24)
+ check(near.state=="stun" and near.poise==0,"Accumulated pressure opens a readable stagger")
+ near.state="recover";f.pressure(near,200)
+ check(near.state=="recover","Stagger immunity prevents pressure stun locks")
+ f.cancel_actions()
+ check(f.bash_wait==0 and f.buffered==0,"Action cancellation clears shove state")
  f.enemies=[near,far];g.combat.armed=true;near.p=origin+Vector2(70,0);near.state="windup";near.time=.5
  g.notice_time=0
  g.state.combat.weapon="axe";f.aim=Vector2.RIGHT;f.guard=true;near.dir=Vector2.LEFT;far.p=g.player+Vector2(140,65);far.kind=1

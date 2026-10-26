@@ -85,8 +85,12 @@ func run():
  check(not HoldSkirmish.sector_hits(Vector2.ZERO,Vector2.RIGHT,76,.9,Vector2(-30,0),10),"Attack cannot hit behind its committed direction")
  g.player=origin;g.state.combat.weapon="axe";f.hit_stop=0;f.hurt_wait=0;f.cancel_actions();f.aim=Vector2.RIGHT
  orc=f.make_enemy("contact84",origin+Vector2(70,0),2);f.enemies=[orc];f.strike();f.aim=Vector2.LEFT
- f.update(.48*.51)
- check(orc.hp==112 and f.locked_aim==Vector2.RIGHT,"Anticipation does no damage and mouse changes do not redirect strike")
+ g.camera=g.player-Vector2(0,25)-g.get_global_mouse_position()+Vector2(-100,0)
+ f.update(.01)
+ check(f.locked_aim==Vector2.LEFT and orc.hp==112,"Early preparation follows mouse without dealing damage")
+ f.swing=.48*.72;f.locked_aim=Vector2.RIGHT
+ f.update(.48*.23)
+ check(orc.hp==112 and f.locked_aim==Vector2.RIGHT,"Committed anticipation no longer follows mouse")
  f.update(.48*.02)
  check(orc.hp==94 and f.hit_stop>0,"Damage and hit-stop begin on authored contact key")
  check(HoldWholeFrames.contact_frame(1-f.swing/.48)==2,"Hit-stop holds the actual contact drawing")

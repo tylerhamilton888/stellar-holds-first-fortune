@@ -1,3 +1,7 @@
+# Combat feel — implementation candidate
+
+Extends Space-dodge branch with early windup aim adjustment, late recovery guard cancel, goblin flanking during allied commitments, decaying visible poise pressure and stagger breaks, cooldown-limited RMB+LMB shield shove, and wall-stop feedback/pressure. Existing orc/troll timings, armor, riposte and stagger immunity remain. No stamina or save-schema change. Shield shove reuses the complete braced/recoil pose; no new art. Terrain scope is wall-safe knockback and wall impacts, not destructible furnishings. Native combat suite: 43 passing assertions. Enemy/hitbox suite: 97 passing assertions, including early steering and committed contact. HUD capture reviewed. Evidence: test-results/combat-feel-verified and combat-feel-enemies-final. No new release or merge; subjective feel and bespoke shove animation still need review.
+
 # Spacebar dodge — source update
 
 Combat dodge now uses Space through a named input action. Q remains material set-down. HUD, training dialogue and equipment/help instructions match. The legacy armed input route consumes Space before jump buffering. Six real-event checks extend combat83; playability54 uses the new key. Native combat-preview passed all 37 assertions with zero errors; updated HUD reviewed at gameplay scale. Evidence: test-results/space-dodge-native2. No new Windows release yet.
