@@ -1,6 +1,8 @@
-# Combat poses and independent roadside props — 0.78.0
+# Combat poses and independent roadside props — delivered in 0.78.0
 
-Implementation and focused native acceptance are complete; final source/export delivery gates are pending. This fixes equipment continuity and attached shield presentation, and exposes the six separated props to players. Equipment instances, schematics, signature crafting expeditions and expanded combat direction artwork remain separate future scope.
+PR #47 is merged and the verified Windows release is published. All fourteen identities have held axe/shield poses; eight clipped original hammer heads are restored. Six separated roadside props share the world and player catalogue. Native visual review, 494 focused checks, all 32 source cases plus people-preview, and 22 exact-export cases / 1,733 checks passed. See testing/combat88.md.
+
+Equipment instances, schematics, signature crafting expeditions, expanded directional work strokes and fully distinct rear recoil artwork remain future scope. The source workflow took 43 minutes 58 seconds against its 45-minute budget: partition independent native cases before adding further scenarios. No CI gate has been weakened or skipped.
 
 # Architectural collections — delivered in 0.77.0
 

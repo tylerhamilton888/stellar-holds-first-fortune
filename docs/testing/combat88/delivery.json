@@ -1,0 +1,49 @@
+{
+  "version": "0.78.0",
+  "runtime_commit": "b2ce75a095c6aefe801b1cdb46f648448e40253d",
+  "runtime_tree": "9575060eb5e44fbaeab8d0784f0210f1803f89e1",
+  "runtime_pr": 47,
+  "runtime_merge": "fe060bf55202a59011ac30ae8fbdbc3f0cb00f94",
+  "source_run": 40334541809,
+  "source_cases": 32,
+  "people_preview_passed": true,
+  "release_run": 40334541656,
+  "pack_cases": 22,
+  "pack_checks": 1733,
+  "local_checks": 494,
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.78.0",
+  "tag_target": "b2ce75a095c6aefe801b1cdb46f648448e40253d",
+  "clean_build": true,
+  "exported_visuals_reviewed": [
+    "male0-shield.png",
+    "female3-weapons.png",
+    "separate-props.png",
+    "practice-recoil.png"
+  ],
+  "verification": {
+    "downloaded_build_report_and_evidence_hashes_match": true,
+    "uploaded_zip_metadata_matches_report": true,
+    "zip_redownloaded_locally": false,
+    "identical_native_exported_boards": 29
+  },
+  "assets": [
+    {
+      "name": "build.json",
+      "size": 822,
+      "digest": "sha256:b4eae5bd9204852ca1c8085a41cc62a81238842a341d40b4ae57c604e6b4df3f",
+      "browser_download_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.78.0/build.json"
+    },
+    {
+      "name": "Stellar-Holds-First-Fortune-0.78.0-Windows.zip",
+      "size": 767100400,
+      "digest": "sha256:583a5e070dddad84854d2ac747f9edc1a2a1fea6528d39dfde43f450d8295cb3",
+      "browser_download_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.78.0/Stellar-Holds-First-Fortune-0.78.0-Windows.zip"
+    },
+    {
+      "name": "verification-evidence.tar.gz",
+      "size": 225624766,
+      "digest": "sha256:618386057bbe762b7656d550b5c6514519b9cbfc68162de57a5b4d9c540d0f53",
+      "browser_download_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.78.0/verification-evidence.tar.gz"
+    }
+  ]
+}
