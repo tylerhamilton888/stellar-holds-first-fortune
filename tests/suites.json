@@ -37,7 +37,8 @@
       "combat",
       "enemies",
       "dev_testing",
-      "architecture"
+      "architecture",
+      "architecture_style"
     ],
     "modular": [
       "modular",
@@ -260,6 +261,16 @@
       "work",
       "dev_testing",
       "menus"
+    ],
+    "architecture-style-preview": [
+      "architecture_style"
+    ],
+    "architecture-style-regression": [
+      "architecture",
+      "menus",
+      "homestead",
+      "royal",
+      "modular"
     ]
   },
   "cases": {
@@ -382,6 +393,10 @@
     "architecture": {
       "script": "tests/architecture86.gd",
       "marker": "ARCHITECTURE86"
+    },
+    "architecture_style": {
+      "script": "tests/architecture87.gd",
+      "marker": "ARCHITECTURE87"
     }
   }
 }

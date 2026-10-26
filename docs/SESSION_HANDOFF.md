@@ -1,3 +1,11 @@
+# 0.77.0 — Stone, Timber & Tradition: candidate
+
+The building system now has three compatible architectural collections: Hearthstone (oak and welcoming limestone), Forgehold (basalt and copper), and Oathhall (carved granite, teal and brass). Independent masonry, roof, trim and room-finish selections share measured modules. Annexes retain real bay widths and full-size masonry; added storeys form a set-back upper block behind the intact original frontage. Original façades, layouts and furnishings remain at their established paths.
+
+Building and furniture catalogues use visual cards. Plan details show the real silhouette and furnished/shell cost. Renovation previews show the current building; the material study explicitly depicts an example wing and upper room. Applying finishes is a quoted transaction; browsing spends nothing. Room floors, perimeter courses, north walls and coping use the collections. Freeform walls/roofs also expose the three collections. Existing saves resolve missing material fields from their plan without destructive migration.
+
+Local native collection tests passed 58 assertions; initial shared architecture tests passed 301. Updated regression and hosted source/export gates are pending. This is not yet a published release. Previous release 0.76.0 remains available. See testing/architecture87.md. Pre-edit tag/bundle architecture87-before.bundle and remote recovery/pre-architecture87 preserve master f62bf8fcfeccd5b47cfab0ac61c741911777860a. Preserve all prior backups.
+
 # 0.76.0 — The Builders of Keldrath: published, verified and merged
 
 All 22 prepared designs now share plans, exterior rendering, room geometry and player furnishing components. The Building Book offers furnished plans or empty shells, editable interiors, side/rear bays, five connected floors, rename/relocate/recover, private storage and real household/workshop services. Original painted fronts and household identities remain intact. Eastern building grounds have matching river/cliff boundaries. Existing construction and normal/test saves are preserved; older saves receive an exact pre-architecture backup.

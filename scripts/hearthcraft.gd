@@ -290,22 +290,7 @@ func rest(p:Vector2)->bool:
  var room=shelter(s.g.player)
  if not room.enclosed or not room.roofed:g.notify("A home needs walls, a door and a roof over the floor around its bed.");return false
  data().facts.home=true;g.save_game();g.notify("Under a roof you raised yourself. Rested; fortune saved.");return true
-func panel():
- g.button(g.panel_body,"Building book · furnished plans, extensions and upper floors",func():g.open_panel("architecture"))
- g.label(g.panel_body,"BUILD YOUR OWN HEARTH",22,Color("edc98a"))
- g.label(g.panel_body,"Refinish the floor and divide this room with walls, windows and working doors. Keep the entrance and stairs accessible." if s.architecture.interior() else "Lay any footprint, add walls and a door, then roof it. Roofs are walkable one level above. Stairs and ladders join matching locations.",15)
- g.label(g.panel_body,"Hold LMB: build · Right click: cancel · E: climb · Shift+E: descend",14)
- var buttons=g.row(g.panel_body);var count=0
- for kind in TITLES:
-  if s.architecture.interior() and kind in ["roof","stairs","ladder"]:continue
-  if count>0 and count%2==0:buttons=g.row(g.panel_body)
-  count+=1;var id=str(kind)
-  var b=g.small_button(buttons,TITLES[id]+(" · "+cost_text(COSTS[id]) if COSTS.has(id) else " · refund"),func():s.cancel_placement();s.placing="house:"+id;g.handworks.placing="";g.close_panel())
-  b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
- g.button(g.panel_body,"Place bed · 5 timber + 2 stone",func():s.start_placement("bed"))
- g.label(g.panel_body,"Use the Building Book to extend the shell or add upper floors. These tools change the room’s floor finish, partitions and operable doors." if s.architecture.interior() else "Working on Z+%d. Five storeys plus their accessible roof deck. Upper floors, furniture and chests stay on their actual level." % level(),15)
- g.label(g.panel_body,"Roof tiles fade while you stand beneath them. Doors open with E. Furniture and chests fit inside your own buildings. Recover roof → wall → floor in that order; contents must be moved first.",14)
- if not s.architecture.interior():lesson()
+func panel():HoldArchitectureView.structure(s.architecture)
 func lesson():
  g.label(g.panel_body,"A HEARTH YOU RAISED · Practical building lesson",17,Color("edc98a"))
  var f=data().get("facts",{})
@@ -315,7 +300,8 @@ func lesson():
   g.label(g.panel_body,("✓ " if done else "○ ")+step[1],14)
 func material(index:int,rect:Rect2,tint:Color=Color.WHITE):
  if index==3:HoldBuildingArt.wall_panel(g,rect,tint);return
- if index in [0,1]:HoldFloorPattern.draw(g,rect,index==1,tint);return
+ if index==2 and s.area=="claim":HoldArchitectureStyles.roof(g,rect,HoldArchitectureStyles.room(s.area),tint);return
+ if index in [0,1]:HoldArchitectureStyles.floor_draw(g,rect,"oak" if index==1 else "slate",tint);return
  var size=Vector2(MATERIALS.get_width()/3.0,MATERIALS.get_height()/2.0)
  g.draw_texture_rect_region(MATERIALS,rect,Rect2(Vector2(index%3,index/3)*size,size),tint)
 func floor_draw():

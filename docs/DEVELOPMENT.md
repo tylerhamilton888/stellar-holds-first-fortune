@@ -1,3 +1,7 @@
+## Architectural material collections
+
+`architecture_styles.gd` owns collection definitions, normalization, source rectangles and shared floor/wall/roof painters. `architecture_view.gd` owns the visual catalogues and studies; its previews use the same building and furnishing painters as the world. Gameplay transactions stay in `architecture.gd`. Player instances retain `surface.architecture86`; optional `style87` fields are additive. Freeform construction stores its collection in the existing per-claim building dictionary. Missing/unknown choices resolve to plan defaults. Finish payment is atomic and adds to shell-paid materials for exact empty-shell recovery. Original façade images are not replaced or recoloured.
+
 ## Player bench output
 
 Handworks owns finished player output through collect_output. begin also recovers older bench cargo with plain E, independently of whether a new input is available. Do not restore the extra Shift+E collection step or automatically drain nearby stored materials. First-shift crew output stays in its hold-owned bench. Internal legacy bucket keys/capacity remain save-compatible; its old player overlay is retired. Upright workshop props use the shared Handworks texture path; preserve original atlases and approved whole-character sources.
