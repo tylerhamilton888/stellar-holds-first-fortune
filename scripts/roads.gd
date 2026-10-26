@@ -132,9 +132,19 @@ func buildings(area:String)->Array:
  if area=="greenfields":return [HoldBuildingPlans.instance("farmhouse",Vector2(550,450))]
  return []
 func furnishings(area:String)->Array:
+ var result=settlement_furnishings(area)
+ # Independent posts use the same depth sorting and small physical bases as
+ # player furniture. Their feet stay outside the 38px portal walking lane.
+ if area in OUTDOORS:
+  for link in links(area):
+   if link.target=="mine" or link.target.begins_with("room:") or link.target.begins_with("home:"):continue
+   var p:Vector2=link.p+Vector2(-link.normal.y,link.normal.x)*62
+   result.append(s.world.furn("signpost",p.x,p.y))
+ return result
+func settlement_furnishings(area:String)->Array:
  var w=s.world
  match area:
-  "trail":return [w.furn("desk",760,568),w.furn("lamp",590,540),w.furn("tea_table",610,610),w.furn("chair",560,625),w.furn("chair",660,625),w.furn("lamp",840,330),w.furn("worktable",780,342)]
+  "trail":return [w.furn("runestone",355,770),w.furn("barrel",420,585),w.furn("crate",465,600),w.furn("desk",760,568),w.furn("road_lantern",590,540),w.furn("tea_table",610,610),w.furn("chair",560,625),w.furn("chair",660,625),w.furn("lamp",840,330),w.furn("worktable",780,342)]
   "pinewood":return [w.furn("lamp",330,740),w.furn("worktable",400,850)]
   "greenfields":return [w.furn("desk",760,458),w.furn("lamp",690,465),w.furn("tea_table",450,520),w.furn("chair",400,535),w.furn("worktable",1440,510)]
   "room:wayfarer":return [w.furn("bed",BED.x,BED.y),w.furn("hearth",440,335),w.furn("tea_table",650,450),w.furn("chair",600,465),w.furn("chair",700,465),w.furn("bookcase",700,335),w.furn("bookcase",630,335),w.furn("lamp",350,395),w.furn("counter",400,500),w.furn("desk",245,550),w.furn("chair",245,585)]
@@ -220,9 +230,3 @@ func ground():
    for x in [1140,1320,1500]:g.fieldwork.sprite(4,Vector2(x,y),86)
   if not data().allotment:
    for p in [Vector2(400,650),Vector2(550,650),Vector2(400,800),Vector2(550,800)]:g.fieldwork.sprite(3,p,86)
- # Physical direction boards stand beside paths; none covers the walking line.
- for link in links(s.area):
-  if link.target=="mine" or link.target.begins_with("room:") or link.target.begins_with("home:") or s.area in ROOMS or s.area=="hearthward":continue
-  var side=Vector2(-link.normal.y,link.normal.x)*62
-  s.signpost(link.p+side,link.title)
-

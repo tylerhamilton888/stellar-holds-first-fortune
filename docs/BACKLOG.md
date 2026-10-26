@@ -1,3 +1,7 @@
+# Combat poses and independent roadside props — 0.78.0
+
+Implementation and focused native acceptance are complete; final source/export delivery gates are pending. This fixes equipment continuity and attached shield presentation, and exposes the six separated props to players. Equipment instances, schematics, signature crafting expeditions and expanded combat direction artwork remain separate future scope.
+
 # Architectural collections — delivered in 0.77.0
 
 Three compatible collections, independent finishes, matching interiors and visual construction menus are published and merged in PR #45. Native visual review and all required source/export gates passed. The release preserves the original frontages and existing saves. See testing/architecture87.md for evidence.
