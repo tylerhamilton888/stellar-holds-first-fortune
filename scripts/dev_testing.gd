@@ -48,6 +48,8 @@ func panel():
    g.small_button(waves,"Hitboxes: "+("ON" if g.fight.show_hitboxes else "OFF"),func():g.fight.show_hitboxes=not g.fight.show_hitboxes;g.refresh_panel())
    g.button(g.panel_body,"Weapons & armor · B",func():g.open_panel("equipment"))
   elif mode()=="building":
+   g.button(g.panel_body,"Building book · all prepared designs",func():g.open_panel("architecture"))
+   g.button(g.panel_body,"Go to eastern building grounds",func():go("claim",Vector2(2450,850)))
    g.button(g.panel_body,"Open construction plans",func():g.open_panel("house_build"))
    g.button(g.panel_body,"Open furniture & home options",func():g.open_panel("homestead"))
    g.button(g.panel_body,"Go to cottage interior",func():go("home:old_delving",Vector2(480,550)))
@@ -83,7 +85,7 @@ func fit_panel():
 func restock():
  if not active():return
  g.state.money=10000;g.state.combat.health=100;g.state.rescue_debt=0
- for item in HoldData.ITEMS:g.state.inventory[item]=maxi(g.state.count(item),200)
+ for item in HoldData.ITEMS:g.state.inventory[item]=maxi(g.state.count(item),2000 if mode()=="building" else 200)
  g.state.combat.owned=["axe","hammer","gun","clothes","mail","rune"]
  for id in HoldData.RESEARCH:g.state.tech[id]=true
  g.state.tech.hearthkeeping=true;g.state.steel=true

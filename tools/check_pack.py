@@ -52,6 +52,8 @@ def main():
     body = (ROOT/'tests/dev_testing85.gd').read_text().split('\n', 1)[1]
     cases.append(('dev_testing', fixture+'\n'+body, 'DEV_TESTING85'))
     results = []
+    body = (ROOT/'tests/architecture86.gd').read_text().split('\n', 1)[1]
+    cases.append(('architecture', fixture+'\n'+body, 'ARCHITECTURE86'))
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()
         with tempfile.TemporaryDirectory(prefix='stellar-pack-') as temp:

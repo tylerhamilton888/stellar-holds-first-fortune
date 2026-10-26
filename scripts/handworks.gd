@@ -137,7 +137,7 @@ func can_place(p:Vector2)->bool:
   for f in g.deep.works.model.data.furniture.values():
    if int(f.depth)==g.deep.world.depth() and Deepworks.center(Vector2i(f.x,f.y)).distance_to(p)<65:return false
  else:
-  if g.surface.area not in ["pinewood","claim"] and not g.surface.area.begins_with("home:"):return false
+  if g.surface.area not in ["pinewood","claim"] and not g.surface.area.begins_with("home:") and not g.surface.architecture.interior():return false
   for offset in [Vector2.ZERO,Vector2(24,0),Vector2(-24,0),Vector2(0,20),Vector2(0,-20)]:
    if not g.surface.walkable(p+offset):return false
   for point in g.surface.points():

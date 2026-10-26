@@ -1,6 +1,6 @@
 class_name HoldHearthcraft
 extends RefCounted
-# Surface construction uses the same physical claim and pack. No hidden room teleport.
+# Shared floors, partitions and doors on owned ground and inside building plans.
 const CELL=40.0
 const MAX_Z=5 # Ground + four upper storeys + accessible roof deck.
 const MATERIALS=preload("res://assets/directional-v47/building-materials.png")
@@ -17,6 +17,7 @@ var reason=""
 func _init(surface):surface_ref=weakref(surface);g=surface.g
 func data()->Dictionary:
  s.ensure()
+ if s.architecture.interior():return s.architecture.construction()
  if g.state.claim_id=="":return {}
  var h=g.state.surface.homes[g.state.claim_id]
  if not h.has("building"):h.building={"tiles":{},"facts":{}}
@@ -74,7 +75,7 @@ func walls(map:Dictionary)->Array:
   if map[k].get("wall","")!="" and not (map[k].wall=="door" and map[k].get("open",false)):
    result.append(Rect2(Vector2(coords(k))*CELL,Vector2.ONE*CELL))
  return result
-func obstacles()->Array:return walls(tiles()) if s.area=="claim" else []
+func obstacles()->Array:return walls(tiles()) if s.area=="claim" or s.architecture.interior() else []
 func occupied(c:Vector2i)->bool:
  if g.fieldwork:
   for b in g.fieldwork.data().beds:
@@ -91,9 +92,9 @@ func occupied(c:Vector2i)->bool:
 func routes_open(map:Dictionary)->bool:
  # Doors count as operable passages; walls may never seal a player or landmark away.
  var blocked={}
- for r in (s.base_obstacles() if level()==0 else []):
-  for y in range(5,24):
-   for x in range(2,45):
+ for r in (s.base_obstacles()+s.architecture.obstacles(s.area) if level()==0 else []):
+  for y in range(5,52):
+   for x in range(2,88):
     if r.grow(10).has_point(center(Vector2i(x,y))):blocked[key(Vector2i(x,y))]=true
  for k in map:
   if map[k].get("wall","") in ["wall","window"]:blocked[k]=true
@@ -102,7 +103,7 @@ func routes_open(map:Dictionary)->bool:
   var c=todo[head];head+=1
   for d in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
    var n=c+d;var k=key(n)
-   if n.x<3 or n.x>43 or n.y<6 or n.y>23 or blocked.has(k) or seen.has(k):continue
+   if not s.claim_ground(center(n)) or blocked.has(k) or seen.has(k):continue
    if level()>0 and not map.has(k):continue
    seen[k]=true;todo.append(n)
  for p in s.points():
@@ -114,10 +115,11 @@ func routes_open(map:Dictionary)->bool:
  return seen.has(key(cell(Vector2(300,760)))) if level()==0 else seen.size()>0
 func valid(c:Vector2i,kind:String,check_routes:bool=true)->bool:
  reason=""
+ if s.architecture.interior():return room_valid(c,kind,check_routes)
  if s.area!="claim":reason="Build houses in your claim yard.";return false
  var p=center(c)
  if g.player.distance_to(p)>170:reason="Move within reach of your work.";return false
- if not Rect2(260,320,1300,600).has_point(p):reason="Keep to the clear homestead building grounds.";return false
+ if not s.claim_ground(p) or p.y<320:reason="Keep to the clear homestead building grounds.";return false
  var t=tile(c)
  if kind=="remove":
   if t.is_empty():reason="No construction here.";return false
@@ -133,7 +135,7 @@ func valid(c:Vector2i,kind:String,check_routes:bool=true)->bool:
     var draft=tiles().duplicate(true);draft.erase(key(c))
     if not routes_open(draft):reason="Keep a continuous floor route to the stairs.";return false
   return true
- for r in (s.base_obstacles() if level()==0 else []):
+ for r in (s.base_obstacles()+s.architecture.obstacles(s.area) if level()==0 else []):
   if r.grow(18).intersects(Rect2(Vector2(c)*CELL,Vector2.ONE*CELL)):reason="Existing buildings need clear foundations.";return false
  for point in s.points():
   if point.action.begins_with("house:") or point.action.begins_with("chest:") or point.action=="house_rest" or point.action=="house_up" or point.action=="house_down":continue
@@ -166,6 +168,49 @@ func ready_to_build(c:Vector2i,kind:String)->bool:
  if kind!="remove" and (not COSTS.has(kind) or not g.state.afford(COSTS[kind])):
   reason="Bring "+cost_text(COSTS.get(kind,{}))+" in your pack.";return false
  return true
+func room_valid(c:Vector2i,kind:String,check_routes:bool)->bool:
+ var p=center(c);var t=tile(c)
+ if not HoldRoomLayout.bounds(s.area).grow(-18).has_point(p):reason="Keep the outer walls and doorway clear; extend the building from its book.";return false
+ if p.distance_to(g.player)>170:reason="Move within reach of your work.";return false
+ if kind in ["stairs","ladder","roof"]:reason="Use the Building Book to add a complete upper floor.";return false
+ if kind=="remove":
+  if t.is_empty():reason="The original structural floor belongs to the building shell.";return false
+  return true
+ if kind.ends_with("floor"):
+  if t.has("floor"):reason="Recover the existing floor finish before replacing it.";return false
+  return true
+ if occupied(c) or Rect2(Vector2(c)*CELL,Vector2.ONE*CELL).grow(15).has_point(g.player):reason="Clear this floor before raising a partition.";return false
+ if t.get("wall","")!="":reason="Recover the existing partition first.";return false
+ for point in s.architecture.points():
+  if point.p.distance_to(p)<85:reason="Keep doorways and stair landings clear.";return false
+ var draft=tiles().duplicate(true);var next=t.duplicate();next.wall=kind;draft[key(c)]=next
+ if check_routes and not room_routes(draft):reason="Leave a door or gap to every landing and exit.";return false
+ return true
+func room_routes(map:Dictionary)->bool:
+ var blocked=s.base_obstacles()+g.handworks.surface_obstacles()
+ for d in g.state.surface.decor:
+  if local(d):blocked.append(HoldFurnishings.footprint(d.kind,Vector2(d.x,d.y)))
+ for d in g.state.surface.chests.values():
+  if local(d):blocked.append(HoldFurnishings.footprint("chest",Vector2(d.x,d.y)))
+ for k in map:
+  if map[k].get("wall","") in ["wall","window"]:blocked.append(Rect2(Vector2(coords(k))*CELL,Vector2.ONE*CELL))
+ var todo=[Vector2i((g.player/20).floor())];var seen={str(todo[0]):true};var head=0
+ while head<todo.size():
+  var c=todo[head];head+=1
+  for d in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+   var n=c+d;var p=Vector2(n)*20+Vector2(10,10)
+   if seen.has(str(n)) or not HoldRoomLayout.bounds(s.area).has_point(p):continue
+   var solid=false
+   for r in blocked:
+    if r.grow(10).has_point(p):solid=true;break
+   if solid:continue
+   seen[str(n)]=true;todo.append(n)
+ for point in s.architecture.points():
+  var found=false
+  for c in todo:
+   if (Vector2(c)*20+Vector2(10,10)).distance_to(point.p)<70:found=true;break
+  if not found:return false
+ return true
 func build(p:Vector2,kind:String)->bool:
  var c=cell(p)
  if not ready_to_build(c,kind):g.notify(reason);return false
@@ -195,6 +240,7 @@ func build(p:Vector2,kind:String)->bool:
    if not tiles(level()+1).has(k):tiles(level()+1)[k]={"floor":"roof_floor"}
   else:t.wall=kind;t.open=kind=="door"
   map[k]=t;data().facts[kind]=true
+ if map.has(k) and map[k].is_empty():map.erase(k)
  contact=center(c);impact=.24;g.face=1 if contact.x>g.player.x else -1
  g.sound.effect("wood" if kind in ["door","wood_floor","roof"] else "stone",-14);g.save_game();return true
 func cost_text(cost:Dictionary)->String:
@@ -207,7 +253,7 @@ func update(dt:float):
   timer=.18;build(g.get_global_mouse_position()+g.camera,s.placing.trim_prefix("house:"))
 func points()->Array:
  var list=[]
- if s.area!="claim":return list
+ if s.area!="claim" and not s.architecture.interior():return list
  for k in tiles():
   var t=tiles()[k]
   if t.get("wall","")=="door":list.append({"p":center(coords(k)),"name":"Close door" if t.get("open",false) else "Open door","action":"house:"+k})
@@ -240,23 +286,26 @@ func shelter(p:Vector2)->Dictionary:
   if map.has(k) and map[k].get("wall","")=="":floors+=1
  return {"enclosed":enclosed and doors>0 and floors>=4,"roofed":roofed,"floor_count":floors,"cells":seen}
 func rest(p:Vector2)->bool:
+ if s.architecture.interior():g.save_game();return true
  var room=shelter(s.g.player)
  if not room.enclosed or not room.roofed:g.notify("A home needs walls, a door and a roof over the floor around its bed.");return false
  data().facts.home=true;g.save_game();g.notify("Under a roof you raised yourself. Rested; fortune saved.");return true
 func panel():
+ g.button(g.panel_body,"Building book · furnished plans, extensions and upper floors",func():g.open_panel("architecture"))
  g.label(g.panel_body,"BUILD YOUR OWN HEARTH",22,Color("edc98a"))
- g.label(g.panel_body,"Lay any footprint, add walls and a door, then roof it. Roofs are walkable one level above. Stairs and ladders join matching locations.",15)
+ g.label(g.panel_body,"Refinish the floor and divide this room with walls, windows and working doors. Keep the entrance and stairs accessible." if s.architecture.interior() else "Lay any footprint, add walls and a door, then roof it. Roofs are walkable one level above. Stairs and ladders join matching locations.",15)
  g.label(g.panel_body,"Hold LMB: build · Right click: cancel · E: climb · Shift+E: descend",14)
  var buttons=g.row(g.panel_body);var count=0
  for kind in TITLES:
+  if s.architecture.interior() and kind in ["roof","stairs","ladder"]:continue
   if count>0 and count%2==0:buttons=g.row(g.panel_body)
   count+=1;var id=str(kind)
   var b=g.small_button(buttons,TITLES[id]+(" · "+cost_text(COSTS[id]) if COSTS.has(id) else " · refund"),func():s.cancel_placement();s.placing="house:"+id;g.handworks.placing="";g.close_panel())
   b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  g.button(g.panel_body,"Place bed · 5 timber + 2 stone",func():s.start_placement("bed"))
- g.label(g.panel_body,"Working on Z+%d. Five storeys plus their accessible roof deck. Upper floors, furniture and chests stay on their actual level." % level(),15)
+ g.label(g.panel_body,"Use the Building Book to extend the shell or add upper floors. These tools change the room’s floor finish, partitions and operable doors." if s.architecture.interior() else "Working on Z+%d. Five storeys plus their accessible roof deck. Upper floors, furniture and chests stay on their actual level." % level(),15)
  g.label(g.panel_body,"Roof tiles fade while you stand beneath them. Doors open with E. Furniture and chests fit inside your own buildings. Recover roof → wall → floor in that order; contents must be moved first.",14)
- lesson()
+ if not s.architecture.interior():lesson()
 func lesson():
  g.label(g.panel_body,"A HEARTH YOU RAISED · Practical building lesson",17,Color("edc98a"))
  var f=data().get("facts",{})
@@ -265,17 +314,19 @@ func lesson():
   if step[0]=="wall":done=done and f.get("door",false)
   g.label(g.panel_body,("✓ " if done else "○ ")+step[1],14)
 func material(index:int,rect:Rect2,tint:Color=Color.WHITE):
+ if index==3:HoldBuildingArt.wall_panel(g,rect,tint);return
  if index in [0,1]:HoldFloorPattern.draw(g,rect,index==1,tint);return
  var size=Vector2(MATERIALS.get_width()/3.0,MATERIALS.get_height()/2.0)
  g.draw_texture_rect_region(MATERIALS,rect,Rect2(Vector2(index%3,index/3)*size,size),tint)
 func floor_draw():
- if s.area!="claim":return
+ if s.area!="claim" and not s.architecture.interior():return
  for z in range(level()):
   for k in tiles(z):
    var t=tiles(z)[k];var p=Vector2(coords(k))*CELL
    material(2 if t.get("roof",false) or t.floor=="roof_floor" else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL),Color(.55,.62,.66,.45))
  for k in tiles():
   var t=tiles()[k];var p=Vector2(coords(k))*CELL
+  if not t.has("floor"):continue
   material(2 if t.floor=="roof_floor" else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL))
  for k in data().links:
   var z=int(k.get_slice("/",0));var c=coords(k.get_slice("/",1))
@@ -287,25 +338,7 @@ func floor_draw():
   if ladder:
    for x in [-14,14]:g.draw_line(p+Vector2(x,-20),p+Vector2(x,20),Color("735735"),3)
 
-func wall_draw(c:Vector2i):
- var t=tile(c);var p=center(c);var kind=t.get("wall","")
- if kind=="":return
- var r=Rect2(p-Vector2(20,46),Vector2(40,64))
- g.draw_rect(Rect2(r.position+Vector2(4,5),r.size),Color(0,0,0,.22))
- material(4 if kind=="window" else 5 if kind=="door" and not t.get("open",false) else 3,r)
- if kind=="window" or (kind=="door" and not t.get("open",false)):return
- if kind in ["door","window"]:
-  var hole=Rect2(p+Vector2(-14,-37),Vector2(28,51 if kind=="door" else 26))
-  g.draw_rect(hole.grow(3),Color("b69a65"));g.draw_rect(hole,Color("223b40"))
-  if kind=="door":
-   if t.get("open",false):g.draw_rect(Rect2(p+Vector2(11,-36),Vector2(6,49)),Color("976b3c"))
-   else:
-    g.draw_rect(hole,Color("805937"))
-    for x in [-8,0,8]:g.draw_line(p+Vector2(x,-35),p+Vector2(x,13),Color("523e2d"),1)
-    for y in [-28,5]:g.draw_line(p+Vector2(-14,y),p+Vector2(14,y),Color("343d3a"),3)
-    g.draw_circle(p+Vector2(8,-9),2,Color("e0be70"))
-  else:
-   g.draw_rect(hole.grow(-2),Color("d5b66f"));g.draw_line(p+Vector2(0,-37),p+Vector2(0,-11),Color("6a5838"),3)
+func wall_draw(c:Vector2i):HoldBuildingArt.wall_piece(g,c,tiles())
 func roof_draw():
  if s.area!="claim":return
  var inside=shelter(g.player).cells if tile(cell(g.player)).has("floor") else {}
