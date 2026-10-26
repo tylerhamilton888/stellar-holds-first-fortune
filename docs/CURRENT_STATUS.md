@@ -1,8 +1,17 @@
-# 0.76.0 — Shared architecture: implementation awaiting final gates
+# 0.76.0 — The Builders of Keldrath: published, verified and merged
 
-All 22 existing designs now share plans, rendering, room geometry and the player furnishing catalogue. The Building Book exposes furnished plans and empty shells, extensions, five connected floors, rename/relocate/recover, editable partitions and real household/workshop services. Original artwork and household distinctions are preserved. See testing/architecture86.md for scope and current checks.
+All 22 prepared designs now share plans, exterior rendering, room geometry and player furnishing components. The Building Book offers furnished plans or empty shells, editable interiors, side/rear bays, five connected floors, rename/relocate/recover, private storage and real household/workshop services. Original painted fronts and household identities remain intact. Eastern building grounds have matching river/cliff boundaries. Existing construction and normal/test saves are preserved; older saves receive an exact pre-architecture backup.
 
-Local final parity verification passed 299 assertions with zero engine errors; final regression, full source and exact-export gates remain pending. Do not describe this version as published yet. Previous release 0.75.0 remains available. Work branch feature/architecture86; baseline 94321816d2c0097514b11269e8f6a5fb95f4e25d. Local pre-architecture86 tag and verified architecture86-before.bundle plus remote recovery/pre-architecture86 preserve the starting point. Keep the full dev-testing85-native-verified.bundle prerequisite.
+Runtime source ff840c816d451e75babaf1fecdc3c776c8b8a1e2 and PR #43 merge 6ff9dc03b56624903d46debdd79990d8b1de97c9 share tree 2ae39e202456a24fab98af2df25f8d286a28fb72. Local native architecture verification passed 301 assertions; seven focused cases passed 343; the five-storey keyboard walkthrough passed 20. Original/player buildings, furnishings, menus and the eastern river boundary were visually reviewed. Source run 40249460487 passed all 30 gameplay cases plus people-preview.
+
+Release run 40249459330 passed the package audit and all 20 exact-export cases (1,550 assertions), including all 301 architecture checks. Exported catalogue and royal-hall captures were reviewed. Downloaded build report and verification evidence match their GitHub digests; verified source, clean build report and uploaded ZIP metadata agree.
+
+Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.76.0
+Windows ZIP: 729,897,845 bytes; SHA256 1478b9f514d8e050de5e7160727fb368b110fdb5bd4b7e7a5fedc1610a588cf4. Extract the complete archive into a fresh folder. Windows device performance/audio remain hands-on testing. Painted façades remain reusable architectural styles; arbitrary per-window façade editing and NPC business/household assignment are not added here.
+
+Try Title > Dev Testing > Construction & decorating. F9 offers the Building Book and eastern-grounds shortcuts. In normal play, O on the claim opens home improvements and the book; O inside a player building opens renovation. E uses stairs; Shift+E descends. Reopen F9 after a test-location shortcut.
+
+Verified local architecture86-ground-verified.bundle and confirmed remote recovery/architecture86-ground-verified preserve the runtime source. The incremental bundle requires cf6fe48459d6c9a5c44707b57c1cb35c5c1ea25e and 217991b75e3878d047e643fba4097dcfcdc323a9, retained in the full dev-testing85-native-verified.bundle. Preserve all earlier backups/releases. Delivery documentation is separate from the verified runtime. See testing/architecture86.md.
 
 # 0.75.0 — The Testing Grounds: published, verified and merged
 
