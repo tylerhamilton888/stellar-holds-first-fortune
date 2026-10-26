@@ -1,0 +1,128 @@
+[
+  {
+    "test": "ambient",
+    "passed": true,
+    "checks": 11,
+    "errors": []
+  },
+  {
+    "test": "continuity",
+    "passed": true,
+    "checks": 35,
+    "errors": []
+  },
+  {
+    "test": "living",
+    "passed": true,
+    "checks": 51,
+    "errors": []
+  },
+  {
+    "test": "civic",
+    "passed": true,
+    "checks": 64,
+    "errors": []
+  },
+  {
+    "test": "firstshift",
+    "passed": true,
+    "checks": 29,
+    "errors": []
+  },
+  {
+    "test": "ancestral",
+    "passed": true,
+    "checks": 23,
+    "errors": []
+  },
+  {
+    "test": "disciplines",
+    "passed": true,
+    "checks": 38,
+    "errors": []
+  },
+  {
+    "test": "polish",
+    "passed": true,
+    "checks": 75,
+    "errors": []
+  },
+  {
+    "test": "firsthour",
+    "passed": true,
+    "checks": 18,
+    "errors": []
+  },
+  {
+    "test": "appearance",
+    "passed": true,
+    "checks": 64,
+    "errors": []
+  },
+  {
+    "test": "roads",
+    "passed": true,
+    "checks": 80,
+    "errors": []
+  },
+  {
+    "test": "work",
+    "passed": true,
+    "checks": 26,
+    "errors": []
+  },
+  {
+    "test": "keldrath",
+    "passed": true,
+    "checks": 47,
+    "errors": []
+  },
+  {
+    "test": "homestead",
+    "passed": true,
+    "checks": 69,
+    "errors": []
+  },
+  {
+    "test": "royal",
+    "passed": true,
+    "checks": 72,
+    "errors": []
+  },
+  {
+    "test": "people",
+    "passed": true,
+    "checks": 380,
+    "errors": []
+  },
+  {
+    "test": "combat",
+    "passed": true,
+    "checks": 31,
+    "errors": []
+  },
+  {
+    "test": "enemies",
+    "passed": true,
+    "checks": 96,
+    "errors": []
+  },
+  {
+    "test": "dev_testing",
+    "passed": true,
+    "checks": 40,
+    "errors": []
+  },
+  {
+    "test": "architecture",
+    "passed": true,
+    "checks": 301,
+    "errors": []
+  },
+  {
+    "test": "architecture_style",
+    "passed": true,
+    "checks": 60,
+    "errors": []
+  }
+]

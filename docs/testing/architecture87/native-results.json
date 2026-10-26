@@ -1,0 +1,54 @@
+{
+  "source": "52e90de84fe2df330347fefbee98825cba1d96c3",
+  "tests": [
+    {
+      "test": "architecture",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 301,
+      "seconds": 100.63
+    },
+    {
+      "test": "menus",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 9,
+      "seconds": 73.27
+    },
+    {
+      "test": "homestead",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 69,
+      "seconds": 127.11
+    },
+    {
+      "test": "royal",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 72,
+      "seconds": 106.23
+    },
+    {
+      "test": "modular",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 28,
+      "seconds": 100.68
+    },
+    {
+      "test": "architecture_style",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 60,
+      "seconds": 79.1
+    }
+  ],
+  "total_checks": 539
+}
