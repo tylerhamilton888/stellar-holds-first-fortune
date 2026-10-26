@@ -1,0 +1,2774 @@
+[
+  {
+    "frame": 0,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 1,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 2,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 3,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 4,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 5,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 6,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 7,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 8,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 9,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 10,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 11,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 12,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 13,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 14,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 15,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 16,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 17,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 18,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 19,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 20,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 21,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 22,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 23,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 24,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 25,
+    "phase": 0.138888888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 26,
+    "phase": 0.277777777777778,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 27,
+    "phase": 0.416666666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 28,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 29,
+    "phase": 0.620694444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 30,
+    "phase": 0.759583333333333,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 31,
+    "phase": 0.898472222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 32,
+    "phase": 0.0347222222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 33,
+    "phase": 0.173611111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 34,
+    "phase": 0.3125,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 35,
+    "phase": 0.451388888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 36,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 37,
+    "phase": 0.655416666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 38,
+    "phase": 0.794305555555555,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 39,
+    "phase": 0.933194444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 40,
+    "phase": 0.0694444444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 41,
+    "phase": 0.208333333333333,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 42,
+    "phase": 0.347222222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 43,
+    "phase": 0.486111111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 44,
+    "phase": 0.55125,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 45,
+    "phase": 0.690138888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 46,
+    "phase": 0.829027777777778,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 47,
+    "phase": 0.967916666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 48,
+    "phase": 0.104166666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 49,
+    "phase": 0.243055555555555,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 50,
+    "phase": 0.381944444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 51,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 52,
+    "phase": 0.585972222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 53,
+    "phase": 0.724861111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 54,
+    "phase": 0.86375,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 55,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 56,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 57,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 58,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 59,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 60,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 61,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 62,
+    "phase": 1.0,
+    "pose": "parry_axe",
+    "recoil": 0.155,
+    "weapon": "axe"
+  },
+  {
+    "frame": 63,
+    "phase": 1.0,
+    "pose": "parry_axe",
+    "recoil": 0.0883333333333333,
+    "weapon": "axe"
+  },
+  {
+    "frame": 64,
+    "phase": 1.0,
+    "pose": "parry_axe",
+    "recoil": 0.0216666666666667,
+    "weapon": "axe"
+  },
+  {
+    "frame": 65,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 66,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 67,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 68,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 69,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 70,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 71,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 72,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 73,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 74,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 75,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 76,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 77,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 78,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 79,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 80,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 81,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 82,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 83,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 84,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 85,
+    "phase": 0.138888888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 86,
+    "phase": 0.277777777777778,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 87,
+    "phase": 0.416666666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 88,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 89,
+    "phase": 0.620694444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 90,
+    "phase": 0.759583333333333,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 91,
+    "phase": 0.898472222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 92,
+    "phase": 0.0347222222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 93,
+    "phase": 0.173611111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 94,
+    "phase": 0.3125,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 95,
+    "phase": 0.451388888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 96,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 97,
+    "phase": 0.655416666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 98,
+    "phase": 0.794305555555555,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 99,
+    "phase": 0.0193798449612403,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 100,
+    "phase": 0.0968992248062018,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 101,
+    "phase": 0.174418604651163,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 102,
+    "phase": 0.251937984496125,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 103,
+    "phase": 0.329457364341086,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 104,
+    "phase": 0.406976744186048,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 105,
+    "phase": 0.484496124031009,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 106,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 107,
+    "phase": 0.521937984496124,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 108,
+    "phase": 0.599457364341085,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 109,
+    "phase": 0.676976744186046,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 110,
+    "phase": 0.754496124031008,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 111,
+    "phase": 0.832015503875969,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 112,
+    "phase": 0.90953488372093,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 113,
+    "phase": 0.987054263565891,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 114,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 115,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 116,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 117,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 118,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 119,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 120,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 121,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 122,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 123,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 124,
+    "phase": 0.0775193798449615,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 125,
+    "phase": 0.155038759689923,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 126,
+    "phase": 0.232558139534884,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 127,
+    "phase": 0.310077519379846,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 128,
+    "phase": 0.387596899224807,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 129,
+    "phase": 0.465116279069769,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 130,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 131,
+    "phase": 0.541317829457364,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 132,
+    "phase": 0.618837209302326,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 133,
+    "phase": 0.696356589147287,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 134,
+    "phase": 0.773875968992248,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 135,
+    "phase": 0.851395348837209,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 136,
+    "phase": 0.92891472868217,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 137,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 138,
+    "phase": 0.0775193798449615,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 139,
+    "phase": 0.155038759689923,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 140,
+    "phase": 0.232558139534884,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 141,
+    "phase": 0.310077519379846,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 142,
+    "phase": 0.387596899224807,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 143,
+    "phase": 0.465116279069769,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 144,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 145,
+    "phase": 0.541317829457364,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 146,
+    "phase": 0.618837209302326,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 147,
+    "phase": 0.696356589147287,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 148,
+    "phase": 0.773875968992248,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 149,
+    "phase": 0.851395348837209,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 150,
+    "phase": 0.92891472868217,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 151,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 152,
+    "phase": 0.0775193798449615,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 153,
+    "phase": 0.155038759689923,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 154,
+    "phase": 0.232558139534884,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 155,
+    "phase": 0.310077519379846,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 156,
+    "phase": 0.387596899224807,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 157,
+    "phase": 0.465116279069769,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 158,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 159,
+    "phase": 0.541317829457364,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 160,
+    "phase": 0.618837209302326,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 161,
+    "phase": 0.696356589147287,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 162,
+    "phase": 0.773875968992248,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 163,
+    "phase": 0.851395348837209,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 164,
+    "phase": 0.92891472868217,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 165,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 166,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 167,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 168,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 169,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 170,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 171,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 172,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 173,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 174,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 175,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 176,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 177,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 178,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 179,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 180,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 181,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 182,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 183,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 184,
+    "phase": 0.0775193798449615,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 185,
+    "phase": 0.155038759689923,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 186,
+    "phase": 0.232558139534884,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 187,
+    "phase": 0.310077519379846,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 188,
+    "phase": 0.387596899224807,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 189,
+    "phase": 0.465116279069769,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 190,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 191,
+    "phase": 0.541317829457364,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 192,
+    "phase": 0.618837209302326,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 193,
+    "phase": 0.696356589147287,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 194,
+    "phase": 0.773875968992248,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 195,
+    "phase": 0.851395348837209,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 196,
+    "phase": 0.92891472868217,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 197,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 198,
+    "phase": 0.0347222222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 199,
+    "phase": 0.173611111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 200,
+    "phase": 0.3125,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 201,
+    "phase": 0.451388888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 202,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 203,
+    "phase": 0.655416666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 204,
+    "phase": 0.794305555555555,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 205,
+    "phase": 0.933194444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 206,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 207,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 208,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 209,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 210,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 211,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 212,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 213,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 214,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 215,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 216,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 217,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 218,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 219,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 220,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 221,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 222,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 223,
+    "phase": 0.138888888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 224,
+    "phase": 0.277777777777778,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 225,
+    "phase": 0.416666666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 226,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 227,
+    "phase": 0.620694444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 228,
+    "phase": 0.759583333333333,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 229,
+    "phase": 0.898472222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 230,
+    "phase": 0.0347222222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 231,
+    "phase": 0.173611111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 232,
+    "phase": 0.3125,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 233,
+    "phase": 0.451388888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 234,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 235,
+    "phase": 0.655416666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 236,
+    "phase": 0.794305555555555,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 237,
+    "phase": 0.933194444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 238,
+    "phase": 0.0694444444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 239,
+    "phase": 0.208333333333333,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 240,
+    "phase": 0.347222222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 241,
+    "phase": 0.486111111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 242,
+    "phase": 0.55125,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 243,
+    "phase": 0.690138888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 244,
+    "phase": 0.829027777777778,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 245,
+    "phase": 0.967916666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 246,
+    "phase": 0.104166666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 247,
+    "phase": 0.243055555555555,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 248,
+    "phase": 0.381944444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 249,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 250,
+    "phase": 0.585972222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 251,
+    "phase": 0.724861111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 252,
+    "phase": 0.86375,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 253,
+    "phase": 1.0,
+    "pose": "hold_combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 254,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 255,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 256,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 257,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 258,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 259,
+    "phase": 1.0,
+    "pose": "parry_axe",
+    "recoil": 0.155,
+    "weapon": "axe"
+  },
+  {
+    "frame": 260,
+    "phase": 1.0,
+    "pose": "parry_axe",
+    "recoil": 0.0883333333333333,
+    "weapon": "axe"
+  },
+  {
+    "frame": 261,
+    "phase": 1.0,
+    "pose": "parry_axe",
+    "recoil": 0.0216666666666667,
+    "weapon": "axe"
+  },
+  {
+    "frame": 262,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 263,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 264,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 265,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 266,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 267,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 268,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 269,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 270,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 271,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 272,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 273,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 274,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 275,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 276,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 277,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 278,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 279,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 280,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 281,
+    "phase": 1.0,
+    "pose": "guard_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 282,
+    "phase": 1.0,
+    "pose": "parry_axe",
+    "recoil": 0.155,
+    "weapon": "axe"
+  },
+  {
+    "frame": 283,
+    "phase": 0.138888888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0883333333333333,
+    "weapon": "axe"
+  },
+  {
+    "frame": 284,
+    "phase": 0.277777777777778,
+    "pose": "combat_axe",
+    "recoil": 0.0216666666666667,
+    "weapon": "axe"
+  },
+  {
+    "frame": 285,
+    "phase": 0.416666666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 286,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 287,
+    "phase": 0.620694444444444,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 288,
+    "phase": 0.759583333333333,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 289,
+    "phase": 0.898472222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 290,
+    "phase": 0.0347222222222222,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 291,
+    "phase": 0.173611111111111,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 292,
+    "phase": 0.3125,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 293,
+    "phase": 0.451388888888889,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 294,
+    "phase": 0.52,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 295,
+    "phase": 0.655416666666667,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 296,
+    "phase": 0.794305555555555,
+    "pose": "combat_axe",
+    "recoil": 0.0,
+    "weapon": "axe"
+  },
+  {
+    "frame": 297,
+    "phase": 0.0193798449612403,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 298,
+    "phase": 0.0968992248062018,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 299,
+    "phase": 0.174418604651163,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 300,
+    "phase": 0.251937984496125,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 301,
+    "phase": 0.329457364341086,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 302,
+    "phase": 0.406976744186048,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 303,
+    "phase": 0.484496124031009,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 304,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 305,
+    "phase": 0.521937984496124,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 306,
+    "phase": 0.599457364341085,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 307,
+    "phase": 0.676976744186046,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 308,
+    "phase": 0.754496124031008,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 309,
+    "phase": 0.832015503875969,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 310,
+    "phase": 0.90953488372093,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 311,
+    "phase": 0.987054263565891,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 312,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 313,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 314,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 315,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 316,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 317,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 318,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 319,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 320,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 321,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 322,
+    "phase": 0.0775193798449615,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 323,
+    "phase": 0.155038759689923,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 324,
+    "phase": 0.232558139534884,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 325,
+    "phase": 0.310077519379846,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 326,
+    "phase": 0.387596899224807,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 327,
+    "phase": 0.465116279069769,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 328,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 329,
+    "phase": 0.541317829457364,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 330,
+    "phase": 0.618837209302326,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 331,
+    "phase": 0.696356589147287,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 332,
+    "phase": 0.773875968992248,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 333,
+    "phase": 0.851395348837209,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 334,
+    "phase": 0.92891472868217,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 335,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 336,
+    "phase": 0.0775193798449615,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 337,
+    "phase": 0.155038759689923,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 338,
+    "phase": 0.232558139534884,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 339,
+    "phase": 0.310077519379846,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 340,
+    "phase": 0.387596899224807,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 341,
+    "phase": 0.465116279069769,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 342,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 343,
+    "phase": 0.541317829457364,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 344,
+    "phase": 0.618837209302326,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 345,
+    "phase": 0.696356589147287,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 346,
+    "phase": 0.773875968992248,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 347,
+    "phase": 0.851395348837209,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 348,
+    "phase": 0.92891472868217,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 349,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 350,
+    "phase": 0.0775193798449615,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 351,
+    "phase": 0.155038759689923,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 352,
+    "phase": 0.232558139534884,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 353,
+    "phase": 0.310077519379846,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 354,
+    "phase": 0.387596899224807,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 355,
+    "phase": 0.465116279069769,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 356,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 357,
+    "phase": 0.541317829457364,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 358,
+    "phase": 0.618837209302326,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 359,
+    "phase": 0.696356589147287,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 360,
+    "phase": 0.773875968992248,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 361,
+    "phase": 0.851395348837209,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 362,
+    "phase": 0.92891472868217,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 363,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 364,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 365,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 366,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 367,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 368,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 369,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 370,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 371,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 372,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 373,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 374,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 375,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 376,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 377,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 378,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 379,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 380,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 381,
+    "phase": 1.0,
+    "pose": "hold_hammer",
+    "recoil": 0.18,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 382,
+    "phase": 0.0678294573643412,
+    "pose": "hammer",
+    "recoil": 0.121666666666667,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 383,
+    "phase": 0.145348837209303,
+    "pose": "hammer",
+    "recoil": 0.055,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 384,
+    "phase": 0.222868217054264,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 385,
+    "phase": 0.300387596899226,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 386,
+    "phase": 0.377906976744187,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 387,
+    "phase": 0.455426356589149,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 388,
+    "phase": 0.52,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 389,
+    "phase": 0.521937984496124,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 390,
+    "phase": 0.599457364341085,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 391,
+    "phase": 0.676976744186046,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 392,
+    "phase": 0.754496124031008,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 393,
+    "phase": 0.832015503875969,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 394,
+    "phase": 0.90953488372093,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  },
+  {
+    "frame": 395,
+    "phase": 0.987054263565891,
+    "pose": "hammer",
+    "recoil": 0.0,
+    "weapon": "hammer"
+  }
+]

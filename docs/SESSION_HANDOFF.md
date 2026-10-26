@@ -1,8 +1,17 @@
-# 0.78.0 — Grip, Guard & Craft: implementation under final verification
+# 0.78.0 — Grip, Guard & Craft: published, verified and merged
 
-Axe/shield drawing now uses complete equipped poses for every saved identity. Detached shield icons and work-tool combat poses are removed from active player/practice rendering. Six separated roadside props share the player catalogue, placement and collision. Baseline 0.77.0 remains preserved on recovery/pre-combat88 at 32822157cc76f4f2f954bad7d848794adab8456a.
+Axe-and-shield combat now uses complete equipped drawings for all fourteen saved identities, including walking, strikes, guard and block reactions. The shield stays on the painted forearm and grip; practice Borin uses the same poses. Eight original hammer crops now retain their complete heads. Damage, hitboxes, timing, original assets and saved appearance choices remain preserved.
 
-The dedicated native case has passed 123 assertions and all 14 shield/weapon contact sheets have been reviewed. Full source/export gates and release publication are still pending. Do not describe this as a delivered Windows build until the delivery record replaces this note. Continue from polish/combat88. See assets/combat88/PRODUCTION.md and tests/combat88.gd.
+Rune-stones, timber signs, lantern posts, barrels, crates and plinths are separate world/player furnishings. Each has an individual catalogue card, price, collision base, placement, movement and recovery. Signs stand clear of travel thresholds and sort correctly with actors. Barrel/crate pieces are explicitly decorative.
+
+Runtime source b2ce75a095c6aefe801b1cdb46f648448e40253d and PR #47 merge fe060bf55202a59011ac30ae8fbdbc3f0cb00f94 share tree 9575060eb5e44fbaeab8d0784f0210f1803f89e1. Native verification passed 494 focused assertions. Source run 40334541809 passed all 32 gameplay cases plus people-preview. Release run 40334541656 passed all 22 exact-export cases, with 1,733 assertions. All fourteen shield/weapon boards, live practice poses, catalogue and world props were reviewed. All 29 exported character/prop boards are byte-identical to their native counterparts; exported shield, hammer, prop and recoil captures were also reviewed.
+
+Download: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.78.0
+Windows ZIP: 767,100,400 bytes; SHA256 583a5e070dddad84854d2ac747f9edc1a2a1fea6528d39dfde43f450d8295cb3. Downloaded build report and verification archive match their GitHub digests; the release tag, clean report and uploaded ZIP metadata agree. Extract the complete archive into a fresh folder. Windows-device performance, audio and subjective combat feel remain hands-on checks.
+
+Try Title > Dev Testing > Combat arena; B selects equipment, LMB strikes, RMB guards and Q dodges. For decor: Construction & decorating > F9 > Building book > Furniture & details > Roadside. Rear guard/recoil sometimes share a braced drawing; mirroring retains apparent-handedness limitations. Original hammer strokes retain their authored directional coverage.
+
+Continue from master. Runtime is preserved on recovery/combat88-native-verified and in the verified combat88-published-native-verified.bundle. The incremental bundle requires 32822157cc76f4f2f954bad7d848794adab8456a, preserved on recovery/pre-combat88. Keep earlier native/hammer bundles, recovery branches and releases. Delivery documentation is separate from the verified runtime. See testing/combat88.md and testing/combat88/delivery.json.
 
 # 0.77.0 — Stone, Timber & Tradition: published, verified and merged
 

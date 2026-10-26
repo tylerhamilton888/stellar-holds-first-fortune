@@ -1,0 +1,58 @@
+[
+  {
+    "test": "combat_art",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 123,
+    "seconds": 81.09
+  },
+  {
+    "test": "combat",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 31,
+    "seconds": 45.08
+  },
+  {
+    "test": "enemies",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 96,
+    "seconds": 48.5
+  },
+  {
+    "test": "dev_testing",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 40,
+    "seconds": 90.55
+  },
+  {
+    "test": "roads",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 80,
+    "seconds": 109.55
+  },
+  {
+    "test": "appearance",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 64,
+    "seconds": 69.5
+  },
+  {
+    "test": "architecture_style",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 60,
+    "seconds": 54.48
+  }
+]
