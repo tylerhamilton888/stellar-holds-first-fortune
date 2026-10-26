@@ -2,25 +2,16 @@ class_name HoldRoomLayout
 extends RefCounted
 # Architectural dimensions, clear floor, door and furnishings share one plan.
 # The forge is a proper hall; apartments retain their compact established plan.
-static func floor_rect(area:String)->Rect2:
- if area=="room:throne":return HoldRoyalStage.FLOOR
- return Rect2(160,260,1020,650) if area=="room:forge" else Rect2(160,260,640,385)
-static func bounds(area:String)->Rect2:
- var r=floor_rect(area)
- return Rect2(r.position+Vector2(15,30),r.size-Vector2(30,40))
-static func size(area:String)->Vector2:
- if area=="room:throne":return Vector2(1300,1180)
- return Vector2(1340,1010) if area=="room:forge" else Vector2(960,720)
-static func exit_point(area:String)->Vector2:
- if area=="room:throne":return Vector2(650,1055)
- return Vector2(480,floor_rect(area).end.y-25)
+static func floor_rect(area:String)->Rect2:return HoldBuildingPlans.geometry(area).floor
+static func bounds(area:String)->Rect2:return HoldBuildingPlans.geometry(area).bounds
+static func size(area:String)->Vector2:return HoldBuildingPlans.geometry(area).size
+static func exit_point(area:String)->Vector2:return HoldBuildingPlans.geometry(area).exit
 static func camera(area:String,p:Vector2)->Vector2:
- # Keep the real south threshold above the hotbar as the player approaches it.
- if area=="room:throne":return (p-Vector2(480,280)).clamp(Vector2(170,100),Vector2(170,705))
- var r=floor_rect(area);var max_y=r.end.y-375
+ var plan=HoldBuildingPlans.geometry(area);var r=plan.floor;var max_y=r.end.y-375
+ if plan.template=="room:throne":return (p-Vector2(480,280)).clamp(Vector2(170,100),Vector2(maxf(170,plan.size.x-960),maxf(705,plan.size.y-475)))
  var target=p-Vector2(480,280)
  target.y=maxf(target.y,lerpf(115,max_y,clampf((p.y-(r.end.y-220))/110.0,0,1)))
- return target.clamp(Vector2(0,115),Vector2(380 if area=="room:forge" else 0,max_y))
+ return target.clamp(Vector2(0,115),Vector2(maxf(0,plan.size.x-960),max_y))
 static func objects(w,area:String)->Array:
  if area=="room:home":return [w.furn("bookcase",245,325),w.furn("bookcase",735,335),w.furn("chair",399,420),w.furn("chair",529,420),w.furn("tea_table",464,440),w.furn("chair",650,366),w.furn("bookcase",625,530),w.furn("lamp",690,505)]
  if area=="room:tavern":return [w.furn("counter",735,450),w.furn("bookcase",560,330),w.furn("bookcase",635,330),w.furn("chair",317,540),w.furn("chair",487,540),w.furn("chair",657,540),w.furn("tea_table",270,410),w.furn("chair",222,425),w.furn("chair",318,425),w.furn("lamp",765,335)]

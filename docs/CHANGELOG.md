@@ -1,3 +1,9 @@
+# 0.76.0 — Shared architecture: implementation awaiting final gates
+
+All 22 existing designs now share plans, rendering, room geometry and the player furnishing catalogue. The Building Book exposes furnished plans and empty shells, extensions, five connected floors, rename/relocate/recover, editable partitions and real household/workshop services. Original artwork and household distinctions are preserved. See testing/architecture86.md for scope and current checks.
+
+Local final parity verification passed 299 assertions with zero engine errors; final regression, full source and exact-export gates remain pending. Do not describe this version as published yet. Previous release 0.75.0 remains available. Work branch feature/architecture86; baseline 94321816d2c0097514b11269e8f6a5fb95f4e25d. Local pre-architecture86 tag and verified architecture86-before.bundle plus remote recovery/pre-architecture86 preserve the starting point. Keep the full dev-testing85-native-verified.bundle prerequisite.
+
 # 0.75.0 — The Testing Grounds: delivered
 
 Added four standalone title-screen testing presets with immediate locations, unlocks and supplies: combat, construction/decorating, mining/workstations and farming/fishing/cooking. F9 inside tests exposes reset/restock, enemy selection and hitboxes, building/work plans, and garden/river/kitchen shortcuts. Existing gameplay rules are reused. A dedicated marked test save preserves all normal slots; normal gameplay does not expose the test shortcut. One build flag hides the temporary entry points.

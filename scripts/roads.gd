@@ -55,6 +55,9 @@ func ensure():
 func connection(p:Vector2,normal:Vector2,target:String,landing:Vector2,title:String)->Dictionary:
  return {"p":p,"normal":normal,"target":target,"landing":landing,"title":title}
 func links(area:String)->Array:
+ if HoldBuildingPlans.owned_room(area):return s.architecture.connections(area)
+ return authored_links(area)+s.architecture.connections(area)
+func authored_links(area:String)->Array:
  if HoldWorldZones.ward(area):
   var result=[]
   for point in s.world.points():
@@ -125,8 +128,8 @@ func roads(area:String)->Array:
   "greenfields":return [[Vector2(940,180),Vector2(940,650),Vector2(1540,650)],[Vector2(940,500),Vector2(550,500),Vector2(550,450)],[Vector2(940,650),Vector2(700,650),Vector2(700,870)],[Vector2(700,720),Vector2(350,720)]]
  return []
 func buildings(area:String)->Array:
- if area=="trail":return [{"p":Vector2(510,520),"kind":"building","art":1,"width":290.0,"sort_y":502.0}]
- if area=="greenfields":return [{"p":Vector2(550,450),"kind":"building","art":0,"width":320.0,"sort_y":432.0}]
+ if area=="trail":return [HoldBuildingPlans.instance("wayfarer",Vector2(510,520))]
+ if area=="greenfields":return [HoldBuildingPlans.instance("farmhouse",Vector2(550,450))]
  return []
 func furnishings(area:String)->Array:
  var w=s.world
@@ -140,9 +143,7 @@ func furnishings(area:String)->Array:
 func obstacles(area:String)->Array:
  var result=[]
  for b in buildings(area):
-  var i=b.art;var source=HoldWorldZones.BUILD_RECTS[i];var anchor=HoldWorldZones.BUILD_ANCHORS[i];var scale=b.width/source.size.x
-  var top=b.p-(anchor-source.position)*scale
-  result.append(Rect2(top+Vector2(10,20),Vector2(b.width-20,b.p.y-18-top.y-20)))
+  result.append(HoldBuildingArt.footprint(b))
  for f in furnishings(area):result.append(s.world.furn_footprint(f))
  if area=="greenfields":
   for y in [585,735]:

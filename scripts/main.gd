@@ -1158,11 +1158,13 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id=="dev_testing" or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id in ["dev_testing","architecture","architecture_details"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
   "dev_testing":dev.panel()
+  "architecture":surface.architecture.panel()
+  "architecture_details":surface.architecture.details_panel()
   "disciplines":HoldDisciplineView.panel(self)
   "conversation":HoldConversation.panel(self)
   "field_notes":
@@ -1357,9 +1359,10 @@ func trade_item(k:String,buy:bool):
  if state.trade(k,buy):sound.effect("coin");refresh_panel()
  else:notify("You cannot afford that trade.")
 func forge_panel():
- if zone=="claim" and state.camp_stage<2:
+ if zone=="claim" and state.camp_stage<2 and not surface.architecture.can_forge():
   label(panel_body,"Raise your workshop at the founding stones first. Keldrath's public forge remains available.",17);return
- compact_person("borin","Measure twice. Hit it until it agrees.")
+ if surface.architecture.can_forge():label(panel_body,"YOUR WORKSHOP · HEARTH & WORKBENCH",21,Color("edc98a"))
+ else:compact_person("borin","Measure twice. Hit it until it agrees.")
  if state.opening<2:
   label(panel_body,"The lower hearth is cold. Deliver 8 coal to Ivar at the foreman's office; the first commission will relight it.",17)
   button(panel_body,"Open work journal",func():open_panel("commission"));return

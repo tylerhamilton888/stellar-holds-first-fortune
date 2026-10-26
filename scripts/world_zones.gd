@@ -40,12 +40,9 @@ func buildings(area_id:String="")->Array:
  # Enterable family galleries replace the closed houses which overlapped streets.
  if area_id=="crownward":result.append({"p":Vector2(350,450),"kind":"building","art":0,"width":310.0,"id":-1})
  result.append_array(HoldNeighborhood.buildings(area_id))
+ for b in result:HoldBuildingPlans.bind(b,area_id)
  return result
-static func building_footprint(b:Dictionary)->Rect2:
- # The painted wall mass is solid, not a narrow strip under an enormous facade.
- var visual=building_rect(b)
- var body=Rect2(visual.position+Vector2(8,12),Vector2(visual.size.x-16,b.p.y-18-visual.position.y-12))
- return body.merge(Rect2(b.p-Vector2(310,230),Vector2(620,212))) if b.get("id",-1)==15 else body
+static func building_footprint(b:Dictionary)->Rect2:return HoldBuildingArt.footprint(b)
 static func facade_index(b:Dictionary)->int:return {0:0,1:1,2:2,3:3,4:4,5:5,6:5,7:3}[b.art]
 static func building_rect(b:Dictionary)->Rect2:
  var i=facade_index(b);var source=FACADE_RECTS[i];var scale=b.width/source.size.x
@@ -211,17 +208,7 @@ func image_at(tex:Texture2D,source:Rect2,anchor:Vector2,p:Vector2,width:float,fa
  if not rect.intersects(Rect2(view_camera(),Vector2(960,540))):return
  var alpha=.35 if fade and current_area()==s.area and rect.has_point(g.player) and g.player.y<p.y-25 else 1.0
  g.draw_texture_rect_region(tex,rect,source,Color(1,1,1,alpha))
-func draw_building(b:Dictionary):
- if ward(current_area()):
-  HoldMasonryArt.building_volume(self,b)
-  if b.get("id",-1)==15:HoldMasonryArt.wing(g,Rect2(b.p-Vector2(310,230),Vector2(620,230)))
-  HoldKeldrathArt.draw(self,b)
-  HoldWardDesign.frontage(self,b);return
- if b.art>=6:
-  var r=Rect2(0,110,710,710) if b.art==6 else Rect2(735,140,795,675)
-  var anchor=Vector2(365,800) if b.art==6 else Vector2(1130,800)
-  image_at(WORKPLACES,r,anchor,b.p,b.width,true);return
- image_at(BUILDINGS,BUILD_RECTS[b.art],BUILD_ANCHORS[b.art],b.p,b.width,true)
+func draw_building(b:Dictionary):HoldBuildingArt.draw(self,b)
 func landmarks(area_id:String="")->Array:
  if area_id=="":area_id=current_area()
  var result=[{"p":LIFT,"kind":"landmark","art":4,"width":125.0}]
@@ -237,6 +224,10 @@ func draw_landmark(o:Dictionary):
   var rect=Rect2(o.p-Vector2(o.width*.5,o.width*.82),Vector2(o.width,o.width*.85))
   if rect.intersects(Rect2(view_camera(),Vector2(960,540))):HoldAmbientProps.fountain(g,o.p,g.clock,o.width/180.0,.35 if current_area()==s.area and rect.has_point(g.player) and g.player.y<o.p.y-25 else 1.0)
 func room_objects(area_id:String="")->Array:
+ if area_id=="":area_id=s.area
+ if HoldBuildingPlans.owned_room(area_id):return []
+ return HoldBuildingPlans.contents(self,area_id).filter(func(o):return o.furnishing!="chest" or not g.state.surface.chests.values().any(func(c):return c.area==area_id and Vector2(c.x,c.y)==o.p))
+func definition_objects(area_id:String="")->Array:
  if area_id=="":area_id=s.area
  if area_id=="room:throne":return [furn("desk",245,625),furn("bookcase",245,535),furn("chair",245,680),furn("orrery",1040,625),furn("tea_table",1040,840),furn("chair",1040,890)]
  if HoldNeighborhood.is_home(area_id):return HoldNeighborhood.room_objects(self,area_id)
@@ -255,21 +246,26 @@ func room_objects(area_id:String="")->Array:
  result.append_array(HoldRoomLayout.objects(self,area_id))
  result.append_array(s.roads.furnishings(area_id))
  return result
-func furn(kind:String,x:float,y:float)->Dictionary:return {"kind":"furnishing","furnishing":{"table":"tea_table","counter":"serving_counter"}.get(kind,kind),"p":Vector2(x,y)}
+func furn(kind:String,x:float,y:float)->Dictionary:
+ var result={"kind":"furnishing","furnishing":{"table":"tea_table","counter":"serving_counter"}.get(kind,kind),"p":Vector2(x,y)}
+ if HoldFurnishings.ITEMS.get(kind,{}).has("sort_offset"):result.sort_y=y+HoldFurnishings.ITEMS[kind].sort_offset
+ return result
 func room_obstacles(area_id:String="")->Array:
  if area_id=="":area_id=s.area
- var result=HoldRoomLayout.obstacles(area_id)
+ var result=[]
  if HoldCivicArt.has_exit(area_id):result.append_array(HoldCivicArt.exit_sides(area_id))
- for o in room_objects(area_id):result.append(furn_footprint(o))
- if HoldNeighborhood.is_home(area_id):
-  result.append_array(HoldNeighborhood.stair_rails(HoldNeighborhood.STAIR,96))
-  if HoldNeighborhood.parts(area_id)[2]=="1":result.append(Rect2(160,615,640,30))
- if area_id in ["room:tavern",HoldHouseholds.LOFT]:result.append_array(HoldNeighborhood.stair_rails(HoldHouseholds.KETTLE_STAIR,96))
- if area_id==HoldHouseholds.LOFT:result.append(Rect2(160,615,640,30))
- if area_id=="room:forge":result.append(Rect2(558,425,48,28))
+ for o in room_objects(area_id):
+  var r=furn_footprint(o)
+  if r.has_area():result.append(r)
+ if HoldBuildingPlans.has_stairs(area_id):
+  result.append_array(HoldNeighborhood.stair_rails(HoldBuildingPlans.stair_position(area_id),96))
+  if HoldBuildingPlans.floor_number(area_id)>0:
+   var r=HoldRoomLayout.floor_rect(area_id);result.append(Rect2(r.position.x,r.end.y-30,r.size.x,30))
  return result
 func furn_footprint(o:Dictionary)->Rect2:return HoldFurnishings.footprint(o.furnishing,o.p)
 func draw_furnishing(o:Dictionary):
+ # Borin draws the shared anvil immediately after his hammer pose.
+ if s.area=="room:forge" and o.furnishing=="anvil":return
  # Active public lockboxes are rendered by the persistent storage system once.
  if o.furnishing=="chest" and ward(current_area()) and current_area()==s.area and HoldWardDesign.STORES.get(s.area,[]).has(o.p):return
  HoldFurnishings.draw(g,o.p,o.furnishing)
@@ -280,43 +276,7 @@ func draw_furnishing(o:Dictionary):
    var impact=HoldWholeFrames.tool_tip(plan.person.profile,Vector2.RIGHT,"hammer",.6)*.85
    g.handworks.raw_sprite({"kind":"stone"},stance+impact+Vector2(0,7),22)
 
-func draw_room_floor():
- if s.area=="room:throne":HoldRoyalStage.floor_draw(self);return
- g.draw_rect(Rect2(Vector2.ZERO,s.size()),Color("182a30"))
- var floor_area=HoldRoomLayout.floor_rect(s.area);var exit_point=HoldRoomLayout.exit_point(s.area)
- var warm=g.room_id in ["home","tavern","commission","wayfarer","greenhearth","kettle_loft"] or HoldNeighborhood.is_home(s.area)
- tile(1 if warm else 0,floor_area,110,Color("ddd4bb") if warm else Color("cbd1c5"))
- # Load-bearing walls and a single south doorway share the collision envelope.
- for x in range(150,int(floor_area.end.x+10),55):
-  s.house.material(3,Rect2(x,210,54,70))
-  g.draw_style_box(stone_style(Color("a1a38b")),Rect2(x,204,54,15))
- for x in [150,floor_area.end.x-10]:g.draw_style_box(stone_style(Color("68766f")),Rect2(x,260,20,floor_area.size.y))
- for r in [Rect2(160,floor_area.end.y-10,280,18),Rect2(520,floor_area.end.y-10,floor_area.end.x-520,18)]:g.draw_style_box(stone_style(Color("9ca18c")),r)
- HoldRoomLayout.dressing(self,s.area)
- HoldHouseholds.dressing(self,s.area)
- if s.area in ["room:tavern",HoldHouseholds.LOFT]:
-  HoldNeighborhood.draw_stairs(self,HoldHouseholds.KETTLE_STAIR,s.area=="room:tavern",96)
-  if s.area==HoldHouseholds.LOFT:g.draw_style_box(stone_style(Color("9ca18c")),Rect2(160,615,640,30))
- HoldCivicArt.exit_floor(g,s.area)
-
- if HoldNeighborhood.is_home(s.area):
-  HoldNeighborhood.draw_stairs(self,HoldNeighborhood.STAIR,HoldNeighborhood.parts(s.area)[2]=="0",96)
-  if HoldNeighborhood.parts(s.area)[2]=="1":g.draw_style_box(stone_style(Color("9ca18c")),Rect2(160,615,640,30))
- if g.room_id=="throne":
-  g.draw_style_box(stone_style(Color("3b696d")),Rect2(440,285,210,330))
-  for x in [446,642]:g.draw_line(Vector2(x,290),Vector2(x,610),Color("bd9e57"),4)
-  for x in [350,710]:
-   s.house.material(3,Rect2(x,270,32,180))
-   g.draw_style_box(stone_style(Color("b5b397")),Rect2(x-5,435,42,18))
- if g.room_id=="training":
-  s.house.material(0,Rect2(305,345,330,185))
-  g.draw_rect(Rect2(315,355,310,165),Color("bda673"),false,3)
- if g.room_id=="home":
-  if s.area.begins_with("home:") and int(g.state.surface.homes[g.state.claim_id].level)>0:
-   g.draw_style_box(stone_style(Color("3f777a")),Rect2(365,420,230,115))
-   g.draw_rect(Rect2(373,428,214,99),Color("c9ac6e"),false,3)
-   for x in range(390,580,35):g.draw_polyline(PackedVector2Array([Vector2(x,439),Vector2(x+9,448),Vector2(x,457),Vector2(x-9,448),Vector2(x,439)]),Color("cab785"),2)
-
+func draw_room_floor():HoldBuildingArt.room_floor(self,s.area)
 func draw_river():
  g.draw_rect(Rect2(1155,200,160,800),Color("465950"))
  tile(4,Rect2(1170,200,130,800),160)
@@ -348,7 +308,7 @@ func tile(index:int,rect:Rect2,unit:float=160,tint:Color=Color.WHITE):
   y+=unit
 
 func exterior_objects()->Array:
- if s.area=="claim":return [{"p":Vector2(500,440),"kind":"building","art":0,"width":350.0},{"p":Vector2(1370,760),"kind":"building","art":4,"width":260.0},{"p":HoldMineEntrance.position("claim"),"kind":"mine_entrance"}]
+ if s.area=="claim":return [HoldBuildingPlans.instance("cottage",Vector2(500,440)),HoldBuildingPlans.instance("workshop",Vector2(1370,760)),{"p":HoldMineEntrance.position("claim"),"kind":"mine_entrance"}]
  if s.area=="trail":return [{"p":Vector2(220,690),"kind":"landmark","art":0,"width":330.0},{"p":HoldMineEntrance.position("trail"),"kind":"mine_entrance"}]
  return []
 

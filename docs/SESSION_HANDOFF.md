@@ -1,3 +1,9 @@
+# 0.76.0 — Shared architecture: implementation awaiting final gates
+
+All 22 existing designs now share plans, rendering, room geometry and the player furnishing catalogue. The Building Book exposes furnished plans and empty shells, extensions, five connected floors, rename/relocate/recover, editable partitions and real household/workshop services. Original artwork and household distinctions are preserved. See testing/architecture86.md for scope and current checks.
+
+Local final parity verification passed 299 assertions with zero engine errors; final regression, full source and exact-export gates remain pending. Do not describe this version as published yet. Previous release 0.75.0 remains available. Work branch feature/architecture86; baseline 94321816d2c0097514b11269e8f6a5fb95f4e25d. Local pre-architecture86 tag and verified architecture86-before.bundle plus remote recovery/pre-architecture86 preserve the starting point. Keep the full dev-testing85-native-verified.bundle prerequisite.
+
 # 0.75.0 — The Testing Grounds: published, verified and merged
 
 Title screen > Dev Testing launches four standalone presets: combat, construction/decorating, mining/workstations and farming/fishing/cooking. Each supplies the location, unlocks and materials for immediate hands-on play. F9 and the DEV TEST badge open paused controls inside test sessions, including reset/restock and relevant shortcuts. The launcher refuses to replace active normal gameplay. One dedicated test save is separate from all three normal fortune slots. Combat encounters restart on reload; construction persists until reset. HoldBuild.DEV_TESTING can hide the temporary entry points later.

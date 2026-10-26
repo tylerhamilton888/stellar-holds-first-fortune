@@ -1,12 +1,15 @@
-# 0.75.0 — The Testing Grounds
+# 0.76.0 — The Builders of Keldrath
 
-Choose **Dev Testing** on the title screen to jump straight into a prepared test world. Inside a test session, press **F9** or use its pause menu to reopen testing controls. A DEV TEST badge stays visible while testing.
+The architecture you encounter is now available in the **Building Book**: all 22 existing building designs, including the nine household styles, both taverns, civic halls, farmhouse, workshops and royal hall. Their original painted fronts, room layouts and distinctive furnishings are preserved.
 
-- **Combat arena:** all weapons and armor, ammunition, individual goblins/beetles/orcs/trolls or a mixed encounter. Heal/restock and toggle hitboxes. Normal damage, parry, guard and dodge remain active.
-- **Construction & decorating:** owned land and cottage, researched plans and ample supplies. Test buildings, stairs, furniture, storage and collision immediately.
-- **Mining & workstations:** exposed minerals, benches, racks, handcart and loose loads for hands-on mining, processing and hauling.
-- **Farming, fishing & cooking:** four garden stages, field tools, seeds and ingredients, with shortcuts to the riverbank and home kitchen.
+- Build a furnished plan or start with an empty shell and arrange your own rooms.
+- Add side/rear bays and up to five connected floors. Place partitions, working doors, floor finishes, furniture and workstations.
+- Move or rename a building while keeping its rooms and stored goods. Empty it to recover its structural materials.
+- Use real beds, storage, cooking and workshop crafting. Forge anvils, royal pillars, throne, relief arch, braziers and double beds are individually buildable.
+- The eastern claim grounds provide space for larger designs. Placement checks protect foundations, entrances and walking routes.
 
-**Your three normal save slots stay separate.** The testing playground has its own save. Resume the last test, save/reload, reset the current preset, or start another. Starting/resetting a preset replaces only the test world. Combat encounters restart on reload; your test building work persists until you reset it.
+**Try it immediately:** Title → Dev Testing → Construction & decorating → F9 → Go to eastern building grounds → Building Book. In normal play, press **O** on your claim, then open the Building Book; inside a building, **O** opens its renovation controls. **E** uses stairs; **Shift+E** descends. Walk through the front doorway to enter or leave.
 
-Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Existing normal saves are supported. These temporary testing entry points can be switched off for a later public build.
+Existing construction and saves are supported. A pre-architecture backup is retained when loading an older save. Developer testing remains separate from normal fortunes. Building a tavern or royal hall provides its architecture and furnishings; its original residents, jobs and story services stay at their established addresses.
+
+Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck.

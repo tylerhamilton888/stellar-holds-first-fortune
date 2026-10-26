@@ -36,7 +36,8 @@
       "people",
       "combat",
       "enemies",
-      "dev_testing"
+      "dev_testing",
+      "architecture"
     ],
     "modular": [
       "modular",
@@ -247,6 +248,18 @@
       "dev_testing",
       "combat",
       "menus"
+    ],
+    "architecture-preview": [
+      "architecture"
+    ],
+    "architecture-regression": [
+      "homestead",
+      "keldrath",
+      "royal",
+      "roads",
+      "work",
+      "dev_testing",
+      "menus"
     ]
   },
   "cases": {
@@ -365,6 +378,10 @@
     "dev_testing": {
       "script": "tests/dev_testing85.gd",
       "marker": "DEV_TESTING85"
+    },
+    "architecture": {
+      "script": "tests/architecture86.gd",
+      "marker": "ARCHITECTURE86"
     }
   }
 }

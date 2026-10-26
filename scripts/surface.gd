@@ -39,9 +39,10 @@ var bed_bounds=Rect2i()
 var house
 var world
 var roads
+var architecture
 
 func _init(game):
- g=game;house=HoldHearthcraft.new(self);world=HoldWorldZones.new(self);roads=HoldRoads.new(self)
+ g=game;house=HoldHearthcraft.new(self);world=HoldWorldZones.new(self);roads=HoldRoads.new(self);architecture=HoldArchitecture.new(self)
 func active()->bool:return g.playing and g.zone!="mine"
 func ensure():
  HoldForestry.ensure(g.state)
@@ -68,8 +69,10 @@ func ensure():
   s.chests[id]={"area":"home:"+g.state.claim_id,"x":650.0,"y":380.0,"items":{}}
  roads.ensure()
 func room()->bool:return area.begins_with("room:") or area.begins_with("home:")
-func size()->Vector2:return HoldRoomLayout.size(area) if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else SIZE
+func size()->Vector2:return HoldRoomLayout.size(area) if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else Vector2(3600,2200) if area=="claim" else SIZE
+func claim_ground(p:Vector2)->bool:return Rect2(90,210,1700,750).has_point(p) or Rect2(1790,210,1700,1850).has_point(p)
 func label()->String:
+ if architecture.interior():return architecture.inside().get("name","Your building")+" · floor "+str(architecture.current_floor()+1)
  if area=="greenfields":return "Greenhearth · the holdfarms"
  if area in HoldRoads.ROOMS:return HoldRoads.ROOMS[area]
  if HoldNeighborhood.is_home(area):return HoldNeighborhood.title(area)
@@ -87,7 +90,7 @@ func restore():
  ensure()
  if g.zone=="mine":return
  var desired=str(g.state.surface.get("area","hearthward"))
- if g.zone=="claim" and not desired.begins_with("home:"):desired="claim"
+ if g.zone=="claim" and not desired.begins_with("home:") and not HoldBuildingPlans.owned_room(desired):desired="claim"
  elif g.zone=="road":desired="pinewood"
  elif g.zone=="approach" and desired not in ["trail","greenfields"]:desired="trail"
  area=desired;return_area=str(g.state.surface.get("return_area","hearthward"))
@@ -99,6 +102,7 @@ func restore():
   g.player=spawn(area)
  g.grounded=true;g.camera=camera_target();g.velocity=Vector2.ZERO
 func spawn(id:String)->Vector2:
+ if HoldBuildingPlans.owned_room(id):return HoldRoomLayout.exit_point(id)-Vector2(0,70)
  if id=="room:throne":return Vector2(650,1005)
  if id=="room:forge":return HoldRoomLayout.exit_point(id)-Vector2(0,70)
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
@@ -115,7 +119,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  world.speech="";rest_time=0
  remember();var old=area
  g.flush_pickups()
- var claim_site=id=="claim" or id.begins_with("home:") or (id.begins_with("room:") and g.state.active_site=="claim" and old=="claim")
+ var claim_site=id=="claim" or id.begins_with("home:") or HoldBuildingPlans.owned_room(id) or (id.begins_with("room:") and g.state.active_site=="claim" and old=="claim")
  g.state.switch_site("claim" if claim_site else "hold",g.geo)
  if id.begins_with("room:") or id.begins_with("home:"):
   if not room():return_area=old
@@ -134,6 +138,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.handworks.arrive(travelling_cart)
  g.begin_transition(label().to_upper());g.save_game()
 func leave():
+ if architecture.interior():architecture.leave();return
  if HoldNeighborhood.is_home(area):enter(HoldNeighborhood.parts(area)[0],HoldNeighborhood.home_door(int(HoldNeighborhood.parts(area)[1]))+Vector2(0,35));return
  var back=return_area
  var p=g.state.surface.positions.get(back,[])
@@ -152,6 +157,8 @@ func points()->Array:
  elif area=="claim":
   result=[spot(180,790,"High Trail · Keldrath","trail"),spot(500,440,"Your home","home:"+g.state.claim_id),spot(1280,345,"Your Deepworks","mine"),spot(970,690,"Founding stones","camp"),spot(1370,760,"Workshop","room:forge"),spot(1650,840,"Launchyard","ship"),spot(740,780,"Homestead workbench","homestead")]
  elif area=="pinewood":result=[spot(180,650,"High Trail","trail")]
+ elif architecture.interior():
+  pass # Shared instance doors, stairs and functional furnishings are appended below.
  elif room():
   var exit_point=HoldRoomLayout.exit_point(area)
   result=[spot(exit_point.x,exit_point.y,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
@@ -174,6 +181,8 @@ func points()->Array:
    if g.room_id=="tavern":
     var guests=HoldNpcPresence.tavern_guests(g.state)
     for i in mini(3,guests.size()):result.append(spot(270+i*170,550,"Speak with "+g.state.npc(guests[i]).first_name,"talk:"+guests[i]))
+ result.append_array(architecture.points())
+ result.append_array(architecture.service_points())
  result.append_array(g.hearth.points())
  result.append_array(roads.points())
  result.append_array(HoldHouseholds.points(self))
@@ -189,10 +198,10 @@ func points()->Array:
   if house.local(c):result.append(spot(c.x,c.y,"Storage chest","chest:"+id))
  result.append_array(house.points())
  for d in g.state.surface.decor:
-  if house.local(d) and d.kind=="bed":
+  if house.local(d) and d.kind in ["bed","double_bed"]:
    var bed=Vector2(d.x,d.y)
    for side in [-1,1]:
-    var access=HoldFurnishings.bedside(bed,side)
+    var access=HoldFurnishings.bedside(bed,side,d.kind)
     if walkable(access):result.append({"p":access,"bed":bed,"name":"Bed · rest in your own house","action":"house_rest"})
   elif house.local(d) and d.kind=="desk":result.append({"p":HoldFurnishings.desk_access(Vector2(d.x,d.y)),"name":"Writing desk · write home","action":"letter"})
  return result
@@ -260,6 +269,10 @@ func start_rest(point:Dictionary)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="architecture_leave":architecture.leave();return
+ if id=="architecture_up":architecture.stairs(true);return
+ if id=="architecture_down":architecture.stairs(false);return
+ if id=="player_forge":g.open_panel("forge");return
  if id=="hearth":g.open_panel("hearth");return
  if id=="road_kitchen":g.open_panel("road_kitchen");return
  if id=="road_order":g.open_panel("road_order");return
@@ -301,7 +314,8 @@ func base_obstacles()->Array:
   list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
   list.append_array([Rect2(1134,643,202,12),Rect2(1134,745,202,12)])
  elif area=="claim":
-  list=[Rect2(346,265,308,155),Rect2(1255,630,230,110)]
+  for b in world.exterior_objects():
+   if b.kind=="building":list.append(HoldBuildingArt.footprint(b))
   list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
  elif area=="pinewood":
   for i in TREES.size():
@@ -309,7 +323,9 @@ func base_obstacles()->Array:
  return list
 func obstacles(ignore:Dictionary={})->Array:
  var list=base_obstacles()
- if not room():list.append_array(roads.obstacles(area))
+ if not room():
+  list.append_array(roads.obstacles(area))
+  if house.level()==0:list.append_array(architecture.obstacles(area))
  if area in ["claim","pinewood"] and house.level()==0:list.append(HoldFurnishings.footprint("desk",Vector2(740,780) if area=="claim" else Vector2(300,790)))
  list.append_array(house.obstacles())
  if g.handworks:list.append_array(g.handworks.surface_obstacles())
@@ -317,7 +333,9 @@ func obstacles(ignore:Dictionary={})->Array:
  for c in g.state.surface.chests.values():
   if house.local(c) and (ignore.is_empty() or c!=ignore):list.append(HoldFurnishings.footprint("chest",Vector2(c.x,c.y)))
  for d in g.state.surface.decor:
-  if house.local(d) and (ignore.is_empty() or d!=ignore):list.append(HoldFurnishings.footprint(d.kind,Vector2(d.x,d.y)))
+  if house.local(d) and (ignore.is_empty() or d!=ignore):
+   var footprint=HoldFurnishings.footprint(d.kind,Vector2(d.x,d.y))
+   if footprint.has_area():list.append(footprint)
  return list
 func walkable(p:Vector2,ignore:Dictionary={})->bool:
  if area=="claim" and house.level()>0 and not house.on_floor(p,house.level()):return false
@@ -326,6 +344,8 @@ func walkable(p:Vector2,ignore:Dictionary={})->bool:
   if not HoldNeighborhood.BOUNDS.has_point(p):return false
  elif room():
   if not HoldRoomLayout.bounds(area).has_point(p):return false
+ elif area=="claim":
+  if not claim_ground(p):return false
  elif not Rect2(90,210,1700,750).has_point(p):return false
  if area=="trail" and p.x>1170 and p.x<1300 and (p.y<665 or p.y>735):return false
  for r in obstacles(ignore):
@@ -378,17 +398,20 @@ func input(e:InputEvent)->bool:
  if not stair_trip.is_empty():return true
  if e is InputEventKey and e.pressed and not e.echo:
   if e.keycode==KEY_E:
-   if e.shift_pressed and area=="claim":house.use_stairs(false)
+   if e.shift_pressed and architecture.interior():architecture.stairs(false)
+   elif e.shift_pressed and area=="claim":house.use_stairs(false)
    else:use()
    return true
   if e.keycode==KEY_G:g.open_panel("wayfinding");return true
+  if e.keycode==KEY_O and architecture.interior():g.open_panel("architecture");return true
   if e.keycode==KEY_O and area=="room:home":g.open_panel("home");return true
   if e.keycode==KEY_O and (area=="claim" or area.begins_with("home:")):g.open_panel("homestead");return true
   if e.keycode in [KEY_SPACE,KEY_V,KEY_X,KEY_P,KEY_F,KEY_Q]:return true
  if e is InputEventMouseButton and e.pressed:
   if e.button_index==MOUSE_BUTTON_RIGHT:cancel_placement();return true
   if e.button_index==MOUSE_BUTTON_LEFT and placing!="":
-   if placing.begins_with("house:"):house.build(g.get_global_mouse_position()+g.camera,placing.trim_prefix("house:"));house.timer=.18
+   if placing.begins_with("blueprint:"):architecture.place(g.get_global_mouse_position()+g.camera)
+   elif placing.begins_with("house:"):house.build(g.get_global_mouse_position()+g.camera,placing.trim_prefix("house:"));house.timer=.18
    else:place(g.get_global_mouse_position()+g.camera)
    return true
  return false
@@ -400,7 +423,7 @@ func start_placement(kind:String):
   g.notify("Research Hearthkeeping for these plans. Ordinary shelves and tables provide the same comfort.");return
  cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
  g.notify("Place on the fine grid. LMB builds; right click cancels. Keep approaches clear.")
-func can_furnish()->bool:return area=="room:home" or area=="claim" or area.begins_with("home:")
+func can_furnish()->bool:return area=="room:home" or area=="claim" or area.begins_with("home:") or architecture.interior()
 func move_nearby_furnishing()->bool:
  if not can_furnish():return false
  var best:Dictionary={};var kind="";var distance=85.0
@@ -417,13 +440,13 @@ func move_nearby_furnishing()->bool:
 func furniture_ready(p:Vector2,kind:String)->bool:
  return furniture_valid(p,kind) and (not moving_furnishing.is_empty() or g.state.afford(HoldFurnishings.ITEMS[kind].cost))
 func build_bounds()->Rect2:
- return Rect2(175,290,610,345) if room() else Rect2(90,210,1700,750)
+ return HoldRoomLayout.bounds(area) if room() else Rect2(90,210,3400,1850) if area=="claim" else Rect2(90,210,1700,750)
 func furniture_valid(p:Vector2,kind:String)->bool:
  if not can_furnish():return false
  if not HoldFurnishings.ITEMS.has(kind) or p.distance_to(g.player)>140:return false
  var base=HoldFurnishings.footprint(kind,p)
  if kind=="chest" and not walkable(p+Vector2(0,25),moving_furnishing):return false
- if kind=="bed" and not (walkable(HoldFurnishings.bedside(p,1),moving_furnishing) or walkable(HoldFurnishings.bedside(p,-1),moving_furnishing)):return false
+ if kind in ["bed","double_bed"] and not (walkable(HoldFurnishings.bedside(p,1,kind),moving_furnishing) or walkable(HoldFurnishings.bedside(p,-1,kind),moving_furnishing)):return false
  for corner in [base.position,Vector2(base.end.x,base.position.y),base.end,Vector2(base.position.x,base.end.y),base.get_center()]:
   if not walkable(corner,moving_furnishing):return false
  for obstacle in obstacles(moving_furnishing):
@@ -437,7 +460,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
  for point in points():
   if point.action=="hearth":continue
   if not moving_furnishing.is_empty() and point.action.begins_with("chest:") and g.state.surface.chests.get(point.action.trim_prefix("chest:"),{})==moving_furnishing:continue
-  if moving_furnishing.get("kind","")=="bed" and point.action=="house_rest" and point.get("bed",Vector2.INF)==Vector2(moving_furnishing.x,moving_furnishing.y):continue
+  if moving_furnishing.get("kind","") in ["bed","double_bed"] and point.action=="house_rest" and point.get("bed",Vector2.INF)==Vector2(moving_furnishing.x,moving_furnishing.y):continue
   if point.action.begins_with("chest:") or point.action=="house_rest":
    var approach=Rect2(point.p+Vector2(-16,10 if point.action.begins_with("chest:") else -10),Vector2(32,24))
    if base.grow(FOOT_RADIUS).intersects(approach):return false
@@ -514,6 +537,8 @@ func chest_panel():
   g.small_button(line,"Store 10",func():transfer(key,10,true);g.open_panel("storage",false))
   g.small_button(line,"Take 10",func():transfer(key,10,false);g.open_panel("storage",false))
 func home_panel():
+ g.button(g.panel_body,"Building book · recreate Keldrath and countryside architecture",func():g.open_panel("architecture"))
+ g.button(g.panel_body,"Furniture & architectural details",func():g.open_panel("architecture_details"))
  g.button(g.panel_body,"Hearth & Homestead · meals and comfort",func():g.open_panel("hearth"))
  g.button(g.panel_body,"River & Root · fishing and gardening",func():g.open_panel("fieldwork"))
  g.button(g.panel_body,"Craft workstations & stockpiles · Shift+B",func():g.open_panel("handworks"))
@@ -606,20 +631,19 @@ func draw():
   objects.append_array(world.neighbor_stair_people())
   objects.append_array(world.street_furnishings())
  if room():objects.append_array(world.room_objects())
- if area=="room:throne":objects.append_array(HoldRoyalStage.objects())
  if is_instance_valid(g.opening_scene) and g.opening_scene.mode=="audience":objects.append({"p":g.opening_scene.ivar_p,"kind":"royal_guide"})
  if room():objects.append_array(world.routines.people(area,g.state.elapsed))
  if area in ["claim","pinewood"] and house.level()==0:objects.append(world.furn("desk",740 if area=="claim" else 300,780 if area=="claim" else 790))
  if area in ["claim","trail"]:
   g.draw_set_transform(-cam);HoldMineEntrance.ground(g,HoldMineEntrance.position(area))
   objects.append_array(world.exterior_objects())
- if area=="claim":
+ if area=="claim" or architecture.interior():
   for k in house.tiles():
    if house.tiles()[k].get("wall","")!="":objects.append({"p":house.center(house.coords(k))+Vector2(0,20),"kind":"wall","c":house.coords(k)})
  for c in g.state.surface.chests.values():
   if house.local(c):objects.append({"p":Vector2(c.x,c.y),"kind":"chest_open" if g.panel_id=="storage" and c==g.state.surface.chests.get(selected_chest,{}) else "chest"})
  for d in g.state.surface.decor:
-  if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind})
+  if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind,"sort_y":float(d.y)+float(HoldFurnishings.ITEMS.get(d.kind,{}).get("sort_offset",0))})
  if room() and not area.begins_with("home:") and area!="room:training":
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
   if host!="" and g.state.active_site=="hold":objects.append({"p":HoldRoyalStage.current(g).p if host=="eirik" else Vector2(620,410),"kind":"npc","id":host})
@@ -635,6 +659,7 @@ func draw():
  if area=="pinewood":
   for i in TREES.size():objects.append({"p":TREES[i],"kind":"tree","i":i})
  objects.append_array(roads.buildings(area))
+ if house.level()==0:objects.append_array(architecture.objects(area))
  if not room():objects.append_array(roads.furnishings(area))
  objects.append_array(roads.people(area))
  objects.append_array(g.fight.objects())
@@ -644,9 +669,7 @@ func draw():
  # Stair treads are floor, not an upright prop drawn over a climbing Dwarf.
  for o in objects:
   if o.kind=="landmark" and o.art in [1,2]:o.sort_y=o.p.y-125
-  elif o.kind=="building" and HoldWorldZones.ward(area):o.sort_y=HoldWorldZones.building_footprint(o).end.y
- if area=="room:forge":
-  for r in HoldRoomLayout.obstacles(area):objects.append({"p":Vector2(r.get_center().x,r.end.y),"kind":"furnishing","furnishing":"stone_pillar"})
+  elif o.kind=="building":o.sort_y=HoldWorldZones.building_footprint(o).end.y
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))
  for o in objects:
   g.draw_set_transform(-cam)
@@ -695,7 +718,8 @@ func draw():
   g.draw_style_box(world.stone_style(Color("19383c")),r)
   A.text(g,r.position+Vector2(6,15),"E",12,Color("ead4a0"))
  house.preview()
- if placing!="" and not placing.begins_with("house:"):
+ architecture.preview()
+ if placing!="" and not placing.begins_with("house:") and not placing.begins_with("blueprint:"):
   var p=snap_furnishing(g.get_global_mouse_position()+g.camera)
   if can_furnish():HoldBuildPreview.grid(g,g.camera,FURNITURE_GRID,build_bounds())
   var ok=furniture_ready(p,placing);var tint=HoldBuildPreview.color(ok)
@@ -759,7 +783,7 @@ func prop(p:Vector2,index:int,width:float):
 func furniture(p:Vector2,kind:String):
  HoldFurnishings.draw(g,p,kind)
 func draw_outdoors():
- world.tile(2,Rect2(Vector2.ZERO,SIZE),200,Color("adb99e"))
+ world.tile(2,Rect2(Vector2.ZERO,size()),200,Color("adb99e"))
  for edge in [Rect2(0,0,1880,200),Rect2(0,200,80,880),Rect2(1800,200,80,880),Rect2(0,970,1880,110)]:
   if area=="greenfields" and edge.position.y==0:continue
   if area in ["pinewood","claim"] and edge.position==Vector2(0,200):continue
@@ -783,6 +807,9 @@ func draw_outdoors():
  if area=="trail":world.draw_river()
  g.draw_texture_rect(ground_cache[area],Rect2(Vector2.ZERO,SIZE),false)
  if area=="trail":world.draw_bridge()
+ if area=="claim":
+  world.tile(0,Rect2(1780,560,800,80),100,Color("b8b29a"))
+  world.tile(0,Rect2(2480,560,80,1370),100,Color("b8b29a"))
  for i in 8:scenery(Vector2(120+i*245,245+sin(i)*30),1,330)
  if area=="claim":
   var upgraded=int(g.state.surface.homes[g.state.claim_id].level)>0

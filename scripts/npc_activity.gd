@@ -25,7 +25,7 @@ static func smith(n:Node2D,p:Vector2,t:float,lit:bool):
  var phase=(f+.1)/8.0 if f>=0 else 0.0
  var contact=p+Vector2(-47,-8)*zoom
  HoldDrawnAnimation.paint(n,p+offset,profile,Vector2(-1,.45),false,t,zoom,offset,"hammer",phase)
- n.draw_texture_rect(ANVIL,Rect2(contact.x-25*zoom,contact.y,51*zoom,50*zoom),false)
+ HoldFurnishings.draw_anvil(n,Rect2(contact.x-25*zoom,contact.y,51*zoom,50*zoom))
  A.rect(n,contact.x-6*zoom,contact.y-zoom,12*zoom,zoom,"e4a66b" if lit else "909b9a")
  if f==4:
   for i in 3:

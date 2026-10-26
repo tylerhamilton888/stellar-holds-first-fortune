@@ -213,6 +213,11 @@ func load_world(geo:Geology)->Dictionary:
   var backup=save_path()+".pre-hearth78-"+str(Time.get_ticks_usec())+".bak"
   while FileAccess.file_exists(backup):backup+=".bak"
   if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
+ # Keep the pre-architecture save readable by the previous executable.
+ if not d.get("surface",{}).has("architecture86"):
+  var backup=save_path()+".pre-architecture86-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  surface=d.get("surface",{})
  deepworks=d.get("deepworks",{})
  hauling=d.get("hauling",{})
