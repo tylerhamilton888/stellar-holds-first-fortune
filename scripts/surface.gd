@@ -70,7 +70,7 @@ func ensure():
  roads.ensure()
 func room()->bool:return area.begins_with("room:") or area.begins_with("home:")
 func size()->Vector2:return HoldRoomLayout.size(area) if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else Vector2(3600,2200) if area=="claim" else SIZE
-func claim_ground(p:Vector2)->bool:return Rect2(90,210,1700,750).has_point(p) or Rect2(1790,210,1700,1850).has_point(p)
+func claim_ground(p:Vector2)->bool:return Rect2(90,210,1810,750).has_point(p) or Rect2(1900,210,1590,1850).has_point(p)
 func label()->String:
  if architecture.interior():return architecture.inside().get("name","Your building")+" · floor "+str(architecture.current_floor()+1)
  if area=="greenfields":return "Greenhearth · the holdfarms"
@@ -787,8 +787,11 @@ func draw_outdoors():
  for edge in [Rect2(0,0,1880,200),Rect2(0,200,80,880),Rect2(1800,200,80,880),Rect2(0,970,1880,110)]:
   if area=="greenfields" and edge.position.y==0:continue
   if area in ["pinewood","claim"] and edge.position==Vector2(0,200):continue
-  if area=="trail" and edge.position.x==1800:continue
+  if area in ["trail","claim"] and edge.position.x==1800:continue
   world.tile(3,edge,180,Color("bac1ae"))
+ if area=="claim":
+  # Natural edges follow the expanded L-shaped grounds, including the river bend.
+  for edge in [Rect2(1880,0,1720,200),Rect2(3490,200,110,2000),Rect2(1900,2060,1590,140),Rect2(0,1080,1900,1120)]:world.tile(3,edge,180,Color("bac1ae"))
  var paths=[PackedVector2Array([Vector2(0,790),Vector2(500,690),Vector2(960,690),Vector2(1650,790)]),PackedVector2Array([Vector2(500,690),Vector2(500,440)]),PackedVector2Array([Vector2(960,690),Vector2(1280,345)])] if area=="claim" else [PackedVector2Array([Vector2(180,650),Vector2(700,690),Vector2(1100,700),Vector2(1650,700)]),PackedVector2Array([Vector2(700,690),Vector2(950,300)]),PackedVector2Array([Vector2(700,690),Vector2(470,920)])]
  if not roads.roads(area).is_empty():paths=roads.roads(area)
  if not ground_cache.has(area):

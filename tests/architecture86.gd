@@ -6,6 +6,8 @@ func run():
  for item in HoldData.ITEMS:g.state.inventory[item]=10000
  for id in HoldData.RESEARCH:g.state.tech[id]=true
  g.surface.enter("claim",Vector2(2200,1060));settle()
+ check(not g.surface.walkable(Vector2(1840,1000)),"Expanded grounds keep the visible tributary unwalkable")
+ check(g.surface.walkable(Vector2(1840,700)) and g.surface.walkable(Vector2(1920,1100)),"Eastern plots connect over dry ground beyond the old boundary")
  var a=g.surface.architecture
  check(HoldBuildingPlans.catalogue().size()==22,"All 22 existing building designs are exposed through shared plans")
  for ward in HoldWorldZones.WARDS:
