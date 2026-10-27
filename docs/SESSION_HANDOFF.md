@@ -1,3 +1,11 @@
+# 0.79.0 — Steel & Footwork: published and merged
+
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.79.0 . Source 185b857904d23bc3787341eefd8e1cad722f90db; PR #49 merge 6027a012f1850449692dd17e3de24cb11d199128. Full source run 40511521050 and exact-package release run 40512193437 passed. Local updated combat/drill suites passed 93 assertions; native HUD, drill menu, visible wall and shove preparation/contact/recovery reviewed.
+
+Space dodges. RMB guards/parries; RMB+LMB shoves with axe/shield. F9 combat drills: Flanking, Stagger, Parry, Wall impact. Shove uses existing whole equipped guard/recoil drawings, not a new atlas. No destructible furnishings. Windows hardware/audio and subjective feel remain hands-on checks.
+
+Downloaded build.json SHA256 matches GitHub a8d503d02a9da7ae428ec4939b4be183adb4b6614e31fb2e2f759d7a4108fba2. Clean report identifies the source above. Uploaded ZIP size 767105423 and SHA256 00a664492134b02524fdcf7ce8a72bdc2029062d04986c8ac17f495bf9e3037c match the build report; ZIP was not independently redownloaded. Previous releases remain intact. Release and combat/steel-footwork89 branches preserve verified source. Extract into a fresh folder.
+
 # 0.79.0 release preparation
 
 Shove now has a .36-second preparation/contact/recovery sequence using whole equipped guard/recoil drawings, with contact after .16 seconds. Moving, dodging or stowing cancels/controls its state as implemented; no detached shield is drawn. F9 combat adds Flanking, Stagger, Parry and Wall impact drills. New tests cover delayed contact and isolated drill setup. Fresh checkout restored from GitHub 06e34b52; native import and verification in progress. No new release is published yet.
