@@ -1,3 +1,11 @@
+# 0.80.0 — Supper & Slumber candidate
+
+One work-energy reserve and awake-time status persist additively in surface.energy90. Existing saves initialize rested. Active, unpaused play advances tiredness; food restores 100/75/50/25 percent at 0/60/90/120 real active minutes awake. Work drains only on mining/woodcut contacts or active manual processing/farming/carrying. Zero energy slows manual work 20 percent; movement and combat stay unchanged. No offline drain.
+
+Energy HUD opens food/drink/rest panel; I also offers it. Meals have a 120-second fullness interval and show exact recovery. Hold ale is bought/traded or brewed from barley/water in existing kitchens: five minutes of 5 percent reduced expenditure, separate drink cooldown, no energy or fatigue recovery. Sleep resets energy/awake time, heals and gives ten minutes of 5 percent reduced expenditure; ale does not stack with that. Nap restores 35 energy, eases awake time 30 minutes and heals 25. Existing bed interaction/animation and shelter/access validation remain. Serving an existing shared supper also replenishes energy when not full.
+
+No calendar/daylight or time-skipping simulation is added here. Rest is an interaction, not an elapsed-world-time fast-forward. Automated production is not player labor. Native energy behavior passes 24 assertions; homestead passes 69. Final layout and hosted release verification pending. Added standalone energy90 case to source and exact-pack gates. The 33 source cases are partitioned into three disjoint native suites; the release still requires the entire identical-source workflow and exact-package checks.
+
 # 0.79.0 — Steel & Footwork: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.79.0 . Source 185b857904d23bc3787341eefd8e1cad722f90db; PR #49 merge 6027a012f1850449692dd17e3de24cb11d199128. Full source run 40511521050 and exact-package release run 40512193437 passed. Local updated combat/drill suites passed 93 assertions; native HUD, drill menu, visible wall and shove preparation/contact/recovery reviewed.

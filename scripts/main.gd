@@ -14,6 +14,8 @@ const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinew
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
 var loading_view:HoldLoadingView
+var energy_button:Button
+var energy_bar:ProgressBar
 var dev:HoldDevTesting
 var hearth:HoldHearth
 var fieldwork:HoldHomesteadLife
@@ -129,6 +131,10 @@ func _ready():
  sound=HoldSound.new();add_child(sound)
  setup_ui()
  dev=HoldDevTesting.new(self)
+ energy_button=button(ui,"Energy",func():open_panel("energy"))
+ energy_button.custom_minimum_size.y=30;energy_button.add_theme_font_size_override("font_size",14)
+ energy_button.position=Vector2(744,8);energy_button.size=Vector2(194,30)
+ energy_bar=HoldWorkEnergy.meter();energy_bar.position=Vector2(744,39);energy_bar.size=Vector2(194,4);energy_bar.show_percentage=false;energy_bar.mouse_filter=Control.MOUSE_FILTER_IGNORE;ui.add_child(energy_bar)
  var loading_layer=CanvasLayer.new();loading_layer.layer=100;add_child(loading_layer)
  loading_view=HoldLoadingView.new();loading_view.game=self;loading_layer.add_child(loading_view)
  hotbar=HoldHotbar.new();hotbar.g=self;ui.add_child(hotbar)
@@ -320,6 +326,7 @@ func _process(dt):
   if completed!="":notify(completed);sound.effect("build")
   if zone!="mine" and not surface.active():combat.update(dt)
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
+   HoldWorkEnergy.tick(state,dt)
    fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt)
    if zone=="mine":
     deep.move(dt)
@@ -863,6 +870,13 @@ func goal()->String:
  if not state.tech.has("automation"):return "GROW YOUR HOLD: Research clockwork industry; recruit a crew."
  return "YOUR FIRST STARSHIP: Build at the eastern launchyard (%d/3)." % state.ship_stage
 func update_hud():
+ if is_instance_valid(energy_button):
+  energy_button.visible=playing and panel_id==""
+  energy_bar.visible=energy_button.visible
+  if playing:
+   var reserve=HoldWorkEnergy.data(state)
+   energy_button.text="Energy %d · %s" % [int(reserve.energy),HoldWorkEnergy.status(state)]
+   energy_bar.value=reserve.energy
  var place="KELDRATH"
  if zone=="approach":place="MOUNTAIN APPROACH"
  elif zone=="road":place="PINEWOOD"
@@ -1159,7 +1173,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id in ["dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id in ["energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1193,6 +1207,7 @@ func open_panel(id:String,remember:bool=true):
   "charters":charters_panel()
   "pinewood":HoldForestry.panel(self)
   "road_order":surface.roads.panel()
+  "energy":HoldWorkEnergy.panel(self)
   "hearth":hearth.panel()
   "road_kitchen":surface.roads.kitchen_panel()
   "gate":world_map_panel()
@@ -1270,6 +1285,7 @@ func open_panel(id:String,remember:bool=true):
  elif id in ["conversation","commission","guidance","roster","equipment"]:panel.set_deferred("size",Vector2(840,452))
 
 func inventory_panel():
+ button(panel_body,"Meals, ale & rest · Energy",func():open_panel("energy"))
  var top=row(panel_body)
  label(top,"%d crowns  •  Carried supplies" % state.money,18,Color("edc98a"))
  small_button(top,"Show all resources" if inventory_owned_only else "Show carried resources",func():inventory_owned_only=not inventory_owned_only;refresh_panel())

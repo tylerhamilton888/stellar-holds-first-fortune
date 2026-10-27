@@ -39,7 +39,8 @@
       "dev_testing",
       "architecture",
       "architecture_style",
-      "combat_art"
+      "combat_art",
+      "energy"
     ],
     "modular": [
       "modular",
@@ -284,6 +285,48 @@
       "roads",
       "appearance",
       "architecture_style"
+    ],
+    "energy-preview": [
+      "energy"
+    ],
+    "gameplay-1": [
+      "loading",
+      "ambient",
+      "handworks",
+      "hold",
+      "civic",
+      "disciplines",
+      "appearance",
+      "keldrath",
+      "quest_ui",
+      "enemies",
+      "architecture_style"
+    ],
+    "gameplay-2": [
+      "menus",
+      "equipment",
+      "world",
+      "continuity",
+      "firstshift",
+      "polish",
+      "roads",
+      "homestead",
+      "people",
+      "dev_testing",
+      "combat_art"
+    ],
+    "gameplay-3": [
+      "orientation",
+      "mining",
+      "modular",
+      "living",
+      "ancestral",
+      "firsthour",
+      "work",
+      "royal",
+      "combat",
+      "architecture",
+      "energy"
     ]
   },
   "cases": {
@@ -414,6 +457,10 @@
     "combat_art": {
       "script": "tests/combat88.gd",
       "marker": "COMBAT88"
+    },
+    "energy": {
+      "script": "tests/energy90.gd",
+      "marker": "ENERGY90"
     }
   }
 }

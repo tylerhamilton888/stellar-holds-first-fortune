@@ -1,3 +1,7 @@
+# 0.80.0 — Supper & Slumber
+
+Work energy, active-time tiredness, diminishing food recovery, hold ale and bedside sleep/naps. New saves and old fortunes begin rested; no offline fatigue. Zero energy slows demanding work by 20%, without restricting movement or combat. Click the Energy HUD or open it from the pack. Calendar, holidays and day/night remain future work.
+
 # 0.78.0 — Grip, Guard & Craft
 
 - Whole axe/shield poses for all fourteen saved identities; consistent combat weapon, forearm grip, guard and impact states; shared Borin practice poses.

@@ -111,7 +111,8 @@ func update(dt:float):
  if bed_id>=0:
   var current=bed()
   if not current.is_empty():g.surface.direction=Vector2(1 if g.player.x<current.x else -1,0)
- elapsed+=dt
+ if action!="fish":HoldWorkEnergy.spend(g.state,dt*.025)
+ elapsed+=dt if action=="fish" else dt*HoldWorkEnergy.speed(g.state)
  if action=="fish":
   var bite=bite_time()
   if elapsed<bite:return

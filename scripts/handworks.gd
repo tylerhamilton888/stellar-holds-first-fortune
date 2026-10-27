@@ -271,6 +271,7 @@ func update(dt:float):
  if lift<=0:setting_down={}
  if not g.playing or g.panel_id!="" or g.room_id=="training":return
  var d=data()
+ if g.walking_pose and not d.carry.is_empty():HoldWorkEnergy.spend(g.state,dt*.02)
  for f in d.facilities:
   if vehicle(f) and f.hitched:
    # Only explicit, validated passages transfer equipment; abandoned carts stay put.
@@ -281,7 +282,7 @@ func update(dt:float):
   var raw=closest(d.loose,65) if d.carry.is_empty() else d.carry.back()
   if not raw.is_empty() and raw.kind=="stone":
    field_raw=raw;working=true;g.surface.direction=Vector2(1,.45)
-   var before=float(raw.get("dressing",0));raw.dressing=before+dt
+   var before=float(raw.get("dressing",0));raw.dressing=before+dt*HoldWorkEnergy.speed(g.state);HoldWorkEnergy.spend(g.state,dt*.05)
    if int((before+.315)/.7)!=int((float(raw.dressing)+.315)/.7):g.sound.effect("stone_0",-14)
    if float(raw.dressing)>=2.1:
     if raw in d.carry:d.carry.erase(raw)
@@ -309,7 +310,7 @@ func update(dt:float):
   return
  working=true;active_id=f.id
  var before=float(f.job.progress)
- f.job.progress=before+dt*HoldIndustry.production(g.state)
+ f.job.progress=before+dt*HoldIndustry.production(g.state)*HoldWorkEnergy.speed(g.state);HoldWorkEnergy.spend(g.state,dt*.05)
  if int((before+.21)/.42)!=int((float(f.job.progress)+.21)/.42):g.sound.effect("wood" if f.kind=="saw" else "stone_0",-14)
  if float(f.job.progress)<1.26:return
  var raw=f.job.raw;var item=raw_item(raw)

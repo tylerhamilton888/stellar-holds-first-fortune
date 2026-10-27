@@ -14,7 +14,7 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-24.04
     # Includes waiting for the full source gate, a cold art import and exact-pack checks.
-    timeout-minutes: 80
+    timeout-minutes: 110
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -54,7 +54,7 @@ jobs:
             CHECK=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/runs" -f head_sha="$SOURCE" -f event=pull_request --jq '[.workflow_runs[] | select(.path == ".github/workflows/validate.yml")][0] // empty')
             test -n "$CHECK" || continue
             # Wait for that exact source instead of launching a duplicate suite.
-            for ATTEMPT in $(seq 1 180); do
+            for ATTEMPT in $(seq 1 240); do
               test "$(echo "$CHECK" | jq -r .status)" = completed && break
               sleep 15
               CHECK=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$(echo "$CHECK" | jq -r .id)")
