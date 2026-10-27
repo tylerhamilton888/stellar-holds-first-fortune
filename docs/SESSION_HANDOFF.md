@@ -1,6 +1,16 @@
-# 0.81.0 — The Turning Year candidate
+# 0.81.0 — The Turning Year: published and merged
 
-Calendar91 adds saved active time, four seasons and four annual three-day feasts; invitations remain claimable. Sleep advances passive world timers and all queued recipes, then restores energy. Outdoor dawn/dusk/night lighting and lamps use existing art, while interiors/underground areas stay readable. Holiday tables reuse existing food/tankard art in depth order. Separate calendar Dev Testing preset provides immediate access. Local calendar acceptance passes 35 checks; final visual refinement and regressions are in progress. Source and exact-export gates include the new case. Publication and delivery verification remain pending.
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.81.0 . Runtime/release source 458104d585d7aa145d062c17720358f4968a619d; PR #53 merge d846107c2cfc3f1af914f9920f17ad6f45c7ca36 has identical tree 76056c9724acd63d15e2367fe0062a8d7259abd1. Source run 40572335280 passed all 34 gameplay cases plus people-preview. Release run 40572553976 passed all 24 exact-export cases / 1,815 assertions. Focused local checks passed 230 assertions. Native and exported calendar, feast, lighting and developer controls reviewed; the two month grids and feast panel are byte-identical between hosted source and export. Other world captures vary and are not claimed identical.
+
+Click the HUD date, or Calendar in Pack/Energy. A day lasts 40 active minutes; four 28-day seasons repeat yearly. Menus pause time and there is no offline advance. Sleep reaches 08:00; naps advance two game hours. Crops and every queued recipe progress during sleep, without simulating combat or manual work. Outdoor dawn/dusk/night stays readable; indoor and underground lighting is preserved.
+
+Four three-day annual feasts add food, ale and remembered toasts at the Copper Kettle and Wayfarer's Hearth. Invitations remain available after the date, with modest once-per-year food/work comfort. No forced collapse, crop loss, service curfews or expiring quests. Seasonal terrain/snow, weather, NPC schedules and holiday minigames remain future work.
+
+Try Title > Dev Testing > Calendar & celebrations; F9 jumps to times of day, each feast, a host or a bed. Test saves remain separate. Existing fortunes initialize at Spring 1, Year 1, 08:00.
+
+Downloaded build.json matches GitHub SHA256 153154c913da9efa1cce4d9048dc81791d04de78feea702acef9e9b4fbd80ea5. Clean report, tag and source agree. Uploaded ZIP size 767128253 and SHA256 cff818887b3ce9606dd758b6f0abba6805669e226e44a0cdf64452e2043c9ab2 match the report; the full ZIP was not independently redownloaded. Downloaded exact-export evidence matches its uploaded checksum. See testing/calendar91.md and testing/calendar91/delivery.json. Extract into a fresh folder. Windows hardware/audio and subjective pacing remain hands-on checks.
+
+Continue from master. Runtime is preserved on feature/calendar91, release/0.81.0 and recovery/calendar91-hosted, plus the verified calendar91-hosted-checkpoint.bundle. Its prerequisite 30a9b877e7a4e71cc521b18a4ed35f4502045db4 is preserved by the prior energy90-delivered-checkpoint.bundle; retain the older recovery chain. Delivery documentation is separate from the verified runtime.
 
 # 0.80.0 — Supper & Slumber: published and merged
 
