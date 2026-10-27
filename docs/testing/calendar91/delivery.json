@@ -1,0 +1,38 @@
+{
+  "version": "0.81.0",
+  "runtime_source": "458104d585d7aa145d062c17720358f4968a619d",
+  "release_source": "458104d585d7aa145d062c17720358f4968a619d",
+  "runtime_pr": 53,
+  "runtime_merge": "d846107c2cfc3f1af914f9920f17ad6f45c7ca36",
+  "runtime_tree": "76056c9724acd63d15e2367fe0062a8d7259abd1",
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.81.0",
+  "source_run": 40572335280,
+  "release_run": 40572553976,
+  "local_assertions": 230,
+  "source_cases": 34,
+  "separate_people_check": true,
+  "export_cases": 24,
+  "export_assertions": 1815,
+  "build_report_sha256": "153154c913da9efa1cce4d9048dc81791d04de78feea702acef9e9b4fbd80ea5",
+  "zip_bytes": 767128253,
+  "zip_sha256": "cff818887b3ce9606dd758b6f0abba6805669e226e44a0cdf64452e2043c9ab2",
+  "pck_sha256": "8c7c93287f3a50b3ef7b932606aece89d4aaee058b43bf062aa578763cec7c9c",
+  "full_zip_independently_downloaded": false,
+  "downloaded_export_artifact": {
+    "id": 12768380326,
+    "sha256": "d175abdeabe4ee06c6a27fc51a10af842b004068c37178625cf82bffd5bd5398"
+  },
+  "release_evidence_asset": {
+    "bytes": 230091182,
+    "sha256": "75dfc4aa6251a89ffda5171a0332b5f738761e3c2217d637db3c5b52d3a88e5a"
+  },
+  "source_export_identical_captures": [
+    "01-calendar.png",
+    "06-toasts.png",
+    "07-summer.png"
+  ],
+  "limits": [
+    "No seasonal terrain/snow, weather, NPC curfews or holiday minigames",
+    "Windows hardware/audio and subjective pacing require hands-on playtesting"
+  ]
+}
