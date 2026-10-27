@@ -1,0 +1,34 @@
+{
+  "version": "0.80.0",
+  "runtime_source": "0802f021a441309058ec2efafa14960864caf350",
+  "release_source": "44fd344ba41779bd5197804254886f231095f09b",
+  "runtime_pr": 51,
+  "runtime_merge": "ace5ed7cc11091e229086c7b385be76a470f2a52",
+  "runtime_tree": "a411a553e42d87972e442f93eda17fc7f9188cd5",
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.80.0",
+  "source_run": 40557642059,
+  "release_run": 40558582380,
+  "local_assertions": 163,
+  "source_cases": 33,
+  "separate_people_check": true,
+  "export_cases": 23,
+  "export_assertions": 1780,
+  "build_report_sha256": "026bd9d7124cd133772f4cd9c0253760e2c7073484c502ab6656c1b7b2404bf6",
+  "zip_bytes": 767115737,
+  "zip_sha256": "60437f23c07d59fcd242a7dcc19694aa152a9fa96623d7643e9088a3b70b04ac",
+  "pck_sha256": "0a3d39eaf49caf9abdbf9da1b9792830da3653a955729f543d3adc4a976469ab",
+  "full_zip_independently_downloaded": false,
+  "downloaded_export_artifact": {
+    "id": 12761574776,
+    "sha256": "b37da8d1e90d133af3e1c7a48a2f93b29b5895b4ac2bcad5b0ea38daa4b6fd46"
+  },
+  "release_evidence_asset": {
+    "bytes": 228744605,
+    "sha256": "81ed8b09043442c20b225e9cf650e06ecbb18bf34c4beaa59f0c0dbb2675f6f4"
+  },
+  "energy_captures_byte_identical_across_local_source_export": true,
+  "limits": [
+    "No calendar/day-night/holidays or world-time sleep advance",
+    "Windows hardware/audio and subjective pacing require hands-on playtesting"
+  ]
+}
