@@ -103,6 +103,7 @@ func favor(id:String)->bool:
  g.notify("Hedrik: A home with a warm table! These old pantry plans are yours. · 25 crowns, Hearthkeeping and barley seed.");g.save_game();return true
 func panel():
  saved(g.state)
+ if HoldCalendar.pending(g.state)>0 or not HoldCalendar.holiday(HoldCalendar.data(g.state).day).is_empty():g.button(g.panel_body,"Celebrations · share a feast & toast",func():g.open_panel("festivals"))
  var tabs=g.row(g.panel_body)
  for id in ["home","cook","supper","neighbor"]:
   var b=g.small_button(tabs,id.capitalize(),func():tab=id;g.open_panel("hearth",false));b.toggle_mode=true;b.button_pressed=tab==id
@@ -134,6 +135,7 @@ func panel():
    for id in ["root_hotpot","fish_chowder"]:
     var b=g.button(g.panel_body,"Give "+HoldData.ITEMS[id].name,func():favor(id);g.open_panel("hearth",false));b.disabled=g.surface.area!="room:tavern" or g.player.distance_to(Vector2(365,470))>85 or int(d.best_comfort)<3 or g.state.count(id)<1
 func cooking_panel():
+ g.small_button(g.panel_body,"Calendar & holiday feasts",func():g.open_panel("festivals"))
  g.label(g.panel_body,"At the hearth",23)
  g.label(g.panel_body,"Cook beside your hearth or counter, or at a public kitchen. Bring ingredients in your pack; Orla sells every ingredient. Meals finish cooking while you play.",15)
  for id in ["turnip_stew","trout_supper","hold_ale"]+MEALS.keys():

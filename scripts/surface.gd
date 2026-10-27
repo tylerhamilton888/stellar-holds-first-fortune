@@ -370,8 +370,9 @@ func move(dt:float):
    direction=(rest_bed-g.player).normalized()
    rest_time=maxf(0,rest_time-dt);rest_elapsed+=dt;g.walking_pose=false
    if rest_time<=0:
+    HoldCalendar.rest(g,rest_nap)
     HoldWorkEnergy.rest(g.state,rest_nap)
-    g.state.surface.facts.rest=true;g.state.combat.health=minf(100,g.state.combat.health+25) if rest_nap else 100;g.notify("Nap complete · some energy and health restored" if rest_nap else "Slept well · energy and health restored · fortune saved")
+    g.state.surface.facts.rest=true;g.state.combat.health=minf(100,g.state.combat.health+25) if rest_nap else 100;g.notify(HoldCalendar.rest_notice(g.state,rest_nap))
     if area=="room:home":g.state.surface.facts.quarters_rest=true;HoldOnboarding.settle(g,"bed")
     g.save_game()
    return
@@ -682,7 +683,8 @@ func draw():
   if o.kind=="building":world.draw_building(o)
   elif o.kind=="mine_entrance":HoldMineEntrance.draw(g,o.p)
   elif o.kind=="landmark":world.draw_landmark(o)
-  elif o.kind=="furnishing":world.draw_furnishing(o)
+  elif o.kind=="furnishing":
+   world.draw_furnishing(o);HoldCalendar.decorate(g,o)
   elif o.kind=="royal_prop":HoldRoyalStage.draw_prop(g,o,g.clock)
   elif o.kind=="royal_guide":
    HoldDrawnAnimation.paint(g,o.p-cam,g.state.npc("ivar"),Vector2.UP,false,0,.85,-cam)
@@ -709,6 +711,7 @@ func draw():
    HoldDrawnAnimation.work_foreground(g,g.player,g.state.appearance,g.handworks.work_direction(station),.85,-cam,"saw" if station.kind=="saw" else "hammer",fmod(float(station.job.progress),.42)/.42)
  g.draw_set_transform(-cam)
  house.roof_draw()
+ HoldCalendar.lighting(g,objects)
  HoldWardDesign.motion(g)
  if g.opening_scene is HoldArrivalEscort:
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return

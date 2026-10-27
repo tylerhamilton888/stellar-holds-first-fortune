@@ -1,13 +1,15 @@
-# 0.80.0 — Supper & Slumber
+# 0.81.0 — The Turning Year
 
-Manual mining, woodcutting, processing, farming and carrying now use work energy. Click Energy in the top-right corner, or open it from your pack, to see recovery and eat a meal. At zero energy demanding work is 20% slower; movement, attacks and dodges remain available.
+The hold now keeps a saved clock and calendar: a 40-minute active day, four 28-day seasons and a repeating year. Click the date beneath the location heading, or open Calendar from your pack or Energy menu. Browse seasons and select dates without advancing time.
 
-Physical tiredness grows during active play. Food restores less after 60, 90 and 120 active minutes awake. Menus pause this clock and there is no offline fatigue. Existing fortunes start fully rested.
+Outdoor light moves smoothly through dawn, daylight, dusk and readable blue nights. Lamps give a soft warm glow. Interiors, Keldrath's underground wards and mines keep their own lighting; services remain available at night.
 
-Dwarves drink hold ale: buy it from the existing hearth trade or brew barley and water at a kitchen. A tankard provides five minutes of modest work comfort. Food and ale do not replace sleep.
+Sleep at a bed until 08:00, or nap for two game hours. Planted crops and every queued crafting recipe advance while you rest. Manual work, actors and combat are not simulated during the skip. Crops never wither when the season changes. Energy recovery remains forgiving, with no forced collapse or offline fatigue.
 
-At a bed, press E for full sleep, or open Energy to choose Sleep or Nap. Sleep restores energy, tiredness and health, plus a short Well Rested benefit. Naps provide partial recovery. This release does not add a calendar, holidays, day/night or world-time fast-forward.
+Four annual celebrations last three days each: First Hearth (Spring 7–9), Forgefire (Summer 14–16), Barleywake (Autumn 21–23) and Ancestor's Vigil (Winter 26–28). Visit Hedrik's welcoming table at the Copper Kettle or the serving counter at Wayfarer's Hearth to share a feast and toast. Existing tables carry seasonal dishes and ale. Each celebration gives a remembered journal entry plus modest food and work comfort once per year. Missed invitations stay available after the holiday; there are no entry costs, expiring rewards or required chores.
 
-Existing saves remain compatible. Dev Testing scenarios reset work energy. Combat retains Space to dodge, RMB to guard/parry and RMB+LMB to shove with axe and shield.
+For immediate testing: Title > Dev Testing > Calendar & celebrations. F9 offers dawn/day/dusk/night, each holiday, the next day, a feast host and a bed. Test saves remain separate.
 
-Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Native rendering and exported-pack regressions are checked; Windows-device performance, audio and balance still benefit from hands-on playtesting.
+Existing fortunes begin at Spring 1, Year 1, 08:00; the calendar does not reinterpret old playtime or advance while the game is closed. Menus pause it. Seasonal terrain/snow, weather, NPC curfews and holiday minigames are not part of this release.
+
+Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Windows-device performance, audible quality and subjective pacing still benefit from hands-on playtesting.

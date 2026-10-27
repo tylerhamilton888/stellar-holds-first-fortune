@@ -1,7 +1,8 @@
 ## Energy follow-up
 
 - Playtest work drain and the 60/90/120-minute tiredness thresholds.
-- Calendar, day/night, holidays and elapsed-time sleep simulation remain separate future work.
+- Calendar, day/night, recurring feasts and passive sleep advancement are implemented in 0.81.0.
+- Future: seasonal terrain/snow, weather, optional festival activities and richer NPC routines; preserve always-available services and forgiving missed events.
 
 # Combat poses and independent roadside props — delivered in 0.78.0
 

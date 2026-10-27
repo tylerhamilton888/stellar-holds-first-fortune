@@ -1,0 +1,65 @@
+extends "res://tests/support/game_fixture.gd"
+func run():
+ output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
+ g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
+ var s=g.state;s.elapsed=999999
+ var d=HoldCalendar.data(s)
+ check(d.day==0 and d.minute==480,"Old fortunes begin Spring 1 at 08:00 regardless of old playtime")
+ HoldCalendar.tick(g,2400);check(d.day==1 and d.minute==480,"A full day preserves clock time")
+ HoldCalendar.advance(s,26*1440);check(HoldCalendar.date(d.day)=="Spring 28 · Year 1","Four-week seasons use day 28")
+ HoldCalendar.advance(s,1440);check(HoldCalendar.date(d.day)=="Summer 1 · Year 1","Season rollover")
+ HoldCalendar.advance(s,84*1440);check(HoldCalendar.date(d.day)=="Spring 1 · Year 2","Year rollover")
+ check(d.events.size()==4,"Skipping through a year keeps all four invitations")
+ HoldCalendar.advance(s,112*1440);check(d.events.size()==8,"Annual festivals create independent invitations")
+ var before=d.duplicate(true);HoldCalendar.advance(s,-10);check(d==before,"Clock cannot run backwards")
+ for hour in [6,12,19,23]:
+  d.minute=hour*60
+  check(HoldCalendar.phase(s)=={6:"Dawn",12:"Day",19:"Dusk",23:"Night"}[hour],"Clock phase at "+str(hour))
+ d.minute=1380;check(HoldCalendar.sleep_minutes(s)==540,"Night sleep reaches 08:00")
+ d.minute=120;check(HoldCalendar.sleep_minutes(s)==360,"After-midnight sleep reaches this morning")
+ d.minute=480;check(HoldCalendar.sleep_minutes(s)==1440,"Morning sleep reaches the next morning")
+ check(HoldCalendar.sleep_minutes(s,true)==120,"Naps last two game hours")
+ d.day=6;d.minute=1080;g.calendar_page=0;g.calendar_selected=6;g.open_panel("calendar");await snap("01-calendar")
+ button("Next");check(g.calendar_page==1 and d.day==6,"Browsing a future season never advances the world");button("Today")
+ var minute=float(d.minute);var age=float(HoldWorkEnergy.data(s).awake);g._process(20)
+ check(d.minute==minute and HoldWorkEnergy.data(s).awake==age,"Calendar pauses the world and fatigue")
+ g.close_panel();s.opening=4;g.surface.enter("trail");settle();at(Vector2(610,650))
+ d.minute=720;check(HoldCalendar.sky_color(g).a==0,"Outdoor midday keeps original colors");await snap("02-day")
+ d.minute=1170;await snap("03-dusk")
+ d.minute=1380;check(HoldCalendar.sky_color(g).a>.4 and HoldCalendar.sky_color(g).a<.5,"Outdoor night is visible but bounded");await snap("04-night")
+ g.surface.enter("room:wayfarer");settle();at(Vector2(400,525))
+ check(HoldCalendar.sky_color(g).a==0,"Interiors retain their lighting")
+ await snap("05-holiday-tables")
+ var key="1:first_hearth";d.events[key].joined=false
+ g.player=Vector2(200,650);check(not HoldCalendar.join(g,key),"Feasts require approaching a host")
+ at(Vector2(400,525));var reserve=HoldWorkEnergy.data(s);reserve.energy=40;reserve.awake=0;reserve.full=0;reserve.rested=0
+ check(HoldCalendar.join(g,key) and reserve.energy==70 and reserve.comfort==300,"Feast grants bounded food, comfort and journal entry")
+ var energy=float(reserve.energy);check(not HoldCalendar.join(g,key) and reserve.energy==energy,"One toast and recovery per celebration per year")
+ d.day=40;d.events[key].joined=false
+ check(HoldCalendar.join(g,key),"A missed feast stays available after its dates")
+ g.open_panel("festivals");await snap("06-toasts");g.close_panel()
+ g.surface.enter("room:home");settle();at(HoldFurnishings.bedside(Vector2(290,420)))
+ d.day=27;d.minute=1380;s.queue.clear();s.add("barley",4);s.add("water",4)
+ s.craft("hold_ale");s.craft("barley_bread")
+ var crop={"id":99,"claim":s.claim_id,"x":500.0,"y":900.0,"crop":"turnip","planted":true,"watered":true,"at":s.elapsed}
+ g.fieldwork.data().beds.append(crop);check(not g.fieldwork.ripe(crop),"Freshly planted crop is not ready before sleep")
+ var ale=s.count("hold_ale");var bread=s.count("barley_bread");var elapsed=s.elapsed
+ reserve.energy=5;reserve.awake=7200
+ check(g.surface.start_rest(g.surface.nearest()),"Bed starts the real sleep action")
+ for i in 120:g.surface.move(1.0/60)
+ check(d.day==28 and d.minute==480,"Bed sleep crosses season and reaches morning")
+ check(s.elapsed==elapsed+900 and s.queue.is_empty() and s.count("hold_ale")==ale+2 and s.count("barley_bread")==bread+1,"Sleep advances every queued recipe and passive world time")
+ check(g.fieldwork.ripe(crop) and crop.planted and crop.watered,"Sleeping into the next season matures crops without destroying them")
+ check(reserve.energy==100 and reserve.awake==0,"Sleep retains energy and tiredness recovery")
+ d.minute=1380;reserve.energy=0;reserve.awake=5400
+ check(g.surface.start_rest(g.surface.nearest(),true),"Bed starts a nap")
+ for i in 120:g.surface.move(1.0/60)
+ check(d.day==29 and d.minute==60 and reserve.energy==35 and reserve.awake==3600,"Nap crosses midnight with partial recovery")
+ d.day=34;d.minute=720;g.calendar_page=1;g.calendar_selected=34;g.open_panel("calendar");await snap("07-summer");g.close_panel()
+ g.save_game();g.start_game(true);settle();d=HoldCalendar.data(g.state)
+ check(d.day==34 and d.minute==720 and d.events[key].joined,"Calendar and celebration journal survive reload")
+ g.show_title();g.dev.start("calendar");settle()
+ check(g.dev.active() and HoldCalendar.data(g.state).day==6,"Separate calendar dev preset starts at First Hearth")
+ g.open_panel("dev_testing");await snap("08-dev-controls")
+ print("CALENDAR91: ",passed," passed / ",failed," failed")
+ g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)

@@ -1,3 +1,7 @@
+# 0.81.0 — The Turning Year candidate
+
+Calendar91 adds saved active time, four seasons and four annual three-day feasts; invitations remain claimable. Sleep advances passive world timers and all queued recipes, then restores energy. Outdoor dawn/dusk/night lighting and lamps use existing art, while interiors/underground areas stay readable. Holiday tables reuse existing food/tankard art in depth order. Separate calendar Dev Testing preset provides immediate access. Local calendar acceptance passes 35 checks; final visual refinement and regressions are in progress. Source and exact-export gates include the new case. Publication and delivery verification remain pending.
+
 # 0.80.0 — Supper & Slumber: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.80.0 . Runtime source 0802f021a441309058ec2efafa14960864caf350; PR #51 merge ace5ed7cc11091e229086c7b385be76a470f2a52 has the identical tree. Release source 44fd344ba41779bd5197804254886f231095f09b differs only in release notes. Full source run 40557642059 and exact-package release run 40558582380 passed: 33 source cases plus people-preview, 23 exported cases / 1,780 assertions, and 163 local assertions. The three final energy UI captures are byte-identical across local, hosted-source and exported runs.

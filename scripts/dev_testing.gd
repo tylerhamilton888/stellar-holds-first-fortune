@@ -3,6 +3,7 @@ extends RefCounted
 # Temporary, opt-in developer fixtures. No production progression rules are bypassed.
 const SAVE="user://dev_testing85.json"
 const MODES={
+ "calendar":{"name":"Calendar & celebrations","detail":"Daylight, night, seasons and all four feasts. Jump to a host or bed."},
  "combat":{"name":"Combat arena","detail":"All weapons and armor. Choose enemies, heal, or inspect hitboxes."},
  "building":{"name":"Construction & decorating","detail":"Owned land, cottage, plans and supplies. Build, decorate and reload."},
  "work":{"name":"Mining & workstations","detail":"Mineral wall, benches, racks, cart and raw loads. Dig, haul and process."},
@@ -40,7 +41,18 @@ func panel():
   g.small_button(row,"Heal & restock",func():restock();g.save_game();g.close_panel())
   g.small_button(row,"Reset this preset",func():start(mode()))
   g.small_button(row,"Save & reload test",func():g.save_game();resume())
-  if mode()=="combat":
+  if mode()=="calendar":
+   var times=g.row(g.panel_body)
+   for hour in [6,12,19,23]:g.small_button(times,"%02d:00" % hour,func():HoldCalendar.data(g.state).minute=hour*60.0;g.save_game();g.close_panel())
+   var feasts=GridContainer.new();feasts.columns=2;g.panel_body.add_child(feasts)
+   for index in 4:g.small_button(feasts,HoldCalendar.HOLIDAYS[index].name,func():HoldCalendar.fixture(g,index))
+   var places=GridContainer.new();places.columns=2;g.panel_body.add_child(places)
+   g.small_button(places,"Next day",func():HoldCalendar.pass_time(g,1440);g.save_game();g.close_panel())
+   g.small_button(places,"Visit feast counter",func():go("room:wayfarer",Vector2(400,525)))
+   g.small_button(places,"Visit a bed",func():go("room:home",HoldFurnishings.bedside(Vector2(290,420))))
+   g.small_button(places,"Return to lantern trail",func():go("trail",Vector2(610,650)))
+   g.small_button(places,"Open calendar",func():g.open_panel("calendar"))
+  elif mode()=="combat":
    g.label(g.panel_body,"Fresh encounters reset arena enemies and health. Combat also restarts on reload.",15)
    var waves=GridContainer.new();waves.columns=2;g.panel_body.add_child(waves)
    for id in [0,1,2,3]:g.small_button(waves,"Fight "+HoldEnemyRoster.spec(id).name,func():wave([id]))
@@ -112,6 +124,7 @@ func start(id:String):
  else:
   go("claim",Vector2(920,500))
   if id=="hearth":gardens()
+  if id=="calendar":HoldCalendar.fixture(g,0);go("trail",Vector2(610,650))
  finish()
 func resume():
  if not HoldBuild.DEV_TESTING or not MODES.has(saved_mode()) or (g.playing and not active()):return
