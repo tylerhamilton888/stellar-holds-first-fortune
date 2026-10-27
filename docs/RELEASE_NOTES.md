@@ -1,9 +1,13 @@
-# 0.78.0 — Grip, Guard & Craft
+# 0.80.0 — Supper & Slumber
 
-Axe-and-shield combat now uses complete drawn poses for all fourteen character appearances. The axe stays the same weapon through ready, swing, contact and recovery. Shields sit on the character’s forearm with painted grips, raised guards and block reactions. Borin uses the same equipment poses in practice. Eight clipped hammer frames also retain their complete hammer heads. Existing combat timing, damage, hitboxes and saves are preserved.
+Manual mining, woodcutting, processing, farming and carrying now use work energy. Click Energy in the top-right corner, or open it from your pack, to see recovery and eat a meal. At zero energy demanding work is 20% slower; movement, attacks and dodges remain available.
 
-Roadside rune-stones, timber signs, lantern posts, barrels, crates and plinths are separate objects. Find all six in **Furniture & Architecture → Roadside**. Each can be placed, moved and recovered independently. Signs have small physical bases beside the paths, with proper depth sorting. Barrel and crate pieces are decorative; use storage chests for items.
+Physical tiredness grows during active play. Food restores less after 60, 90 and 120 active minutes awake. Menus pause this clock and there is no offline fatigue. Existing fortunes start fully rested.
 
-**Try combat:** Title → Dev Testing → Combat. Equip axe and shield, hold RMB to guard, then release and strike with LMB. **Try decor:** Dev Testing → Construction & decorating → Furniture & Architecture → Roadside.
+Dwarves drink hold ale: buy it from the existing hearth trade or brew barley and water at a kitchen. A tankard provides five minutes of modest work comfort. Food and ale do not replace sleep.
 
-Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck.
+At a bed, press E for full sleep, or open Energy to choose Sleep or Nap. Sleep restores energy, tiredness and health, plus a short Well Rested benefit. Naps provide partial recovery. This release does not add a calendar, holidays, day/night or world-time fast-forward.
+
+Existing saves remain compatible. Dev Testing scenarios reset work energy. Combat retains Space to dodge, RMB to guard/parry and RMB+LMB to shove with axe and shield.
+
+Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Native rendering and exported-pack regressions are checked; Windows-device performance, audio and balance still benefit from hands-on playtesting.

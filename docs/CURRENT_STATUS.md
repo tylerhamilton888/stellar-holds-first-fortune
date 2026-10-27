@@ -1,3 +1,11 @@
+# 0.80.0 — Supper & Slumber: published and merged
+
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.80.0 . Runtime source 0802f021a441309058ec2efafa14960864caf350; PR #51 merge ace5ed7cc11091e229086c7b385be76a470f2a52 has the identical tree. Release source 44fd344ba41779bd5197804254886f231095f09b differs only in release notes. Full source run 40557642059 and exact-package release run 40558582380 passed: 33 source cases plus people-preview, 23 exported cases / 1,780 assertions, and 163 local assertions. The three final energy UI captures are byte-identical across local, hosted-source and exported runs.
+
+Click Energy on the HUD, or open it from I, for meals, ale and nearby bed actions. Manual work spends energy; food restores less after 60/90/120 active minutes awake. Sleep fully restores energy and tiredness; naps offer partial recovery. Ale gives modest work comfort. Zero energy slows demanding work 20%; movement and combat remain unrestricted. Menus pause tiredness and there is no offline drain. No calendar, day/night, holidays or time-skipping sleep is added.
+
+The downloaded clean build report matches its GitHub SHA256 026bd9d7124cd133772f4cd9c0253760e2c7073484c502ab6656c1b7b2404bf6. Uploaded ZIP size 767115737 and SHA256 60437f23c07d59fcd242a7dcc19694aa152a9fa96623d7643e9088a3b70b04ac match that report; the full ZIP was not independently redownloaded. Downloaded export evidence also matches its uploaded checksum. See testing/energy90.md and testing/energy90/delivery.json. Extract into a fresh folder. Windows hardware/audio and subjective energy pacing remain hands-on checks.
+
 # 0.79.0 — Steel & Footwork: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.79.0 . Source 185b857904d23bc3787341eefd8e1cad722f90db; PR #49 merge 6027a012f1850449692dd17e3de24cb11d199128. Full source run 40511521050 and exact-package release run 40512193437 passed. Local updated combat/drill suites passed 93 assertions; native HUD, drill menu, visible wall and shove preparation/contact/recovery reviewed.
