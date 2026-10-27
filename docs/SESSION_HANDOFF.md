@@ -1,3 +1,17 @@
+# 0.79.0 release preparation
+
+Shove now has a .36-second preparation/contact/recovery sequence using whole equipped guard/recoil drawings, with contact after .16 seconds. Moving, dodging or stowing cancels/controls its state as implemented; no detached shield is drawn. F9 combat adds Flanking, Stagger, Parry and Wall impact drills. New tests cover delayed contact and isolated drill setup. Fresh checkout restored from GitHub 06e34b52; native import and verification in progress. No new release is published yet.
+
+# Combat feel — implementation candidate
+
+Extends Space-dodge branch with early windup aim adjustment, late recovery guard cancel, goblin flanking during allied commitments, decaying visible poise pressure and stagger breaks, cooldown-limited RMB+LMB shield shove, and wall-stop feedback/pressure. Existing orc/troll timings, armor, riposte and stagger immunity remain. No stamina or save-schema change. Shield shove reuses the complete braced/recoil pose; no new art. Terrain scope is wall-safe knockback and wall impacts, not destructible furnishings. Native combat suite: 43 passing assertions. Enemy/hitbox suite: 97 passing assertions, including early steering and committed contact. HUD capture reviewed. Evidence: test-results/combat-feel-verified and combat-feel-enemies-final. No new release or merge; subjective feel and bespoke shove animation still need review.
+
+# Spacebar dodge — source update
+
+Combat dodge now uses Space through a named input action. Q remains material set-down. HUD, training dialogue and equipment/help instructions match. The legacy armed input route consumes Space before jump buffering. Six real-event checks extend combat83; playability54 uses the new key. Native combat-preview passed all 37 assertions with zero errors; updated HUD reviewed at gameplay scale. Evidence: test-results/space-dodge-native2. No new Windows release yet.
+
+The five proposed combat improvements are an agreed direction; they are not implemented by this binding change. Audit existing buffering, riposte, stagger protection and enemy behaviors before extending them.
+
 # 0.78.0 — Grip, Guard & Craft: published, verified and merged
 
 Axe-and-shield combat now uses complete equipped drawings for all fourteen saved identities, including walking, strikes, guard and block reactions. The shield stays on the painted forearm and grip; practice Borin uses the same poses. Eight original hammer crops now retain their complete heads. Damage, hitboxes, timing, original assets and saved appearance choices remain preserved.

@@ -12,7 +12,7 @@ static func draw_room(n:Node2D,t:float):
  A.rect(n,165,218,610,112,Color(.04,.09,.13,.94))
  A.line(n,Vector2(165,218),Vector2(775,218),"9d875e",1)
  A.text(n,Vector2(180,245),"PADDED PRACTICE BAY",20)
- A.text(n,Vector2(180,270),"F: axe & shield   LMB: strike   RMB: guard   Q: dodge",15)
+ A.text(n,Vector2(180,270),"F: axe & shield   LMB: strike   RMB: guard   Space: dodge",15)
  A.text(n,Vector2(180,292),"No injuries or stamina cost. E at the bench reviews your progress.",14)
  for x in range(460,710,35):A.rect(n,x,407,13,3,"b29a6c")
  var f=HoldOnboarding.ensure(n.state).facts

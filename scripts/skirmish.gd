@@ -17,6 +17,10 @@ var guard_was=false
 var parry=0.0
 var parry_wait=0.0
 var shield_recoil=0.0
+var bash_wait=0.0
+var bash_left=0.0
+var bash_hit=false
+var bash_aim=Vector2.RIGHT
 var dodge=0.0
 var dodge_wait=0.0
 var dodge_vector=Vector2.RIGHT
@@ -31,10 +35,10 @@ func _init(game):g=game
 func practice()->bool:return g.room_id=="training"
 func enabled()->bool:return practice() or (g.zone=="mine" and HoldOnboarding.combat_ready(g.state))
 func cancel_actions():
- hit_stop=0;impacts.clear();shield_recoil=0
+ hit_stop=0;impacts.clear();shield_recoil=0;bash_wait=0;bash_left=0;bash_hit=false
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;dodge=0;g.combat.riposte=0
 func reset():
- hit_stop=0;impacts.clear();shield_recoil=0
+ hit_stop=0;impacts.clear();shield_recoil=0;bash_wait=0;bash_left=0;bash_hit=false
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;parry_wait=0;dodge=0;dodge_wait=0;hurt_wait=0;key="";enemies.clear();lesson_announced=false
 func open_at(p:Vector2)->bool:
  return not g.deep.world.solid(p) if g.zone=="mine" else g.surface.walkable(p)
@@ -45,7 +49,7 @@ func clear(a:Vector2,b:Vector2)->bool:
 func spawn():
  var context="practice" if practice() else g.handworks.context()
  if key==context:return
- key=context;enemies.clear();hit_stop=0;impacts.clear();shield_recoil=0;swing=0;buffered=0;guard=false;guard_was=false;dodge=0;g.combat.riposte=0
+ key=context;enemies.clear();hit_stop=0;impacts.clear();shield_recoil=0;bash_wait=0;bash_left=0;bash_hit=false;swing=0;buffered=0;guard=false;guard_was=false;dodge=0;g.combat.riposte=0
  if practice():
   enemies.append(make_enemy("practice",Vector2(580,430),0));return
  var w=g.deep.world
@@ -99,14 +103,40 @@ func input(e:InputEvent)->bool:
   if e.keycode==KEY_F8:show_hitboxes=not show_hitboxes;return true
   if e.keycode==KEY_F:
    if g.handworks.busy_hands():say("Park the cart or set down your load first.");return true
-   g.combat.armed=not g.combat.armed;g.mining_gun.selected=false;swing=0;guard=false;buffered=0;g.combat.riposte=0;return true
-  if e.keycode==KEY_Q and g.combat.armed:evade();return true
+   g.combat.armed=not g.combat.armed;g.mining_gun.selected=false;cancel_actions();return true
+  if e.is_action_pressed("dodge") and g.combat.armed:evade();return true
  if e is InputEventMouseButton and g.combat.armed and not g.hotbar.over():
-  if e.button_index==MOUSE_BUTTON_LEFT and e.pressed:buffered=.16;return true
+  if e.button_index==MOUSE_BUTTON_LEFT and e.pressed:
+   if guard and g.state.combat.weapon=="axe":shield_bash()
+   else:buffered=.20
+   return true
  return false
+func shield_bash():
+ if bash_wait>0 or swing>0 or dodge>0:return
+ bash_wait=.8;bash_left=.36;bash_hit=false;bash_aim=aim;parry=0;buffered=0
+func resolve_bash():
+ for enemy in enemies:
+  if enemy.hp<=0 or not sector_hits(g.player,bash_aim,48,.8,enemy.p,float(HoldEnemyRoster.spec(enemy.kind).body)) or not clear(g.player,enemy.p):continue
+  impact(enemy.p,.035,Color("b8ddd8"),false)
+  if practice():continue
+  var radius=float(HoldEnemyRoster.spec(enemy.kind).body)
+  var before:Vector2=enemy.p
+  var distance=9.0 if enemy.kind==3 else 30.0
+  enemy.p=push_body(before,bash_aim,distance,radius)
+  enemy.alert=6.0
+  if enemy.p.distance_to(before)<distance*.5:pressure(enemy,45)
+  stagger(enemy,.35)
+ say("Shield shove")
+func pressure(enemy:Dictionary,amount:float):
+ if enemy.get("stagger_wait",0.0)>0:return
+ var limit=120.0 if enemy.kind==3 else 75.0 if enemy.kind==2 else 50.0
+ enemy.poise=float(enemy.get("poise",0.0))+amount
+ if enemy.poise>=limit:
+  enemy.poise=0.0;stagger(enemy,.85);say("Off balance · strike now")
 func say(text:String):feedback=text;feedback_time=2.2;g.notify(text)
 func evade():
  if dodge_wait>0 or dodge>0:return
+ bash_left=0
  # Movement selects the dodge; standing still uses the mouse-facing direction.
  dodge_vector=Input.get_vector("left","right","up","down")
  if dodge_vector==Vector2.ZERO:dodge_vector=aim
@@ -118,8 +148,10 @@ func movement(axis:Vector2)->Vector2:
  if enabled() and hit_stop>0:return Vector2.ZERO
  if not enabled() or not g.combat.armed:return axis*g.handworks.travel_speed()
  if dodge>0:return dodge_vector*420
+ if bash_left>0:return Vector2.ZERO
  return axis*(100 if guard else 135 if swing>0 else 185)
 func strike():
+ if bash_left>0:return
  var weapon=g.combat.weapon()
  if g.state.combat.weapon=="gun" and g.state.count("ammo")<=0:say("No cartridges · B changes equipment");buffered=0;return
  swing=weapon.time;struck=false;locked_aim=aim;buffered=0;g.sound.effect("swing",-13)
@@ -133,13 +165,21 @@ func update(dt:float):
   if dt<=0:return
  for effect in impacts:effect.life-=dt
  impacts=impacts.filter(func(effect):return effect.life>0)
- shield_recoil=maxf(0,shield_recoil-dt)
+ shield_recoil=maxf(0,shield_recoil-dt);bash_wait=maxf(0,bash_wait-dt)
+ if bash_left>0:
+  bash_left=maxf(0,bash_left-dt)
+  if not bash_hit and bash_left<=.20:
+   bash_hit=true;resolve_bash()
  buffered=maxf(0,buffered-dt);parry=maxf(0,parry-dt);parry_wait=maxf(0,parry_wait-dt);dodge=maxf(0,dodge-dt);dodge_wait=maxf(0,dodge_wait-dt);hurt_wait=maxf(0,hurt_wait-dt);g.combat.riposte=maxf(0,g.combat.riposte-dt)
  var delta=g.get_global_mouse_position()+g.camera-(g.player-Vector2(0,25))
  if delta.length()>10:aim=delta.normalized()
  if g.combat.armed:
-  g.surface.direction=locked_aim if swing>0 else aim
+  # Aim remains adjustable through early preparation, then commits before contact.
+  if swing>g.combat.weapon().time*.72:locked_aim=aim
+  g.surface.direction=bash_aim if bash_left>0 else locked_aim if swing>0 else aim
   var held=Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
+  # A completed contact may flow into guard; preparation cannot be canceled by guard.
+  if held and struck and swing>0 and swing<g.combat.weapon().time*.24:swing=0
   if held and not guard_was and swing<=0 and dodge<=0 and parry_wait<=0:parry=.19;parry_wait=.55
   guard_was=held;guard=held and swing<=0 and dodge<=0
   if not held and not g.hotbar.over() and (buffered>0 or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and swing<=0 and dodge<=0:strike()
@@ -153,6 +193,7 @@ func update(dt:float):
   if e.hp<=0:e.dead_time=maxf(0,e.get("dead_time",0.0)-dt);continue
   var spec=HoldEnemyRoster.spec(e.kind)
   e.alert=maxf(0,e.get("alert",0.0)-dt)
+  e.poise=maxf(0,float(e.get("poise",0.0))-dt*12)
   e.flash=maxf(0,e.flash-dt);e.stagger_wait=maxf(0,e.get("stagger_wait",0.0)-dt);e.walk=false
   var toward=g.player-e.p
   if e.state=="windup":
@@ -172,9 +213,16 @@ func update(dt:float):
   if practice() and not g.combat.armed:continue
   e.dir=toward.normalized()
   if toward.length()<float(spec.reach)-10:
-   if attack_slot(e):e.state="windup";e.time=.72 if practice() else float(spec.windup);e.evaded=false
-   continue
-  var next=e.p.move_toward(g.player,(90.0 if practice() else float(spec.speed))*dt)
+   if attack_slot(e):
+    e.state="windup";e.time=.72 if practice() else float(spec.windup);e.evaded=false
+    continue
+   if practice() or e.kind!=0:continue
+  var destination:Vector2=g.player
+  # Goblins flank while another fighter commits; heavy fighters hold their approach.
+  if not practice() and e.kind==0 and not attack_slot(e):
+   var side=1.0 if posmod(hash(e.id),2)==0 else -1.0
+   destination=g.player+toward.normalized().rotated(side*1.2)*95
+  var next=e.p.move_toward(destination,(90.0 if practice() else float(spec.speed))*dt)
   var spaced=true
   for other in enemies:
    if other!=e and other.hp>0 and next.distance_to(other.p)<float(spec.body)+float(HoldEnemyRoster.spec(other.kind).body)+10:spaced=false
@@ -208,7 +256,12 @@ func resolve():
   hit=true;e.flash=.18
   var heavy=g.state.combat.weapon=="hammer"
   impact(e.p-locked_aim*body,.065 if heavy else .035,Color("ffe0a0"),heavy)
-  if not practice():e.p=push_body(e.p,locked_aim,(22.0 if heavy else 8.0)*(.3 if e.kind==3 else 1.0),body)
+  if not practice():
+   var before:Vector2=e.p
+   var shove=(22.0 if heavy else 8.0)*(.3 if e.kind==3 else 1.0)
+   e.p=push_body(e.p,locked_aim,shove,body)
+   if heavy and e.p.distance_to(before)<shove*.5:
+    impact(e.p,.07,Color("e5b86c"),true);pressure(e,45)
   if practice():
    HoldOnboarding.fact(g.state,"practice_hit");g.sound.effect("wood",-18)
   else:
@@ -225,6 +278,7 @@ func resolve():
     for item in loot:g.state.add(item,int(loot[item]))
     HoldOnboarding.fact(g.state,"deep_combat");g.save_game();say("Foe defeated · salvage recovered")
    elif g.state.combat.weapon=="hammer" or g.combat.riposte>0:stagger(e,.65)
+   else:pressure(e,24 if not ranged else 15)
   if ranged:break
  if hit:g.combat.riposte=0
 func receive(e:Dictionary):
@@ -279,11 +333,17 @@ func draw_enemy(e:Dictionary):
   g.draw_texture_rect_region(HoldCombat.ENEMIES,Rect2((source.position-roots[frame])*scale,source.size*scale),source,Color(1.3,1.2,1.1) if e.flash>0 else Color.WHITE);g.draw_set_transform(-cam)
  if not practice() and e.hp>0:
   var top=-float(spec.height)-18
+  var poise=float(e.get("poise",0.0))
+  if poise>0:
+   var limit=120.0 if e.kind==3 else 75.0 if e.kind==2 else 50.0
+   g.draw_rect(Rect2(p+Vector2(-22,top+6),Vector2(44*minf(1,poise/limit),2)),Color("8fe3d1"))
+  if e.state=="stun":HoldArt.text(g,p+Vector2(-30,22),"Off balance",11,Color("8fe3d1"))
   g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44,4)),Color("312b2a"));g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44*e.hp/e.max,4)),Color("cf956c"))
   HoldArt.text(g,p+Vector2(-44,top-5),spec.name,11,Color("ead6ac"))
   if e.kind==3 and e.state=="windup":HoldArt.text(g,p+Vector2(-64,22),"Heavy · dodge / parry",12,Color("f0b97a"))
 func player_pose()->String:
  if g.state.combat.weapon=="axe":
+  if bash_left>0:return "guard_axe" if bash_left>.20 or bash_left<.08 else "parry_axe"
   if swing>0:return "combat_axe"
   if shield_recoil>0:return "parry_axe"
   if guard:return "guard_axe"
@@ -292,7 +352,7 @@ func player_pose()->String:
  return "hammer" if swing>0 else "hold_hammer"
 func draw_player(p:Vector2,zoom:float,offset:Vector2):
  var pose_action=player_pose()
- HoldDrawnAnimation.paint(g,p+offset,g.combat.profile(),locked_aim if swing>0 else aim,g.walking_pose,g.gait_clock,zoom,offset,pose_action,1-swing/g.combat.weapon().time if swing>0 else 0)
+ HoldDrawnAnimation.paint(g,p+offset,g.combat.profile(),bash_aim if bash_left>0 else locked_aim if swing>0 else aim,g.walking_pose,g.gait_clock,zoom,offset,pose_action,1-swing/g.combat.weapon().time if swing>0 else 0)
  g.draw_set_transform(offset)
  if guard:
   var center=p+aim*26-Vector2(0,24)
@@ -303,14 +363,14 @@ func overlay():
  draw_impacts()
  if not g.combat.armed:return
  g.draw_set_transform(Vector2.ZERO)
- var text="LMB strike · RMB guard / parry · Q directional dodge · F tools"
+ var text="LMB strike · RMB guard · RMB + LMB shove · Space dodge"
  if practice():
   var f=HoldOnboarding.ensure(g.state).facts
   text="Practice · Blows %d/3   Guard %d/1   Evade a strike %d/1" % [mini(3,int(f.get("practice_hit",0))),mini(1,int(f.get("practice_guard",0))),mini(1,int(f.get("practice_dodge",0)))]
  var y=178.0 if g.hotbar.bar_y()<100 else 82.0
  g.draw_rect(Rect2(18,y,620,49 if practice() else 28),Color(.03,.08,.10,.93))
  HoldArt.text(g,Vector2(28,y+19),text,14,Color("ead6ac"))
- if practice():HoldArt.text(g,Vector2(28,y+39),"Mouse faces · hold LMB strike · RMB guard · Q dodge · F tools",13,Color("afd2c5"))
+ if practice():HoldArt.text(g,Vector2(28,y+39),"Mouse faces · hold LMB strike · RMB guard · Space dodge · F tools",13,Color("afd2c5"))
  else:
   g.draw_rect(Rect2(720,y,220,28),Color(.03,.08,.10,.93))
   HoldArt.text(g,Vector2(730,y+19),"%d HP · B gear" % g.state.combat.health,14,Color("afd2c5"))

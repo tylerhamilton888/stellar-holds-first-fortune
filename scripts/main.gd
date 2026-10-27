@@ -174,7 +174,7 @@ func _ready():
  queue_redraw()
 
 func setup_inputs():
- var bindings={"left":[KEY_A,KEY_LEFT],"right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE],"up":[KEY_W,KEY_UP],"down":[KEY_S,KEY_DOWN],"interact":[KEY_E],"recall":[KEY_R],"inventory":[KEY_I],"manage":[KEY_M],"help":[KEY_F1],"pause":[KEY_ESCAPE],"save":[KEY_F5]}
+ var bindings={"left":[KEY_A,KEY_LEFT],"right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE],"dodge":[KEY_SPACE],"up":[KEY_W,KEY_UP],"down":[KEY_S,KEY_DOWN],"interact":[KEY_E],"recall":[KEY_R],"inventory":[KEY_I],"manage":[KEY_M],"help":[KEY_F1],"pause":[KEY_ESCAPE],"save":[KEY_F5]}
  for action in bindings:
   if not InputMap.has_action(action):InputMap.add_action(action)
   for k in bindings[action]:
@@ -386,6 +386,8 @@ func _unhandled_input(e):
  if deep.input(e):get_viewport().set_input_as_handled();return
  if surface.input(e):get_viewport().set_input_as_handled();return
  if panel_id=="" and e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT and e.pressed:mining_buffer=.16
+ if panel_id=="" and combat.armed and (zone=="mine" or room_id=="training") and e.is_action_pressed("dodge") and not e.is_echo():
+  combat.dodge();get_viewport().set_input_as_handled();return
  if panel_id=="" and e.is_action_pressed("jump") and not e.is_echo():jump_buffer=.12
  if panel_id=="" and e.is_action_released("jump") and velocity.y< -140:velocity.y=-140
  if e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT and e.pressed and panel_id=="" and construction.selected!="":
@@ -404,7 +406,6 @@ func _unhandled_input(e):
   elif e.keycode==KEY_B:toggle_panel("equipment")
   elif e.keycode==KEY_N:toggle_panel("roster")
   elif e.keycode==KEY_F and panel_id=="":mining_gun.selected=false;construction.selected="";combat.toggle()
-  elif e.keycode==KEY_Q and panel_id=="" and (zone=="mine" or room_id=="training"):combat.dodge()
   elif e.keycode==KEY_C:open_creator(false)
   elif e.keycode==KEY_G:toggle_panel("world_map")
   elif e.keycode==KEY_J:toggle_panel("commission")
@@ -1473,7 +1474,7 @@ func help_panel():
 J: work journal  •  N: people and location tracking
 I: resources  •  B: weapons and armor"],["What comes next?","Your first coal delivery earns an audience with the Lord. Return to Ivar for the lift commission and new lessons. Finish all three commissions to earn a reference, buy a mountain charter, and hire a founding crew as you build your workshop and freight beacon."]],
   [["Dig comfortably","WASD / arrows move in eight directions underground. Hold LMB with pick [1] for rock or shovel [2] for dirt. Hammer [4] exploits existing cracks; Shift + pick extracts ore selectively. Axe [3] is for Pinewood timber."],["Connect the depths","V opens stairs, timber ladder shafts and lamps. Build on clear floor; E descends, Shift + E ascends at that same location. Ladders carry Dwarfs and buckets; stairs also carry carts and machines. X surveys the layer below. T assigns crew depth. Return through the entrance to deliver cargo and leave."],["Build your hold","O opens Rooms, Furnish, Finishes and Folk. Designate excavated floor, then place furniture or apply finishes with LMB. Right mouse cancels. H manages hauling; C takes/parks the cart, U unloads and Shift + U loads piles. L opens the project ledger. Delivered supplies fund crafting and construction."]],
-  [["Draw your weapon","F switches between your weapon and tools. Left mouse attacks; hold right mouse to guard. Press guard just before an impact to parry, then counterattack. Q dodges. There is no stamina."],["Prepare for an expedition","B opens gear. Borin introduces the starter axe and shield in his safe practice bay after the lift repair and return-route lesson. Hostile encounters unlock when you report your training. Forge upgrades at Borin's workbench; equipped armor improves your protection. Guns consume cartridges."],["Choose your fights","Cleared encounters stay cleared. Enemies drop useful salvage. Rest outside the mine to heal. Defeat triggers paid rescue, so prepare an escape route."]],
+  [["Draw your weapon","F switches between your weapon and tools. Left mouse attacks; hold right mouse to guard. Press guard just before an impact to parry, then counterattack. Space dodges. There is no stamina."],["Prepare for an expedition","B opens gear. Borin introduces the starter axe and shield in his safe practice bay after the lift repair and return-route lesson. Hostile encounters unlock when you report your training. Forge upgrades at Borin's workbench; equipped armor improves your protection. Guns consume cartridges."],["Choose your fights","Cleared encounters stay cleared. Enemies drop useful salvage. Rest outside the mine to heal. Defeat triggers paid rescue, so prepare an escape route."]],
   [["Craft, trade, grow","The forge reserves materials when you queue a job; completed items enter your pack automatically. Production continues while browsing ordinary menus. Sell surplus at Orla's exchange; contracts or tavern hospitality unlock bargaining."],["Save & pause","F5 saves. Escape opens pause or goes back through menus. Losing window focus pauses the world until you resume. Auto-save runs every 45 seconds and on major purchases or travel. Three separate save slots; a new fortune asks before replacing the selected slot."],["Comfort & controls","Use Sound & comfort from the pause menu for music, ambience, effects and camera shake. Tab moves focus; Enter activates a button. Given and family names are separate. There is no hunger timer: provisions fuel your worker."]]
  ]
  for entry in topics[help_tab]:

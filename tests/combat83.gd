@@ -8,6 +8,21 @@ func run():
   for x in range(14,30):w.set_cell(Vector2i(x,y),0)
  g.player=Deepworks.center(Vector2i(20,20));g.fight.spawn();g.combat.armed=true
  var f=g.fight
+ # Exercise the real event route, including modal suppression and jump conflict.
+ g.jump_buffer=0;f.aim=Vector2.RIGHT
+ Input.action_press("down");key(KEY_SPACE);Input.action_release("down")
+ check(f.dodge>0 and f.dodge_vector==Vector2.DOWN and g.jump_buffer==0,"Space dodges toward movement without also jumping")
+ var wait=f.dodge_wait;key(KEY_SPACE)
+ check(f.dodge_wait==wait,"Repeated Space cannot reset dodge cooldown")
+ f.dodge=0;f.dodge_wait=0;key(KEY_Q)
+ check(f.dodge==0,"Q no longer triggers combat dodge")
+ g.open_panel("inventory");key(KEY_SPACE)
+ check(f.dodge==0,"Space cannot dodge through an open menu");g.close_panel()
+ g.combat.armed=false;key(KEY_SPACE)
+ check(f.dodge==0,"Stowed weapons do not trigger combat dodge")
+ g.combat.armed=true;f.dodge_wait=0;key(KEY_SPACE)
+ check(f.dodge>0 and f.dodge_vector==Vector2.RIGHT,"Stationary Space dodge follows aim")
+ f.dodge=0;f.dodge_wait=0
  check(w.layer().has("encounter_companions"),"New encounter records persist companion positions")
  check(f.enemies.size()>=2 and f.enemies.size()<=4,"New deep chambers contain bounded pairs")
  var records=w.layer().encounters.duplicate(true);var companions=w.layer().encounter_companions.duplicate(true)
@@ -70,6 +85,26 @@ func run():
  check(g.state.combat.health==hp,"Outside amber cone is safe at actual impact")
  near.p=origin-Vector2.from_angle(.85)*70;near.state="windup";near.time=.01;f.update(.02)
  check(g.state.combat.health==hp-16,"Inside amber cone is hit at actual impact")
+ # Shield shove creates space but cannot be spammed, damage or farm mastery.
+ f.enemies=[near];g.combat.armed=true;g.state.combat.weapon="axe"
+ f.swing=0;f.dodge=0;f.bash_wait=0;f.aim=Vector2.RIGHT;f.hit_stop=0
+ near.p=g.player+Vector2(35,0);near.hp=64;near.kind=0;near.state="idle";near.stagger_wait=0
+ var shove_start:Vector2=near.p
+ f.shield_bash()
+ check(near.p==shove_start and f.bash_left>0,"Shove prepares before contact")
+ f.update(.17)
+ check(near.p.x>shove_start.x and near.hp==64 and near.state=="stun","Shield shove displaces and interrupts without free damage")
+ var shove_end:Vector2=near.p;f.shield_bash()
+ check(near.p==shove_end,"Shield shove cooldown prevents repeated displacement")
+ near.stagger_wait=0;near.state="idle";near.poise=0
+ f.pressure(near,24);f.pressure(near,24)
+ check(near.state=="idle","Light pressure requires several hits to break poise")
+ f.pressure(near,24)
+ check(near.state=="stun" and near.poise==0,"Accumulated pressure opens a readable stagger")
+ near.state="recover";f.pressure(near,200)
+ check(near.state=="recover","Stagger immunity prevents pressure stun locks")
+ f.cancel_actions()
+ check(f.bash_wait==0 and f.buffered==0,"Action cancellation clears shove state")
  f.enemies=[near,far];g.combat.armed=true;near.p=origin+Vector2(70,0);near.state="windup";near.time=.5
  g.notice_time=0
  g.state.combat.weapon="axe";f.aim=Vector2.RIGHT;f.guard=true;near.dir=Vector2.LEFT;far.p=g.player+Vector2(140,65);far.kind=1
