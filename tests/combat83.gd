@@ -91,6 +91,8 @@ func run():
  near.p=g.player+Vector2(35,0);near.hp=64;near.kind=0;near.state="idle";near.stagger_wait=0
  var shove_start:Vector2=near.p
  f.shield_bash()
+ check(near.p==shove_start and f.bash_left>0,"Shove prepares before contact")
+ f.update(.17)
  check(near.p.x>shove_start.x and near.hp==64 and near.state=="stun","Shield shove displaces and interrupts without free damage")
  var shove_end:Vector2=near.p;f.shield_bash()
  check(near.p==shove_end,"Shield shove cooldown prevents repeated displacement")

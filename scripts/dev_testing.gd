@@ -45,6 +45,8 @@ func panel():
    var waves=GridContainer.new();waves.columns=2;g.panel_body.add_child(waves)
    for id in [0,1,2,3]:g.small_button(waves,"Fight "+HoldEnemyRoster.spec(id).name,func():wave([id]))
    g.small_button(waves,"Fight goblin + orc",func():wave([0,2]))
+   for lesson in ["Flanking","Stagger","Parry","Wall impact"]:
+    g.small_button(waves,lesson+" drill",func():drill(lesson))
    g.small_button(waves,"Hitboxes: "+("ON" if g.fight.show_hitboxes else "OFF"),func():g.fight.show_hitboxes=not g.fight.show_hitboxes;g.refresh_panel())
    g.button(g.panel_body,"Weapons & armor · B",func():g.open_panel("equipment"))
   elif mode()=="building":
@@ -133,6 +135,22 @@ func wave(kinds:Array):
  for i in kinds.size():
   var e=g.fight.make_enemy("dev85/"+str(i),g.player+Vector2(170+i*95,i*75),int(kinds[i]));e.dir=Vector2.LEFT;g.fight.enemies.append(e)
  finish()
+func drill(lesson:String):
+ if not active() or mode()!="combat":return
+ wave([0,2] if lesson=="Flanking" else [3] if lesson=="Parry" else [2])
+ g.state.combat.weapon="axe";g.fight.cancel_actions()
+ var tip=""
+ match lesson:
+  "Flanking":tip="Keep both foes in view. The goblin circles while the orc commits."
+  "Stagger":tip="Land repeated axe hits before turquoise pressure fades. Switch to hammer with B to compare."
+  "Parry":tip="Tap RMB just before the troll connects, then counter with LMB. Space evades."
+  "Wall impact":
+   var w=g.deep.world
+   for y in range(17,25):w.set_cell(Vector2i(24,y),2)
+   g.player=Deepworks.center(Vector2i(22,20))
+   g.fight.enemies[0].p=Deepworks.center(Vector2i(23,20))
+   tip="Face the orc against the wall. Hold RMB and click LMB to shove; compare a hammer impact."
+ finish();g.notify(tip);g.notice_time=12
 func workshops():
  var w=g.deep.world
  for x in range(17,30):w.set_cell(Vector2i(x,14),[2,3,4,5,6][(x-17)%5])

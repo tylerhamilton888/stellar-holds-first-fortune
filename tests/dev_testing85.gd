@@ -53,6 +53,13 @@ func run():
  check(g.state.surface.decor==JSON.parse_string(JSON.stringify(decor)),"Test construction survives save and reload")
  g.open_panel("dev_testing");button("Reset this preset");settle()
  check(g.state.surface.decor.is_empty(),"Reset clears only the test construction")
+ g.dev.start("combat");settle()
+ for lesson in ["Flanking","Stagger","Parry","Wall impact"]:
+  g.open_panel("dev_testing");button(lesson+" drill");settle()
+  check(g.fight.enemies.size()==(2 if lesson=="Flanking" else 1),"Drill supplies intended fighters: "+lesson)
+  check(g.state.test_session and g.combat.armed,"Drill remains isolated and ready: "+lesson)
+  await snap("drill-"+lesson.to_lower().replace(" ","-"))
+ check(g.deep.world.at(Vector2i(24,20))!=0,"Wall drill provides actual solid terrain")
  g.dev.start("work");settle()
  var facilities=g.handworks.data().facilities.filter(func(f):return g.handworks.local(f) and Vector2(f.x,f.y).distance_to(g.player)<400)
  check(facilities.size()==5,"Mining test supplies five usable benches, racks and cart")
