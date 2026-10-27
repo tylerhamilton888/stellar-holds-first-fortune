@@ -1,3 +1,8 @@
+## Energy follow-up
+
+- Playtest work drain and the 60/90/120-minute tiredness thresholds.
+- Calendar, day/night, holidays and elapsed-time sleep simulation remain separate future work.
+
 # Combat poses and independent roadside props — delivered in 0.78.0
 
 PR #47 is merged and the verified Windows release is published. All fourteen identities have held axe/shield poses; eight clipped original hammer heads are restored. Six separated roadside props share the world and player catalogue. Native visual review, 494 focused checks, all 32 source cases plus people-preview, and 22 exact-export cases / 1,733 checks passed. See testing/combat88.md.

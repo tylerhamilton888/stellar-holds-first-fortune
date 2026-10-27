@@ -28,6 +28,7 @@ var cut_target=-1
 var cut_struck=false
 var cut_approach=false
 var cut_flash=0.0
+var rest_nap=false
 var rest_time=0.0
 var rest_elapsed=0.0
 var rest_approach=Vector2.INF
@@ -262,10 +263,13 @@ func tick_stair(dt:float):
  if distance<25:HoldDrawnLocomotion.advance(g,distance,"stone")
  if trip.age>=1.5:
   g.player=anchor+Vector2(0,30);stair_trip.clear();g.walking_pose=false;remember();g.save_game()
-func start_rest(point:Dictionary)->bool:
+func start_rest(point:Dictionary,nap:bool=false)->bool:
  if point.is_empty() or point.action not in ["rest","house_rest"]:return false
+ if g.player.distance_to(point.p)>60:return false
+ if point.action=="house_rest" and not room() and not house.rest(point.bed):return false
  if g.handworks.busy_hands():g.notify("Park or set down your load before resting.");return false
  if not walkable(point.p) or not clear_interaction(g.player,point.p):return false
+ rest_nap=nap
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
@@ -366,7 +370,8 @@ func move(dt:float):
    direction=(rest_bed-g.player).normalized()
    rest_time=maxf(0,rest_time-dt);rest_elapsed+=dt;g.walking_pose=false
    if rest_time<=0:
-    g.state.surface.facts.rest=true;g.state.combat.health=100;g.notify("Rested · health restored · fortune saved")
+    HoldWorkEnergy.rest(g.state,rest_nap)
+    g.state.surface.facts.rest=true;g.state.combat.health=minf(100,g.state.combat.health+25) if rest_nap else 100;g.notify("Nap complete · some energy and health restored" if rest_nap else "Slept well · energy and health restored · fortune saved")
     if area=="room:home":g.state.surface.facts.quarters_rest=true;HoldOnboarding.settle(g,"bed")
     g.save_game()
    return
@@ -589,7 +594,7 @@ func chop(dt:float):
   if walkable(step):
    direction=(stance-g.player).normalized();HoldDrawnLocomotion.advance(g,g.player.distance_to(step),"wood");g.player=step;g.walking_pose=true;cut_approach=true
   cut_clock=0;cut_struck=false;return
- cut_clock+=dt
+ cut_clock+=dt*HoldWorkEnergy.speed(g.state)
  if cut_clock>=.64:cut_clock=fmod(cut_clock,.64);cut_struck=false
  if cut_clock<.35 or cut_struck:return
  cut_struck=true;cut_flash=.16
@@ -603,6 +608,7 @@ func chop(dt:float):
    g.state.forestry.logs[str(best)]=3;g.state.forestry.fell_at[str(best)]=g.state.elapsed;g.state.forestry.direction[str(best)]=g.face
  if is_log or g.state.road_trees[best]==0:g.handworks.spawn("log",TREES[best]+Vector2(24,24),2,"pine:"+str(best));g.handworks.award("forester")
  else:g.state.add("wood",2)
+ HoldWorkEnergy.spend(g.state,.12)
  HoldOnboarding.fact(g.state,"woodcut",2);g.sound.effect("wood",-14)
  g.notify(("Raw log freed · E lifts it. " if is_log or g.state.road_trees[best]==0 else "+2 timber · ")+("Chop the fallen trunk for more." if g.state.road_trees[best]<=0 else "The cut is deepening."))
 func hud():

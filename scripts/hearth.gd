@@ -4,7 +4,7 @@ extends RefCounted
 const CROPS={
  "turnip":{"name":"Turnips","seed":"turnip_seed","time":180.0,"use":"Stew, hotpot and Kettle orders","color":"bd81bb"},
  "carrot":{"name":"Copper carrots","seed":"carrot_seed","time":210.0,"use":"Chowder and roasted roots","color":"d89652"},
- "barley":{"name":"Hold barley","seed":"barley_seed","time":270.0,"use":"Hearth bread; a future brewing grain","color":"d9ba65"},
+ "barley":{"name":"Hold barley","seed":"barley_seed","time":270.0,"use":"Hearth bread; hold ale","color":"d9ba65"},
  "hearthcap":{"name":"Hearthcaps","seed":"hearthcap_seed","time":240.0,"use":"Hotpot; a shade-loving cultivation crop","color":"b99e79"}}
 const SPOTS={
  "trail":{"name":"Stonebridge current","bank":Vector2(1130,550),"float":Vector2(1205,546),"fish":["river_fish","river_fish","silver_char"]},
@@ -15,7 +15,7 @@ const MEALS={
  "barley_bread":{"effect":"Pack 5 provisions; a simple shared supper","time":600.0,"work":1.0},
  "fish_chowder":{"effect":"Good company: better selling terms for 5 minutes","time":300.0,"work":1.0},
  "char_plate":{"effect":"Well fed: +10% workshop speed for 5 minutes","time":300.0,"work":1.10}}
-const TRADE=["turnip_seed","carrot_seed","barley_seed","hearthcap_seed","turnip","carrot","barley","hearthcap","river_fish","pond_perch","silver_char","root_hotpot","barley_bread","fish_chowder","char_plate"]
+const TRADE=["hold_ale","turnip_seed","carrot_seed","barley_seed","hearthcap_seed","turnip","carrot","barley","hearthcap","river_fish","pond_perch","silver_char","root_hotpot","barley_bread","fish_chowder","char_plate"]
 const GROUPS={"Rest":["bed","double_bed"],"Warmth":["hearth"],"Light":["lamp"],"Storage":["chest","bookcase","pantry"],"Character":["desk","orrery","stone_pillar","notice_board"]}
 var g
 var tab="home"
@@ -77,12 +77,15 @@ func kitchen_ready()->bool:
  return g.player.distance_to(p)<=75 and g.surface.clear_interaction(g.player,p)
 func cook(id:String)->bool:
  var public_kitchen=g.surface.area in HoldRoads.ROOMS
- if id not in MEALS and id not in ["turnip_stew","trout_supper"]:return false
+ if id not in MEALS and id not in ["turnip_stew","trout_supper","hold_ale"]:return false
  if public_kitchen:return g.surface.roads.cook(id)
  if not kitchen() or not g.state.craft(id):return false
  g.sound.effect("water",-19);g.save_game();return true
 func serve(id:String)->bool:
  if id not in MEALS or not table_near() or not g.state.pay({id:1}):return false
+ var reserve=HoldWorkEnergy.data(g.state)
+ if reserve.full<=0:
+  reserve.energy=minf(100,float(reserve.energy)+HoldWorkEnergy.recovery(g.state,id));reserve.full=120.0
  var c=comforts();var d=saved(g.state);var duration=float(MEALS[id].time)+c.size()*30
  if g.state.tech.has("hearthkeeping"):duration+=120
  if "Dining" in c and HoldDisciplines.has(g.state,"warm_table"):duration+=120
@@ -133,10 +136,10 @@ func panel():
 func cooking_panel():
  g.label(g.panel_body,"At the hearth",23)
  g.label(g.panel_body,"Cook beside your hearth or counter, or at a public kitchen. Bring ingredients in your pack; Orla sells every ingredient. Meals finish cooking while you play.",15)
- for id in ["turnip_stew","trout_supper"]+MEALS.keys():
+ for id in ["turnip_stew","trout_supper","hold_ale"]+MEALS.keys():
   var recipe=HoldData.RECIPES[id]
   var card=g.section(g.panel_body,recipe.name);g.label(card,HoldData.cost_text(recipe.cost),14)
-  g.label(card,MEALS[id].effect if id in MEALS else "Three provisions for your crew",14)
+  g.label(card,MEALS[id].effect if id in MEALS else "Two tankards of hold ale · work comfort" if id=="hold_ale" else "Three provisions for you or your crew",14)
   var b=g.small_button(card,"Prepare",func():cook(id);g.refresh_panel());b.disabled=not g.state.afford(recipe.cost) or g.state.queue.size()>=12 or not kitchen_ready()
 func fishing_spot()->Dictionary:
  var area=g.surface.area

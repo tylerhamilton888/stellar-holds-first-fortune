@@ -217,6 +217,7 @@ func mine(dt:float):
  g.face=1 if contact.x>=g.player.x else -1
  mining_method="hammer" if g.tool==3 else ("careful" if Input.is_key_pressed(KEY_SHIFT) else "pick")
  swing_duration=.78 if mining_method=="careful" else (.72 if mining_method=="hammer" else SWING)
+ swing_duration/=HoldWorkEnergy.speed(g.state)
  strike_left=swing_duration;struck=false;g.sound.effect("swing",-20)
 func worksite(c:Vector2i)->Dictionary:
  var lit=false;var braced=false;var p=Deepworks.center(c)
@@ -241,6 +242,7 @@ func hit(c:Vector2i,thermal:bool=false):
  var work=worksite(c);var result=world.strike(c,-1,thermal,false,mining_method,work)
  if result.is_empty():return
  if result.has("blocked"):g.notify("Hard basalt: research Tempered steel at the survey office.");return
+ HoldWorkEnergy.spend(g.state,.08)
  g.sound.impact(result.kind,result.broken);pulse=.18 if result.broken else .14;contact_hold=.09 if result.broken else .055
  var color=ore_color(result.kind) if result.kind in [3,4,5,6] else color(result.kind,world.depth()).lightened(.25)
  for i in (15 if result.broken else 7):sparks.append({"p":contact,"v":Vector2.from_angle(randf()*TAU)*randf_range(30,140),"life":randf_range(.15,.5),"color":color,"kind":result.kind,"size":randf_range(2,5)})

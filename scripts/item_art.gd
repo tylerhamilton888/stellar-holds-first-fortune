@@ -4,7 +4,7 @@ static var hearth_textures={}
 static func hearth_texture(id:String)->Texture2D:
  if not hearth_textures.has(id):hearth_textures[id]=load("res://assets/hearth78/"+id+".svg")
  return hearth_textures[id]
-const HEARTH_IDS=["carrot", "barley", "hearthcap", "pond_perch", "silver_char", "root_hotpot", "barley_bread", "fish_chowder", "char_plate", "turnip"]
+const HEARTH_IDS=["carrot", "barley", "hearthcap", "pond_perch", "silver_char", "root_hotpot", "barley_bread", "fish_chowder", "char_plate", "turnip", "hold_ale"]
 const FIELD=preload("res://assets/animation-v51/homestead-props.png")
 const TOOLS=preload("res://assets/animation-v51/field-tools.png")
 const SHEET=preload("res://assets/character-parts/items.png")

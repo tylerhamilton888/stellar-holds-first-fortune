@@ -86,6 +86,7 @@ func fit_panel():
   g.panel.position=Vector2(40,24);g.panel.size=Vector2(880,492)
 func restock():
  if not active():return
+ HoldWorkEnergy.rest(g.state)
  g.state.money=10000;g.state.combat.health=100;g.state.rescue_debt=0
  for item in HoldData.ITEMS:g.state.inventory[item]=maxi(g.state.count(item),2000 if mode()=="building" else 200)
  g.state.combat.owned=["axe","hammer","gun","clothes","mail","rune"]
