@@ -134,7 +134,7 @@ func _ready():
  energy_button=button(ui,"Energy",func():open_panel("energy"))
  energy_button.custom_minimum_size.y=30;energy_button.add_theme_font_size_override("font_size",14)
  energy_button.position=Vector2(744,8);energy_button.size=Vector2(194,30)
- energy_bar=HoldWorkEnergy.meter();energy_bar.position=Vector2(744,39);energy_bar.size=Vector2(194,4);energy_bar.show_percentage=false;energy_bar.mouse_filter=Control.MOUSE_FILTER_IGNORE;ui.add_child(energy_bar)
+ energy_bar=HoldWorkEnergy.meter();energy_bar.show_percentage=false;energy_bar.mouse_filter=Control.MOUSE_FILTER_IGNORE;ui.add_child(energy_bar);energy_bar.position=Vector2(744,39);energy_bar.size=Vector2(194,4)
  var loading_layer=CanvasLayer.new();loading_layer.layer=100;add_child(loading_layer)
  loading_view=HoldLoadingView.new();loading_view.game=self;loading_layer.add_child(loading_view)
  hotbar=HoldHotbar.new();hotbar.g=self;ui.add_child(hotbar)
