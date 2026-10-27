@@ -46,10 +46,11 @@ static func panel(g):
  g.label(g.panel_body,"Energy · %d / 100 · %s" % [int(d.energy),status(g.state)],22)
  var bar=meter();bar.value=d.energy;bar.custom_minimum_size=Vector2(0,24);g.panel_body.add_child(bar)
  g.label(g.panel_body,"Food recovery: %d%%. At zero energy, demanding work is 20%% slower. Walking and combat stay unrestricted. Tiredness builds with active time awake; menus pause it." % int(food_factor(g.state)*100),16)
+ g.small_button(g.panel_body,"Calendar & celebrations",func():g.open_panel("calendar"))
  var point=g.surface.nearest() if g.surface.active() else {}
  if point.get("action","") in ["rest","house_rest"]:
-  g.button(g.panel_body,"Sleep in this bed · full recovery",func():g.close_panel();g.surface.start_rest(point))
-  g.button(g.panel_body,"Nap in this bed · partial recovery",func():g.close_panel();g.surface.start_rest(point,true))
+  g.button(g.panel_body,"Sleep until 08:00 · full recovery",func():g.close_panel();g.surface.start_rest(point))
+  g.button(g.panel_body,"Nap for two hours · partial recovery",func():g.close_panel();g.surface.start_rest(point,true))
  else:g.label(g.panel_body,"Approach your bed for sleep or a nap. E at the bedside sleeps.",15)
  if d.full>0:g.label(g.panel_body,"Comfortably full · another meal in %d seconds" % ceili(d.full),15)
  for id in MEALS:

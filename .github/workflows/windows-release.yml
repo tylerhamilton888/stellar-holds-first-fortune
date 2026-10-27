@@ -38,6 +38,10 @@ jobs:
       # Prepare the clean package while the identical-source gate runs elsewhere.
       - name: Build one complete Windows ZIP
         run: python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
+      - name: Test the exact exported pack
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a python3 tools/check_pack.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --pack "$RUNNER_TEMP/windows-build/FirstFortune.pck" --output test-results/pack
       - name: Native gameplay and save verification
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
@@ -75,10 +79,6 @@ jobs:
           else
             xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/release
           fi
-      - name: Test the exact exported pack
-        env:
-          LIBGL_ALWAYS_SOFTWARE: '1'
-        run: xvfb-run -a python3 tools/check_pack.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --pack "$RUNNER_TEMP/windows-build/FirstFortune.pck" --output test-results/pack
       - name: Publish the verified version without replacing older builds
         env:
           GH_TOKEN: ${{ github.token }}

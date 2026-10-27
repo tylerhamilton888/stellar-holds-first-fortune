@@ -40,7 +40,8 @@
       "architecture",
       "architecture_style",
       "combat_art",
-      "energy"
+      "energy",
+      "calendar"
     ],
     "modular": [
       "modular",
@@ -326,7 +327,11 @@
       "royal",
       "combat",
       "architecture",
-      "energy"
+      "energy",
+      "calendar"
+    ],
+    "calendar-preview": [
+      "calendar"
     ]
   },
   "cases": {
@@ -461,6 +466,10 @@
     "energy": {
       "script": "tests/energy90.gd",
       "marker": "ENERGY90"
+    },
+    "calendar": {
+      "script": "tests/calendar91.gd",
+      "marker": "CALENDAR91"
     }
   }
 }

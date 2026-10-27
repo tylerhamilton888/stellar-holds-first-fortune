@@ -14,6 +14,9 @@ const ROAD_STATIONS=[{"x":190.0,"name":"Woodcutter's field board","panel":"pinew
 const CLAIM_STATIONS=[{"x":150.0,"name":"Your quarters","panel":"home"},{"x":400.0,"name":"Return to Keldrath","panel":"gate"},{"x":970.0,"name":"Founding your hold","panel":"camp"},{"x":1205.0,"name":"Workshop","panel":"forge"},{"x":1465.0,"name":"Your mine","panel":"mine"},{"x":1780.0,"name":"Future launchyard","panel":"ship"}]
 
 var loading_view:HoldLoadingView
+var calendar_button:Button
+var calendar_page=-1
+var calendar_selected=-1
 var energy_button:Button
 var energy_bar:ProgressBar
 var dev:HoldDevTesting
@@ -131,6 +134,8 @@ func _ready():
  sound=HoldSound.new();add_child(sound)
  setup_ui()
  dev=HoldDevTesting.new(self)
+ calendar_button=small_button(ui,"Calendar",func():calendar_page=-1;calendar_selected=-1;open_panel("calendar"))
+ calendar_button.position=Vector2(24,47);calendar_button.size=Vector2(440,30)
  energy_button=button(ui,"Energy",func():open_panel("energy"))
  energy_button.custom_minimum_size.y=30;energy_button.add_theme_font_size_override("font_size",14)
  energy_button.position=Vector2(744,8);energy_button.size=Vector2(194,30)
@@ -224,6 +229,7 @@ func show_title():
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
  if testing and not HoldBuild.DEV_TESTING:return
+ calendar_page=-1;calendar_selected=-1
  state.test_session=testing
  surface.cancel_placement();handworks.placing=""
  fight.reset();fieldwork.cancel();fieldwork.placing=false;handworks.working=false;handworks.approaching=false;handworks.lift=0;handworks.setting_down={}
@@ -327,6 +333,7 @@ func _process(dt):
   if zone!="mine" and not surface.active():combat.update(dt)
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
    HoldWorkEnergy.tick(state,dt)
+   HoldCalendar.tick(self,dt)
    fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt)
    if zone=="mine":
     deep.move(dt)
@@ -870,6 +877,13 @@ func goal()->String:
  if not state.tech.has("automation"):return "GROW YOUR HOLD: Research clockwork industry; recruit a crew."
  return "YOUR FIRST STARSHIP: Build at the eastern launchyard (%d/3)." % state.ship_stage
 func update_hud():
+ if is_instance_valid(calendar_button):
+  calendar_button.visible=playing and panel_id==""
+  if playing:
+   var day=int(HoldCalendar.data(state).day)
+   var holiday=HoldCalendar.holiday(day)
+   calendar_button.text=HoldCalendar.date(day)+" · "+HoldCalendar.clock_text(state)+" · "+HoldCalendar.phase(state)+(" ★" if not holiday.is_empty() else "")
+   calendar_button.tooltip_text="Open calendar"+(" · "+holiday.name if not holiday.is_empty() else "")
  if is_instance_valid(energy_button):
   energy_button.visible=playing and panel_id==""
   energy_bar.visible=energy_button.visible
@@ -1173,7 +1187,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id in ["energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1207,6 +1221,8 @@ func open_panel(id:String,remember:bool=true):
   "charters":charters_panel()
   "pinewood":HoldForestry.panel(self)
   "road_order":surface.roads.panel()
+  "calendar":HoldCalendar.panel(self)
+  "festivals":HoldCalendar.festivals_panel(self)
   "energy":HoldWorkEnergy.panel(self)
   "hearth":hearth.panel()
   "road_kitchen":surface.roads.kitchen_panel()
@@ -1285,6 +1301,7 @@ func open_panel(id:String,remember:bool=true):
  elif id in ["conversation","commission","guidance","roster","equipment"]:panel.set_deferred("size",Vector2(840,452))
 
 func inventory_panel():
+ small_button(panel_body,"Calendar & celebrations",func():open_panel("calendar"))
  button(panel_body,"Meals, ale & rest · Energy",func():open_panel("energy"))
  var top=row(panel_body)
  label(top,"%d crowns  •  Carried supplies" % state.money,18,Color("edc98a"))
