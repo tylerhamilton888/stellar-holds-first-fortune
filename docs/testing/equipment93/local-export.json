@@ -1,0 +1,107 @@
+{
+  "version": "0.83.0",
+  "source": "621b54bbebae0b05a95ab6ca3a0a8ca870f37a37",
+  "tree": "ed01948e715d742b9fb777d5168cefe421f4cd8f",
+  "local_build": {
+    "version": "0.83.0",
+    "commit": "9b04859c0e9bbb006e607fb9956d6d521d8a2064",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "aeb40c67cfaf893e7416a2d28013e93e974672486bf7be9df125254e993c2f9a",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "f700a3286d53e1411a1e6de0070931e2144d27b3b32a28ab5115d12042184d10",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "1dcf47ec08638fa194e0d2c913ee81baa8321ab60bf33dc717b44c9346c5a77e",
+    "zip_bytes": 767190254
+  },
+  "source_results": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.17
+    },
+    {
+      "test": "equipment93",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 43,
+      "seconds": 46.24
+    },
+    {
+      "test": "combat",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 44,
+      "seconds": 41.8
+    },
+    {
+      "test": "energy",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 24,
+      "seconds": 51.97
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 47.46
+    }
+  ],
+  "local_export_checks": 43,
+  "images": {
+    "weapons": {
+      "source_sha256": "41283675437b8df5b4c37676c34124e2439786276cec2b36adaff61a6ebfdac7",
+      "export_sha256": "b7bf19df969295f8d908403a97b00851b4998e97480ca8aabd61c3d3720cbb79",
+      "byte_identical": false,
+      "pixel_identical": false,
+      "pixel_difference_bounds": [
+        1244,
+        234,
+        1274,
+        260
+      ]
+    },
+    "armor": {
+      "source_sha256": "33d356deb950520ff288e8d113bb61d9ad1c2accab0836dec6b36e1cf51808a1",
+      "export_sha256": "dde6b096c02c25aeb67a93ee5b518345971842abc9befde8242854201b5defe6",
+      "byte_identical": false,
+      "pixel_identical": false,
+      "pixel_difference_bounds": [
+        1244,
+        234,
+        1274,
+        260
+      ]
+    },
+    "forge-rune": {
+      "source_sha256": "ceb1bc5522c804f92913604e5cded1e866ce5353281c4d9a34b96bf068317e4d",
+      "export_sha256": "171baee0e4641e48f2c1327a31fdfb75717dd6b632c6a83f6cbfc040236e22db",
+      "byte_identical": false,
+      "pixel_identical": false,
+      "pixel_difference_bounds": [
+        1244,
+        234,
+        1274,
+        260
+      ]
+    }
+  },
+  "pr": 57,
+  "source_run": 40760152166,
+  "release_run": 40760151380,
+  "status": "Delivered: both hosted gates passed; see delivery.json for published build verification.",
+  "visual_review": "Equipment and forge UI reviewed in the exported game. Differences from source captures are confined to background forge animation outside the menu; full images are not claimed identical."
+}

@@ -1,0 +1,69 @@
+{
+  "source": "621b54bbebae0b05a95ab6ca3a0a8ca870f37a37",
+  "version": "0.83.0",
+  "build": {
+    "version": "0.83.0",
+    "commit": "621b54bbebae0b05a95ab6ca3a0a8ca870f37a37",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "0a03462b65ac268a311a4abaadd6f091448da0dc6eb67089f8f94e43649985bf",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "04b872cafe55bc4b44c5b381fa84c4ef2c46718c7b76ee07029ff286ee0e9b5a",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "b043fa352778111a2ebe4b56a3fd01f6be0cc92b716a67c9df11e2bf6016a04b",
+    "zip_bytes": 767154215
+  },
+  "cases": 26,
+  "assertions": 1893,
+  "images": {
+    "weapons": {
+      "source_sha256": "41283675437b8df5b4c37676c34124e2439786276cec2b36adaff61a6ebfdac7",
+      "published_sha256": "b7bf19df969295f8d908403a97b00851b4998e97480ca8aabd61c3d3720cbb79",
+      "whole_image_difference_bounds": [
+        1244,
+        234,
+        1274,
+        260
+      ],
+      "menu_pixels_identical": true
+    },
+    "armor": {
+      "source_sha256": "33d356deb950520ff288e8d113bb61d9ad1c2accab0836dec6b36e1cf51808a1",
+      "published_sha256": "dde6b096c02c25aeb67a93ee5b518345971842abc9befde8242854201b5defe6",
+      "whole_image_difference_bounds": [
+        1244,
+        234,
+        1274,
+        260
+      ],
+      "menu_pixels_identical": true
+    },
+    "forge-rune": {
+      "source_sha256": "ceb1bc5522c804f92913604e5cded1e866ce5353281c4d9a34b96bf068317e4d",
+      "published_sha256": "171baee0e4641e48f2c1327a31fdfb75717dd6b632c6a83f6cbfc040236e22db",
+      "whole_image_difference_bounds": [
+        1244,
+        234,
+        1274,
+        260
+      ],
+      "menu_pixels_identical": true
+    }
+  },
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.83.0",
+  "zip_metadata_matches_report": true,
+  "zip_independently_redownloaded": false,
+  "downloaded_evidence_verified": true,
+  "build_report_digest": "sha256:04d06740313dcd52ecfd4144ed5cbf528ef484c76e56776d9ab97f24c03cf237",
+  "evidence_digest": "sha256:8b96bcd9d208d6e3adbcca80069705a811da78691964f224bbf6a4217c226926",
+  "source_run": 40760152166,
+  "release_run": 40760151380,
+  "runtime_merge": "50422c0001528b69abab33837c026b3f2f3496b0",
+  "runtime_tree": "ed01948e715d742b9fb777d5168cefe421f4cd8f",
+  "source_cases": 36,
+  "people_preview_passed": true
+}
