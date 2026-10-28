@@ -1,0 +1,46 @@
+{
+  "local_build": {
+    "version": "0.82.0",
+    "commit": "825f7a329e3ecdf574722753fb9cec434bf162c9",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "2b3a991c347394f6c9143b764e23827297c9ee39521ccff087d65e819bb0dfed",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "2a890661072f8d249c1fe4c0f6acb56d750c5e121b866b23241af2a39893403e",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "a18b0b11c5bcf00904ecb9e3c01aac79281d74d2a8fe404c9fdb6a530c2c9a71",
+    "zip_bytes": 767200278
+  },
+  "hosted_source": "93048fecc7ccc8209ab4b0bc0f53a5bce464a19c",
+  "identical_source_tree": "9911e8cf70ac8dabf1210177618563a1cf5c3375",
+  "native_menu_checks": 35,
+  "local_exported_menu_checks": 35,
+  "additional_contextual_layout_checks": 5,
+  "reviewed_matching_images": {
+    "inventory": {
+      "source_sha256": "8c6c4b5285730afb0c2aca65fae456ee645366a7ba9b6f7240104a8f598ccd95",
+      "pack_sha256": "8c6c4b5285730afb0c2aca65fae456ee645366a7ba9b6f7240104a8f598ccd95"
+    },
+    "skills": {
+      "source_sha256": "c4c502656d300406780444b9c4fbc1abe5e9832ebabe01a9d7d54e0821db83e9",
+      "pack_sha256": "c4c502656d300406780444b9c4fbc1abe5e9832ebabe01a9d7d54e0821db83e9"
+    },
+    "conversation": {
+      "source_sha256": "50672274ca2159e7522192ee3b337e2de1359da8981f8f2b23eee8e4de342452",
+      "pack_sha256": "50672274ca2159e7522192ee3b337e2de1359da8981f8f2b23eee8e4de342452"
+    },
+    "recipes": {
+      "source_sha256": "e89803475610652e5a197278bd00e39e342f342be3e0198e872f6b805f134b06",
+      "pack_sha256": "e89803475610652e5a197278bd00e39e342f342be3e0198e872f6b805f134b06"
+    }
+  },
+  "full_hosted_source_run": 40727028182,
+  "full_hosted_release_run": 40727027814,
+  "status": "Delivered; hosted source and exact-export gates passed. See delivery.json.",
+  "local_pack_entries": 3339,
+  "developer_outputs_excluded": true
+}
