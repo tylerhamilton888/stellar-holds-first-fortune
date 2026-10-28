@@ -1,3 +1,11 @@
+# 0.83.0 — Steel in Your Hands: implementation candidate
+
+The first equipment/crafting milestone adds stable individual weapons and armor, legacy ownership migration, standard/tempered forge commissions, and comparisons against equipped gear. Existing type keys still select original art and combat roles. Tempered weapons add 6 damage; tempered armor adds 8 percentage points of protection. Precision forging unlocks finishing; materials come from the existing mining, smelting and peaceful trade systems. No durability, randomized loot, new stamina or mandatory combat acquisition.
+
+HoldEquipment93 owns combat.gear93 normalization, instance IDs, effective stats and forge transactions. Combat and Skirmish use effective damage/protection; ownership, locality, research and materials are rechecked on purchase. Old saves get an exact pre-equipment93 backup before migration. Weapons/Armor/Forge gear remain inside the shared Gear tab. Existing items stay owned when another piece is commissioned.
+
+Combat never spends work energy. Zero energy leaves attacks, guard, parry, dodge, shove and movement available; guns still require ammunition. Background hauling and handwork stop charging energy with weapons drawn. Tests cover full/zero energy, actual outgoing/incoming damage, legacy backup, persistent instance selection, forge prerequisites and UI bounds. Native/source/export verification is in progress; not yet delivered. See testing/equipment93.md. Salvage/study, persistent schematics and the signature expedition remain the next milestone.
+
 # 0.82.0 — The Hold’s Handbook: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.82.0 . Runtime/release source 93048fecc7ccc8209ab4b0bc0f53a5bce464a19c; PR #55 merge 6a42eec3f151a46c04a5a9b1e9753829007e87a4 has identical tree 9911e8cf70ac8dabf1210177618563a1cf5c3375. Source run 40727028182 passed all 35 gameplay cases plus people-preview. Release run 40727027814 passed all 25 exact-export cases / 1,850 assertions. Final local source and clean export each passed 35 menu assertions; five additional contextual layout checks passed.

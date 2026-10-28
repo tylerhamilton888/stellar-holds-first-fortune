@@ -1,3 +1,7 @@
+## Equipment instances
+
+HoldEquipment93 owns additive combat.gear93 instances and equipped IDs. Existing combat.weapon/armor/owned remain compatibility/art-role keys. A read reconciles old/preset type grants into standard instances; forging creates unique monotonic IDs. Effective stats are derived from immutable type definitions and bounded workmanship, never stored as arbitrary multipliers. Both combat controllers consume these stats. Revalidate forge locality, research and payment at activation; menu enablement alone is insufficient. Preserve the pre-equipment93 save before migration.
+
 ## Menu presentation
 
 HoldMenuView owns the shared book shell, scoped parchment theme, persistent peer tabs and Page Up/Down cycling. The HUD/title keep their existing theme. HoldPlayerBook reads the authoritative pack, hotbar, people and recipe data; it never owns item stacks or performs manufacturing. Inventory/recipe/skill selection is transient UI state. HoldDisciplineView separates the overview from existing technique/research actions. Conversation callbacks and locality stay with HoldConversation/HoldPeople. Preserve existing shortcuts and Escape history when adding tabs. All new menu resources must appear in source and exact-export acceptance.

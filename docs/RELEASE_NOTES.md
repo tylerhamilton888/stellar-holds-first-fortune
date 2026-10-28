@@ -1,9 +1,11 @@
-# 0.82.0 — The Hold’s Handbook
+# 0.83.0 — Steel in Your Hands
 
-Menus now share a warm parchment frame and a consistent tab bar: Pack, Gear, Skills, People, Craft, Journal, Map, Calendar and Options. Page Up / Page Down changes tabs; the familiar I/B/Y/N/J/G shortcuts and Escape still work.
+Your equipment is now a collection of individual pieces. Open **B → Weapons / Armor** to compare and equip them, or choose **Forge gear** at Borin’s workbench to commission another piece. Your previous equipment stays yours.
 
-The pack uses compact item slots with quantities, search and a selected-item panel for pinning supplies to slots 6–0. Skills open to a progress overview, then reveal techniques and research when selected. People combine portraits, relationship progress, known tastes and location actions in one directory. Conversations sit lower on screen with a painted portrait and ordered responses. Gear uses side-by-side cards, and Craft offers a recipe catalogue without bypassing workstations.
+Standard gear keeps its familiar stats. Research **Precision forging** to commission tempered weapons (+6 damage) and armor (+8 percentage points of protection) with extra materials. These use existing art and can be made from peacefully acquired supplies.
 
-Existing artwork, supplies, purchases, skill requirements, local NPC interactions and saves are preserved. The design takes inspiration from Stardew Valley’s menu organization while retaining Keldrath’s own characters and systems.
+Combat does not consume the energy meter. Attacks, guards, parries, shoves and dodges work at zero energy; guns still need cartridges. Drawing weapons also suspends background hauling/handwork energy drain. Energy remains a manual-work and rest system, with no collapse or inability to defend yourself.
 
-Extract the complete Windows ZIP into a fresh folder. Windows hardware/audio and subjective readability need hands-on playtesting.
+Existing owned equipment migrates without losing items or strength, and an exact pre-migration save backup is retained. Extract the Windows ZIP into a fresh folder, then run FirstFortune.exe. Windows hardware/audio and subjective balance need hands-on playtesting.
+
+Salvage/study, schematics and signature expeditions are future work. This release introduces no durability, randomized gear rolls or new stamina system.

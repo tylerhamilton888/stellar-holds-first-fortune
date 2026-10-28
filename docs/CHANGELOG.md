@@ -1,3 +1,10 @@
+# 0.83.0 — Steel in Your Hands
+
+- Individually saved weapon/armor pieces and equipped selections; legacy owned gear migrates at unchanged strength with an exact rollback backup.
+- Forge standard or tempered equipment at Borin’s workbench. Precision forging and additional materials unlock +6 weapon damage or +8 protection points; previous pieces stay owned.
+- Gear shows material, workmanship and stat differences; forge previews compare both grades before paying.
+- Work energy never gates combat. Drawn weapons suspend background hauling/handwork drain; zero-energy attack and defense regressions cover the live combat controller.
+
 # 0.82.0 — The Hold’s Handbook
 
 Menus now share a warm parchment frame and a consistent tab bar: Pack, Gear, Skills, People, Craft, Journal, Map, Calendar and Options. Page Up / Page Down changes tabs; the familiar I/B/Y/N/J/G shortcuts and Escape still work.

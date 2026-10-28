@@ -271,12 +271,13 @@ func update(dt:float):
  if lift<=0:setting_down={}
  if not g.playing or g.panel_id!="" or g.room_id=="training":return
  var d=data()
- if g.walking_pose and not d.carry.is_empty():HoldWorkEnergy.spend(g.state,dt*.02)
+ if g.walking_pose and not g.combat.armed and not d.carry.is_empty():HoldWorkEnergy.spend(g.state,dt*.02)
  for f in d.facilities:
   if vehicle(f) and f.hitched:
    # Only explicit, validated passages transfer equipment; abandoned carts stay put.
    if not local(f) or pos(f).distance_to(g.player)>145:f.hitched=false
    else:f.x=g.player.x;f.y=g.player.y
+ if g.combat.armed:return
  var f=facility()
  if f.is_empty() and g.zone=="mine" and Input.is_key_pressed(KEY_SHIFT) and Input.is_action_pressed("interact") and Input.get_vector("left","right","up","down")==Vector2.ZERO:
   var raw=closest(d.loose,65) if d.carry.is_empty() else d.carry.back()

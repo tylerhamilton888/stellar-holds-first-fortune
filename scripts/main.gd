@@ -93,6 +93,7 @@ var menu_scroll:ScrollContainer
 var menu_paused=false
 var inventory_owned_only=true
 var gear_tab="weapon"
+var gear_recipe="axe"
 var help_tab=0
 var trade_tab="sell"
 var forge_tab=0

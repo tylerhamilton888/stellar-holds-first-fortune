@@ -116,7 +116,7 @@ func run():
  await snap("04-equipment")
  check(g.panel.get_global_rect().end.y<=g.get_viewport_rect().size.y,"Gear panel stays within viewport after switching")
  g.menu_scroll.scroll_vertical=10000;await snap("05-equipment-bottom")
- check(g.menu_scroll.scroll_vertical>0,"All weapon choices remain accessible by scrolling")
+ check(g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"Three weapon choices fit in the compact equipment catalogue")
  g.close_panel()
  g.room_id="training";f.enemies=[near];near.hp=64;g.state.combat.weapon="axe";f.locked_aim=Vector2.RIGHT
  var practice_xp=HoldDisciplines.xp(g.state,"warrior");f.resolve()
