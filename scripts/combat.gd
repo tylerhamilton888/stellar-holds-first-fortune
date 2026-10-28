@@ -293,12 +293,14 @@ func panel():
  var tabs=g.row(g.panel_body)
  for slot in ["weapon","armor"]:
   var tab=g.small_button(tabs,"Weapons" if slot=="weapon" else "Armor",func():g.gear_tab=slot;g.open_panel("equipment",false));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  if g.gear_tab==slot:tab.modulate=Color("a7e2ce")
+  tab.toggle_mode=true;tab.button_pressed=g.gear_tab==slot
  var slot=g.gear_tab
  var items=WEAPONS if slot=="weapon" else ARMOR
+ var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",10);g.panel_body.add_child(grid)
  for id in items:
   var item=items[id];var owned=id in g.state.combat.owned;var equipped=g.state.combat[slot]==id
-  var body=g.section(g.panel_body,item.name+("  •  Equipped" if equipped else ("  •  Owned" if owned else "")))
+  var body=g.section(grid,item.name+("  •  Equipped" if equipped else ("  •  Owned" if owned else "")))
+  body.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
   g.label(body,item.get("desc","Damage reduction: %d%%" % int(item.get("reduction",0)*100)),16)
   if owned and not equipped:
    var b=g.button(body,"Equipped" if equipped else "Equip "+item.name,func():g.state.combat[slot]=id;reset_actions();g.save_game();g.refresh_panel());b.disabled=equipped

@@ -98,6 +98,9 @@ var trade_tab="sell"
 var forge_tab=0
 var research_tab=0
 var discipline_tab="mining"
+var skill_detail=false
+var pack_selection=""
+var recipe_selection=""
 var panel_body:VBoxContainer
 var hud:Label
 var footer:Label
@@ -392,6 +395,8 @@ func _unhandled_input(e):
   else:open_panel("dev_testing")
   get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
+ if panel_id!="" and e is InputEventKey and e.pressed and not e.echo and e.keycode in [KEY_PAGEUP,KEY_PAGEDOWN]:
+  HoldMenuView.cycle_tab(self,-1 if e.keycode==KEY_PAGEUP else 1);get_viewport().set_input_as_handled();return
  if fight.input(e):get_viewport().set_input_as_handled();return
  if fieldwork.input(e):get_viewport().set_input_as_handled();return
  if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldAncestralClaim.interact(self):get_viewport().set_input_as_handled();return
@@ -1174,10 +1179,9 @@ func compact_person(key:String,quote:String):
  if HoldConversation.local(self,key):small_button(r,"Talk",func():HoldConversation.start(self,key))
 
 func menu_footer(parent:Node):
- var bottom=VBoxContainer.new();bottom.add_theme_constant_override("separation",2);parent.add_child(bottom)
- label(bottom,"Choose your fortune" if panel_id=="save_slots" else ("Paused" if menu_paused else "Safe to browse • production continues"),14,Color("a7c8bf"))
- var hint=label(bottom,"Tab: focus  •  Enter: select  •  Esc: back / close",14,Color("a7c8bf"));hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
-
+ var bottom=row(parent)
+ label(bottom,"Choose your fortune" if panel_id=="save_slots" else ("Paused" if menu_paused else "Production continues"),14,Color("a7c8bf"))
+ var hint=label(bottom,"PgUp / PgDn: tabs · Tab: focus · Esc: back / close" if HoldMenuView.has_tabs(panel_id) else "Tab: focus · Enter: select · Esc: back / close",14,Color("a7c8bf"));hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
 func purchase(cost:Dictionary,crowns:int,callback:Callable):
  if not state.pay(cost,crowns):notify("Not enough materials or crowns.");return
  callback.call();sound.effect("build");save_game();refresh_panel()
@@ -1187,7 +1191,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1249,14 +1253,7 @@ func open_panel(id:String,remember:bool=true):
     else:notify("You need 7 crowns."))
    button(panel_body,"Meet the hiring bench • six prospective crewmates",func():outpost_tab=2;open_panel("manage"))
    HoldCulture.panel(self)
-  "roster":
-   HoldPeople.notebook(self)
-   for key in HoldAppearance.NPC_NAMES:
-    if key=="eirik" and HoldOnboarding.ensure(state).fresh and HoldOnboarding.stage(state)<4:continue
-    character_card(panel_body,key,"A familiar face in Keldrath.")
-   for key in HoldOutpost.candidate_ids(state):
-    if not HoldAppearance.NPC_NAMES.has(key):character_card(panel_body,key,HoldOutpost.line(state,key))
-   for i in 3:character_card(panel_body,"visitor_"+str(i),"Taking a turn through the hold.")
+  "roster":HoldPlayerBook.people(self)
   "visitor":
    character_card(panel_body,visitor_key,HoldOutpost.line(state,visitor_key) if HoldOutpost.has_member(state,visitor_key) else visitor_quote())
    label(panel_body,("A member of your founding crew. " if state.outpost.get("crew",{}).has(visitor_key) else "A fellow dwarf of Keldrath. ")+"Track "+HoldCulture.words(state.npc(visitor_key)).possessive+" location whenever you want to find "+HoldCulture.words(state.npc(visitor_key)).object+" again.",14)
@@ -1273,6 +1270,7 @@ func open_panel(id:String,remember:bool=true):
   "forge":forge_panel()
   "research":research_panel()
   "inventory":inventory_panel()
+  "recipes":HoldPlayerBook.recipes(self)
   "manage":management_panel()
   "ship":ship_panel()
   "pause":
@@ -1297,38 +1295,10 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Create replacement for slot %d" % state.save_slot,func():open_creator(true))
    button(panel_body,"Keep my existing hold",close_panel)
 
- if id=="living":panel.set_deferred("size",Vector2(720,452))
- elif id in ["conversation","commission","guidance","roster","equipment"]:panel.set_deferred("size",Vector2(840,452))
+ panel.set_deferred("size",Vector2(840,342) if id=="conversation" else Vector2(880,492))
 
 func inventory_panel():
- small_button(panel_body,"Calendar & celebrations",func():open_panel("calendar"))
- button(panel_body,"Meals, ale & rest · Energy",func():open_panel("energy"))
- var top=row(panel_body)
- label(top,"%d crowns  •  Carried supplies" % state.money,18,Color("edc98a"))
- small_button(top,"Show all resources" if inventory_owned_only else "Show carried resources",func():inventory_owned_only=not inventory_owned_only;refresh_panel())
- var search=LineEdit.new();search.placeholder_text="Search your pack…";search.clear_button_enabled=true;search.custom_minimum_size.y=34;panel_body.add_child(search)
- label(panel_body,"Carried materials supply crafting and trade. Chest and stockpile contents stay on site.",16,Color("b4c9c4"))
- var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",10);grid.add_theme_constant_override("v_separation",8);panel_body.add_child(grid)
- var count=0;var cards=[]
- for k in HoldData.ITEMS:
-  if inventory_owned_only and state.count(k)==0:continue
-  count+=1
-  var card=section(grid,"");card.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  cards.append({"node":card.get_parent(),"name":str(HoldData.ITEMS[k].name).to_lower()})
-  var r=row(card);HoldItemArt.icon(r,k);label(r,HoldData.ITEMS[k].name,16)
-  var bind=OptionButton.new();bind.add_item("Pin to bar…")
-  for slot in range(5,10):bind.add_item("Slot "+str((slot+1)%10))
-  r.add_child(bind);bind.item_selected.connect(func(index):
-   if index>0:hotbar.assign(k,index+4);bind.select(0))
-  var amount=label(r,str(state.count(k)),18,Color("edc98a"));amount.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;amount.size_flags_horizontal=0;amount.custom_minimum_size.x=38
- search.text_changed.connect(func(query):
-  for card in cards:card.node.visible=query.strip_edges().to_lower() in card.name
-  menu_scroll.scroll_vertical=0)
- if count==0:label(panel_body,"Your pack is empty. Dig loose earth or stone to gather your first materials.",16)
- label(panel_body,"1 Pickaxe  •  2 Shovel  •  3 Axe  •  4 Hammer
-5 Slagcaster (when unlocked) • 6–0 pinned supplies. Click a slot or press its number.
-Pin carried resources using the selectors above; quantities always come from your pack.
-Open Gear above to change weapons or armor.",16,Color("b4c9c4"))
+ HoldPlayerBook.inventory(self)
 func resume_adventure():
  if not menu_history.is_empty() and menu_history[-1].id=="ivar_welcome":back_panel()
  else:close_panel()

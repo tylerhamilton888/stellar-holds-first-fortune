@@ -1,3 +1,7 @@
+## Menu pass — 0.82.0 candidate
+
+Shared navigation, compact inventory, skill overview, combined people directory, portrait dialogue and recipe browsing are implemented. Native review and release verification are in progress; see testing/menu92.md. Controller remapping, drag-and-drop slots and future equipment instances remain separate scope.
+
 ## Energy follow-up
 
 - Playtest work drain and the 60/90/120-minute tiredness thresholds.
