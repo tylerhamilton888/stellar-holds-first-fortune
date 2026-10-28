@@ -1,6 +1,6 @@
-## Equipment foundation — 0.83.0 candidate
+## Equipment foundation — delivered in 0.83.0
 
-Individual gear, comparisons and standard/tempered forge commissions implemented; verification in progress. Combat costs no work energy and remains available at zero. Next: owner feel/balance feedback, then salvage/study, persistent schematics and a signature crafting expedition with peaceful alternatives. No durability or stamina gate.
+Individual gear, comparisons and standard/tempered forge commissions published and merged. All 36 source cases plus people-preview and 26 exact-export cases / 1,893 assertions passed; see testing/equipment93.md. Combat costs no work energy and remains available at zero. Next: owner feel/balance feedback, then salvage/study, persistent schematics and a signature crafting expedition with peaceful alternatives. No durability or stamina gate.
 
 ## Menu pass — delivered in 0.82.0
 
