@@ -1,10 +1,14 @@
-# 0.82.0 — The Hold’s Handbook: implementation candidate
+# 0.82.0 — The Hold’s Handbook: published and merged
 
-Working branch ui/menu92, based on master 6b9e65e88133d2f4514ec0f2bd53f08618abd4f1 (local pre-menu92 checkpoint). The last published baseline remains v0.81.0. This pass changes menu presentation/navigation only: shared parchment tabs, compact pack and recipe grids, skill overview/detail, combined people rows, lower portrait dialogue and equipment cards. Existing artwork, ownership, transactions and saves remain authoritative.
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.82.0 . Runtime/release source 93048fecc7ccc8209ab4b0bc0f53a5bce464a19c; PR #55 merge 6a42eec3f151a46c04a5a9b1e9753829007e87a4 has identical tree 9911e8cf70ac8dabf1210177618563a1cf5c3375. Source run 40727028182 passed all 35 gameplay cases plus people-preview. Release run 40727027814 passed all 25 exact-export cases / 1,850 assertions. Final local source and clean export each passed 35 menu assertions; five additional contextual layout checks passed.
 
-Read testing/menu92.md. HoldMenuView owns shared shell, colors and tab cycling; HoldPlayerBook owns pack/people/recipe presentation. HoldDisciplineView owns overview/detail. Existing gameplay owners still perform pinning, crafting, purchases, learning and NPC interaction. Recipes are a read-only browser; services retain their existing location rules.
+This pass adds shared parchment tabs, compact pack and recipe grids, a thirteen-skill overview with technique details, combined people rows, lower portrait dialogue and equipment cards. I opens Pack; Page Up/Down cycles tabs. Existing art, transactions, locality and saves remain authoritative. Recipe browsing does not manufacture remotely. Inventory and all thirteen skills fit without scrolling at 960×540.
 
-Native visual and behavioral checks are in progress; full source and exact-export gates must pass before publication/merge. Do not describe this candidate as delivered. Tests menu92 and the revised discipline UI case are included in the acceptance manifests. Keep all earlier recovery branches, bundles and releases.
+Read testing/menu92.md. HoldMenuView owns the shell and tabs; HoldPlayerBook owns pack/people/recipes; HoldDisciplineView owns overview/detail. The four reviewed inventory, skills, conversation and recipe captures are byte-identical in local source, local export and hosted exact-export evidence. No drag-and-drop, controller remapping or equipment instances are claimed.
+
+Downloaded build report and verification evidence match their GitHub SHA256 digests. Clean report, tag and source agree. Uploaded ZIP size 767151469 and SHA256 c69658ae50e6eee3fb09c0e24da4f27b2fb5e0f82c6f065daf1899cc1fc00145 match the report; the full ZIP was not independently redownloaded. See testing/menu92/delivery.json. Extract into a fresh folder. Windows hardware/audio and subjective readability remain hands-on playtest checks.
+
+Continue from master; next is owner playtest feedback on these menus. Runtime is preserved on ui/menu92, release/0.82.0 and recovery/menu92-hosted, plus verified menu92-hosted.bundle. Its prerequisite 6b9e65e88133d2f4514ec0f2bd53f08618abd4f1 is preserved on master. Keep earlier recovery branches, bundles and releases. Delivery documentation is separate from verified runtime.
 
 # 0.81.0 — The Turning Year: published and merged
 
