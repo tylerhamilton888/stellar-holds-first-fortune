@@ -1,3 +1,9 @@
+# 0.84.0 navigation trial
+
+Title → Dev Testing → Mine views & depth routes opens a separate test save with two connected floors. Press F6 to compare overhead and exploration. Use brackets to turn, WASD to move, Z to browse floors and mark a route, E to descend and Shift+E to return. X opens the original survey. Try mining the iron face, lifting the raw load and working at the bench. F9 can add a goblin; combat remains usable at zero energy. Place equipment to check the temporary overhead construction view. Save/reload should keep your location and chosen view.
+
+Please judge stair visibility, wall obstruction, target selection, movement direction and camera comfort before expansion to town/interiors. This prototype renders one mine floor at a time; a view toggle never changes the world or moves the dwarf.
+
 # 0.67.1 appearance check
 
 Try the grand moustache/full-beard, bare-crown, cropped-hair and high-ponytail designs in character creation. Switch hair colors, cycle walking/work/carry/standing and turn the preview. Watch neighbors walk, stop and drink; their beard, hairstyle, color and stature should remain recognizable. Check the greatbeard Dwarf's boots while drinking or working. Existing saves are supported; the first artwork preparation uses a new cache revision.

@@ -1,11 +1,11 @@
-# 0.83.0 — Steel in Your Hands
+# 0.84.0 — Depth & Perspective
 
-Your equipment is now a collection of individual pieces. Open **B → Weapons / Armor** to compare and equip them, or choose **Forge gear** at Borin’s workbench to commission another piece. Your previous equipment stays yours.
+Explore your mines from either view. **F6** switches between traditional overhead and a perspective camera with your painted Dwarf in 3D terrain. **[ / ]** turn the camera; WASD movement and Space dodge follow it. Your chosen view is remembered.
 
-Standard gear keeps its familiar stats. Research **Precision forging** to commission tempered weapons (+6 damage) and armor (+8 percentage points of protection) with extra materials. These use existing art and can be made from peacefully acquired supplies.
+Press **Z** for the paused depth map. Browse **D1–D5** or use Page Up / Page Down, see faint adjacent explored floors, and click known ground to mark a gold route through real stairs. **Return to dwarf** restores the map to your current floor. Browsing never moves your character or reveals unexplored chambers; **E / Shift+E** still travel down/up at stairs. Hitched carts cannot route down ladders.
 
-Combat does not consume the energy meter. Attacks, guards, parries, shoves and dodges work at zero energy; guns still need cartridges. Drawing weapons also suspends background hauling/handwork energy drain. Energy remains a manual-work and rest system, with no collapse or inability to defend yourself.
+For a quick trial, choose **Title → Dev Testing → Mine views & depth routes**. It prepares two connected floors, a mineral face, a workbench and a marked route in the separate test save. **F9** opens its controls.
 
-Existing owned equipment migrates without losing items or strength, and an exact pre-migration save backup is retained. Extract the Windows ZIP into a fresh folder, then run FirstFortune.exe. Windows hardware/audio and subjective balance need hands-on playtesting.
+Mining, combat, cargo and saves share the existing world. Combat remains usable at zero energy. Construction placement temporarily uses overhead and returns to your chosen view afterward. This first perspective mode covers mines, with one floor displayed at a time; towns and interiors keep their existing presentation.
 
-Salvage/study, schematics and signature expeditions are future work. This release introduces no durability, randomized gear rolls or new stamina system.
+Extract the complete Windows ZIP into a fresh folder and run FirstFortune.exe. Windows hardware/audio and subjective camera feel remain hands-on playtest checks.

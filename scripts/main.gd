@@ -25,6 +25,7 @@ var fieldwork:HoldHomesteadLife
 var handworks:HoldHandworks
 var hotbar:HoldHotbar
 var surface:HoldSurface
+var depth_nav:HoldDepthNavigation94
 var deep:DeepworksPlay
 var forest_view:Node2D
 var backdrop:Sprite2D
@@ -147,6 +148,7 @@ func _ready():
  var loading_layer=CanvasLayer.new();loading_layer.layer=100;add_child(loading_layer)
  loading_view=HoldLoadingView.new();loading_view.game=self;loading_layer.add_child(loading_view)
  hotbar=HoldHotbar.new();hotbar.g=self;ui.add_child(hotbar)
+ depth_nav=HoldDepthNavigation94.new(self)
  state.load_audio_settings();apply_audio_settings()
  geo.generate(27419)
  show_title()
@@ -232,6 +234,7 @@ func show_title():
  var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
+ if depth_nav!=null:depth_nav.reset()
  if testing and not HoldBuild.DEV_TESTING:return
  calendar_page=-1;calendar_selected=-1
  state.test_session=testing
@@ -309,6 +312,7 @@ func pause_for_focus_loss():
  if playing and panel_id!="pause" and not is_instance_valid(creator):open_panel("pause")
 
 func _process(dt):
+ if depth_nav!=null:depth_nav.update(dt)
  if playing:
   surface.roads.poll_input();deep.poll_arrival_input()
  if HoldFolk.warming():
@@ -396,6 +400,7 @@ func _unhandled_input(e):
   else:open_panel("dev_testing")
   get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
+ if depth_nav.input(e):get_viewport().set_input_as_handled();return
  if panel_id!="" and e is InputEventKey and e.pressed and not e.echo and e.keycode in [KEY_PAGEUP,KEY_PAGEDOWN]:
   HoldMenuView.cycle_tab(self,-1 if e.keycode==KEY_PAGEUP else 1);get_viewport().set_input_as_handled();return
  if fight.input(e):get_viewport().set_input_as_handled();return
@@ -930,7 +935,9 @@ func _draw():
  forest_view.visible=playing and zone=="road" and room_id=="" and not surface.active()
  if forest_view.visible:forest_view.queue_redraw()
  if not playing:draw_title();return
- if zone=="mine":deep.draw();return
+ if zone=="mine":
+  if not depth_nav.explore.active():deep.draw()
+  return
  if surface.active():surface.draw();return
  draw_background()
  var offset=-camera
@@ -1192,7 +1199,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1207,6 +1214,7 @@ func open_panel(id:String,remember:bool=true):
    if zone=="mine":deep.panel()
    else:HoldFieldSurvey.panel(self)
   "equipment":combat.panel()
+  "depth_map":depth_nav.panel()
   "deepworks":deep.panel()
   "haulage":deep.haulage_panel()
   "living":deep.works.panel()
@@ -1937,3 +1945,6 @@ func reveal_discoveries():
    popups.append({"p":center,"text":"A SEALED AETHER GEODE • +20 survey crowns","life":3.0})
    notify("An intact geode! Shift + pick preserves more crystal. Follow the pale mineral seam.")
 
+
+func world_mouse()->Vector2:
+ return depth_nav.explore.mouse_world() if depth_nav!=null else get_global_mouse_position()+camera

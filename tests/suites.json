@@ -43,7 +43,8 @@
       "energy",
       "calendar",
       "menu92",
-      "equipment93"
+      "equipment93",
+      "navigation94"
     ],
     "modular": [
       "modular",
@@ -332,7 +333,8 @@
       "architecture",
       "energy",
       "calendar",
-      "equipment93"
+      "equipment93",
+      "navigation94"
     ],
     "calendar-preview": [
       "calendar"
@@ -357,6 +359,16 @@
     ],
     "equipment93-only": [
       "equipment93"
+    ],
+    "navigation94": [
+      "navigation94"
+    ],
+    "navigation94-regression": [
+      "navigation94",
+      "combat",
+      "mining",
+      "dev_testing",
+      "menu92"
     ]
   },
   "cases": {
@@ -503,6 +515,10 @@
     "equipment93": {
       "script": "tests/equipment93.gd",
       "marker": "EQUIPMENT93"
+    },
+    "navigation94": {
+      "script": "tests/navigation94.gd",
+      "marker": "NAVIGATION94"
     }
   }
 }

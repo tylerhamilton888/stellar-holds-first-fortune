@@ -138,7 +138,7 @@ func evade():
  if dodge_wait>0 or dodge>0:return
  bash_left=0
  # Movement selects the dodge; standing still uses the mouse-facing direction.
- dodge_vector=Input.get_vector("left","right","up","down")
+ dodge_vector=g.depth_nav.explore.movement(Input.get_vector("left","right","up","down"))
  if dodge_vector==Vector2.ZERO:dodge_vector=aim
  for e in enemies:
   if e.state=="windup" and e.time<.4 and e.p.distance_to(g.player)<110:e.evaded=true
@@ -171,7 +171,7 @@ func update(dt:float):
   if not bash_hit and bash_left<=.20:
    bash_hit=true;resolve_bash()
  buffered=maxf(0,buffered-dt);parry=maxf(0,parry-dt);parry_wait=maxf(0,parry_wait-dt);dodge=maxf(0,dodge-dt);dodge_wait=maxf(0,dodge_wait-dt);hurt_wait=maxf(0,hurt_wait-dt);g.combat.riposte=maxf(0,g.combat.riposte-dt)
- var delta=g.get_global_mouse_position()+g.camera-(g.player-Vector2(0,25))
+ var delta=g.world_mouse()-(g.player if g.depth_nav.explore.active() else g.player-Vector2(0,25))
  if delta.length()>10:aim=delta.normalized()
  if g.combat.armed:
   # Aim remains adjustable through early preparation, then commits before contact.

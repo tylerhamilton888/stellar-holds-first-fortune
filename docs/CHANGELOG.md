@@ -1,3 +1,10 @@
+# 0.84.0 — Depth & Perspective
+
+- F6 toggles traditional overhead and mine exploration with painted 2D characters in 3D terrain. Brackets rotate the camera; movement, dodge and mouse targeting follow the view. The choice is remembered separately from your save.
+- Z opens a paused floor map with D1–D5 browsing, adjacent explored-floor ghosts, stair markers and gold routes through actual known passages. Cart routes respect ladder restrictions.
+- Mining, encounters, cargo, stairs and save data use the existing simulation. Workstation prompts, geological survey and enemy warnings remain visible. Precise construction temporarily returns to overhead.
+- Dev Testing adds a separate two-floor exploration preset. The prototype covers mines; towns and interiors retain their existing views. Combat still consumes no work energy.
+
 # 0.83.0 — Steel in Your Hands
 
 - Individually saved weapon/armor pieces and equipped selections; legacy owned gear migrates at unchanged strength with an exact rollback backup.
