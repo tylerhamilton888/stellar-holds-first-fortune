@@ -1,6 +1,6 @@
-## Depth navigation and optional exploration — 0.84.0 candidate
+## Depth navigation and optional exploration — delivered in 0.84.0
 
-Implemented: paused explored-floor map, adjacent-floor ghosts, real stair routes, remembered overhead/3D toggle, camera-relative input and an isolated two-level test preset. Final regression and release verification are pending; see testing/navigation94.md. Next: owner feedback on camera height, obstruction, route readability and Windows performance. Town/interior conversion, continuous multi-floor geometry and free orbit are later scope. Preserve energy-free combat and existing fortunes.
+Published and merged: paused explored-floor map, adjacent-floor ghosts, actual stair routes, remembered overhead/3D toggle, camera-relative input and isolated two-level test preset. All 37 source cases plus people-preview and 27 exact-export cases / 1,924 assertions passed. See testing/navigation94.md. Next: owner feedback on camera height, obstruction, route readability and Windows performance. Town/interior conversion, continuous multi-floor geometry, advanced construction surface parity and free orbit remain later scope. Preserve energy-free combat and existing fortunes.
 
 ## Equipment foundation — delivered in 0.83.0
 

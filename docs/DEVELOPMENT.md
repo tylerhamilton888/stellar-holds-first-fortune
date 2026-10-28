@@ -87,3 +87,7 @@ Starter-quarter plans live in `HoldQuarters` and reuse `HoldFurnishings` costs/a
 ## Calendar and rest
 
 HoldCalendar owns surface.calendar91: a saved day index, minute and annual festival journal. One game minute takes 1/.6 active seconds; menus and offline time do not advance it. Sleep advances passive state.tick in one-second steps so all queued recipes finish correctly; actors, attacks and manual work are not simulated. Energy recovery follows the time skip. Seasons do not destroy crops or close services. Feasts use existing public tables, item art and bounded energy/comfort benefits, and remain available after their dates. Calendar UI browsing never changes simulation time.
+
+## Optional mine presentation
+
+HoldDepthNavigation94 owns transient explored-floor browsing and walking-route hints; routes use known walkable cells, authoritative stair links and current cart restrictions. HoldMineView94 projects the existing Deepworks state into a lazy 3D SubViewport with original sprites and props. Keep simulation, collision, inventory, encounters and save ownership in their current controllers. View preference belongs in user://view_settings94.cfg, not fortune data. World mouse coordinates and camera-relative movement/dodge are the shared input boundary. Construction placement remains overhead; inactive 3D viewports stop rendering. Preserve texture references across deferred viewport draws. Run navigation94 alongside affected gameplay cases and the exact exported pack, and inspect markers, occlusion and the original artwork at gameplay scale.

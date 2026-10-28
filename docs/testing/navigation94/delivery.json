@@ -1,0 +1,98 @@
+{
+  "source": "b579fdea477b9779dbe23a1104d97c8b4d0fefdc",
+  "runtime_tree": "71fed7cc923ea5e435ddbee1d47513574e04383e",
+  "version": "0.84.0",
+  "build": {
+    "version": "0.84.0",
+    "commit": "b579fdea477b9779dbe23a1104d97c8b4d0fefdc",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "cdc2578887e1af9fd1490bc861bb3c2c595d4705c130fac1bae65f2c4d1574e9",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "1230f8ea3a14d1baffae1f05d0a11a08f5fb2d24be98ea4c4c4b02cef24bcfa6",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "976bddc0feb78115e6a8b36373f9a945e747d52da86556434b58b7ebb7aa77d5",
+    "zip_bytes": 767179080
+  },
+  "cases": 27,
+  "assertions": 1924,
+  "images": {
+    "depth-map.png": {
+      "source_sha256": "4c3b6f5cd826b62104b06da395434bcf89ac5255816c2e0150dc1602273d95f3",
+      "published_sha256": "4c3b6f5cd826b62104b06da395434bcf89ac5255816c2e0150dc1602273d95f3",
+      "identical": true
+    },
+    "exploration-combat.png": {
+      "source_sha256": "873f89658da242639ad0819d705eeaa97d14b5731dd6cdedc8795cbb94032a23",
+      "published_sha256": "ab49f2640f4ae068383b99c091bd57220c17f4ab8fb051ab9b204ca9da6ddcc3",
+      "identical": false
+    },
+    "exploration-lower.png": {
+      "source_sha256": "d096a79cbdebb53f8e43824245d20101308aa4c7c24cfbabc6d1eda4928efdb8",
+      "published_sha256": "4f172e90f34f4aa167e4c7a1d4682f3efd6d13c2fce1a0c72a6e38370d42c326",
+      "identical": false
+    },
+    "exploration-mining.png": {
+      "source_sha256": "44f8a545d3a3c134e1e72ab61d41a96119bafda0774645e5a765dd15a2a68aa0",
+      "published_sha256": "da0226cd7052b8af7bf92d5c7f83ce5bf6c7397477e92a6b2ead501c2422caae",
+      "identical": false
+    },
+    "exploration-preset.png": {
+      "source_sha256": "22d47829fd07ce7d9322b9a7e0ccc5c8ec4290cb22eabe35ac945fc03e75f8fe",
+      "published_sha256": "22d47829fd07ce7d9322b9a7e0ccc5c8ec4290cb22eabe35ac945fc03e75f8fe",
+      "identical": true
+    },
+    "exploration-survey.png": {
+      "source_sha256": "6fe2583775fb44b223c5bf38e7e381c208416abf43e21b9dd3050150eef2e98c",
+      "published_sha256": "4c871f4fcbd6a8069a680d8ca30f7021c1504fee40c8d4d8e43d636f3e364a37",
+      "identical": false
+    },
+    "exploration-turn.png": {
+      "source_sha256": "68e92c0d125b0e3bb286b9c81b4a424e675bbabaacf626534fd2a8b53de61d08",
+      "published_sha256": "bc4e7d75dc596da584630ab5c751edd150ab5526a6f8999270a5b865614fa1ba",
+      "identical": false
+    },
+    "exploration.png": {
+      "source_sha256": "82362aac55e64f5403cfc17a9664206f66a54cc2af55f5eb9f6743a28cc0842c",
+      "published_sha256": "a5535a9ed307e35016a77abbee8d6054f0181d297d1e21fba4446a738631eab8",
+      "identical": false
+    },
+    "overhead-route.png": {
+      "source_sha256": "978d52e08dd7375f3efd3ed8789da1918fee1701c13eec2dbb381c593735339d",
+      "published_sha256": "a97d6786b8f07b361fb59343b174ed9587e9e3c3ab45761a7fbf9deb37a81b34",
+      "identical": false
+    },
+    "route-map.png": {
+      "source_sha256": "3e93b7be6d60656dabb47ef96e035c5cd66c9b0bd74f9d142c261901e052ad1d",
+      "published_sha256": "3e93b7be6d60656dabb47ef96e035c5cd66c9b0bd74f9d142c261901e052ad1d",
+      "identical": true
+    }
+  },
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.84.0",
+  "zip_metadata_matches_report": true,
+  "zip_independently_redownloaded": false,
+  "downloaded_evidence_verified": true,
+  "build_report_digest": "sha256:b475ff285f4e6b53e2a2724b21d9517705d119a2823b3b1fa09207c40c6d2099",
+  "evidence_digest": "sha256:ff9d1206e619a0c17430c60347a83cac1dd66e0ad4b12d4aa3346690eb17df6c",
+  "source_run": 40772786202,
+  "release_run": 40772781053,
+  "local_regression_assertions": 197,
+  "local_final_navigation_assertions": 31,
+  "local_pre_highlight_export_assertions": 31,
+  "runtime_pr": 59,
+  "runtime_merge": "e365b67d7eebbb55bcdd31dab38ad543af8b360a",
+  "local_performance": {
+    "environment": "Godot 4.4.1 GL Compatibility; Linux Xvfb 1280x720, Mesa llvmpipe software rendering",
+    "fixture": "Dev Testing / Mine views & depth routes; 120 measured rendered frames per sample after 30 warmup frames",
+    "overhead_idle_mean_ms": 27.1318,
+    "exploration_idle_mean_ms": 20.4888,
+    "exploration_moving_mean_ms": 20.8148,
+    "exploration_combat_mean_ms": 23.0454,
+    "exploration_combat_p95_ms": 30.887,
+    "windows_hardware_tested": false
+  }
+}
