@@ -45,7 +45,7 @@ static func panel(g):
  var d=data(g.state)
  g.label(g.panel_body,"Energy · %d / 100 · %s" % [int(d.energy),status(g.state)],22)
  var bar=meter();bar.value=d.energy;bar.custom_minimum_size=Vector2(0,24);g.panel_body.add_child(bar)
- g.label(g.panel_body,"Food recovery: %d%%. At zero energy, demanding work is 20%% slower. Walking and combat stay unrestricted. Tiredness builds with active time awake; menus pause it." % int(food_factor(g.state)*100),16)
+ g.label(g.panel_body,"Food recovery: %d%%. At zero energy, demanding work is 20%% slower. Attacks, guarding, parries, shoves and dodges cost no energy and work at zero. Tiredness builds with active time awake; menus pause it." % int(food_factor(g.state)*100),16)
  g.small_button(g.panel_body,"Calendar & celebrations",func():g.open_panel("calendar"))
  var point=g.surface.nearest() if g.surface.active() else {}
  if point.get("action","") in ["rest","house_rest"]:

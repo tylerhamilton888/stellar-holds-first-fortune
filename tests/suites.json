@@ -42,7 +42,8 @@
       "combat_art",
       "energy",
       "calendar",
-      "menu92"
+      "menu92",
+      "equipment93"
     ],
     "modular": [
       "modular",
@@ -330,7 +331,8 @@
       "combat",
       "architecture",
       "energy",
-      "calendar"
+      "calendar",
+      "equipment93"
     ],
     "calendar-preview": [
       "calendar"
@@ -346,6 +348,15 @@
     ],
     "menu-only": [
       "menu92"
+    ],
+    "equipment93": [
+      "equipment93",
+      "combat",
+      "energy",
+      "menu92"
+    ],
+    "equipment93-only": [
+      "equipment93"
     ]
   },
   "cases": {
@@ -488,6 +499,10 @@
     "menu92": {
       "script": "tests/menu92.gd",
       "marker": "MENU92"
+    },
+    "equipment93": {
+      "script": "tests/equipment93.gd",
+      "marker": "EQUIPMENT93"
     }
   }
 }

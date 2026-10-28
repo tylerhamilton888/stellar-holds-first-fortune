@@ -218,6 +218,10 @@ func load_world(geo:Geology)->Dictionary:
   var backup=save_path()+".pre-architecture86-"+str(Time.get_ticks_usec())+".bak"
   while FileAccess.file_exists(backup):backup+=".bak"
   if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
+ if not d.get("combat",{}).has("gear93"):
+  var backup=save_path()+".pre-equipment93-"+str(Time.get_ticks_usec())+".bak"
+  while FileAccess.file_exists(backup):backup+=".bak"
+  if DirAccess.copy_absolute(save_path(),backup)!=OK:return {}
  surface=d.get("surface",{})
  deepworks=d.get("deepworks",{})
  hauling=d.get("hauling",{})

@@ -295,13 +295,13 @@ func receive(e:Dictionary):
   else:
    impact(g.player,.055,Color("f7b27c"),e.kind==3)
    g.player=push_body(g.player,e.dir,6,PLAYER_BODY)
-   g.state.combat.health-=damage*(.25 if g.state.combat.weapon=="axe" else .375)*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));say("Heavy blow · dodge or parry" if e.kind==3 else "Braced · reduced damage")
+   g.state.combat.health-=damage*(.25 if g.state.combat.weapon=="axe" else .375)*(1-float(g.combat.armor().reduction));say("Heavy blow · dodge or parry" if e.kind==3 else "Braced · reduced damage")
    if g.state.combat.health<=0:g.perform_rescue("Defeated · crew rescue")
   hurt_wait=.25;return
  if practice():say("Watch the amber arc. Face Borin to guard, or dodge sideways.");return
  impact(g.player,.07 if e.kind==3 else .04,Color("ff997c"),e.kind==3)
  g.player=push_body(g.player,e.dir,18 if e.kind==3 else 8,PLAYER_BODY)
- g.state.combat.health-=damage*(1-float(HoldCombat.ARMOR[g.state.combat.armor].reduction));hurt_wait=.65;g.sound.effect("stone",-15);say("Hit · %d health remaining" % maxi(0,int(g.state.combat.health)))
+ g.state.combat.health-=damage*(1-float(g.combat.armor().reduction));hurt_wait=.65;g.sound.effect("stone",-15);say("Hit · %d health remaining" % maxi(0,int(g.state.combat.health)))
  if g.state.combat.health<=0:g.perform_rescue("Defeated · crew rescue")
 func objects()->Array:
  if not enabled():return []

@@ -2,8 +2,8 @@ class_name HoldBuild
 extends RefCounted
 
 # Authoritative metadata for the title screen, validation and packaging.
-const VERSION="0.82.0"
-const CHAPTER="THE HOLD’S HANDBOOK"
+const VERSION="0.83.0"
+const CHAPTER="STEEL IN YOUR HANDS"
 const ENGINE="4.4.1"
 
 

@@ -34,7 +34,7 @@ var peace=0.0
 var traces:Array=[]
 func _init(game):g=game
 static func defaults()->Dictionary:
- return {"health":100.0,"weapon":"axe","armor":"clothes","owned":["axe","clothes"],"cleared":{},"wounds":{}}
+ return {"health":100.0,"weapon":"axe","armor":"clothes","owned":["axe","clothes"],"cleared":{},"wounds":{},"gear93":{}}
 static func normalize(raw:Dictionary)->Dictionary:
  var d=defaults()
  for k in d:if raw.has(k):d[k]=raw[k]
@@ -45,8 +45,10 @@ static func normalize(raw:Dictionary)->Dictionary:
  if not ARMOR.has(d.armor) or not d.armor in d.owned:d.armor="clothes"
  if not d.cleared is Dictionary:d.cleared={}
  if not d.wounds is Dictionary:d.wounds={}
+ HoldEquipment93.ensure(d)
  return d
-func weapon()->Dictionary:return WEAPONS[g.state.combat.weapon]
+func weapon()->Dictionary:return HoldEquipment93.stats(HoldEquipment93.equipped(g.state.combat,"weapon"))
+func armor()->Dictionary:return HoldEquipment93.stats(HoldEquipment93.equipped(g.state.combat,"armor"))
 func profile()->Dictionary:
  var p=g.state.appearance.duplicate();p["armor"]=ARMOR[g.state.combat.armor].look
  p["shield_pose"]=armed and g.state.combat.weapon=="axe"
@@ -221,7 +223,7 @@ func receive_hit(e:Dictionary,damage:float)->String:
   guard_reaction=.20;guard_parried=false
   damage*=.18 if g.state.combat.weapon=="axe" else .4
   g.sound.effect("metal",-18 if e.id=="practice" else -7)
- damage*=1-float(ARMOR[g.state.combat.armor].reduction)
+ damage*=1-float(armor().reduction)
  g.state.combat.health=maxf(0,g.state.combat.health-damage);invulnerable=.5
  g.burst(g.player+Vector2(0,-35),Color("e5b175"),4)
  if g.state.combat.health<=0:
@@ -284,33 +286,4 @@ func panel():
  if not HoldOnboarding.combat_ready(g.state) and not HoldPractice.allowed(g):
   g.label(g.panel_body,"Borin will issue an axe and shield during Keep your feet. First complete the lift commission and Ivar's return-route lesson.",17)
   g.button(g.panel_body,"First-season journal",func():g.open_panel("guidance"));return
- var heading=g.row(g.panel_body)
- var preview=HoldSpritePreview.new();preview.profile=profile();preview.motion="idle";preview.custom_minimum_size=Vector2(80,80);heading.add_child(preview)
- var summary=VBoxContainer.new();summary.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(summary)
- g.label(summary,"%s  •  %s" % [WEAPONS[g.state.combat.weapon].name,ARMOR[g.state.combat.armor].name],18,Color("edc98a"))
- g.label(summary,"Health %d / 100  •  Cartridges %d" % [g.state.combat.health,g.state.count("ammo")],16)
- g.label(summary,"F draw / stow  •  Left click attack  •  Right click guard / parry  •  Space dodge",16)
- var tabs=g.row(g.panel_body)
- for slot in ["weapon","armor"]:
-  var tab=g.small_button(tabs,"Weapons" if slot=="weapon" else "Armor",func():g.gear_tab=slot;g.open_panel("equipment",false));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  tab.toggle_mode=true;tab.button_pressed=g.gear_tab==slot
- var slot=g.gear_tab
- var items=WEAPONS if slot=="weapon" else ARMOR
- var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",10);g.panel_body.add_child(grid)
- for id in items:
-  var item=items[id];var owned=id in g.state.combat.owned;var equipped=g.state.combat[slot]==id
-  var body=g.section(grid,item.name+("  •  Equipped" if equipped else ("  •  Owned" if owned else "")))
-  body.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  g.label(body,item.get("desc","Damage reduction: %d%%" % int(item.get("reduction",0)*100)),16)
-  if owned and not equipped:
-   var b=g.button(body,"Equipped" if equipped else "Equip "+item.name,func():g.state.combat[slot]=id;reset_actions();g.save_game();g.refresh_panel());b.disabled=equipped
-  elif not owned:
-   var reason=g.requirements(item.cost)
-   if item.tech!="" and not g.state.tech.has(item.tech):reason="Research "+HoldData.RESEARCH[item.tech].name
-   elif g.state.active_site=="hold" and g.state.opening<2:reason="Deliver the first coal commission to relight the forge"
-   elif g.room_id!="forge":reason="Visit Borin's workbench to forge this"
-   g.label(body,"Materials: "+HoldData.cost_text(item.cost)+"\n"+reason,16,Color("b4c9c4"))
-   var b=g.button(body,"Forge & equip "+item.name,func():
-    if g.room_id!="forge" or (g.state.active_site=="hold" and g.state.opening<2) or (item.tech!="" and not g.state.tech.has(item.tech)):return
-    if g.state.pay(item.cost):g.state.combat.owned.append(id);g.state.combat[slot]=id;reset_actions();g.sound.effect("build");g.save_game();g.refresh_panel())
-   b.disabled=reason!="Ready"
+ HoldEquipment93.panel(g)

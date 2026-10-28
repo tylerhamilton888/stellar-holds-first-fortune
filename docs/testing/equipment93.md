@@ -1,0 +1,5 @@
+# Equipment foundation and combat energy — 0.83.0 candidate
+
+New equipment93 acceptance covers legacy ownership and exact backup, stable instances/reload, effective damage/protection, comparison deltas, forge locality/material/research rejection, repeated independent commissions, and compact weapon/armor/forge views. Live attack, shield, parry, dodge, shove and gunfire are exercised at full and zero work energy, including background carry update. The combat case retains actual equipment-button cancellation checks; its layout expectation now checks that three weapon choices fit without scrolling.
+
+Source and exact-export manifests both include equipment93. The focused equipment case passed 43 assertions in native Godot 4.4.1. Weapon/armor and all five forge-recipe captures were reviewed at the game viewport; both grades and forge actions fit without scrolling. Broader combat/energy/menu regressions and hosted source/export verification are in progress. No published release is claimed yet.

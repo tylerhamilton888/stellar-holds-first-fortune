@@ -1,3 +1,7 @@
+## Equipment foundation — 0.83.0 candidate
+
+Individual gear, comparisons and standard/tempered forge commissions implemented; verification in progress. Combat costs no work energy and remains available at zero. Next: owner feel/balance feedback, then salvage/study, persistent schematics and a signature crafting expedition with peaceful alternatives. No durability or stamina gate.
+
 ## Menu pass — delivered in 0.82.0
 
 Shared navigation, compact inventory, skill overview, combined people directory, portrait dialogue and recipe browsing are implemented. Native visual review, all 35 source cases plus people-preview, and 25 exact-export cases / 1,850 assertions passed; see testing/menu92.md. Next: owner menu playtest feedback. Controller remapping, drag-and-drop slots and future equipment instances remain separate scope.
