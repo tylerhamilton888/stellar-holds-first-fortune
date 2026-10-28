@@ -1,3 +1,7 @@
+## Menu presentation
+
+HoldMenuView owns the shared book shell, scoped parchment theme, persistent peer tabs and Page Up/Down cycling. The HUD/title keep their existing theme. HoldPlayerBook reads the authoritative pack, hotbar, people and recipe data; it never owns item stacks or performs manufacturing. Inventory/recipe/skill selection is transient UI state. HoldDisciplineView separates the overview from existing technique/research actions. Conversation callbacks and locality stay with HoldConversation/HoldPeople. Preserve existing shortcuts and Escape history when adding tabs. All new menu resources must appear in source and exact-export acceptance.
+
 ## Architectural material collections
 
 `architecture_styles.gd` owns collection definitions, normalization, source rectangles and shared floor/wall/roof painters. `architecture_view.gd` owns the visual catalogues and studies; its previews use the same building and furnishing painters as the world. Gameplay transactions stay in `architecture.gd`. Player instances retain `surface.architecture86`; optional `style87` fields are additive. Freeform construction stores its collection in the existing per-claim building dictionary. Missing/unknown choices resolve to plan defaults. Finish payment is atomic and adds to shell-paid materials for exact empty-shell recovery. Original façade images are not replaced or recoloured.

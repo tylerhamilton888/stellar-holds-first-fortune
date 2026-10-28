@@ -17,7 +17,7 @@ func run():
  check(HoldDisciplines.xp(g.state,"overseer")==1,"Unique deeds cannot be repeated for XP")
  check(not HoldDisciplines.learn(g.state,"unknown"),"Unknown save or UI technique cannot be learned")
  for path in HoldDisciplines.PATHS:
-  g.discipline_tab=path;g.open_panel("disciplines");await frames(2)
+  g.skill_detail=true;g.discipline_tab=path;g.open_panel("disciplines");await frames(2)
   check(g.panel.get_global_rect().end.y<=g.get_viewport_rect().size.y,"Panel fits viewport: "+path)
   if path in ["mining","engineer","brewing"]:await snap("path-"+path)
  var before=HoldDisciplines.xp(g.state,"smithing")
@@ -35,7 +35,7 @@ func run():
  for path in saved.xp:same=same and HoldDisciplines.xp(g.state,path)==int(saved.xp[path])
  check(same,"Progression survives actual save and reload")
  g.close_panel();key(KEY_Y);check(g.panel_id=="disciplines" and g.menu_paused,"Y opens a safely paused development screen")
- g.close_panel();g.discipline_tab="farming";HoldDisciplines.award(g.state,"farming",16);g.open_panel("disciplines");button("Learn technique")
+ g.close_panel();g.skill_detail=true;g.discipline_tab="farming";HoldDisciplines.award(g.state,"farming",16);g.open_panel("disciplines");button("Learn technique")
  check(HoldDisciplines.has(g.state,"gentle_tending"),"Actual Learn button commits the earlier farming technique")
  button("Learn technique")
  check(HoldDisciplines.has(g.state,"seed_selection"),"Actual Learn button still commits Seed selection after learning Gentle tending")

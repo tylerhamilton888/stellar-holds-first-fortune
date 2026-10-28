@@ -102,7 +102,7 @@ static func panel(g):
   var b=g.small_button(grid,str(day+1)+("  ★" if not h.is_empty() else "")+(" · today" if absolute==int(d.day) else ""),func():g.calendar_selected=absolute;g.refresh_panel())
   b.alignment=HORIZONTAL_ALIGNMENT_CENTER;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.toggle_mode=true;b.button_pressed=absolute==g.calendar_selected
   b.tooltip_text=date(absolute)+(": "+h.name if not h.is_empty() else "")
-  if absolute==int(d.day):b.add_theme_color_override("font_color",Color("91e2c7"))
+  if absolute==int(d.day):b.add_theme_color_override("font_color",Color("355d54"))
  if g.calendar_selected>=0 and g.calendar_selected/28==g.calendar_page:
   var selected=holiday(g.calendar_selected)
   g.label(g.panel_body,date(g.calendar_selected)+(": "+selected.name if not selected.is_empty() else " · A day for your own plans"),17,Color("edc98a"))

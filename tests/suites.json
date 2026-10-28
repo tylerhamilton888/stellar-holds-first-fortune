@@ -41,7 +41,8 @@
       "architecture_style",
       "combat_art",
       "energy",
-      "calendar"
+      "calendar",
+      "menu92"
     ],
     "modular": [
       "modular",
@@ -314,7 +315,8 @@
       "homestead",
       "people",
       "dev_testing",
-      "combat_art"
+      "combat_art",
+      "menu92"
     ],
     "gameplay-3": [
       "orientation",
@@ -332,6 +334,18 @@
     ],
     "calendar-preview": [
       "calendar"
+    ],
+    "menu-preview": [
+      "menu92",
+      "menus",
+      "disciplines",
+      "people",
+      "quest_ui",
+      "calendar",
+      "energy"
+    ],
+    "menu-only": [
+      "menu92"
     ]
   },
   "cases": {
@@ -470,6 +484,10 @@
     "calendar": {
       "script": "tests/calendar91.gd",
       "marker": "CALENDAR91"
+    },
+    "menu92": {
+      "script": "tests/menu92.gd",
+      "marker": "MENU92"
     }
   }
 }

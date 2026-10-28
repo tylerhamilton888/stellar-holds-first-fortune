@@ -27,18 +27,19 @@ static func start(g,id:String):
  HoldPeople.meet(g,id)
  g.talk_id=id;g.talk_topic="";g.talk_line="";g.menu_history.clear();g.open_panel("conversation",false)
 static func header(g,parent:Node,id:String,text:String,compact:bool=false):
- var line=g.row(parent);line.add_theme_constant_override("separation",22)
+ var line=g.row(parent);line.add_theme_constant_override("separation",20)
+ var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",8);line.add_child(body)
+ var title=g.row(body);g.label(title,g.state.npc(id).name,22,Color("edc98a"))
+ if g.panel_id=="conversation":
+  var close=g.small_button(title,"×",g.close_panel);close.tooltip_text="End conversation · Esc"
+ g.label(body,HoldCulture.render(g.state,text),18)
  var portrait=HoldRoyalHall.portrait() if id=="eirik" else HoldPortrait.new()
  if id!="eirik":portrait.profile=g.state.npc(id)
- portrait.custom_minimum_size=Vector2(96,96) if compact else Vector2(132,132);line.add_child(portrait)
- var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",4 if compact else 8);line.add_child(body)
- g.label(body,g.state.npc(id).name,22 if compact else 24,Color("edc98a"))
- g.label(body,HoldPeople.role(g.state,id),14,Color("a7c7c6"))
- g.label(body,HoldCulture.render(g.state,text),16 if compact else 18)
+ portrait.custom_minimum_size=Vector2(92,92) if compact else Vector2(108,108);line.add_child(portrait)
  var rule=HSeparator.new();parent.add_child(rule)
 static func responses(g):
  if g.panel.find_child("Responses",true,false)!=null:return
- var box=GridContainer.new();box.name="Responses";box.columns=2
+ var box=GridContainer.new();box.name="Responses";box.columns=1
  box.add_theme_constant_override("h_separation",10);box.add_theme_constant_override("v_separation",9)
  box.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  # Keep long quest responses inside the existing scroll area, never below the window.
@@ -55,7 +56,7 @@ static func choose(g,text:String,fn:Callable,quest:bool=false)->Button:
  for style_name in ["normal","hover","pressed","disabled","focus"]:
   var style=b.get_theme_stylebox(style_name).duplicate();style.set_content_margin_all(9);b.add_theme_stylebox_override(style_name,style)
  b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
- b.add_theme_color_override("font_color",Color("efd7a7") if quest else Color("e4e9e5"))
+ b.add_theme_color_override("font_color",Color("79501f") if quest else Color("382d24"))
  return b
 static func greeting(g,id:String)->String:
  if g.talk_line!="":return g.talk_line

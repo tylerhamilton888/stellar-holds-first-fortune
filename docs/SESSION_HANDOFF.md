@@ -1,3 +1,11 @@
+# 0.82.0 — The Hold’s Handbook: implementation candidate
+
+Working branch ui/menu92, based on master 6b9e65e88133d2f4514ec0f2bd53f08618abd4f1 (local pre-menu92 checkpoint). The last published baseline remains v0.81.0. This pass changes menu presentation/navigation only: shared parchment tabs, compact pack and recipe grids, skill overview/detail, combined people rows, lower portrait dialogue and equipment cards. Existing artwork, ownership, transactions and saves remain authoritative.
+
+Read testing/menu92.md. HoldMenuView owns shared shell, colors and tab cycling; HoldPlayerBook owns pack/people/recipe presentation. HoldDisciplineView owns overview/detail. Existing gameplay owners still perform pinning, crafting, purchases, learning and NPC interaction. Recipes are a read-only browser; services retain their existing location rules.
+
+Native visual and behavioral checks are in progress; full source and exact-export gates must pass before publication/merge. Do not describe this candidate as delivered. Tests menu92 and the revised discipline UI case are included in the acceptance manifests. Keep all earlier recovery branches, bundles and releases.
+
 # 0.81.0 — The Turning Year: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.81.0 . Runtime/release source 458104d585d7aa145d062c17720358f4968a619d; PR #53 merge d846107c2cfc3f1af914f9920f17ad6f45c7ca36 has identical tree 76056c9724acd63d15e2367fe0062a8d7259abd1. Source run 40572335280 passed all 34 gameplay cases plus people-preview. Release run 40572553976 passed all 24 exact-export cases / 1,815 assertions. Focused local checks passed 230 assertions. Native and exported calendar, feast, lighting and developer controls reviewed; the two month grids and feast panel are byte-identical between hosted source and export. Other world captures vary and are not claimed identical.
