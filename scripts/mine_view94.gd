@@ -71,14 +71,12 @@ func clear_children(node:Node):
  for child in node.get_children():node.remove_child(child);child.queue_free()
 func rebuild():
  clear_children(terrain)
- var groups={};var w=g.deep.world;var c=Deepworks.cell(g.player);var back=Vector2(sin(yaw),cos(yaw))
+ var groups={};var w=g.deep.world;var c=Deepworks.cell(g.player)
  for y in range(maxi(0,c.y-12),mini(Deepworks.H,c.y+13)):
   for x in range(maxi(0,c.x-12),mini(Deepworks.W,c.x+13)):
    var tile=Vector2i(x,y);var seen=w.layer().seen.has(Deepworks.key(tile));var k=w.at(tile) if seen else 8
    # Unexplored space remains opaque; previewing cannot reveal caverns or ore.
-   var height=.06 if k==0 else 1.65
-   var delta=(Deepworks.center(tile)-g.player)/40
-   if k!=0 and delta.dot(back)>-.5 and absf(delta.cross(back))<2.3:height=.32
+   var height=tile_height(tile,k)
    var transform=Transform3D(Basis.from_scale(Vector3(1,height,1)),Vector3(x+.5,height*.5-.06,y+.5))
    if not groups.has(k):groups[k]=[]
    groups[k].append({"t":transform,"color":Color.WHITE if seen else Color("253139")})
@@ -95,6 +93,10 @@ func rebuild():
   label3d(terrain,point(p)+Vector3(0,.8,0),("↓ E · D%d" % (int(link.lower)+1)) if down else ("↑ Shift+E · D%d" % (int(link.upper)+1)),Color("a2fff0"))
  for step in g.depth_nav.path:
   if step.z==w.depth() and Deepworks.center(Vector2i(step.x,step.y)).distance_to(g.player)<450:box(terrain,point(Deepworks.center(Vector2i(step.x,step.y)))+Vector3(0,.035,0),Vector3(.15,.025,.15),Color("ffd27c"))
+func tile_height(c:Vector2i,kind:int)->float:
+ if kind==0:return .06
+ var delta=(Deepworks.center(c)-g.player)/40;var back=Vector2(sin(yaw),cos(yaw))
+ return .32 if delta.dot(back)>-.5 and absf(delta.cross(back))<2.3 else 1.65
 func box(parent:Node,p:Vector3,size:Vector3,color:Color):
  var item=MeshInstance3D.new();var mesh=BoxMesh.new();mesh.size=size;var mat=StandardMaterial3D.new();mat.albedo_color=color;mesh.material=mat;item.mesh=mesh;item.position=p;parent.add_child(item)
 func label3d(parent:Node,p:Vector3,text:String,color:Color):
@@ -195,8 +197,8 @@ func update_effects():
  if not g.combat.armed and g.panel_id=="":
   var target=g.deep.world.target(g.player,mouse_world(),180 if g.mining_gun.selected else 52)
   if target.x>=0:
-   var p=point(Deepworks.center(target));box(effects,p+Vector3(0,1.68,0),Vector3(.9,.035,.9),Color("f8d287"))
-   label3d(effects,p+Vector3(0,2.1,0),HoldData.TILES[g.deep.world.at(target)].name,Color("ffe4a1"))
+   var p=point(Deepworks.center(target));var height=tile_height(target,g.deep.world.at(target));box(effects,p+Vector3(0,height-.025,0),Vector3(.9,.035,.9),Color("f8d287"))
+   label3d(effects,p+Vector3(0,height+.45,0),HoldData.TILES[g.deep.world.at(target)].name,Color("ffe4a1"))
 class PropCanvas extends Node2D:
  var game
  var object:Dictionary
