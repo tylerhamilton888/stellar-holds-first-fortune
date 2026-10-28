@@ -1,3 +1,7 @@
+## Depth navigation and optional exploration — 0.84.0 candidate
+
+Implemented: paused explored-floor map, adjacent-floor ghosts, real stair routes, remembered overhead/3D toggle, camera-relative input and an isolated two-level test preset. Final regression and release verification are pending; see testing/navigation94.md. Next: owner feedback on camera height, obstruction, route readability and Windows performance. Town/interior conversion, continuous multi-floor geometry and free orbit are later scope. Preserve energy-free combat and existing fortunes.
+
 ## Equipment foundation — delivered in 0.83.0
 
 Individual gear, comparisons and standard/tempered forge commissions published and merged. All 36 source cases plus people-preview and 26 exact-export cases / 1,893 assertions passed; see testing/equipment93.md. Combat costs no work energy and remains available at zero. Next: owner feel/balance feedback, then salvage/study, persistent schematics and a signature crafting expedition with peaceful alternatives. No durability or stamina gate.

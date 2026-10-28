@@ -3,6 +3,7 @@ extends RefCounted
 # Temporary, opt-in developer fixtures. No production progression rules are bypassed.
 const SAVE="user://dev_testing85.json"
 const MODES={
+ "exploration":{"name":"Mine views & depth routes","detail":"Two connected floors, a mineral face and workbench. F6 changes view; Z plans a route."},
  "calendar":{"name":"Calendar & celebrations","detail":"Daylight, night, seasons and all four feasts. Jump to a host or bed."},
  "combat":{"name":"Combat arena","detail":"All weapons and armor. Choose enemies, heal, or inspect hitboxes."},
  "building":{"name":"Construction & decorating","detail":"Owned land, cottage, plans and supplies. Build, decorate and reload."},
@@ -68,6 +69,13 @@ func panel():
    g.button(g.panel_body,"Open furniture & home options",func():g.open_panel("homestead"))
    g.button(g.panel_body,"Go to cottage interior",func():go("home:old_delving",Vector2(480,550)))
    g.button(g.panel_body,"Return to building plot",func():go("claim",Vector2(920,500)))
+  elif mode()=="exploration":
+   g.button(g.panel_body,"Open depth map · Z",func():g.depth_nav.open_map())
+   g.button(g.panel_body,"Change overhead / exploration · F6",func():g.close_panel();g.depth_nav.toggle_view())
+   g.button(g.panel_body,"Add a goblin for combat",func():
+    g.fight.enemies.clear();var e=g.fight.make_enemy("dev94/goblin",g.player+Vector2(100,0),0)
+    if not g.deep.world.solid(e.p):g.fight.enemies.append(e);g.combat.armed=true
+    g.close_panel())
   elif mode()=="work":g.button(g.panel_body,"Open workstation & hauling plans",func():g.open_panel("handworks"))
   elif mode()=="hearth":
    g.button(g.panel_body,"Go to garden beds",func():go("claim",Vector2(530,925)))
@@ -117,7 +125,8 @@ func start(id:String):
  var q=HoldOnboarding.ensure(g.state)
  q.fresh=false;q.stage=7;q.arrival_seen=true;q.escort_pending=false;q.settle_required=false;q.combat=true
  restock()
- if id in ["combat","work"]:
+ if id=="exploration":exploration()
+ elif id in ["combat","work"]:
   arena(2 if id=="combat" else 0)
   if id=="combat":wave([0]);return
   workshops()
@@ -184,3 +193,20 @@ func finish():
  g.close_panel();g.transition_left=0;g.transition_shade.visible=false;g.velocity=Vector2.ZERO
  g.camera=g.deep.camera_target() if g.zone=="mine" else g.surface.camera_target()
  g.notice_time=0;g.save_game();g.update_hud();g.queue_redraw()
+
+func exploration():
+ if not active():return
+ arena(0)
+ var w=g.deep.world
+ for z in [0,1]:
+  var layer=w.layer(z);layer.features=[];layer.fixtures={};layer.damage={};layer.encounters=[];layer.encounter_companions={};layer.encounter_roster={};layer.seen.clear()
+  for y in range(16,27):
+   for x in range(17,29):
+    w.set_cell(Vector2i(x,y),2 if x in [17,28] or y in [16,26] else 0,z)
+    layer.seen[Deepworks.key(Vector2i(x,y))]=true
+ w.data.depth=0;w.carve_stairs(Vector2i(25,20))
+ w.set_cell(Vector2i(23,23),3,0);w.layer(0).fixtures["21,20"]="lamp";w.layer(1).fixtures["25,21"]="lamp"
+ g.player=Deepworks.center(Vector2i(20,20));g.handworks.build("breaker",Deepworks.center(Vector2i(20,18)))
+ g.handworks.spawn("stone",Deepworks.center(Vector2i(19,22)),4,"dev94","iron_ore")
+ w.rebuild_landmarks();g.player=Deepworks.center(Vector2i(21,24));g.fight.reset();g.depth_nav.reset();g.depth_nav.explore.yaw=0
+ g.depth_nav.route_to(Vector2i(22,19),1)

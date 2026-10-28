@@ -142,7 +142,7 @@ func poll_arrival_input():
  if not Input.is_action_pressed("up"):arrival_up_held=false
 func move(dt:float):
  if g.handworks.approaching:return
- ensure();var axis=Input.get_vector("left","right","up","down")
+ ensure();var axis=g.depth_nav.explore.movement(Input.get_vector("left","right","up","down"))
  if not Input.is_action_pressed("up") or g.player.distance_to(Deepworks.center(Deepworks.ENTRY))>90:arrival_up_held=false
  if axis!=Vector2.ZERO and strike_left>0 and works.pending.is_empty():strike_left=0;contact_hold=0
  if axis!=Vector2.ZERO and not g.combat.armed:g.surface.direction=axis
@@ -205,7 +205,7 @@ func mine(dt:float):
  if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and g.mining_buffer<=0:return
  g.mining_buffer=0
  if g.tool not in [0,1,3] and not g.mining_gun.selected:g.notify("Equip pick [1], shovel [2], or fracture hammer [4].");return
- var aim=g.get_global_mouse_position()+g.camera
+ var aim=g.world_mouse()
  target=world.target(g.player,aim,180 if g.mining_gun.selected else 52)
  if target.x<0:return
  # The collision surface is authoritative; the player chooses their own stance.
@@ -394,7 +394,7 @@ func draw():
  A.draw_offset=offset;g.draw_set_transform(offset)
  var room_lamps=works.lamps()
  var z=world.depth();var l=world.layer();var start=Deepworks.cell(g.camera)-Vector2i.ONE
- var aim=world.target(g.player,g.get_global_mouse_position()+g.camera,180 if g.mining_gun.selected else 52)
+ var aim=world.target(g.player,g.world_mouse(),180 if g.mining_gun.selected else 52)
  for y in range(maxi(0,start.y),mini(Deepworks.H,start.y+17)):
   for x in range(maxi(0,start.x),mini(Deepworks.W,start.x+27)):
    var c=Vector2i(x,y);var id=Deepworks.key(c)
@@ -575,24 +575,29 @@ func draw():
   A.text(g,Vector2(30,99),"H · Cargo %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
  if survey_open and g.panel_id=="":draw_survey()
+ if not g.depth_nav.path.is_empty() and g.panel_id=="":
+  A.text(g,Vector2(24,126),g.depth_nav.hint(),14,Color("ffe0a0"))
+  for step in g.depth_nav.path:
+   if step.z==z:g.draw_circle(Deepworks.center(Vector2i(step.x,step.y))-g.camera,3,Color("ffd27c"))
  works.hud()
  g.handworks.overlay();g.fight.overlay()
  if g.panel_id!="":g.draw_rect(Rect2(0,0,960,540),Color(.02,.045,.06,.55))
 func lamp(p:Vector2):
  for r in [68,48,32,18]:g.draw_circle(p-Vector2(0,15),r,Color(1,.72,.35,.025))
  g.surface.prop(p+Vector2(0,12),3,42)
-func draw_survey():
+func draw_survey(canvas:Node2D=null):
+ if canvas==null:canvas=g
  var z=world.depth();var c=Deepworks.cell(g.player)
- g.draw_rect(Rect2(708,112,228,270),Color("142934"));g.draw_rect(Rect2(708,112,228,270),Color("a58c5e"),false,1)
- A.text(g,Vector2(720,135),"SURVEY · LAYER BELOW",13,Color("edcc8c"))
- if z>=world.data.layers.size()-1:A.text(g,Vector2(720,162),"UNSURVEYED FRONTIER",12);return
+ canvas.draw_rect(Rect2(708,112,228,270),Color("142934"));canvas.draw_rect(Rect2(708,112,228,270),Color("a58c5e"),false,1)
+ A.text(canvas,Vector2(720,135),"SURVEY · LAYER BELOW",13,Color("edcc8c"))
+ if z>=world.data.layers.size()-1:A.text(canvas,Vector2(720,162),"UNSURVEYED FRONTIER",12);return
  for y in range(-5,6):
   for x in range(-6,7):
    var k=world.at(c+Vector2i(x,y),z+1)
-   g.draw_rect(Rect2(720+(x+6)*16,150+(y+5)*16,15,15),ore_color(k) if k in [3,4,5,6] else color(k,z+1))
- g.draw_rect(Rect2(720+6*16,150+5*16,15,15),Color("ffffff"),false,2)
- A.text(g,Vector2(720,347),"WHITE: YOUR X / Y",11,Color("c3d5c9"))
- A.text(g,Vector2(720,365),"V: CARVE   X: CLOSE",11,Color("c3d5c9"))
+   canvas.draw_rect(Rect2(720+(x+6)*16,150+(y+5)*16,15,15),ore_color(k) if k in [3,4,5,6] else color(k,z+1))
+ canvas.draw_rect(Rect2(720+6*16,150+5*16,15,15),Color("ffffff"),false,2)
+ A.text(canvas,Vector2(720,347),"WHITE: YOUR X / Y",11,Color("c3d5c9"))
+ A.text(canvas,Vector2(720,365),"V: CARVE   X: CLOSE",11,Color("c3d5c9"))
 
 func draw_worksite(entry:Vector2):
  # Original construction details: timber portal, freight track, crates and tools.

@@ -1,0 +1,11 @@
+# Navigation94 — optional mine perspective and explored-floor map
+
+The new HoldMineView94 is presentation only. It uses a SubViewport, original whole-character frames, original prop artwork and nearby tile geometry; Deepworks remains the authority for movement, collision, digging and saved layers. No 3D physics bodies or duplicate world save are added. HoldDepthNavigation94 owns transient map browsing and BFS guidance through known cells and actual stair links. View preference uses user://view_settings94.cfg, outside fortunes.
+
+Controls: F6 view; brackets quarter-turn; Z paused depth map; Page Up/Down browsed floor; click explored ground for route; E/Shift+E actual stairs. Placement modes automatically use overhead and restore exploration afterward. X still renders the original geological survey. Combat aim projects at body height while mining uses the ground plane. Original workstations retain texture ownership across viewport draws.
+
+Native focused source evidence: test-results/navigation94-final, 31 assertions, exit zero and no script errors. Covers unchanged position/inventory across toggles, no map mutation/reveal, real cross-floor links, cart/ladder restriction, camera-relative movement and zero-energy dodge, mouse-selected mining contact, mouse-selected combat direction and damage at zero energy, construction fallback, survey, menu pause, preference/save reload and normal-fortune isolation of the developer preset.
+
+Visual review includes the original character in both camera orientations, enlarged stair labels, workbench and raw load, attack cone, survey and parchment map. The initial workstation texture lifetime defect was repaired before acceptance. Final regression/source/exact-export evidence will be recorded after completion. Screenshots in navigation94/ are gameplay captures, not mockups.
+
+Scope and remaining checks: mine-only prototype, one floor at a time, quarter-turn camera and marked E stair transitions. Routes guide manual movement and can be replanned after excavation/construction; they do not auto-walk. Construction material finishes and every advanced cargo/work overlay are not claimed at parity with overhead. Native Linux software rendering is verified; Windows device performance/audio and subjective camera comfort require owner playtesting.

@@ -245,7 +245,7 @@ func input(e:InputEvent)->bool:
  if e is InputEventMouseButton and e.pressed and placing!="":
   if e.button_index==MOUSE_BUTTON_RIGHT:placing="";return true
   if e.button_index==MOUSE_BUTTON_LEFT and not g.hotbar.over():
-   if build(placing,g.get_global_mouse_position()+g.camera):placing=""
+   if build(placing,g.world_mouse()):placing=""
    return true
  return false
 func begin(f:Dictionary)->bool:
@@ -446,7 +446,7 @@ func overlay():
  g.draw_set_transform(-g.camera)
  HoldFirstShift.draw_target(g)
  if placing!="":
-  var p=snap_build(g.get_global_mouse_position()+g.camera);var ok=placement_ready(placing,p)
+  var p=snap_build(g.world_mouse());var ok=placement_ready(placing,p)
   if g.zone=="mine" or g.surface.area in ["claim","pinewood"] or g.surface.area.begins_with("home:"):
    HoldBuildPreview.grid(g,g.camera,20,Rect2(g.player-Vector2(180,180),Vector2(360,360)) if g.zone=="mine" else g.surface.build_bounds())
   sprite(SPECS[placing].art,p,85,.55)
@@ -455,6 +455,13 @@ func overlay():
    for stock in data().facilities:
     if local(stock) and stock.get("owner","")!="hold" and stock.kind in (["stone_pile","cart","wagon"] if placing=="breaker" else ["timber_pile","cart","wagon"]) and pos(stock).distance_to(p)<150 and clear_line(pos(stock),p):
      g.draw_dashed_line(p,pos(stock),Color("97c6bb"),2,6)
+ var text=prompt()
+ g.draw_set_transform(Vector2.ZERO)
+ if text!="":
+  var width=minf(924,ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+24)
+  g.draw_rect(Rect2(18,82,width,27),Color(.03,.08,.10,.9));HoldArt.text(g,Vector2(28,101),text,13,Color("ead6a4"))
+
+func prompt()->String:
  var f=facility();var raw=closest(data().loose,65);var text=""
  if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · output to pack" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
@@ -463,7 +470,4 @@ func overlay():
  if not f.is_empty() and f.get("owner","")=="hold":text="Hold crew · reserved stock and work order"
  if placing!="":text="Placing "+SPECS[placing].name+" · LMB build · Right click cancel"
  if text=="":text=HoldFirstShift.context_hint(g)
- g.draw_set_transform(Vector2.ZERO)
- if text!="":
-  var width=minf(924,ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+24)
-  g.draw_rect(Rect2(18,82,width,27),Color(.03,.08,.10,.9));HoldArt.text(g,Vector2(28,101),text,13,Color("ead6a4"))
+ return text

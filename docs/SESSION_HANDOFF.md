@@ -1,3 +1,15 @@
+# 0.84.0 — Depth & Perspective: implementation candidate
+
+F6 switches mines between traditional overhead and a perspective camera with the original painted Folk in 3D terrain. Brackets turn the camera by a quarter turn; movement and dodge follow it. Position, excavation, stair links, encounters and inventory remain the existing simulation. The view preference is stored separately from fortunes. Construction placement temporarily uses overhead and restores the chosen view afterward. Towns and interiors retain their existing presentation.
+
+Z opens a paused depth map. Page Up/Down or D1–D5 browses explored floors without moving the dwarf. The map fits explored bounds, optionally ghosts adjacent explored floors, marks stairs and plans a gold walking route through known walkable cells and real stair links. Hitched carts cannot route down ladders. Return to dwarf changes the map floor only. Routes are temporary guidance, not automatic travel.
+
+Title > Dev Testing > Mine views & depth routes prepares two connected floors, a bench, raw ore and a marked route in the separate test save. F9 offers reset/reload, the map, view switch and a nearby combat probe. Existing fortunes remain untouched by the fixture. Combat remains available at zero work energy.
+
+Focused native navigation checks passed 31 assertions, including actual mining contact, mouse combat aim, zero-energy strike/dodge, real stair travel, menu pause, preference reload and test-save isolation. Final regression, source and exact-export release gates are still pending. See testing/navigation94.md. This is a mine-only prototype: quarter-turn camera, one physical floor displayed at a time, stair transitions through E/Shift+E. Windows hardware/audio and subjective camera feel require hands-on playtesting.
+
+Continue on exploration/depth94 from delivered master f9f2a8c2a57b0d83c81053cdd39c59cc6b92612a. Keep all prior release and recovery checkpoints. Next: owner playtest of navigation, camera obstruction and control comfort before expanding perspective rendering to town/interiors or additional view controls.
+
 # 0.83.0 — Steel in Your Hands: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.83.0 . Runtime/release source 621b54bbebae0b05a95ab6ca3a0a8ca870f37a37; PR #57 merge 50422c0001528b69abab33837c026b3f2f3496b0 has identical tree ed01948e715d742b9fb777d5168cefe421f4cd8f. Source run 40760152166 passed all 36 gameplay cases plus people-preview. Release run 40760151380 passed all 26 exact-export cases / 1,893 assertions. Local focused source checks passed 146 assertions; the local exported equipment case passed 43.

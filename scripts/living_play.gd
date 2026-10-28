@@ -28,7 +28,7 @@ func input(e:InputEvent)->bool:
   if e.button_index==MOUSE_BUTTON_LEFT:
    if not e.pressed:ready=true;return true
    if mode=="room" and ready:
-    var c=Deepworks.cell(g.get_global_mouse_position()+g.camera)
+    var c=Deepworks.cell(g.world_mouse())
     if Deepworks.center(c).distance_to(g.player)>280:g.notify("Move closer to the room's corners.");return true
     if corner.x<0:corner=c;g.notify("First corner set. Click the opposite corner.")
     else:
@@ -39,7 +39,7 @@ func input(e:InputEvent)->bool:
 func begin():
  if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):ready=true;return
  if not ready or mode=="room" or not pending.is_empty():return
- var c=Deepworks.cell(g.get_global_mouse_position()+g.camera)
+ var c=Deepworks.cell(g.world_mouse())
  var p=Deepworks.center(c)
  if mode=="quarry" and w.at(c)==0:return
  if mode=="dress" and masonry.bench(c).is_empty():return
@@ -231,7 +231,7 @@ func draw():
  for f in model.data.furniture.values():
   if int(f.depth)==z:draw_furniture(f.kind,Deepworks.center(Vector2i(f.x,f.y)))
  if mode!="":
-  var c=Deepworks.cell(g.get_global_mouse_position()+g.camera);var p=Vector2(c)*40
+  var c=Deepworks.cell(g.world_mouse());var p=Vector2(c)*40
   if mode=="room" and corner.x>=0:
    var left=Vector2(mini(c.x,corner.x),mini(c.y,corner.y))*40
    var size=Vector2(absi(c.x-corner.x)+1,absi(c.y-corner.y)+1)*40
