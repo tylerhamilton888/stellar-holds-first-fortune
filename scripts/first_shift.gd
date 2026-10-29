@@ -97,6 +97,7 @@ static func kit(g):
  if q.started and station(g,"bench").is_empty():g.state.add("wood",3);g.state.add("stone",4)
  g.save_game();g.notify("Ivar issues six lengths of timber for your first equipment. The crew stock remains hold property.")
 static func journal(g):
+ if HoldFirstVisit99.active(g.state):return
  var q=data(g)
  if not q.started and not q.get("accepted",false):
   if not offered(g):return
