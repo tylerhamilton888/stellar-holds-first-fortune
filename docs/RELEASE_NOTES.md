@@ -1,11 +1,7 @@
-# 0.85.0 — A Dwarf’s Eye View
+# 0.85.1 — Workbench clearance
 
-**3D in 2D** now feels like a third-person control mode. In a mine, press **F6** to switch from overhead to exploration. Move the mouse to turn and tilt the camera, use **WASD** to move relative to your view, and use the **wheel** to zoom. Close zoom eases over the shoulder so the dwarf stays clear of the hotbar. Aim mining and combat with the reticle; **LMB** works/attacks, **RMB** guards/parries, and **Space** dodges. Combat still costs no work energy.
+The Mine views & depth routes test bench now has room for the dwarf to hammer. Hold **E** beside a supplied stonebreaker to approach its working position and process the chunk; finished materials go straight to your pack.
 
-Hold **Alt** to use the pointer. Menus and the **Z** depth map free it automatically, then return to mouse look when closed. **Esc** pauses. Surveying and precise construction retain their existing cursor workflows. Returning from a menu waits for held mouse buttons to be released before allowing new attacks.
+New bench placements require a clear working position. If an existing bench becomes obstructed, its prompt explains the blockage and its unfinished input stays safe. Clear space behind and beside it, or return the unfinished input from Shift+B before recovering an empty player-built bench.
 
-Press **F7** for Camera & controls: adjust sensitivity, invert vertical look, reset the camera, or select the original **Free cursor** mode with bracket turns. Your view and comfort preferences are remembered separately from your fortune.
-
-Try **Title → Dev Testing → Mine views & depth routes**, then **F6**. Mines remain the scope of exploration; towns and interiors keep their existing view. Both modes share the same saved world, stair routes, artwork and gameplay.
-
-Extract the complete Windows ZIP into a fresh folder and run FirstFortune.exe. Windows hardware/audio and subjective mouse comfort remain hands-on playtest checks.
+For an exploration test saved in 0.85.0, use **F9 → reset** to rebuild the test layout, or mine out the wall behind the old bench. Normal fortunes are unchanged. Mouse-look, overhead controls and energy-free combat are preserved.

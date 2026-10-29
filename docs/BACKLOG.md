@@ -1,3 +1,7 @@
+# Workbench clearance fix — 0.85.1 in verification
+
+Reproduced the exploration preset's loaded-but-idle stonebreaker: both working positions overlap the north wall. Moved the test bench one tile south, reject new placements without working clearance, and explain obstructed work without discarding its input. Native bench96 passed six checks, including exact output yield. Focused regressions and release checks are pending. Existing 0.85.0 test saves need F9 reset or the wall mined clear; normal saves are unchanged.
+
 ## Mouse-look exploration — delivered in 0.85.0
 
 Owner feedback on manual rotation is addressed with continuous mouse look, camera-relative controls, reticle aiming, zoom/shoulder framing and pointer/menu handoff. Published and merged after 38 source cases plus people-preview and 28 exact-export cases / 1,970 assertions passed. F7 preserves the free-cursor option and offers sensitivity/inversion. Next: owner Windows playtest for camera comfort, close visibility and targeting. Town/interior expansion and continuous multi-floor geometry remain separate scope. Preserve shared simulation, original art and energy-free combat.

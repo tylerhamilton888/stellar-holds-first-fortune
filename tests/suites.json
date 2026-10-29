@@ -45,7 +45,8 @@
       "menu92",
       "equipment93",
       "navigation94",
-      "mouselook95"
+      "mouselook95",
+      "bench96"
     ],
     "modular": [
       "modular",
@@ -336,7 +337,8 @@
       "calendar",
       "equipment93",
       "navigation94",
-      "mouselook95"
+      "mouselook95",
+      "bench96"
     ],
     "calendar-preview": [
       "calendar"
@@ -384,6 +386,13 @@
     ],
     "mouselook95-view": [
       "mouselook95",
+      "navigation94"
+    ],
+    "bench96": [
+      "bench96",
+      "handworks",
+      "work",
+      "dev_testing",
       "navigation94"
     ]
   },
@@ -539,6 +548,10 @@
     "mouselook95": {
       "script": "tests/mouselook95.gd",
       "marker": "MOUSELOOK95"
+    },
+    "bench96": {
+      "script": "tests/bench96.gd",
+      "marker": "BENCH96"
     }
   }
 }

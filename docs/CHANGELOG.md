@@ -1,3 +1,10 @@
+# 0.85.1 — Workbench clearance
+
+The Mine views & depth routes test bench now has room for the dwarf to hammer. Hold **E** beside a supplied stonebreaker to approach its working position and process the chunk; finished materials go straight to your pack.
+
+New bench placements require a clear working position. If an existing bench becomes obstructed, its prompt explains the blockage and its unfinished input stays safe. Clear space behind and beside it, or return the unfinished input from Shift+B before recovering an empty player-built bench.
+
+
 # 0.85.0 — A Dwarf’s Eye View
 
 - Mine exploration now defaults to captured mouse-look: continuous orbit/tilt, camera-relative WASD and dodge, central reticle aiming and wheel zoom. Close zoom uses shoulder framing.
