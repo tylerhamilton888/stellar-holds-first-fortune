@@ -48,7 +48,8 @@
       "mouselook95",
       "bench96",
       "expedition97",
-      "workplace98"
+      "workplace98",
+      "firstvisit99"
     ],
     "modular": [
       "modular",
@@ -342,7 +343,8 @@
       "mouselook95",
       "bench96",
       "expedition97",
-      "workplace98"
+      "workplace98",
+      "firstvisit99"
     ],
     "calendar-preview": [
       "calendar"
@@ -411,6 +413,17 @@
       "bench96",
       "mouselook95",
       "expedition97"
+    ],
+    "firstvisit99": [
+      "firstvisit99",
+      "firstshift",
+      "workplace98",
+      "quest_ui",
+      "orientation",
+      "expedition97"
+    ],
+    "firstvisit99-only": [
+      "firstvisit99"
     ]
   },
   "cases": {
@@ -577,6 +590,10 @@
     "workplace98": {
       "script": "tests/workplace98.gd",
       "marker": "WORKPLACE98"
+    },
+    "firstvisit99": {
+      "script": "tests/firstvisit99.gd",
+      "marker": "FIRSTVISIT99"
     }
   }
 }

@@ -1,3 +1,7 @@
+# 0.87.0 — A place to begin: playtest preparation
+
+Title → First visit to the hold → choose a normal save slot. This optional opening begins at the borrowed mine worksite after Ivar has signed the shift book. Five small tasks teach movement, pack, lifting, stocking and actual bench work. Completing the basics grants one repair allowance (4 stone, 3 iron, 2 coal) and a lead to the old cutters’ bay. Guidance can be paused; longer ambitions track existing commissions, charter, hold and ship milestones without new gates or deadlines. Standard new fortunes and existing saves keep their original openings. See testing/firstvisit99.md. Windows playtest packaging and focused verification are in progress; no stable release claim.
+
 # Old cutters’ bay — playable preview in verification
 
 An abandoned workplace now connects discovery, physical repair, warmth, actual stock processing and a persistent resident. New hold mines only; existing excavations are preserved. Use Dev Testing → The old cutters bay. See testing/workplace98.md for scope and verification.

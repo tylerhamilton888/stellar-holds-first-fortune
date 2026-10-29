@@ -16,6 +16,9 @@ static func accept(g)->bool:
  kit(g);g.save_game()
  return true
 static func guided(g)->bool:
+ if HoldFirstVisit99.active(g.state):
+  var visit=HoldFirstVisit99.data(g.state)
+  return visit.guided and visit.focus=="basics" and HoldFirstVisit99.step(g.state)<5
  return bool(data(g).get("guided",true))
 static func set_guided(g,value:bool):
  data(g).guided=value;g.save_game();g.refresh_panel()

@@ -1,0 +1,106 @@
+{
+  "version": "0.86.1-preview",
+  "local_source": "3729c2e5a709df536aa2fc0c4eb8a36b07111d91",
+  "hosted_source": "92a5734e42dbb322e2ebd511d2086bcb727e0f83",
+  "tree": "051151bb922067067d3525bb7d28e70f16db9e1b",
+  "pr": 66,
+  "build": {
+    "version": "0.86.1-preview",
+    "commit": "3729c2e5a709df536aa2fc0c4eb8a36b07111d91",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "7f52e47b2950eb5627bc81f701e66c45da7621c8a0fe4584ea1c2450dcd36de0",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "21101bcbc7323886f325b05b65c13729ec1cc20fa8888d0015e4830874c2403e",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "dd32c447320f817638f68823ffc3a9d5cba375cec662e7c697480ad7cb651aef",
+    "zip_bytes": 767252055
+  },
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.16
+    },
+    {
+      "test": "workplace98",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 22,
+      "seconds": 24.49
+    },
+    {
+      "test": "living",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 51,
+      "seconds": 65.51
+    },
+    {
+      "test": "firstshift",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 62.51
+    },
+    {
+      "test": "bench96",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 6,
+      "seconds": 21.48
+    },
+    {
+      "test": "mouselook95",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 46,
+      "seconds": 26.47
+    },
+    {
+      "test": "expedition97",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 16,
+      "seconds": 47.52
+    }
+  ],
+  "exported": [
+    {
+      "test": "ambient",
+      "passed": true,
+      "checks": 11
+    },
+    {
+      "test": "workplace98",
+      "passed": true,
+      "checks": 23
+    },
+    {
+      "test": "navigation94",
+      "passed": true,
+      "checks": 31
+    }
+  ],
+  "images": {
+    "working-bay.png": "2bd67c4a1203793a29211aa03fea9ba2b181d218e1cb5be62244f1bde0c305f2",
+    "sealed-passage.png": "b63520f5c140167c1e15bdd26ae96776ebd8bdb8ebbdacd51c21ab4a00a72ba8",
+    "cold-bay.png": "7454184b5b709b834372fd1671f4baae339349fbdc857277a76c7dcb37cd9f6c",
+    "hearth-break.png": "d5fc503ca1a02783b4ca370c6575649a7128045025b9fb7e620ec8bb2924bc26",
+    "exploration-bay.png": "ec68eea74df404473192f2b79f8793f73549f4300352c166c0587fedd6195500"
+  },
+  "scope": "Playable preview; stable 0.85.1 and existing mines remain unchanged. Full hosted source CI is separate; human playtest of atmosphere and return visit remains open."
+}

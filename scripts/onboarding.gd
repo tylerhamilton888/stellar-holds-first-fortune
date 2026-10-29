@@ -9,7 +9,7 @@ static func ensure(s)->Dictionary:
 static func begin_fortune(s):
  var q=ensure(s);q.fresh=true;q.stage=0;q.arrival_seen=false;q.combat=false;q.escort_pending=true;q.settle_required=true
 static func stage(s)->int:return int(ensure(s).stage)
-static func side_stories(s)->bool:return s.opening>=2 and (not ensure(s).fresh or stage(s)>=6)
+static func side_stories(s)->bool:return HoldFirstVisit99.active(s) or s.opening>=2 and (not ensure(s).fresh or stage(s)>=6)
 static func combat_ready(s)->bool:return bool(ensure(s).combat)
 static func fact(s,id:String,amount:int=1):
  var q=ensure(s);q.facts[id]=int(q.facts.get(id,0))+amount
