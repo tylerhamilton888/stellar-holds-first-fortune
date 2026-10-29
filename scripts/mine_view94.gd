@@ -95,7 +95,8 @@ func make():
  var sun=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-60,-25,0);sun.light_color=Color("ffe3bc");sun.light_energy=1.0;scene.add_child(sun)
  camera=Camera3D.new();camera.fov=58;camera.near=.1;camera.far=40;scene.add_child(camera);camera.current=true
  terrain=Node3D.new();actors=Node3D.new();props=Node3D.new();effects=Node3D.new();scene.add_child(terrain);scene.add_child(props);scene.add_child(actors);scene.add_child(effects)
- player_sprite=Sprite3D.new();actors.add_child(player_sprite)
+ # Keep the player readable when the tilted paper sprite meets a rock face.
+ player_sprite=Sprite3D.new();player_sprite.no_depth_test=true;actors.add_child(player_sprite)
  hud=ViewHUD.new();hud.view=self;screen.add_child(hud)
 func sync(dt:float):
  sync_pointer()
