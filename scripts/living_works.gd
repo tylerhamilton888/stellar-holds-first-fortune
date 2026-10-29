@@ -109,7 +109,7 @@ func finish(c:Vector2i,kind:String)->String:
 func quality(r:Dictionary)->Dictionary:
  var counts={};var comfort=0;var functionality=0;var heritage=0;var furniture_count=0;var access=true
  for f in data.furniture.values():
-  if f.room!=r.id:continue
+  if f.get("room","")!=r.id:continue
   furniture_count+=1;var n=int(counts.get(f.kind,0));counts[f.kind]=n+1
   if n>0:continue # duplicates add no score
   var def=FURNITURE[f.kind];comfort+=def.comfort;functionality+=def.function;heritage+=def.heritage
@@ -119,7 +119,7 @@ func quality(r:Dictionary)->Dictionary:
   access=access and usable
  var floor_points=0.0;var wall_points=0.0;var styles={}
  for f in data.surfaces.values():
-  if f.room!=r.id:continue
+  if f.get("room","")!=r.id:continue
   if f.surface=="floor" and w.at(Vector2i(f.x,f.y),int(r.depth))==0:floor_points+=FINISHES[f.kind].craft
   elif f.surface=="wall" and w.at(Vector2i(f.x,f.y),int(r.depth))!=0:wall_points+=FINISHES[f.kind].craft
   else:continue
@@ -153,7 +153,7 @@ func destination(npc:String)->Dictionary:
  return data.rooms.get(id,{})
 func stand(r:Dictionary)->Vector2i:
  for f in data.furniture.values():
-  if f.room!=r.id or f.kind!=("bench" if r.kind=="workshop" else "bed"):continue
+  if f.get("room","")!=r.id or f.kind!=("bench" if r.kind=="workshop" else "bed"):continue
   for d in Deepworks.DIRS:
    var c=Vector2i(f.x,f.y)+d
    if not at(c,int(r.depth)).is_empty() and w.walkable(c,int(r.depth)):return c
@@ -173,7 +173,7 @@ func opportunity_ready()->bool:
  if r.is_empty():return false
  var has_rune=false
  for f in data.furniture.values():
-  if f.room==r.id and f.kind=="rune":has_rune=true
+  if f.get("room","")==r.id and f.kind=="rune":has_rune=true
  return r.metrics.active and r.metrics.score>=55 and has_rune and r.metrics.craft>=2
 func complete_opportunity()->bool:
  if not opportunity_ready():return false

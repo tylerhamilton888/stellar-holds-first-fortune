@@ -424,6 +424,12 @@
     ],
     "firstvisit99-only": [
       "firstvisit99"
+    ],
+    "furniture99": [
+      "mining",
+      "living",
+      "workplace98",
+      "firstvisit99"
     ]
   },
   "cases": {

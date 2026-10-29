@@ -246,7 +246,7 @@ func rebuild_props():
  for part in g.deep.world.landmarks():
   if part.feature.found and nearby(part.p):capture(part,"landmark")
  for furniture in g.deep.works.model.data.furniture.values():
-  if furniture.room=="old_cutters" and not g.deep.world.layer().seen.has(Deepworks.key(Vector2i(furniture.x,furniture.y))):continue
+  if furniture.get("room","")=="old_cutters" and not g.deep.world.layer().seen.has(Deepworks.key(Vector2i(furniture.x,furniture.y))):continue
   var p=Deepworks.center(Vector2i(furniture.x,furniture.y))
   if int(furniture.depth)==g.deep.world.depth() and nearby(p):capture({"p":p,"furniture":furniture},"furniture")
  for key in g.deep.world.layer().fixtures:
@@ -318,7 +318,7 @@ class PropCanvas extends Node2D:
    if int(object.art)==4:HoldMasonryArt.pillar(self,at,object.height)
    else:draw_texture_rect_region(HoldWorldZones.DETAILS,Rect2(at-Vector2(object.width/2,object.height),Vector2(object.width,object.height)),HoldWorldZones.DETAIL_RECTS[int(object.art)])
   elif kind=="furniture":
-   if object.furniture.room=="old_cutters":HoldWorkplace98.draw_furniture(self,object.furniture,at)
+   if object.furniture.get("room","")=="old_cutters":HoldWorkplace98.draw_furniture(self,object.furniture,at)
    elif object.furniture.kind=="lamp":HoldArt.lamp(self,at-Vector2(0,25),0)
    else:
     if living_painter==null:living_painter=LivingPlay.new(self,game.deep.world)

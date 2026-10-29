@@ -2,7 +2,7 @@ class_name HoldBuild
 extends RefCounted
 
 # Authoritative metadata for the title screen, validation and packaging.
-const VERSION="0.87.0-playtest"
+const VERSION="0.87.0"
 const CHAPTER="A PLACE TO BEGIN"
 const ENGINE="4.4.1"
 

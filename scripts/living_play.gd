@@ -95,7 +95,7 @@ func interact()->bool:
  var r=model.at(Deepworks.cell(g.player))
  if r.is_empty() or not r.metrics.active:return false
  for f in model.data.furniture.values():
-  if f.room==r.id and f.kind in ["bench","anvil"] and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68:
+  if f.get("room","")==r.id and f.kind in ["bench","anvil"] and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68:
    g.open_panel("forge");return true
  return false
 func panel():
@@ -233,7 +233,7 @@ func draw():
    A.text(g,rect.position+Vector2(5,14),r.name.to_upper(),10,Color("d2bb8e"))
  for f in model.data.furniture.values():
   if int(f.depth)!=z:continue
-  if f.room=="old_cutters":
+  if f.get("room","")=="old_cutters":
    if w.layer().seen.has(Deepworks.key(Vector2i(f.x,f.y))):HoldWorkplace98.draw_furniture(g,f,Deepworks.center(Vector2i(f.x,f.y)))
   else:draw_furniture(f.kind,Deepworks.center(Vector2i(f.x,f.y)))
  if mode!="":

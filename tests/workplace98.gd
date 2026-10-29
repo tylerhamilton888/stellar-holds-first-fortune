@@ -63,6 +63,15 @@ func run():
  g.player=Deepworks.center(Vector2i(int(q.x)+4,int(q.y)+5));w.survey(g.player)
  g.depth_nav.explore.mouse_look=false;g.depth_nav.toggle_view();g.depth_nav.update(0);settle();await snap("exploration-bay")
  check(g.depth_nav.explore.sprite_pool.has("workplace98:odrin"),"Original resident artwork appears in exploration view")
+ # Room membership is optional for standalone/legacy furniture. Both views must draw it.
+ g.depth_nav.toggle_view();g.player=Deepworks.center(Vector2i(8,10));w.survey(g.player)
+ var pillar_cell=Vector2i(6,10);var pillar_key=w.link_key(pillar_cell,0)
+ g.deep.works.model.data.furniture[pillar_key]={"x":6,"y":10,"depth":0,"kind":"pillar","solid":true}
+ g.deep.works.model.refresh();g.save_game();g.start_game(true,{},true);settle();w=g.deep.world
+ check(not g.deep.works.model.data.furniture[pillar_key].has("room"),"Legacy standalone furniture survives reload without a fabricated room")
+ await snap("standalone-overhead")
+ g.depth_nav.explore.enabled=true;g.depth_nav.explore.invalidate();g.depth_nav.update(0);await snap("standalone-exploration")
+ check(g.depth_nav.explore.prop_pool.has("furniture:"+str(Deepworks.center(pillar_cell))),"Exploration captures standalone furniture without room membership")
  var saved_cells=w.layer().cells.duplicate();w.data.erase("workplace98");var existing=Deepworks.new(g.state)
  check(existing.layer().cells==saved_cells and not existing.data.has("workplace98"),"Loading an existing mine never inserts or overwrites a new ruin")
  print("WORKPLACE98: ",passed," passed / ",failed," failed")

@@ -1,7 +1,9 @@
-# 0.85.1 — Workbench clearance
+# 0.87.0 — A place to begin
 
-The Mine views & depth routes test bench now has room for the dwarf to hammer. Hold **E** beside a supplied stonebreaker to approach its working position and process the chunk; finished materials go straight to your pack.
+Choose **First visit to the hold**, an empty save slot, then create your Dwarf. Five short practical tasks teach movement, your pack, lifting mined loads, stocking a rack and working a stonebreaker. A one-time allowance supplies a first restoration project: reopen the old cutters’ bay, repair and light its hearth, and supply real stone for Odrin to work.
 
-New bench placements require a clear working position. If an existing bench becomes obstructed, its prompt explains the blockage and its unfinished input stays safe. Clear space behind and beside it, or return the unfinished input from Shift+B before recovering an empty player-built bench.
+**J** keeps directions and optional longer ambitions: Ivar’s reference, a mountain charter, a working hold and the First Fortune. Pause guidance whenever you like. No quest deadlines; your normal save continues after the introduction. Existing fortunes retain their original openings. Ivar also offers fresh-ore expeditions after his original commissions.
 
-For an exploration test saved in 0.85.0, use **F9 → reset** to rebuild the test layout, or mine out the wall behind the old bench. Normal fortunes are unchanged. Mouse-look, overhead controls and energy-free combat are preserved.
+Standalone and older mine furniture no longer requires room membership to draw, including in the optional exploration view. Original artwork, saved excavations, stock ownership and energy-free combat are preserved.
+
+Extract all files into a fresh folder and run **FirstFortune.exe**. The release is gated on full native source and exact exported-pack verification. Human pacing, enjoyment and Windows device/audio performance remain playtest questions.
