@@ -1,3 +1,9 @@
+# 0.86.1-preview — The old cutters’ bay
+
+- Discover an abandoned bay, reopen its supply passage and restore its hearth with ordinary construction.
+- Odrin follows real routes, processes real raw stock, takes a midday break and responds to lost access or heat. Work history and material ownership persist.
+- Includes a separate test save; existing mines and normal fortunes are preserved. This preview includes the expedition prototype and is not a stable-release replacement.
+
 # 0.85.1 — Workbench clearance
 
 The Mine views & depth routes test bench now has room for the dwarf to hammer. Hold **E** beside a supplied stonebreaker to approach its working position and process the chunk; finished materials go straight to your pack.

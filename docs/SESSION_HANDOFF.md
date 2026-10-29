@@ -1,3 +1,11 @@
+# Old cutters’ bay — playable preview in verification
+
+An abandoned workplace now connects discovery, physical repair, warmth, actual stock processing and a persistent resident. New hold mines only; existing excavations are preserved. Use Dev Testing → The old cutters bay. See testing/workplace98.md for scope and verification.
+
+# Expedition loop preview — in verification
+
+Implemented Ivar’s fresh-ore expedition, handcart-material reward and crystal follow-up, plus a separate First expedition test save. See testing/expedition97.md. Pacing remains a playtest question; no new authored dungeon or combat-energy changes.
+
 # 0.85.1 — Workbench clearance: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.85.1. Release source f4dada8c4c09c6c723fd1b719a7c5e0090347ffb; PR #63 merged as dbd3ee4a7fe76f878dfc8791154c2a13ca60ab55 with identical tree 9381465166b9efbfbbd0b2de39d52c0c9759301b. Source run 40896041513 passed all 39 gameplay cases plus people-preview. Release run 40896319756 passed all 29 exact-export cases / 1,976 assertions and published successfully. Local focused checks passed 144 assertions; local exported bench96 passed six. See testing/bench96.md.

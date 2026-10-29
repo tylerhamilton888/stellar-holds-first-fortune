@@ -323,6 +323,7 @@ func update(dt:float):
  if int((before+.21)/.42)!=int((float(f.job.progress)+.21)/.42):g.sound.effect("wood" if f.kind=="saw" else "stone_0",-14)
  if float(f.job.progress)<1.26:return
  var raw=f.job.raw;var item=raw_item(raw)
+ HoldExpedition97.processed(g,raw)
  f.cargo[item]=int(f.cargo.get(item,0))+int(raw.units)+(1 if HoldDisciplines.has(g.state,"sawyer" if raw.kind=="log" else "stone_finish") else 0)
  f.job={}
  if raw.kind=="log":
@@ -381,6 +382,7 @@ func objects()->Array:
  for o in data().loose:
   if local(o) and int(o.id)!=int(setting_down.get("id",-1)) and int(o.id)!=int(field_raw.get("id",-1)) and pos(o).distance_to(g.player)<900:list.append({"p":pos(o),"kind":"handwork","raw":o})
  for f in data().facilities:
+  if f.get("concealed",false) and g.zone=="mine" and not g.deep.world.layer().seen.has(Deepworks.key(Deepworks.cell(pos(f)))):continue
   if local(f) and pos(f).distance_to(g.player)<900:list.append({"p":pos(f),"kind":"handwork","facility":f})
  return list
 func raw_sprite(raw:Dictionary,p:Vector2,width:float=40):
@@ -417,14 +419,15 @@ func draw_object(o:Dictionary):
   var count=DeepHaul.amount(f.cargo) if f.kind=="store" else f.raw.size()
   HoldArt.text(g,o.p+Vector2(-22,16),"%d / %d" % [count,load_capacity(f)],11,Color("f1d8a0"))
  if not f.job.is_empty():
-  var work_side=-1 if f.id=="firstshift:crewbench" or g.player.x<=f.x else 1
-  var work_at=o.p+Vector2(work_side*26,-34) if ((working and active_id==f.id) or f.id=="firstshift:crewbench") and f.kind=="breaker" else o.p+Vector2(0,-27)
+  var resident_working=HoldWorkplace98.is_working(g,str(f.id))
+  var work_side=-1 if resident_working or f.id=="firstshift:crewbench" or g.player.x<=f.x else 1
+  var work_at=o.p+Vector2(work_side*26,-34) if ((working and active_id==f.id) or resident_working or f.id=="firstshift:crewbench") and f.kind=="breaker" else o.p+Vector2(0,-27)
   raw_sprite(f.job.raw,work_at,30 if f.kind=="breaker" else 40)
   var phase=fmod(float(f.job.progress),.42)/.42
   var tip=work_at+Vector2(0,-12)
   if f.kind=="breaker":
    for i in int(float(f.job.progress)/.42):g.draw_line(tip+Vector2(-8+i*7,-10),tip+Vector2(3+i*4,8),Color("354049"),1.5)
-  if working and active_id==f.id and phase>.45 and phase<.7:
+  if ((working and active_id==f.id) or resident_working) and phase>.45 and phase<.7:
    for i in 5:g.draw_circle(tip+Vector2.from_angle(i*1.2)*phase*19,1.5,Color("c8ad7c"))
   g.draw_rect(Rect2(o.p+Vector2(-30,4),Vector2(60,3)),Color("1d3038"));g.draw_rect(Rect2(o.p+Vector2(-30,4),Vector2(60*float(f.job.progress)/1.26,3)),Color("e8c27d"))
 func pushing()->bool:
@@ -470,6 +473,8 @@ func overlay():
   g.draw_rect(Rect2(18,82,width,27),Color(.03,.08,.10,.9));HoldArt.text(g,Vector2(28,101),text,13,Color("ead6a4"))
 
 func prompt()->String:
+ var workplace_hint=HoldWorkplace98.prompt(g)
+ if workplace_hint!="":return workplace_hint
  var f=facility();var raw=closest(data().loose,65);var text=""
  if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · output to pack" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)

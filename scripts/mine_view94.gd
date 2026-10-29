@@ -229,17 +229,24 @@ func update_actors():
   var target=Vector2(360,420) if crew.phase=="fetch" else Vector2(364,280);var walking=not mason and a.p.distance_to(target)>2
   var aim=Vector2(1,.45) if mason else (target-a.p).normalized() if walking else Vector2.DOWN
   person(sprite("shift:"+a.role),a.p,HoldFirstShift.profile_for(mason),aim,walking,float(crew.gait),"hammer" if working else "carry_stone" if carrying else "town_walk",fmod(float(bench.job.get("progress",0)),.42)/.42 if working else 1.0)
+ for a in HoldWorkplace98.actors(g):
+  if nearby(a.p):
+   var resident=HoldWorkplace98.data(g).person
+   person(sprite("workplace98:odrin"),a.p,HoldWorkplace98.profile(),Vector2(1,.45) if resident.work else Vector2(resident.direction[0],resident.direction[1]),resident.walking,float(resident.gait),"hammer" if resident.work else "town_walk",fposmod(float(HoldWorkplace98.station(g,"bench").job.get("progress",0)),.42)/.42)
  for a in HoldAncestralClaim.actors(g):
   if nearby(a.p):person(sprite("rescue:"+str(a.index)),a.p,HoldFirstShift.profile_for(a.index==0),Vector2.DOWN,false,g.clock)
 func nearby(p:Vector2)->bool:return p.distance_to(g.player)<480 and g.depth_nav.known(Deepworks.cell(p),g.deep.world.depth())
 func rebuild_props():
  for entry in prop_pool.values():entry.used=false
  # Static original props are rendered to small transparent cards; their physical bases remain authoritative.
+ for object in HoldWorkplace98.props(g):
+  if nearby(object.p):capture(object,"workplace98")
  for object in g.handworks.objects():
   if nearby(object.p):capture(object,"handwork")
  for part in g.deep.world.landmarks():
   if part.feature.found and nearby(part.p):capture(part,"landmark")
  for furniture in g.deep.works.model.data.furniture.values():
+  if furniture.room=="old_cutters" and not g.deep.world.layer().seen.has(Deepworks.key(Vector2i(furniture.x,furniture.y))):continue
   var p=Deepworks.center(Vector2i(furniture.x,furniture.y))
   if int(furniture.depth)==g.deep.world.depth() and nearby(p):capture({"p":p,"furniture":furniture},"furniture")
  for key in g.deep.world.layer().fixtures:
@@ -293,6 +300,8 @@ class PropCanvas extends Node2D:
   var at=Vector2(128,220)
   if hand_painter==null:hand_painter=HoldHandworks.new(self);hand_painter.textures=game.handworks.textures
   if kind=="lamp":HoldArt.lamp(self,at-Vector2(0,25),0)
+  elif kind=="workplace98":
+   var prop=object.duplicate();prop.p=at;HoldWorkplace98.draw_prop(self,prop)
   elif kind=="handwork":
    var painter=hand_painter;painter.working=game.handworks.working;painter.active_id=game.handworks.active_id
    var copy=object.duplicate(true);copy.p=at
@@ -309,7 +318,8 @@ class PropCanvas extends Node2D:
    if int(object.art)==4:HoldMasonryArt.pillar(self,at,object.height)
    else:draw_texture_rect_region(HoldWorldZones.DETAILS,Rect2(at-Vector2(object.width/2,object.height),Vector2(object.width,object.height)),HoldWorldZones.DETAIL_RECTS[int(object.art)])
   elif kind=="furniture":
-   if object.furniture.kind=="lamp":HoldArt.lamp(self,at-Vector2(0,25),0)
+   if object.furniture.room=="old_cutters":HoldWorkplace98.draw_furniture(self,object.furniture,at)
+   elif object.furniture.kind=="lamp":HoldArt.lamp(self,at-Vector2(0,25),0)
    else:
     if living_painter==null:living_painter=LivingPlay.new(self,game.deep.world)
     living_painter.draw_furniture(object.furniture.kind,at)

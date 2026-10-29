@@ -42,6 +42,7 @@ func enter(resume:bool=false):
  world.survey(g.player)
  HoldFirstShift.enter(g)
  HoldAncestralClaim.enter(g)
+ HoldWorkplace98.enter(g)
 func remember():
  ensure()
  if g.zone=="mine":world.data.position=[g.player.x,g.player.y]
@@ -491,6 +492,7 @@ func draw():
   draw_worksite(entry)
   if world.entrance(g.player):A.text(g,entry+Vector2(-5,-55),"Walk north · surface",12,Color("edcd8a"))
  works.draw()
+ for prop in HoldWorkplace98.props(g):HoldWorkplace98.draw_prop(g,prop)
  draw_haulage()
  var actors:Array=[]
  for part in world.landmarks():
@@ -501,6 +503,7 @@ func draw():
  actors.append_array(g.fight.objects())
  actors.append_array(g.handworks.objects())
  actors.append_array(HoldFirstShift.actors(g))
+ actors.append_array(HoldWorkplace98.actors(g))
  actors.append_array(HoldAncestralClaim.actors(g))
  actors.append({"p":g.player,"player":true});actors.sort_custom(func(a,b):return a.p.y<b.p.y)
  for actor in actors:
@@ -510,6 +513,7 @@ func draw():
    g.surface.world.detail(int(actor.art),actor.anchor,float(actor.width),float(actor.height));continue
   g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
   if actor.get("kind","")=="firstshift":HoldFirstShift.draw(g,actor,offset)
+  elif actor.get("kind","")=="workplace98":HoldWorkplace98.draw_person(g,actor,offset)
   elif actor.get("kind","")=="rescue_crew":HoldAncestralClaim.draw(g,actor,offset)
   elif actor.get("kind","")=="fighter":g.fight.draw_enemy(actor.enemy)
   elif actor.get("kind","")=="handwork":g.handworks.draw_object(actor)

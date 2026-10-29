@@ -344,7 +344,7 @@ func _process(dt):
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
    HoldWorkEnergy.tick(state,dt)
    HoldCalendar.tick(self,dt)
-   fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt)
+   fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt);HoldWorkplace98.tick(self,dt)
    if zone=="mine":
     deep.move(dt)
     if zone=="mine":deep.mine(dt)
@@ -411,6 +411,7 @@ func _unhandled_input(e):
  if fight.input(e):get_viewport().set_input_as_handled();return
  if fieldwork.input(e):get_viewport().set_input_as_handled();return
  if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldAncestralClaim.interact(self):get_viewport().set_input_as_handled();return
+ if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldWorkplace98.interact(self):get_viewport().set_input_as_handled();return
  if handworks.input(e):get_viewport().set_input_as_handled();return
  if hotbar.handle(e):get_viewport().set_input_as_handled();return
  if deep.input(e):get_viewport().set_input_as_handled();return
@@ -1605,6 +1606,7 @@ func commission_panel():
   var objective=HoldMenuView.section(panel_body,"Current objective")
   label(objective,current,17)
   small_button(objective,"View steps & local quests",func():open_panel("guidance"))
+ HoldExpedition97.journal(self)
  HoldFirstShift.journal(self)
  HoldAncestralClaim.journal(self)
  if HoldOnboarding.side_stories(state):

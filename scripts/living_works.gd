@@ -126,7 +126,8 @@ func quality(r:Dictionary)->Dictionary:
   styles[f.kind]=true
  var craft=minf(3,floor_points/(r.w*r.h)*6)+minf(3,wall_points/4)
  var missing=[]
- for k in FUNCTIONS[r.kind].needs:
+ var needs=["bench","anvil"] if r.id=="old_cutters" else FUNCTIONS[r.kind].needs
+ for k in needs:
   if not counts.has(k):missing.append(FURNITURE[k].name)
  var clutter=maxi(0,furniture_count-int(r.w*r.h*.32))*5
  var score=clampi(int((minf(5,functionality)*8 if r.kind=="workshop" else minf(5,comfort)*10)+craft*5+minf(3,heritage)*4)-clutter,0,100)

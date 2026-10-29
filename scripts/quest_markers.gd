@@ -2,6 +2,9 @@ class_name HoldQuestMarkers
 extends RefCounted
 const A=preload("res://scripts/art.gd")
 static func status(s,id:String)->String:
+ if id=="ivar" and HoldExpedition97.available(s):
+  if HoldExpedition97.ready(s):return "ready"
+  if not HoldExpedition97.data(s).active:return "offer"
  var anniversary=HoldAnniversary.status(s,id)
  var states=[anniversary,HoldOnboarding.status(s,id),HoldAncestralClaim.marker(s,id)]
  var matter=HoldClaimStories.ensure(s).active

@@ -169,7 +169,9 @@ func hud():
  var room=model.at(Deepworks.cell(g.player))
  if not room.is_empty():
   g.draw_style_box(chip(),Rect2(20,109,365,28))
-  A.text(g,Vector2(30,128),"O · %s · %s" % [room.name,"Quality %d" % room.metrics.score if room.metrics.active else "Needs furnishings"],12,Color("e5c695"))
+  var detail="Quality %d" % room.metrics.score if room.metrics.active else "Needs furnishings"
+  if room.id=="old_cutters":detail="Warm hearth" if HoldWorkplace98.warm(g) else "Cold hearth"
+  A.text(g,Vector2(30,128),"O · %s · %s" % [room.name,detail],12,Color("e5c695"))
  if mode!="":
   g.draw_style_box(chip(),Rect2(230,392,500,37))
   var title=LivingWorks.FUNCTIONS.get(selected,{}).get("name",selected) if mode=="room" else (LivingWorks.FURNITURE if mode=="furniture" else LivingWorks.FINISHES).get(selected,{}).get("name","Dismantle")
@@ -181,6 +183,7 @@ func chip()->StyleBoxFlat:
  style.border_color=Color(.55,.48,.31,.65);style.set_border_width_all(1);return style
 func lamps()->Array:
  var result=[]
+ if HoldWorkplace98.active(g) and HoldWorkplace98.warm(g):result.append(Deepworks.center(HoldWorkplace98.hearth(HoldWorkplace98.data(g))))
  for f in model.data.furniture.values():
   if int(f.depth)==w.depth() and f.kind=="lamp":result.append(Deepworks.center(Vector2i(f.x,f.y)))
  return result
@@ -229,7 +232,10 @@ func draw():
    g.draw_rect(rect,Color(.8,.69,.43,.35),false,1)
    A.text(g,rect.position+Vector2(5,14),r.name.to_upper(),10,Color("d2bb8e"))
  for f in model.data.furniture.values():
-  if int(f.depth)==z:draw_furniture(f.kind,Deepworks.center(Vector2i(f.x,f.y)))
+  if int(f.depth)!=z:continue
+  if f.room=="old_cutters":
+   if w.layer().seen.has(Deepworks.key(Vector2i(f.x,f.y))):HoldWorkplace98.draw_furniture(g,f,Deepworks.center(Vector2i(f.x,f.y)))
+  else:draw_furniture(f.kind,Deepworks.center(Vector2i(f.x,f.y)))
  if mode!="":
   var c=Deepworks.cell(g.world_mouse());var p=Vector2(c)*40
   if mode=="room" and corner.x>=0:

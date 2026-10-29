@@ -1,0 +1,7 @@
+# Expedition 97 — playable preview
+
+Adds an optional post-opening expedition in Ivar’s journal: mine and process 12 fresh iron ore and 8 coal, return to Ivar, receive 80 crowns plus the six wood/two iron needed for a handcart, then accept a four-crystal follow-up. Only newly created rock loads processed after acceptance count; pre-existing inventory cannot complete the work requirement. Delivery still consumes ordinary pack materials. No deadlines or combat-energy changes.
+
+Title → Dev Testing → First expedition starts a separate save at Ivar with ordinary starting technology, 45 crowns and modest equipment-building supplies. J shows the objective and processed/pack counts; existing workstations, terrain, enemies, hauling and construction remain authoritative.
+
+The initial native test passed 13 checks covering real bench processing, old-stock rejection, local turn-in, exact rewards, repeat claims and save/reload. The first-shift and bench regressions passed 29 and six checks. The final exact exported package passed ambient 11 and expedition 16 checks, including the separate preset and normal-save preservation. Source/export journal screenshots were reviewed; all 3,347 PCK entries passed audit. Full source CI remains separate from this playable preview. ZIP SHA256: 2f9ee80cae0d81d5eae518dbde5d5042660ae746ee848ffea8c9cf2ccfd67125 (767,236,882 bytes). The 15–20 minute pacing target has not been verified by a human playtest; this is a focused loop prototype, not a new authored dungeon.
