@@ -177,12 +177,13 @@ func update(dt:float):
   # Aim remains adjustable through early preparation, then commits before contact.
   if swing>g.combat.weapon().time*.72:locked_aim=aim
   g.surface.direction=bash_aim if bash_left>0 else locked_aim if swing>0 else aim
-  var held=Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
+  var allowed=g.depth_nav.explore.actions_allowed()
+  var held=allowed and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
   # A completed contact may flow into guard; preparation cannot be canceled by guard.
   if held and struck and swing>0 and swing<g.combat.weapon().time*.24:swing=0
   if held and not guard_was and swing<=0 and dodge<=0 and parry_wait<=0:parry=.19;parry_wait=.55
   guard_was=held;guard=held and swing<=0 and dodge<=0
-  if not held and not g.hotbar.over() and (buffered>0 or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and swing<=0 and dodge<=0:strike()
+  if allowed and not held and not g.hotbar.over() and (buffered>0 or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and swing<=0 and dodge<=0:strike()
  else:guard=false;guard_was=false;swing=0;buffered=0
  if swing>0:
   swing=maxf(0,swing-dt)

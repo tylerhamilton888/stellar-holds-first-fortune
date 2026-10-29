@@ -16,11 +16,12 @@ func data()->Dictionary:
 func restore():select(clampi(int(data().get("selected",0)),0,9),false)
 func available()->bool:return not HoldFolk.warming() and g.playing and g.panel_id=="" and not is_instance_valid(g.creator) and not is_instance_valid(g.opening_scene) and not is_instance_valid(g.anniversary_scene)
 func bar_y()->float:
+ if g.depth_nav!=null and g.depth_nav.explore.active():return 374.0
  if g.surface.active() and g.surface.area in HoldWorldZones.WARDS and g.player.y>1510:return 80.0
  if g.zone=="mine":return 112.0 if (g.player-g.camera).y>390 else 374.0
  return 80.0 if (g.player-g.camera).y>430 else 414.0
 func slot_rect(i:int)->Rect2:return Rect2(230+i*50,bar_y()+24,46,51)
-func over()->bool:return available() and Rect2(224,bar_y(),512,80).has_point(g.get_global_mouse_position())
+func over()->bool:return available() and not g.depth_nav.explore.captured and Rect2(224,bar_y(),512,80).has_point(g.get_global_mouse_position())
 func blocked_work()->bool:return item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!="" or g.fieldwork.placing or g.fieldwork.action!="" or not g.handworks.setting_down.is_empty()
 func title(id:String)->String:
  if id.begins_with("tool:"):return g.TOOL_NAMES[clampi(int(id.get_slice(":",1)),0,3)]

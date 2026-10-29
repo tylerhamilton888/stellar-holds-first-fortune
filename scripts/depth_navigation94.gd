@@ -8,25 +8,30 @@ var message="Select explored ground to mark a walking route."
 var ghost=true
 var view_button:Button
 var map_button:Button
+var controls_button:Button
 var explore
 var site=""
 func _init(game):
  g=game
  view_button=g.small_button(g.ui,"Explore in 3D · F6",toggle_view);view_button.position=Vector2(744,154);view_button.size=Vector2(194,30)
  map_button=g.small_button(g.ui,"Depth map · Z",open_map);map_button.position=Vector2(744,118);map_button.size=Vector2(194,30)
+ controls_button=g.small_button(g.ui,"Camera controls · F7",func():g.open_panel("camera_controls"));controls_button.position=Vector2(744,190);controls_button.size=Vector2(194,30)
  explore=HoldMineView94.new(g)
 func reset():
  goal=Vector3i(-1,-1,-1);path.clear();site="";explore.enabled=explore.preferred;explore.invalidate()
 func toggle_view():
  if g.zone!="mine" or not g.playing:return
  explore.enabled=not explore.enabled;explore.save_preference()
- g.notify("3D exploration · WASD move · [ / ] turn camera · F6 overhead" if explore.enabled else "Traditional overhead view · F6 explores in 3D")
+ g.notify("3D exploration · Mouse look · WASD move · Alt cursor · F7 controls" if explore.enabled and explore.mouse_look else "3D exploration · [ / ] camera · F7 controls" if explore.enabled else "Traditional overhead view · F6 explores in 3D")
  explore.sync(0)
 func open_map():
  if g.zone!="mine":return
  viewed=g.deep.world.depth();g.open_panel("depth_map")
 func input(e)->bool:
+ if explore.active() and e is InputEventMouseButton and not explore.actions_allowed():
+  g.hotbar.handle(e);return true
  if g.zone!="mine" or not e is InputEventKey or not e.pressed or e.echo:return false
+ if e.keycode==KEY_F7 and g.panel_id in ["","camera_controls"]:g.toggle_panel("camera_controls");return true
  if e.keycode==KEY_F6 and g.panel_id=="":toggle_view();return true
  if e.keycode==KEY_Z and g.panel_id in ["","depth_map"]:
   if g.panel_id=="":open_map()
@@ -39,7 +44,7 @@ func input(e)->bool:
  return false
 func update(dt:float):
  var visible=g.playing and g.zone=="mine" and g.panel_id=="" and not g.deep.survey_open
- view_button.visible=visible;map_button.visible=visible
+ view_button.visible=visible;map_button.visible=visible;controls_button.visible=visible and explore.enabled
  if visible:
   if site!=g.state.active_site:site=g.state.active_site;goal=Vector3i(-1,-1,-1);path.clear()
   map_button.text="Depth %d · Map [Z]" % (g.deep.world.depth()+1)

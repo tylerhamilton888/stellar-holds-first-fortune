@@ -1,3 +1,7 @@
+## Mouse-look exploration — 0.85.0 candidate
+
+Owner feedback on manual camera rotation is addressed with continuous mouse look, camera-relative controls, reticle aim, zoom and pointer/menu handoff. Native and exported verification/delivery are in progress. Next: owner Windows playtest for mouse sensitivity, pitch/zoom comfort, close-camera visibility and combat targeting. Mine-only presentation and shared simulation remain; town/interior expansion and continuous multi-floor geometry are separate work.
+
 ## Depth navigation and optional exploration — delivered in 0.84.0
 
 Published and merged: paused explored-floor map, adjacent-floor ghosts, actual stair routes, remembered overhead/3D toggle, camera-relative input and isolated two-level test preset. All 37 source cases plus people-preview and 27 exact-export cases / 1,924 assertions passed. See testing/navigation94.md. Next: owner feedback on camera height, obstruction, route readability and Windows performance. Town/interior conversion, continuous multi-floor geometry, advanced construction surface parity and free orbit remain later scope. Preserve energy-free combat and existing fortunes.

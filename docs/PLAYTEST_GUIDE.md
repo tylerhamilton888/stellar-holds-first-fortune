@@ -1,3 +1,9 @@
+# 0.85.0 mouse-look trial
+
+Title → Dev Testing → Mine views & depth routes, then F6. Mouse-look is the new default; F7 offers Free cursor if desired. Turn and tilt while moving with WASD, wheel from close shoulder view to wide exploration, and try Space dodging after drawing a weapon. Aim at the highlighted iron face and hold LMB while planted. RMB must guard rather than rotate the camera. Combat must remain available at zero work energy.
+
+Hold Alt and click the hotbar or a HUD button. Open I, Z, X and F7; the pointer should be usable, and returning should not mine or attack from a held menu click. Switch out of the window, return, and resume from pause. Place equipment to test the overhead handoff, use the stairs, and leave the mine. Check sensitivity/invert settings after restarting. Report camera comfort, close-view obstruction and Windows mouse behavior. This remains a mine-only presentation of the existing simulation.
+
 # 0.84.0 navigation trial
 
 Title → Dev Testing → Mine views & depth routes opens a separate test save with two connected floors. Press F6 to compare overhead and exploration. Use brackets to turn, WASD to move, Z to browse floors and mark a route, E to descend and Shift+E to return. X opens the original survey. Try mining the iron face, lifting the raw load and working at the bench. F9 can add a goblin; combat remains usable at zero energy. Place equipment to check the temporary overhead construction view. Save/reload should keep your location and chosen view.

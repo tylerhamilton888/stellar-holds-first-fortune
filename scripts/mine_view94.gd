@@ -4,6 +4,15 @@ extends RefCounted
 var g
 var enabled=false
 var yaw=0.0
+var pitch=.62
+var distance=9.5
+var sensitivity=1.0
+var invert_y=false
+var mouse_look=true
+var cursor_held=false
+var captured=false
+var buttons_blocked=false
+var walls:Array=[]
 var viewport:SubViewport
 var screen:SubViewportContainer
 var scene:Node3D
@@ -24,11 +33,59 @@ var preferred=false
 func _init(game):
  g=game
  var cfg=ConfigFile.new()
- if cfg.load("user://view_settings94.cfg")==OK:preferred=bool(cfg.get_value("view","exploration",false))
+ if cfg.load("user://view_settings94.cfg")==OK:
+  preferred=bool(cfg.get_value("view","exploration",false))
+  mouse_look=bool(cfg.get_value("view","mouse_look",true));invert_y=bool(cfg.get_value("view","invert_y",false))
+  sensitivity=clampf(float(cfg.get_value("view","sensitivity",1.0)),.25,2.5)
+  distance=clampf(float(cfg.get_value("view","distance",9.5)),5,12)
  enabled=preferred
 func active()->bool:return enabled and g.playing and g.zone=="mine" and g.handworks.placing=="" and (g.deep.works==null or g.deep.works.mode=="")
 func save_preference():
- preferred=enabled;var cfg=ConfigFile.new();cfg.set_value("view","exploration",preferred);cfg.save("user://view_settings94.cfg")
+ preferred=enabled;var cfg=ConfigFile.new()
+ for key in ["mouse_look","invert_y","sensitivity","distance"]:cfg.set_value("view",key,get(key))
+ cfg.set_value("view","exploration",preferred);cfg.save("user://view_settings94.cfg")
+func release_pointer():
+ if captured:Input.mouse_mode=Input.MOUSE_MODE_VISIBLE
+ captured=false;buttons_blocked=true;g.mining_buffer=0
+ if g.fight!=null:g.fight.buffered=0;g.fight.guard=false;g.fight.guard_was=false
+func sync_pointer():
+ var wanted=active() and mouse_look and not cursor_held and not g.deep.survey_open and g.panel_id=="" and g.transition_left<=0 and not HoldFolk.warming() and not is_instance_valid(g.creator) and not is_instance_valid(g.opening_scene) and not is_instance_valid(g.anniversary_scene)
+ if wanted!=captured:
+  if wanted:
+   captured=true;buttons_blocked=true;Input.mouse_mode=Input.MOUSE_MODE_CAPTURED
+   var focus=g.get_viewport().gui_get_focus_owner()
+   if focus!=null:focus.release_focus()
+  else:release_pointer()
+ if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):buttons_blocked=false
+func actions_allowed()->bool:
+ return not active() or not mouse_look or (captured and not buttons_blocked)
+# Runs before GUI dispatch: captured motion must not be swallowed by a HUD control.
+func input(e:InputEvent)->bool:
+ if e is InputEventKey and e.keycode==KEY_ALT:
+  cursor_held=e.pressed;sync_pointer();return active() and mouse_look
+ if not active() or g.panel_id!="":return false
+ if e is InputEventMouseMotion and captured:
+  yaw=wrapf(yaw-e.screen_relative.x*.003*sensitivity,-PI,PI)
+  pitch=clampf(pitch+e.screen_relative.y*.003*sensitivity*(-1 if invert_y else 1),.38,1.18)
+  update_camera();return true
+ if e is InputEventMouseButton and e.pressed and captured and e.button_index in [MOUSE_BUTTON_WHEEL_UP,MOUSE_BUTTON_WHEEL_DOWN]:
+  distance=clampf(distance+(-.65 if e.button_index==MOUSE_BUTTON_WHEEL_UP else .65),5,12)
+  update_camera();save_preference();return true
+ return false
+func controls_panel():
+ g.label(g.panel_body,"3D in 2D · your painted Dwarf, a mouse-controlled view",19)
+ var row=g.row(g.panel_body)
+ for choice in [true,false]:
+  var b=g.small_button(row,"Mouse look" if choice else "Free cursor",func():mouse_look=choice;save_preference();g.refresh_panel())
+  b.toggle_mode=true;b.button_pressed=mouse_look==choice;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ g.label(g.panel_body,"Mouse turns and tilts the view. WASD moves relative to it; aim with the reticle. Wheel zooms. Hold Alt for the cursor. Esc pauses. F6 returns overhead.",16)
+ g.label(g.panel_body,"Free cursor retains click-to-aim and [ / ] camera turns. Combat: LMB strike, RMB guard, Space dodge. Work: stop moving, then hold LMB on the highlighted face.",15)
+ var r=g.row(g.panel_body);var value=g.label(r,"Sensitivity: %.2f×" % sensitivity,16)
+ var slider=HSlider.new();slider.min_value=.25;slider.max_value=2.5;slider.step=.05;slider.value=sensitivity;slider.custom_minimum_size=Vector2(320,32);r.add_child(slider)
+ slider.value_changed.connect(func(v):sensitivity=v;value.text="Sensitivity: %.2f×" % v;save_preference())
+ var invert=CheckButton.new();invert.text="Invert vertical look";invert.button_pressed=invert_y;g.panel_body.add_child(invert)
+ invert.toggled.connect(func(v):invert_y=v;save_preference())
+ g.small_button(g.panel_body,"Reset camera & sensitivity",func():yaw=0;pitch=.62;distance=9.5;sensitivity=1;invert_y=false;save_preference();g.refresh_panel())
 func invalidate():context="";timer=0
 func make():
  screen=SubViewportContainer.new();screen.name="MineExploration94";screen.size=Vector2(960,540);screen.stretch=true;screen.mouse_filter=Control.MOUSE_FILTER_IGNORE;g.add_child(screen)
@@ -41,24 +98,44 @@ func make():
  player_sprite=Sprite3D.new();actors.add_child(player_sprite)
  hud=ViewHUD.new();hud.view=self;screen.add_child(hud)
 func sync(dt:float):
+ sync_pointer()
  if not active():
   if is_instance_valid(screen):screen.visible=false;viewport.render_target_update_mode=SubViewport.UPDATE_DISABLED
   return
  if not is_instance_valid(screen):make()
  screen.visible=true;viewport.render_target_update_mode=SubViewport.UPDATE_ALWAYS
  g.deep.ensure();var w=g.deep.world
- var center=point(g.player)
- camera.position=center+Vector3(sin(yaw)*7.4,6.2,cos(yaw)*7.4);camera.look_at(center+Vector3(0,.35,0))
+ update_camera()
  timer-=dt
- var key=g.state.active_site+":"+str(w.depth())+":"+str(Deepworks.cell(g.player))+":"+str(yaw)
+ var key=g.state.active_site+":"+str(w.depth())+":"+str(Deepworks.cell(g.player))
  if context!=key or timer<=0:
   context=key;timer=.25;rebuild();rebuild_props()
- update_actors();update_effects();hud.queue_redraw()
+ update_cutaway();update_actors()
+ for entry in prop_pool.values():apply_sprite(entry.card,entry.vp.get_texture(),Rect2(-128,-220,256,256),entry.canvas.object.p)
+ update_effects();hud.queue_redraw()
+func update_camera():
+ if not is_instance_valid(camera):return
+ var center=point(g.player);var back=Vector3(sin(yaw),0,cos(yaw))
+ if mouse_look:
+  # Close zoom eases over the shoulder and raises the dwarf above the hotbar.
+  var close=clampf((9.5-distance)/4.5,0,1);var right=Vector3(cos(yaw),0,-sin(yaw))
+  camera.position=center+back*cos(pitch)*distance+right*close*1.4+Vector3.UP*(.8+sin(pitch)*distance)
+  camera.look_at(center-back*lerpf(2.0,.7,close)+right*close*.9+Vector3.UP*.8)
+ else:
+  camera.position=center+back*7.4+Vector3.UP*6.2;camera.look_at(center+Vector3.UP*.35)
+func update_cutaway():
+ for wall in walls:
+  var height=tile_height(wall.c,wall.kind)
+  if height==wall.height:continue
+  wall.height=height
+  wall.multi.set_instance_transform(wall.index,Transform3D(Basis.from_scale(Vector3(1,height,1)),Vector3(wall.c.x+.5,height*.5-.06,wall.c.y+.5)))
 func point(p:Vector2)->Vector3:return Vector3(p.x/40,0,p.y/40)
-func movement(axis:Vector2)->Vector2:return axis.rotated(-yaw) if active() else axis
+func heading()->float:return atan2(camera.global_basis.z.x,camera.global_basis.z.z) if is_instance_valid(camera) else yaw
+func movement(axis:Vector2)->Vector2:return axis.rotated(-heading()) if active() else axis
 func mouse_world()->Vector2:
  if not active() or not is_instance_valid(camera):return g.get_global_mouse_position()+g.camera
- var mouse=g.get_global_mouse_position();var origin=camera.project_ray_origin(mouse);var direction=camera.project_ray_normal(mouse)
+ var mouse=Vector2(480,270) if mouse_look else g.get_global_mouse_position()
+ var origin=camera.project_ray_origin(mouse);var direction=camera.project_ray_normal(mouse)
  var hit=Plane(Vector3.UP,.8 if g.combat.armed else 0).intersects_ray(origin,direction)
  return Vector2(hit.x,hit.z)*40 if hit!=null else g.player
 func material(kind:int)->StandardMaterial3D:
@@ -70,7 +147,7 @@ func material(kind:int)->StandardMaterial3D:
 func clear_children(node:Node):
  for child in node.get_children():node.remove_child(child);child.queue_free()
 func rebuild():
- clear_children(terrain)
+ walls.clear();clear_children(terrain)
  var groups={};var w=g.deep.world;var c=Deepworks.cell(g.player)
  for y in range(maxi(0,c.y-12),mini(Deepworks.H,c.y+13)):
   for x in range(maxi(0,c.x-12),mini(Deepworks.W,c.x+13)):
@@ -79,11 +156,13 @@ func rebuild():
    var height=tile_height(tile,k)
    var transform=Transform3D(Basis.from_scale(Vector3(1,height,1)),Vector3(x+.5,height*.5-.06,y+.5))
    if not groups.has(k):groups[k]=[]
-   groups[k].append({"t":transform,"color":Color.WHITE if seen else Color("253139")})
+   groups[k].append({"t":transform,"color":Color.WHITE if seen else Color("253139"),"c":tile,"height":height})
  for k in groups:
   var mesh=BoxMesh.new();mesh.size=Vector3.ONE;mesh.material=material(k)
   var multi=MultiMesh.new();multi.transform_format=MultiMesh.TRANSFORM_3D;multi.use_colors=true;multi.mesh=mesh;multi.instance_count=groups[k].size()
-  for i in groups[k].size():multi.set_instance_transform(i,groups[k][i].t);multi.set_instance_color(i,groups[k][i].color)
+  for i in groups[k].size():
+   multi.set_instance_transform(i,groups[k][i].t);multi.set_instance_color(i,groups[k][i].color)
+   if k!=0:walls.append({"multi":multi,"index":i,"c":groups[k][i].c,"height":groups[k][i].height,"kind":k})
   var batch=MultiMeshInstance3D.new();batch.multimesh=multi;terrain.add_child(batch)
  for link in w.data.links.values():
   var p=Deepworks.center(Vector2i(link.x,link.y))
@@ -108,13 +187,14 @@ func sprite(id:String)->Sprite3D:
 func apply_sprite(s:Sprite3D,texture:Texture2D,rect:Rect2,p:Vector2,flip:bool=false):
  s.texture=texture;s.pixel_size=.025;s.billboard=BaseMaterial3D.BILLBOARD_ENABLED;s.alpha_cut=SpriteBase3D.ALPHA_CUT_DISCARD;s.texture_filter=BaseMaterial3D.TEXTURE_FILTER_LINEAR;s.flip_h=flip
  s.scale=Vector3(rect.size.x/texture.get_width(),rect.size.y/texture.get_height(),1)
- var center=rect.get_center();s.position=point(p)+camera.global_basis.x*center.x*.025*(-1 if flip else 1)+Vector3(0,-center.y*.025,0)
+ var center=rect.get_center();s.position=point(p)+camera.global_basis.x*center.x*.025*(-1 if flip else 1)-camera.global_basis.y*center.y*.025
 func person(s:Sprite3D,p:Vector2,profile:Dictionary,direction:Vector2,walking:bool,time:float,action:String="",phase:float=0):
- var d=direction.rotated(yaw);var frame=HoldWholeFrames.descriptor(profile,d,walking,time,action,phase)
+ var d=direction.rotated(heading());var frame=HoldWholeFrames.descriptor(profile,d,walking,time,action,phase)
  apply_sprite(s,HoldWholeFrames.texture(profile,frame.sheet,frame.index),frame.destination,p,d.x<-.3)
 func update_actors():
  for s in sprite_pool.values():s.visible=false
  var d=g.deep;var f=g.fight;var action=g.hotbar.pose();var phase=0.0;var direction=g.surface.direction
+ if mouse_look and not g.walking_pose:direction=movement(Vector2.UP)
  if g.combat.armed:action=f.player_pose();phase=1-f.swing/g.combat.weapon().time if f.swing>0 else 0;direction=f.bash_aim if f.bash_left>0 else f.locked_aim if f.swing>0 else f.aim
  elif d.strike_left>0:action=["pick","shovel","axe","hammer"][g.tool];phase=1-d.strike_left/d.swing_duration;direction=(d.contact-g.player).normalized()
  elif g.handworks.working:
@@ -126,7 +206,7 @@ func update_actors():
  person(player_sprite,g.player,g.combat.profile(),direction,g.walking_pose,g.gait_clock,action,phase)
  for e in f.enemies:
   if e.hp<=0 or e.p.distance_to(g.player)>500 or not d.world.layer().seen.has(Deepworks.key(Deepworks.cell(e.p))):continue
-  var facing=e.dir.rotated(yaw);var s=sprite("enemy:"+str(e.id));var kind=int(e.kind)
+  var facing=e.dir.rotated(heading());var s=sprite("enemy:"+str(e.id));var kind=int(e.kind)
   var source:Rect2;var root:Vector2;var scale:float;var tex:Texture2D
   if kind==1:
    var index=2 if e.state=="windup" else 3 if e.state=="recover" else int(e.gait*8)%2
@@ -187,7 +267,7 @@ func update_effects():
  for e in g.fight.enemies:
   if e.hp<=0 or e.p.distance_to(g.player)>500 or not g.depth_nav.known(Deepworks.cell(e.p),g.deep.world.depth()):continue
   var spec=HoldEnemyRoster.spec(e.kind)
-  label3d(effects,point(e.p)+Vector3(0,float(spec.height)/40+.3,0),("! " if e.state=="windup" else "")+str(ceili(e.hp)),Color("ffce7b") if e.state=="windup" else Color("d4e2db"))
+  label3d(effects,point(e.p)+camera.global_basis.y*(float(spec.height)/40+.3),("! " if e.state=="windup" else "")+str(ceili(e.hp)),Color("ffce7b") if e.state=="windup" else Color("d4e2db"))
   if e.state=="windup":
    var tool=SurfaceTool.new();tool.begin(Mesh.PRIMITIVE_TRIANGLES)
    var center=point(e.p)+Vector3(0,.04,0);var a=e.dir.angle();var angle=float(spec.angle);var radius=float(spec.reach)/40
@@ -239,7 +319,14 @@ class ViewHUD extends Node2D:
   draw_rect(Rect2(0,0,960,77),Color("0e202c"));draw_rect(Rect2(0,462,960,78),Color("0e202c"))
   HoldArt.text(self,Vector2(24,483),"D%d · %s · 3D EXPLORATION" % [w.depth()+1,Deepworks.NAMES[w.depth()]],14,Color("edca8c"))
   HoldArt.text(self,Vector2(24,100),game.depth_nav.hint(),14,Color("ffe0a0"))
-  HoldArt.text(self,Vector2(600,483),"[ / ] camera · F6 overhead",14,Color("b9d5d3"))
+  HoldArt.text(self,Vector2(490,483),"Alt: cursor · Wheel: zoom · F7: camera" if view.mouse_look else "[ / ] camera · F7: controls",14,Color("b9d5d3"))
+  if view.mouse_look and game.panel_id=="" and not game.deep.survey_open:
+   if view.captured:
+    var at=Vector2(480,270);var color=Color("ffe1a4")
+    for d in [Vector2.LEFT,Vector2.RIGHT,Vector2.UP,Vector2.DOWN]:
+     draw_line(at+d*5,at+d*11,Color("14242b"),4);draw_line(at+d*5,at+d*11,color,1.5)
+    draw_circle(at,1.5,color)
+   else:HoldArt.text(self,Vector2(290,350),"Release Alt to return to mouse look",15,Color("ffe1a4"))
   if game.combat.armed:HoldArt.text(self,Vector2(24,126),"HP %d · LMB strike · RMB guard · Space dodge" % game.state.combat.health,14,Color("efdbc3"))
   elif game.handworks.prompt()!="":HoldArt.text(self,Vector2(24,126),game.handworks.prompt(),12,Color("efdbc3"))
   if game.deep.survey_open and game.panel_id=="":game.deep.draw_survey(self)

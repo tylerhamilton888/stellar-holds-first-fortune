@@ -3,7 +3,7 @@ extends RefCounted
 # Temporary, opt-in developer fixtures. No production progression rules are bypassed.
 const SAVE="user://dev_testing85.json"
 const MODES={
- "exploration":{"name":"Mine views & depth routes","detail":"Two connected floors, a mineral face and workbench. F6 changes view; Z plans a route."},
+ "exploration":{"name":"Mine views & depth routes","detail":"Two connected floors, a mineral face and workbench. F6 changes view; mouse looks, Alt frees cursor, F7 controls; Z plans a route."},
  "calendar":{"name":"Calendar & celebrations","detail":"Daylight, night, seasons and all four feasts. Jump to a host or bed."},
  "combat":{"name":"Combat arena","detail":"All weapons and armor. Choose enemies, heal, or inspect hitboxes."},
  "building":{"name":"Construction & decorating","detail":"Owned land, cottage, plans and supplies. Build, decorate and reload."},

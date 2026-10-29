@@ -1,11 +1,11 @@
-# 0.84.0 — Depth & Perspective
+# 0.85.0 — A Dwarf’s Eye View
 
-Explore your mines from either view. **F6** switches between traditional overhead and a perspective camera with your painted Dwarf in 3D terrain. **[ / ]** turn the camera; WASD movement and Space dodge follow it. Your chosen view is remembered.
+**3D in 2D** now feels like a third-person control mode. In a mine, press **F6** to switch from overhead to exploration. Move the mouse to turn and tilt the camera, use **WASD** to move relative to your view, and use the **wheel** to zoom. Close zoom eases over the shoulder so the dwarf stays clear of the hotbar. Aim mining and combat with the reticle; **LMB** works/attacks, **RMB** guards/parries, and **Space** dodges. Combat still costs no work energy.
 
-Press **Z** for the paused depth map. Browse **D1–D5** or use Page Up / Page Down, see faint adjacent explored floors, and click known ground to mark a gold route through real stairs. **Return to dwarf** restores the map to your current floor. Browsing never moves your character or reveals unexplored chambers; **E / Shift+E** still travel down/up at stairs. Hitched carts cannot route down ladders.
+Hold **Alt** to use the pointer. Menus and the **Z** depth map free it automatically, then return to mouse look when closed. **Esc** pauses. Surveying and precise construction retain their existing cursor workflows. Returning from a menu waits for held mouse buttons to be released before allowing new attacks.
 
-For a quick trial, choose **Title → Dev Testing → Mine views & depth routes**. It prepares two connected floors, a mineral face, a workbench and a marked route in the separate test save. **F9** opens its controls.
+Press **F7** for Camera & controls: adjust sensitivity, invert vertical look, reset the camera, or select the original **Free cursor** mode with bracket turns. Your view and comfort preferences are remembered separately from your fortune.
 
-Mining, combat, cargo and saves share the existing world. Combat remains usable at zero energy. Construction placement temporarily uses overhead and returns to your chosen view afterward. This first perspective mode covers mines, with one floor displayed at a time; towns and interiors keep their existing presentation.
+Try **Title → Dev Testing → Mine views & depth routes**, then **F6**. Mines remain the scope of exploration; towns and interiors keep their existing view. Both modes share the same saved world, stair routes, artwork and gameplay.
 
-Extract the complete Windows ZIP into a fresh folder and run FirstFortune.exe. Windows hardware/audio and subjective camera feel remain hands-on playtest checks.
+Extract the complete Windows ZIP into a fresh folder and run FirstFortune.exe. Windows hardware/audio and subjective mouse comfort remain hands-on playtest checks.

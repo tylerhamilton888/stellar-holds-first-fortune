@@ -210,6 +210,7 @@ func setup_ui():
  transition_label=Label.new();transition_label.position=Vector2(100,240);transition_label.size=Vector2(760,60);transition_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;transition_label.add_theme_font_size_override("font_size",25);transition_label.modulate=Color("edc98a");transition_shade.add_child(transition_label)
 
 func show_title():
+ if depth_nav!=null:depth_nav.explore.release_pointer()
  dev.leave()
  playing=false;room_id="";transition_left=0;transition_shade.visible=false;sound.set_context("title")
  for n in [hud,status,objectives,footer]:n.visible=false
@@ -305,6 +306,7 @@ func remember_agents():
   elif agent.type=="bot":state.outpost.bot_fuel=agent.fuel
 
 func pause_for_focus_loss():
+ if depth_nav!=null:depth_nav.explore.cursor_held=false;depth_nav.explore.release_pointer()
  if is_instance_valid(anniversary_scene) or is_instance_valid(opening_scene):return
  if is_instance_valid(overworld):
   if not overworld.paused and not overworld.survey:overworld.toggle_pause()
@@ -383,6 +385,9 @@ func capture():
  if path=="":path="user://"
  get_viewport().get_texture().get_image().save_png(path.path_join(capture_mode+".png"))
  shutdown()
+
+func _input(e):
+ if depth_nav!=null and depth_nav.explore.input(e):get_viewport().set_input_as_handled()
 
 func _unhandled_input(e):
  if playing and HoldFolk.warming():return
@@ -1194,12 +1199,14 @@ func purchase(cost:Dictionary,crowns:int,callback:Callable):
  if not state.pay(cost,crowns):notify("Not enough materials or crowns.");return
  callback.call();sound.effect("build");save_game();refresh_panel()
 func open_panel(id:String,remember:bool=true):
+ if depth_nav!=null:depth_nav.explore.release_pointer()
  if id in ["world_map","basin_map","gate"]:id="wayfinding"
  if playing and panel_id=="settings" and id!="settings":save_game()
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ if id=="camera_controls":menu_paused=true
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
  match id:
@@ -1215,6 +1222,7 @@ func open_panel(id:String,remember:bool=true):
    else:HoldFieldSurvey.panel(self)
   "equipment":combat.panel()
   "depth_map":depth_nav.panel()
+  "camera_controls":depth_nav.explore.controls_panel()
   "deepworks":deep.panel()
   "haulage":deep.haulage_panel()
   "living":deep.works.panel()

@@ -3,7 +3,7 @@ func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
  g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false;HoldOnboarding.ensure(g.state).combat=true
- g.change_zone("mine");settle();var w=g.deep.world;var nav=g.depth_nav
+ g.change_zone("mine");settle();var w=g.deep.world;var nav=g.depth_nav;nav.explore.mouse_look=false
  for z in [0,1]:
   w.layer(z).features=[];w.layer(z).seen.clear();w.layer(z).encounters=[];w.layer(z).encounter_companions={}
   for y in range(14,27):

@@ -199,7 +199,7 @@ func mine(dt:float):
    if not works.pending.is_empty():works.impact()
    elif target.x>=0 and contact.distance_to(g.player)<(200 if g.mining_gun.selected else 58) and world.visible(g.player,contact):hit(target,g.mining_gun.selected)
   return
- if g.hotbar.blocked_work() or g.handworks.working or Input.get_vector("left","right","up","down")!=Vector2.ZERO:return
+ if not g.depth_nav.explore.actions_allowed() or g.hotbar.blocked_work() or g.handworks.working or Input.get_vector("left","right","up","down")!=Vector2.ZERO:return
  if works.mode!="":works.begin();return
  if stair_work>0:return
  if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and g.mining_buffer<=0:return
