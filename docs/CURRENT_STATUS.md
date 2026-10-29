@@ -1,3 +1,7 @@
+# Workbench clearance fix — 0.85.1 in verification
+
+Reproduced the exploration preset's loaded-but-idle stonebreaker: both working positions overlap the north wall. Moved the test bench one tile south, reject new placements without working clearance, and explain obstructed work without discarding its input. Native bench96 passed six checks, including exact output yield. Focused regressions and release checks are pending. Existing 0.85.0 test saves need F9 reset or the wall mined clear; normal saves are unchanged.
+
 # 0.85.0 — A Dwarf’s Eye View: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.85.0. Runtime/release/tag source 76d0c5195bf95d74dbb8c0fed54b52213d490190; PR #61 merge 09dda3c57f6fc0d2a69f0c2e1e1e3d4e07dbaff7 has the same runtime tree 7e20f238fea428591c3a81da60a151b94394ff82. Source run 40800423957 passed all 38 gameplay cases plus people-preview. Release run 40800559860 passed all 28 exact-export cases / 1,970 assertions. Local focused checks passed 197 assertions; final mouse-look passed 46; the local final exported view/navigation checks passed 77.

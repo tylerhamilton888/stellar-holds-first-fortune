@@ -206,7 +206,7 @@ func exploration():
     layer.seen[Deepworks.key(Vector2i(x,y))]=true
  w.data.depth=0;w.carve_stairs(Vector2i(25,20))
  w.set_cell(Vector2i(23,23),3,0);w.layer(0).fixtures["21,20"]="lamp";w.layer(1).fixtures["25,21"]="lamp"
- g.player=Deepworks.center(Vector2i(20,20));g.handworks.build("breaker",Deepworks.center(Vector2i(20,18)))
+ g.player=Deepworks.center(Vector2i(20,20));g.handworks.build("breaker",Deepworks.center(Vector2i(20,19)))
  g.handworks.spawn("stone",Deepworks.center(Vector2i(19,22)),4,"dev94","iron_ore")
  w.rebuild_landmarks();g.player=Deepworks.center(Vector2i(21,24));g.fight.reset();g.depth_nav.reset();g.depth_nav.explore.yaw=0
  g.depth_nav.route_to(Vector2i(22,19),1)

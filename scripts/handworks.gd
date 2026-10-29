@@ -19,6 +19,7 @@ var active_id=""
 var active_anchor=Vector2.INF
 var working=false
 var approaching=false
+var blocked_id=""
 var last_beat=-1
 var lift=0.0
 var setting_down:Dictionary={}
@@ -147,13 +148,20 @@ func can_place(p:Vector2)->bool:
  for f in data().facilities:
   if local(f) and pos(f).distance_to(p)<80:return false
  return clear_line(g.player,p)
+func working_space(kind:String,p:Vector2)->bool:
+ if kind not in ["breaker","saw"]:return true
+ for side in [-1,1]:
+  var stance=p+Vector2(side*(56 if kind=="breaker" else 34),-55 if kind=="breaker" else -24)
+  if stance_clear(p+Vector2(side*60,-30),stance):return true
+ return false
 static func snap_build(p:Vector2)->Vector2:return (p/20).round()*20
 func placement_ready(kind:String,p:Vector2)->bool:
- return SPECS.has(kind) and (kind!="wagon" or capacity()>=2) and g.state.afford(SPECS[kind].cost) and can_place(snap_build(p))
+ return SPECS.has(kind) and (kind!="wagon" or capacity()>=2) and g.state.afford(SPECS[kind].cost) and can_place(snap_build(p)) and working_space(kind,snap_build(p))
 func build(kind:String,p:Vector2)->bool:
  if kind=="wagon" and capacity()<2:g.notify("Freight wagon plans unlock with Strong Shoulders: eight productive masonry/forestry jobs.");return false
  p=snap_build(p)
  if not SPECS.has(kind) or not can_place(p):g.notify("Choose clear floor nearby, away from doors, stairs and other furniture.");return false
+ if not working_space(kind,p):g.notify("Leave clear floor behind the bench for its working position.");return false
  if not g.state.pay(SPECS[kind].cost):g.notify("Bring the construction materials in your pack.");return false
  var d=data();var id=str(d.next);d.next=int(d.next)+1
  d.facilities.append({"id":id,"kind":kind,"area":context(),"x":p.x,"y":p.y,"raw":[],"cargo":{},"job":{},"hitched":false})
@@ -265,7 +273,7 @@ func begin(f:Dictionary)->bool:
  if active_id!=f.id:g.notify("Bring a raw "+("stone chunk" if f.kind=="breaker" else "log")+" on your shoulder or in a rack within 150 units.")
  return false
 func update(dt:float):
- lift=maxf(0,lift-dt);working=false;approaching=false;field_raw={}
+ lift=maxf(0,lift-dt);working=false;approaching=false;field_raw={};blocked_id=""
  if Input.get_vector("left","right","up","down")!=Vector2.ZERO:active_id=""
  if Input.get_vector("left","right","up","down")!=Vector2.ZERO:lift=0.0
  if lift<=0:setting_down={}
@@ -305,7 +313,7 @@ func update(dt:float):
   var rear=pos(f)+Vector2(sign*60,-30)
   if stance_clear(g.player,rear) and stance_clear(rear,candidate):stance=candidate;approach=rear;break
   if stance_clear(g.player,corner) and stance_clear(corner,rear) and stance_clear(rear,candidate):stance=candidate;approach=corner;break
- if stance==Vector2.INF:return
+ if stance==Vector2.INF:blocked_id=f.id;return
  if g.player.distance_to(stance)>3:
   var before_pos=g.player;g.player=g.player.move_toward(approach,150*dt);active_anchor=g.player;g.walking_pose=true;HoldDrawnLocomotion.advance(g,g.player.distance_to(before_pos),"stone");g.surface.direction=(approach-before_pos).normalized();approaching=true
   return
@@ -467,6 +475,7 @@ func prompt()->String:
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
  elif f.is_empty() and not raw.is_empty():text="E · Lift "+raw_name(raw)+" · %d units" % int(raw.units)+(" · Hold Shift+E dress" if g.zone=="mine" and raw.kind=="stone" else "")
  elif not data().carry.is_empty():text="Carrying %d / %d · Q put down · E deliver" % [data().carry.size(),capacity()]
+ if not f.is_empty() and blocked_id==f.id:text="Working position blocked · clear space behind and beside the bench"
  if not f.is_empty() and f.get("owner","")=="hold":text="Hold crew · reserved stock and work order"
  if placing!="":text="Placing "+SPECS[placing].name+" · LMB build · Right click cancel"
  if text=="":text=HoldFirstShift.context_hint(g)
