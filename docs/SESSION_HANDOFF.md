@@ -1,3 +1,11 @@
+# 0.85.0 — A Dwarf’s Eye View: implementation candidate
+
+Reworks mine exploration into mouse-look by default. F6 still chooses overhead/exploration; mouse motion rotates and tilts, WASD and Space dodge follow the camera, the central reticle aims mining/combat, and the wheel zooms. Close zoom eases over the shoulder to keep the dwarf above the hotbar. Hold Alt for the pointer; books, surveying, placement, focus loss and leaving the mine release capture. A held UI click cannot leak into a strike after recapture. RMB remains guard/parry. Combat still costs no work energy.
+
+F7 opens paused Camera & controls: Mouse look / Free cursor, sensitivity, invert vertical look and camera reset. Preferences remain in user://view_settings94.cfg, separate from fortunes. The original cursor-and-brackets mode remains available. Original world, collision, stairs, art and saves remain authoritative. Town/interior presentation is unchanged.
+
+Native input/visual review passed: 46 new mouse-look assertions and 197 focused regression assertions, with the final view/navigation rerun passing 77. Exact export and hosted gates remain in progress; this candidate is not yet published. See testing/mouselook95.md. Continue on exploration/mouselook95 from delivered master d31a4dd8970957c38bdeba574b00ce6dd6c5e985. Preserve earlier releases, branches and bundles. Next is completing exact-export/source gates and delivery, then owner feel feedback.
+
 # 0.84.0 — Depth & Perspective: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.84.0. Runtime/release/tag source b579fdea477b9779dbe23a1104d97c8b4d0fefdc; PR #59 merge e365b67d7eebbb55bcdd31dab38ad543af8b360a has the same tree 71fed7cc923ea5e435ddbee1d47513574e04383e. Source run 40772786202 passed all 37 gameplay cases plus people-preview. Release run 40772781053 passed all 27 exact-export cases / 1,924 assertions. Local regressions passed 197 assertions; the final highlight adjustment passed 31 navigation assertions and visual review. The earlier local export also passed 31 navigation assertions.

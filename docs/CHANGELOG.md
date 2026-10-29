@@ -1,3 +1,10 @@
+# 0.85.0 — A Dwarf’s Eye View
+
+- Mine exploration now defaults to captured mouse-look: continuous orbit/tilt, camera-relative WASD and dodge, central reticle aiming and wheel zoom. Close zoom uses shoulder framing.
+- Alt frees the cursor. Books, survey, construction, window focus loss and leaving the mine release capture. Held UI clicks cannot become attacks on returning to play.
+- F7 adds mouse-look/free-cursor choice, sensitivity, invert vertical look and reset. Settings persist separately from fortunes. F6 still restores traditional overhead; RMB remains guard/parry.
+- Camera turns update existing wall cutaways without rebuilding terrain batches every frame. Original sprites, gameplay, saves and zero-energy combat remain intact.
+
 # 0.84.0 — Depth & Perspective
 
 - F6 toggles traditional overhead and mine exploration with painted 2D characters in 3D terrain. Brackets rotate the camera; movement, dodge and mouse targeting follow the view. The choice is remembered separately from your save.

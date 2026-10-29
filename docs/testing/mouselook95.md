@@ -1,0 +1,11 @@
+# Mouse-look exploration acceptance
+
+Candidate 0.85.0; delivery pending. `tests/mouselook95.gd` uses the shared isolated fixture and native Input.parse_input_event for mouse motion, buttons and Alt. It checks unscaled motion, pitch bounds, sensitivity/inversion, zoom limits, close framing, unchanged world state, retained terrain batches, pointer handoff, held-click suppression, menus/map/survey/placement/focus, persisted preferences, actual mining contact, zero-energy attack/guard/dodge, camera-relative collision movement and overhead/zone/title exit.
+
+Focused regressions: navigation94 (31), combat (44), mining (38), dev_testing (49), menu92 (35): 197 assertions passed in test-results/mouselook95-regression. Final native view rerun: mouselook95 (46) and navigation94 (31), all 77 passing in test-results/mouselook95-verified. The local exact pack passed the same 77 assertions and all seven mouse-look captures matched native pixels. A final player-visibility adjustment then passed 46 native assertions in test-results/mouselook95-visible; its final exported verification is pending. Native review includes default/orbit/close views, camera controls, reticle mining and enemy warnings. Existing whole Dwarf artwork is retained.
+
+An initial harness injected motion before the native window completed capture; waiting two frames before injection resolved the initial-event test. Extreme-zoom review found hotbar overlap; close camera framing and billboard root anchoring were corrected. A player-only depth override keeps the dwarf readable when its tilted paper sprite meets a rock face; enemies and props retain normal occlusion.
+
+Local performance probe: Godot 4.4.1 GL Compatibility, Mesa llvmpipe, Xvfb 1280×720. 150 frames per sample, first 30 discarded. Mean/p95 milliseconds: overhead idle 27.21/41.39; exploration idle 21.58/28.76; continuous orbit 21.84/28.07; orbit while moving 22.13/28.91; combat 21.73/31.29. This small mine fixture predates the close-zoom framing and billboard anchoring corrections and is not a Windows hardware performance claim. See mouselook95/performance.txt.
+
+Limits: mine presentation only, one floor at a time. Aim and collision remain on the original ground plane; this is not jumping/free-flight 3D physics. Windows hardware/audio and subjective sensitivity/comfort require the owner’s playtest.

@@ -44,7 +44,8 @@
       "calendar",
       "menu92",
       "equipment93",
-      "navigation94"
+      "navigation94",
+      "mouselook95"
     ],
     "modular": [
       "modular",
@@ -334,7 +335,8 @@
       "energy",
       "calendar",
       "equipment93",
-      "navigation94"
+      "navigation94",
+      "mouselook95"
     ],
     "calendar-preview": [
       "calendar"
@@ -369,6 +371,20 @@
       "mining",
       "dev_testing",
       "menu92"
+    ],
+    "mouselook95": [
+      "mouselook95"
+    ],
+    "mouselook95-regression": [
+      "navigation94",
+      "combat",
+      "mining",
+      "dev_testing",
+      "menu92"
+    ],
+    "mouselook95-view": [
+      "mouselook95",
+      "navigation94"
     ]
   },
   "cases": {
@@ -519,6 +535,10 @@
     "navigation94": {
       "script": "tests/navigation94.gd",
       "marker": "NAVIGATION94"
+    },
+    "mouselook95": {
+      "script": "tests/mouselook95.gd",
+      "marker": "MOUSELOOK95"
     }
   }
 }
