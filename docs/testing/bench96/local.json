@@ -1,0 +1,52 @@
+{
+  "source": "f4dada8c4c09c6c723fd1b719a7c5e0090347ffb",
+  "tree": "9381465166b9efbfbbd0b2de39d52c0c9759301b",
+  "focused": [
+    {
+      "test": "bench96",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 6,
+      "seconds": 20.68
+    },
+    {
+      "test": "handworks",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 32,
+      "seconds": 62.47
+    },
+    {
+      "test": "work",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 26,
+      "seconds": 70.53
+    },
+    {
+      "test": "dev_testing",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 49,
+      "seconds": 112.5
+    },
+    {
+      "test": "navigation94",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 31,
+      "seconds": 56.51
+    }
+  ],
+  "local_export_assertions": 6,
+  "pck_entries": 3345,
+  "reviewed_images": {
+    "blocked-bench.png": "64f3d9bead258ed4986f9c768b3550faf601245a2394d5dd1fb0eeb32aa603c5",
+    "overhead-bench.png": "3b6208f66730a279d02a124c491f09486f29cbef7053c904064d5a05370522b4"
+  }
+}

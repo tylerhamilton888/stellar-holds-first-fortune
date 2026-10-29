@@ -1,0 +1,32 @@
+{
+  "version": "0.85.1",
+  "source": "f4dada8c4c09c6c723fd1b719a7c5e0090347ffb",
+  "merge": "dbd3ee4a7fe76f878dfc8791154c2a13ca60ab55",
+  "tree": "9381465166b9efbfbbd0b2de39d52c0c9759301b",
+  "source_run": 40896041513,
+  "release_run": 40896319756,
+  "source_cases": 39,
+  "export_cases": 29,
+  "export_assertions": 1976,
+  "assets": [
+    {
+      "name": "build.json",
+      "size": 822,
+      "digest": "sha256:94bed3e4b9bdfc98851d4185d6b6fe216ced7e27244a72139a36b2b4a44c0b8f",
+      "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.85.1/build.json"
+    },
+    {
+      "name": "Stellar-Holds-First-Fortune-0.85.1-Windows.zip",
+      "size": 767188403,
+      "digest": "sha256:2f9eefe74b8b58b0edf546b6960d5ede202075488d631640e84b1ac2632644a2",
+      "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.85.1/Stellar-Holds-First-Fortune-0.85.1-Windows.zip"
+    },
+    {
+      "name": "verification-evidence.tar.gz",
+      "size": 243797442,
+      "digest": "sha256:1b5e7328873233d3354d48fc2d689306b97fbfdc50b91c46bff4422545b6ba3c",
+      "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.85.1/verification-evidence.tar.gz"
+    }
+  ],
+  "verification": "Downloaded build report and evidence match release asset hashes. ZIP size/hash match build report; full ZIP not independently redownloaded. Hosted bench screenshots visually reviewed."
+}

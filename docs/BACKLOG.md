@@ -1,6 +1,8 @@
-# Workbench clearance fix — 0.85.1 in verification
+# 0.85.1 — Workbench clearance: published and merged
 
-Reproduced the exploration preset's loaded-but-idle stonebreaker: both working positions overlap the north wall. Moved the test bench one tile south, reject new placements without working clearance, and explain obstructed work without discarding its input. Native bench96 passed six checks, including exact output yield. Focused regressions and release checks are pending. Existing 0.85.0 test saves need F9 reset or the wall mined clear; normal saves are unchanged.
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.85.1. Release source f4dada8c4c09c6c723fd1b719a7c5e0090347ffb; PR #63 merged as dbd3ee4a7fe76f878dfc8791154c2a13ca60ab55 with identical tree 9381465166b9efbfbbd0b2de39d52c0c9759301b. Source run 40896041513 passed all 39 gameplay cases plus people-preview. Release run 40896319756 passed all 29 exact-export cases / 1,976 assertions and published successfully. Local focused checks passed 144 assertions; local exported bench96 passed six. See testing/bench96.md.
+
+The exploration test bench now has room for its working stance. New bench placement requires working clearance; an obstructed existing bench explains the blockage and preserves its unfinished input. Hold E to work. Existing 0.85.0 exploration test saves need F9 reset or the wall mined clear. Normal fortunes and energy-free combat are unchanged.
 
 ## Mouse-look exploration — delivered in 0.85.0
 
