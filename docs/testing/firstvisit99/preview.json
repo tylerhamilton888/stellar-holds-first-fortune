@@ -1,0 +1,110 @@
+{
+  "version": "0.87.0-playtest",
+  "local_source": "cf43450ddc71752ff359be88181d252b6c69c4b9",
+  "hosted_source": "c425c183caa36c087a725972aadd96f72534b88c",
+  "source_tree": "564da75096587cbd8ea2eb7fd3a5ca1b050b874c",
+  "pull_request": 67,
+  "build": {
+    "version": "0.87.0-playtest",
+    "commit": "cf43450ddc71752ff359be88181d252b6c69c4b9",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "6a65423c4c4030038a9cd4baf100203ab10d820fe2f1b6c195391bc5acc8afee",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "1dff9111cf53aff02af915c17ad2d41d1737e4526d39c8b3ff8b4ff360a399ce",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "648425881202d385384b693c5b4a66d4a6b7b65023e7253d193d5a144d0661ea",
+    "zip_bytes": 767260893
+  },
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.19
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 22,
+      "seconds": 61.55
+    },
+    {
+      "test": "firstshift",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 64.57
+    },
+    {
+      "test": "workplace98",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 26.88
+    },
+    {
+      "test": "quest_ui",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 21,
+      "seconds": 49.87
+    },
+    {
+      "test": "orientation",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 20,
+      "seconds": 72.16
+    },
+    {
+      "test": "expedition97",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 16,
+      "seconds": 46.88
+    }
+  ],
+  "final_pack": [
+    {
+      "test": "ambient",
+      "passed": true,
+      "checks": 11
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "checks": 22
+    }
+  ],
+  "earlier_pack_workplace": {
+    "checks": 23,
+    "passed": true,
+    "source": "ecb45c33914a2ce19893093d6bbafb637c6f6cc9"
+  },
+  "screenshots": {
+    "test-results/firstvisit99-final-pack/firstvisit99/title.png": "a09bd4c38336104dfa3288c2061054d29e78b3c1b5ea7bb484f70ae0aa7e2a39",
+    "test-results/firstvisit99-final-pack/firstvisit99/first-task.png": "f3f68f83cf5156d0d35995b33362b6bf8619f05291abbed3e5b34dcc00c33cfc",
+    "test-results/firstvisit99-final-pack/firstvisit99/choose-fortune.png": "b38e30c93d46213ce97cc334b0cbda961b759a70da04cca95af442dad3b22438",
+    "test-results/firstvisit99-final-pack/firstvisit99/restoration-lead.png": "b5ac52d0fa688f7fa655fde7375c68acca3f38cddeaa5a2706871a0a348811de",
+    "test-results/firstvisit99-final-pack/firstvisit99/commission-details.png": "5e616155f6ed79ed0fd4b6a3c3915b755deeb68e78e326cf84088d73d7e1c598"
+  },
+  "limits": [
+    "Playable preview, not a stable release or merge.",
+    "Native focused suite predates the final one-line suppression of the duplicate lesson; final exported first-visit case covers that change.",
+    "Linux native renderer exercised the real Windows PCK; Windows hardware/audio and human pacing/enjoyment remain playtests."
+  ]
+}
