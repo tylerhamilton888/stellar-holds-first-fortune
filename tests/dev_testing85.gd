@@ -61,8 +61,9 @@ func run():
   await snap("drill-"+lesson.to_lower().replace(" ","-"))
  check(g.deep.world.at(Vector2i(24,20))!=0,"Wall drill provides actual solid terrain")
  g.dev.start("work");settle()
- var facilities=g.handworks.data().facilities.filter(func(f):return g.handworks.local(f) and Vector2(f.x,f.y).distance_to(g.player)<400)
- check(facilities.size()==5,"Mining test supplies five usable benches, racks and cart")
+ var facilities=g.handworks.data().facilities.filter(func(f):return g.handworks.local(f) and not str(f.id).begins_with("workplace98:") and Vector2(f.x,f.y).distance_to(g.player)<400)
+ var kinds=facilities.map(func(f):return str(f.kind));kinds.sort()
+ check(kinds==["breaker","cart","saw","stone_pile","timber_pile"],"Mining test supplies its five intended benches, racks and cart independently of the old bay")
  check(g.handworks.data().loose.size()==2 and not g.combat.armed,"Loose mineral and timber loads are ready with tools drawn")
  var rack=facilities.filter(func(f):return f.kind=="stone_pile")[0]
  var raw=g.handworks.data().loose[0];g.handworks.data().loose.erase(raw);g.handworks.data().carry.append(raw)
