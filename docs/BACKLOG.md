@@ -1,8 +1,14 @@
-# 0.87.0 — Full validation and release preparation
+# 0.87.0 — A place to begin: published and merged
 
-GitHub's broader check caught a missing optional room key in standalone furniture rendering. The room lookup now tolerates unassigned furniture in overhead/exploration, room quality and interaction paths. Added saved standalone-furniture captures to workplace98; the existing mining regression reproduces the original failure. Preparing the complete source and exact-export gates before publication. The earlier 0.87.0-playtest ZIP is superseded by this candidate; do not treat its focused checks as full release acceptance.
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.87.0. PR #67 merged as ed720a79d649aaa72488c9669286a173922d28b5; release source 2d3a41cb41c14ad2c4753c6f79abe4aec9d96f9f, identical tree 20b42c9736e6524ee586e82f8f158c7b2bec23c5. Full source run 40960086190 passed all 42 gameplay cases plus people-preview. Release run 40960081561 passed all 32 exact-export cases / 2,039 assertions and published successfully.
 
-# 0.87.0 — A place to begin: Windows playtest delivered
+Extract the Windows ZIP into a fresh folder and run FirstFortune.exe. Choose First visit to the hold → an empty normal save slot → create a Dwarf. Five practical tasks lead into the old cutters’ bay; J offers optional ambitions toward Ivar’s reference, charter, hold and ship. Guidance can be paused. Existing fortunes and energy-free combat are preserved.
+
+The full gate uncovered and fixed optional room membership on standalone furniture, pillar drawing through the wrong canvas, and a developer fixture that counted the new bay’s borrowed stations. Native and exported standalone-furniture captures were reviewed. Local focused source checks passed 136 assertions; focused exported checks passed 96, and the remaining local exported cases passed 816.
+
+Downloaded build report and verification archive match GitHub SHA256 digests. Uploaded ZIP size 767,215,075 and SHA256 f8b15ae69d1e6e4ada8d09dd397819cda940a7c8447b8417bad0c882bac26333 match the clean build report. The hosted full ZIP was not independently redownloaded. The published version supersedes the earlier playtest ZIP. Human pacing, enjoyment and Windows device/audio performance still need hands-on playtesting. Evidence: testing/firstvisit99/delivery.json. Continue from master; earlier backups and previews are retained.
+
+# Historical preview — superseded by published 0.87.0
 
 Title → First visit to the hold → choose an empty normal save slot and create a Dwarf. Five small tasks teach movement, pack, lifting, stocking and real bench work. A one-time repair allowance introduces the old cutters’ bay; longer optional ambitions track Ivar’s reference, charter, hold and ship. Guidance can be paused. Standard new fortunes and existing saves retain their original openings.
 
