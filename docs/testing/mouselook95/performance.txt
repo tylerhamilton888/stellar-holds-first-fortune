@@ -3,8 +3,8 @@ WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by 
      at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:360)
 OpenGL API 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
 
-PERF overhead_idle mean_ms=27.205325 p95_ms=41.388 draw_calls=1115.0
-PERF exploration_idle mean_ms=21.5816833333333 p95_ms=28.764 draw_calls=80.0
-PERF exploration_orbit mean_ms=21.8409666666667 p95_ms=28.071 draw_calls=80.0
-PERF exploration_moving mean_ms=22.13135 p95_ms=28.909 draw_calls=73.0
-PERF exploration_combat mean_ms=21.7267916666667 p95_ms=31.294 draw_calls=70.0
+PERF overhead_idle mean_ms=26.3409416666667 p95_ms=40.513 draw_calls=1111.0
+PERF exploration_idle mean_ms=19.7840916666667 p95_ms=27.393 draw_calls=80.0
+PERF exploration_orbit mean_ms=20.953825 p95_ms=28.989 draw_calls=80.0
+PERF exploration_moving mean_ms=19.7296916666667 p95_ms=26.292 draw_calls=73.0
+PERF exploration_combat mean_ms=18.6110333333333 p95_ms=25.404 draw_calls=70.0

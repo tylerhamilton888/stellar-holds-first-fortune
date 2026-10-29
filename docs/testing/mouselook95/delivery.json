@@ -1,0 +1,73 @@
+{
+  "source": "76d0c5195bf95d74dbb8c0fed54b52213d490190",
+  "runtime_tree": "7e20f238fea428591c3a81da60a151b94394ff82",
+  "version": "0.85.0",
+  "build": {
+    "version": "0.85.0",
+    "commit": "76d0c5195bf95d74dbb8c0fed54b52213d490190",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "01a266e10d0d7966ddd39745fdef553dd7a6221a965f0cbd9fd508e73fc7484c",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "bb05ae3f83fda4f66b48cb15779e345e458feeeab91d4b78f37289342c14f880",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "a399a27c679dfa5e73971720ed53844d4ef82bfd34b2808e1accb62904646bc6",
+    "zip_bytes": 767188145
+  },
+  "cases": 28,
+  "assertions": 1970,
+  "images": {
+    "camera-controls.png": {
+      "source_sha256": "6800141a5a0b720c4b655a2a5e217c7a3b947fad8d037e2a5ab7c7b81184d33a",
+      "published_sha256": "6800141a5a0b720c4b655a2a5e217c7a3b947fad8d037e2a5ab7c7b81184d33a",
+      "identical": true
+    },
+    "close-high.png": {
+      "source_sha256": "9956dbe73fda109084d234addea1cdd3b18cadac7b87f5285d1063dc34f6fe52",
+      "published_sha256": "9956dbe73fda109084d234addea1cdd3b18cadac7b87f5285d1063dc34f6fe52",
+      "identical": true
+    },
+    "close-low.png": {
+      "source_sha256": "1fd53066e90a31045d03e281473d8a60881554be6da723b6382fa1538b8a6df4",
+      "published_sha256": "1fd53066e90a31045d03e281473d8a60881554be6da723b6382fa1538b8a6df4",
+      "identical": true
+    },
+    "mouse-look.png": {
+      "source_sha256": "6d549d414edf5e58e7898913e55ebea29e93e2b3c543ca5479a3d779e36355a4",
+      "published_sha256": "6d549d414edf5e58e7898913e55ebea29e93e2b3c543ca5479a3d779e36355a4",
+      "identical": true
+    },
+    "mouse-orbit.png": {
+      "source_sha256": "421496c0766ebda6f78dd52aed45dfaccc4a464d110bfa8d3cb4a3c96fef3007",
+      "published_sha256": "421496c0766ebda6f78dd52aed45dfaccc4a464d110bfa8d3cb4a3c96fef3007",
+      "identical": true
+    },
+    "reticle-combat.png": {
+      "source_sha256": "c9e4f408e6f06c911dea8e1e5cd6a3e7d85feb0a04c2a70641f597f4fbaf0ad4",
+      "published_sha256": "c9e4f408e6f06c911dea8e1e5cd6a3e7d85feb0a04c2a70641f597f4fbaf0ad4",
+      "identical": true
+    },
+    "reticle-mining.png": {
+      "source_sha256": "2ff05f14aa57edbc7ac8e8908dc648e1df0fba70b0bd9a1979a59f17d2791a86",
+      "published_sha256": "2ff05f14aa57edbc7ac8e8908dc648e1df0fba70b0bd9a1979a59f17d2791a86",
+      "identical": true
+    }
+  },
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.85.0",
+  "zip_metadata_matches_report": true,
+  "zip_independently_redownloaded": false,
+  "downloaded_evidence_verified": true,
+  "build_report_digest": "sha256:da0784788b1f4b79cf3eca95a9493bab2a45b260e7a5595f319f81ec4eaca8b1",
+  "evidence_digest": "sha256:d2a4f7f95b04aff46977c3c04201ed86b58cda18eb806f07526538b4c4bf2225",
+  "source_run": 40800423957,
+  "release_run": 40800559860,
+  "local_regression_assertions": 197,
+  "local_final_mouselook_assertions": 46,
+  "local_view_rerun_assertions": 77,
+  "local_final_export_assertions": 77,
+  "runtime_merge": "09dda3c57f6fc0d2a69f0c2e1e1e3d4e07dbaff7"
+}

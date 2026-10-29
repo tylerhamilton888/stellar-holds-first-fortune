@@ -1,6 +1,6 @@
-## Mouse-look exploration — 0.85.0 candidate
+## Mouse-look exploration — delivered in 0.85.0
 
-Owner feedback on manual camera rotation is addressed with continuous mouse look, camera-relative controls, reticle aim, zoom and pointer/menu handoff. Native and exported verification/delivery are in progress. Next: owner Windows playtest for mouse sensitivity, pitch/zoom comfort, close-camera visibility and combat targeting. Mine-only presentation and shared simulation remain; town/interior expansion and continuous multi-floor geometry are separate work.
+Owner feedback on manual rotation is addressed with continuous mouse look, camera-relative controls, reticle aiming, zoom/shoulder framing and pointer/menu handoff. Published and merged after 38 source cases plus people-preview and 28 exact-export cases / 1,970 assertions passed. F7 preserves the free-cursor option and offers sensitivity/inversion. Next: owner Windows playtest for camera comfort, close visibility and targeting. Town/interior expansion and continuous multi-floor geometry remain separate scope. Preserve shared simulation, original art and energy-free combat.
 
 ## Depth navigation and optional exploration — delivered in 0.84.0
 
