@@ -294,7 +294,7 @@ func draw_furniture(kind:String,p:Vector2):
    for y in [-14,0,14]:g.draw_line(p+Vector2(-17,y),p+Vector2(17,y),rim,3)
    for j in 6:g.draw_rect(Rect2(p+Vector2(-13+j%3*10,-12+j/3*14),Vector2(6,9)),Color("839893") if j%2 else Color("b18d57"))
   "pillar","rune":
-   g.surface.world.detail(4,p+Vector2(0,16),34,70)
+   HoldMasonryArt.pillar(g,p+Vector2(0,16),70)
    if kind=="rune":
     g.draw_polyline(PackedVector2Array([p+Vector2(0,-34),p+Vector2(4,-26),p+Vector2(-4,-19),p+Vector2(0,-12)]),Color("bde5d6"),1.3,true)
   "chair":
