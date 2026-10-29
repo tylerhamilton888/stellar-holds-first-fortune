@@ -1,3 +1,21 @@
+# 0.87.0 — Full validation and release preparation
+
+GitHub's broader check caught a missing optional room key in standalone furniture rendering. The room lookup now tolerates unassigned furniture in overhead/exploration, room quality and interaction paths. Added saved standalone-furniture captures to workplace98; the existing mining regression reproduces the original failure. Preparing the complete source and exact-export gates before publication. The earlier 0.87.0-playtest ZIP is superseded by this candidate; do not treat its focused checks as full release acceptance.
+
+# 0.87.0 — A place to begin: Windows playtest delivered
+
+Title → First visit to the hold → choose an empty normal save slot and create a Dwarf. Five small tasks teach movement, pack, lifting, stocking and real bench work. A one-time repair allowance introduces the old cutters’ bay; longer optional ambitions track Ivar’s reference, charter, hold and ship. Guidance can be paused. Standard new fortunes and existing saves retain their original openings.
+
+Clean Windows ZIP: firstvisit99-final-build/Stellar-Holds-First-Fortune-0.87.0-playtest-Windows.zip (767,260,893 bytes; SHA256 648425881202d385384b693c5b4a66d4a6b7b65023e7253d193d5a144d0661ea). Local runtime cf43450ddc71752ff359be88181d252b6c69c4b9 and hosted c425c183caa36c087a725972aadd96f72534b88c have identical tree 564da75096587cbd8ea2eb7fd3a5ca1b050b874c. Draft PR #67 contains the earlier expedition/workplace previews too; not merged or stable-published.
+
+Focused native checks passed 131 assertions; final exported ambient and first-visit cases passed 33. The immediately preceding export also passed workplace98’s 23 assertions. Final one-line journal cleanup is covered by exported first-visit input/save/delivery tests. Title, slots and journal captures reviewed. All 3,351 PCK entries and the complete ZIP passed integrity checks. Human pacing/enjoyment and Windows hardware/audio remain playtests. See testing/firstvisit99.md and testing/firstvisit99/preview.json. Keep previous backups and previews.
+
+# 0.86.1-preview — The old cutters’ bay
+
+- Discover an abandoned bay, reopen its supply passage and restore its hearth with ordinary construction.
+- Odrin follows real routes, processes real raw stock, takes a midday break and responds to lost access or heat. Work history and material ownership persist.
+- Includes a separate test save; existing mines and normal fortunes are preserved. This preview includes the expedition prototype and is not a stable-release replacement.
+
 # 0.85.1 — Workbench clearance
 
 The Mine views & depth routes test bench now has room for the dwarf to hammer. Hold **E** beside a supplied stonebreaker to approach its working position and process the chunk; finished materials go straight to your pack.

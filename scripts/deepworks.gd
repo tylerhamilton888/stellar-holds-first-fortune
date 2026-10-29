@@ -14,7 +14,9 @@ var landmark_cache:Array=[]
 const FEET=Vector2(10,8)
 func _init(s):
  state=s
- if not s.deepworks.has(s.active_site):s.deepworks[s.active_site]=generate(s.seed_value+(7919 if s.active_site=="claim" else 0))
+ if not s.deepworks.has(s.active_site):
+  s.deepworks[s.active_site]=generate(s.seed_value+(7919 if s.active_site=="claim" else 0))
+  if s.active_site=="hold":HoldWorkplace98.seed(s.deepworks[s.active_site])
  data=s.deepworks[s.active_site]
  rebuild_landmarks()
 static func key(c:Vector2i)->String:return "%d,%d" % [c.x,c.y]

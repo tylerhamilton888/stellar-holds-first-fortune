@@ -19,7 +19,7 @@ func run():
  g.surface.enter("trail");settle();g.surface.action("mine");settle()
  var h=g.handworks;var q=HoldFirstShift.data(g);var world=g.deep.world
  check(g.zone=="mine" and q.started,"Settlement route enters the real mine and starts the first shift")
- check(h.data().facilities.filter(func(f):return h.local(f)).size()==4,"Four real loan/crew facilities establish the bay")
+ check(h.data().facilities.filter(func(f):return h.local(f) and str(f.id).begins_with("firstshift:")).size()==4,"Four real loan/crew facilities establish the bay")
  var cells=world.layer().cells.duplicate();var wood=g.state.count("wood")
  HoldFirstShift.kit(g)
  check(g.state.count("wood")==wood,"The mine journal cannot grant access to hold supplies")

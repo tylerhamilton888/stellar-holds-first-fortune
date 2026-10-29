@@ -1,3 +1,23 @@
+# 0.87.0 — Full validation and release preparation
+
+GitHub's broader check caught a missing optional room key in standalone furniture rendering. The room lookup now tolerates unassigned furniture in overhead/exploration, room quality and interaction paths. Added saved standalone-furniture captures to workplace98; the existing mining regression reproduces the original failure. Preparing the complete source and exact-export gates before publication. The earlier 0.87.0-playtest ZIP is superseded by this candidate; do not treat its focused checks as full release acceptance.
+
+# 0.87.0 — A place to begin: Windows playtest delivered
+
+Title → First visit to the hold → choose an empty normal save slot and create a Dwarf. Five small tasks teach movement, pack, lifting, stocking and real bench work. A one-time repair allowance introduces the old cutters’ bay; longer optional ambitions track Ivar’s reference, charter, hold and ship. Guidance can be paused. Standard new fortunes and existing saves retain their original openings.
+
+Clean Windows ZIP: firstvisit99-final-build/Stellar-Holds-First-Fortune-0.87.0-playtest-Windows.zip (767,260,893 bytes; SHA256 648425881202d385384b693c5b4a66d4a6b7b65023e7253d193d5a144d0661ea). Local runtime cf43450ddc71752ff359be88181d252b6c69c4b9 and hosted c425c183caa36c087a725972aadd96f72534b88c have identical tree 564da75096587cbd8ea2eb7fd3a5ca1b050b874c. Draft PR #67 contains the earlier expedition/workplace previews too; not merged or stable-published.
+
+Focused native checks passed 131 assertions; final exported ambient and first-visit cases passed 33. The immediately preceding export also passed workplace98’s 23 assertions. Final one-line journal cleanup is covered by exported first-visit input/save/delivery tests. Title, slots and journal captures reviewed. All 3,351 PCK entries and the complete ZIP passed integrity checks. Human pacing/enjoyment and Windows hardware/audio remain playtests. See testing/firstvisit99.md and testing/firstvisit99/preview.json. Keep previous backups and previews.
+
+# Old cutters’ bay — playable preview in verification
+
+An abandoned workplace now connects discovery, physical repair, warmth, actual stock processing and a persistent resident. New hold mines only; existing excavations are preserved. Use Dev Testing → The old cutters bay. See testing/workplace98.md for scope and verification.
+
+# Expedition loop preview — in verification
+
+Implemented Ivar’s fresh-ore expedition, handcart-material reward and crystal follow-up, plus a separate First expedition test save. See testing/expedition97.md. Pacing remains a playtest question; no new authored dungeon or combat-energy changes.
+
 # 0.85.1 — Workbench clearance: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.85.1. Release source f4dada8c4c09c6c723fd1b719a7c5e0090347ffb; PR #63 merged as dbd3ee4a7fe76f878dfc8791154c2a13ca60ab55 with identical tree 9381465166b9efbfbbd0b2de39d52c0c9759301b. Source run 40896041513 passed all 39 gameplay cases plus people-preview. Release run 40896319756 passed all 29 exact-export cases / 1,976 assertions and published successfully. Local focused checks passed 144 assertions; local exported bench96 passed six. See testing/bench96.md.

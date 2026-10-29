@@ -209,7 +209,10 @@ func setup_ui():
  transition_shade=ColorRect.new();transition_shade.color=Color("0b1721");transition_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);transition_shade.z_index=90;transition_shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;transition_shade.visible=false;ui.add_child(transition_shade)
  transition_label=Label.new();transition_label.position=Vector2(100,240);transition_label.size=Vector2(760,60);transition_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;transition_label.add_theme_font_size_override("font_size",25);transition_label.modulate=Color("edc98a");transition_shade.add_child(transition_label)
 
+var first_visit_pending=false
+
 func show_title():
+ first_visit_pending=false
  if depth_nav!=null:depth_nav.explore.release_pointer()
  dev.leave()
  playing=false;room_id="";transition_left=0;transition_shade.visible=false;sound.set_context("title")
@@ -221,7 +224,7 @@ func show_title():
  var description=Label.new();description.text="Earn your mountain. Found your house.";description.position=Vector2(69,254);description.add_theme_font_size_override("font_size",14);title_ui.add_child(description)
  var box=VBoxContainer.new();box.position=Vector2(69,288);box.size=Vector2(288,150);box.add_theme_constant_override("separation",6);title_ui.add_child(box)
  button(box,"Continue / choose a fortune",func():open_panel("save_slots"))
- button(box,"Begin a new fortune",func():open_panel("save_slots"))
+ button(box,"First visit to the hold",func():first_visit_pending=true;open_panel("save_slots"))
  button(box,"Settings & sound",func():open_panel("settings"))
  if HoldBuild.DEV_TESTING:button(box,"Dev Testing",func():open_panel("dev_testing"))
  button(box,"Quit",shutdown)
@@ -235,6 +238,8 @@ func show_title():
  var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
+ var first_visit=first_visit_pending and not load_saved and not testing
+ first_visit_pending=false
  if depth_nav!=null:depth_nav.reset()
  if testing and not HoldBuild.DEV_TESTING:return
  calendar_page=-1;calendar_selected=-1
@@ -274,6 +279,8 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  hotbar.restore()
  HoldFolk.prepare(self)
  if not load_saved:
+  if first_visit:
+   HoldFirstVisit99.begin(self);return
   save_game()
   if capture_mode=="" and not skip_arrival:opening_scene=HoldOpeningScene.begin(self,"arrival")
   else:
@@ -344,7 +351,7 @@ func _process(dt):
   if panel_id=="" and not launching and not is_instance_valid(creator) and transition_left<=0:
    HoldWorkEnergy.tick(state,dt)
    HoldCalendar.tick(self,dt)
-   fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt)
+   fight.update(dt);handworks.update(dt);HoldFirstShift.tick(self,dt);HoldAncestralClaim.tick(self,dt);HoldWorkplace98.tick(self,dt);HoldFirstVisit99.tick(self)
    if zone=="mine":
     deep.move(dt)
     if zone=="mine":deep.mine(dt)
@@ -411,6 +418,7 @@ func _unhandled_input(e):
  if fight.input(e):get_viewport().set_input_as_handled();return
  if fieldwork.input(e):get_viewport().set_input_as_handled();return
  if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldAncestralClaim.interact(self):get_viewport().set_input_as_handled();return
+ if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldWorkplace98.interact(self):get_viewport().set_input_as_handled();return
  if handworks.input(e):get_viewport().set_input_as_handled();return
  if hotbar.handle(e):get_viewport().set_input_as_handled();return
  if deep.input(e):get_viewport().set_input_as_handled();return
@@ -878,6 +886,7 @@ func nearest_station()->Dictionary:
   if absf(station.x-player.x)<absf(best.x-player.x):best=station
  return best
 func goal()->String:
+ if HoldFirstVisit99.active(state):return HoldFirstVisit99.goal(self)
  var shift_goal=HoldFirstShift.goal(self)
  if shift_goal!="":return shift_goal
  var primary=HoldOnboarding.primary(state)
@@ -1199,13 +1208,14 @@ func purchase(cost:Dictionary,crowns:int,callback:Callable):
  if not state.pay(cost,crowns):notify("Not enough materials or crowns.");return
  callback.call();sound.effect("build");save_game();refresh_panel()
 func open_panel(id:String,remember:bool=true):
+ if id=="inventory" and playing:HoldFirstVisit99.seen_pack(state)
  if depth_nav!=null:depth_nav.explore.release_pointer()
  if id in ["world_map","basin_map","gate"]:id="wayfinding"
  if playing and panel_id=="settings" and id!="settings":save_game()
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
  panel_id=id;panel.visible=true
  HoldMenuView.build_shell(self,id)
@@ -1239,6 +1249,7 @@ func open_panel(id:String,remember:bool=true):
   "ivar_welcome":ivar_welcome_panel()
   "briefing":briefing_panel()
   "commission":commission_panel()
+  "commissions_detail":commission_panel(true)
   "charters":charters_panel()
   "pinewood":HoldForestry.panel(self)
   "road_order":surface.roads.panel()
@@ -1599,12 +1610,15 @@ func ivar_welcome_panel():
  label(panel_body,"Ivar's advice for the work ahead. J opens your current commissions and lessons." if HoldOnboarding.ensure(state).fresh else "Your first task: mine 8 coal, then return to Ivar’s office. J opens your work journal.",17,Color("edc98a"))
  label(panel_body,"Ivar’s advice",18)
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
-func commission_panel():
+func commission_panel(details:bool=false):
+ if HoldFirstVisit99.active(state) and not details:
+  HoldFirstVisit99.journal(self);return
  var current=HoldOnboarding.primary(state)
  if current!="":
   var objective=HoldMenuView.section(panel_body,"Current objective")
   label(objective,current,17)
   small_button(objective,"View steps & local quests",func():open_panel("guidance"))
+ HoldExpedition97.journal(self)
  HoldFirstShift.journal(self)
  HoldAncestralClaim.journal(self)
  if HoldOnboarding.side_stories(state):
@@ -1918,6 +1932,7 @@ func arrive_region(destination:String):
 
 
 func save_slots_panel():
+ if first_visit_pending:label(panel_body,"FIRST VISIT · Short practical lessons, an old workplace to revive, then a life of your own. Choose an empty slot below and create your Dwarf. Existing fortunes keep their original opening.",17)
  label(panel_body,"Separate characters, mountains and progress. Autosave stays in the slot you choose.",16)
  for slot in range(1,4):
   var summary=HoldState.slot_summary(slot)

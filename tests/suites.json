@@ -46,7 +46,10 @@
       "equipment93",
       "navigation94",
       "mouselook95",
-      "bench96"
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99"
     ],
     "modular": [
       "modular",
@@ -338,7 +341,10 @@
       "equipment93",
       "navigation94",
       "mouselook95",
-      "bench96"
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99"
     ],
     "calendar-preview": [
       "calendar"
@@ -394,6 +400,36 @@
       "work",
       "dev_testing",
       "navigation94"
+    ],
+    "expedition97": [
+      "expedition97",
+      "firstshift",
+      "bench96"
+    ],
+    "workplace98": [
+      "workplace98",
+      "living",
+      "firstshift",
+      "bench96",
+      "mouselook95",
+      "expedition97"
+    ],
+    "firstvisit99": [
+      "firstvisit99",
+      "firstshift",
+      "workplace98",
+      "quest_ui",
+      "orientation",
+      "expedition97"
+    ],
+    "firstvisit99-only": [
+      "firstvisit99"
+    ],
+    "furniture99": [
+      "mining",
+      "living",
+      "workplace98",
+      "firstvisit99"
     ]
   },
   "cases": {
@@ -552,6 +588,18 @@
     "bench96": {
       "script": "tests/bench96.gd",
       "marker": "BENCH96"
+    },
+    "expedition97": {
+      "script": "tests/expedition97.gd",
+      "marker": "EXPEDITION97"
+    },
+    "workplace98": {
+      "script": "tests/workplace98.gd",
+      "marker": "WORKPLACE98"
+    },
+    "firstvisit99": {
+      "script": "tests/firstvisit99.gd",
+      "marker": "FIRSTVISIT99"
     }
   }
 }
