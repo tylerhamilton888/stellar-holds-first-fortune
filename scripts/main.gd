@@ -1605,6 +1605,7 @@ func commission_panel():
   var objective=HoldMenuView.section(panel_body,"Current objective")
   label(objective,current,17)
   small_button(objective,"View steps & local quests",func():open_panel("guidance"))
+ HoldExpedition97.journal(self)
  HoldFirstShift.journal(self)
  HoldAncestralClaim.journal(self)
  if HoldOnboarding.side_stories(state):

@@ -46,7 +46,8 @@
       "equipment93",
       "navigation94",
       "mouselook95",
-      "bench96"
+      "bench96",
+      "expedition97"
     ],
     "modular": [
       "modular",
@@ -338,7 +339,8 @@
       "equipment93",
       "navigation94",
       "mouselook95",
-      "bench96"
+      "bench96",
+      "expedition97"
     ],
     "calendar-preview": [
       "calendar"
@@ -394,6 +396,11 @@
       "work",
       "dev_testing",
       "navigation94"
+    ],
+    "expedition97": [
+      "expedition97",
+      "firstshift",
+      "bench96"
     ]
   },
   "cases": {
@@ -552,6 +559,10 @@
     "bench96": {
       "script": "tests/bench96.gd",
       "marker": "BENCH96"
+    },
+    "expedition97": {
+      "script": "tests/expedition97.gd",
+      "marker": "EXPEDITION97"
     }
   }
 }

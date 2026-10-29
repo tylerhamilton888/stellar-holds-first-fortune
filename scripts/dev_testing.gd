@@ -3,6 +3,7 @@ extends RefCounted
 # Temporary, opt-in developer fixtures. No production progression rules are bypassed.
 const SAVE="user://dev_testing85.json"
 const MODES={
+ "expedition":{"name":"First expedition","detail":"Meet Ivar, mine and process fresh iron and coal, return for handcart materials, then follow the crystal lead. Separate test save."},
  "exploration":{"name":"Mine views & depth routes","detail":"Two connected floors, a mineral face and workbench. F6 changes view; mouse looks, Alt frees cursor, F7 controls; Z plans a route."},
  "calendar":{"name":"Calendar & celebrations","detail":"Daylight, night, seasons and all four feasts. Jump to a host or bed."},
  "combat":{"name":"Combat arena","detail":"All weapons and armor. Choose enemies, heal, or inspect hitboxes."},
@@ -124,8 +125,11 @@ func start(id:String):
  g.state.opening=4;g.state.claim_id="old_delving";g.state.camp_stage=3;g.state.tracked_npc=""
  var q=HoldOnboarding.ensure(g.state)
  q.fresh=false;q.stage=7;q.arrival_seen=true;q.escort_pending=false;q.settle_required=false;q.combat=true
- restock()
- if id=="exploration":exploration()
+ if id!="expedition":restock()
+ if id=="expedition":
+  g.state.add("wood",4);g.state.add("stone",8)
+  g.surface.enter("room:commission")
+ elif id=="exploration":exploration()
  elif id in ["combat","work"]:
   arena(2 if id=="combat" else 0)
   if id=="combat":wave([0]);return

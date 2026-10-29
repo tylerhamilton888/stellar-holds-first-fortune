@@ -323,6 +323,7 @@ func update(dt:float):
  if int((before+.21)/.42)!=int((float(f.job.progress)+.21)/.42):g.sound.effect("wood" if f.kind=="saw" else "stone_0",-14)
  if float(f.job.progress)<1.26:return
  var raw=f.job.raw;var item=raw_item(raw)
+ HoldExpedition97.processed(g,raw)
  f.cargo[item]=int(f.cargo.get(item,0))+int(raw.units)+(1 if HoldDisciplines.has(g.state,"sawyer" if raw.kind=="log" else "stone_finish") else 0)
  f.job={}
  if raw.kind=="log":
