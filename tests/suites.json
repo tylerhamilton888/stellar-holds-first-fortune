@@ -50,7 +50,8 @@
       "expedition97",
       "workplace98",
       "firstvisit99",
-      "menu_quality100"
+      "menu_quality100",
+      "lodge100"
     ],
     "modular": [
       "modular",
@@ -437,12 +438,25 @@
       "menu_quality100"
     ],
     "gameplay-4": [
-      "menu_quality100"
+      "menu_quality100",
+      "lodge100"
     ],
     "menu-quality-regression": [
       "quest_ui",
       "calendar",
       "energy"
+    ],
+    "lodge-only": [
+      "lodge100"
+    ],
+    "lodge-regression": [
+      "lodge100",
+      "firstvisit99",
+      "firsthour",
+      "living",
+      "roads",
+      "orientation",
+      "menu_quality100"
     ]
   },
   "cases": {
@@ -617,6 +631,10 @@
     "menu_quality100": {
       "script": "tests/menu_quality100.gd",
       "marker": "MENUQUALITY100"
+    },
+    "lodge100": {
+      "script": "tests/lodge100.gd",
+      "marker": "LODGE100"
     }
   }
 }

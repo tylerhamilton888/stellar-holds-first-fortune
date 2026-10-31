@@ -13,7 +13,9 @@ static func camera(area:String,p:Vector2)->Vector2:
  target.y=maxf(target.y,lerpf(115,max_y,clampf((p.y-(r.end.y-220))/110.0,0,1)))
  return target.clamp(Vector2(0,115),Vector2(maxf(0,plan.size.x-960),max_y))
 static func objects(w,area:String)->Array:
- if area=="room:home":return [w.furn("bookcase",245,325),w.furn("bookcase",735,335),w.furn("chair",399,420),w.furn("chair",529,420),w.furn("tea_table",464,440),w.furn("chair",650,366),w.furn("bookcase",625,530),w.furn("lamp",690,505)]
+ if area=="room:home":
+  if HoldFirstVisit99.lodge_intro(w.g.state):return []
+  return [w.furn("bookcase",245,325),w.furn("bookcase",735,335),w.furn("chair",399,420),w.furn("chair",529,420),w.furn("tea_table",464,440),w.furn("chair",650,366),w.furn("bookcase",625,530),w.furn("lamp",690,505)]
  if area=="room:tavern":return [w.furn("counter",735,450),w.furn("bookcase",560,330),w.furn("bookcase",635,330),w.furn("chair",317,540),w.furn("chair",487,540),w.furn("chair",657,540),w.furn("tea_table",270,410),w.furn("chair",222,425),w.furn("chair",318,425),w.furn("lamp",765,335)]
  if area=="room:market":return [w.furn("counter",515,390),w.furn("bookcase",365,335),w.furn("bookcase",645,335),w.furn("worktable",285,510),w.furn("tea_table",700,530),w.furn("chair",747,550),w.furn("lamp",225,570)]
  if area=="room:research":return [w.furn("orrery",350,490),w.furn("bookcase",420,345),w.furn("bookcase",495,345),w.furn("bookcase",735,345),w.furn("desk",690,540),w.furn("lamp",735,510)]
@@ -34,6 +36,9 @@ static func dressing(w,area:String):
   rug(w,Rect2(210,345,140,220),Color("486c6b"))
   rug(w,Rect2(470,387,274,122),Color("756344"))
   rug(w,Rect2(455,540,50,75),Color("526f62"))
+ elif area=="room:lodge":
+  rug(w,Rect2(200,305,210,95),Color("486c6b"))
+  rug(w,Rect2(405,405,150,115),Color("756344"))
  elif area=="room:home":
   rug(w,Rect2(247,342,95,143),Color("486c6b"))
   rug(w,Rect2(373,368,186,112),Color("58756c"))

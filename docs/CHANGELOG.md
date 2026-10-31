@@ -1,3 +1,9 @@
+# 0.89.0 — A hearth of your own (candidate)
+
+- Start new fortunes in the shared miners’ lodge, meet Ivar and visit the existing private quarters.
+- Work a real first shift for wages and room materials, then build a furnishing to reveal the next lead.
+- Preserve existing fortunes, furniture and first-visit progress. Add route, save/reload and old-fortune regression coverage.
+
 # 0.88.0 — A clearer hold: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.88.0. PR #69 merged as b4adf11ad87b87571e5dd2c22563946ca18e5d09; release source 597719c182cf236e349db8ccb4a7c29fbe6ba1f0 and merged source have identical tree 133ffce7e42c87d15fedbc684070970a3239b4c0. GitHub source run 41228493845 passed all 43 gameplay cases plus people-preview. Release run 41228523599 passed all 33 exact-export cases and published successfully.

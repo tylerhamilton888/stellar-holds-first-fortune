@@ -81,6 +81,8 @@ static func room_floor(w,area:String):
  var plan=HoldBuildingPlans.geometry(area);var source=plan.template;var g=w.g
  if source=="room:throne":HoldRoyalStage.floor_draw(w,area);return
  HoldArchitectureStyles.room_shell(w,area)
+ if area==HoldWorkerLodge100.ROOM:HoldWorkerLodge100.draw_private_door(w)
+ if area=="room:home" and not HoldFirstVisit99.lodge_intro(g.state):HoldWorkerLodge100.draw_private_door(w,560)
  var floor_area=plan.floor
  var room="home" if source.begins_with("home:") else source.trim_prefix("room:")
  HoldRoomLayout.dressing(w,source);HoldHouseholds.dressing(w,source)

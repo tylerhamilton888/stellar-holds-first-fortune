@@ -72,7 +72,8 @@ func points()->Array:
  for i in HoldDistrictMap.DOORS:
   if int(i)/7!=s.level():continue
   var d=HoldDistrictMap.DOORS[i];var action="room:"+d.id
-  if i==10:action="anniversary"
+  if i==7 and HoldFirstVisit99.lodge_intro(g.state):action=HoldWorkerLodge100.ROOM
+  elif i==10:action="anniversary"
   elif i==13:action="trail"
   elif i==17:action="room:practice"
   result.append({"p":door(i),"name":"King's Gate · High Trail" if i==13 else d.name,"action":action})
@@ -89,6 +90,7 @@ func points()->Array:
  for c in people():result.append({"p":c.p,"name":c.name+" · "+c.role,"action":c.get("interaction","citizen:"+str(c.index))})
  return result
 func arrival(old:String,id:String)->Vector2:
+ if old=="room:home" and id==HoldWorkerLodge100.ROOM:return HoldWorkerLodge100.RETURN_FROM_ROOM
  if old in ["room:tavern",HoldHouseholds.LOFT] and id in ["room:tavern",HoldHouseholds.LOFT]:return HoldHouseholds.KETTLE_STAIR+Vector2(0,30)
  if HoldNeighborhood.is_home(old):
   var p=HoldNeighborhood.parts(old)
@@ -241,7 +243,10 @@ func definition_objects(area_id:String="")->Array:
  elif id=="market":result=[furn("counter",410,390),furn("bookcase",305,335),furn("bookcase",705,335)]
  elif id in ["commission","research"]:result=[furn("desk",620,365),furn("bookcase",270,345),furn("bookcase",345,345)]
  elif id=="training":result=[furn("desk",660,570)]
- elif id=="home":result=[furn("table",650,330),furn("bed",290,420),furn("desk",735,515),furn("hearth",440,335)]
+ elif id=="lodge":result=HoldWorkerLodge100.furnishings(self)
+ elif id=="home":
+  result=[furn("bed",290,420),furn("desk",735,515),furn("hearth",440,335)]
+  if not HoldFirstVisit99.lodge_intro(g.state):result.append(furn("table",650,330))
  for x in [220,740]:result.append(furn("lamp",x,305))
  result.append_array(HoldRoomLayout.objects(self,area_id))
  result.append_array(s.roads.furnishings(area_id))
