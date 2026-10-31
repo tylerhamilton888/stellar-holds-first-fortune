@@ -1,3 +1,9 @@
+# 0.88.0 — A clearer hold (candidate)
+
+Menu and HUD presentation pass based on 0.87.0: hide energy, calendar and mine controls at the title and during menus; block background clicks with a modal shade; clarify the First visit selection; improve the book theme, scrolling cues, options layout and pause ordering. Existing fortunes, controls, inventory and gameplay state are unchanged. `tests/menu_quality100.gd` covers title-to-game transitions, opening choice and menu visibility; it is registered for source and exported-pack gates.
+
+This is a development candidate until the full source gate, exact-pack verification and release publication pass. See `docs/RELEASE_NOTES.md` for player-facing scope. Native captures require visual review; Windows device performance and audio are still player checks.
+
 # 0.87.0 — A place to begin: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.87.0. PR #67 merged as ed720a79d649aaa72488c9669286a173922d28b5; release source 2d3a41cb41c14ad2c4753c6f79abe4aec9d96f9f, identical tree 20b42c9736e6524ee586e82f8f158c7b2bec23c5. Full source run 40960086190 passed all 42 gameplay cases plus people-preview. Release run 40960081561 passed all 32 exact-export cases / 2,039 assertions and published successfully.

@@ -17,6 +17,7 @@ func _init(game):
  map_button=g.small_button(g.ui,"Depth map · Z",open_map);map_button.position=Vector2(744,118);map_button.size=Vector2(194,30)
  controls_button=g.small_button(g.ui,"Camera controls · F7",func():g.open_panel("camera_controls"));controls_button.position=Vector2(744,190);controls_button.size=Vector2(194,30)
  explore=HoldMineView94.new(g)
+ sync_visibility()
 func reset():
  goal=Vector3i(-1,-1,-1);path.clear();site="";explore.enabled=explore.preferred;explore.invalidate()
 func toggle_view():
@@ -42,9 +43,12 @@ func input(e)->bool:
  if explore.active() and g.panel_id=="" and e.keycode in [KEY_BRACKETLEFT,KEY_BRACKETRIGHT]:
   explore.yaw+=(-1 if e.keycode==KEY_BRACKETLEFT else 1)*PI/2;explore.invalidate();return true
  return false
-func update(dt:float):
- var visible=g.playing and g.zone=="mine" and g.panel_id=="" and not g.deep.survey_open
+func sync_visibility()->bool:
+ var visible=g.playing and g.zone=="mine" and g.panel_id=="" and not g.deep.survey_open and not is_instance_valid(g.creator)
  view_button.visible=visible;map_button.visible=visible;controls_button.visible=visible and explore.enabled
+ return visible
+func update(dt:float):
+ var visible=sync_visibility()
  if visible:
   if site!=g.state.active_site:site=g.state.active_site;goal=Vector3i(-1,-1,-1);path.clear()
   map_button.text="Depth %d · Map [Z]" % (g.deep.world.depth()+1)

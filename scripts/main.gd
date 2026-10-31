@@ -109,6 +109,7 @@ var footer:Label
 var status:Label
 var objectives:Label
 var title_ui:Control
+var menu_shade:ColorRect
 var panel_info:Label
 var build_anim=0.0
 var launching=false
@@ -205,6 +206,7 @@ func setup_ui():
  status=Label.new();status.position=Vector2(24,48);status.add_theme_color_override("font_color",Color("a3c4bd"));ui.add_child(status)
  objectives=Label.new();objectives.position=Vector2(24,84);objectives.add_theme_font_size_override("font_size",14);ui.add_child(objectives)
  footer=Label.new();footer.position=Vector2(24,507);footer.size.x=912;footer.clip_text=true;footer.add_theme_font_size_override("font_size",14);ui.add_child(footer)
+ menu_shade=ColorRect.new();menu_shade.color=Color(.025,.04,.045,.45);menu_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);menu_shade.z_index=9;menu_shade.mouse_filter=Control.MOUSE_FILTER_STOP;menu_shade.visible=false;ui.add_child(menu_shade)
  panel=PanelContainer.new();panel.z_index=10;panel.position=Vector2(60,44);panel.size=Vector2(840,452);panel.visible=false;ui.add_child(panel)
  transition_shade=ColorRect.new();transition_shade.color=Color("0b1721");transition_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);transition_shade.z_index=90;transition_shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;transition_shade.visible=false;ui.add_child(transition_shade)
  transition_label=Label.new();transition_label.position=Vector2(100,240);transition_label.size=Vector2(760,60);transition_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;transition_label.add_theme_font_size_override("font_size",25);transition_label.modulate=Color("edc98a");transition_shade.add_child(transition_label)
@@ -218,12 +220,13 @@ func show_title():
  playing=false;room_id="";transition_left=0;transition_shade.visible=false;sound.set_context("title")
  for n in [hud,status,objectives,footer]:n.visible=false
  close_panel()
+ sync_hud_controls()
  title_ui=Control.new();ui.add_child(title_ui)
  var title=Label.new();title.text="THE STELLAR\nHOLDS";title.add_theme_font_override("font",load("res://assets/HoldRunic.ttf"));title.position=Vector2(65,94);title.add_theme_font_size_override("font_size",48);title.add_theme_color_override("font_color",Color("f0d49b"));title_ui.add_child(title)
  var sub=Label.new();sub.text="THE FIRST FORTUNE";sub.position=Vector2(69,218);sub.add_theme_font_size_override("font_size",19);sub.modulate=Color("85c9bc");title_ui.add_child(sub)
  var description=Label.new();description.text="Earn your mountain. Found your house.";description.position=Vector2(69,254);description.add_theme_font_size_override("font_size",14);title_ui.add_child(description)
  var box=VBoxContainer.new();box.position=Vector2(69,288);box.size=Vector2(288,150);box.add_theme_constant_override("separation",6);title_ui.add_child(box)
- button(box,"Continue / choose a fortune",func():open_panel("save_slots"))
+ button(box,"Continue / choose a fortune",func():first_visit_pending=false;open_panel("save_slots"))
  button(box,"First visit to the hold",func():first_visit_pending=true;open_panel("save_slots"))
  button(box,"Settings & sound",func():open_panel("settings"))
  if HoldBuild.DEV_TESTING:button(box,"Dev Testing",func():open_panel("dev_testing"))
@@ -901,17 +904,25 @@ func goal()->String:
  if not state.tech.has("metallurgy"):return "FIRST STEPS: Mine iron, copper and coal. Smelt at the forge."
  if not state.tech.has("automation"):return "GROW YOUR HOLD: Research clockwork industry; recruit a crew."
  return "YOUR FIRST STARSHIP: Build at the eastern launchyard (%d/3)." % state.ship_stage
+func sync_hud_controls():
+ var show=playing and panel_id=="" and not is_instance_valid(creator)
+ if is_instance_valid(calendar_button):calendar_button.visible=show
+ if is_instance_valid(energy_button):energy_button.visible=show
+ if is_instance_valid(energy_bar):energy_bar.visible=show
+ if depth_nav!=null:depth_nav.sync_visibility()
+ if not show:
+  for item in [hud,status,objectives,footer,hotbar]:
+   if is_instance_valid(item):item.visible=false
+
 func update_hud():
+ sync_hud_controls()
  if is_instance_valid(calendar_button):
-  calendar_button.visible=playing and panel_id==""
   if playing:
    var day=int(HoldCalendar.data(state).day)
    var holiday=HoldCalendar.holiday(day)
    calendar_button.text=HoldCalendar.date(day)+" · "+HoldCalendar.clock_text(state)+" · "+HoldCalendar.phase(state)+(" ★" if not holiday.is_empty() else "")
    calendar_button.tooltip_text="Open calendar"+(" · "+holiday.name if not holiday.is_empty() else "")
  if is_instance_valid(energy_button):
-  energy_button.visible=playing and panel_id==""
-  energy_bar.visible=energy_button.visible
   if playing:
    var reserve=HoldWorkEnergy.data(state)
    energy_button.text="Energy %d · %s" % [int(reserve.energy),HoldWorkEnergy.status(state)]
@@ -943,6 +954,7 @@ func update_hud():
  if surface and surface.active():surface.hud()
  status.visible=false
  dev.update_badge()
+ sync_hud_controls()
 
 func _draw():
  if playing and HoldFolk.warming():return
@@ -1165,7 +1177,8 @@ func close_panel():
   for n in [hud,status,objectives,footer]:n.visible=playing
  sound.stop_voice()
  if playing and panel_id in ["pause","settings"]:save_game()
- panel.visible=false;panel_id="";panel_info=null;menu_history.clear();menu_paused=false
+ panel.visible=false;menu_shade.visible=false;panel_id="";panel_info=null;menu_history.clear();menu_paused=false
+ sync_hud_controls()
  jump_buffer=0;movement_remainder=0
 func back_panel():
  if playing and panel_id=="settings":save_game()
@@ -1200,10 +1213,11 @@ func compact_person(key:String,quote:String):
  label(r,state.npc(key).name+" / "+quote,16,Color("b8cfc6"))
  if HoldConversation.local(self,key):small_button(r,"Talk",func():HoldConversation.start(self,key))
 
-func menu_footer(parent:Node):
+func menu_footer(parent:Node)->Label:
  var bottom=row(parent)
- label(bottom,"Choose your fortune" if panel_id=="save_slots" else ("Paused" if menu_paused else "Production continues"),14,Color("a7c8bf"))
- var hint=label(bottom,"PgUp / PgDn: tabs · Tab: focus · Esc: back / close" if HoldMenuView.has_tabs(panel_id) else "Tab: focus · Enter: select · Esc: back / close",14,Color("a7c8bf"));hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
+ var status_label=label(bottom,"Choose your fortune" if panel_id=="save_slots" else ("Main menu" if not playing else ("Paused" if menu_paused else "Production continues")),14,Color("a7c8bf"))
+ var hint=label(bottom,"PgUp / PgDn: tabs · Tab: focus · Esc: back / close" if playing and HoldMenuView.has_tabs(panel_id) else "Tab: focus · Enter: select · Esc: back / close",14,Color("a7c8bf"));hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
+ return status_label
 func purchase(cost:Dictionary,crowns:int,callback:Callable):
  if not state.pay(cost,crowns):notify("Not enough materials or crowns.");return
  callback.call();sound.effect("build");save_game();refresh_panel()
@@ -1217,7 +1231,8 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
- panel_id=id;panel.visible=true
+ panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
+ sync_hud_controls()
  HoldMenuView.build_shell(self,id)
  match id:
   "dev_testing":dev.panel()
@@ -1303,7 +1318,7 @@ func open_panel(id:String,remember:bool=true):
   "ship":ship_panel()
   "pause":
    var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",12);panel_body.add_child(grid)
-   for entry in [["Disciplines · Y",func():open_panel("disciplines")],["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Sound & comfort",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
+   for entry in [["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Disciplines · Y",func():open_panel("disciplines")],["Sound & comfort",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
     var b=button(grid,entry[0],entry[1]);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
    if dev.active():button(panel_body,"Dev Testing · F9",func():open_panel("dev_testing"))
    label(panel_body,"The world is paused. Take your time. Switching away from the game also pauses it; return when ready.",16,Color("b4c9c4"))
@@ -1333,10 +1348,11 @@ func resume_adventure():
 func apply_audio_settings():
  sound.volume(state.volume);sound.mix(state.music_volume,state.ambience_volume,state.effects_volume,state.footsteps_volume,state.dialogue_volume)
 func settings_panel():
+ panel_body.add_theme_constant_override("separation",6)
  label(panel_body,"Changes apply and save immediately. Set a slider to 0% to mute that category.",16)
  for setting in [["Master volume","volume"],["Music","music_volume"],["Environment","ambience_volume"],["Tools & combat","effects_volume"],["Footsteps","footsteps_volume"],["Dialogue","dialogue_volume"]]:
-  var r=row(panel_body);var title=label(r,setting[0],16);title.custom_minimum_size.x=180
-  var slider=HSlider.new();slider.min_value=0;slider.max_value=1;slider.step=.05;slider.value=state.get(setting[1]);slider.custom_minimum_size=Vector2(250,32);slider.size_flags_horizontal=Control.SIZE_EXPAND_FILL;r.add_child(slider)
+  var r=row(panel_body);var title=label(r,setting[0],16);title.custom_minimum_size.x=180;title.size_flags_horizontal=0
+  var slider=HSlider.new();slider.min_value=0;slider.max_value=1;slider.step=.05;slider.value=state.get(setting[1]);slider.custom_minimum_size=Vector2(250,24);slider.size_flags_horizontal=Control.SIZE_EXPAND_FILL;r.add_child(slider)
   var value=label(r,"%d%%" % roundi(slider.value*100),16);value.custom_minimum_size.x=55;value.size_flags_horizontal=0
   slider.value_changed.connect(func(v):state.set(setting[1],v);value.text="%d%%" % roundi(v*100);apply_audio_settings();state.save_audio_settings())
  var samples=row(panel_body)
@@ -1548,11 +1564,12 @@ func open_creator(new_fortune:bool):
  creator=HoldCreator.new();creator.z_index=30;creator.creating=new_fortune
  creator.profile=(HoldAppearance.random_profile(randi()) if new_fortune else state.appearance.duplicate(true))
  ui.add_child(creator)
+ sync_hud_controls()
  creator.accepted.connect(func(p:Dictionary):
   creator.queue_free();creator=null
   if new_fortune:start_game(false,p)
-  else:state.appearance=p;save_game();notify("Your name and appearance are saved. Good fortune, "+p.name+"."))
- creator.cancelled.connect(func():creator.queue_free();creator=null)
+  else:state.appearance=p;save_game();sync_hud_controls();notify("Your name and appearance are saved. Good fortune, "+p.name+"."))
+ creator.cancelled.connect(func():creator.queue_free();creator=null;sync_hud_controls())
 func character_card(parent:Node,key:String,quote:String):
  var r=row(parent);r.add_theme_constant_override("separation",18)
  var portrait
