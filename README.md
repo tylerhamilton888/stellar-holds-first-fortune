@@ -8,7 +8,7 @@ Download the complete Windows ZIP from [Releases](https://github.com/tylerhamilt
 
 ## Develop
 
-1. Clone this repository. `main` contains the complete editable game and original assets; open `project.godot` in Godot 4.4.1.
+1. Clone this repository. `master` contains the complete editable game and original assets; open `project.godot` in Godot 4.4.1.
 2. Install **Godot 4.4.1 stable**, the standard editor (not .NET), and Python 3.11 or newer.
 3. Open `project.godot`. The editor imports assets; run `main.tscn` with F6 or the project with F5.
 4. Read [AGENTS.md](AGENTS.md), [handoff](docs/SESSION_HANDOFF.md), and [development guide](docs/DEVELOPMENT.md).
@@ -31,9 +31,7 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
-Familiar Faces (0.67.1) corrects character artwork continuity, hair shading, walk registration and complete utility poses. Character creation previews walking, working and carrying with turn controls. [Download the complete Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.67.1). See [verification](docs/testing/appearance74.md). The worksite, first-shift, furnishing and loading improvements from 0.67.0 remain integrated.
-
-Work & Knowledge (0.65.0) adds thirteen illustrated discipline tabs, twelve active paths, thirteen optional techniques and the eight established research methods. Press **Y** to browse. Brewing is reserved for its future production loop. Existing saves and earned abilities are preserved. Keldrath, the first-shift lesson and ancestral Overseer-to-Thane quest remain integrated. Read the [playtest guide](docs/PLAYTEST_GUIDE.md), [progression architecture](docs/PROGRESSION_NEXT.md) and [verification record](docs/testing/disciplines71.md).
+A Clearer Hold (0.88.0) cleans up the title, gameplay HUD and shared menus, including clearer settings and scrolling. [Download the complete Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.88.0). First visit offers a guided opening, while existing fortunes remain available. See [current status](docs/CURRENT_STATUS.md) and the [playtest guide](docs/PLAYTEST_GUIDE.md).
 
 ## Project map
 
