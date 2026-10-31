@@ -1,8 +1,10 @@
-# 0.88.0 — A clearer hold (candidate)
+# 0.88.0 — A clearer hold: published and merged
 
-Menu and HUD presentation pass based on 0.87.0: hide energy, calendar and mine controls at the title and during menus; block background clicks with a modal shade; clarify the First visit selection; improve the book theme, scrolling cues, options layout and pause ordering. Existing fortunes, controls, inventory and gameplay state are unchanged. `tests/menu_quality100.gd` covers title-to-game transitions, opening choice and menu visibility; it is registered for source and exported-pack gates.
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.88.0. PR #69 merged as b4adf11ad87b87571e5dd2c22563946ca18e5d09; release source 597719c182cf236e349db8ccb4a7c29fbe6ba1f0 and merged source have identical tree 133ffce7e42c87d15fedbc684070970a3239b4c0. GitHub source run 41228493845 passed all 43 gameplay cases plus people-preview. Release run 41228523599 passed all 33 exact-export cases and published successfully.
 
-This is a development candidate until the full source gate, exact-pack verification and release publication pass. See `docs/RELEASE_NOTES.md` for player-facing scope. Native captures require visual review; Windows device performance and audio are still player checks.
+The title now hides gameplay HUD and mine controls immediately, opening choice resets when returning to ordinary fortunes, and menu panels hide world HUD while blocking background clicks. Shared parchment styling, scroll cues, settings spacing and pause ordering are improved. Existing fortunes and game systems remain. Source and exported captures of title, slots, creator, pack, skills, calendar, settings and pause were reviewed. The new menu_quality100 source and exact-pack cases passed 32 assertions locally.
+
+The uploaded Windows ZIP is 767,218,066 bytes; GitHub's SHA-256 60d8e695a43e971dd6a7fcf721e06ddb535ef68f2aa81119837cb33e96941178 matches the clean hosted build report. The full ZIP was not independently redownloaded. Windows hardware, audio and subjective menu quality still require player testing. Continue from master and retain prior releases.
 
 # 0.87.0 — A place to begin: published and merged
 

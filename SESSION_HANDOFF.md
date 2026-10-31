@@ -1,4 +1,4 @@
-Current handoff: docs/SESSION_HANDOFF.md. Release 0.75.0 is published, verified and merged; the records below are historical.
+Current handoff: docs/SESSION_HANDOFF.md. Release 0.88.0 is published, verified and merged; the records below are historical.
 
 # 0.64.0 — The Hold of Three Hearths (source verified)
 
