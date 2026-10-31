@@ -18,7 +18,9 @@ static func small_button(parent:Node,text:String,fn:Callable)->Button:
  return b
 
 static func section(parent:Node,title:String)->VBoxContainer:
- var box=PanelContainer.new();var style=StyleBoxFlat.new();style.bg_color=Color("e4d1ab") if folio(parent) else Color("1d3540");style.set_content_margin_all(12);style.set_corner_radius_all(4);box.add_theme_stylebox_override("panel",style);parent.add_child(box)
+ var box=PanelContainer.new();var style=StyleBoxFlat.new();style.bg_color=Color("e9d8b6") if folio(parent) else Color("1d3540");style.set_content_margin_all(12);style.set_corner_radius_all(4)
+ if folio(parent):style.border_color=Color("cbb184");style.set_border_width_all(1)
+ box.add_theme_stylebox_override("panel",style);parent.add_child(box)
  var body=VBoxContainer.new();body.add_theme_constant_override("separation",7);box.add_child(body)
  if title!="":label(body,title,18,Color("edc98a"))
  return body
@@ -52,11 +54,11 @@ static func paper_style(fill:String,border:String="a47b43",width:int=1)->StyleBo
  var s=StyleBoxFlat.new();s.bg_color=Color(fill);s.border_color=Color(border);s.set_border_width_all(width);s.set_corner_radius_all(3);s.set_content_margin_all(10);return s
 static func book_theme()->Theme:
  var t=make_theme();t.default_font_size=16
- var frame=paper_style("f0dfbb","795332",3);frame.set_content_margin_all(16);frame.shadow_color=Color(0,0,0,.35);frame.shadow_size=8;t.set_stylebox("panel","PanelContainer",frame)
+ var frame=paper_style("f3e4c5","765034",3);frame.set_content_margin_all(16);frame.shadow_color=Color(0,0,0,.48);frame.shadow_size=12;t.set_stylebox("panel","PanelContainer",frame)
  for type in ["Button","OptionButton","CheckButton","CheckBox"]:
-  t.set_stylebox("normal",type,paper_style("e4cda0"))
-  t.set_stylebox("hover",type,paper_style("f9edce","8e5e2d",2))
-  t.set_stylebox("pressed",type,paper_style("b9ccbb","44695a",2))
+  t.set_stylebox("normal",type,paper_style("ead5ad","ae8955"))
+  t.set_stylebox("hover",type,paper_style("fff1ce","9b713b",2))
+  t.set_stylebox("pressed",type,paper_style("b8cebd","416b5c",2))
   t.set_stylebox("disabled",type,paper_style("ded2b9","b6a58a"))
   for key in ["font_color","font_hover_color","font_pressed_color","font_focus_color"]:t.set_color(key,type,Color("382d24"))
   t.set_color("font_disabled_color",type,Color("7b705f"))
@@ -67,6 +69,10 @@ static func book_theme()->Theme:
  t.set_stylebox("background","ProgressBar",track);t.set_stylebox("fill","ProgressBar",fill)
  t.set_stylebox("panel","PopupMenu",paper_style("f0dfbb"));t.set_color("font_color","PopupMenu",Color("382d24"));t.set_color("font_hover_color","PopupMenu",Color("382d24"));t.set_stylebox("hover","PopupMenu",paper_style("b9ccbb"))
  t.set_stylebox("panel","TooltipPanel",paper_style("fff2d7","795332",2));t.set_color("font_color","TooltipLabel",Color("382d24"))
+ var scroll_track=paper_style("dfcea9","c5ad82");scroll_track.set_content_margin_all(3)
+ var scroll_thumb=paper_style("9d8056","806440");scroll_thumb.set_content_margin_all(4)
+ t.set_stylebox("scroll","VScrollBar",scroll_track);t.set_stylebox("grabber","VScrollBar",scroll_thumb)
+ t.set_stylebox("grabber_highlight","VScrollBar",paper_style("bd975f","806440"));t.set_stylebox("grabber_pressed","VScrollBar",paper_style("806440","654b30"))
  return t
 static func tab_id(id:String)->String:
  return {"energy":"inventory","guidance":"commission","commissions_detail":"commission","festivals":"calendar","help":"settings","pause":"settings"}.get(id,id)
@@ -100,4 +106,12 @@ static func build_shell(g,id:String):
    tab.tooltip_text=entry[1]+(" · "+entry[2] if entry[2]!="" else "")+" · Page Up / Page Down switches tabs"
  var scroll=ScrollContainer.new();scroll.follow_focus=true;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;outer.add_child(scroll);g.menu_scroll=scroll
  g.panel_body=VBoxContainer.new();g.panel_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;g.panel_body.add_theme_constant_override("separation",10);scroll.add_child(g.panel_body)
- g.menu_footer(outer)
+ var status=g.menu_footer(outer);var default_status=status.text
+ var scrollbar=scroll.get_v_scroll_bar()
+ var update_scroll_hint=func():
+  if not is_instance_valid(status):return
+  var remaining=scrollbar.max_value-scrollbar.page
+  status.text=default_status+(" · Scroll for more" if scrollbar.value<remaining-1 else " · Scroll up") if remaining>1 else default_status
+ scrollbar.changed.connect(update_scroll_hint)
+ scrollbar.value_changed.connect(func(_value):update_scroll_hint.call())
+ update_scroll_hint.call_deferred()

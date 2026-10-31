@@ -1,9 +1,7 @@
-# 0.87.0 — A place to begin
+# 0.88.0 — A clearer hold
 
-Choose **First visit to the hold**, an empty save slot, then create your Dwarf. Five short practical tasks teach movement, your pack, lifting mined loads, stocking a rack and working a stonebreaker. A one-time allowance supplies a first restoration project: reopen the old cutters’ bay, repair and light its hearth, and supply real stone for Odrin to work.
+The title screen now keeps the energy meter, calendar and mine controls in the game where they belong. Returning to the title hides them immediately. If you back out of First visit, choosing an ordinary fortune no longer carries that opening choice over by accident.
 
-**J** keeps directions and optional longer ambitions: Ivar’s reference, a mountain charter, a working hold and the First Fortune. Pause guidance whenever you like. No quest deadlines; your normal save continues after the introduction. Existing fortunes retain their original openings. Ivar also offers fresh-ore expeditions after his original commissions.
+Menus use a warmer shared parchment treatment, clearer panels and scrollbars, and a subtle backdrop that keeps attention on the current screen. The world HUD clears while a menu is open. The options screen fits its audio controls more comfortably, the pause menu puts Resume and Save first, and long pages indicate when more content can be scrolled. Title-screen settings no longer describe tabs that are unavailable there.
 
-Standalone and older mine furniture no longer requires room membership to draw, including in the optional exploration view. Original artwork, saved excavations, stock ownership and energy-free combat are preserved.
-
-Extract all files into a fresh folder and run **FirstFortune.exe**. The release is gated on full native source and exact exported-pack verification. Human pacing, enjoyment and Windows device/audio performance remain playtest questions.
+Your existing fortunes and settings remain compatible. Extract the Windows ZIP into a fresh folder and run **FirstFortune.exe**. Menu feel, readability, Windows device performance and audio remain worth checking on your own machine.

@@ -64,6 +64,8 @@ def main():
     cases.append(('calendar', fixture+'\n'+body, 'CALENDAR91'))
     body = (ROOT/'tests/menu92.gd').read_text().split('\n', 1)[1]
     cases.append(('menu92', fixture+'\n'+body, 'MENU92'))
+    body = (ROOT/'tests/menu_quality100.gd').read_text().split('\n', 1)[1]
+    cases.append(('menu_quality100', fixture+'\n'+body, 'MENUQUALITY100'))
     body = (ROOT/'tests/equipment93.gd').read_text().split('\n', 1)[1]
     cases.append(('equipment93', fixture+'\n'+body, 'EQUIPMENT93'))
     body = (ROOT/'tests/navigation94.gd').read_text().split('\n', 1)[1]
