@@ -110,6 +110,7 @@ var status:Label
 var objectives:Label
 var title_ui:Control
 var menu_shade:ColorRect
+var lodge_talker=0
 var panel_info:Label
 var build_anim=0.0
 var launching=false
@@ -815,7 +816,7 @@ func change_zone(z:String):
  drops.clear();particles.clear();popups.clear();close_panel();zone=z;velocity=Vector2.ZERO
  player=Vector2(150,370) if z=="mine" else Vector2(1465,HUB_FLOOR)
  camera=Vector2.ZERO if z=="mine" else Vector2(985,0)
- if z=="mine":deep.enter()
+ if z=="mine":deep.enter();HoldFirstVisit99.mine_entered(self)
  handworks.arrive(travelling_cart)
  begin_transition("THE LOWER WORKINGS" if z=="mine" else "BACK TO THE HOLD");sound.set_context(z)
  notify("DEEPWORKS: WASD move · Hold LMB dig · V carve stairs · E down / Shift+E up · X survey below." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
@@ -1231,6 +1232,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
+ if id=="lodge_talk":menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
  HoldMenuView.build_shell(self,id)
@@ -1271,6 +1273,7 @@ func open_panel(id:String,remember:bool=true):
   "calendar":HoldCalendar.panel(self)
   "festivals":HoldCalendar.festivals_panel(self)
   "energy":HoldWorkEnergy.panel(self)
+  "lodge_talk":HoldWorkerLodge100.panel(self)
   "hearth":hearth.panel()
   "road_kitchen":surface.roads.kitchen_panel()
   "gate":world_map_panel()
@@ -1949,7 +1952,7 @@ func arrive_region(destination:String):
 
 
 func save_slots_panel():
- if first_visit_pending:label(panel_body,"FIRST VISIT · Short practical lessons, an old workplace to revive, then a life of your own. Choose an empty slot below and create your Dwarf. Existing fortunes keep their original opening.",17)
+ if first_visit_pending:label(panel_body,"FIRST VISIT · Meet the miners, make a room your own and earn your first wages. Choose a slot and create your Dwarf. Existing fortunes keep their progress.",17)
  label(panel_body,"Separate characters, mountains and progress. Autosave stays in the slot you choose.",16)
  for slot in range(1,4):
   var summary=HoldState.slot_summary(slot)
@@ -1964,7 +1967,7 @@ func save_slots_panel():
   var actions=row(line)
   if summary.get("valid",false):button(actions,"Continue",func():state.save_slot=slot;start_game(true))
   button(actions,"New fortune" if not summary.exists else "Replace this fortune…",func():
-   state.save_slot=slot
+   state.save_slot=slot;first_visit_pending=true
    if summary.exists:open_panel("new_confirm")
    else:open_creator(true))
 

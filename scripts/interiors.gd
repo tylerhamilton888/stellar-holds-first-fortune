@@ -8,6 +8,7 @@ const ROOMS={
  "throne":{"name":"The King's Hall","host":"eirik","action":"Address Lord Eirik","detail":"Old kings in stone. A living lord on the dais."},
  "training":{"name":"Borin's practice bay","host":"","action":"Review your training","detail":"Padded blows, firm footing. Practice without wounds."},
  "home":{"name":"Workers' quarters","host":"","action":"Rest, wardrobe & supplies","detail":"A warm hearth. A borrowed room. A place to begin."},
+ "lodge":{"name":"Miners' lodge","host":"","action":"","detail":"Shared bunks and a hearth for Keldrath's working folk."},
  "tavern":{"name":"The Copper Kettle","host":"hedrik","action":"Speak with Hedrik","detail":"Oak smoke, copper mugs, and the end of a long shift."},
  "forge":{"name":"Borin's forge","host":"borin","action":"Work with Borin","detail":"The bellows breathe. Every useful thing begins here."},
  "market":{"name":"Orla's exchange","host":"orla","action":"Trade with Orla","detail":"Freight manifests cover every mile between the holds."},

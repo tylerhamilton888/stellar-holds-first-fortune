@@ -124,11 +124,14 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.state.switch_site("claim" if claim_site else "hold",g.geo)
  if id.begins_with("room:") or id.begins_with("home:"):
   if not room():return_area=old
+  elif old==HoldWorkerLodge100.ROOM and id=="room:home":return_area=HoldWorkerLodge100.ROOM
+  elif old=="room:home" and id==HoldWorkerLodge100.ROOM:return_area="hearthward"
   elif id!=old:return_area="claim" if claim_site else ("crownward" if id in ["room:throne","room:research",HoldHouseholds.ARCHIVE] else "forgeward" if id in ["room:forge","room:practice"] else "hearthward")
  if old=="claim" and id!="claim":house.data().z=0
  area=id
  g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id in ["trail","greenfields"] else "hub")
  g.room_id="home" if id.begins_with("home:") else id.trim_prefix("room:") if id.begins_with("room:") else ""
+ if id=="room:home":HoldFirstVisit99.room_entered(g)
  var landing=world.arrival(old,id) if at==Vector2.INF else at
  g.player=spawn(id) if landing==Vector2.INF else landing
  if not walkable(g.player):g.player=spawn(id)
@@ -141,10 +144,14 @@ func enter(id:String,at:Vector2=Vector2.INF):
 func leave():
  if architecture.interior():architecture.leave();return
  if HoldNeighborhood.is_home(area):enter(HoldNeighborhood.parts(area)[0],HoldNeighborhood.home_door(int(HoldNeighborhood.parts(area)[1]))+Vector2(0,35));return
+ if area=="room:home" and return_area==HoldWorkerLodge100.ROOM:
+  enter(HoldWorkerLodge100.ROOM,HoldWorkerLodge100.RETURN_FROM_ROOM);return
+ if area==HoldWorkerLodge100.ROOM:HoldFirstVisit99.leave_lodge(g)
  var back=return_area
  var p=g.state.surface.positions.get(back,[])
  enter(back,Vector2(p[0],p[1])+Vector2(0,35) if p.size()==2 else spawn(back))
 func camera_target()->Vector2:
+ if area==HoldWorkerLodge100.ROOM or (area=="room:home" and HoldFirstVisit99.lodge_intro(g.state)):return Vector2(0,160)
  if room():return HoldRoomLayout.camera(area,g.player)
  if HoldWorldZones.ward(area):return HoldTerraces.camera(area,g.player)
  return (g.player-Vector2(480,300)).clamp(Vector2(0,-65),Vector2(maxf(0,size().x-960),maxf(-65,size().y-480)))
@@ -162,13 +169,18 @@ func points()->Array:
   pass # Shared instance doors, stairs and functional furnishings are appended below.
  elif room():
   var exit_point=HoldRoomLayout.exit_point(area)
-  result=[spot(exit_point.x,exit_point.y,"Leave · "+NAMES.get(return_area,"your claim"),"leave")]
+  var destination="miners' lodge" if return_area==HoldWorkerLodge100.ROOM else NAMES.get(return_area,"your claim")
+  result=[spot(exit_point.x,exit_point.y,"Leave · "+destination,"leave")]
   if HoldNeighborhood.is_home(area):
    var parts=HoldNeighborhood.parts(area)
    if parts[2]=="1":result=[] # Upper rooms leave by their real stair, never a ground-level door.
    result.append(spot(700,550,"Stairs · "+("upper rooms" if parts[2]=="0" else "family hearth"),HoldNeighborhood.home_id(parts[0],int(parts[1]),1-int(parts[2]))))
+  elif area==HoldWorkerLodge100.ROOM:
+   result.append(spot(HoldWorkerLodge100.PRIVATE_DOOR.x,HoldWorkerLodge100.PRIVATE_DOOR.y,"Your room · private quarters","room:home"))
+   for c in HoldWorkerLodge100.people(g):result.append({"p":c.p,"name":c.name+" · "+c.role,"action":c.interaction})
   elif area.begins_with("home:") or area=="room:home":
    result.append({"p":HoldFurnishings.bedside(Vector2(290,420)),"name":"Bed · rest and save","action":"rest","bed":Vector2(290,420)});result.append(spot(735,537,"Writing desk · write home","letter"))
+   if area=="room:home" and not HoldFirstVisit99.lodge_intro(g.state):result.append(spot(560,330,"Shared miners' lodge","room:lodge"))
   elif area==HoldHouseholds.LOFT:result=[]
   elif area==HoldHouseholds.ARCHIVE:pass
   elif area in HoldRoads.ROOMS:pass
@@ -280,6 +292,7 @@ func action(id:String):
  if id=="hearth":g.open_panel("hearth");return
  if id=="road_kitchen":g.open_panel("road_kitchen");return
  if id=="road_order":g.open_panel("road_order");return
+ if id.begins_with("lodge_folk:"):HoldWorkerLodge100.speak(g,int(id.trim_prefix("lodge_folk:")));return
  if id.begins_with("road_folk:"):roads.speak(int(id.trim_prefix("road_folk:")));return
  if id=="leave":leave()
  elif id.begins_with("hold_stair:"):
@@ -492,7 +505,7 @@ func place(p:Vector2)->bool:
   var id="chest:"+str(serial)
   g.state.surface.chests[id]={"area":area,"z":house.level(),"x":p.x,"y":p.y,"items":{}}
  else:g.state.surface.decor.append({"area":area,"z":house.level(),"x":p.x,"y":p.y,"kind":placing})
- if area=="room:home":g.state.surface.facts.quarters_build=true
+ if area=="room:home":g.state.surface.facts.quarters_build=true;HoldFirstVisit99.furnished(g,placing)
  g.state.surface.facts.build=true;placing="";g.sound.effect("build");g.save_game();return true
 func transfer(item:String,n:int,deposit:bool,save:bool=true)->int:
  var c=g.state.surface.chests.get(selected_chest,{})
@@ -574,7 +587,7 @@ func lift_panel():
 func guide_panel():
  g.label(g.panel_body,"FOLLOW THE PATHS",22,Color("edc98a"))
  g.label(g.panel_body,"Walk with WASD or arrows, including along the Great Stair. Walk through the outdoor arches, paths and farmhouse thresholds to travel. Doorways also open as you walk into them. E uses household stairs, people and workstations. You are here: "+label()+".",16)
- for text in ["Hearthward: quarters, tavern, exchange and Ivar’s office.","Crownward (Z +1): take the Great Stair at Hearthward’s northwest wall to the royal gallery.","Forgeward (Z -1): cross Hearthward’s southern gallery bridge, turn east past the family homes, and walk down the Great Stair. Borin’s workshop is on Forgeward’s north street.","The enclosed Royal/Forge service stairs and the hold lift remain useful shortcuts.","King’s Gate opens onto Stonebridge: a wayside hearth, paid bridge orders, fishing and a northern mine staging yard. Follow the south path into Pinewood, or cross the bridge for Greenhearth and your claim.","Greenhearth: lease four permanent garden plots at the farm board; bring your field tools, seed and water. Local boards pay for real deliveries once each workday.","Neighbors leave their family hearths for work and the Copper Kettle. You can follow them through doors and between wards.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
+ for text in ["Hearthward: the miners' lodge and your room on the northwestern street, the Copper Kettle, exchange and Ivar’s office.","Crownward (Z +1): take the Great Stair at Hearthward’s northwest wall to the royal gallery.","Forgeward (Z -1): cross Hearthward’s southern gallery bridge, turn east past the family homes, and walk down the Great Stair. Borin’s workshop is on Forgeward’s north street.","The enclosed Royal/Forge service stairs and the hold lift remain useful shortcuts.","King’s Gate opens onto Stonebridge: a wayside hearth, paid bridge orders, fishing and a northern mine staging yard. Follow the south path into Pinewood, or cross the bridge for Greenhearth and your claim.","Greenhearth: lease four permanent garden plots at the farm board; bring your field tools, seed and water. Local boards pay for real deliveries once each workday.","Neighbors leave their family hearths for work and the Copper Kettle. You can follow them through doors and between wards.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
   g.label(g.panel_body,text,16)
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
@@ -614,6 +627,8 @@ func chop(dt:float):
  g.notify(("Raw log freed · E lifts it. " if is_log or g.state.road_trees[best]==0 else "+2 timber · ")+("Chop the fallen trunk for more." if g.state.road_trees[best]<=0 else "The cut is deepening."))
 func hud():
  g.objectives.visible=false
+ if HoldFirstVisit99.lodge_intro(g.state) and HoldFirstVisit99.data(g.state).get("guided",false) and g.panel_id=="":
+  g.objectives.text=HoldFirstVisit99.goal(g);g.objectives.visible=true
  g.hud.text=label().to_upper()+"   %d CROWNS" % g.state.money
  if g.panel_id=="":
   var p=nearest()
@@ -652,6 +667,7 @@ func draw():
  for d in g.state.surface.decor:
   if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind,"sort_y":float(d.y)+float(HoldFurnishings.ITEMS.get(d.kind,{}).get("sort_offset",0))})
  if room() and not area.begins_with("home:") and area!="room:training":
+  if area==HoldWorkerLodge100.ROOM:objects.append_array(HoldWorkerLodge100.people(g))
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
   if host!="" and g.state.active_site=="hold":objects.append({"p":HoldRoyalStage.current(g).p if host=="eirik" else Vector2(620,410),"kind":"npc","id":host})
   if g.room_id=="tavern":

@@ -10,7 +10,7 @@ const NAMES=["CROWNWARD", "HEARTHWARD", "FORGEWARD"]
 const DOORS={
  1:{"id":"throne","name":"King's hall","npc":"eirik","detail":"The high vault. A royal audience requires Ivar's reference."},
  4:{"id":"research","name":"Survey office","npc":"eldric","detail":"Eldric's charts, methods and mountain charters."},
- 7:{"id":"home","name":"Your quarters","npc":"","detail":"A borrowed room among the hearths of Keldrath."},
+ 7:{"id":"home","name":"Miners' lodge","npc":"","detail":"A shared lodge and your private room among the hearths of Keldrath."},
  8:{"id":"tavern","name":"Copper Kettle","npc":"hedrik","detail":"Hedrik, hot supper and the hiring bench."},
  9:{"id":"market","name":"The exchange","npc":"orla","detail":"Orla's counter. Trade, freight and news from the road."},
  10:{"id":"concourse","name":"Main concourse","npc":"","detail":"Walk the familiar street, meet visitors and see the anniversary gifts."},
