@@ -1,4 +1,4 @@
-# 0.89.0 — A hearth of your own (candidate)
+# 0.89.0 — A hearth of your own (published)
 
 - Start new fortunes in the shared miners’ lodge, meet Ivar and visit the existing private quarters.
 - Work a real first shift for wages and room materials, then build a furnishing to reveal the next lead.

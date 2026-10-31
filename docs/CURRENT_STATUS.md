@@ -1,8 +1,10 @@
-# 0.89.0 — A hearth of your own: candidate
+# 0.89.0 — A hearth of your own: published and merged
 
-New fortunes begin in a shared miners’ lodge with Ivar, two miners and three bunks. The existing starting quarters become a private room reached through the lodge; a first real shift at Old Workings pays 20 crowns and four timber, and placing real furniture advances the opening toward the old cutters’ bay. Guidance is optional. Existing fortunes retain their original rooms and furnishings; the new save data is additive. The lodge uses existing painted assets and bounded NPC animation, not a simulated workforce.
+Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.89.0. PR #71 merged as 8d146f8b79f151353ff06cb9ecf9a2720b2456b5; release source 96a4866eb962e0188963534bf0512399c8de1e86 and merged source have identical tree 7f3d2b3da33225407c182e8dff2b335650be6ba0. Hosted source run 41234344775 passed all 44 gameplay cases plus people-preview. Release run 41234369629 passed all 34 exact-export cases and published successfully.
 
-Verification and publication are in progress. Player pacing, Windows hardware and audio still need hands-on playtesting. Continue to preserve previous releases and saves.
+New fortunes begin at the miners’ lodge: meet Ivar and two miners, visit your private quarters, earn wages and materials at the real stonebreaker, then furnish the room for the next lead. Guidance is optional; existing fortunes and furnishings remain. The lodge uses existing art and bounded miner animation. Source and exported lodge, dialogue and room captures were reviewed. Focused source checks passed 272 assertions; local exact-pack checks passed 169.
+
+The published Windows ZIP is 767,228,674 bytes; GitHub's SHA-256 61524ec4b76b15ca0a638b2bd80bfaea6db6e8523a4cb04c4cb624043e7f1227 matches the hosted clean build log. The full ZIP was not independently redownloaded. Windows hardware, audio and the opening’s pacing and enjoyment need hands-on player testing. Continue from master; retain previous releases and saves.
 
 # 0.88.0 — A clearer hold: published and merged
 

@@ -31,7 +31,7 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
-A Clearer Hold (0.88.0) cleans up the title, gameplay HUD and shared menus, including clearer settings and scrolling. [Download the complete Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.88.0). First visit offers a guided opening, while existing fortunes remain available. See [current status](docs/CURRENT_STATUS.md) and the [playtest guide](docs/PLAYTEST_GUIDE.md).
+A Hearth of Your Own (0.89.0) begins new fortunes in a shared miners’ lodge. Meet Ivar, take your first shift and furnish your quarters before following the next lead. [Download the complete Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.89.0). Existing fortunes remain available. See [current status](docs/CURRENT_STATUS.md) and the [playtest guide](docs/PLAYTEST_GUIDE.md).
 
 ## Project map
 
