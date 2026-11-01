@@ -1,6 +1,6 @@
 # Story art 105 — portrait/loading checkpoint
 
-24 named portraits now use explicit cast IDs through the existing portrait widget; Eirik retains his bespoke art. Four approved loading scenes rotate per load with readable overlays. Native focused art checks passed 92 assertions and captures were reviewed; loading regression passed. People/courtship checks are still running. No release or merge claimed.
+24 named portraits now use explicit cast IDs through the existing portrait widget; Eirik retains his bespoke art. Four approved loading scenes rotate per load with readable overlays. Native focused suites passed 856 assertions (art 92, loading 19, people 446, courtship 299); the exported pack passed the same 92 art checks from an empty directory and isolated save. Captures reviewed; evidence: testing/story105/acceptance.json. Source backed up in PR #77; full hosted gate pending. No release or merge claimed.
 
 World sprites remain the existing whole-frame sets. Rejected walking studies are not integrated; natural resting stances, distinct female builds and context-only gestures remain production work. Read art/STORY_ART_IMPLEMENTATION.md before continuing.
 

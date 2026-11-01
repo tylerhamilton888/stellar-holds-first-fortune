@@ -1,0 +1,48 @@
+{
+  "native": [
+    {
+      "test": "story_art105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 92,
+      "seconds": 7.19
+    },
+    {
+      "test": "loading",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 19,
+      "seconds": 65.88
+    },
+    {
+      "test": "people",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 446,
+      "seconds": 75.43
+    },
+    {
+      "test": "courtship101",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 299,
+      "seconds": 73.42
+    }
+  ],
+  "native_assertions": 856,
+  "exported_art_assertions": 92,
+  "pack_sha256": "3899103f2d804717cf98332fb03866ab9f4ed0f9412c9329636907aee92a42bd",
+  "visual_review": [
+    "24 named portraits at two widget sizes",
+    "four loading compositions",
+    "no clipped heads or text overlap"
+  ],
+  "limitations": [
+    "Full bespoke world sprites and resting stances are not integrated.",
+    "No Windows user playtest or published release claimed."
+  ]
+}

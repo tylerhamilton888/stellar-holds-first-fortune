@@ -8,7 +8,7 @@ Implemented 24 distinct named dialogue portraits through the existing HoldPortra
 
 Four approved loading scenes rotate once per loading event: mine/haulage, forge, homebuilding, riverside life. Scenes stay fixed while hints rotate. Full artwork fits the canvas; shaded title and hint areas maintain readability. Existing progress, fade and input blocking remain intact. No artificial loading delay.
 
-Production provenance: assets/story105/production.json. Focused native art checks: 92 passed, including 24 crops, color/shader transitions, saved identity preservation and loading selection. Native portrait boards and all four loading captures reviewed. Broader focused regression suite is still pending at this checkpoint.
+Production provenance: assets/story105/production.json. Focused native art checks: 92 passed, including 24 crops, color/shader transitions, saved identity preservation and loading selection. Native portrait boards and all four loading captures reviewed. Focused native suite passed 856 assertions (art 92, loading 19, people 446, courtship 299). Exported-pack art checks passed 92 from an empty working directory and isolated save. Evidence: ../testing/story105/acceptance.json. PR #77 retains the implementation; full hosted validation remains pending.
 
 ## Checkpoint 2 — world frames (not implemented)
 
