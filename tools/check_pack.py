@@ -82,6 +82,8 @@ def main():
     cases.append(('firstvisit99', fixture+'\n'+body, 'FIRSTVISIT99'))
     body = (ROOT/'tests/lodge100.gd').read_text().split('\n', 1)[1]
     cases.append(('lodge100', fixture+'\n'+body, 'LODGE100'))
+    body = (ROOT/'tests/mountain104.gd').read_text().split('\n', 1)[1]
+    cases.append(('mountain104', fixture+'\n'+body, 'MOUNTAIN104'))
     body = (ROOT/'tests/frontier103.gd').read_text().split('\n', 1)[1]
     cases.append(('frontier103', fixture+'\n'+body, 'FRONTIER103'))
     body = (ROOT/'tests/greatclaim102.gd').read_text().split('\n', 1)[1]

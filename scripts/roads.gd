@@ -172,7 +172,7 @@ func people(area:String,time:float=-1)->Array:
  var result=[]
  for i in FOLK.size():
   var f=FOLK[i]
-  if area!=f.area:continue
+  if area!=f.area or HoldMountain104.missing(g.state,"road_folk:"+str(i)) or HoldMountain104.gathering(g.state,"road_folk:"+str(i)):continue
   var key=str(g.state.seed_value)+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+7500+i,f.gender)
   var profile=HoldRoadCharacters.appearance(g.state,"road_folk:"+str(i),profiles[key])
@@ -181,6 +181,7 @@ func people(area:String,time:float=-1)->Array:
   if phase>duration+7:phase-=duration+7;start=f.b;end=f.a
   var walking=phase<duration;var at=start.lerp(end,minf(1,phase/duration))
   result.append({"kind":"citizen","p":at,"profile":profile,"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profile.family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
+ result.append_array(HoldMountain104.guests(g,area))
  return result
 func points()->Array:
  var result=[]

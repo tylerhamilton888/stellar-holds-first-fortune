@@ -234,7 +234,9 @@ func update_actors():
    var resident=HoldWorkplace98.data(g).person
    person(sprite("workplace98:odrin"),a.p,HoldWorkplace98.profile(),Vector2(1,.45) if resident.work else Vector2(resident.direction[0],resident.direction[1]),resident.walking,float(resident.gait),"hammer" if resident.work else "town_walk",fposmod(float(HoldWorkplace98.station(g,"bench").job.get("progress",0)),.42)/.42)
  for a in HoldAncestralClaim.actors(g):
-  if nearby(a.p):person(sprite("rescue:"+str(a.index)),a.p,HoldFirstShift.profile_for(a.index==0),Vector2.DOWN,false,g.clock)
+  if nearby(a.p):
+   var survivor=HoldAncestralClaim.data(g.state).crew[a.index];var rescue_aim=survivor.get("aim",[0,1])
+   person(sprite("rescue:"+str(a.index)),a.p,HoldMountain104.profile(g,a.index),Vector2(rescue_aim[0],rescue_aim[1]).normalized(),bool(survivor.get("walking",false)),float(survivor.gait))
 func nearby(p:Vector2)->bool:return p.distance_to(g.player)<480 and g.depth_nav.known(Deepworks.cell(p),g.deep.world.depth())
 func rebuild_props():
  for entry in prop_pool.values():entry.used=false

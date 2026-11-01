@@ -104,6 +104,7 @@ static func transact(g,kind:String,id:String,buy:bool=true)->bool:
 static func panel(g):
  if not active(g.state):return
  var s=g.state
+ HoldMountain104.panel(g)
  g.label(g.panel_body,"STONEBRIDGE · A TOWN TAKING ROOT",22,Color("edc98a"))
  g.button(g.panel_body,"Field kit · fishing and farming",func():g.open_panel("fieldwork"))
  g.label(g.panel_body,"West: bunkhouse and Wayfarer's Hearth. North: Old Workings and the communal forge. Across the bridge: survey hall and watch stores. South: Pinewood and Greenhearth. The eastern rise is reserved for households.",16)
@@ -187,6 +188,7 @@ static func home_panel(g):
 
 static func archive_panel(g):
  if not active(g.state) or g.surface.area!=room(g.state,"survey",1) or g.player.distance_to(Vector2(690,575))>90:return
+ HoldMountain104.panel(g)
  g.label(g.panel_body,"THE STONEBRIDGE REGISTER",22,Color("edc98a"))
  g.label(g.panel_body,"The first leaves record the bridge survey, retaining walls and drainage cut. Skarrin's name appears often, alongside Bram's road crew and Sten's haulers. Ivar has kept the workers' names beside their foreman's.",16)
  g.label(g.panel_body,"The charter reserves hereditary allowances for authenticated ancestral rights. No claimant may certify their own evidence. Work marks remain separately recorded; equal totals require a public test of skill.",16)

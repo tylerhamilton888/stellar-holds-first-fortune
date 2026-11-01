@@ -1,0 +1,55 @@
+{
+  "engine": "4.4.1",
+  "version": "0.92.0",
+  "native": [
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 36,
+      "seconds": 133.01
+    },
+    {
+      "test": "ancestral",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 53.58
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 224,
+      "seconds": 138.38
+    }
+  ],
+  "exported_pack": [
+    {
+      "test": "mountain104",
+      "passed": true,
+      "checks": 40,
+      "errors": []
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "checks": 224,
+      "errors": []
+    }
+  ],
+  "visual_review": [
+    "rescue",
+    "gathered-survivors (corrected clear-floor positions)",
+    "celebration",
+    "authentication"
+  ],
+  "limits": [
+    "Full hosted source and Windows exact-package gates pending",
+    "No cinematic collapse or bespoke Skarrin artwork",
+    "No player Windows hardware/audio verification"
+  ]
+}

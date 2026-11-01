@@ -1,3 +1,23 @@
+# Active milestone — The mountain remembers, 0.92.0
+
+Branch story/mountain-remembers based on local 9e56b26 / hosted docs checkpoint 306cd0c0e365221d513268d5c608c6a470f26490 (tree d48f642f222e15dc9c357bdd0f04cd1fdc523946). Prior PR #74 is now merged after all full source jobs passed, merge 3072c26863f673f0fcf7a19083a5cea5d6316e34. Do not restart unchanged prior runs.
+
+Read 03-rescue-ancestry.md and mountain104.gd. Native chapter/legacy/frontier checks passed; final exported chapter passed 40 checks and exported frontier passed 224. Corrected gathering visual reviewed. Evidence in ../testing/mountain104/acceptance.json. Source commit, identical hosted tree backup, PR and release/0.92.0 are the delivery steps. New code preserves existing ancestral and construction owners. No previous save geography or household data is replaced. The authored refuge requires excavation, standard lighting and pillar construction; named survivors physically evacuate and gather. Authentication uses local independent evidence and an audited once-only allowance. Skarrin insight keys and survivor reactions persist.
+
+Do not mark the full narrative or bespoke character art complete. Subsequent work is 04-contest-keldrath.md after delivery. Keep delivery-only evidence separate from active runtime PR so full checks are not cancelled.
+
+---
+
+# Delivery checkpoint — town/home source backed up
+
+Source local 5526377056d4b8d9f874bb552880b8f903c96756 / hosted cf3daf6c07b8b1f093db2018b859fd84c69e8aed; verified identical tree b6212292baade453f7d1ed5696111e7adb9e5f69. PR #74: https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/74. Full source run 41339237563 and Windows release run 41339241566 are in progress, not yet verified. release/0.91.0 points at that exact source. Do not overwrite older releases or restart unchanged source checks.
+
+Local exported PCK acceptance additionally passed frontier103 (224) and lodge100 (47) from empty working/save directories; town capture reviewed. Native source coverage remains 1,342 distinct assertions. Source/export results are in ../testing/frontier103/acceptance.json. The local pack is not the published Windows ZIP.
+
+Next: inspect both hosted runs, fix actual failures if any, merge PR #74 only after the full source gate succeeds, verify Windows release assets and record final delivery. Documentation-only checkpoint lives separately so it does not restart runtime validation. Later story milestones remain queued; begin with 03-rescue-ancestry only after finishing this delivery checkpoint.
+
+---
+
 # Active frontier checkpoint — 2026-11-01
 
 Branch story/frontier-town; version 0.91.0. Town/home implementation complete for the scoped slice. Native acceptance passed 1,342 assertions across eight cases; see ../testing/frontier103/acceptance.json. Final frontier103 repeated with 224 passing assertions after archive/trade/menu refinements. All public entrance paths and NPC routes pass before and after storehouse construction. Every new public plan can be constructed and entered by the player. Reviewed final captures. Source commit/hosted PR and Windows gates are the next delivery step; do not repeat native checks without changed source or new evidence.
