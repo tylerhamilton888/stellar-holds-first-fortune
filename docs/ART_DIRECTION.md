@@ -1,3 +1,7 @@
+# Romance candidates — owner direction, 2026-11-01
+
+Every romance candidate must be conventionally attractive for their gender: handsome, masculine, fully bearded men and pretty, feminine, unbearded women, all unmistakably adult Dwarfs. Preserve the established whole-character style and identity across portraits and animation. Personalities should have individual romantic appeal grounded in Dwarven kinship, craft, loyalty and tradition. Story characters may use bespoke faces, outfits, silhouettes, portraits, expressions and key animations beyond the shared background-cast variations; recolored common designs are a baseline, not their final target. See [ROMANCE_CAST.md](ROMANCE_CAST.md) for the cast, specific visual targets and production acceptance criteria.
+
 # Compatible architecture — 0.77.0
 
 Hearthstone, Forgehold and Oathhall share module scale, light direction and placement rules. Use original fronts intact, full-size wall/window bays and cropped partial masonry tiles; never squeeze an entire forge into a small extension or slice an arbitrary strip through a roof. Add storeys as a coherent set-back upper structure. Mix masonry, roof and trim independently; a material study must be labelled as an example if it includes unbuilt additions. Painted room materials and coping must align with the existing walkable bounds. Judge additions and furniture beside the approved Dwarf at gameplay scale. Exact original image-generation prompts and source policy are in assets/architecture87/PRODUCTION.md.

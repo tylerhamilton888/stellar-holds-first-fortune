@@ -1,3 +1,9 @@
+# Romance cast direction — focused source checks passed
+
+The four existing future-romance candidates now use authored whole-character appearance defaults instead of random visual choices. World rendering prefers saved acquaintance identities so portraits, names and history remain consistent. Dagna and Ragnhild receive warmer trait descriptions through a versioned narrative update. See ROMANCE_CAST.md for the explicit attractiveness standard and the owner's clarification that story characters warrant bespoke art beyond background variations.
+
+This is a baseline using existing artwork, not completion of six bespoke frontier characters, dating, marriage or the attached Great Claim overhaul. Existing saved appearances remain preserved. Godot 4.4.1 import and the native people-preview suite passed (408 checks). Reviewed all four recolored candidate dialogue portraits. Existing friendship, gifts, eligibility metadata and saved identity reload checks pass. Full hosted validation and bespoke story-character production remain outstanding. No new Windows release has been produced.
+
 # 0.89.0 — A hearth of your own: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.89.0. PR #71 merged as 8d146f8b79f151353ff06cb9ecf9a2720b2456b5; release source 96a4866eb962e0188963534bf0512399c8de1e86 and merged source have identical tree 7f3d2b3da33225407c182e8dff2b335650be6ba0. Hosted source run 41234344775 passed all 44 gameplay cases plus people-preview. Release run 41234369629 passed all 34 exact-export cases and published successfully.

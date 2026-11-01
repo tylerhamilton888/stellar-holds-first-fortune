@@ -167,11 +167,12 @@ func people(area:String,time:float=-1)->Array:
   if area!=f.area:continue
   var key=str(g.state.seed_value)+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+7500+i,f.gender)
+  var profile=HoldRoadCharacters.appearance(g.state,"road_folk:"+str(i),profiles[key])
   var duration=f.a.distance_to(f.b)/38.0;var phase=fposmod(time+i*9,(duration+7)*2)
   var start:Vector2=f.a;var end:Vector2=f.b
   if phase>duration+7:phase-=duration+7;start=f.b;end=f.a
   var walking=phase<duration;var at=start.lerp(end,minf(1,phase/duration))
-  result.append({"kind":"citizen","p":at,"profile":profiles[key],"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profiles[key].family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
+  result.append({"kind":"citizen","p":at,"profile":profile,"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profile.family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
  return result
 func points()->Array:
  var result=[]

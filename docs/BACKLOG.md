@@ -1,3 +1,7 @@
+# Romance story-character production
+
+Apply docs/ROMANCE_CAST.md to every romance option. Give the frontier story cast individually recognizable faces, silhouettes, signature clothing, portraits/expressions and key animations; shared recolored background designs are an interim baseline. Expand the current four future candidates toward the Great Claim's three women and three men, preserve established relationships, and implement reciprocal courtship and household progression in the narrative milestone. Authored baseline appearance defaults are implemented; bespoke six-person assets and romance gameplay are outstanding.
+
 # 0.89.0 — A hearth of your own: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.89.0. PR #71 merged as 8d146f8b79f151353ff06cb9ecf9a2720b2456b5; release source 96a4866eb962e0188963534bf0512399c8de1e86 and merged source have identical tree 7f3d2b3da33225407c182e8dff2b335650be6ba0. Hosted source run 41234344775 passed all 44 gameplay cases plus people-preview. Release run 41234369629 passed all 34 exact-export cases and published successfully.
