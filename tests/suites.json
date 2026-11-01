@@ -2,6 +2,7 @@
   "suites": {
     "core": [
       "loading",
+      "story_art105",
       "menus",
       "orientation",
       "ambient",
@@ -9,6 +10,7 @@
     ],
     "gameplay": [
       "loading",
+      "story_art105",
       "menus",
       "orientation",
       "ambient",
@@ -139,6 +141,7 @@
       "orientation",
       "handworks",
       "loading",
+      "story_art105",
       "polish"
     ],
     "firsthour-only": [
@@ -147,6 +150,7 @@
     "firsthour-regression": [
       "handworks",
       "loading",
+      "story_art105",
       "polish"
     ],
     "mining-only": [
@@ -306,6 +310,7 @@
     ],
     "gameplay-1": [
       "loading",
+      "story_art105",
       "ambient",
       "handworks",
       "hold",
@@ -506,6 +511,12 @@
     ],
     "mountain104-only": [
       "mountain104"
+    ],
+    "story_art105": [
+      "story_art105",
+      "loading",
+      "people",
+      "courtship101"
     ]
   },
   "cases": {
@@ -700,6 +711,10 @@
     "mountain104": {
       "script": "tests/mountain104.gd",
       "marker": "MOUNTAIN104"
+    },
+    "story_art105": {
+      "script": "tests/story_art105.gd",
+      "marker": "STORYART105"
     }
   }
 }

@@ -1,6 +1,6 @@
 # Story art approval checkpoint
 
-Status: owner accepted the concept direction and authorized translation into the established portrait/sprite system, emphasizing bold shapes, colors and readability. Owner explicitly allowed a representative preview before implementation. First translation proof is in `story-translation/preview.png`; no generated art has yet been wired into gameplay. Review this checkpoint before resuming art production or the next story milestone.
+Status: owner accepted the concept direction and authorized translation into the established portrait/sprite system, emphasizing bold shapes, colors and readability. Owner explicitly allowed a representative preview before implementation. First translation proof is in `story-translation/preview.png`; portrait/loading integration is now underway. See STORY_ART_IMPLEMENTATION.md for current completion and remaining world-animation work. Review this checkpoint before resuming art production or the next story milestone.
 
 The owner requested bespoke named-character art and four illustrated loading scenes, all presented before implementation. Subsequent direction: keep the male designs, correct Ivar's extra arm, make women less anime and more grounded adults, and allow tasteful open necklines and bare arms without a sexualized aesthetic. Existing in-world models remain the gameplay-scale standard.
 

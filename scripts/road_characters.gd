@@ -13,13 +13,13 @@ const CANDIDATE_APPEARANCES={
  "road_folk:6":{"gender":1,"sculpt":3,"hair_color":0,"cloth_color":5,"skin":0},
  "road_folk:7":{"gender":0,"sculpt":4,"hair_color":2,"cloth_color":6,"skin":1}}
 static func appearance(s,id:String,fallback:Dictionary)->Dictionary:
- if s.npc_appearances.has(id):return s.npc_appearances[id].duplicate(true)
- if not CANDIDATE_APPEARANCES.has(id):return fallback
+ if s.npc_appearances.has(id):return HoldStoryArt105.tag(s.npc_appearances[id].duplicate(true),id)
+ if not CANDIDATE_APPEARANCES.has(id):return HoldStoryArt105.tag(fallback,id)
  var p=fallback.duplicate(true)
  if id=="road_folk:6":p.first_name="Brynja";p.family_name="Brasshaven"
  if id=="road_folk:7":p.first_name="Hakon";p.family_name="Ironroot"
  for field in CANDIDATE_APPEARANCES[id]:p[field]=CANDIDATE_APPEARANCES[id][field]
- return HoldAppearance.normalized(p)
+ return HoldStoryArt105.tag(HoldAppearance.normalized(p),id)
 
 const FAMILIAR_WELCOMES={
  "road_folk:0":"Ah, a face I know. Come tell me something the bridge hasn't already heard.",

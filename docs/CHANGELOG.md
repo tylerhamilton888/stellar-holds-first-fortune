@@ -1,3 +1,9 @@
+# Unreleased — story art 105, checkpoint 1
+
+- Added 24 bespoke named dialogue portraits with stable explicit ID routing; retained Eirik and generic/player portraits.
+- Added the four approved loading illustrations with per-event rotation and readable full-canvas presentation.
+- World sprite/stance replacement is not part of this checkpoint; failed walking studies remain excluded.
+
 # 0.89.0 — A hearth of your own (published)
 
 - Start new fortunes in the shared miners’ lodge, meet Ivar and visit the existing private quarters.

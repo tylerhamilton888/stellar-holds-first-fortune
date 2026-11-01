@@ -1,0 +1,77 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "portraits": [
+    {
+      "asset": "portraits-0.webp",
+      "ids": [
+        "dagna",
+        "ragnhild",
+        "brynja",
+        "orla",
+        "edda",
+        "sigrid"
+      ],
+      "source": "exec-f404dcfb-6839-4c08-b424-0f08b2e35a59.png",
+      "prompt": "Use case: stylized-concept. PRODUCTION DIALOGUE PORTRAIT ATLAS for the hand-painted dwarf game The Stellar Holds. Exactly SIX square chest-up portraits in a strict evenly spaced 3-column x 2-row grid, 1536x1024. No text, labels, panels, borders, hands, tools or extra figures. Each face and entire hair stays INSIDE its own 512px square with 8% headroom, shoulders reach cell bottom. Solid uniform deep desaturated teal background #283f45 in every cell. NO transparency needed. Camera and head size consistent. Bold warm dark outlines, clear large painted color blocks, only 2-3 main values, restrained soft shading. Much simpler than detailed concept art. Readable at 86px square! No tiny ornament or textures. Normal adult eyes, strong distinct noses/jaws/brows, not anime/chibi/photoreal. All men fully bearded over chin and jaw; all women unbearded and attractive sturdy adult dwarves. Natural fixed hair colors. Preserve approved character identity but simplify. References are identity and style guides; do not copy layouts or names into image. Top left DAGNA: warm heart-shaped face, chestnut loose waves, red bodice with cream scoop neck/short sleeves, affectionate subtle smile, medium shoulders. Top middle RAGNHILD: athletic feminine pear build, longer oval face and straight nose, copper crown braid, green sleeveless square-neck dress, steady relaxed smile. Top right BRYNJA: compact athletic square shoulders, angular attractive face with short strong nose, flaxen side braid, ochre open sleeveless shirt/dark leather apron, focused half-smile. Bottom left ORLA: mature broader shoulders, full-busted defined waist, visibly longer prominent nose and broad cheekbones distinct from Ragnhild, copper braided LOW BUN, blue V-neck dress/elbow sleeves, kindly confident expression. Bottom middle EDDA: narrow upright frame, mature long face, arched nose, spectacles, ash-brown hair with silver streak/low braided bun, blue waistcoat over cream open collar, calm attentive expression. Bottom right SIGRID: broad muscular shoulders/strong upper arms, square feminine jaw, strong straight brows, black side braid with copper band, slate blue sleeveless tunic, assured expression."
+    },
+    {
+      "asset": "portraits-1.webp",
+      "ids": [
+        "yrsa",
+        "ivar",
+        "skarrin",
+        "rurik",
+        "torvik",
+        "ketil"
+      ],
+      "source": "exec-59fe1eb5-6226-42ca-80b3-1ce6b540f1cf.png",
+      "prompt": "Use case: stylized-concept. PRODUCTION DIALOGUE PORTRAIT ATLAS for the hand-painted dwarf game The Stellar Holds. Exactly SIX square chest-up portraits in a strict evenly spaced 3-column x 2-row grid, 1536x1024. No text, labels, panels, borders, hands, tools or extra figures. Each face and entire hair stays INSIDE its own 512px square with 8% headroom, shoulders reach cell bottom. Solid uniform deep desaturated teal background #283f45 in every cell. NO transparency needed. Camera and head size consistent. Bold warm dark outlines, clear large painted color blocks, only 2-3 main values, restrained soft shading. Much simpler than detailed concept art. Readable at 86px square! No tiny ornament or textures. Normal adult eyes, strong distinct noses/jaws/brows, not anime/chibi/photoreal. All men fully bearded over chin and jaw; all women unbearded and attractive sturdy adult dwarves. Natural fixed hair colors. Preserve approved character identity but simplify. References are identity and style guides; do not copy layouts or names into image. Top left YRSA: petite athletic feminine adult, heart-shaped freckled face/slightly upturned nose, ash-blonde braided updo, ochre sleeveless waistcoat over cream square neckline, upright neutral curious expression NOT leaning flirtatiously. Top middle IVAR: broad older male, iron grey swept hair, long full beard with one broad central bound braid/two shorter side locks, ochre foreman coat/cream shirt, patient warm eyes. Top right SKARRIN: black combed hair, SHORT dense full black beard covering entire chin/jaw, charcoal high collar grey shirt brown diagonal strap, skeptical reserved expression. Bottom left RURIK: broad older hearty russet-haired male, full rounded thick russet beard, brick-red hauler shirt/brown shoulder strap, broad warm grin. Bottom middle TORVIK: handsome patient masculine adult, oak brown swept hair, full beard ending TWO long oath braids, pine green timberworker shirt/leather shoulder strap, quiet warm smile. Bottom right KETIL: handsome confident male, honey-gold hair and full square beard, woad blue open-collar field shirt, easy friendly smile."
+    },
+    {
+      "asset": "portraits-2.webp",
+      "ids": [
+        "hakon",
+        "hedrik",
+        "borin",
+        "eldric",
+        "bram",
+        "sten"
+      ],
+      "source": "exec-72123875-b4dd-46a3-bc04-1d26cd490c93.png",
+      "prompt": "Use case: stylized-concept. PRODUCTION DIALOGUE PORTRAIT ATLAS for the hand-painted dwarf game The Stellar Holds. Exactly SIX square chest-up portraits in a strict evenly spaced 3-column x 2-row grid, 1536x1024. No text, labels, panels, borders, hands, tools or extra figures. Each face and entire hair stays INSIDE its own 512px square with 8% headroom, shoulders reach cell bottom. Solid uniform deep desaturated teal background #283f45 in every cell. NO transparency needed. Camera and head size consistent. Bold warm dark outlines, clear large painted color blocks, only 2-3 main values, restrained soft shading. Much simpler than detailed concept art. Readable at 86px square! No tiny ornament or textures. Normal adult eyes, strong distinct noses/jaws/brows, not anime/chibi/photoreal. All men fully bearded over chin and jaw; all women unbearded and attractive sturdy adult dwarves. Natural fixed hair colors. Preserve approved character identity but simplify. References are identity and style guides; do not copy layouts or names into image. Top left HAKON: handsome broad masculine guard, copper hair and substantial full beard, slate blue guard coat/mail collar, protective gentle expression. Top middle HEDRIK: chestnut hair full rounded beard and curled moustache, rowan red waistcoat/cream shirt, broad genial tavernkeeper face. Top right BORIN: dark oak hair enormous full beard, slate shirt/leather apron, sturdy master smith, thoughtful strong brow. Bottom left ELDRIC: older grey hair two-part full beard, spectacles, blue scholar coat, shrewd thoughtful face. Bottom middle BRAM: bald crown grey side hair, broad full grey beard, patched blue-grey road cape, tired but capable friendly older face. Bottom right STEN: short raven hair/full squared black beard, mustard porter tunic/one simple shoulder pad, stocky square jaw/steady expression."
+    },
+    {
+      "asset": "portraits-3.webp",
+      "ids": [
+        "brann",
+        "dagr",
+        "odrin",
+        "osvik",
+        "tovan",
+        "kelvar"
+      ],
+      "source": "exec-d08ad89e-2e23-4e23-abfe-2edfed4280c9.png",
+      "prompt": "Use case: stylized-concept. PRODUCTION DIALOGUE PORTRAIT ATLAS for the hand-painted dwarf game The Stellar Holds. Exactly SIX square chest-up portraits in a strict evenly spaced 3-column x 2-row grid, 1536x1024. No text, labels, panels, borders, hands, tools or extra figures. Each face and entire hair stays INSIDE its own 512px square with 8% headroom, shoulders reach cell bottom. Solid uniform deep desaturated teal background #283f45 in every cell. NO transparency needed. Camera and head size consistent. Bold warm dark outlines, clear large painted color blocks, only 2-3 main values, restrained soft shading. Much simpler than detailed concept art. Readable at 86px square! No tiny ornament or textures. Normal adult eyes, strong distinct noses/jaws/brows, not anime/chibi/photoreal. All men fully bearded over chin and jaw; all women unbearded and attractive sturdy adult dwarves. Natural fixed hair colors. Preserve approved character identity but simplify. References are identity and style guides; do not copy layouts or names into image. Top left BRANN: chestnut hair/full beard with single broad braid, rowan red work jacket/cream shirt, capable straightforward expression. Top middle DAGR: dark short crest/mohawk, full copper beard ending twin braids, heather muted purple work vest, competitive grin. Top right ODRIN: raven hair grey temples, full rounded dark beard, faded rowan red shirt/crossed brown apron straps, calm solid face. Bottom left OSVIK: ash-brown hair neatly forked full beard with iron bands, slate precision smith shirt/leather apron, exacting thoughtful expression. Bottom middle TOVAN: honey-brown hair/full soft beard with one braid, blue quilted waistcoat/cream shirt, kind round-cheeked adult face. Bottom right KELVAR: black hair grey temples, full square dark beard, goggles on forehead, pine green engineer coat, dry skeptical friendly expression."
+    }
+  ],
+  "hedrik_repair": "Top middle of batch 2: remove beard plaits and rings, restore rounded full beard and upturned curled moustache; preserve five other portraits.",
+  "loadings": [
+    [
+      "loading-mine.webp",
+      "exec-163aa840-109b-4693-b073-aaea6b48ee20.png"
+    ],
+    [
+      "loading-forge.webp",
+      "exec-3f6d48d0-7860-4297-a68f-8e83df105225.png"
+    ],
+    [
+      "loading-home.webp",
+      "exec-d24dfeab-154d-42e9-b2b0-a933f66ff4aa.png"
+    ],
+    [
+      "loading-river.webp",
+      "exec-43ca42d0-4ed3-4bf1-8c13-74115e193b5c.png"
+    ]
+  ],
+  "export": "ImageMagick mechanical export only: portraits 1536x1024 WebP quality92; loading 1440x810 WebP quality90; no repainting, compositing or body-part construction."
+}

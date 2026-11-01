@@ -263,7 +263,7 @@ func npc(key:String)->Dictionary:
    npc_appearances[key]=HoldAppearance.normalized(p)
   elif HoldAppearance.NPC_NAMES.has(key):npc_appearances[key]=HoldAppearance.npc_profile(key,seed_value)
   else:npc_appearances[key]=HoldAppearance.random_profile(seed_value+int(key.hash()))
- return npc_appearances[key]
+ return HoldStoryArt105.tag(npc_appearances[key],key)
 
 func finish_commission()->bool:
  if opening<1 or opening>3 or not HoldOnboarding.commission_allowed(self):return false
