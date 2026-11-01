@@ -98,6 +98,11 @@ static func goal(g)->String:
   if not q.get("room_seen",false):return "First morning · bunkhouse stairs → your room above · J"
   if not q.get("rewarded",false):return "First shift · northern town path → Old Workings · J"
   if not HoldFrontier103.data(g.state).permit:return "A place of your own · two civic projects → Ivar’s shift book · J"
+  if HoldMountain104.eligible(g.state):
+   var stage=int(HoldAncestralClaim.data(g.state).stage)
+   if stage==0:return "A runner from the mine · visit Ivar’s shift book · J"
+   if stage<3:return "The mountain remembers · rescue the trapped survey crew · J"
+   if stage<5:return "The mountain remembers · survivors and ancestral evidence · J"
   if HoldFrontier103.data(g.state).home_reward:return "A hearth of your own · build, work and meet your neighbors · J"
   return "Your household plot · east road · O: design and build your home · J"
  if not q.guided:return "Explore at your own pace · J: resume guidance or choose a goal"
@@ -175,6 +180,7 @@ static func journal(g):
  g.small_button(g.panel_body,"Just let me explore",func():focus(g,"free"))
 
 static func frontier_journal(g):
+ HoldMountain104.panel(g)
  var s=g.state;var q=data(s)
  g.label(g.panel_body,"A DWARF'S WORTH · STONEBRIDGE",22,Color("edc98a"))
  g.label(g.panel_body,"A bunkhouse room today; a home you design and build as you settle into town. Nothing decays while you are away. Take these steps at your own pace.",16)

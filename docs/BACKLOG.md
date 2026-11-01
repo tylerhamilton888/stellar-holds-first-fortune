@@ -1,3 +1,7 @@
+# Mountain chapter remaining work
+
+Playable frontier rescue, independent ancestry authentication, gathering and character reactions implemented in 0.92.0. Finish full hosted validation and Windows delivery; read great-claim/CHECKPOINT.md. Next gameplay milestone: 04-contest-keldrath.md. Bespoke story-character frames/portraits (including Skarrin's short deliberate beard) remain queued; no cinematic collapse animation is claimed. Preserve the permanent household plot through all subsequent events.
+
 # Great Claim remaining implementation
 
 Town and player-home slice implemented and native-tested in 0.91.0; finish hosted source/export delivery gates. Read great-claim/CHECKPOINT.md. Seven milestones include the new permanent player-home milestone. Keep extending this plot through later story chapters. Remaining: wider authored narrative cast, rescue/ancestry, contest/Keldrath, invasion/trial, Thaneship/marriage and bespoke story-character art. Six-candidate courtship/betrothal already exists; shared character families remain an interim art baseline.

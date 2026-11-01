@@ -1,3 +1,13 @@
+# 0.92.0 — The mountain remembers: chapter implemented
+
+New frontier fortunes can accept Ivar's rescue after registering a home and earning 180 contribution marks. Sten, Torvik and a partner (or Brynja) occupy a sealed refuge in the actual Old Workings geology. Excavation, light, ordinary masonry support and a clear route enable physical evacuation. Named profiles and positions survive saves; blocked exits halt the crew. Survivors leave their ordinary routes while trapped and gather at the bunkhouse on return.
+
+Celebration leads to Edda's examination, the upstairs archive and Ivar's family registration. The once-only hereditary allowance is recorded separately and ties Skarrin's standing at authentication. Existing home/property and Z data remain untouched; no premature title is granted. Relationship investment unlocks two saved Skarrin insights, and survivors/partners have follow-up dialogue. Existing saves retain the old ancestral quest.
+
+Source checks passed: mountain104 36, ancestral 23, frontier103 224 (283 assertions). Exported-pack acceptance passed 40 chapter checks plus 224 town/home checks; the final gathering positions were corrected and visually reviewed. Hosted delivery remains pending. Evidence: testing/mountain104/acceptance.json. See great-claim/CHECKPOINT.md. Full bespoke Skarrin art and cinematic collapse remain unimplemented; subsequent contest/Keldrath, invasion/trial and Thaneship/marriage remain queued.
+
+Town/home PR #74 passed all five hosted jobs and merged as 3072c26863f673f0fcf7a19083a5cea5d6316e34. Its release/0.91.0 exact-pack gate was still running when this chapter began. Preserve every previous release.
+
 # 0.91.0 — A town taking root: native checks passed
 
 New fortunes start in Stonebridge's real two-storey bunkhouse. Connected roads lead to the tavern, communal forge, survey hall/archive, watch stores, farms and mine. The community storehouse starts as a foundation/worksite and becomes a usable building after a paid contribution. Skarrin and Edda have authored conversations and normal persistent identities. Public buildings use the same player-accessible plans and actual room storeys; public ownership prevents dismantling, not construction parity. Existing fortunes keep their geography.

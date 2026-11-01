@@ -26,6 +26,7 @@ static func contribute(g,id:String)->bool:
  g.save_game();g.notify(p.title+" completed · "+str(p.points)+" Claim marks recorded.");return true
 static func standings(s)->Array:
  var count=data(s).get("projects",{}).size()
+ if HoldMountain104.active(s) and HoldMountain104.data(s).get("authenticated",false):return [["Skarrin",int(HoldMountain104.data(s).rival_at_award),"Verified works at authentication; public contest pending"],["Rurik Stonehand",150,"Haulage and settlement deliveries"],["You",int(data(s).points),"Work plus separately recorded hereditary allowance"]]
  # Named deliveries at civic milestones; no elapsed-time or player-score chasing.
  return [["Skarrin",300+([0,35,35,80][mini(count,3)]),"Prior survey, retaining wall; later a brace delivery and drainage cut"],["Rurik Stonehand",110+20*mini(count,2),"Prior haulage; timber and stone deliveries"],["You",int(data(s).get("points",0)),"Verified work and completed civic projects"]]
 static func furnishings(w,area:String)->Array:

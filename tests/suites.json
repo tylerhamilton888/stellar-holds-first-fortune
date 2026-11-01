@@ -54,7 +54,8 @@
       "lodge100",
       "courtship101",
       "greatclaim102",
-      "frontier103"
+      "frontier103",
+      "mountain104"
     ],
     "modular": [
       "modular",
@@ -445,7 +446,8 @@
       "lodge100",
       "courtship101",
       "greatclaim102",
-      "frontier103"
+      "frontier103",
+      "mountain104"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -496,6 +498,14 @@
       "architecture",
       "homestead",
       "roads"
+    ],
+    "mountain104": [
+      "mountain104",
+      "ancestral",
+      "frontier103"
+    ],
+    "mountain104-only": [
+      "mountain104"
     ]
   },
   "cases": {
@@ -686,6 +696,10 @@
     "frontier103": {
       "script": "tests/frontier103.gd",
       "marker": "FRONTIER103"
+    },
+    "mountain104": {
+      "script": "tests/mountain104.gd",
+      "marker": "MOUNTAIN104"
     }
   }
 }

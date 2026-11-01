@@ -38,15 +38,16 @@ static func enter(g):
   g.notify("Ivar is revising the rescue approach; no safe assembly point is available in this developed gallery.");return
  q.site=[chosen.x,chosen.y];var p=Deepworks.center(chosen)
  q.crew=[{"p":[p.x,p.y],"gait":0.0,"home":false},{"p":[p.x+40 if w.walkable(chosen+Vector2i.RIGHT) else p.x,p.y if w.walkable(chosen+Vector2i.RIGHT) else p.y+40],"gait":0.0,"home":false}]
+ HoldMountain104.setup(g)
  g.save_game()
 static func tick(g,dt:float):
  var q=data(g.state)
  if not active(g) or q.stage!=2 or g.panel_id!="":return
  for n in q.crew.size():
-  var c=q.crew[n]
+  var c=q.crew[n];c.walking=false
   if c.home:continue
   # Stagger departures so the two whole-character sprites do not overlap.
-  if n==1 and not q.crew[0].home and Vector2(q.crew[0].p[0],q.crew[0].p[1]).distance_to(Deepworks.center(Vector2i(q.site[0],q.site[1])))<70:continue
+  if n>0 and not q.crew[n-1].home and Vector2(q.crew[n-1].p[0],q.crew[n-1].p[1]).distance_to(Deepworks.center(Vector2i(q.site[0],q.site[1])))<70:continue
   var p=Vector2(c.p[0],c.p[1]);var path=c.get("path",[])
   c.retry=maxf(0,float(c.get("retry",0))-dt)
   if path.is_empty():
@@ -58,19 +59,20 @@ static func tick(g,dt:float):
   var target=Deepworks.center(Vector2i(int(path[0][0]),int(path[0][1])))
   c.aim=[target.x-p.x,target.y-p.y]
   var next=p.move_toward(target,70*dt)
-  if not g.deep.world.solid(next):c.gait+=HoldDrawnLocomotion.time_for_distance(p.distance_to(next));c.p=[next.x,next.y]
+  if not g.deep.world.solid(next):c.walking=p.distance_to(next)>.01;c.gait+=HoldDrawnLocomotion.time_for_distance(p.distance_to(next));c.p=[next.x,next.y]
   else:c.path=[]
   if next.distance_to(target)<1 and not path.is_empty():path.pop_front()
   if next.distance_to(Deepworks.center(Deepworks.ENTRY))<8:c.home=true
  if q.crew.all(func(c):return c.home):
-  q.stage=3;HoldOutpost.record(g.state,"crew_rescue","Two trapped miners returned through the opened gallery. An old charter slab was recovered from their refuge.")
-  g.notify("Both miners are safe. The slab bears your family mark. Take it to Eldric for examination.");g.save_game()
+  q.stage=3;HoldOutpost.record(g.state,"crew_rescue","Sten and the survey crew returned through the opened gallery with an ancestral fragment." if HoldMountain104.active(g.state) else "Two trapped miners returned through the opened gallery. An old charter slab was recovered from their refuge.")
+  g.notify("The crew is safe. Return to Ivar’s shift book for the gathering." if HoldMountain104.active(g.state) else "Both miners are safe. The slab bears your family mark. Take it to Eldric for examination.");g.save_game()
 static func interact(g)->bool:
  var q=data(g.state)
  if not active(g) or q.stage!=1 or q.site.is_empty():return false
  var p=Deepworks.center(Vector2i(q.site[0],q.site[1]))
  if g.player.distance_to(p)>70 or not g.deep.world.visible(g.player,p):return false
  if route(g.deep.world,Deepworks.cell(p),Deepworks.ENTRY).is_empty():g.notify("The crew needs a continuous walkable route to the entrance. Clear the bypass first.");return true
+ if HoldMountain104.active(g.state) and not HoldMountain104.safe(g):return true
  q.stage=2;g.save_game();g.notify("The miners are on their feet. Keep the route clear while they walk out; their recovered slab can wait.");return true
 static func actors(g)->Array:
  var q=data(g.state);var out=[]
@@ -83,13 +85,16 @@ static func actors(g)->Array:
   out.append({"kind":"rescue_crew","p":p,"index":i})
  return out
 static func draw(g,a:Dictionary,offset:Vector2):
- var q=data(g.state);var c=q.crew[a.index];var walk=q.stage==2
+ var q=data(g.state);var c=q.crew[a.index];var walk=bool(c.get("walking",false))
  var direction=c.get("aim",[0,1]);var aim=Vector2(direction[0],direction[1]).normalized() if walk else Vector2.DOWN
- HoldDrawnAnimation.paint(g,a.p+offset,HoldFirstShift.profile_for(a.index==0),aim,walk,float(c.gait),.85,offset,"town_walk",1.0)
+ HoldDrawnAnimation.paint(g,a.p+offset,HoldMountain104.profile(g,a.index),aim,walk,float(c.gait),.85,offset,"town_walk",1.0)
  g.draw_set_transform(offset)
  if q.stage==1 and g.player.distance_to(a.p)<70:HoldArt.text(g,a.p+Vector2(-4,-58),"E",14,Color("edc98a"))
-static func eligible(s)->bool:return s.claim_id!="" or (s.opening>=2 and (not HoldOnboarding.ensure(s).fresh or HoldOnboarding.stage(s)>=6))
+static func eligible(s)->bool:
+ if HoldMountain104.active(s):return HoldMountain104.eligible(s)
+ return s.claim_id!="" or (s.opening>=2 and (not HoldOnboarding.ensure(s).fresh or HoldOnboarding.stage(s)>=6))
 static func act(g,action:String)->bool:
+ if HoldMountain104.active(g.state):return HoldMountain104.act(g,action)
  var s=g.state;var q=data(s);var done=false
  match action:
   "rescue":
@@ -117,6 +122,7 @@ static func ready(s)->bool:
  HoldOutpost.ensure(s)
  return s.claim_id!="" and s.camp_stage>=3 and s.outpost.crew.size()>=2 and s.count("food")>=12 and s.count("water")>=12
 static func description(s)->String:
+ if HoldMountain104.active(s):return HoldMountain104.description(s)
  var q=data(s)
  match int(q.stage):
   0:return "Ivar may have work requiring judgment as well as strong hands after your first paid shift."
@@ -134,6 +140,7 @@ static func journal(g):
  g.label(g.panel_body,"THE STONE REMEMBERS"+(" · "+q.title if q.title!="" else ""),18,Color("edc98a"))
  g.label(g.panel_body,description(g.state),15)
 static func marker(s,id:String)->String:
+ if HoldMountain104.active(s):return ""
  var q=data(s)
  if id=="ivar":
   if q.stage==0 and eligible(s):return "offer"

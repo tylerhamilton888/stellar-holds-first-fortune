@@ -933,6 +933,7 @@ func update_hud():
  elif zone=="road":place="PINEWOOD"
  elif state.active_site=="claim":place=HoldOutpost.title(state).to_upper()
  if room_id!="":place=HoldInteriors.ROOMS.get(room_id,{"name":"Family hearth"}).name.to_upper()
+ if zone=="mine" and state.active_site=="hold" and HoldFrontier103.active(state):place="STONEBRIDGE"
  hud.text=place+" / "+("DEEP WORKINGS" if zone=="mine" else ("KELDRATH" if zone=="approach" else "TIMBER COUPE" if zone=="road" else "MOUNTAIN HOLD"))+"   %d CROWNS" % state.money
  status.text="IRON ORE %d   COPPER %d   COAL %d   CRYSTAL %d   TIMBER %d" % [state.count("iron_ore"),state.count("copper_ore"),state.count("coal"),state.count("crystal"),state.count("wood")]
  objectives.text=goal()
