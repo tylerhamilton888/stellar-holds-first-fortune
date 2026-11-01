@@ -1,3 +1,13 @@
+# 0.92.0 source merged — Windows verification pending
+
+PR #75 merged as 3b46d1c98a55dc8b01830c15080879a7ea6a9d4f after all five jobs in full source run 41342691773 passed. Release source dbb248ea948f1afa4b8135006e9d97adc16f38fd (local 5463f34), identical tree 8a27f05048d201edbc6d907d410c56a9bf4dfc59. The Windows ZIP has built; release run 41342691069 is still testing the exact pack and will publish only on success. Do not call v0.92.0 published until release assets are verified. The previous town/home release v0.91.0 is now published and preserved.
+
+Playable chapter: named physical rescue with support/light requirements, blocked-route handling and save continuity; survivor gathering; independent ancestry authentication and once-only hereditary allowance; Skarrin insights and personal reactions. Native focused checks passed 283 assertions; local exported checks passed 264, including final corrected gathering positions. Full hosted source validation also passed. Evidence: docs/testing/mountain104/acceptance.json.
+
+Next delivery step: inspect 41342691069, verify published assets/checksums, record the final release. Then read docs/great-claim/04-contest-keldrath.md for the next gameplay milestone. Bespoke Skarrin art and cinematic collapse are not implemented; later story/marriage remains queued. No human Windows/audio playtest is claimed.
+
+---
+
 # 0.92.0 — The mountain remembers: chapter implemented
 
 New frontier fortunes can accept Ivar's rescue after registering a home and earning 180 contribution marks. Sten, Torvik and a partner (or Brynja) occupy a sealed refuge in the actual Old Workings geology. Excavation, light, ordinary masonry support and a clear route enable physical evacuation. Named profiles and positions survive saves; blocked exits halt the crew. Survivors leave their ordinary routes while trapped and gather at the bunkhouse on return.

@@ -48,8 +48,20 @@
     "authentication"
   ],
   "limits": [
-    "Full hosted source and Windows exact-package gates pending",
+    "Windows exact-package gate and publication pending",
     "No cinematic collapse or bespoke Skarrin artwork",
     "No player Windows hardware/audio verification"
-  ]
+  ],
+  "hosted_source": {
+    "commit": "dbb248ea948f1afa4b8135006e9d97adc16f38fd",
+    "tree": "8a27f05048d201edbc6d907d410c56a9bf4dfc59",
+    "run": 41342691773,
+    "jobs_passed": 5,
+    "pr": 75,
+    "merge": "3b46d1c98a55dc8b01830c15080879a7ea6a9d4f"
+  },
+  "windows": {
+    "run": 41342691069,
+    "status": "ZIP built; exact-package verification in progress; not yet verified published"
+  }
 }
