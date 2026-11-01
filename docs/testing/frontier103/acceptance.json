@@ -82,5 +82,24 @@
     "Hosted full-source and exact-export checks pending",
     "No player Windows hardware/audio verification",
     "Later story and bespoke character art remain queued"
-  ]
+  ],
+  "local_exported_pack_cases": [
+    {
+      "test": "frontier103",
+      "passed": true,
+      "checks": 224,
+      "errors": []
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "checks": 47,
+      "errors": []
+    }
+  ],
+  "local_exported_pack_note": "Exported from source 5526377, tested with empty working/save directories. This is not the hosted Windows ZIP.",
+  "hosted_source": "cf3daf6c07b8b1f093db2018b859fd84c69e8aed",
+  "tree": "b6212292baade453f7d1ed5696111e7adb9e5f69",
+  "source_run": 41339237563,
+  "release_run": 41339241566
 }
