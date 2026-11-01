@@ -114,6 +114,7 @@ func routes_open(map:Dictionary)->bool:
   if not found:return false
  return seen.has(key(cell(Vector2(300,760)))) if level()==0 else seen.size()>0
 func valid(c:Vector2i,kind:String,check_routes:bool=true)->bool:
+ if s.architecture.interior() and HoldFrontier103.public_building(s.architecture.inside()):reason="Public structures belong to the town. The same plans are available for your plot.";return false
  reason=""
  if s.architecture.interior():return room_valid(c,kind,check_routes)
  if s.area!="claim":reason="Build houses in your claim yard.";return false

@@ -17,7 +17,9 @@ const FOLK=[
  {"area":"greenfields","name":"Ketil","role":"Field hand","a":Vector2(1110,790),"b":Vector2(1530,790),"gender":0,"line":"These fields feed the hold. We keep the cart lane clear; you can carry your harvest all the way to the Kettle's order board."},
  {"area":"trail","name":"Sten","role":"Mine porter","a":Vector2(760,400),"b":Vector2(865,400),"gender":0,"line":"The northern arch leads straight into Old Workings. The rack and breaker outside are on loan. Bring your own stone; the crew's supplies remain theirs."},
  {"area":"pinewood","name":"Brynja","role":"Metalworker & toolwright","a":Vector2(760,790),"b":Vector2(850,790),"gender":1,"line":"Brynja sets a small brass hinge beside her tools. 'A good fitting should still close cleanly when our grandchildren are old. Come, tell me what you are making.'"},
- {"area":"trail","name":"Hakon","role":"Road guard","a":Vector2(1320,700),"b":Vector2(1430,700),"gender":0,"line":"Hakon rests his hand on his belt. 'Road is clear for now. If you are going into the hills, tell someone which path. I'll be here when you return.'"}]
+ {"area":"trail","name":"Hakon","role":"Road guard","a":Vector2(1320,700),"b":Vector2(1430,700),"gender":0,"line":"Hakon rests his hand on his belt. 'Road is clear for now. If you are going into the hills, tell someone which path. I'll be here when you return.'"},
+ {"area":"trail","name":"Skarrin","role":"Survey foreman & leading claimant","a":Vector2(970,630),"b":Vector2(1090,630),"gender":0,"line":"Those retaining walls are mine. So are the best survey figures. But naturally the old families will want their share of the credit."},
+ {"area":"trail","name":"Edda","role":"Survey clerk & keeper of names","a":Vector2(1410,530),"b":Vector2(1510,530),"gender":1,"line":"The office holds surveys below and records above. A town needs both sound foundations and people who remember why they were laid."}]
 var g
 var surface_ref:WeakRef
 var s:
@@ -60,6 +62,7 @@ func links(area:String)->Array:
  if HoldBuildingPlans.owned_room(area):return s.architecture.connections(area)
  return authored_links(area)+s.architecture.connections(area)
 func authored_links(area:String)->Array:
+ if HoldFrontier103.active(g.state) and area=="claim":return [connection(Vector2(100,790),Vector2.LEFT,"trail",Vector2(1730,700),"Stonebridge town"),connection(HoldMineEntrance.position("claim")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Household workings")]
  if HoldWorldZones.ward(area):
   var result=[]
   for point in s.world.points():
@@ -67,7 +70,7 @@ func authored_links(area:String)->Array:
   if area=="hearthward":result.append(connection(HoldWorldZones.GATE+Vector2(0,3),Vector2.UP,"trail",Vector2(220,735),"High Trail"))
   return result
  match area:
-  "trail":return [connection(Vector2(220,690),Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Keldrath"),connection(HoldMineEntrance.position("trail")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(Vector2(470,925),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(Vector2(510,520),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
+  "trail":return [connection(Vector2(100,690) if HoldFrontier103.active(g.state) else Vector2(220,690),Vector2.LEFT if HoldFrontier103.active(g.state) else Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Road to Keldrath"),connection(HoldMineEntrance.position("trail")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(Vector2(470,925),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(Vector2(510,520),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
   "pinewood":return [connection(Vector2(100,650),Vector2.LEFT,"trail",Vector2(470,870),"High Trail")]
   "greenfields":return [connection(Vector2(940,235),Vector2.UP,"trail",Vector2(1540,870),"Stonebridge"),connection(Vector2(550,450),Vector2.UP,"room:greenhearth",Vector2(480,565),"Farmhouse")]
   "claim":return [connection(Vector2(100,790),Vector2.LEFT,"trail",Vector2(1730,700),"Stonebridge"),connection(HoldMineEntrance.position("claim")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Your Deepworks"),connection(Vector2(500,440),Vector2.UP,"home:"+g.state.claim_id,Vector2(480,565),"Your hearth")]
@@ -108,7 +111,7 @@ func moved(before:Vector2,dt:float)->bool:
  if portal_cooldown>0:return false
  if link.is_empty():return false
  if link.target=="claim" and g.state.claim_id=="":
-  g.player=before;g.notify("Unclaimed mountain. Ivar or the Survey Office can help you earn or buy a charter.");portal_cooldown=1;return false
+  g.player=before;g.notify("Earn a household plot at Ivar’s shift book: first shift and two civic projects." if HoldFrontier103.active(g.state) else "Unclaimed mountain. Ivar or the Survey Office can help you earn or buy a charter.");portal_cooldown=1;return false
  if link.target in OUTDOORS and g.state.opening==0:
   g.player=before;g.notify(g.region_travel_hint());portal_cooldown=1;return false
  var gait=g.gait_clock;var from=s.area
@@ -124,6 +127,7 @@ func moved(before:Vector2,dt:float)->bool:
  data().visits[link.target]=true
  return true
 func roads(area:String)->Array:
+ if HoldFrontier103.active(g.state) and area=="trail":return [[Vector2(100,690),Vector2(1780,700)],[Vector2(190,690),Vector2(190,430)],[Vector2(510,690),Vector2(510,520)],[Vector2(690,690),Vector2(690,460),Vector2(950,300)],[Vector2(880,690),Vector2(880,570)],[Vector2(1450,700),Vector2(1480,450)],[Vector2(1540,700),Vector2(1510,915),Vector2(1660,915),Vector2(1660,870)],[Vector2(470,690),Vector2(470,925)],[Vector2(1540,700),Vector2(1540,925)],[Vector2(880,690),Vector2(880,940),Vector2(1020,940),Vector2(1020,900)]]
  match area:
   "trail":return [[Vector2(220,690),Vector2(700,690),Vector2(1880,700)],[Vector2(700,690),Vector2(950,300)],[Vector2(700,690),Vector2(470,980)],[Vector2(1430,700),Vector2(1540,980)],[Vector2(510,690),Vector2(510,520)],[Vector2(790,520),Vector2(650,420),Vector2(610,400)]]
   "pinewood":return [[Vector2(0,650),Vector2(300,650),Vector2(550,730),Vector2(800,730),Vector2(1100,600),Vector2(1560,760)],[Vector2(300,650),Vector2(300,790),Vector2(570,790),Vector2(700,790)]]
@@ -135,6 +139,7 @@ func buildings(area:String)->Array:
  return []
 func furnishings(area:String)->Array:
  var result=settlement_furnishings(area)
+ result.append_array(HoldFrontier103.works(g,area))
  result.append_array(HoldGreatClaim102.furnishings(s.world,area))
  # Independent posts use the same depth sorting and small physical bases as
  # player furniture. Their feet stay outside the 38px portal walking lane.

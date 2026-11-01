@@ -16,7 +16,7 @@ static func credit(s,path:String,amount:int):
  var d=data(s);var old=int(d.work.get(path,0));var earned=mini(amount,maxi(0,8-old))
  d.work[path]=old+earned;d.points=int(d.points)+earned
 static func near(g)->bool:
- return active(g.state) and g.zone!="mine" and g.surface.area==HoldWorkerLodge100.ROOM and g.player.distance_to(DESK)<85 and g.surface.clear_interaction(g.player,DESK)
+ return active(g.state) and g.zone!="mine" and g.surface.area==HoldFrontier103.lodge(g.state) and g.player.distance_to(DESK)<85 and g.surface.clear_interaction(g.player,DESK)
 static func complete(s,id:String)->bool:return active(s) and bool(data(s).projects.get(id,false))
 static func contribute(g,id:String)->bool:
  if not near(g) or not PROJECTS.has(id) or complete(g.state,id):return false
@@ -31,7 +31,7 @@ static func standings(s)->Array:
 static func furnishings(w,area:String)->Array:
  var result=[];var s=w.g.state
  if not active(s):return result
- if area==HoldWorkerLodge100.ROOM:result.append(w.furn("desk",DESK.x,DESK.y))
+ if area==HoldWorkerLodge100.ROOM and not HoldFrontier103.active(s):result.append(w.furn("desk",DESK.x,DESK.y))
  if area=="trail":
   if complete(s,"watch"):
    result.append(w.furn("road_lantern",1110,610));result.append(w.furn("road_lantern",1370,610))
@@ -42,6 +42,7 @@ static func furnishings(w,area:String)->Array:
  return result
 static func panel(g):
  if not active(g.state):g.label(g.panel_body,"This fortune is not entered in the Great Claim.",18);return
+ if HoldFrontier103.active(g.state):g.button(g.panel_body,"Town plan and player-home milestone",func():g.open_panel("frontier103"))
  g.label(g.panel_body,"THE GREAT CLAIM LEDGER",22,Color("edc98a"))
  g.label(g.panel_body,"Ivar records useful work and supplies freely committed to the settlement. The first eight completed work units in each discipline earn a mark apiece; civic projects earn their stated marks once. Nothing is awarded for waiting.",16)
  g.label(g.panel_body,"Charter law: authenticated ancestral rights carry a separate hereditary allowance. Until authenticated, no claimant receives that allowance. A tie must be settled by a public test of skill.",15)

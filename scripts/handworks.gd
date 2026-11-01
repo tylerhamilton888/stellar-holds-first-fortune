@@ -128,6 +128,7 @@ func nearby_cart()->Dictionary:
   if vehicle(f):carts.append(f)
  return closest(carts,100)
 func can_place(p:Vector2)->bool:
+ if g.zone!="mine" and g.surface.architecture.interior() and HoldFrontier103.public_building(g.surface.architecture.inside()) and not HoldFrontier103.private_room(g):return false
  if g.player.distance_to(p)>140 or footprint({"x":p.x,"y":p.y}).grow(10).has_point(g.player):return false
  if g.zone=="mine":
   if g.deep.world.entrance(p):return false

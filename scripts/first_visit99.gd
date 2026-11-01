@@ -15,12 +15,13 @@ static func begin(g):
  var s=g.state
  s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
  HoldGreatClaim102.begin(s)
+ HoldFrontier103.begin(g)
  s.opening=1;s.tracked_npc=""
  var q=HoldOnboarding.ensure(s)
  q.fresh=false;q.stage=3;q.arrival_seen=true;q.escort_pending=false;q.settle_required=false;q.combat=true
  s.add("wood",6)
  HoldFirstShift.data(g).accepted=true;HoldFirstShift.data(g).kit=true;HoldFirstShift.data(g).guided=true
- g.surface.enter(HoldWorkerLodge100.ROOM,Vector2(480,555))
+ g.surface.enter(HoldFrontier103.lodge(s),Vector2(480,555))
  g.notify("Welcome to the miners' lodge · E speaks with Ivar · J keeps your first steps.")
  g.save_game()
 static func meet_ivar(g):
@@ -92,6 +93,13 @@ static func bay_hint(g)->String:
 static func goal(g)->String:
  if not active(g.state):return ""
  var q=data(g.state)
+ if HoldFrontier103.active(g.state) and q.guided:
+  if not q.get("ivar_spoken",false):return "First morning · speak with Ivar by the bunkhouse hearth · E"
+  if not q.get("room_seen",false):return "First morning · bunkhouse stairs → your room above · J"
+  if not q.get("rewarded",false):return "First shift · northern town path → Old Workings · J"
+  if not HoldFrontier103.data(g.state).permit:return "A place of your own · two civic projects → Ivar’s shift book · J"
+  if HoldFrontier103.data(g.state).home_reward:return "A hearth of your own · build, work and meet your neighbors · J"
+  return "Your household plot · east road · O: design and build your home · J"
  if not q.guided:return "Explore at your own pace · J: resume guidance or choose a goal"
  match str(q.focus):
   "lodge":
@@ -113,6 +121,8 @@ static func goal(g)->String:
 static func focus(g,id:String):
  var q=data(g.state);q.focus=id;q.guided=true;g.save_game();g.refresh_panel()
 static func journal(g):
+ if HoldFrontier103.active(g.state):
+  frontier_journal(g);return
  var s=g.state;var q=data(s);var n=step(s)
  var before_shift=lodge_intro(s) and not q.get("work_started",false)
  g.label(g.panel_body,"FIRST VISIT TO THE HOLD",22,Color("edc98a"))
@@ -163,3 +173,15 @@ static func journal(g):
  g.button(g.panel_body,"Local lessons · timber, fishing, craft and more",func():g.open_panel("guidance"))
  g.label(g.panel_body,"Free afternoons: walk north out of the mine to the High Trail; Pinewood is south, Keldrath west. Talk to people, chop timber, try fishing or improve your worksite. F6 tries the optional mine exploration camera; F7 opens its controls. Combat never consumes work energy.",15)
  g.small_button(g.panel_body,"Just let me explore",func():focus(g,"free"))
+
+static func frontier_journal(g):
+ var s=g.state;var q=data(s)
+ g.label(g.panel_body,"A DWARF'S WORTH · STONEBRIDGE",22,Color("edc98a"))
+ g.label(g.panel_body,"A bunkhouse room today; a home you design and build as you settle into town. Nothing decays while you are away. Take these steps at your own pace.",16)
+ for line in ["Meet Ivar by the bunkhouse hearth. The stairs lead to your private room above.","Leave the bunkhouse into Stonebridge. Follow the northern path to Old Workings; the western rack and stonebreaker are on loan.","Complete your first load for wages, then furnish your upstairs room with O.","Use the ledger beside Ivar to complete two civic projects. The town changes when you contribute.","Accept your household plot at Ivar's shift book, then follow the east road. Design a home with the building book or piece-by-piece construction, including stairs and upper floors.","Add your bed and a lamp or hearth, then register your home for 60 Claim marks. You can keep extending it throughout the story."]:
+  g.label(g.panel_body,line,16)
+ if q.get("work_started",false) and step(s)<5:
+  g.label(g.panel_body,TASKS[step(s)][0]+": "+TASKS[step(s)][1],16)
+ g.button(g.panel_body,"View Great Claim ledger",func():g.open_panel("great_claim102"))
+ g.button(g.panel_body,"Town services and home milestone",func():g.open_panel("frontier103"))
+ g.small_button(g.panel_body,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())

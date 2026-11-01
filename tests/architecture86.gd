@@ -9,7 +9,7 @@ func run():
  check(not g.surface.walkable(Vector2(1840,1000)),"Expanded grounds keep the visible tributary unwalkable")
  check(g.surface.walkable(Vector2(1840,700)) and g.surface.walkable(Vector2(1920,1100)),"Eastern plots connect over dry ground beyond the old boundary")
  var a=g.surface.architecture
- check(HoldBuildingPlans.catalogue().size()==22,"All 22 existing building designs are exposed through shared plans")
+ check(HoldBuildingPlans.catalogue().size()==25,"All 25 existing and frontier building designs are exposed through shared plans")
  for ward in HoldWorldZones.WARDS:
   for b in g.surface.world.buildings(ward):
    check(HoldBuildingPlans.catalogue().has(b.plan),"Authored building resolves to player-buildable plan "+b.plan)

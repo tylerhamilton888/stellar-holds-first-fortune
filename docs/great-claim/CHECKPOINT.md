@@ -1,3 +1,13 @@
+# Active frontier checkpoint — 2026-11-01
+
+Branch story/frontier-town; version 0.91.0. Town/home implementation complete for the scoped slice. Native acceptance passed 1,342 assertions across eight cases; see ../testing/frontier103/acceptance.json. Final frontier103 repeated with 224 passing assertions after archive/trade/menu refinements. All public entrance paths and NPC routes pass before and after storehouse construction. Every new public plan can be constructed and entered by the player. Reviewed final captures. Source commit/hosted PR and Windows gates are the next delivery step; do not repeat native checks without changed source or new evidence.
+
+Read 02-frontier-ledger.md and 02b-player-home.md. Main owner frontier103.gd; construction stays with architecture/hearthcraft and existing Z data. New fortunes only; old saves retain legacy geography. Public property is protected; private upstairs quarters and player home remain editable. Plot is permanent and must survive later appointment. No free cottage/workshop. Full narrative milestones and bespoke story art remain queued.
+
+Prior source PR #73 passed and merged as 12208d1c632fa77d7d253b1c75f867f823a1a060. Prior release run 41336685688 is still executing exact-pack checks. Do not overwrite release/0.90.0; use release/0.91.0 for this source. Once the new hosted source/export gates pass, merge the runtime PR and record delivery evidence separately without restarting its checks.
+
+---
+
 # Active checkpoint
 
 Active: 02-frontier-ledger. Ledger foundation implemented; full milestone NOT complete.

@@ -313,6 +313,8 @@ func tile(index:int,rect:Rect2,unit:float=160,tint:Color=Color.WHITE):
   y+=unit
 
 func exterior_objects()->Array:
+ if HoldFrontier103.active(g.state):
+  if s.area=="claim" or s.area=="trail":return [{"p":HoldMineEntrance.position(s.area),"kind":"mine_entrance"}]
  if s.area=="claim":return [HoldBuildingPlans.instance("cottage",Vector2(500,440)),HoldBuildingPlans.instance("workshop",Vector2(1370,760)),{"p":HoldMineEntrance.position("claim"),"kind":"mine_entrance"}]
  if s.area=="trail":return [{"p":Vector2(220,690),"kind":"landmark","art":0,"width":330.0},{"p":HoldMineEntrance.position("trail"),"kind":"mine_entrance"}]
  return []

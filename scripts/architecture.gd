@@ -172,7 +172,9 @@ func start(id:String):
  g.notify("Place the doorway near you. Green fits; right click cancels. Walk inside after building. Choose furnishings in the Building Book.")
 func place(p:Vector2)->bool:
  p=(p/20).round()*20
- var b=record(moving);var o=building_object(b) if not b.is_empty() else HoldBuildingPlans.instance(selected,p)
+ var b=record(moving)
+ if HoldFrontier103.public_building(b):return false
+ var o=building_object(b) if not b.is_empty() else HoldBuildingPlans.instance(selected,p)
  o.p=p
  if b.is_empty() and not plan_style.is_empty():o.style87=plan_style.duplicate()
  if not valid(o,moving):g.notify(reason);return false
@@ -206,6 +208,7 @@ func nearby()->Dictionary:
  return best
 func expand(axis:String)->bool:
  var b=nearby()
+ if HoldFrontier103.public_building(b):return false
  if b.is_empty():return false
  if int(b.get(axis,0))>=6:g.notify("This wing has reached its six-bay span. Build another hall beside it.");return false
  if interior():g.notify("Step outside to extend the foundation.");return false
@@ -220,6 +223,7 @@ func floor_cost(b:Dictionary)->Dictionary:
  return {"stone":ceili(80*scale),"wood":ceili(60*scale),"iron":4}
 func add_floor()->bool:
  var b=nearby()
+ if HoldFrontier103.public_building(b):return false
  if b.is_empty() or b.rooms.size()>=5:return false
  # Additional storeys use a clear, aligned staircase shared by every floor.
  var candidates=[HoldBuildingPlans.stair_position(HoldBuildingPlans.room_id(str(b.id)))] if b.rooms.size()>1 else [Vector2(700,550),Vector2(600,550),Vector2(600,600),Vector2(350,550)]
@@ -244,6 +248,7 @@ func add_floor()->bool:
  b.stair=[landing.x,landing.y];b.rooms.append(b.rooms[0]);HoldBuildingPlans.add_cost(b.shell_paid,fee);seed_room(b,b.rooms.size()-1,false);g.save_game();g.refresh_panel();return true
 func move_building():
  var b=nearby()
+ if HoldFrontier103.public_building(b):return
  if b.is_empty() or interior():return
  preview_key="";moving=str(b.id);selected=b.plan;s.cancel_placement();s.placing="blueprint:"+selected;g.close_panel()
  g.notify("Relocate this building. Its rooms, furnishings and stored goods stay together.")
@@ -258,6 +263,7 @@ func empty_for_recovery(b:Dictionary)->bool:
  return true
 func recover()->bool:
  var b=nearby()
+ if HoldFrontier103.public_building(b):return false
  if b.is_empty() or interior():return false
  if not empty_for_recovery(b):g.notify("Empty every room, including furniture, storage, partitions and equipment, before recovering the shell.");return false
  for key in b.shell_paid:g.state.add(key,int(b.shell_paid[key]))
@@ -283,6 +289,7 @@ func style_cost(b:Dictionary)->Dictionary:
   total[key]=int(total.get(key,0))+ceili(r.get_area()/6400.0)*b.rooms.size()
  return total
 func apply_style()->bool:
+ if HoldFrontier103.public_building(nearby()):return false
  var b=nearby()
  if b.is_empty() or str(b.id)!=style_owner:return false
  for key in HoldArchitectureStyles.OPTIONS:
