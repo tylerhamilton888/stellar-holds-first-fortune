@@ -25,3 +25,5 @@ Do not fake contribution progress with elapsed time or turn the opening into dia
 Record implementation commits, state keys/migrations, tests actually run, reviewed captures, incomplete items and exact next action here before moving on.
 
 Foundation implemented in great_claim102.gd: additive new-fortune entry, bounded real work credit, local atomic donations, three permanent visible furnishing projects, milestone-based competitor totals, early hereditary law. Old saves receive no silent enrollment. This does not yet deliver the frontier opening, full 10–15 authored cast, Skarrin interactions or local services. Keep Keldrath reachable until those services and subsequent chapters are ready.
+
+Native acceptance: ledger 79, disciplines 38, firstvisit99 23, lodge100 48; all passed. Final ledger case repeated after visual refinement; reviewed ledger and both trail improvement captures. See ../testing/great-claim101/acceptance.json.

@@ -1,0 +1,101 @@
+{
+  "source_local": "881483c",
+  "source_hosted": "f34e826b75fff7ca98505f3b92444c74a54851bf",
+  "tree": "1040947605bd02d5a794a1284eb432792b2dfad6",
+  "cast101": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.16
+    },
+    {
+      "test": "courtship101",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 299,
+      "seconds": 70.49
+    },
+    {
+      "test": "people",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 432,
+      "seconds": 77.49
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 82,
+      "seconds": 102.46
+    }
+  ],
+  "greatclaim102": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.15
+    },
+    {
+      "test": "greatclaim102",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 79,
+      "seconds": 49.78
+    },
+    {
+      "test": "disciplines",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 38,
+      "seconds": 44.11
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 60.5
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 48,
+      "seconds": 96.52
+    }
+  ],
+  "final_ledger_repeat": {
+    "passed": true,
+    "checks": 79,
+    "captures_reviewed": [
+      "ledger",
+      "improved-trail",
+      "dry-stores"
+    ]
+  },
+  "courtship_captures_reviewed": [
+    "dagna",
+    "ragnhild",
+    "brynja",
+    "torvik",
+    "ketil",
+    "hakon"
+  ],
+  "source_run": 41336534776,
+  "hosted_status": "in_progress",
+  "release": "0.90.0 queued; publication not yet verified"
+}
