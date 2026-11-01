@@ -1,3 +1,7 @@
+# Mountain source merged
+
+PR #75 passed full source validation and merged. Finish verifying Windows release run 41342691069, then continue the public contest/Keldrath milestone. Read great-claim/CHECKPOINT.md; no runtime retesting is needed without a new failure or changed source. The town/home release v0.91.0 is published.
+
 # Mountain chapter remaining work
 
 Playable frontier rescue, independent ancestry authentication, gathering and character reactions implemented in 0.92.0. Finish full hosted validation and Windows delivery; read great-claim/CHECKPOINT.md. Next gameplay milestone: 04-contest-keldrath.md. Bespoke story-character frames/portraits (including Skarrin's short deliberate beard) remain queued; no cinematic collapse animation is claimed. Preserve the permanent household plot through all subsequent events.

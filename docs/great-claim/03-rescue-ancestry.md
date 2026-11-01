@@ -1,6 +1,6 @@
 # The mountain remembers
 
-Status: playable rescue/authentication chapter implemented; native and local exported-pack acceptance passed; hosted delivery pending. Bespoke Skarrin art remains queued.
+Status: playable rescue/authentication chapter implemented; native, local exported-pack and full hosted source acceptance passed; PR #75 merged. Windows publication pending. Bespoke Skarrin art remains queued.
 
 ## Deliverable
 
