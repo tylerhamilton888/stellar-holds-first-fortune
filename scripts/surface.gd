@@ -176,6 +176,7 @@ func points()->Array:
    if parts[2]=="1":result=[] # Upper rooms leave by their real stair, never a ground-level door.
    result.append(spot(700,550,"Stairs · "+("upper rooms" if parts[2]=="0" else "family hearth"),HoldNeighborhood.home_id(parts[0],int(parts[1]),1-int(parts[2]))))
   elif area==HoldWorkerLodge100.ROOM:
+   if HoldGreatClaim102.active(g.state):result.append(spot(670,425,"Great Claim ledger","great_claim102"))
    result.append(spot(HoldWorkerLodge100.PRIVATE_DOOR.x,HoldWorkerLodge100.PRIVATE_DOOR.y,"Your room · private quarters","room:home"))
    for c in HoldWorkerLodge100.people(g):result.append({"p":c.p,"name":c.name+" · "+c.role,"action":c.interaction})
   elif area.begins_with("home:") or area=="room:home":
@@ -285,6 +286,7 @@ func start_rest(point:Dictionary,nap:bool=false)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="great_claim102":g.open_panel(id);return
  if id=="architecture_leave":architecture.leave();return
  if id=="architecture_up":architecture.stairs(true);return
  if id=="architecture_down":architecture.stairs(false);return

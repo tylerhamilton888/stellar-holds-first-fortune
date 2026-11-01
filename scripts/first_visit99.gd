@@ -14,6 +14,7 @@ static func lodge_intro(s)->bool:return active(s) and bool(data(s).get("lodge_in
 static func begin(g):
  var s=g.state
  s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
+ HoldGreatClaim102.begin(s)
  s.opening=1;s.tracked_npc=""
  var q=HoldOnboarding.ensure(s)
  q.fresh=false;q.stage=3;q.arrival_seen=true;q.escort_pending=false;q.settle_required=false;q.combat=true
@@ -149,6 +150,7 @@ static func journal(g):
   g.label(bay,("✓ " if q.bay_worked else "○ ")+"Put a raw stone load into the bay's rack. Keep the passage and bench clear. Odrin works 08:00–18:00, with a noon break; return later if he is away.",15)
   g.label(bay,"Warmth lasts half an hour of active play. The furniture and work remain when it cools. No deadline or failure penalty. E beside Odrin lets you talk.",14)
   if not q.bay_worked:g.small_button(bay,"Follow the old bay lead",func():focus(g,"bay"))
+ if HoldGreatClaim102.active(s):g.button(g.panel_body,"Great Claim · civic ledger",func():g.open_panel("great_claim102"))
  var goals=HoldMenuView.section(g.panel_body,"Longer ambitions · choose your own pace")
  for spec in [["reference","A trusted pair of hands",s.opening>=4,"Finish Ivar's three commissions: coal for the forge, stone and timber for the lift, then smelted metal for the conduits. These earn wages and a reference."],["charter","A mountain with your name on it",s.claim_id!="","With the reference, visit the survey office in Keldrath. Compare the mountains before buying a charter; prices begin at 240 crowns."],["hold","A place for your people",s.camp_stage>=3,"On your claim, M shows the foundation, workshop and freight beacon. Build at your pace; recruit help at the Copper Kettle when you can afford it."],["ship","The First Fortune",s.launched,"Establish your hold, recruit and assign an engineer, then work toward the keel and launchyard stages in M. A long-term ambition, not today's homework."]]:
   g.label(goals,("✓ " if spec[2] else "○ ")+spec[1],18,Color("a7dfcb") if spec[2] else Color("edc98a"))

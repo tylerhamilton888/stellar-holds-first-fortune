@@ -15,7 +15,9 @@ const FOLK=[
  {"area":"pinewood","name":"Torvik","role":"Timber worker","a":Vector2(470,765),"b":Vector2(700,765),"gender":0,"line":"Fell your trees, shoulder the logs, then use the loan saw and rack. Our board pays for finished timber; it does not take raw logs."},
  {"area":"greenfields","name":"Ragnhild","role":"Smallholder","a":Vector2(630,500),"b":Vector2(820,500),"gender":1,"line":"Lease the four beds by the farmhouse once. Bring your own seeds and water. No rent timer, and no crop withers while you are away."},
  {"area":"greenfields","name":"Ketil","role":"Field hand","a":Vector2(1110,790),"b":Vector2(1530,790),"gender":0,"line":"These fields feed the hold. We keep the cart lane clear; you can carry your harvest all the way to the Kettle's order board."},
- {"area":"trail","name":"Sten","role":"Mine porter","a":Vector2(760,400),"b":Vector2(865,400),"gender":0,"line":"The northern arch leads straight into Old Workings. The rack and breaker outside are on loan. Bring your own stone; the crew's supplies remain theirs."}]
+ {"area":"trail","name":"Sten","role":"Mine porter","a":Vector2(760,400),"b":Vector2(865,400),"gender":0,"line":"The northern arch leads straight into Old Workings. The rack and breaker outside are on loan. Bring your own stone; the crew's supplies remain theirs."},
+ {"area":"pinewood","name":"Brynja","role":"Metalworker & toolwright","a":Vector2(760,790),"b":Vector2(850,790),"gender":1,"line":"Brynja sets a small brass hinge beside her tools. 'A good fitting should still close cleanly when our grandchildren are old. Come, tell me what you are making.'"},
+ {"area":"trail","name":"Hakon","role":"Road guard","a":Vector2(1320,700),"b":Vector2(1430,700),"gender":0,"line":"Hakon rests his hand on his belt. 'Road is clear for now. If you are going into the hills, tell someone which path. I'll be here when you return.'"}]
 var g
 var surface_ref:WeakRef
 var s:
@@ -133,6 +135,7 @@ func buildings(area:String)->Array:
  return []
 func furnishings(area:String)->Array:
  var result=settlement_furnishings(area)
+ result.append_array(HoldGreatClaim102.furnishings(s.world,area))
  # Independent posts use the same depth sorting and small physical bases as
  # player furniture. Their feet stay outside the 38px portal walking lane.
  if area in OUTDOORS:
@@ -167,11 +170,12 @@ func people(area:String,time:float=-1)->Array:
   if area!=f.area:continue
   var key=str(g.state.seed_value)+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+7500+i,f.gender)
+  var profile=HoldRoadCharacters.appearance(g.state,"road_folk:"+str(i),profiles[key])
   var duration=f.a.distance_to(f.b)/38.0;var phase=fposmod(time+i*9,(duration+7)*2)
   var start:Vector2=f.a;var end:Vector2=f.b
   if phase>duration+7:phase-=duration+7;start=f.b;end=f.a
   var walking=phase<duration;var at=start.lerp(end,minf(1,phase/duration))
-  result.append({"kind":"citizen","p":at,"profile":profiles[key],"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profiles[key].family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
+  result.append({"kind":"citizen","p":at,"profile":profile,"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profile.family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
  return result
 func points()->Array:
  var result=[]

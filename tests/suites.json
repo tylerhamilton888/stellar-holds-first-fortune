@@ -51,7 +51,9 @@
       "workplace98",
       "firstvisit99",
       "menu_quality100",
-      "lodge100"
+      "lodge100",
+      "courtship101",
+      "greatclaim102"
     ],
     "modular": [
       "modular",
@@ -439,7 +441,9 @@
     ],
     "gameplay-4": [
       "menu_quality100",
-      "lodge100"
+      "lodge100",
+      "courtship101",
+      "greatclaim102"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -457,6 +461,20 @@
       "roads",
       "orientation",
       "menu_quality100"
+    ],
+    "courtship101": [
+      "courtship101"
+    ],
+    "cast101": [
+      "courtship101",
+      "people",
+      "roads"
+    ],
+    "greatclaim102": [
+      "greatclaim102",
+      "disciplines",
+      "firstvisit99",
+      "lodge100"
     ]
   },
   "cases": {
@@ -635,6 +653,14 @@
     "lodge100": {
       "script": "tests/lodge100.gd",
       "marker": "LODGE100"
+    },
+    "courtship101": {
+      "script": "tests/courtship101.gd",
+      "marker": "COURTSHIP101"
+    },
+    "greatclaim102": {
+      "script": "tests/greatclaim102.gd",
+      "marker": "GREATCLAIM102"
     }
   }
 }

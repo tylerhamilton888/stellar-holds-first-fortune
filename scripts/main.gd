@@ -1232,7 +1232,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
- if id=="lodge_talk":menu_paused=true
+ if id in ["lodge_talk","great_claim102"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
  HoldMenuView.build_shell(self,id)
@@ -1274,6 +1274,7 @@ func open_panel(id:String,remember:bool=true):
   "festivals":HoldCalendar.festivals_panel(self)
   "energy":HoldWorkEnergy.panel(self)
   "lodge_talk":HoldWorkerLodge100.panel(self)
+  "great_claim102":HoldGreatClaim102.panel(self)
   "hearth":hearth.panel()
   "road_kitchen":surface.roads.kitchen_panel()
   "gate":world_map_panel()

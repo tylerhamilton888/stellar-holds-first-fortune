@@ -1,3 +1,7 @@
+# Great Claim remaining implementation
+
+Continue from great-claim/CHECKPOINT.md. Six-candidate courtship and betrothal are implemented and tested. Milestone two has a playable ledger foundation, but needs frontier geography, local services and the full narrative cast. Milestones three–six cover rescue/ancestry, contest/Keldrath, invasion/trial, and Thaneship/household. Bespoke character faces, clothing, expression sets and key animations remain required by ROMANCE_CAST.md. Shared recolored families are an interim baseline.
+
 # 0.89.0 — A hearth of your own: published and merged
 
 Published https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.89.0. PR #71 merged as 8d146f8b79f151353ff06cb9ecf9a2720b2456b5; release source 96a4866eb962e0188963534bf0512399c8de1e86 and merged source have identical tree 7f3d2b3da33225407c182e8dff2b335650be6ba0. Hosted source run 41234344775 passed all 44 gameplay cases plus people-preview. Release run 41234369629 passed all 34 exact-export cases and published successfully.

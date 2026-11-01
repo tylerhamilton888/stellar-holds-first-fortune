@@ -56,6 +56,7 @@ static func award(s,path:String,amount:int=1,event:String=""):
   if d.events.has(path+":"+event):return
   d.events[path+":"+event]=true
  d.xp[path]=xp(s,path)+amount
+ HoldGreatClaim102.credit(s,path,amount)
 static func has(s,id:String)->bool:return bool(data(s).learned.get(id,false))
 static func missing(s,id:String)->String:
  if not NODES.has(id):return "Unknown technique"

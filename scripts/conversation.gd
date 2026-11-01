@@ -72,6 +72,10 @@ static func panel(g):
  if not local(g,id):g.label(g.panel_body,"This conversation has ended. Visit the resident to speak again.");return
  if g.talk_topic=="person":
   HoldPeople.panel(g,id)
+ elif g.talk_topic=="courtship101":
+  HoldCourtship101.panel(g,id)
+ elif g.talk_topic=="courtship_end101":
+  HoldCourtship101.end_panel(g,id)
  elif g.talk_topic=="road_story":
   HoldRoadCharacters.panel(g,id)
  elif g.talk_topic=="favor":
@@ -117,6 +121,7 @@ static func panel(g):
   for i in TOPICS.get(id,[]).size():
    choose(g,TOPICS[id][i][0],func():g.talk_topic="fluff"+str(i);g.refresh_panel())
   HoldPeople.options(g,id)
+  HoldCourtship101.option(g,id)
   if HoldOutpost.has_member(s,id):choose(g,"Tell me about yourself",func():g.talk_line=HoldOutpost.line(s,id,true);g.refresh_panel())
  choose(g,"Good fortune. I'll leave you to it.",g.close_panel)
 static func ivar_options(g):

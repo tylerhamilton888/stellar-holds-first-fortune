@@ -98,8 +98,14 @@ func run():
   var actor={}
   for candidate in g.surface.roads.people(spec.area):
    if candidate.index==i:actor=candidate;break
+  if HoldRoadCharacters.CANDIDATE_APPEARANCES.has(actor.interaction):
+   var expected=HoldRoadCharacters.CANDIDATE_APPEARANCES[actor.interaction]
+   for field in expected:check(actor.profile[field]==expected[field],"Authored candidate appearance: "+spec.name+" / "+field)
   at(actor.p+Vector2(0,22));HoldConversation.start(g,actor.interaction)
   var record=HoldPeople.records(g.state)[actor.interaction]
+  check(g.state.npc(actor.interaction).sculpt==actor.profile.sculpt and g.state.npc(actor.interaction).hair_color==actor.profile.hair_color,"Portrait and actor share identity: "+spec.name)
+  if HoldRoadCharacters.CANDIDATE_APPEARANCES.has(actor.interaction):
+   await snap("candidate-"+spec.name.to_lower())
   check(record.persona.trait==HoldRoadCharacters.CAST[actor.interaction].trait,"Road cast has authored identity: "+spec.name)
   button("How have you been?");button("Tell me about life here")
   var topic=HoldRoadCharacters.CAST[actor.interaction].topics[0]
@@ -119,8 +125,16 @@ func run():
    record.bond=5;g.talk_line=""
    check(HoldConversation.greeting(g,actor.interaction).begins_with(HoldRoadCharacters.FAMILIAR_WELCOMES[actor.interaction]),"Established friendship receives a personal welcome")
    g.refresh_panel();await snap("dagna-familiar-welcome")
-  check(not record.has("romance") and not HoldRoadCharacters.ROMANCE_ENABLED,"Friendly talk creates no romance progression")
+  check(not record.has("romance") and HoldCourtship101.partner(g.state)=="","Friendly talk creates no romance progression")
   g.close_panel()
+ var retained=g.state.npc_appearances["road_folk:1"].duplicate(true)
+ retained.sculpt=4;retained.hair_color=6
+ retained=HoldAppearance.normalized(retained)
+ g.state.npc_appearances["road_folk:1"]=retained
+ var restored=g.surface.roads.people("room:wayfarer")[0]
+ check(restored.profile==retained,"Saved candidate identity overrides authored default in world rendering")
+ g.save_game();g.start_game(true);settle()
+ check(g.surface.roads.people("room:wayfarer")[0].profile==retained,"Saved candidate identity survives reload and renderer cache")
  var old={"persona":{"trait":"Old generic trait","want":"Old want","worry":"Old worry","close":"Old confidence","like":"crystal","dislike":"coal","work":"stone","reason":"An existing promise"},"bond":7,"known":true,"gift_day":2,"work_day":3,"last":"An existing memory"}
  HoldRoadCharacters.upgrade_record("road_folk:1",old)
  check(old.persona.trait==HoldRoadCharacters.CAST["road_folk:1"].trait and old.persona.like=="crystal" and old.persona.work=="stone" and old.bond==7 and old.last=="An existing memory","Authored upgrade preserves preferences, favors and relationship history")
