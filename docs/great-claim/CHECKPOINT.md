@@ -1,3 +1,13 @@
+# Delivery receipt — mountain chapter
+
+Source local 5463f340a7bfb5896a2705246b92289fd933e80f / hosted dbb248ea948f1afa4b8135006e9d97adc16f38fd, verified identical tree 8a27f05048d201edbc6d907d410c56a9bf4dfc59. PR #75: https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/75. Source run 41342691773 and release/0.92.0 run 41342691069 are running; merge/publication must be verified. Never restart unchanged runtime checks for documentation updates.
+
+Local native checks: 283 assertions. Local exported checks: 264, including the final 40-check chapter with corrected gathering positions. Evidence: ../testing/mountain104/acceptance.json. Prior PR #74 is merged; 0.90.0 is published, while the 0.91.0 exact-package run remained in progress at last check.
+
+Next: finish hosted gates, merge #75 at exact head after success, verify 0.92.0 release assets, update delivery documentation separately. Then proceed to 04-contest-keldrath.md. No cinematic collapse or bespoke Skarrin art has been delivered.
+
+---
+
 # Active milestone — The mountain remembers, 0.92.0
 
 Branch story/mountain-remembers based on local 9e56b26 / hosted docs checkpoint 306cd0c0e365221d513268d5c608c6a470f26490 (tree d48f642f222e15dc9c357bdd0f04cd1fdc523946). Prior PR #74 is now merged after all full source jobs passed, merge 3072c26863f673f0fcf7a19083a5cea5d6316e34. Do not restart unchanged prior runs.
