@@ -1,6 +1,6 @@
-# Romance story-character production
+# Great Claim remaining implementation
 
-Apply docs/ROMANCE_CAST.md to every romance option. Give the frontier story cast individually recognizable faces, silhouettes, signature clothing, portraits/expressions and key animations; shared recolored background designs are an interim baseline. Expand the current four future candidates toward the Great Claim's three women and three men, preserve established relationships, and implement reciprocal courtship and household progression in the narrative milestone. Authored baseline appearance defaults are implemented; bespoke six-person assets and romance gameplay are outstanding.
+Continue from great-claim/CHECKPOINT.md. Six-candidate courtship and betrothal are implemented and tested. Milestone two has a playable ledger foundation, but needs frontier geography, local services and the full narrative cast. Milestones three–six cover rescue/ancestry, contest/Keldrath, invasion/trial, and Thaneship/household. Bespoke character faces, clothing, expression sets and key animations remain required by ROMANCE_CAST.md. Shared recolored families are an interim baseline.
 
 # 0.89.0 — A hearth of your own: published and merged
 

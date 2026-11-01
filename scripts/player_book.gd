@@ -76,6 +76,7 @@ static func people(g):
   if records.has(id):
    var d=records[id];var progress=ProgressBar.new();progress.max_value=20;progress.value=d.bond;progress.show_percentage=false;progress.custom_minimum_size=Vector2(160,9);progress.tooltip_text=HoldPeople.level(d);body.add_child(progress)
    g.label(body,HoldPeople.level(d)+" · "+d.last,14)
+   if HoldCourtship101.ARCS.has(id):g.label(body,HoldCourtship101.status(g.state,id),14)
    if d.known:g.label(body,"Likes "+HoldData.ITEMS[d.persona.like].name.to_lower()+" · Dislikes "+HoldData.ITEMS[d.persona.dislike].name.to_lower(),14)
   else:g.label(body,"Not yet acquainted",14)
   var actions=VBoxContainer.new();actions.custom_minimum_size.x=145;row.add_child(actions)

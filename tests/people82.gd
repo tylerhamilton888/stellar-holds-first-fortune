@@ -125,7 +125,7 @@ func run():
    record.bond=5;g.talk_line=""
    check(HoldConversation.greeting(g,actor.interaction).begins_with(HoldRoadCharacters.FAMILIAR_WELCOMES[actor.interaction]),"Established friendship receives a personal welcome")
    g.refresh_panel();await snap("dagna-familiar-welcome")
-  check(not record.has("romance") and not HoldRoadCharacters.ROMANCE_ENABLED,"Friendly talk creates no romance progression")
+  check(not record.has("romance") and HoldCourtship101.partner(g.state)=="","Friendly talk creates no romance progression")
   g.close_panel()
  var retained=g.state.npc_appearances["road_folk:1"].duplicate(true)
  retained.sculpt=4;retained.hair_color=6

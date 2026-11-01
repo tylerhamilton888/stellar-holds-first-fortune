@@ -113,6 +113,7 @@ static func panel(g,id:String):
  HoldConversation.choose(g,"Give a gift from my pack",func():g.talk_topic="gift";g.refresh_panel())
  HoldConversation.choose(g,"Any small jobs need doing?",func():g.talk_topic="favor";g.refresh_panel())
  if HoldRoadCharacters.CAST.has(id):HoldConversation.choose(g,"Tell me about life here",func():g.talk_line="";g.talk_topic="road_story";g.refresh_panel())
+ HoldCourtship101.option(g,id)
  HoldConversation.return_choice(g,id)
 static func favor(g,id:String):
  var d=records(g.state).get(id,{})

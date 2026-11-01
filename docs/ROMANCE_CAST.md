@@ -16,7 +16,7 @@ Keep the shared movement/system foundation where useful, but author complete cha
 
 ## Existing authored candidates
 
-The current implementation contains four adult, single candidates as future-romance metadata. Courtship and marriage are not enabled. This pass assigns deliberate default appearances using existing reviewed portrait/whole-character families; previously saved identities remain intact, including their names and preferences.
+The implementation now contains six adult, single candidates: three women and three men. Each has an individual material errand, personal choice and keepsake, three authored courtship scenes, explicit reciprocal courtship and betrothal. Marriage and household life remain milestone six. Defaults use reviewed portrait/whole-character families; previously saved identities remain intact, including names and preferences.
 
 | Character | Appearance direction | Personality and attraction |
 | --- | --- | --- |
@@ -25,14 +25,16 @@ The current implementation contains four adult, single candidates as future-roma
 | Torvik, timber worker | Oak hair and full twin oath braids, pine green, broad strong build | Patient, dependable and privately playful; skilled hands, understated confidence, music and reliability give him romantic appeal. |
 | Ketil, field hand and singer | Honey hair and full square beard, woad blue, sturdy masculine build | Sociable, confident and thoughtful beneath his theatrical humor; works hard and learns to speak sincerely when it matters. |
 
-The current personalities, friendships, work, tastes and personal stories remain the foundation. Each needs individual courtship dialogue and personal scenes when romance is implemented. Affection should grow through shared life, earned trust, kindness and explicit reciprocal interest. Give each ambitions, humor, vulnerabilities and flaws without making relentless hostility the main romantic hook. Their language, commitments and habits should express kinship, craftsmanship, loyalty, ancestry and pride in the hold.
+| Brynja Brasshaven, toolwright | Flaxen braid, ochre work clothes, expressive feminine face and sturdy build | Ambitious and exacting, with dry humor; learns to set down her work and share credit without surrendering her craft. |
+| Hakon Ironroot, road guard | Copper hair and substantial full beard, slate blue, broad masculine build | Courageous, attentive and quietly tender; protects others, admits fatigue and makes room for a life beyond duty. |
+
+The current personalities, friendships, work, tastes and personal stories remain the foundation. Affection should grow through shared life, earned trust, kindness and explicit reciprocal interest. Give each ambitions, humor, vulnerabilities and flaws without making relentless hostility the main romantic hook. Their language, commitments and habits should express kinship, craftsmanship, loyalty, ancestry and pride in the hold.
 
 ## Frontier expansion
 
-The attached Great Claim directive targets approximately three female and three male candidates in the new frontier community. That six-person cast and the wider narrative overhaul are not implemented by this focused pass. Retain compatible existing characters and relationships when choosing that roster. An ambitious craftswoman and a courageous guard are possible additions, subject to the frontier cast design; they are not existing NPCs or completed content.
-
+The Great Claim roster retains Dagna, Ragnhild, Torvik and Ketil and adds Brynja and Hakon at stable road IDs 6 and 7. The wider frontier relocation and narrative are tracked in great-claim/PLAN.md.
 Every added candidate must meet the same attractiveness and identity requirements. Give each a reason to live and work in the claim, relationships outside the player, and a continuing role after Thaneship. Reactions to noble ancestry must be personal: prestige can amuse or interest someone, but cannot replace the relationship. Orla and Hedrik remain married to one another; Skarrin is not a romance candidate.
 
 ## Verification boundary
 
-Selecting established attractive character families provides a consistent baseline, not six bespoke completed characters. Preserve existing acquaintances rather than silently replacing a saved person. Dedicated faces, clothes, courtship scenes, marriage and the full frontier roster remain future production work. Record visual review and tests in the current status before publishing a build.
+Selecting established attractive character families provides a consistent baseline, not six bespoke completed characters. Preserve existing acquaintances rather than silently replacing a saved person. Dedicated faces, clothes, expression animation, marriage and the full frontier roster remain future production work. The implemented courtship scenes currently use text choices and existing portrait families. Record visual review and tests in the current status before publishing a build.

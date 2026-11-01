@@ -1,3 +1,9 @@
+# 0.90.0 — Six lives at the claim: source milestone
+
+Read great-claim/CHECKPOINT.md first. Six adult candidates now have individual material errands, keepsakes, eighteen authored date scenes, reciprocal courtship and betrothal. New candidates are Brynja (toolwright) and Hakon (guard); existing four identities and saved acquaintances remain. Married cast stays excluded. Native cast101 passed 813 assertions; all six dialogue captures reviewed. Art remains an established-family baseline, not final bespoke frames and expressions.
+
+New fortunes receive a Great Claim ledger: real completed work, bounded marks, three atomic material donations and eight visible trail furnishings. greatclaim102 passed 79 assertions. Full milestone two, frontier relocation and narrative cast remain unfinished; milestones three through six are queued. The full attached directive is preserved with six implementation checkpoints in great-claim/. No claim of full-story completion. Hosted validation, merge and Windows delivery are pending for this source.
+
 # Romance cast direction — focused source checks passed
 
 The four existing future-romance candidates now use authored whole-character appearance defaults instead of random visual choices. World rendering prefers saved acquaintance identities so portraits, names and history remain consistent. Dagna and Ragnhild receive warmer trait descriptions through a versioned narrative update. See ROMANCE_CAST.md for the explicit attractiveness standard and the owner's clarification that story characters warrant bespoke art beyond background variations.

@@ -1,19 +1,23 @@
 class_name HoldRoadCharacters
 extends RefCounted
 # Stable road_folk IDs retain their existing names and appearances.
-# Romance is authoring metadata only. No gameplay consumes it yet.
-const ROMANCE_ENABLED=false
+# Explicit courtship is owned by HoldCourtship101; friendship never implies romance.
+const ROMANCE_ENABLED=true
 # Reviewed whole-character designs; natural pigments are applied by the existing
 # shared sprite/portrait pipeline. Saved acquaintances keep their identity.
 const CANDIDATE_APPEARANCES={
  "road_folk:1":{"gender":1,"sculpt":2,"hair_color":3,"cloth_color":3,"skin":1},
  "road_folk:2":{"gender":0,"sculpt":1,"hair_color":4,"cloth_color":4,"skin":1},
  "road_folk:3":{"gender":1,"sculpt":0,"hair_color":2,"cloth_color":4,"skin":2},
- "road_folk:4":{"gender":0,"sculpt":0,"hair_color":1,"cloth_color":1,"skin":0}}
+ "road_folk:4":{"gender":0,"sculpt":0,"hair_color":1,"cloth_color":1,"skin":0},
+ "road_folk:6":{"gender":1,"sculpt":3,"hair_color":0,"cloth_color":5,"skin":0},
+ "road_folk:7":{"gender":0,"sculpt":4,"hair_color":2,"cloth_color":6,"skin":1}}
 static func appearance(s,id:String,fallback:Dictionary)->Dictionary:
  if s.npc_appearances.has(id):return s.npc_appearances[id].duplicate(true)
  if not CANDIDATE_APPEARANCES.has(id):return fallback
  var p=fallback.duplicate(true)
+ if id=="road_folk:6":p.first_name="Brynja";p.family_name="Brasshaven"
+ if id=="road_folk:7":p.first_name="Hakon";p.family_name="Ironroot"
  for field in CANDIDATE_APPEARANCES[id]:p[field]=CANDIDATE_APPEARANCES[id][field]
  return HoldAppearance.normalized(p)
 
@@ -23,7 +27,9 @@ const FAMILIAR_WELCOMES={
  "road_folk:2":"I kept an interesting offcut to show you. It looks like nothing yet. That is the enjoyable part.",
  "road_folk:3":"Good timing. I could use a second opinion, preferably one less stubborn than mine.",
  "road_folk:4":"A friendly audience! Don't worry, I can manage a conversation without singing. Usually.",
- "road_folk:5":"Good to see you back on your own two feet. That is always my preferred arrangement."}
+ "road_folk:5":"Good to see you back on your own two feet. That is always my preferred arrangement.",
+ "road_folk:6":"There you are. Put your pack down; I have a new fitting to show you, and a seat that could use company.",
+ "road_folk:7":"Back safely. Good. I was hoping we'd have time for more than a nod today."}
 const CAST={
  "road_folk:0":{
   "trait":"Gruff, conscientious, secretly sentimental",
@@ -72,7 +78,23 @@ const CAST={
   "close":"My daughter made me a little wooden tally stick. One notch for coming home, she said. There isn't much room left on it. I intend to make that a problem.",
   "like":"river_fish","dislike":"crystal","work":"wood","reason":"Replacement pegs for the porters' load rack",
   "topics":[["Why work at the mine entrance?","Somebody ought to remember what went in as well as what came out. Tools, lamps, people. Especially people. Ivar taught me the order of that list; I reversed it."],["Where do you go after your shift?","Home to my wife and daughter, by way of Dagna's kettle if the road crew needs a hand. Bram calls that a long way round. He takes it too."]],
-  "adult":true,"gender":0,"relationship":"married","romance_candidate":false}}
+  "adult":true,"gender":0,"relationship":"married","romance_candidate":false},
+ "road_folk:6":{
+  "trait":"Bright, ambitious, tender beneath her exacting standards",
+  "want":"A workshop with my family's mark above the door. My father taught me to make sound hinges; I want to make a gate worthy of them.",
+  "worry":"I can hear every fault in a piece before anyone praises it. Father says a craftsman must learn when to lay down the file. He never said how difficult that would be.",
+  "close":"I kept the first hinge we made together. It squeaks disgracefully. When I have my own front door, that is the hinge I want on it.",
+  "like":"copper","dislike":"iron_slag","work":"iron","reason":"Stock for a sturdy apprentice's tool rest",
+  "topics":[["Why come to a frontier workshop?","At home I was always somebody's daughter at somebody's bench. I love them dearly. I also want to bring them here one day and say: I built this."],["What do you do when the tools are put away?","Braid my hair properly, mend the embroidery on my good sleeves, and pretend I haven't thought of a better hinge. Dagna knows when to take my notebook away."]],
+  "adult":true,"gender":1,"relationship":"single","romance_candidate":true,"future_player_gender":0},
+ "road_folk:7":{
+  "trait":"Courageous, steady, warmly self-effacing",
+  "want":"A road where children can race the wagons and the guards complain of boredom. Until then, I intend to be difficult to get past.",
+  "worry":"My father wore this watch clasp. I used to think courage meant never being frightened. He put me right on that, very gently, after my first patrol.",
+  "close":"I want a hearth of my own one day. A noisy table, someone who knows when I am boasting, and a reason to come home beyond the end of a shift.",
+  "like":"food","dislike":"copper_slag","work":"dressed_stone","reason":"Stones for the road-watch shelter",
+  "topics":[["What keeps a guard here?","An oath is a useful thing when the weather is miserable. These are our roads and our people. Also, Dagna refuses to let a guard miss supper."],["Can you ever put duty aside?","Torvik is teaching me a dance. I can hold a bridge against trouble, but I have yet to defeat the second turn. You may laugh. I do."]],
+  "adult":true,"gender":0,"relationship":"single","romance_candidate":true,"future_player_gender":1}}
 
 static func persona(id:String)->Dictionary:
  var result={}
@@ -87,7 +109,7 @@ static func greeting(g,id:String)->String:
  return practical
 
 static func whereabouts(id:String)->String:
- return {"road_folk:0":"Stonebridge road","road_folk:1":"Inside the Wayfarer's Hearth, Stonebridge","road_folk:2":"Pinewood timber yard","road_folk:3":"Greenhearth allotments","road_folk:4":"Greenhearth fields","road_folk:5":"Outside Old Workings, Stonebridge"}.get(id,"")
+ return {"road_folk:0":"Stonebridge road","road_folk:1":"Inside the Wayfarer's Hearth, Stonebridge","road_folk:2":"Pinewood timber yard","road_folk:3":"Greenhearth allotments","road_folk:4":"Greenhearth fields","road_folk:5":"Outside Old Workings, Stonebridge","road_folk:6":"Pinewood toolwright’s bench","road_folk:7":"Stonebridge eastern road watch"}.get(id,"")
 
 static func upgrade_record(id:String,d:Dictionary):
  if not CAST.has(id):return
