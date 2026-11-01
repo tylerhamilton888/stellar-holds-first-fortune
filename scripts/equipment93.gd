@@ -66,7 +66,7 @@ static func cost(kind:String,grade:int)->Dictionary:
 static func reason(g,kind:String,grade:int)->String:
  if spec(kind).is_empty() or kind=="clothes" or grade not in [0,1]:return "No forge recipe"
  if not HoldOnboarding.combat_ready(g.state) and not HoldPractice.allowed(g):return "Complete Borin’s training first"
- if g.room_id!="forge":return "Visit Borin’s workbench"
+ if g.room_id!="forge" and not HoldFrontier103.near(g,"forge") and not g.surface.architecture.can_forge():return "Visit a working forge"
  if g.state.active_site=="hold" and g.state.opening<2:return "Relight the forge first"
  var tech=str(spec(kind).tech)
  if (grade==1 or tech=="metallurgy") and not g.state.tech.has("metallurgy"):return "Research "+HoldData.RESEARCH.metallurgy.name

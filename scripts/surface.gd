@@ -67,13 +67,16 @@ func ensure():
  if g.state.claim_id!="" and not s.homes.has(g.state.claim_id):
   s.homes[g.state.claim_id]={"level":0,"lesson":false}
   var id="claim:"+g.state.claim_id+":starter"
-  s.chests[id]={"area":"home:"+g.state.claim_id,"x":650.0,"y":380.0,"items":{}}
+  if not HoldFrontier103.active(g.state):s.chests[id]={"area":"home:"+g.state.claim_id,"x":650.0,"y":380.0,"items":{}}
  roads.ensure()
 func room()->bool:return area.begins_with("room:") or area.begins_with("home:")
 func size()->Vector2:return HoldRoomLayout.size(area) if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else Vector2(3600,2200) if area=="claim" else SIZE
 func claim_ground(p:Vector2)->bool:return Rect2(90,210,1810,750).has_point(p) or Rect2(1900,210,1590,1850).has_point(p)
 func label()->String:
  if architecture.interior():return architecture.inside().get("name","Your building")+" · floor "+str(architecture.current_floor()+1)
+ if HoldFrontier103.active(g.state):
+  if area=="trail":return "Stonebridge · frontier town"
+  if area=="claim":return "Stonebridge · your household grounds · Z+"+str(house.level())
  if area=="greenfields":return "Greenhearth · the holdfarms"
  if area in HoldRoads.ROOMS:return HoldRoads.ROOMS[area]
  if HoldNeighborhood.is_home(area):return HoldNeighborhood.title(area)
@@ -111,7 +114,9 @@ func spawn(id:String)->Vector2:
 func enter(id:String,at:Vector2=Vector2.INF):
  if g.fieldwork:g.fieldwork.cancel()
  ensure()
- if id=="claim" and g.state.claim_id=="":g.open_panel("charters");return
+ if HoldFrontier103.active(g.state) and (HoldWorldZones.ward(id) or id in ["room:throne","room:research","room:market","room:forge","room:commission"]) and not HoldFrontier103.data(g.state).keldrath_open:
+  g.notify("Keldrath lies beyond the frontier. The survey hall, communal forge and watch stores serve Stonebridge.");return
+ if id=="claim" and g.state.claim_id=="":g.open_panel("frontier103" if HoldFrontier103.active(g.state) else "charters");return
  if id=="room:throne" and HoldOnboarding.ensure(g.state).fresh and HoldOnboarding.stage(g.state)<4:g.notify("Ivar's first-shift reference opens the royal audience.");return
  if id in HoldRoads.OUTDOORS and g.state.opening==0:g.notify(g.region_travel_hint());return
  if g.room_id=="training":g.state.resident_visits.erase("borin")
@@ -120,7 +125,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  world.speech="";rest_time=0
  remember();var old=area
  g.flush_pickups()
- var claim_site=id=="claim" or id.begins_with("home:") or HoldBuildingPlans.owned_room(id) or (id.begins_with("room:") and g.state.active_site=="claim" and old=="claim")
+ var claim_site=id=="claim" or id.begins_with("home:") or (HoldBuildingPlans.owned_room(id) and architecture.record(HoldBuildingPlans.room_parts(id)[0]).get("area","")=="claim") or (id.begins_with("room:") and g.state.active_site=="claim" and old=="claim")
  g.state.switch_site("claim" if claim_site else "hold",g.geo)
  if id.begins_with("room:") or id.begins_with("home:"):
   if not room():return_area=old
@@ -131,7 +136,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  area=id
  g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id in ["trail","greenfields"] else "hub")
  g.room_id="home" if id.begins_with("home:") else id.trim_prefix("room:") if id.begins_with("room:") else ""
- if id=="room:home":HoldFirstVisit99.room_entered(g)
+ if id=="room:home" or (HoldFrontier103.active(g.state) and id==HoldFrontier103.quarters(g.state)):HoldFirstVisit99.room_entered(g)
  var landing=world.arrival(old,id) if at==Vector2.INF else at
  g.player=spawn(id) if landing==Vector2.INF else landing
  if not walkable(g.player):g.player=spawn(id)
@@ -151,7 +156,7 @@ func leave():
  var p=g.state.surface.positions.get(back,[])
  enter(back,Vector2(p[0],p[1])+Vector2(0,35) if p.size()==2 else spawn(back))
 func camera_target()->Vector2:
- if area==HoldWorkerLodge100.ROOM or (area=="room:home" and HoldFirstVisit99.lodge_intro(g.state)):return Vector2(0,160)
+ if area==HoldFrontier103.lodge(g.state) or HoldFrontier103.private_room(g) or (area=="room:home" and HoldFirstVisit99.lodge_intro(g.state)):return Vector2(0,160)
  if room():return HoldRoomLayout.camera(area,g.player)
  if HoldWorldZones.ward(area):return HoldTerraces.camera(area,g.player)
  return (g.player-Vector2(480,300)).clamp(Vector2(0,-65),Vector2(maxf(0,size().x-960),maxf(-65,size().y-480)))
@@ -195,6 +200,14 @@ func points()->Array:
    if g.room_id=="tavern":
     var guests=HoldNpcPresence.tavern_guests(g.state)
     for i in mini(3,guests.size()):result.append(spot(270+i*170,550,"Speak with "+g.state.npc(guests[i]).first_name,"talk:"+guests[i]))
+ if HoldFrontier103.active(g.state):
+  if area=="trail":
+   result=result.filter(func(p):return p.action!="hearthward")
+   for point in result:
+    if point.action=="claim":point.name="Your household grounds" if g.state.claim_id!="" else "Household plots · speak with Ivar"
+   result.append(spot(100,690,"Road to Keldrath · later journey","hearthward"))
+  if area=="claim":result=result.filter(func(p):return p.action in ["trail","mine"] or str(p.action).begins_with("house:"))
+ result.append_array(HoldFrontier103.points(g))
  result.append_array(architecture.points())
  result.append_array(architecture.service_points())
  result.append_array(g.hearth.points())
@@ -286,6 +299,8 @@ func start_rest(point:Dictionary,nap:bool=false)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="frontier_archive103":g.open_panel(id);return
+ if id=="frontier103":g.open_panel(id);return
  if id=="great_claim102":g.open_panel(id);return
  if id=="architecture_leave":architecture.leave();return
  if id=="architecture_up":architecture.stairs(true);return
@@ -328,7 +343,7 @@ func base_obstacles()->Array:
  if HoldWorldZones.ward(area):return world.obstacles()
  if room():return world.room_obstacles()
  if area=="trail":
-  for pair in [[Vector2(220,690),330.0]]:
+  for pair in ([] if HoldFrontier103.active(g.state) else [[Vector2(220,690),330.0]]):
    for side in [-1,1]:list.append(Rect2(pair[0]+Vector2(side*pair[1]*.32-pair[1]*.14,-pair[1]*.34),Vector2(pair[1]*.28,pair[1]*.42)))
   list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
   list.append_array([Rect2(1134,643,202,12),Rect2(1134,745,202,12)])
@@ -424,6 +439,7 @@ func input(e:InputEvent)->bool:
    else:use()
    return true
   if e.keycode==KEY_G:g.open_panel("wayfinding");return true
+  if e.keycode==KEY_O and HoldFrontier103.private_room(g):g.open_panel("home");return true
   if e.keycode==KEY_O and architecture.interior():g.open_panel("architecture");return true
   if e.keycode==KEY_O and area=="room:home":g.open_panel("home");return true
   if e.keycode==KEY_O and (area=="claim" or area.begins_with("home:")):g.open_panel("homestead");return true
@@ -444,7 +460,9 @@ func start_placement(kind:String):
   g.notify("Research Hearthkeeping for these plans. Ordinary shelves and tables provide the same comfort.");return
  cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
  g.notify("Place on the fine grid. LMB builds; right click cancels. Keep approaches clear.")
-func can_furnish()->bool:return area=="room:home" or area=="claim" or area.begins_with("home:") or architecture.interior()
+func can_furnish()->bool:
+ if architecture.interior() and HoldFrontier103.public_building(architecture.inside()):return HoldFrontier103.private_room(g)
+ return area=="room:home" or area=="claim" or area.begins_with("home:") or architecture.interior()
 func move_nearby_furnishing()->bool:
  if not can_furnish():return false
  var best:Dictionary={};var kind="";var distance=85.0
@@ -489,6 +507,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
   if p.distance_to(point.p)<80 or base.grow(36).has_point(point.p):return false
  return not base.grow(8).has_point(g.player)
 func place(p:Vector2)->bool:
+ if architecture.interior() and HoldFrontier103.public_building(architecture.inside()) and not HoldFrontier103.private_room(g):g.notify("Build and furnish your own plot; these are shared town rooms.");return false
  ensure();p=snap_furnishing(p)
  if not can_furnish():g.notify("Furnish your own quarters, hearth or claim.");return false
  if not furniture_valid(p,placing):g.notify("Choose clear ground within reach; leave room for the entire furnishing.");return false
@@ -507,7 +526,7 @@ func place(p:Vector2)->bool:
   var id="chest:"+str(serial)
   g.state.surface.chests[id]={"area":area,"z":house.level(),"x":p.x,"y":p.y,"items":{}}
  else:g.state.surface.decor.append({"area":area,"z":house.level(),"x":p.x,"y":p.y,"kind":placing})
- if area=="room:home":g.state.surface.facts.quarters_build=true;HoldFirstVisit99.furnished(g,placing)
+ if area=="room:home" or HoldFrontier103.private_room(g):g.state.surface.facts.quarters_build=true;HoldFirstVisit99.furnished(g,placing)
  g.state.surface.facts.build=true;placing="";g.sound.effect("build");g.save_game();return true
 func transfer(item:String,n:int,deposit:bool,save:bool=true)->int:
  var c=g.state.surface.chests.get(selected_chest,{})
@@ -522,6 +541,7 @@ func transfer(item:String,n:int,deposit:bool,save:bool=true)->int:
  if save:g.save_game()
  return moved
 func recover_chest()->bool:
+ if not can_furnish():return false
  cancel_placement()
  var c=g.state.surface.chests.get(selected_chest,{})
  if c.get("fixed",false):g.notify("This chest is fixed in place. Its contents are yours.");return false
@@ -530,6 +550,7 @@ func recover_chest()->bool:
   if int(value)>0:g.notify("Empty the chest before taking it apart.");return false
  g.state.surface.chests.erase(selected_chest);g.state.add("wood",4);g.close_panel();g.save_game();return true
 func recover_decor()->bool:
+ if not can_furnish():return false
  cancel_placement()
  for i in g.state.surface.decor.size():
   var d=g.state.surface.decor[i]
@@ -558,6 +579,7 @@ func chest_panel():
   g.small_button(line,"Store 10",func():transfer(key,10,true);g.open_panel("storage",false))
   g.small_button(line,"Take 10",func():transfer(key,10,false);g.open_panel("storage",false))
 func home_panel():
+ if HoldFrontier103.active(g.state):HoldFrontier103.home_panel(g);return
  g.button(g.panel_body,"Building book · recreate Keldrath and countryside architecture",func():g.open_panel("architecture"))
  g.button(g.panel_body,"Furniture & architectural details",func():g.open_panel("architecture_details"))
  g.button(g.panel_body,"Hearth & Homestead · meals and comfort",func():g.open_panel("hearth"))
@@ -669,7 +691,7 @@ func draw():
  for d in g.state.surface.decor:
   if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind,"sort_y":float(d.y)+float(HoldFurnishings.ITEMS.get(d.kind,{}).get("sort_offset",0))})
  if room() and not area.begins_with("home:") and area!="room:training":
-  if area==HoldWorkerLodge100.ROOM:objects.append_array(HoldWorkerLodge100.people(g))
+  if area==HoldFrontier103.lodge(g.state):objects.append_array(HoldWorkerLodge100.people(g))
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
   if host!="" and g.state.active_site=="hold":objects.append({"p":HoldRoyalStage.current(g).p if host=="eirik" else Vector2(620,410),"kind":"npc","id":host})
   if g.room_id=="tavern":
@@ -837,11 +859,12 @@ func draw_outdoors():
  if area=="trail":world.draw_river()
  g.draw_texture_rect(ground_cache[area],Rect2(Vector2.ZERO,SIZE),false)
  if area=="trail":world.draw_bridge()
+ HoldFrontier103.draw_ground(g)
  if area=="claim":
   world.tile(0,Rect2(1780,560,800,80),100,Color("b8b29a"))
   world.tile(0,Rect2(2480,560,80,1370),100,Color("b8b29a"))
  for i in 8:scenery(Vector2(120+i*245,245+sin(i)*30),1,330)
- if area=="claim":
+ if area=="claim" and not HoldFrontier103.active(g.state):
   var upgraded=int(g.state.surface.homes[g.state.claim_id].level)>0
 
   prop(Vector2(395,560),4,120);prop(Vector2(595,560),4,120)

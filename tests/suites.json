@@ -53,7 +53,8 @@
       "menu_quality100",
       "lodge100",
       "courtship101",
-      "greatclaim102"
+      "greatclaim102",
+      "frontier103"
     ],
     "modular": [
       "modular",
@@ -443,7 +444,8 @@
       "menu_quality100",
       "lodge100",
       "courtship101",
-      "greatclaim102"
+      "greatclaim102",
+      "frontier103"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -475,6 +477,25 @@
       "disciplines",
       "firstvisit99",
       "lodge100"
+    ],
+    "frontier103": [
+      "frontier103"
+    ],
+    "frontier103-check": [
+      "frontier103",
+      "firstvisit99",
+      "lodge100",
+      "greatclaim102",
+      "people",
+      "architecture",
+      "homestead",
+      "roads"
+    ],
+    "frontier103-final": [
+      "frontier103",
+      "architecture",
+      "homestead",
+      "roads"
     ]
   },
   "cases": {
@@ -661,6 +682,10 @@
     "greatclaim102": {
       "script": "tests/greatclaim102.gd",
       "marker": "GREATCLAIM102"
+    },
+    "frontier103": {
+      "script": "tests/frontier103.gd",
+      "marker": "FRONTIER103"
     }
   }
 }

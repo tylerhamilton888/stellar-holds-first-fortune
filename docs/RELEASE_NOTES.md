@@ -1,9 +1,11 @@
-# 0.90.0 — Six lives at the claim
+# 0.91.0 — A town taking root
 
-Meet six adult romance candidates: Dagna, Ragnhild, Brynja, Torvik, Ketil and Hakon. Help with each person's individual errand, make a personal choice, and earn a keepsake. Once trust grows, ask explicitly to court; three shared moments on later calendar days can lead to betrothal. Your choices and commitment survive saving. Existing friendships and saved appearances remain intact; Orla and Hedrik remain married.
+New fortunes now begin in Stonebridge, a working frontier town. The bunkhouse has shared bunks below and your private room upstairs. Walk to the Wayfarer's Hearth, communal forge, survey hall and its upper archive, watch stores, nearby fields, timber yard and Old Workings. Local services handle real commissions, trading, research and crafting. Keldrath is reserved for a later journey; existing fortunes retain their previous geography.
 
-New fortunes also receive a Great Claim ledger in the miners' lodge. Completed work earns bounded contribution marks, while three material-funded projects add lamps, a shared table and dry stores to the High Trail. Press E at the ledger or view it through J after starting work. Existing fortunes retain their opening and geography.
+Earn your own household plot through a paid first shift and two civic projects. Keep your bunkhouse room while you design and build a home on the eastern rise. O opens building plans, piece-by-piece construction, furniture and workstations. Choose your layout and finishes; add real stairs and usable upper floors. Register a finished home with a bed and light/hearth for 60 contribution marks, once. Your design and belongings persist.
 
-This is the first playable milestone of the Great Claim project. The frontier relocation, cave-in and ancestry story, contest, Keldrath invasion, trial, Thaneship, marriage and bespoke character animation remain in development. Current portraits and actors use established character families.
+The same building catalogue produces the town and player buildings. Complete a community storehouse from its partly laid foundation, then enter and use it. Public property cannot be dismantled for free materials; its plans remain available for your own plot. Skarrin and Edda introduce the contest's tensions and hereditary law.
 
-Extract a verified Windows ZIP into a fresh folder and run **FirstFortune.exe**. Prior releases and saves are retained.
+J explains the opening and home milestone; M opens the contribution ledger. Six-candidate courtship remains available. The later cave-in, ancestry contest, Keldrath invasion/trial, Thaneship and marriage chapters remain in development.
+
+Extract the verified Windows package into a fresh folder and run **FirstFortune.exe**. Keep previous saves and releases.

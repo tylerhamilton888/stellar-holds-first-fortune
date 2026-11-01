@@ -77,7 +77,7 @@ static func role(s,id:String)->String:
 static func chat(g,id:String)->String:
  if not HoldConversation.local(g,id):return "Let us talk when we are together."
  meet(g,id);var d=records(g.state)[id];var day=int(g.state.elapsed/600.0)
- if d.chat_day!=day:d.chat_day=day;d.bond=mini(20,int(d.bond)+1);d.last="We made time for a conversation.";g.save_game()
+ if d.chat_day!=day:d.chat_day=day;d.bond=mini(10 if id=="road_folk:8" else 20,int(d.bond)+1);d.last="We made time for a conversation.";g.save_game()
  var p=d.persona
  return p.close if int(d.bond)>=5 else (p.want if day%2==0 else p.worry)
 static func gift(g,id:String,item:String)->String:
@@ -88,15 +88,16 @@ static func gift(g,id:String,item:String)->String:
  if int(d.gift_day)==day:return "One gift is plenty for today. Keep something for yourself."
  if not g.state.pay({item:1}):return "You no longer have that in your pack."
  var liked=item==d.persona.like;var disliked=item==d.persona.dislike
- d.gift_day=day;d.bond=clampi(int(d.bond)+(3 if liked else -1 if disliked else 1),0,20)
+ d.gift_day=day;d.bond=clampi(int(d.bond)+(3 if liked else -1 if disliked else 1),0,10 if id=="road_folk:8" else 20)
  d.last=("Loved" if liked else "Disliked" if disliked else "Appreciated")+" your gift of "+HoldData.ITEMS[item].name.to_lower()+"."
  g.save_game()
+ if id=="road_folk:8":return "Useful. I can put this to work. Do not expect me to mistake a gift for an argument." if not disliked else "What am I supposed to do with this? The survey figures will not improve themselves."
  return "You remembered! That is a particular favorite of mine." if liked else "Thank you for thinking of me, but this isn't really to my taste." if disliked else "That's kind of you. Thank you."
 static func help(g,id:String)->bool:
  if not HoldConversation.local(g,id):return false
  var d=records(g.state).get(id,{});var day=int(g.state.elapsed/600.0)
  if d.is_empty() or int(d.work_day)==day or not g.state.pay({d.persona.work:2}):return false
- d.work_day=day;d.bond=mini(20,int(d.bond)+2);d.last="You helped: "+d.persona.reason.to_lower()+"."
+ d.work_day=day;d.bond=mini(10 if id=="road_folk:8" else 20,int(d.bond)+2);d.last="You helped: "+d.persona.reason.to_lower()+"."
  # Fair reimbursement, not an infinite premium over the market.
  g.state.money+=2*int(HoldData.ITEMS[d.persona.work].price);g.save_game();return true
 static func options(g,id:String):

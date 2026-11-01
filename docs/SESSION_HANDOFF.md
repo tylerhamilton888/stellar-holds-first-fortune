@@ -1,8 +1,18 @@
+# 0.91.0 — A town taking root: native checks passed
+
+New fortunes start in Stonebridge's real two-storey bunkhouse. Connected roads lead to the tavern, communal forge, survey hall/archive, watch stores, farms and mine. The community storehouse starts as a foundation/worksite and becomes a usable building after a paid contribution. Skarrin and Edda have authored conversations and normal persistent identities. Public buildings use the same player-accessible plans and actual room storeys; public ownership prevents dismantling, not construction parity. Existing fortunes keep their geography.
+
+A paid first shift and two civic projects earn a permanent household plot. No cottage or workshop is automatically granted. Players can build from plans or piece by piece, furnish, extend and add connected upper floors; a roofed, furnished home earns one-time recognition. The private bunkhouse room remains available. Later Thaneship must preserve this same plot and design.
+
+Native Godot 4.4.1 checks passed 1,342 distinct assertions across frontier103 (224), architecture (339), homestead (69), roads (84), firstvisit99 (22), lodge100 (47), greatclaim102 (111), and people (446). Reviewed town, bunkhouse, archive, storehouse, player home and home-design menu captures. Evidence: testing/frontier103/acceptance.json. Full hosted source and exact-export gates still pending; do not call 0.91.0 published yet. Prior PR #73 passed its full source gate and merged as 12208d1c632fa77d7d253b1c75f867f823a1a060; its separate 0.90.0 Windows run remains pending at this checkpoint.
+
+Continue from great-claim/CHECKPOINT.md. Seven milestone files now include the explicit player-home milestone. Full narrative cast expansion, rescue/ancestry, contest/Keldrath, invasion/trial, Thaneship/marriage and bespoke story-character art remain queued. This is a playable town/home slice, not the completed story.
+
 # 0.90.0 — Six lives at the claim: source milestone
 
 Read great-claim/CHECKPOINT.md first. Six adult candidates now have individual material errands, keepsakes, eighteen authored date scenes, reciprocal courtship and betrothal. New candidates are Brynja (toolwright) and Hakon (guard); existing four identities and saved acquaintances remain. Married cast stays excluded. Native cast101 passed 813 assertions; all six dialogue captures reviewed. Art remains an established-family baseline, not final bespoke frames and expressions.
 
-New fortunes receive a Great Claim ledger: real completed work, bounded marks, three atomic material donations and eight visible trail furnishings. greatclaim102 passed 79 assertions. Full milestone two, frontier relocation and narrative cast remain unfinished; milestones three through six are queued. The full attached directive is preserved with six implementation checkpoints in great-claim/. No claim of full-story completion. Hosted validation, merge and Windows delivery are pending for this source.
+New fortunes receive a Great Claim ledger: real completed work, bounded marks, three atomic material donations and eight visible trail furnishings. greatclaim102 passed 79 assertions, disciplines 38, firstvisit99 23 and lodge100 48: 1,001 distinct assertions across both focused suites. Final ledger UI and trail captures reviewed; the refined ledger case passed again. Full milestone two, frontier relocation and narrative cast remain unfinished; milestones three through six are queued. The full attached directive is preserved with six implementation checkpoints in great-claim/. No claim of full-story completion. Source backed up as f34e826b (local 881483c), identical tree 1040947605bd02d5a794a1284eb432792b2dfad6, PR #73. Full hosted run 41336534776 is in progress. release/0.90.0 is queued through the gated Windows workflow; merge and publication are not yet verified.
 
 # Romance cast direction — focused source checks passed
 

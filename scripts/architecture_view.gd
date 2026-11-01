@@ -78,6 +78,14 @@ static func book(a):
   action(g,box,"Choose plan",func():a.select_plan(id))
  action(g,g.panel_body,"Build piece by piece · floors, walls and roofs",func():g.open_panel("house_build"))
 static func renovation(a,b:Dictionary):
+ if HoldFrontier103.public_building(b):
+  var g=a.g
+  preview(g.panel_body,a.building_object(b),180)
+  g.label(g.panel_body,b.name+" · shared town building",21)
+  g.label(g.panel_body,"This building uses the same shell, interiors and stairs available in your building book. You may build your own version on your household plot.",16)
+  action(g,g.panel_body,"View this building plan",func():a.select_plan(b.plan))
+  if HoldFrontier103.private_room(g):action(g,g.panel_body,"Furnish my upstairs room",func():g.open_panel("home"))
+  return
  var g=a.g;var row=g.row(g.panel_body)
  var picture=preview(row,a.building_object(b),180);picture.custom_minimum_size.x=230;picture.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
  var summary=VBoxContainer.new();summary.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(summary)

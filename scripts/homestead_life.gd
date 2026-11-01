@@ -89,7 +89,7 @@ func input(e:InputEvent)->bool:
  if ripe(b):start("harvest",b)
  elif not b.planted:
   if not b.get("prepared",false):start("hoe",b)
-  elif g.state.count(HoldHearth.CROPS[data().selected].seed)<1:g.notify("No selected seed in your pack. Choose a crop on the field board; Orla sells all seeds.")
+  elif g.state.count(HoldHearth.CROPS[data().selected].seed)<1:g.notify("No selected seed in your pack. Choose a crop on the field board; The town stores sell all seeds.")
   else:start("plant",b)
  elif not b.watered:
   if g.state.count("water")<1:g.notify("Bring one water from your pack to water this bed.")
@@ -230,7 +230,7 @@ func panel():
   var b=g.button(g.panel_body,c.name+" · "+str(g.state.count(c.seed))+" seed · "+c.use,func():d.selected=id;g.open_panel("fieldwork",false));b.toggle_mode=true;b.button_pressed=d.selected==id
  g.label(g.panel_body,"E prepares soil, then plants the selected seed, then waters once. Optional tending shortens growth by 15%. Crops take 3–4½ minutes of world time and wait forever when ripe. Harvests return seed.",14)
  g.label(g.panel_body,"Fish at Stonebridge for trout, the southern claim river for char, and Greenhearth’s eastern river for perch. E casts; hold E when the float bobs. No missed-bite penalty; walk away to cancel.",14)
- g.label(g.panel_body,"Bring your harvest to a home hearth or public kitchen. Serve meals at your own table. Orla buys and sells crops, fish, seeds and meals.",14)
+ g.label(g.panel_body,"Bring your harvest to a home hearth or public kitchen. Serve meals at your own table. The town exchanges buy and sell crops, fish, seeds and meals.",14)
  var lesson=GridContainer.new();lesson.columns=2;lesson.add_theme_constant_override("h_separation",20);g.panel_body.add_child(lesson)
  for step in [["tools","Craft your field tools"],["bed","Build a garden bed at your claim"],["plant","Plant a turnip seed"],["water","Water the planted bed"],["harvest","Bring in your first harvest"],["fish","Catch a river trout"]]:g.label(lesson,("✓ " if d.facts.get(step[0],false) else "○ ")+step[1],15,Color("9bd6c0") if d.facts.get(step[0],false) else Color("d3c7ac"))
  g.label(g.panel_body,"First harvest + first catch: 3 provisions for your Folk, once.",14)

@@ -1,0 +1,86 @@
+{
+  "engine": "4.4.1",
+  "version": "0.91.0",
+  "cases": [
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 22,
+      "seconds": 62.47
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 67.47
+    },
+    {
+      "test": "greatclaim102",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 111,
+      "seconds": 53.36
+    },
+    {
+      "test": "people",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 446,
+      "seconds": 77.5
+    },
+    {
+      "test": "architecture",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 339,
+      "seconds": 55.44
+    },
+    {
+      "test": "homestead",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 69,
+      "seconds": 84.42
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 84,
+      "seconds": 108.47
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 224,
+      "seconds": 64.64
+    }
+  ],
+  "total_checks": 1342,
+  "visual_review": [
+    "town-west",
+    "town-east",
+    "bunkhouse",
+    "upper-archive",
+    "archive-text",
+    "completed-storehouse",
+    "player-home",
+    "home-design-menu"
+  ],
+  "limits": [
+    "Hosted full-source and exact-export checks pending",
+    "No player Windows hardware/audio verification",
+    "Later story and bespoke character art remain queued"
+  ]
+}

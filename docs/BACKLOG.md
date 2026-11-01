@@ -1,6 +1,6 @@
 # Great Claim remaining implementation
 
-Continue from great-claim/CHECKPOINT.md. Six-candidate courtship and betrothal are implemented and tested. Milestone two has a playable ledger foundation, but needs frontier geography, local services and the full narrative cast. Milestones three–six cover rescue/ancestry, contest/Keldrath, invasion/trial, and Thaneship/household. Bespoke character faces, clothing, expression sets and key animations remain required by ROMANCE_CAST.md. Shared recolored families are an interim baseline.
+Town and player-home slice implemented and native-tested in 0.91.0; finish hosted source/export delivery gates. Read great-claim/CHECKPOINT.md. Seven milestones include the new permanent player-home milestone. Keep extending this plot through later story chapters. Remaining: wider authored narrative cast, rescue/ancestry, contest/Keldrath, invasion/trial, Thaneship/marriage and bespoke story-character art. Six-candidate courtship/betrothal already exists; shared character families remain an interim art baseline.
 
 # 0.89.0 — A hearth of your own: published and merged
 

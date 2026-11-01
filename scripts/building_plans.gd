@@ -19,6 +19,9 @@ static func catalogue()->Dictionary:
    out[id]={"name":HoldHouseholds.name_for(ward,i)+" house","category":"Hearths","rooms":[HoldNeighborhood.home_id(ward,i),HoldNeighborhood.home_id(ward,i,1)],"ward":true,"art":0,"id":-2,"home":HoldNeighborhood.home_id(ward,i),"width":[260.0,240.0,280.0][i]}
  for item in [["cottage","Charter cottage","Hearths","home:blueprint",0,350.0],["wayfarer","Wayfarer's Hearth","Hearths","room:wayfarer",1,290.0],["farmhouse","Greenhearth farmhouse","Hearths","room:greenhearth",0,320.0],["workshop","Charter workshop","Industry","room:forge",4,260.0]]:
   out[item[0]]={"name":item[1],"category":item[2],"rooms":[item[3]],"ward":false,"art":item[4],"id":-3,"width":item[5]}
+ out.frontier_lodge={"name":"Stonebridge bunkhouse","category":"Hearths","rooms":["room:lodge","room:home"],"ward":false,"art":0,"id":-3,"width":300.0}
+ out.frontier_office={"name":"Survey hall and archive","category":"Civic","rooms":["room:research","room:research"],"stair":[550,550],"ward":false,"art":2,"id":-3,"width":260.0}
+ out.frontier_watch={"name":"Watch house and stores","category":"Civic","rooms":["room:market"],"ward":false,"art":0,"id":-3,"width":240.0}
  for id in out:out[id].key=id
  catalogue_cache=out;return out
 static func plan(id:String)->Dictionary:return catalogue().get(id,{})
@@ -64,7 +67,7 @@ static func floor_number(area:String)->int:
  return int(HoldNeighborhood.parts(area)[2]) if HoldNeighborhood.is_home(area) else 0
 static func stair_position(area:String)->Vector2:
  if owned_room(area):
-  var b=HoldArchitecture.current().record(room_parts(area)[0]);var p=b.get("stair",[])
+  var b=HoldArchitecture.current().record(room_parts(area)[0]);var p=b.get("stair",plan(b.get("plan","")).get("stair",[]))
   if p.size()==2:return Vector2(p[0],p[1])
  return HoldHouseholds.KETTLE_STAIR if template(area) in ["room:tavern",HoldHouseholds.LOFT] else HoldNeighborhood.STAIR
 static func has_stairs(area:String)->bool:

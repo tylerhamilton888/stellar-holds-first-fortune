@@ -453,7 +453,7 @@ func _unhandled_input(e):
   elif e.keycode==KEY_J:toggle_panel("commission")
   elif e.is_action_pressed("save"):save_game();notify("Hold saved.")
   elif e.is_action_pressed("inventory"):toggle_panel("inventory")
-  elif e.is_action_pressed("manage"):toggle_panel("manage")
+  elif e.is_action_pressed("manage"):toggle_panel("great_claim102" if HoldFrontier103.active(state) else "manage")
   elif e.is_action_pressed("help"):toggle_panel("help")
   elif e.is_action_pressed("recall") and panel_id=="" and zone=="mine":
    open_panel("rescue")
@@ -1232,7 +1232,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
- if id in ["lodge_talk","great_claim102"]:menu_paused=true
+ if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
  HoldMenuView.build_shell(self,id)
@@ -1275,6 +1275,8 @@ func open_panel(id:String,remember:bool=true):
   "energy":HoldWorkEnergy.panel(self)
   "lodge_talk":HoldWorkerLodge100.panel(self)
   "great_claim102":HoldGreatClaim102.panel(self)
+  "frontier103":HoldFrontier103.panel(self)
+  "frontier_archive103":HoldFrontier103.archive_panel(self)
   "hearth":hearth.panel()
   "road_kitchen":surface.roads.kitchen_panel()
   "gate":world_map_panel()
@@ -1685,6 +1687,7 @@ func gate_panel():
  label(panel_body,"Walk to Old Workings for coal, Pinewood for timber, or your chartered mountain. WASD / arrows move you across the basin; E enters the nearby landmark.",16)
  label(panel_body,"Travel is free. Your work in each mine is preserved. Keldrath remains open for trade, research and fellowship.",14,Color("a3c8bb"))
 func charters_panel():
+ if HoldFrontier103.active(state):HoldFrontier103.panel(self);return
  HoldAncestralClaim.journal(self)
  if HoldOnboarding.ensure(state).fresh and HoldOnboarding.stage(state)<5:
   label(panel_body,"A charter requires a royal reference. Begin with Ivar and your first shift.",17);return

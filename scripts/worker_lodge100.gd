@@ -14,9 +14,9 @@ static func profile(g,index:int)->Dictionary:
  return HoldAppearance.normalized(p)
 
 static func people(g)->Array:
- if g.surface.area!=ROOM:return []
+ if g.surface.area!=HoldFrontier103.lodge(g.state):return []
  var result=[]
- if HoldFirstVisit99.lodge_intro(g.state) and not HoldFirstVisit99.data(g.state).get("ivar_departed",false):
+ if HoldFirstVisit99.lodge_intro(g.state) and (HoldFrontier103.active(g.state) or not HoldFirstVisit99.data(g.state).get("ivar_departed",false)):
   result.append({"p":Vector2(510,380),"kind":"citizen","profile":profile(g,0),"aim":Vector2.DOWN,"walking":false,"name":"Ivar Deepmeasure","role":"Foreman","time":g.clock,"gait":0.0,"interaction":"lodge_folk:0"})
  var t=float(g.state.elapsed);var phase=fposmod(t,28.0)
  var x=lerpf(250.0,350.0,clampf((phase-4.0)/6.0,0,1)) if phase<14 else lerpf(350.0,250.0,clampf((phase-18.0)/6.0,0,1))
@@ -53,5 +53,8 @@ static func panel(g):
    text="Rurik rolls a sore shoulder. 'A fresh face! The bunks are for whoever needs them, and the hearth's for everyone. Keep the west rack stocked and you'll have useful stone before you know it.'"
   2:
    text="Sigrid lifts her mug. 'There's a room through the north door if you want a little quiet. A chair and a lamp can make even a borrowed room feel like your own. The trail out to work starts at King's Gate.'"
+ if HoldFrontier103.active(g.state):
+  text=text.replace("room through that door","room upstairs").replace("north door","stairs").replace("The trail out to work starts at King's Gate.","Old Workings lies north of the town square.")
  g.label(body,text,16)
+ if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Shift book and household plot",func():g.open_panel("frontier103"))
  g.button(g.panel_body,"Thanks · back to the lodge",g.close_panel)

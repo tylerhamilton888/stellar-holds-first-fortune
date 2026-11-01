@@ -29,6 +29,7 @@ static func work_bonus(s)->float:
  var m=saved(s).meal
  return float(MEALS.get(m.get("id",""),{}).get("work",1.0)) if float(m.get("until",0))>s.elapsed else 1.0
 func own_home()->bool:
+ if g.surface.architecture.interior() and HoldFrontier103.public_building(g.surface.architecture.inside()):return HoldFrontier103.private_room(g)
  return g.surface.area=="room:home" or g.surface.area.begins_with("home:") or g.surface.area=="claim" or g.surface.architecture.interior()
 func furniture()->Array:
  var list=[]
