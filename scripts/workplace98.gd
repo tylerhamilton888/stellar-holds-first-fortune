@@ -46,7 +46,7 @@ static func enter(g):
  q.installed=true;g.deep.works.model.refresh()
 static func profile()->Dictionary:
  var p=HoldAppearance.defaults();p.first_name="Odrin";p.family_name="Slatehand";p.name="Odrin Slatehand";p.sculpt=3;p.hair_color=5;p.beard_color=5;p.cloth_color=3
- return p
+ return HoldStoryArt105.tag(p,"odrin")
 static func position(q:Dictionary)->Vector2:return Vector2(q.person.p[0],q.person.p[1])
 static func path(g,a:Vector2,b:Vector2)->Array:
  if g.deep.world.solid(a) or g.deep.world.solid(b):return []

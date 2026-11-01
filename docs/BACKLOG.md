@@ -1,3 +1,7 @@
+# Story art production priority
+
+Portrait/loading checkpoint implemented; finish complete named world-frame bundles next. Preserve differentiated female silhouettes and natural idle postures; greetings/explanations/flirtation are contextual gestures. Repair and verify true passing steps before activation. See art/STORY_ART_IMPLEMENTATION.md.
+
 # Mountain source merged
 
 PR #75 passed full source validation and merged. Finish verifying Windows release run 41342691069, then continue the public contest/Keldrath milestone. Read great-claim/CHECKPOINT.md; no runtime retesting is needed without a new failure or changed source. The town/home release v0.91.0 is published.

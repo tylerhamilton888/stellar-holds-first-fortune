@@ -11,7 +11,7 @@ static func profile(g,index:int)->Dictionary:
  var p=HoldAppearance.random_profile(g.state.seed_value+7120+index*37,1 if index==2 else 0)
  var parts=MINERS[index-1].split(" ")
  p.first_name=parts[0];p.family_name=parts[1]
- return HoldAppearance.normalized(p)
+ return HoldStoryArt105.tag(HoldAppearance.normalized(p),"lodge_folk:"+str(index))
 
 static func people(g)->Array:
  if g.surface.area!=HoldFrontier103.lodge(g.state):return []
