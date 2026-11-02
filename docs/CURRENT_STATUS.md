@@ -1,3 +1,15 @@
+# Hakon world locomotion — 119
+
+Hakon is the eighth enabled named world character, with four resting views and sixteen walking keys at his existing 62px stature. Copper half-tied hair, substantial ringed beard, slate-blue guard tunic/hood, mail trim, two hip pouches, bracers and matching boots. Whole-frame corrections address repeated footfalls, inconsistent hardware and replacement-pose proportions. Original atlas retained; named cache revision 19 refreshes old frames.
+
+His High Trail patrol, normal first-interaction name, conversation, save/load, inventory and partner rescue remain unchanged. No combat or worker action was invented for the guard. Native anatomy/continuity board and ordered loops reviewed; integration checks are recorded in testing/gait119/acceptance.json. Every Hakon pose now has a tested explicit existing atlas source. Art provenance and exact prompts: art/gait119/README.md. Focused source and exact-export validation each passed 3,412 assertions across nine cases; all 3,635 packed entries verified. No new Windows release; full hosted validation and owner visual feedback remain open.
+
+Delivery branch: fix/hakon-world119, publish against master. Torvik PR #85 and Ketil/arm correction PR #86 passed hosted validation and merged; latest merge 177708f2b15eb852d06df0117803a32e0b8ad859 has base tree 2b9b716160056b55648ef9da5c8fa2d6e05d9918. Verify remote/local tree equality on publication.
+
+Eight named bundles active, 16 unfinished. Next extracted character: Bram, then Sten. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished; the existing Pinewood tutorial/workbench hint overlap remains outside this art pass.
+
+---
+
 # Ketil world animation and arm repair — 118
 
 Ketil is the seventh enabled named world character: twenty walking/resting poses at 62px, with loose honey hair, full square beard, blue shirt and consistent leather equipment. His Greenfields route and saved conversation/rescue identity remain unchanged. Originals remain; named cache revision 18 refreshes old frames.

@@ -1,0 +1,145 @@
+{
+  "source": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 13.19
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 682,
+      "seconds": 15.26
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 314,
+      "seconds": 51.57
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 285,
+      "seconds": 60.49
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 289,
+      "seconds": 52.58
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 290,
+      "seconds": 65.29
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 377,
+      "seconds": 63.43
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 369,
+      "seconds": 57.27
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 489,
+      "seconds": 59.57
+    },
+    {
+      "test": "story_world119",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 317,
+      "seconds": 67.54
+    }
+  ],
+  "visual_review": "Native twenty-pose board and four ordered captures at 2x; 62px samples and live High Trail walk/rest/conversation. Owner feedback remains open.",
+  "release": "No new Windows release",
+  "hosted": "Pending publication",
+  "export": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 682,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 314,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 285,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 289,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 290,
+      "errors": []
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "checks": 377,
+      "errors": []
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "checks": 369,
+      "errors": []
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "checks": 489,
+      "errors": []
+    },
+    {
+      "test": "story_world119",
+      "passed": true,
+      "checks": 317,
+      "errors": []
+    }
+  ],
+  "pack_sha256": "8e83e9b63d733fca67de7392f380618f1d1a4f6e8b30eab92441e88aab851514",
+  "verified_entries": 3635
+}
