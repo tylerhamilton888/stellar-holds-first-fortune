@@ -1,0 +1,34 @@
+{
+  "feature": "Ridge courtship 124",
+  "source_local_commit": "c98b047a035ecd18c24d08cff08a5da42c8ebc0f",
+  "published_head": "01a64dcb1346d130d1add23ad01b492f96af7b4a",
+  "source_tree": "6019b4c43c6236fd07a1d8a9abf6ccfde78d9f58",
+  "source_merge": "fe9d028180c6b80a7096ec2b0e9760e367db11a3",
+  "pull_request": 95,
+  "source_cases": 9,
+  "source_checks": 4027,
+  "export_cases": 8,
+  "export_checks": 3931,
+  "export_integrity": {
+    "entry_count": 3839,
+    "exact_metadata_matches": [
+      "assets/story105/world/alden.json",
+      "assets/story105/world/maren.json",
+      "assets/story105/world/aldenextra.json",
+      "assets/story105/world/marenextra.json"
+    ],
+    "pack_sha256": "42cb74bcae3fd55eb57fcb1521f25f5b2528df50d284923d7a61e0b2949d1cf0",
+    "pack_size": 1039458960
+  },
+  "hosted_run": 41530415605,
+  "hosted_jobs": 5,
+  "hosted_completed_at": "2026-11-02T22:05:13Z",
+  "native_review": [
+    "four ordered keys across front, side, rear-quarter and back views",
+    "resting and drinking poses at native scale",
+    "portraits and both player courtship panels",
+    "shared Hearth routes and coupled dialogue"
+  ],
+  "new_windows_release": false,
+  "owner_visual_feedback": "open"
+}
