@@ -34,6 +34,8 @@ def main():
     cases.append(('story_world117', fixture+'\n'+body, 'STORYWORLD117'))
     body = (ROOT/'tests/story_world118.gd').read_text().split('\n', 1)[1]
     cases.append(('story_world118', fixture+'\n'+body, 'STORYWORLD118'))
+    body = (ROOT/'tests/story_world119.gd').read_text().split('\n', 1)[1]
+    cases.append(('story_world119', fixture+'\n'+body, 'STORYWORLD119'))
     body = (ROOT/'tests/continuity66.gd').read_text().split('\n', 1)[1]
     cases.append(('continuity', fixture+'\n'+body, 'CONTINUITY66'))
     body = (ROOT/'tests/living67.gd').read_text().split('\n', 1)[1]

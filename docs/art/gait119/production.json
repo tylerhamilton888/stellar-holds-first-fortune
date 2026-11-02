@@ -1,0 +1,88 @@
+{
+  "idle": {
+    "source": "exec-af3f791c-14bc-4414-8639-b2f4e311f92f.png",
+    "source_sha256": "7b9233830787810efea99f2d73acacda85a1c059258ed8b8c6cb36f381eade7b",
+    "runtime": "assets/story105/world/hakonidle.webp",
+    "runtime_sha256": "4e018795013184f8eccbc12db48c882952c5e5a5eccde5cc4e8afb1f282cd94b",
+    "selected": "all4"
+  },
+  "front": {
+    "source": "exec-b54e441a-c69a-4157-ab24-e8bd6a0d53f8.png",
+    "source_sha256": "597c58810e60fc36b82e51bcc19cd53bcd2e4ff6883bc371564343f9da16fe87",
+    "runtime": "assets/story105/world/hakonfront.webp",
+    "runtime_sha256": "d5024b25d8192d8aa01c7969407a79413ba6828a549f2b55dd8ec24898b86ae9",
+    "selected": "0,2 contacts"
+  },
+  "frontpass": {
+    "source": "exec-7e0f01b9-eab6-41f1-89f2-1f42fe36666e.png",
+    "source_sha256": "7f22d91bdae866457c8321c3a3f898d42ef8a7ea1efddec81a77bac6398dc1f4",
+    "runtime": "assets/story105/world/hakonfrontpass.webp",
+    "runtime_sha256": "ddb3efe3ec0cc850c64ab8cc6b3d29fee1efb82fd93b6fdc8761b86493f8addc",
+    "selected": "1,3 passing"
+  },
+  "side": {
+    "source": "exec-d0580a9c-2548-4031-8edb-7a73ae1b437b.png",
+    "source_sha256": "7f7cae28b3e50fa34f47dda374d5a91e136c112159fbffa5fd72df482245a789",
+    "runtime": "assets/story105/world/hakonside.webp",
+    "runtime_sha256": "896a9bffe339039836480a6b3a90975b08561ec2bf0e97bfd67986dcbfe81b22",
+    "selected": "0,2 contacts"
+  },
+  "sidepass": {
+    "source": "exec-a32fc7cf-810f-48c1-a005-ce73d9602ae7.png",
+    "source_sha256": "d64ad8a2bcdbe3ac956da9c449227fb2dd0e363b9c9255534eb4f583121ff303",
+    "runtime": "assets/story105/world/hakonsidepass.webp",
+    "runtime_sha256": "578fe61a8b000b70ef7a32deac57eb3c7dcd68fafcf20d3d8cd87a87aa9fe5e9",
+    "selected": "1 only"
+  },
+  "sidecompact": {
+    "source": "exec-edfdb79b-bdf3-4626-947a-b4bb1a9cef09.png",
+    "source_sha256": "bb99755710618b6b2eeb6592f184e2df225ddf003f9e945f64bc0a559833eba1",
+    "runtime": "assets/story105/world/hakonsidecompact.webp",
+    "runtime_sha256": "e49d117b84ea9a552e07f577c2e83b861916f23adbcbf5eca31bf788ec7e2519",
+    "selected": "0 passingB"
+  },
+  "quarter": {
+    "source": "exec-3ff84be1-a740-40ac-b71f-08a1f17e0aec.png",
+    "source_sha256": "11b983d660602c396768049b96b87ae76f9ef95d02c3b7ec0be704c48e8ae64d",
+    "runtime": "assets/story105/world/hakonquarter.webp",
+    "runtime_sha256": "02e969b4a31ebe2081145399f3d02a5978a6ccaca575aba84354536edc21a5a7",
+    "selected": "0,1 only"
+  },
+  "quartercompact": {
+    "source": "exec-e6305486-4c95-43bf-9257-5d5df3c478c4.png",
+    "source_sha256": "69d82afc24377680ef24ff5a1bc7ed00aa2418beb2df6aed30489286a7bf4211",
+    "runtime": "assets/story105/world/hakonquartercompact.webp",
+    "runtime_sha256": "b617743aec323312711a92fefae18b59057a885d09d11bebcc20b87ceae57ed1",
+    "selected": "0,1 opposite half-step"
+  },
+  "backconsistent": {
+    "source": "exec-020c3e90-851c-41c6-bc3f-a9b9c8692fbe.png",
+    "source_sha256": "c9bc77b5a58527de606f27880d47b15c9808f1d8752c7d118984ff469d2341b0",
+    "runtime": "assets/story105/world/hakonbackconsistent.webp",
+    "runtime_sha256": "76003301d3c39d711a0678f3065af921a2bb5f0569e81b0255531a003c73a773",
+    "selected": "all4"
+  },
+  "method": "Built-in image generation; importer extracts complete figures without painting or assembling anatomy.",
+  "rejections": [
+    "Initial front/side passing poses repeated contacts; unselected keys remain provenance only.",
+    "Initial rear-quarter repeated trailing leg; opposite pair replaced.",
+    "Initial back row alternated wrong order and lacked clear passing poses; replaced with pose-referenced whole frames.",
+    "First single side replacement had incorrect boot lacing; later pose replacement inherited square buckles and smile, corrected.",
+    "New back row introduced rear strap buckles; removed.",
+    "Side/rear-quarter replacements read too tall and narrow in native review; compact whole-frame replacements selected."
+  ],
+  "sidepassing": {
+    "source": "exec-7a56a743-2ee0-485e-8aa6-e76f84fd4131.png",
+    "source_sha256": "3102c556455893437588b83762b4c5319b3f8fb7f1161278d15486f6355ac2db",
+    "runtime": "assets/story105/world/hakonsidepassing.webp",
+    "runtime_sha256": "8ac9b5fe77d4d913ee50d691c6214b4831bf73757f481ed56bfd52856e299239",
+    "selected": "NONE; retained intermediate, superseded by compact full paintings"
+  },
+  "quarteropposite": {
+    "source": "exec-264e476e-eb20-4677-81aa-b04edc98a300.png",
+    "source_sha256": "0cf4e5f76c5ef34fcd7a37c243fec4c1b79742d6f0ec3e83042dc1c971ef8f0b",
+    "runtime": "assets/story105/world/hakonquarteropposite.webp",
+    "runtime_sha256": "5d918f532ee29fa01fa7977e62060847c26fd14cf233bad2d47ae11284d36fcf",
+    "selected": "NONE; retained intermediate, superseded by compact full paintings"
+  }
+}
