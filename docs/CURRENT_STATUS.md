@@ -1,3 +1,15 @@
+# Final named cast batch 123 — all 24 complete
+
+Dagr, Odrin, Osvik, Tovan and Kelvar complete the named world cast with 184 whole painted poses. Four-view locomotion/resting covers all five; existing drinking, hammering and directional mining roles have their own complete figures. Yrsa also receives sixteen missing work poses, preserving her earlier 24. Total new poses: 200. Existing stature, identities, gameplay and saves remain unchanged; named cache revision 23 refreshes derived art.
+
+All 7,264 source assertions and 7,239 exact-export assertions passed across eighteen cases each. Export integrity verified all 3,821 entries, and all seventeen affected animation metadata files exactly match source. Native gait/work boards and live tavern, recruitment, role reassignment, mining/workshop, Odrin workplace and save/reload reviewed. Evidence: testing/batch123/acceptance.json and batch-poses.gif. Provenance: art/batch123/README.md. No new Windows release; owner visual feedback remains open.
+
+Source PR #93 publishes fdcd052670dd33a270bed3bf01bf47c80eeb9b1e with exact local source tree c0b9add79004942eda2168072252ad605844c252. All five jobs in hosted run 41519827785 passed by 2026-11-02T20:55:09Z. PR #93 merged as 25206199b22ee4e66dde2374c230b968f18ee0c3; its tree exactly matches the tested source. Preserve prior source, releases and recovery records.
+
+All 24 named world bundles are now active. No named character remains in the unfinished art queue. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished gameplay work. Existing tutorial/hint overlap remains outside this art pass.
+
+---
+
 # Named cast batch 122 — five characters
 
 Ivar, Hedrik, Borin, Eldric and Brann are enabled together with 128 complete poses: four-view locomotion/resting for all five, drinking for Hedrik/Brann, hammering for Borin/Brann, and front/side/back mining for Brann. Corrected Eldric’s sleeve/beard continuity and Brann’s mining grip and two-point pick heads following owner feedback. Complete-figure bounds prevent clipped tools; fixed body calibration preserves scale through raised poses. Borin’s hammer now contacts the anvil on the existing strike beat. Named cache revision 22 refreshes derived frames.
