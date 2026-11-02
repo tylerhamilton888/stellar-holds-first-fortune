@@ -133,7 +133,6 @@
   },
   "known_limits": [
     "No new Windows release",
-    "Full hosted validation pending publication",
     "Unreviewed ten named bundles remain disabled"
   ],
   "pack": [
@@ -204,5 +203,26 @@
       "errors": []
     }
   ],
-  "fixture_corrections": "Initial run used an obstructed south approach to Sten and compared transient worker state before save flushed it. Final fixture selects an accessible approach and compares saved assignments/progress after the flush."
+  "fixture_corrections": "Initial run used an obstructed south approach to Sten and compared transient worker state before save flushed it. Final fixture selects an accessible approach and compares saved assignments/progress after the flush.",
+  "hosted": {
+    "run_id": 41493206856,
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41493206856",
+    "conclusion": "success",
+    "completed_at": "2026-11-02T18:02:46Z",
+    "tested_head": "306698dae730237e2b8a6d38e6aac403829cdf07",
+    "tree": "dedcc11ca241e2d3612e335cc8861a58c6b41023",
+    "jobs": [
+      "gameplay (gameplay-1)",
+      "gameplay (gameplay-2)",
+      "gameplay (gameplay-3)",
+      "gameplay (gameplay-4)",
+      "people-preview"
+    ]
+  },
+  "delivery": {
+    "pull_request": 89,
+    "merged_commit": "63e852fb5efa7015ec261fba1c5a1c13e9baa4a9",
+    "merged_tree_verified": true,
+    "new_windows_release": false
+  }
 }
