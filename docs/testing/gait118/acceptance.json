@@ -1,0 +1,132 @@
+{
+  "source": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.16
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 691,
+      "seconds": 13.47
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 315,
+      "seconds": 51.47
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 286,
+      "seconds": 51.47
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 290,
+      "seconds": 53.49
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 291,
+      "seconds": 55.49
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 377,
+      "seconds": 53.43
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 370,
+      "seconds": 58.52
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 490,
+      "seconds": 58.07
+    }
+  ],
+  "source_note": "Full eight-case source pass followed by final Torvik/Ketil rerun after arm-source repair.",
+  "visual_review": "Native boards, four ordered walk captures and Greenfields conversation/route. Owner acceptance remains open.",
+  "hosted": "Pending new branch; Torvik parent run 41454186041 succeeded but does not validate the new correction.",
+  "release": "No Windows release",
+  "export": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 691,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 315,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 286,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 290,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 291,
+      "errors": []
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "checks": 377,
+      "errors": []
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "checks": 370,
+      "errors": []
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "checks": 490,
+      "errors": []
+    }
+  ],
+  "pack_sha256": "2cf2ffc6f5866a79ecc09888ec15bef92c46b7baf1ed086850c7cc5bc476dc12",
+  "verified_entries": 3602
+}
