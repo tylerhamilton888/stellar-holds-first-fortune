@@ -1,3 +1,9 @@
+# Brynja world animation (gait112)
+
+Added Brynja's twenty whole resting/walking poses at 58px with alternating feet, corrected opposite contacts and compact proportions. Enabled only her current walking/resting behavior; route, save, inventory and rescue identity are preserved. Added route/save/rescue/stature checks and exported coverage; native 1,846 and exact-pack 1,630 assertions passed. Fresh review caches and named runtime cache revision 12 prevent stale art. No new Windows release. Ragnhild PR #79 passed its full hosted gate and merged.
+
+---
+
 # Unreleased — Ragnhild world animation
 
 - Enabled Ragnhild's twenty whole resting/walking poses across four directions, with distinct near/far footfalls and corrected front passing support. Preserved her own athletic silhouette and crown braid.

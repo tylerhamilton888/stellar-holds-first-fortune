@@ -1,0 +1,145 @@
+{
+  "tool": "built-in image_gen",
+  "whole_frame_only": true,
+  "records": [
+    {
+      "purpose": "front",
+      "prompt": "Use case: precise-object-edit. Image 1 is a four-pose MOVEMENT TEMPLATE ONLY; image 2 defines BRYNJA's identity. Redraw FOUR complete Brynja figures in exactly the four different poses of image 1, front-facing walking toward viewer. Keep anatomical left/right legs distinct: opposite contact steps in poses 1/3 and opposite planted legs in passing poses 2/4. Preserve movement and opposing arm swing, but replace all character identity with Brynja: very short compact adult female dwarf, square shoulders, strong arms, pretty expressive adult face, flaxen blonde long braid over shoulder, ochre sleeveless shirt, charcoal leather work overalls/apron with brass buckles, brown wrist bracers, sturdy short brown boots. Match reference 2 body shape and clothes exactly. Equal head/body size across all four figures, normalize template size differences. Whole painted figures, no assembled limbs. Four evenly spaced columns in ONE ROW with generous transparent margins, clean genuine alpha, no ground, text or glow. Straight natural leg tracks, no outward knees or twisted hips.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-e3b4c791-6420-4d2e-b3c2-53d5690dcf2d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Contact keys 0 and 2 retained; passing keys replaced"
+    },
+    {
+      "purpose": "side",
+      "prompt": "Use case: precise-object-edit. Image 1 is a four-pose MOVEMENT TEMPLATE ONLY; image 2 defines BRYNJA's identity. Redraw FOUR complete Brynja figures in exactly the four different poses of image 1, right-facing side profile walking to the right. Keep anatomical left/right legs distinct: opposite contact steps in poses 1/3 and opposite planted legs in passing poses 2/4. Preserve movement and opposing arm swing, but replace all character identity with Brynja: very short compact adult female dwarf, square shoulders, strong arms, pretty expressive adult face, flaxen blonde long braid over shoulder, ochre sleeveless shirt, charcoal leather work overalls/apron with brass buckles, brown wrist bracers, sturdy short brown boots. Match reference 2 body shape and clothes exactly. Equal head/body size across all four figures, normalize template size differences. Whole painted figures, no assembled limbs. Four evenly spaced columns in ONE ROW with generous transparent margins, clean genuine alpha, no ground, text or glow. Straight natural leg tracks, no outward knees or twisted hips.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-8aa106f5-30c9-4f4b-9d3d-0c09dfb0158c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Keys 0,1,3 retained; opposite contact key 2 replaced"
+    },
+    {
+      "purpose": "quarter",
+      "prompt": "Use case: precise-object-edit. Image 1 is a four-pose MOVEMENT TEMPLATE ONLY; image 2 defines BRYNJA's identity. Redraw FOUR complete Brynja figures in exactly the four different poses of image 1, rear-right three-quarter walking AWAY toward the upper right. ALL four torsos and legs face the same upper-right direction, never straight back. Near and far legs have correct depth and all toes point upper-right. Keep anatomical left/right legs distinct: opposite contact steps in poses 1/3 and opposite planted legs in passing poses 2/4. Preserve movement and opposing arm swing, but replace all character identity with Brynja: very short compact adult female dwarf, square shoulders, strong arms, pretty expressive adult face, flaxen blonde long braid over shoulder, ochre sleeveless shirt, charcoal leather work overalls/apron with brass buckles, brown wrist bracers, sturdy short brown boots. Match reference 2 body shape and clothes exactly. Equal head/body size across all four figures, normalize template size differences. Whole painted figures, no assembled limbs. Four evenly spaced columns in ONE ROW with generous transparent margins, clean genuine alpha, no ground, text or glow. Straight natural leg tracks, no outward knees or twisted hips.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-82f033fb-51b4-4269-8181-e0071d29dcb2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Keys 1,2,3 retained; opposite contact key 0 replaced"
+    },
+    {
+      "purpose": "back",
+      "prompt": "Use case: precise-object-edit. Image 1 is a four-pose MOVEMENT TEMPLATE ONLY; image 2 defines BRYNJA's identity. Redraw FOUR complete Brynja figures in exactly the four different poses of image 1, straight back view walking directly away. Keep parallel vertical lower legs, narrow natural foot tracks, soles square to camera and opposite heels lifted. Keep anatomical left/right legs distinct: opposite contact steps in poses 1/3 and opposite planted legs in passing poses 2/4. Preserve movement and opposing arm swing, but replace all character identity with Brynja: very short compact adult female dwarf, square shoulders, strong arms, pretty expressive adult face, flaxen blonde long braid over shoulder, ochre sleeveless shirt, charcoal leather work overalls/apron with brass buckles, brown wrist bracers, sturdy short brown boots. Match reference 2 body shape and clothes exactly. Equal head/body size across all four figures, normalize template size differences. Whole painted figures, no assembled limbs. Four evenly spaced columns in ONE ROW with generous transparent margins, clean genuine alpha, no ground, text or glow. Straight natural leg tracks, no outward knees or twisted hips.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-e2032c50-c42d-4da0-8388-3a7de05dc66e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "All four keys retained"
+    },
+    {
+      "purpose": "front passing pair",
+      "prompt": "Use case: precise-object-edit. Make TWO complete front-facing walk PASSING poses of Brynja, side by side on transparent background. Image1 is exact left figure movement template: planted boot on image LEFT, other heel raised behind on image RIGHT. Image2 is exact right figure movement template: planted boot on image RIGHT, other heel raised behind on image LEFT. Image3 is Brynja identity. Replace BOTH template characters with compact square-shouldered adult female dwarf Brynja: flaxen single long braid, ochre shirt, charcoal leather overalls apron brass buckles, brown bracers and short brown boots, pretty adult face. Same equal proportions across two figures. Both are upright passing poses with knees close and ONE boot planted under hip, other heel lifted behind, no extended forward sole/contact stride. Copy template leg anatomy and foot placement exactly, but retain Brynja's short compact body. TWO evenly spaced columns ONE row. Whole paintings, no text, transparent background.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-af6df8e8-34f2-4759-a64b-d1048006f57b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Rejected mirrored identity and changed boots/background"
+    },
+    {
+      "purpose": "SideFix",
+      "prompt": "Use case: precise-object-edit. Image1 supplies the exact full-body side-profile contact stride POSE. Image2 supplies Brynja IDENTITY. Draw ONE full Brynja in image1's precise pose facing right, with NEAR arm swung FORWARD to the right and NEAR leg trailing BACK to the left (near leg visibly overlaps the far leg at hip). Far leg steps forward to the right, far arm back. Copy all joints and limb occlusion of image1. Brynja is short, compact square-shouldered adult female dwarf with flaxen long braid, ochre sleeveless shirt, charcoal leather work overalls/apron, brass buckles, brown bracers, short brown boots, pretty adult face. Preserve image2 body proportions and clothes. Whole painted figure, clean true transparent background, generous margin, no labels.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-39c65346-fb8b-4a5e-b023-9ca8b5624989.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Intermediate: correct movement, later proportion correction replaces it"
+    },
+    {
+      "purpose": "Left",
+      "prompt": "Use case: precise-object-edit. Edit this SINGLE whole Brynja sprite into a front-facing PASSING walk pose. Preserve exact face, head, torso, costume, single braid on IMAGE LEFT, pouch on IMAGE LEFT, brown boots and compact dwarf proportions. Only change leg/arm pose: LEFT HALF OF IMAGE boot planted flat directly under left hip; RIGHT HALF OF IMAGE heel lifted behind, knee slightly bent. No forward-extended sole. Legs close together vertical and uncrossed. Relax both arms near her sides. Whole complete painted figure, genuine transparent background, no glow or shadows or text. Keep original short boots with small brass fastening, do not add long shin boots.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-217e7998-c449-4240-a310-d7b35c421530.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Accepted image-left planted passing"
+    },
+    {
+      "purpose": "Right",
+      "prompt": "Use case: precise-object-edit. Edit this SINGLE whole Brynja sprite into a front-facing PASSING walk pose. Preserve exact face, head, torso, costume, single braid on IMAGE LEFT, pouch on IMAGE LEFT, brown boots and compact dwarf proportions. Only change leg/arm pose: RIGHT HALF OF IMAGE boot planted flat directly under right hip; LEFT HALF OF IMAGE heel lifted behind, knee slightly bent. No forward-extended sole. Legs close together vertical and uncrossed. Relax both arms near her sides. Whole complete painted figure, genuine transparent background, no glow or shadows or text. Keep original short boots with small brass fastening, do not add long shin boots.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-488dffd5-6b49-4deb-9179-5522fb3ddc02.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Rejected: repeated image-left planted pose"
+    },
+    {
+      "purpose": "QuarterFix",
+      "prompt": "Use case: precise-object-edit. Edit this single complete Brynja rear-right three-quarter walking figure to the OPPOSITE CONTACT STEP. Keep exact head, braid, proportions, costume and upper-right facing direction. The NEAR leg (attached to the image-right hip) must step FORWARD toward upper-right, overlapping and partly hiding the far thigh. Its toe points right/away. The FAR leg (attached to image-left hip) trails behind toward lower-left with its sole showing, visibly behind the near thigh. Swing NEAR right-side arm BACK/down toward lower-left, far arm forward. This reverses the current near-leg-back/near-arm-forward pose. Both hips and feet follow torso toward upper-right, no twisting lower half to face left. Short sturdy dwarf legs, whole painted figure, genuine transparent background with margins, no text.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-c3d99d36-2738-46ac-ab3d-3132c1a8f421.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Rejected: retained same contact and arm pose"
+    },
+    {
+      "purpose": "Diagnostic",
+      "prompt": "Use case: precise-object-edit. Draw this exact Brynja in one front view passing-walk pose. DIAGNOSTIC BOOT COLORS: on the RIGHT HALF OF THE IMAGE, a RED boot is planted flat directly below the right-side hip. On the LEFT HALF OF THE IMAGE, a BLUE boot is LIFTED behind with knee bent, toe off ground. RIGHT=RED=PLANTED. LEFT=BLUE=LIFTED. Must reverse current pose, not merely color existing boots. Keep whole short compact female dwarf, same torso/head/face/hair and outfit; single braid and pouch stay image LEFT. Relaxed hands. No extended stride, no crossed knees. Full figure transparent background, no text. Preserve original short leg proportions.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-8abbd9ae-ebe2-4b66-b106-8ab2ea63754c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Diagnostic only: correct opposite planted foot"
+    },
+    {
+      "purpose": "Cleanup",
+      "prompt": "Use case: precise-object-edit. Keep this EXACT complete figure and pose. Change ONLY the RED and BLUE boot leather to the SAME natural medium BROWN leather as her belt pouch, retaining brass fastenings. RIGHT image boot remains planted flat, LEFT image boot remains lifted behind; do not swap or move either leg. Keep face, braid on image left, pouch on image left, arms, body proportions and outfit unchanged. Short compact dwarf, whole painting on genuine transparent background, no glow, text or ground shadow.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-9a74f76c-2c81-4e3e-a724-2805490f42e6.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Accepted: brown leather restored, image-right planted"
+    },
+    {
+      "purpose": "QuarterTemplate",
+      "prompt": "Use case: precise-object-edit. Image1 is the EXACT POSE to copy; image2 is Brynja's identity and clothes. Replace Dagna in image1 with Brynja while preserving image1's full pose EXACTLY, especially NEAR ARM DOWN AND BACK with fist beside hip, and far arm forward. Preserve image1's limb occlusion and exact leg positions, head direction, rear-right-quarter camera. Do not use the arm pose from image2. Brynja: short compact square-shouldered adult female dwarf, blonde single long braid, ochre sleeveless shirt, dark charcoal work overalls apron and leather belt pouch, brown bracers, short brown boots. Whole painted figure, true transparent background, no text, no cropping. Match compact reference2 proportions while copying reference1 movement.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-5639aa03-e28d-4806-8df4-063f969daa13.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Intermediate: correct arm swing, costume continuity requires correction"
+    },
+    {
+      "purpose": "QuarterCleanup",
+      "prompt": "Use case: precise-object-edit. Edit Image1, preserving EXACT limb pose and camera angle, especially near arm down/back and far leg trailing. Correct only hair and costume continuity to match image2: one thick blonde braid hanging DOWN along the spine (not flying sideways); ochre shirt with crossed dark work-overall straps on the BACK; NO chest bib visible on her back, no belt buckle visible on back. Brown tool pouch is on the IMAGE RIGHT hip as in image2, not left. Match image2's compact silhouette, same short boots, exact image1 limb positions. Whole complete Brynja sprite, genuine transparent background. No text, no new accessories. Image2 is costume reference only, do not copy its limb pose.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-f7017b48-a478-4bdf-af1e-5cdc38e98352.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Intermediate: costume restored but near arm still forward"
+    },
+    {
+      "purpose": "Arm",
+      "prompt": "Use case: precise-object-edit. Change ONLY the arm on the RIGHT side of this image. Lower that entire near arm so it hangs down and slightly BACK toward the bottom-left, with its fist BELOW the belt pouch at thigh level. The right-side elbow must be straight-ish and the fist visible beside the thigh, NOT projected forward to the right. The far arm on the left should be partly hidden forward behind the torso. Keep legs, boots, head, braid, torso, costume, body scale and camera angle exactly unchanged. Whole figure with genuine transparent background. This is a targeted ARM SWING correction only; no new pose or outfit design.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-b70c6956-7cfd-4e5a-821d-2f3e2ea19583.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Intermediate: correct movement, later proportion correction replaces it"
+    },
+    {
+      "purpose": "SideCompact",
+      "prompt": "Use case: precise-object-edit. Correct the PROPORTIONS of image1's complete Brynja sprite to match image2's very short squat compact dwarf silhouette. Preserve EXACT image1 pose: near arm forward and near leg backward, facing right. Make her torso and shoulders broader, HEAD LARGER, and legs/boots SHORTER so her head is about one third total height and her belt sits around 60 percent down from crown. Do not make her slim or tall. Match image2 head, torso, arms, boot size and squat adult build. Keep flaxen braid, ochre shirt, charcoal apron/overalls, bracers and brown boots. ONE complete figure; transparent background; no text. Reference2 is identity/proportion guide only, keep image1 limb pose.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-96c616ea-aeb4-4748-a866-8dd5f860ea75.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Intermediate: compact proportions restored; arm swing corrected next"
+    },
+    {
+      "purpose": "QuarterCompact",
+      "prompt": "Use case: precise-object-edit. Correct the PROPORTIONS of image1's complete Brynja sprite to match image2's very short squat compact dwarf silhouette. Preserve EXACT image1 pose: near arm lowered beside hip and far leg backward, rear-right-quarter facing upper right. Make her torso and shoulders broader, HEAD LARGER, and legs/boots SHORTER so her head is about one third total height and her belt sits around 60 percent down from crown. Do not make her slim or tall. Match image2 head, torso, arms, boot size and squat adult build. Keep flaxen braid down spine, ochre shirt, crossed charcoal overall straps on back, pouch image-right, bracers and brown boots. ONE complete figure; transparent background; no text. Reference2 is proportion guide only, keep image1 limb pose.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-abf98820-5de8-451d-a3c9-710ce8ecb992.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Accepted final compact opposite rear-quarter contact"
+    },
+    {
+      "purpose": "SideArm",
+      "prompt": "Use case: precise-object-edit. Fix ONLY arm swing in this complete Brynja right-facing walking sprite. The NEAR arm originates at the LARGE shoulder on the LEFT half of the image. Move that arm FORWARD across the chest toward the RIGHT edge, elbow slightly bent, fist in front of belly pointing RIGHT. Hide the far/right shoulder arm behind her torso, swung back. Near left-side shoulder -> forearm across body -> fist at right. Preserve exact head, hair, compact torso and ALL leg/boot positions and costume. No proportion changes. Full figure genuine transparent background. This is opposite arm swing, not the current near-arm-back pose.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-d945b2a7-47e9-4635-933e-069de2df7a3f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "decision": "Accepted final compact opposite side contact"
+    }
+  ],
+  "runtime_mapping": {
+    "0": "res://assets/story105/world/brynja.webp",
+    "1": "res://assets/story105/world/brynja.webp",
+    "2": "res://assets/story105/world/brynja.webp",
+    "3": "res://assets/story105/world/brynja.webp",
+    "4": "res://assets/story105/world/brynjafront.webp",
+    "5": "res://assets/story105/world/brynjapassleft.webp",
+    "6": "res://assets/story105/world/brynjafront.webp",
+    "7": "res://assets/story105/world/brynjapassright.webp",
+    "8": "res://assets/story105/world/brynjaside.webp",
+    "9": "res://assets/story105/world/brynjaside.webp",
+    "10": "res://assets/story105/world/brynjasideopposite.webp",
+    "11": "res://assets/story105/world/brynjaside.webp",
+    "12": "res://assets/story105/world/brynjaquarteropposite.webp",
+    "13": "res://assets/story105/world/brynjaquarter.webp",
+    "14": "res://assets/story105/world/brynjaquarter.webp",
+    "15": "res://assets/story105/world/brynjaquarter.webp",
+    "16": "res://assets/story105/world/brynjaback.webp",
+    "17": "res://assets/story105/world/brynjaback.webp",
+    "18": "res://assets/story105/world/brynjaback.webp",
+    "19": "res://assets/story105/world/brynjaback.webp"
+  },
+  "lossless_atlas_sha256": {
+    "brynjaquarteropposite.webp": "699b741a12fd44b7ac58a70763559a5b4669e9e712bd600c9c73291cd9b12856",
+    "brynjaback.webp": "ce847005c1ce8d63049e745057d78a146b34db54212205c1f73d60eafd1fa04d",
+    "brynjafront.webp": "48c44e84e30d961badfbb00557210c99a016702c13229251d83a14221169d4e6",
+    "brynjapassright.webp": "12074eeef9d12c54776074b6068a3b2c736e6c355a6b219eb7fe9aa73b91efa9",
+    "brynjapassleft.webp": "53d09225e402ae5062714599b76609904786ef4f0fcce404876a85e116ecdbb2",
+    "brynjaquarter.webp": "3451dbf76aed35f56e6e1ce302fdf3ce9e0b91014c3a9544de1c8d15db123f03",
+    "brynja.webp": "2ebd92516addd7648fcd883ba908bea6b184d30f04fe3d210ff7b88996d19398",
+    "brynjasideopposite.webp": "4889bd958c97d61d9fb4d2967f6abfe2c8d1b9e3b63d4aee06e6d07782968430",
+    "brynjaside.webp": "7952e3841e1b32016a5de688a781e7cb6f5fe2b5b33826a0a6b76b5d3c8be6fc"
+  },
+  "notes": [
+    "Each whole-frame replacement is reviewed with a fresh native cache. The named runtime cache revision advances from 11 to 12.",
+    "Front passing and opposite contact poses required targeted corrections; intermediate sources are not production approvals."
+  ]
+}

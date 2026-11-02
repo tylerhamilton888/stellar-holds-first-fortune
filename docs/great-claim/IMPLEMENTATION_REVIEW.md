@@ -6,7 +6,7 @@ Compared against the complete [owner directive](OWNER_DIRECTIVE.md), not merely 
 
 - **Published:** v0.92.0, the frontier rescue/ancestry chapter. Release assets were confirmed during this recovery; this was not an independent Windows playtest.
 - **Merged after that release:** PR #77, 24 bespoke named dialogue portraits, Eirik's existing portrait and four illustrated loading scenes. Full hosted validation passed. No newer Windows executable has been delivered in this recovery.
-- **Local update after this audit:** Dagna’s complete 24-frame world bundle is now implemented and verified in native and focused exported-pack checks. Ragnhild has subsequently received a complete 20-pose walking/resting bundle with route/save/rescue checks; 22 named world characters remain unfinished and eight other extracted candidates remain disabled. See ../art/gait111/README.md. No new Windows release is claimed.
+- **Local update after this audit:** Dagna’s complete 24-frame world bundle is now implemented and verified in native and focused exported-pack checks. Ragnhild has subsequently received a complete 20-pose walking/resting bundle with route/save/rescue checks. See ../art/gait111/README.md. Brynja now also has a twenty-pose walking/resting bundle; 21 named world characters remain unfinished and seven other extracted candidates remain disabled; see ../art/gait112/README.md for its scope and validation. No new Windows release is claimed.
 
 ## Requirement coverage
 
