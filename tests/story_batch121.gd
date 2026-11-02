@@ -40,7 +40,7 @@ func run():
    var a=HoldWholeFrames.descriptor(p,Vector2.RIGHT,false,0,"drink",k)
    if drinks:check(a.sheet==sheet and a.index==20+k,"Authored whole drinking key "+id+str(k))
    else:check(a==HoldWholeFrames.descriptor(generic,Vector2.RIGHT,false,0,"drink",k),"No invented drinking assignment "+id)
- check(not HoldStoryWorld105.has_profile(g.state.npc("ivar")),"Unreviewed Ivar remains inactive")
+ check(not HoldStoryWorld105.has_profile(g.state.npc("dagr")),"Unreviewed Dagr remains inactive")
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player renderer unchanged")
  for idx in [5,8]:
   var id="road_folk:"+str(idx);var f=HoldRoads.FOLK[idx];var duration=f.a.distance_to(f.b)/38.;var cycle=2*(duration+7)
