@@ -6,13 +6,14 @@ const CAST=[
  "dagna","ragnhild","brynja","orla","edda","sigrid",
  "yrsa","ivar","skarrin","rurik","torvik","ketil",
  "hakon","hedrik","borin","eldric","bram","sten",
- "brann","dagr","odrin","osvik","tovan","kelvar"]
-const ROAD=["bram","dagna","torvik","ragnhild","ketil","sten","brynja","hakon","skarrin","edda"]
+ "brann","dagr","odrin","osvik","tovan","kelvar","alden","maren"]
+const ROAD=["bram","dagna","torvik","ragnhild","ketil","sten","brynja","hakon","skarrin","edda","alden","maren"]
 const SHEETS=[
  preload("res://assets/story105/portraits-0.webp"),
  preload("res://assets/story105/portraits-1.webp"),
  preload("res://assets/story105/portraits-2.webp"),
  preload("res://assets/story105/portraits-3.webp")]
+const EXTRA_PORTRAITS={"alden":preload("res://assets/story124/alden-portrait.webp"),"maren":preload("res://assets/story124/maren-portrait.webp")}
 static var portraits:Dictionary={}
 static func resolve(id:String)->String:
  if id.begins_with("road_folk:"):
@@ -32,6 +33,7 @@ static func has_portrait(p:Dictionary)->bool:
  return str(p.get("cast_id","")) in CAST
 static func texture(p:Dictionary)->Texture2D:
  var id=str(p.get("cast_id",""));var index=CAST.find(id)
+ if EXTRA_PORTRAITS.has(id):return EXTRA_PORTRAITS[id]
  if index<0:return null
  if not portraits.has(id):
   var atlas=AtlasTexture.new();atlas.atlas=SHEETS[int(index/6)]

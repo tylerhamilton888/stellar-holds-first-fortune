@@ -67,6 +67,7 @@ static func meet(g,id:String):
   normalize_persona(persona)
   all[id]={"persona":persona,"bond":0,"chat_day":-1,"gift_day":-1,"work_day":-1,"known":false,"last":"We have just met."}
   HoldRoadCharacters.upgrade_record(id,all[id])
+ HoldRidgePair124.meet(s,id)
  g.save_game()
 static func level(d:Dictionary)->String:
  return "Trusted friend" if int(d.bond)>=12 else "Familiar face" if int(d.bond)>=5 else "Acquaintance"
@@ -154,7 +155,9 @@ static func notebook(g):
  for id in all:
   var d=all[id]
   g.label(g.panel_body,g.state.npc(id).name+" · "+level(d),17)
-  if HoldRoadCharacters.CAST.has(id):g.label(g.panel_body,HoldRoadCharacters.whereabouts(id),14,Color("a7c7c6"))
+  if HoldRoadCharacters.CAST.has(id):g.label(g.panel_body,HoldRoadCharacters.whereabouts(id,g.state),14,Color("a7c7c6"))
+  var shared=HoldRidgePair124.summary(g.state,id)
+  if shared!="":g.label(g.panel_body,shared,14)
   g.label(g.panel_body,d.persona.trait+". "+d.last,14)
   if d.known:g.label(g.panel_body,"Enjoys "+HoldData.ITEMS[d.persona.like].name.to_lower()+"; dislikes "+HoldData.ITEMS[d.persona.dislike].name.to_lower()+".",14)
   if HoldConversation.local(g,id):g.button(g.panel_body,"Talk to "+g.state.npc(id).first_name,func():HoldConversation.start(g,id))

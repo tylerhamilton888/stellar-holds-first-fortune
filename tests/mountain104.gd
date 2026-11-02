@@ -91,5 +91,12 @@ func run():
  g.surface.enter("trail");g.surface.action("mine");settle();HoldMountain104.setup(g)
  check("road_folk:1" in q.victims,"Current partner joins named rescue cast")
  check(q.crew[2].profile==g.state.npc_appearances["road_folk:1"],"Partner portrait and world identity preserved")
+ for id in ["road_folk:10","road_folk:11"]:
+  HoldCourtship101.record(g.state,"road_folk:1").stage=0
+  HoldCourtship101.record(g.state,"road_folk:10").stage=0
+  HoldCourtship101.record(g.state,id).stage=1
+  q.erase("victims");HoldMountain104.setup(g)
+  check(id in q.victims,"New ridge partner joins rescue cast "+id)
+  check(q.crew[2].profile.cast_id==HoldStoryArt105.resolve(id),"New partner retains bespoke world and portrait identity "+id)
  print("MOUNTAIN104: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)

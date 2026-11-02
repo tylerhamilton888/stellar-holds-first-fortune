@@ -117,6 +117,8 @@ def main():
     cases.append(('frontier103', fixture+'\n'+body, 'FRONTIER103'))
     body = (ROOT/'tests/greatclaim102.gd').read_text().split('\n', 1)[1]
     cases.append(('greatclaim102', fixture+'\n'+body, 'GREATCLAIM102'))
+    body = (ROOT/'tests/ridge124.gd').read_text().split('\n', 1)[1]
+    cases.append(('ridge124', fixture+'\n'+body, 'RIDGE124'))
     body = (ROOT/'tests/courtship101.gd').read_text().split('\n', 1)[1]
     cases.append(('courtship101', fixture+'\n'+body, 'COURTSHIP101'))
     if a.selected_cases:

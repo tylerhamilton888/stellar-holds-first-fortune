@@ -18,7 +18,8 @@
       "story_world120",
       "story_batch121",
       "story_batch122",
-      "story_batch123"
+      "story_batch123",
+      "ridge124"
     ],
     "gameplay": [
       "loading",
@@ -81,7 +82,8 @@
       "story_world120",
       "story_batch121",
       "story_batch122",
-      "story_batch123"
+      "story_batch123",
+      "ridge124"
     ],
     "modular": [
       "modular",
@@ -488,7 +490,8 @@
       "story_world120",
       "story_batch121",
       "story_batch122",
-      "story_batch123"
+      "story_batch123",
+      "ridge124"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -750,6 +753,20 @@
       "mountain104",
       "story_batch123",
       "workplace98"
+    ],
+    "ridge124_focus": [
+      "ridge124"
+    ],
+    "ridge124": [
+      "ridge124",
+      "courtship101",
+      "people",
+      "calendar",
+      "roads",
+      "mountain104",
+      "story_art105",
+      "story_world105",
+      "story_batch123"
     ]
   },
   "cases": {
@@ -1000,6 +1017,10 @@
     "story_batch123": {
       "script": "tests/story_batch123.gd",
       "marker": "STORYBATCH123"
+    },
+    "ridge124": {
+      "script": "tests/ridge124.gd",
+      "marker": "RIDGE124"
     }
   }
 }

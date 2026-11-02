@@ -40,6 +40,7 @@ static func advance(s,minutes:float):
  var d=data(s);var before=int(d.day);var total=float(d.minute)+minutes
  d.day=before+int(floor(total/1440));d.minute=fposmod(total,1440)
  record_events(s,before,int(d.day))
+ if int(d.day)!=before:HoldRidgePair124.advance(s)
 static func tick(g,dt:float):
  var before=int(data(g.state).day);advance(g.state,maxf(0,dt)*MINUTES_PER_SECOND)
  if data(g.state).day!=before:
