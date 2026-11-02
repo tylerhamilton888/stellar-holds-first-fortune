@@ -396,6 +396,7 @@ static func begin(g,id:String)->bool:
  var d=record(g.state,id)
  if d.quest!=3 or d.stage!=0 or bond(g.state,id)<5 or d.ended==day(g.state):return false
  d.stage=1;d.began=day(g.state);d.dates=[];d.last_date=day(g.state)
+ HoldRidgePair124.advance(g.state)
  g.save_game();return true
 static func date_ready(s,id:String)->bool:
  var d=record(s,id)

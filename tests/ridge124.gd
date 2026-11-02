@@ -1,7 +1,8 @@
 extends "res://tests/support/game_fixture.gd"
 const IDS=["road_folk:10","road_folk:11"]
 func visit(id:String):
- var area="room:wayfarer" if id==IDS[1] or HoldRidgePair124.paired(g.state) else "pinewood"
+ var area=HoldRoads.FOLK[int(id.trim_prefix("road_folk:"))].area
+ if id==IDS[0] and HoldRidgePair124.paired(g.state):area="room:wayfarer"
  g.surface.enter(area);settle()
  for actor in g.surface.roads.people(area):
   if actor.interaction==id:at(actor.p+Vector2(0,22));break
@@ -93,7 +94,10 @@ func run():
  check(HoldRidgePair124.data(g.state).stage==3 and HoldRidgePair124.data(g.state).events.size()==3,"Large time skip advances each shared event exactly once")
  check(inventory==g.state.inventory,"NPC relationship never spends player possessions")
  reset_story();meet_both();visit(IDS[1]);g.state.appearance.gender=0;HoldRidgePair124.express_interest(g,IDS[1])
- HoldCourtship101.record(g.state,"road_folk:1").stage=1;HoldCalendar.advance(g.state,1440*84)
+ visit("road_folk:1");HoldCourtship101.record(g.state,"road_folk:1").quest=3;HoldPeople.records(g.state)["road_folk:1"].bond=12
+ check(HoldCourtship101.begin(g,"road_folk:1") and HoldRidgePair124.data(g.state).interest=="","Choosing somebody else releases early interest immediately")
+ check(HoldCourtship101.end(g,"road_folk:1"),"Same-day change of mind cannot restore an old reservation")
+ HoldCalendar.advance(g.state,1440*84)
  check(HoldRidgePair124.data(g.state).interest=="" and HoldRidgePair124.paired(g.state),"Choosing somebody else releases early interest")
  print("RIDGE124: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
