@@ -54,7 +54,7 @@
   "source_tree": "e885241515368cf355dcdb537f562717cc5d8cfa",
   "pull_request": 91,
   "hosted_run": 41508202259,
-  "hosted_status": "in_progress",
+  "hosted_status": "success",
   "visual_review": [
     "All four ordered gait keys and resting identity continuity reviewed beside each character.",
     "Brann overhead wrists and hand spacing corrected following owner feedback.",
@@ -71,5 +71,8 @@
     "Existing tutorial/hint overlap is outside this art pass."
   ],
   "additional_character_regression": "passed",
-  "count_difference": "The native ambient harness has 36 assertions; the standalone exported ambient harness has 11. All other corresponding case counts match."
+  "count_difference": "The native ambient harness has 36 assertions; the standalone exported ambient harness has 11. All other corresponding case counts match.",
+  "hosted_completed_at": "2026-11-02T19:42:38Z",
+  "source_merge_commit": "769ebd1c2ccbfbec03b5418939f4e81c9e94bb91",
+  "merged_source_tree_verified": true
 }
