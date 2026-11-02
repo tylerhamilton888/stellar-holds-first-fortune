@@ -4,7 +4,7 @@ Dagr, Odrin, Osvik, Tovan and Kelvar complete the named world cast with 184 whol
 
 All 7,264 source assertions and 7,239 exact-export assertions passed across eighteen cases each. Export integrity verified all 3,821 entries, and all seventeen affected animation metadata files exactly match source. Native gait/work boards and live tavern, recruitment, role reassignment, mining/workshop, Odrin workplace and save/reload reviewed. Evidence: testing/batch123/acceptance.json and batch-poses.gif. Provenance: art/batch123/README.md. No new Windows release; owner visual feedback remains open.
 
-Source PR #93 publishes fdcd052670dd33a270bed3bf01bf47c80eeb9b1e with exact local source tree c0b9add79004942eda2168072252ad605844c252. Hosted run 41519827785 remains pending; do not merge until all five jobs pass. Preserve prior source, releases and recovery records.
+Source PR #93 publishes fdcd052670dd33a270bed3bf01bf47c80eeb9b1e with exact local source tree c0b9add79004942eda2168072252ad605844c252. All five jobs in hosted run 41519827785 passed by 2026-11-02T20:55:09Z. PR #93 merged as 25206199b22ee4e66dde2374c230b968f18ee0c3; its tree exactly matches the tested source. Preserve prior source, releases and recovery records.
 
 All 24 named world bundles are now active. No named character remains in the unfinished art queue. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished gameplay work. Existing tutorial/hint overlap remains outside this art pass.
 

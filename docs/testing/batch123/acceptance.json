@@ -5,7 +5,7 @@
   "source_tree": "c0b9add79004942eda2168072252ad605844c252",
   "pull_request": 93,
   "hosted_run": 41519827785,
-  "status": "Local source and exact-export validation passed; hosted validation pending",
+  "status": "Merged after native, exact-export and full hosted validation passed",
   "characters": [
     "dagr",
     "odrin",
@@ -143,5 +143,46 @@
     "No new Windows release.",
     "Software-rendered native checks do not establish player-device performance or audible quality."
   ],
-  "hosted_status": "pending"
+  "hosted_status": "success",
+  "hosted_completed_at": "2026-11-02T20:55:09Z",
+  "hosted_jobs": [
+    {
+      "id": 125532673031,
+      "name": "people-preview",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-11-02T20:39:56Z"
+    },
+    {
+      "id": 125532673202,
+      "name": "gameplay (gameplay-2)",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-11-02T20:53:13Z"
+    },
+    {
+      "id": 125532673380,
+      "name": "gameplay (gameplay-3)",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-11-02T20:54:52Z"
+    },
+    {
+      "id": 125532673451,
+      "name": "gameplay (gameplay-4)",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-11-02T20:55:09Z"
+    },
+    {
+      "id": 125532673697,
+      "name": "gameplay (gameplay-1)",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-11-02T20:49:13Z"
+    }
+  ],
+  "merge_commit": "25206199b22ee4e66dde2374c230b968f18ee0c3",
+  "merge_tree_matches_tested_source": true,
+  "yrsa_original_24_frames_preserved": true
 }

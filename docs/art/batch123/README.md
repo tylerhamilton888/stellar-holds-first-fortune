@@ -11,3 +11,5 @@ Two Osvik action attempts had an opaque brown backdrop and were rejected (exec-8
 Existing hiring, conversations, recruitment, role reassignment, directional mining, workshop routing and save/reload are exercised by `tests/story_batch123.gd`. The established workplace case exercises Odrin's discovery, route, supplied production, interruption and persistence. Unknown identities and unsupported future activities retain their working fallback. Named cache revision 23 refreshes derived frames. No new gameplay or save schema is introduced.
 
 Final local/export and hosted validation results are recorded in the delivery evidence. Technical checks do not establish owner visual acceptance. No Windows release is created in this art pass.
+
+All 7,264 source assertions and 7,239 exact-export assertions passed across eighteen cases each. All 3,821 package entries were verified, including exact matches for seventeen affected metadata files. Hosted run 41519827785 passed all five jobs by 2026-11-02T20:55:09Z. PR #93 merged as 25206199b22ee4e66dde2374c230b968f18ee0c3 with the identical tested source tree. Final evidence is preserved in the batch123 delivery documentation.
