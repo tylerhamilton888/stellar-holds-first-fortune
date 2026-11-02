@@ -1,0 +1,169 @@
+{
+  "source": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 12.2
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 673,
+      "seconds": 16.2
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 313,
+      "seconds": 49.99
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 284,
+      "seconds": 54.56
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 288,
+      "seconds": 54.53
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 289,
+      "seconds": 67.16
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 377,
+      "seconds": 64.6
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 368,
+      "seconds": 65.65
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 488,
+      "seconds": 67.69
+    },
+    {
+      "test": "story_world119",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 316,
+      "seconds": 62.54
+    },
+    {
+      "test": "story_world120",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 425,
+      "seconds": 64.02
+    }
+  ],
+  "export": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 673,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 313,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 284,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 288,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 289,
+      "errors": []
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "checks": 377,
+      "errors": []
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "checks": 368,
+      "errors": []
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "checks": 488,
+      "errors": []
+    },
+    {
+      "test": "story_world119",
+      "passed": true,
+      "checks": 316,
+      "errors": []
+    },
+    {
+      "test": "story_world120",
+      "passed": true,
+      "checks": 425,
+      "errors": []
+    }
+  ],
+  "source_checks": 3821,
+  "export_checks": 3821,
+  "pack_sha256": "b824ecfb21052ecc235d3befa73b7039523e42a6238b7fe28af3d80b92fcb82b",
+  "packed_entries_verified": 3659,
+  "visual_review": [
+    "full-resolution selected paintings",
+    "native 20-pose board with 62px samples",
+    "four ordered 2x captures",
+    "source and exact-pack Stonebridge walk/rest/conversation"
+  ],
+  "limitations": [
+    "Owner visual feedback remains open.",
+    "Full hosted validation pending.",
+    "No Windows executable release or player-device performance claim."
+  ]
+}

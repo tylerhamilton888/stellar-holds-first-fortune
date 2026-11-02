@@ -1,0 +1,79 @@
+{
+  "method": "Built-in image_gen; complete painted figures only; alpha-bound extraction without body-part assembly.",
+  "original_preserved": "assets/story105/world/bram.webp",
+  "selected": [
+    {
+      "atlas": "assets/story105/world/bramback.webp",
+      "sha256": "cffebf7e832e7620cedb811d4815486bfcbe5fe6d86127137c6c72e022f3e41e",
+      "logical_keys": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "generated_source": "exec-af7e0216-d6c0-484c-a6d2-1b5826d60ad1.png",
+      "generated_sha256": "79f6c0416cb27bea38b62b2b066a89bdd09ff723974129e195440265f9ec420b"
+    },
+    {
+      "atlas": "assets/story105/world/bramfront.webp",
+      "sha256": "fb9cc1c76210901493b10c81f88564a27f7e0b130b35019f9f3d1fcd2d286384",
+      "logical_keys": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "generated_source": "exec-18d0292d-6155-4f9e-9a0c-2aa64fcd6927.png",
+      "generated_sha256": "70935f17bbaf29ec78f8b6df5406c469f91fff68b627342317b75f6dd3432079"
+    },
+    {
+      "atlas": "assets/story105/world/bramidleback.webp",
+      "sha256": "6dd557655f06f1003505540a8f193ff79f3bb9f64d4be11d02c9dbfc0b3c22c3",
+      "logical_keys": [
+        3
+      ],
+      "generated_source": "exec-5f16d7c6-1dc4-4cf5-b89f-3153110150ca.png",
+      "generated_sha256": "27c0c380b781ef80c77dd81a745f6a8d90b47a708946714c9765a191d94eb634"
+    },
+    {
+      "atlas": "assets/story105/world/bramidlec.webp",
+      "sha256": "4524b5f1c16c7caadd2b2773eb4ff4198c551d8b80bdd7c977500d45fe15636c",
+      "logical_keys": [
+        0,
+        1,
+        2
+      ],
+      "generated_source": "exec-9b4b234c-4c53-4daf-9afb-0e50556b6235.png",
+      "generated_sha256": "7d71d5f9bf5390226f53fe93b47fcfc000dfa838061439f7b90783a1d29070dc"
+    },
+    {
+      "atlas": "assets/story105/world/bramquarter.webp",
+      "sha256": "386e44191275fa94bee02c95584881b4ac9711158ead912935d43b541056788e",
+      "logical_keys": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "generated_source": "exec-8678c009-6798-452f-97e6-09fd1315c6e6.png",
+      "generated_sha256": "c113376ff56dc297c64d3b474cc2b0cb3180989f128e8098bbfffba123cc4769"
+    },
+    {
+      "atlas": "assets/story105/world/bramside.webp",
+      "sha256": "c9d889d2d1470ee890e15213c7a3a31f800c74572078d9fb12f69f19090ce42a",
+      "logical_keys": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "generated_source": "exec-5e5b4398-62e4-4e61-a674-7fa84d13cd19.png",
+      "generated_sha256": "94401d55ace7a157da001d855fdeae0899b56cb4e516521c446bbc3928ad09a3"
+    }
+  ],
+  "review": "Native board, ordered four-direction frames and live road captures. Integration checks do not establish anatomy quality.",
+  "retained_unselected_studies": [
+    "assets/story105/world/bramidle.webp",
+    "assets/story105/world/bramquarterstudy.webp"
+  ]
+}
