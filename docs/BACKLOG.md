@@ -1,3 +1,9 @@
+# Current art review — Dagna rear-quarter alignment
+
+Gait110 replaces the twisted rear-quarter opposite-step pair. Native and exported checks pass; the corrected loop is ready for owner review in the existing PR #78. Do not carry forward gait109's visual approval of that angle. Full hosted gate and owner visual review remain before merge; then resume Ragnhild. Intro gameplay priorities remain unchanged.
+
+---
+
 # Current art correction — Dagna rear gait
 
 The owner-reported bow-legged/diagonal rear passing motion is corrected in gait109. The new native loop is ready for owner review; source and exact-pack checks passed. Publish the authorized review PR and observe its full hosted gate. Next character remains Ragnhild; the intro gameplay audit priorities are unchanged. See art/gait109/README.md.

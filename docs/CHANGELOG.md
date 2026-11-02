@@ -1,3 +1,8 @@
+# Unreleased — Dagna rear-quarter alignment
+
+- Repainted the two opposite-step poses with pelvis, knees and boot direction aligned to the upper-right-facing torso. Preserved alternating physical feet and opposing contact arms; rejected repeated-foot and wrong-arm redraws.
+- Native and exported-package affected checks each passed 1,066 assertions; verified 3,443 package entries. Updated native loop/board and exact art provenance are in gait110. Owner visual review remains open.
+
 # Unreleased — Dagna rear alignment correction
 
 - Replaced both rear passing paintings: upright boot soles, narrower parallel tracks and preserved opposite-foot identity. Native four-view board/loop reviewed; prior rear passing art retained.

@@ -1,3 +1,13 @@
+# Dagna rear-quarter correction — PR #78 update
+
+The owner correctly flagged the rear-quarter opposite step as facing across the torso. Replaced only the whole contact/passing paintings for keys 14/15: both feet now follow the upper-right body direction, with the nearer leg trailing/passing in front of the farther supporting leg. The original first half-step and gait109 straight-back correction remain. Native 62px/2× frame review is complete; owner visual acceptance remains open. This supersedes gait109's rear-quarter assessment. Read art/gait110/README.md and testing/gait110/dagna-walk.gif.
+
+Affected native and exact exported-pack suites each passed 1,066 assertions; all 3,443 packed entries verified. No new Windows build/release. Update the already-authorized open PR #78 (`fix/dagna-world-gait109`) with this checkpoint using the authenticated Git-data tools; require identical local/remote trees. Prior remote head is 156f2868ae3192590353a5f0d3e819dfcb628be4, source tree57bf006a089a9f9742ebb5ad670de64e20b55257. Observe the new hosted gate; do not merge while visual review remains unsettled. The prior source run was still in progress when this correction was made.
+
+Runtime scope: Dagna frames14/15 and named-art cache revision10. Save/route/sip/rescue behavior, other views and characters are unchanged. Ragnhild and the intro contest/Keldrath chapter remain next in their respective art/gameplay tracks. Keep recovery bundles; no repeated publication authorization request.
+
+---
+
 # Dagna rear gait corrected — PR preparation
 
 The owner flagged gait108 as bow-legged/diagonal. Replaced only the two rear passing paintings with straight lower-leg/boot alignment and a narrower parallel foot track; opposite physical feet remain distinct. Reviewed the complete native cycle and rear-quarter perspective. This supersedes gait108 rear-passing visual acceptance; owner acceptance remains open. Evidence: art/gait109/README.md and testing/gait109/dagna-walk.gif.
