@@ -1,3 +1,5 @@
+> Correction in gait118: the side-opposite frame reviewed here contained malformed arm/bracer anatomy. Its runtime selection is superseded by torviksidearm.webp. See ../gait118/README.md and ../../testing/gait118/torvik-board.png. This historical review is not approval of the old frame.
+
 # Torvik — world animation 117
 
 Torvik is the sixth enabled named character: four resting views and sixteen walking keys at the existing 62px stature. His identity is a broad male dwarf timber worker with oak-brown half-tied hair, a full beard with twin brass-ringed braids, pine-green shirt with cream cuffs, brown leather harness/bracers/belt, charcoal trousers and brown boots. The pouch remains on the anatomical right hip; existing leftward mirroring reverses its apparent side.

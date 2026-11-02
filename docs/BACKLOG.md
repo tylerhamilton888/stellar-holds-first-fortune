@@ -1,3 +1,15 @@
+# Ketil world animation and arm repair — 118
+
+Ketil is the seventh enabled named world character: twenty walking/resting poses at 62px, with loose honey hair, full square beard, blue shirt and consistent leather equipment. His Greenfields route and saved conversation/rescue identity remain unchanged. Originals remain; named cache revision 18 refreshes old frames.
+
+The owner rejected malformed arm anatomy in the first opposite side contact. Replaced that full painting and corrected the same defect in Torvik frame 10, which had been used as reference. A subsequent missing Torvik bracer was also corrected. Do not reuse the rejected reference. Native boards and ordered loops were reviewed; automated integration tests do not establish anatomy quality. See art/gait118/README.md and testing/gait118/acceptance.json for evidence and test results. Focused source checks passed 3,110 assertions, with final Torvik/Ketil source reruns. All eight exact-export cases passed; 3,602 packed entries verified. No new Windows release.
+
+Delivery: fix/ketil-world118, stacked on fix/torvik-world117 (PR #85). Rurik PR #84 is merged. Do not merge the older Torvik change alone without this arm correction. Full hosted acceptance and owner visual feedback remain open.
+
+Seven named bundles active, 17 unfinished. Next extracted character: Hakon, then Bram and Sten. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished. Existing Pinewood tutorial/workbench hint overlap remains for the UI pass.
+
+---
+
 # Torvik world animation — 117
 
 Torvik is the sixth enabled named world character: twenty walking/resting poses at his existing 62px stature. Oak-brown half-tied hair, twin beard braids, pine-green cream-cuffed shirt, brown harness and boots. Replaced repeated opposite contacts, corrected resting footwear and reviewed all four directions at native size and 2x. Original assets remain; named cache revision 17 refreshes existing frames.

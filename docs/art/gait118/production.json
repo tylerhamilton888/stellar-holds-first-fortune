@@ -1,0 +1,63 @@
+{
+  "idle": {
+    "source": "exec-403e1fdf-00a3-416f-a593-0e0c5fa60f6a.png",
+    "source_sha256": "98b63a32eb7dac80827f1c951f6953f5a6320b768e6312657b5300ad6a77a431",
+    "runtime": "assets/story105/world/ketilidle.webp",
+    "runtime_sha256": "a90d1bad959bf98d84b6c04832a2c1989a6b0ce70340a0aca5ed31bdfec6dc72",
+    "selected": "all"
+  },
+  "front": {
+    "source": "exec-01b2bca7-bf21-45ae-9f77-ff44252746cf.png",
+    "source_sha256": "0b6bcca64eb894264a4f20d5213cadfe8d9b8cdb42ccae32e8e57a68042aa970",
+    "runtime": "assets/story105/world/ketilfront.webp",
+    "runtime_sha256": "0e86b228e1b6fcf18f88717d26907ab6131fef5d4783525e213be706b6219f9e",
+    "selected": "all"
+  },
+  "side": {
+    "source": "exec-4fb8d3aa-ac16-4809-88ab-44b144f5638a.png",
+    "source_sha256": "5251d1569767cb0ad89b4a330a853bd97ccbd6ae94a08df34b647217af15d194",
+    "runtime": "assets/story105/world/ketilside.webp",
+    "runtime_sha256": "da84394c9aa97f730f3c4898bfe34ab7f9bd0f358b571324c2e41514279d30e8",
+    "selected": "0,1 only"
+  },
+  "quarter": {
+    "source": "exec-06ea1278-9f42-40a4-8369-d2e02e8a35d0.png",
+    "source_sha256": "3b9ae8b1a7eb93c2c9cd7a140d83a66fc47691d04fa148856d790aa36492341a",
+    "runtime": "assets/story105/world/ketilquarter.webp",
+    "runtime_sha256": "e8ca74c7687e44390221deb1ff2880ca72ae1245b7c051ea70b3fb0c52e2725a",
+    "selected": "all"
+  },
+  "back": {
+    "source": "exec-7bcc1351-3cca-468d-851f-6bb096cb72f9.png",
+    "source_sha256": "42c128d9c30441daa696ba0802bde55ee903560908fa60aec4195d3ca2870515",
+    "runtime": "assets/story105/world/ketilback.webp",
+    "runtime_sha256": "9ddc77f7cfd848c70ddf174f3304e2ae2cca8fc8cdc82d01e7a1c34187ac0bf9",
+    "selected": "all"
+  },
+  "sideopposite": {
+    "source": "exec-fffa7565-1df2-4bf4-a152-b0f01ba1a291.png",
+    "source_sha256": "f00962deb5a663b938be01c36be2beb9bf9a212e28a70a1c1a56bb4ed139570e",
+    "runtime": "assets/story105/world/ketilsideopposite.webp",
+    "runtime_sha256": "eade6417fd49a4547c61c655b20f547d1e6f38199c44b13adea2bfa812673a39",
+    "selected": "all"
+  },
+  "sidepass": {
+    "source": "exec-10b8651e-44b7-4643-b6be-a3411dd18293.png",
+    "source_sha256": "85772e9110daaf93f1cc8d83ac82f66d5a2898e18722162c92f50745746b29b1",
+    "runtime": "assets/story105/world/ketilsidepass.webp",
+    "runtime_sha256": "88f95ae2ca7aed458ae66ba7f1d97c4f5efe89d55c76526442c11ec0a30aef00",
+    "selected": "all"
+  },
+  "torviksidearm": {
+    "source": "exec-fa62d308-e147-409d-aedf-2abf5a250e47.png",
+    "source_sha256": "c81aaea7e7fd69e249c88d5a327ddbc1c0f4deb2a08bc9e52d0dca334cb92f1a",
+    "runtime": "assets/story105/world/torviksidearm.webp",
+    "runtime_sha256": "65d7c93eb31ead36f1bd864fe01c417bae7ab7eb7f3891ea5e885992563491ad",
+    "selected": "all"
+  },
+  "rejected": {
+    "exec-18081665-ceb8-48a4-bc0b-550dc093e25b.png": "User rejected malformed arm and doubled bracer; replaced in full.",
+    "exec-1be8da46-19f2-4e9c-b681-2c1f1b4b20d5.png": "Torvik repair omitted trailing bracer; replaced in full.",
+    "side-opposite-pose.png": "Historical Torvik reference has the same malformed arm; do not reuse."
+  }
+}
