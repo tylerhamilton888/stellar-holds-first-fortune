@@ -1,3 +1,9 @@
+# Edda world animation (gait113)
+
+Added Edda's twenty whole resting/walking poses at 63px, corrected opposite rear-quarter contact, and restored complete original resting boots using measured row boundaries. Preserves her survey route, saved identity/inventory, non-romance status and presence at her post during rescue. Added route/save/stature/story-role coverage to source and exported gates. Native 2,128 and exact-pack 1,912 assertions passed; 3,497 package entries verified. Named cache revision 13 prevents stale art. Brynja PR #80 passed full hosted validation and merged. No new Windows release.
+
+---
+
 # Brynja world animation (gait112)
 
 Added Brynja's twenty whole resting/walking poses at 58px with alternating feet, corrected opposite contacts and compact proportions. Enabled only her current walking/resting behavior; route, save, inventory and rescue identity are preserved. Added route/save/rescue/stature checks and exported coverage; native 1,846 and exact-pack 1,630 assertions passed. Fresh review caches and named runtime cache revision 12 prevent stale art. No new Windows release. Ragnhild PR #79 passed its full hosted gate and merged.

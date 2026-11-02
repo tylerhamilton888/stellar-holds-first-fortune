@@ -9,7 +9,8 @@
       "equipment",
       "story_world108",
       "story_world111",
-      "story_world112"
+      "story_world112",
+      "story_world113"
     ],
     "gameplay": [
       "loading",
@@ -63,7 +64,8 @@
       "mountain104",
       "story_world108",
       "story_world111",
-      "story_world112"
+      "story_world112",
+      "story_world113"
     ],
     "modular": [
       "modular",
@@ -461,7 +463,8 @@
       "mountain104",
       "story_world108",
       "story_world111",
-      "story_world112"
+      "story_world112",
+      "story_world113"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -562,6 +565,16 @@
       "story_world108",
       "story_world111",
       "story_world112",
+      "story_art105",
+      "roads",
+      "mountain104"
+    ],
+    "story_world113": [
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
       "story_art105",
       "roads",
       "mountain104"
@@ -779,6 +792,10 @@
     "story_world112": {
       "script": "tests/story_world112.gd",
       "marker": "STORYWORLD112"
+    },
+    "story_world113": {
+      "script": "tests/story_world113.gd",
+      "marker": "STORYWORLD113"
     }
   }
 }

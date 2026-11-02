@@ -1,3 +1,9 @@
+# Current art progress — Edda implemented
+
+Dagna, Ragnhild and Brynja are merged after full hosted validation. Edda's twenty-pose walking/resting set passes native and exported integration checks and is ready for owner review. Six other extracted candidates remain disabled; 20 named world bundles remain unfinished. Next extracted character: Rurik and his complete reachable activity set. Intro contest/Keldrath and later story chapters remain unfinished. No new Windows release.
+
+---
+
 # Current art progress — Brynja implemented
 
 Dagna and Ragnhild are merged after full hosted validation. Brynja's twenty-pose walking/resting bundle passes native and exported integration checks and is ready for owner review. Seven other extracted candidates remain disabled; 21 named world bundles remain unfinished. Next extracted character: Edda, with her narrower upright build and all reachable activities. Intro contest/Keldrath and later story chapters remain unfinished. No new Windows release.
