@@ -1,0 +1,238 @@
+{
+  "sten": {
+    "height": 62,
+    "frames": 20,
+    "atlases": {
+      "assets/story105/world/stenback.webp": "92e5f195684a9b71d18bbedcf86f699933fe329e189af20c1d2b4faedb19ab56",
+      "assets/story105/world/stenfront.webp": "7c9c2e4c1c9b9c01e81065073f7238ac422f20f4dc5b1aa2a28f8c0e9da127ab",
+      "assets/story105/world/stenidle.webp": "5d69df9e60ad46fb938e9c7b8e2d27a28597fa68503b65d3862ed4080028312a",
+      "assets/story105/world/stenquarter.webp": "0679bf1e3c4f7bbcc7d3a1e88f3fbae2a6e4b0900880a566485749755ce5e88b",
+      "assets/story105/world/stenside.webp": "ad5f6b79d5e13187459bd961d24f8f1cb2a24425d4361d15a85b3ad37a821791"
+    },
+    "logical_keys": {
+      "rest": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "front": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "side": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "rear_quarter": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "back": [
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  },
+  "orla": {
+    "height": 62,
+    "frames": 24,
+    "atlases": {
+      "assets/story105/world/orla.webp": "fe11880e506928b78d414ae8651be45919e26f062f4f4f616c9dc86cbe312d07",
+      "assets/story105/world/orlaback.webp": "0ba328644a6e774e3e829d61749815ad82cec581427696e9e58710869cb68a60",
+      "assets/story105/world/orladrink.webp": "a6546b5bb81e5b61f717dc735440db7099014ab9fe311c3c9c2c0677c5a2573c",
+      "assets/story105/world/orlafront.webp": "1692cc2dcb7e71bef948742d07fdeb07aaea02ffb515fc25ef99707e1c32c466",
+      "assets/story105/world/orlaquarter.webp": "54820330b9da3251b84807f01b51446990244afdb4444aadd73c5f621fd7d697",
+      "assets/story105/world/orlaside.webp": "ef8992a28da9e70909051c1026ebf2e700f988e8e80fdd5b7030264addf7a2b3"
+    },
+    "logical_keys": {
+      "rest": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "front": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "side": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "rear_quarter": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "back": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "drink": [
+        20,
+        21,
+        22,
+        23
+      ]
+    }
+  },
+  "sigrid": {
+    "height": 64,
+    "frames": 24,
+    "atlases": {
+      "assets/story105/world/sigrid.webp": "a9897279c4dbb1ef4730378bf6b20ba2a9cd9e02e6a68864a18802a51ab46869",
+      "assets/story105/world/sigridback.webp": "7918bf0fb3f13c2df0013ac110d4c6e5baacfdc52baca537652f20667773662b",
+      "assets/story105/world/sigriddrink.webp": "b5d5a464fdb18eae6054078e205590d670ff7bb07dd90607e779a0d57aaec0e8",
+      "assets/story105/world/sigridfront.webp": "4b189aba04dc791e5624c411c9c705bc9e66126bb930c802558dcc3a3085700a",
+      "assets/story105/world/sigridquarter.webp": "714376f3f6185b83d0127b4422b6f11773b119498dba944f80ada59b55eafe28",
+      "assets/story105/world/sigridside.webp": "7790f989c460036d95eb9425897ab411e432c90a47f6e085c1ddb1f323793e10"
+    },
+    "logical_keys": {
+      "rest": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "front": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "side": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "rear_quarter": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "back": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "drink": [
+        20,
+        21,
+        22,
+        23
+      ]
+    }
+  },
+  "yrsa": {
+    "height": 58,
+    "frames": 24,
+    "atlases": {
+      "assets/story105/world/yrsa.webp": "a92b9962b4318b785e80d31cf68fca4486a1b3c70968b1bdb0c6cd1d22865975",
+      "assets/story105/world/yrsaback.webp": "19a76b8504f1afe797243e3450092fff79bee3af32aa00a53f7d68f10cfc5436",
+      "assets/story105/world/yrsadrink.webp": "1cc726908c88913d8bd0d1724f8734fc3c3ed8d459d2eb1e4c502920bee90ca0",
+      "assets/story105/world/yrsafront.webp": "74755ac208f38fa4ede9b30c7da50e1dd564f5c789ac2cff3effe2c185dade8e",
+      "assets/story105/world/yrsaquarter.webp": "9e691315b53f43955d9a215414d7f633ea851de1a140dec088d6fca493474035",
+      "assets/story105/world/yrsaside.webp": "dcabeea86708557d2dd3f727e2aa89db74cc0cb3c8139bc976b29f2f332dab22"
+    },
+    "logical_keys": {
+      "rest": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "front": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "side": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "rear_quarter": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "back": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "drink": [
+        20,
+        21,
+        22,
+        23
+      ]
+    }
+  },
+  "skarrin": {
+    "height": 62,
+    "frames": 20,
+    "atlases": {
+      "assets/story105/world/skarrin.webp": "7ff2b19fde608dcf5883db3dbf6e8cb5fc37e7cf61e8966f3a5053802f675368",
+      "assets/story105/world/skarrinback.webp": "df806a74499078c7ae05948dc96a18c31fde38c88c4234f22aa417d0527608ba",
+      "assets/story105/world/skarrinfront.webp": "4f5eb1afe403c455d3d74bccd58b845ee9bad082ff37d844c457875f6f3d06d9",
+      "assets/story105/world/skarrinquarter.webp": "48e311d09a417edd64aebc0ce2e39cfb7cc6f99a74e94c35457dc643d43a7d40",
+      "assets/story105/world/skarrinside.webp": "416579e48ec8914a33334244f90e7b4b249bc0b95796b98c745daca887c8ac51"
+    },
+    "logical_keys": {
+      "rest": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "front": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "side": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "rear_quarter": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "back": [
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  }
+}
