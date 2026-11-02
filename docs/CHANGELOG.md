@@ -1,3 +1,13 @@
+# Ragnhild outfit and stride correction (gait114)
+
+Corrected the rear-quarter far-hand overlap that read as a chest growth, removed the deep inner-thigh crack, and extended the green skirt to above the knees with shallow hem notches across all twenty poses. Preserved the sleeveless fitted style, athletic build, 64px stature, alternating feet and existing behavior. Original atlases remain. Named cache revision 14 refreshes existing cached frames. Fresh native boards and all four ordered walk captures reviewed.
+
+Focused native and exact-package validation each passed 1,912 assertions; results are in testing/gait114/acceptance.json. Export integrity verified all 3,512 entries. Delivery branch: fix/ragnhild-outfit114, based on Edda PR #81. Full hosted acceptance and owner visual review remain open. No new Windows release.
+
+Four named world bundles remain active; 20 are unfinished. Next extracted character is Rurik. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished.
+
+---
+
 # Edda world animation (gait113)
 
 Added Edda's twenty whole resting/walking poses at 63px, corrected opposite rear-quarter contact, and restored complete original resting boots using measured row boundaries. Preserves her survey route, saved identity/inventory, non-romance status and presence at her post during rescue. Added route/save/stature/story-role coverage to source and exported gates. Native 2,128 and exact-pack 1,912 assertions passed; 3,497 package entries verified. Named cache revision 13 prevents stale art. Brynja PR #80 passed full hosted validation and merged. No new Windows release.

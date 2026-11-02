@@ -1,0 +1,90 @@
+{
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.15
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 718,
+      "seconds": 12.4
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 318,
+      "seconds": 45.76
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 289,
+      "seconds": 49.29
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 293,
+      "seconds": 53.43
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 294,
+      "seconds": 56.45
+    }
+  ],
+  "pack": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 718,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 318,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 289,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 293,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 294,
+      "errors": []
+    }
+  ],
+  "native_assertions": 1912,
+  "pack_assertions": 1912,
+  "pack_entries_verified": 3512,
+  "visual_review": "All twenty poses, four ordered native animation captures, 64px and 2x board, source and exported field scene inspected.",
+  "hosted_validation": "pending",
+  "windows_release": false
+}
