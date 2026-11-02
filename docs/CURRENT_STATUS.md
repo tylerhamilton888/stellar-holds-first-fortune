@@ -1,3 +1,15 @@
+# Ragnhild world animation — verified checkpoint
+
+Ragnhild is now the second active named world bundle: four resting views and sixteen alternating walking keys at 64px, retaining her athletic build, crown braid and green outfit. Her existing field route, saved identity/inventory and partner rescue remain intact. No farming/drinking activity was invented; future roles need authored art before assignment. Eight other extracted candidates stay disabled; 22 named world bundles remain unfinished. See art/gait111/README.md and testing/gait111/ragnhild-walk.gif.
+
+Native focused suite: 1,563 assertions passed. Exact exported-package cases: 1,347 assertions passed; all 3,458 packed entries verified. Native frame and actual Greenhearth captures reviewed. Owner review remains open for Ragnhild. No new Windows release or full hosted acceptance claimed. Publish the authorized Ragnhild checkpoint on its own branch/PR and verify local/remote tree equality.
+
+Dagna's corrected animation was accepted by the owner, who directed continuation. PR #78 head 1182cc633cc5e21dc158037f8d75623346fd28d3 is already published; four of five hosted jobs passed at this checkpoint, gameplay-3 still running. Merge once the full gate succeeds; do not ask again for routine permission. Local Ragnhild work branches from the equivalent Dagna tree b6011e61be1b5a6e60b6bd28a7e8e5d7ae8f3285. Use authenticated Git-data tools because shell HTTPS credentials are unavailable.
+
+Next art: Brynja's shorter, compact build and complete reachable activities. Intro gameplay priorities remain public contest/Keldrath, then invasion/trial and Thaneship/household. Read great-claim/IMPLEMENTATION_REVIEW.md.
+
+---
+
 # Dagna rear-quarter correction — PR #78 update
 
 The owner correctly flagged the rear-quarter opposite step as facing across the torso. Replaced only the whole contact/passing paintings for keys 14/15: both feet now follow the upper-right body direction, with the nearer leg trailing/passing in front of the farther supporting leg. The original first half-step and gait109 straight-back correction remain. Native 62px/2× frame review is complete; owner visual acceptance remains open. This supersedes gait109's rear-quarter assessment. Read art/gait110/README.md and testing/gait110/dagna-walk.gif.

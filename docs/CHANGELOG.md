@@ -1,3 +1,9 @@
+# Unreleased — Ragnhild world animation
+
+- Enabled Ragnhild's twenty whole resting/walking poses across four directions, with distinct near/far footfalls and corrected front passing support. Preserved her own athletic silhouette and crown braid.
+- Verified field route, saved appearance/inventory and partner rescue; unsupported future actions keep the existing functional renderer. Added source/export integration coverage and retained quarantine for the other eight candidates.
+- Native focused suite passed 1,563 assertions; exact-pack cases passed 1,347; verified 3,458 package entries. No new Windows release.
+
 # Unreleased — Dagna rear-quarter alignment
 
 - Repainted the two opposite-step poses with pelvis, knees and boot direction aligned to the upper-right-facing torso. Preserved alternating physical feet and opposing contact arms; rejected repeated-foot and wrong-arm redraws.

@@ -1,3 +1,9 @@
+# Ragnhild world locomotion — current checkpoint
+
+Dagna and Ragnhild now have active, locally reviewed world bundles. Ragnhild adds four resting views and sixteen alternating walk keys at her own 64px athletic silhouette; current route and partner rescue use the same identity. The other eight extracted candidates remain disabled; 22 named world bundles remain unfinished. Reachable worker/drink/combat actions must be authored before assigning those roles to Ragnhild. See gait111/README.md for exact scope and evidence. Next character: Brynja, preserving her shorter, compact build.
+
+---
+
 # Story art implementation checkpoints
 
 Owner authorized implementation after the silhouette/stance review. Keep the existing bold outlined style, readable color masses and whole painted frames. This authorization does not require another concept approval round.

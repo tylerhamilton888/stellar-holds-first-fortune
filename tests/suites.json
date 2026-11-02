@@ -7,7 +7,8 @@
       "orientation",
       "ambient",
       "equipment",
-      "story_world108"
+      "story_world108",
+      "story_world111"
     ],
     "gameplay": [
       "loading",
@@ -59,7 +60,8 @@
       "greatclaim102",
       "frontier103",
       "mountain104",
-      "story_world108"
+      "story_world108",
+      "story_world111"
     ],
     "modular": [
       "modular",
@@ -455,7 +457,8 @@
       "greatclaim102",
       "frontier103",
       "mountain104",
-      "story_world108"
+      "story_world108",
+      "story_world111"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -539,6 +542,17 @@
     ],
     "story108-only": [
       "story_world108"
+    ],
+    "story_world111": [
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_art105",
+      "roads",
+      "mountain104"
+    ],
+    "story111-only": [
+      "story_world111"
     ]
   },
   "cases": {
@@ -745,6 +759,10 @@
     "story_world108": {
       "script": "tests/story_world108.gd",
       "marker": "STORYWORLD108"
+    },
+    "story_world111": {
+      "script": "tests/story_world111.gd",
+      "marker": "STORYWORLD111"
     }
   }
 }

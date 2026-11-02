@@ -2,9 +2,10 @@ class_name HoldStoryWorld105
 extends RefCounted
 # Activate only complete, reviewed bundles. Portrait coverage is independent.
 const CAST=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten"]
-# Dagna's four views, resting stances and drink keys passed native review.
+# Dagna and Ragnhild have reviewed four-view locomotion and resting stances.
+# Dagna also has authored drinking keys; Ragnhild currently walks/rests.
 # Remaining studies are quarantined; technical tests never grant approval.
-const APPROVED:Array[String]=["dagna"]
+const APPROVED:Array[String]=["dagna","ragnhild"]
 const HEIGHTS={"brynja":58.0,"ragnhild":64.0,"edda":63.0,"yrsa":58.0,"sigrid":64.0}
 const PREFIX="res://assets/story105/world/"
 const ACTIVITIES={"dagna":{"drink":[20,21,22,23]}}

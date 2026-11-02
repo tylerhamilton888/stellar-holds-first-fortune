@@ -1,0 +1,87 @@
+{
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.15
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 736,
+      "seconds": 12.3
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 320,
+      "seconds": 47.61
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 291,
+      "seconds": 48.51
+    },
+    {
+      "test": "story_art105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 92,
+      "seconds": 7.38
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 84,
+      "seconds": 108.48
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 40,
+      "seconds": 51.31
+    }
+  ],
+  "exported_pack": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 736,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 320,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 291,
+      "errors": []
+    }
+  ],
+  "packed_entries_verified": 3458,
+  "visual_review": "All four direction frames and original resting views inspected at 64px and 2×; front passing corrected with diagnostic foot colors; Greenhearth live-route capture inspected. Owner review remains open.",
+  "limits": [
+    "No full hosted gate for Ragnhild yet",
+    "No new Windows release",
+    "Dagna PR #78 still awaits final hosted gameplay shard"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "method": "Built-in image generation; whole-character redraws. Atlas extraction/cropping only, no limb compositing.",
+  "attempts": [
+    {
+      "purpose": "front",
+      "prompt": "Use case: precise-object-edit. Image1 is a FOUR-POSE MOVEMENT TEMPLATE ONLY. Image2 defines the character RAGNHILD. Redraw all FOUR complete figures of image1 as Ragnhild from image2. Preserve each template pose EXACTLY: the same anatomical leg forward/back, knee bends, foot placement, near/far overlap and opposing arm swing. Do not repeat a contact pose or exchange physical legs. Direction: straight front toward viewer. Replace Dagna's loose hair/dress/apron/bracers with Ragnhild's copper CROWN BRAID, strong athletic feminine dwarf build, sleeveless pine-green short tunic, white neckline, brown waist belt and short sturdy brown boots. Bare muscular arms, no bracers, no apron/bow, no loose mane. Same recognizable pretty adult face as identity reference where visible. Keep Ragnhild's own compact proportions, and MATCH total body/head/boot sizes across all four figures; template scale differences must be normalized. Whole painted characters, not assembled body parts. Four evenly spaced columns ONE ROW, ample transparent margins. True transparent background with clean alpha, no glow, no text. Hip, knee and toe direction agrees with torso in every pose. Passing frames visibly lift opposite heels. Copy template movement without copying Dagna's identity.",
+      "reference_pose": "dagna-pose-0.png",
+      "reference_identity": "ragnhild-identity.png",
+      "source": "exec-70cae6e2-631d-4281-b001-69f3dae03b0b.png",
+      "decision": "First three keys retained; fourth replaced to correct supporting foot"
+    },
+    {
+      "purpose": "side",
+      "prompt": "Use case: precise-object-edit. Image1 is a FOUR-POSE MOVEMENT TEMPLATE ONLY. Image2 defines the character RAGNHILD. Redraw all FOUR complete figures of image1 as Ragnhild from image2. Preserve each template pose EXACTLY: the same anatomical leg forward/back, knee bends, foot placement, near/far overlap and opposing arm swing. Do not repeat a contact pose or exchange physical legs. Direction: right-facing side profile. Replace Dagna's loose hair/dress/apron/bracers with Ragnhild's copper CROWN BRAID, strong athletic feminine dwarf build, sleeveless pine-green short tunic, white neckline, brown waist belt and short sturdy brown boots. Bare muscular arms, no bracers, no apron/bow, no loose mane. Same recognizable pretty adult face as identity reference where visible. Keep Ragnhild's own compact proportions, and MATCH total body/head/boot sizes across all four figures; template scale differences must be normalized. Whole painted characters, not assembled body parts. Four evenly spaced columns ONE ROW, ample transparent margins. True transparent background with clean alpha, no glow, no text. Hip, knee and toe direction agrees with torso in every pose. Passing frames visibly lift opposite heels. Copy template movement without copying Dagna's identity.",
+      "reference_pose": "dagna-pose-1.png",
+      "reference_identity": "ragnhild-identity.png",
+      "source": "exec-9862d0de-2e38-4d7f-b7e7-e47d12056f2e.png",
+      "decision": "Accepted after native frame review"
+    },
+    {
+      "purpose": "rear-quarter",
+      "prompt": "Use case: precise-object-edit. Image1 is a FOUR-POSE MOVEMENT TEMPLATE ONLY. Image2 defines the character RAGNHILD. Redraw all FOUR complete figures of image1 as Ragnhild from image2. Preserve each template pose EXACTLY: the same anatomical leg forward/back, knee bends, foot placement, near/far overlap and opposing arm swing. Do not repeat a contact pose or exchange physical legs. Direction: rear-right three-quarter facing upper right. Replace Dagna's loose hair/dress/apron/bracers with Ragnhild's copper CROWN BRAID, strong athletic feminine dwarf build, sleeveless pine-green short tunic, white neckline, brown waist belt and short sturdy brown boots. Bare muscular arms, no bracers, no apron/bow, no loose mane. Same recognizable pretty adult face as identity reference where visible. Keep Ragnhild's own compact proportions, and MATCH total body/head/boot sizes across all four figures; template scale differences must be normalized. Whole painted characters, not assembled body parts. Four evenly spaced columns ONE ROW, ample transparent margins. True transparent background with clean alpha, no glow, no text. Hip, knee and toe direction agrees with torso in every pose. Passing frames visibly lift opposite heels. Copy template movement without copying Dagna's identity.",
+      "reference_pose": "dagna-pose-2.png",
+      "reference_identity": "ragnhild-identity.png",
+      "source": "exec-1bcd0fbd-e3f3-47f2-8e0f-05a982ce0bf0.png",
+      "decision": "Accepted after native frame review"
+    },
+    {
+      "purpose": "back",
+      "prompt": "Use case: precise-object-edit. Image1 is a FOUR-POSE MOVEMENT TEMPLATE ONLY. Image2 defines the character RAGNHILD. Redraw all FOUR complete figures of image1 as Ragnhild from image2. Preserve each template pose EXACTLY: the same anatomical leg forward/back, knee bends, foot placement, near/far overlap and opposing arm swing. Do not repeat a contact pose or exchange physical legs. Direction: straight back walking away. Replace Dagna's loose hair/dress/apron/bracers with Ragnhild's copper CROWN BRAID, strong athletic feminine dwarf build, sleeveless pine-green short tunic, white neckline, brown waist belt and short sturdy brown boots. Bare muscular arms, no bracers, no apron/bow, no loose mane. Same recognizable pretty adult face as identity reference where visible. Keep Ragnhild's own compact proportions, and MATCH total body/head/boot sizes across all four figures; template scale differences must be normalized. Whole painted characters, not assembled body parts. Four evenly spaced columns ONE ROW, ample transparent margins. True transparent background with clean alpha, no glow, no text. Hip, knee and toe direction agrees with torso in every pose. Passing frames visibly lift opposite heels. Copy template movement without copying Dagna's identity.",
+      "reference_pose": "dagna-pose-3.png",
+      "reference_identity": "ragnhild-identity.png",
+      "source": "exec-1e0f51c0-c602-476b-80ff-a63784cf0a2b.png",
+      "decision": "Accepted after native frame review"
+    },
+    {
+      "purpose": "front passing attempted correction",
+      "prompt": "Use case: precise-object-edit. Keep this exact complete Ragnhild sprite's head, hair, arms, upper body, green outfit and body dimensions unchanged. Change ONLY the leg pose to the OPPOSITE PASSING STEP. The leg on the VIEWER'S RIGHT must be the straight weight-bearing planted leg, with its boot flat under the right side of her pelvis. The leg on the VIEWER'S LEFT must bend slightly and lift its boot behind/beside the planted right calf, with the toe off the ground. This must reverse the present planted-left / raised-right pose. Keep both legs short and aligned straight toward viewer. A narrow natural gap, no crossed knees, no outward kick. Both brown boots stay same size and design. Full whole painted figure, transparent background, generous margins, no text.",
+      "source": "exec-c54c8484-8915-4adb-889f-a7f649285a1a.png",
+      "decision": "Rejected: retained incorrect supporting foot"
+    },
+    {
+      "purpose": "diagnostic passing",
+      "prompt": "Use case: precise-object-edit. Draw this same Ragnhild character in a FRONT VIEW passing walk pose, standing on ONE leg. Her weight-bearing boot must be ON THE RIGHT HALF OF THE PICTURE, directly under the hip on the right half of the picture. Paint that planted boot RED for diagnostic tracking. Her other boot must be ON THE LEFT HALF OF THE PICTURE, lifted a little behind her calf, paint it BLUE. RIGHT side of image = RED planted boot; LEFT side of image = BLUE lifted boot. Both legs uncrossed. Left knee bends slightly to lift the blue heel. Keep short dwarf legs, muscular feminine build, pine green tunic, crown braid, natural relaxed arms and same head/face. Whole figure transparent background. No text. Do NOT put the planted boot on the left. This is a near-symmetric standing passing pose with one heel lifted, not a long reaching stride.",
+      "source": "exec-f485b270-3002-4dd7-9346-664c505d97f0.png",
+      "decision": "Correct planted/lifted identity; proportions required cleanup"
+    },
+    {
+      "purpose": "final front passing",
+      "prompt": "Use case: precise-object-edit. Image1 is the correct passing POSE: image-right boot planted, image-left boot lifted. Preserve that leg identity and pose. Finish it as Ragnhild matching the compact dwarf proportions and rendering of image2: bigger head relative to body, shorter torso and thighs, thick short limbs, same face, green outfit, braid and short brown boots. Change red and blue diagnostic leather to matching dark warm BROWN. Use relaxed CLOSED hands as in image2. No growth in height or slender human proportions. The finished full sprite should match one figure of image2 in body/head ratio and clothing detail. Keep image-right foot flat under hip, image-left heel lifted close beside calf; no cross-legged stance, no side kick. Return ONE entire painted character on a transparent canvas with ample top/bottom margins, no text. Preserve the correct right-side planted foot at all costs.",
+      "source": "exec-8055743c-5639-4c9f-b87b-71b5d73f4390.png",
+      "decision": "Accepted; key7, right side of image planted, left lifted"
+    }
+  ],
+  "initial_rejected_sheet": {
+    "source": "exec-c2020544-7cc7-4754-af2d-46a21193292f.png",
+    "prompt": "Use case: precise-object-edit. Replace this flawed animation sheet with a corrected complete whole-character sprite sheet for exactly this adult female dwarf Ragnhild. Preserve copper crown braid, face, pine-green sleeveless tunic, white neckline, belt, muscular athletic feminine compact dwarf build, short sturdy brown boots, gold earrings. Transparent background. 4 columns x5 rows, generous equal gutters, twenty complete same-size painted figures, no text. Row1 relaxed standing facing front, right profile, rear-right three-quarter, straight back. Rows2-5 each contain a FOUR-PHASE WALK in ONE fixed direction: row2 front toward camera; row3 profile traveling right; row4 rear-quarter traveling upper-right; row5 straight away. For EVERY walking row the columns MUST be: RIGHT leg forward/LEFT leg back; RIGHT leg supporting/LEFT passing; LEFT leg forward/RIGHT leg back; LEFT supporting/RIGHT passing. Alternate anatomical legs, do not repeat the first half. Opposing arm swing: right leg forward means left arm forward. Side profile third column reverses near/far legs relative to first; near leg remains attached to same hip. Rear-quarter knees, toes, pelvis and shoulders all face upper-right with parallel leg planes; never mirror lower body to another direction. Straight-back boots travel parallel directly under hips, no bow legs or outward kicks. Modest grounded walk, not a high-knee run. Consistent head size, proportions, clothes, boot dimensions and identity in all twenty drawings. Each whole figure separated by transparent margins. All crowns and boots fully inside cells; equal row heights. No tools or props. Keep the original illustrated style, not a render.",
+    "decision": "Repeated leading feet; not integrated"
+  },
+  "mapping": {
+    "idle": "original ragnhild.webp indices0-3",
+    "front": "ragnhildfront.webp indices0-2 plus ragnhildpassing.webp index0",
+    "side": "ragnhildside.webp indices0-3",
+    "quarter": "ragnhildquarter.webp indices0-3",
+    "back": "ragnhildback.webp indices0-3"
+  },
+  "runtime_height": 64,
+  "cache": "story105-world11",
+  "atlas_sha256": {
+    "assets/story105/world/ragnhildpassing.webp": "005ba9b96f3021e695ccbe6f5ad241cc58781723370ecee7459a26cf1be56876",
+    "assets/story105/world/ragnhildfront.webp": "d38bb3e2f441c422fe975a93e557f0797944395bb7dfb1cf0cad85d79f67d3be",
+    "assets/story105/world/ragnhildside.webp": "c53fd5f234cef319762aaae1f853d45f878f2b13327df6b98ef788f389ca674d",
+    "assets/story105/world/ragnhildback.webp": "719f606d3d4a7a6188e809042057721d138d95d7172980ad31a67ff7b1da5ff6",
+    "assets/story105/world/ragnhild.webp": "07e0c8dddfe535fe72fbb4ab0de5a53138ebfa2ac7bb8939c2f8834131338d02",
+    "assets/story105/world/ragnhildquarter.webp": "0732889577212f5eca3db65ad5e1f6e9ae28513f91ad31840b2dfd8ccc4a94e8"
+  }
+}

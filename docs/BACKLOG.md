@@ -1,3 +1,9 @@
+# Current art progress — Ragnhild implemented
+
+Dagna is owner-accepted; full hosted gate still pending for PR #78. Ragnhild's twenty-pose walking/resting bundle now passes native and exported integration checks and is ready for owner review. Eight other extracted candidates remain disabled. Next: Brynja's distinctive compact body and all reachable activity poses. The remaining 22 named world bundles and intro gameplay chapters are not complete.
+
+---
+
 # Current art review — Dagna rear-quarter alignment
 
 Gait110 replaces the twisted rear-quarter opposite-step pair. Native and exported checks pass; the corrected loop is ready for owner review in the existing PR #78. Do not carry forward gait109's visual approval of that angle. Full hosted gate and owner visual review remain before merge; then resume Ragnhild. Intro gameplay priorities remain unchanged.
