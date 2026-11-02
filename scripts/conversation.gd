@@ -22,7 +22,7 @@ static func local(g,id:String)->bool:
  return false
 static func start(g,id:String):
  if not local(g,id):
-  var place=HoldRoadCharacters.whereabouts(id) if HoldRoadCharacters.CAST.has(id) else g.npc_where(id).label
+  var place=HoldRoadCharacters.whereabouts(id,g.state) if HoldRoadCharacters.CAST.has(id) else g.npc_where(id).label
   g.notify("Find "+g.state.npc(id).first_name+" at "+place+".");return
  HoldPeople.meet(g,id)
  g.talk_id=id;g.talk_topic="";g.talk_line="";g.menu_history.clear();g.open_panel("conversation",false)

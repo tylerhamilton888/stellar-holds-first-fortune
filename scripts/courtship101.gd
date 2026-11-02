@@ -2,6 +2,8 @@ class_name HoldCourtship101
 extends RefCounted
 # Explicit player choices; save state stays separate from friendship.
 const ARCS={
+ "road_folk:10":{"title": "Room on the ridge", "request": "Alden is marking a safe winter path for the woodcutters. Bring three finished timber and two iron ingots for sound trail posts and their brackets.", "cost": {"wood": 3, "iron": 2}, "question": "The last post is set. Alden points uphill. \"We will take the long way home. Best view in the valley.\" He has remembered the route and forgotten to ask you.", "choices": ["Tell him you would like an invitation.", "Ask what he hoped you would enjoy on the walk."], "answers": ["He stops, then gives a rueful grin. \"Would you walk with me? I should like your company. There. Harder than splitting the post, somehow.\"", "\"The light on the snow. And a little more time with you.\" His certainty softens. \"If that is what you would like as well.\""], "keepsake": "Alden's hand-carved ridge marker", "yes": "\"Yes. I could give you a very confident speech, but I would rather tell you the truth: I have been hoping you would ask.\"", "promise": "\"By hearth and kin, yes. Not a place I have chosen for you. A home we choose together.\"", "dates": [["The sheltered path", "Alden offers his arm at a narrow turn. \"I know a shorter way. It is considerably less pleasant.\"", ["Choose the sheltered walk with him.", "Ask him to show you how he reads the weather."], ["\"A sound decision.\" He settles into your pace. For once the ranger has no wish to arrive early.", "He points out wind-combed snow and the way the firs lean. His voice loses its boast as he shares a place he loves."]], ["A turn on solid ground", "Alden has been practising a dance behind the timber shed. \"The ground was uneven. That was the entire difficulty.\"", ["Offer to test that theory.", "Ask him to follow your lead this time."], ["He bows with unexpected grace. One missed step brings a laugh from you both, and a rather better second attempt.", "He raises an eyebrow, then takes your hand. \"Very well. I am listening.\" His feet improve immediately."]], ["One quiet place", "Alden describes supper with his brothers: six opinions, a seventh louder one, and never enough clean cups. Then he asks what you would want from a home.", ["A lively table, with work shared fairly.", "Some quiet time that belongs to the two of you."], ["\"Then I shall learn to wash up before giving instructions.\" He says it lightly, but his hand around yours is steady.", "\"I can promise that.\" He leaves a space beside him and waits for you to choose it."]]]},
+ "road_folk:11":{"title": "A table of her choosing", "request": "Maren is finishing a folding shelf for her trail kitchen and planning a small supper for the road crew. Bring two finished timber and three provisions from your pack.", "cost": {"wood": 2, "food": 3}, "question": "Maren sets the last plate on her new shelf. \"If I let everyone arrange my kitchen, I shall spend my life walking round their ideas. What would you put here?\"", "choices": ["Ask where she would like it.", "Offer to hold the shelf while she tries her arrangement."], "answers": ["She laughs. \"An excellent beginning.\" She shows you her plan, then asks where you would like to sit when the cooking is done.", "You move the shelf twice before she is satisfied. \"There. Useful hands and no lecture. You are welcome in my kitchen.\""], "keepsake": "Maren's blue-checked supper cloth", "yes": "\"Yes. And let us be clear: I am choosing your company, not applying to keep your house.\" Her smile turns tender. \"I do think we would make a lovely home, though.\"", "promise": "\"Yes. A home with room for both our wishes, and someone who remembers to ask. I should be very happy to marry you.\"", "dates": [["When the supper is done", "Maren has put away the last pan. \"We could find another useful thing to do. Or we could be terribly idle for a little while.\"", ["Invite her to sit beside you.", "Offer to finish the last small chore together."], ["She sits close enough that your shoulders touch. \"This is proving to be one of my better ideas.\"", "The task takes almost no time with two pairs of hands. She keeps yours when it is finished."]], ["The next turn", "Maren offers a dance lesson in a quiet corner. \"The secret is to notice your partner. The counting is only there to help.\"", ["Take her hand and listen.", "Admit you might need a patient teacher."], ["She guides the first turn, then lets you find the next together. The lesson becomes a dance before either mentions it.", "\"Patience I have. Unwarned boots are another matter.\" She laughs, and draws you gently into the first step."]], ["A spring-colored patch", "Maren stitches a blue scrap into the lining of her travelling apron. \"Something cheerful where only I need to know it is there.\"", ["Ask her to tell you about the cloth.", "Tell her you like the life she is making for herself."], ["She tells you of a bright spring morning and a decision to leave a place that had grown too small. \"I am glad this road brought me here.\"", "She rests the needle safely in its cloth and takes your hand. \"Then perhaps we might make a little of it together.\""]]]},
  "road_folk:1": {
   "title": "A place at her own table",
   "request": "Dagna wants to bake her mother's feast loaf for the road crew. Bring two hearth barley breads and three hearthcaps; she insists that this time she will sit down with everyone else.",
@@ -370,7 +372,7 @@ static func partner(s)->String:
   if ARCS.has(id) and int(all(s)[id].get("stage",0))>0:return id
  return ""
 static func local(g,id:String)->bool:return ARCS.has(id) and HoldConversation.local(g,id) and HoldPeople.records(g.state).has(id)
-static func eligible(s,id:String)->bool:return HoldRoadCharacters.future_candidate(id,int(s.appearance.gender))
+static func eligible(s,id:String)->bool:return HoldRoadCharacters.future_candidate(id,int(s.appearance.gender)) and HoldRidgePair124.available(s,id)
 static func bond(s,id:String)->int:return int(HoldPeople.records(s).get(id,{}).get("bond",0))
 static func accept(g,id:String)->bool:
  if not local(g,id):return false
@@ -394,6 +396,7 @@ static func begin(g,id:String)->bool:
  var d=record(g.state,id)
  if d.quest!=3 or d.stage!=0 or bond(g.state,id)<5 or d.ended==day(g.state):return false
  d.stage=1;d.began=day(g.state);d.dates=[];d.last_date=day(g.state)
+ HoldRidgePair124.advance(g.state)
  g.save_game();return true
 static func date_ready(s,id:String)->bool:
  var d=record(s,id)
@@ -417,11 +420,14 @@ static func end(g,id:String)->bool:
  var d=record(g.state,id)
  if d.stage not in [1,2]:return false
  d.stage=0;d.ended=day(g.state);d.dates=[];d.last_date=-1
+ HoldRidgePair124.player_ended(g.state,id)
  g.save_game();return true
 static func status(s,id:String)->String:
  if not ARCS.has(id):return ""
  var d=s.surface.get("courtship101",{}).get(id,{})
  var stage=int(d.get("stage",0))
+ var shared=HoldRidgePair124.summary(s,id)
+ if stage==0 and HoldRidgePair124.paired(s) and id in HoldRidgePair124.IDS:return shared
  if stage==2:return "Betrothed · "+str(ARCS[id].title)
  if stage==1:return "Courting · %d of 3 shared moments" % d.get("dates",[]).size()
  return "Personal story complete" if int(d.get("quest",0))==3 else "Personal story: "+ARCS[id].title
@@ -434,10 +440,13 @@ static func panel(g,id:String):
  var text=arc.request
  if d.quest==2:text=arc.question
  elif d.stage==2:text=arc.promise
- elif d.quest==3:text=HoldRoadCharacters.CAST[id].close
+ elif d.quest==3:
+  text=HoldRoadCharacters.CAST[id].close
+  if id in HoldRidgePair124.IDS and HoldRidgePair124.paired(g.state):text=HoldRidgePair124.greeting(g.state,id)
  if date_ready(g.state,id):text=arc.dates[d.dates.size()][1]
  HoldConversation.header(g,g.panel_body,id,g.talk_line if g.talk_line!="" else text,true)
  g.label(g.panel_body,status(g.state,id),17)
+ HoldRidgePair124.options(g,id)
  if d.quest==0:
   HoldConversation.choose(g,"Offer to help",func():
    if accept(g,id):g.talk_line="Thank you. There is no deadline; come back when you have what we need."

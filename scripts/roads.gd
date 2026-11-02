@@ -19,7 +19,9 @@ const FOLK=[
  {"area":"pinewood","name":"Brynja","role":"Metalworker & toolwright","a":Vector2(760,790),"b":Vector2(850,790),"gender":1,"line":"Brynja sets a small brass hinge beside her tools. 'A good fitting should still close cleanly when our grandchildren are old. Come, tell me what you are making.'"},
  {"area":"trail","name":"Hakon","role":"Road guard","a":Vector2(1320,700),"b":Vector2(1430,700),"gender":0,"line":"Hakon rests his hand on his belt. 'Road is clear for now. If you are going into the hills, tell someone which path. I'll be here when you return.'"},
  {"area":"trail","name":"Skarrin","role":"Survey foreman & leading claimant","a":Vector2(970,630),"b":Vector2(1090,630),"gender":0,"line":"Those retaining walls are mine. So are the best survey figures. But naturally the old families will want their share of the credit."},
- {"area":"trail","name":"Edda","role":"Survey clerk & keeper of names","a":Vector2(1410,530),"b":Vector2(1510,530),"gender":1,"line":"The office holds surveys below and records above. A town needs both sound foundations and people who remember why they were laid."}]
+ {"area":"trail","name":"Edda","role":"Survey clerk & keeper of names","a":Vector2(1410,530),"b":Vector2(1510,530),"gender":1,"line":"The office holds surveys below and records above. A town needs both sound foundations and people who remember why they were laid."},
+ {"area":"pinewood","name":"Alden","role":"Huntsman & ridge ranger","a":Vector2(1120,625),"b":Vector2(1280,675),"gender":0,"line":"Alden looks up from the ridge path. 'Good weather for a long walk. Better weather for a good supper afterwards. Which brings you this way?'"},
+ {"area":"room:wayfarer","name":"Maren","role":"Trail cook & seamstress","a":Vector2(535,550),"b":Vector2(625,550),"gender":1,"line":"Maren sets aside her sewing. 'There is room at the table. Clean boots help, but good company matters more.'"}]
 var g
 var surface_ref:WeakRef
 var s:
@@ -172,6 +174,8 @@ func people(area:String,time:float=-1)->Array:
  var result=[]
  for i in FOLK.size():
   var f=FOLK[i]
+  if i==10 and HoldRidgePair124.paired(g.state):
+   f=f.duplicate(true);f.area="room:wayfarer";f.a=Vector2(535,510);f.b=Vector2(625,510)
   if area!=f.area or HoldMountain104.missing(g.state,"road_folk:"+str(i)) or HoldMountain104.gathering(g.state,"road_folk:"+str(i)):continue
   var key=str(g.state.seed_value)+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+7500+i,f.gender)
@@ -184,7 +188,7 @@ func people(area:String,time:float=-1)->Array:
   # A brief whole-painted sip during Dagna's existing seven-second pause.
   # Positions, walking speed and the saved-clock route remain unchanged.
   var resting=phase-duration
-  if i==1 and not walking and resting>=1.0 and resting<4.0:
+  if (i==1 or (i in [10,11] and area=="room:wayfarer")) and not walking and resting>=1.0 and resting<4.0:
    actor.pose="drink";actor.phase=float([0,1,2,2,3,0][clampi(int((resting-1.0)*2),0,5)]);actor.aim=Vector2.DOWN
   result.append(actor)
  result.append_array(HoldMountain104.guests(g,area))

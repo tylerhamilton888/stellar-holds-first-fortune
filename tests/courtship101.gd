@@ -9,7 +9,7 @@ func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
  g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false
- check(HoldCourtship101.ARCS.size()==6,"Exactly six authored romance candidates")
+ check(HoldCourtship101.ARCS.size()==8,"Exactly eight authored romance candidates")
  var genders=[0,0]
  for id in HoldCourtship101.ARCS:
   var cast=HoldRoadCharacters.CAST[id];genders[int(cast.gender)]+=1
@@ -70,7 +70,7 @@ func run():
   check(HoldCourtship101.partner(g.state)=="" and HoldCourtship101.record(g.state,id).quest==3,"Explicit breakup preserves personal story")
   check(not HoldCourtship101.begin(g,id),"Breakup cannot be immediately reversed for farming")
   HoldCalendar.advance(g.state,1440)
- check(genders==[3,3],"Three women and three men")
+ check(genders==[4,4],"Four women and four men")
  # An existing commitment blocks a second partner, including stale callbacks.
  visit("road_folk:1");g.state.appearance.gender=0;check(HoldCourtship101.begin(g,"road_folk:1"),"May court again after time apart")
  visit("road_folk:3");check(not HoldCourtship101.begin(g,"road_folk:3"),"Cannot begin a second simultaneous commitment")

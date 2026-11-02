@@ -6,6 +6,8 @@ const ROMANCE_ENABLED=true
 # Reviewed whole-character designs; natural pigments are applied by the existing
 # shared sprite/portrait pipeline. Saved acquaintances keep their identity.
 const CANDIDATE_APPEARANCES={
+ "road_folk:10":{"gender": 0, "sculpt": 1, "hair_color": 2, "cloth_color": 4, "skin": 1},
+ "road_folk:11":{"gender": 1, "sculpt": 3, "hair_color": 0, "cloth_color": 1, "skin": 0},
  "road_folk:1":{"gender":1,"sculpt":2,"hair_color":3,"cloth_color":3,"skin":1},
  "road_folk:2":{"gender":0,"sculpt":1,"hair_color":4,"cloth_color":4,"skin":1},
  "road_folk:3":{"gender":1,"sculpt":0,"hair_color":2,"cloth_color":4,"skin":2},
@@ -16,12 +18,16 @@ static func appearance(s,id:String,fallback:Dictionary)->Dictionary:
  if s.npc_appearances.has(id):return HoldStoryArt105.tag(s.npc_appearances[id].duplicate(true),id)
  if not CANDIDATE_APPEARANCES.has(id):return HoldStoryArt105.tag(fallback,id)
  var p=fallback.duplicate(true)
+ if id=="road_folk:10":p.first_name="Alden";p.family_name="Pineward"
+ if id=="road_folk:11":p.first_name="Maren";p.family_name="Hearthwell"
  if id=="road_folk:6":p.first_name="Brynja";p.family_name="Brasshaven"
  if id=="road_folk:7":p.first_name="Hakon";p.family_name="Ironroot"
  for field in CANDIDATE_APPEARANCES[id]:p[field]=CANDIDATE_APPEARANCES[id][field]
  return HoldStoryArt105.tag(HoldAppearance.normalized(p),id)
 
 const FAMILIAR_WELCOMES={
+ "road_folk:10":"There you are. I was about to invent a reason to come looking for you.",
+ "road_folk:11":"Come in. I have saved you a place, and an opinion about your last story.",
  "road_folk:0":"Ah, a face I know. Come tell me something the bridge hasn't already heard.",
  "road_folk:1":"There you are. No need to find an excuse to visit; your company will do.",
  "road_folk:2":"I kept an interesting offcut to show you. It looks like nothing yet. That is the enjoyable part.",
@@ -31,6 +37,8 @@ const FAMILIAR_WELCOMES={
  "road_folk:6":"There you are. Put your pack down; I have a new fitting to show you, and a seat that could use company.",
  "road_folk:7":"Back safely. Good. I was hoping we'd have time for more than a nod today."}
 const CAST={
+ "road_folk:10":{"trait": "Bold, capable, stubbornly affectionate", "want": "A roof above the treeline, a well-stocked larder, and somebody who is glad to hear my boots at the door. I used to think the first two would arrange the third. Apparently there is more to it.", "worry": "I can read a slope before the snow moves. Reading a room is a different trade. Six younger brothers have not improved my instruction.", "close": "I am used to being the one who knows the way. With you, I would rather find out where we want to go. Together, if you will have me.", "like": "river_fish", "dislike": "iron_slag", "work": "wood", "reason": "Dry trail markers for the high ridge", "adult": true, "gender": 0, "relationship": "single", "romance_candidate": true, "future_player_gender": 1, "topics": [["What brings you down from the ridge?", "Salt, arrow fittings, and occasionally advice I did not ask for. Maren supplies that last item with admirable confidence. The advice is usually sound."], ["You have a large family?", "Six younger brothers. Fine trackers, every one. None can find a clean shirt without assistance. I blame the shirts."], ["Can a ranger dance?", "I can cross scree in the dark. A few floorboards ought to present no difficulty. That is what I said before the second turn."]]},
+ "road_folk:11":{"trait": "Warm, spirited, nobody's fool", "want": "A travelling supper kitchen of my own. Good food, sound canvas, and room for a dance when the work is done. I like making a home; I mean to have a say in the shape of it.", "worry": "People sometimes mistake kindness for agreeing to everything. I can welcome a muddy ranger and still make him clean his boots. Both are acts of hospitality.", "close": "I could make a home almost anywhere. That does not mean I would choose just anyone to share it. With you, I find myself thinking about the choosing.", "like": "barley_bread", "dislike": "coal", "work": "wood", "reason": "A folding shelf for the trail kitchen", "adult": true, "gender": 1, "relationship": "single", "romance_candidate": true, "future_player_gender": 0, "topics": [["What is your work here?", "Trail suppers, mended coats, and teaching hungry dwarfs that a table has more uses than resting their elbows. Dagna lends me a corner while I build up my own kitchen."], ["Do you know Alden?", "He can bring a whole winter's supper down a mountain. Asking someone to share it is apparently the difficult part. There is a good heart under all that confidence."], ["You teach dancing?", "Only the useful parts: listen, make room, and remember there is another person holding your hand. A surprising number of skills begin there."]]},
  "road_folk:8":{"trait":"Competent, austere, resentful","want":"Equal standing for every useful pair of hands. Though a surveyor who carries this place ought to be heard before the men who merely carry baskets.","worry":"They will find some ancestral seal and call it merit. My drainage cuts are real. My walls are real. Their pedigrees do not hold back water.","close":"Your help has been useful. Do not mistake that for understanding what I have accomplished here.","like":"iron","dislike":"barley_bread","work":"wood","reason":"Survey stakes for the drainage cut","adult":true,"gender":0,"relationship":"single","romance_candidate":false,"topics":[["Why stay here?","Because this place could be something, if it would stop looking backwards."],["And the Greenskins?","An Orc understands strength without consulting a grandfather. There might be more common ground than our elders admit."],["The others helped with your walls.","At my direction. Someone had to see what needed doing."]]},
  "road_folk:9":{"trait":"Patient, exacting, quietly amused","want":"A plan that matches the ground, and a name attached to every promise. A record kept properly saves quarrels later.","worry":"Newcomers hear that a noble seal earns a hereditary allowance and imagine any old trinket will do. Authentication is work, not flattery.","close":"Your home will enter the town record when it is ready. Choose a name you will still like hearing shouted across a muddy street.","like":"hearthcap","dislike":"iron_slag","work":"stone","reason":"Dry shelves for the survey archive","adult":true,"gender":1,"relationship":"single","romance_candidate":false,"topics":[["Why do ancestral claims matter?","Charter law rewards an authenticated ancestral right. The allowance is recorded separately from work; it is not a secret adjustment to the totals."],["May I build like the town buildings?","Every shell here has a plan in your building book. Floors, stairs, partitions and finishes use the same craft. Your household plot gives you room to practise."],["What is upstairs?","Survey records and old names. The stair is real; mind the landing and keep the passage clear."]]},
  "road_folk:0":{
@@ -105,13 +113,16 @@ static func persona(id:String)->Dictionary:
  return result
 
 static func greeting(g,id:String)->String:
+ var paired_line=HoldRidgePair124.greeting(g.state,id)
+ if paired_line!="":return paired_line
  var practical:String=HoldRoads.FOLK[int(id.trim_prefix("road_folk:"))].line
  var d=HoldPeople.records(g.state).get(id,{})
  if int(d.get("bond",0))>=5:return FAMILIAR_WELCOMES.get(id,"Good to see you again.")+"\n\n"+practical
  return practical
 
-static func whereabouts(id:String)->String:
- return {"road_folk:0":"Stonebridge road","road_folk:1":"Inside the Wayfarer's Hearth, Stonebridge","road_folk:2":"Pinewood timber yard","road_folk:3":"Greenhearth allotments","road_folk:4":"Greenhearth fields","road_folk:5":"Outside Old Workings, Stonebridge","road_folk:6":"Pinewood toolwright’s bench","road_folk:7":"Stonebridge eastern road watch","road_folk:8":"Stonebridge drainage works, southeast of the forge","road_folk:9":"Outside Stonebridge survey hall"}.get(id,"")
+static func whereabouts(id:String,s=null)->String:
+ if id=="road_folk:10" and s!=null and HoldRidgePair124.paired(s):return "Inside the Wayfarer's Hearth, with Maren"
+ return {"road_folk:10":"Pinewood eastern ranger path","road_folk:11":"Inside the Wayfarer's Hearth, by the supper shelf","road_folk:0":"Stonebridge road","road_folk:1":"Inside the Wayfarer's Hearth, Stonebridge","road_folk:2":"Pinewood timber yard","road_folk:3":"Greenhearth allotments","road_folk:4":"Greenhearth fields","road_folk:5":"Outside Old Workings, Stonebridge","road_folk:6":"Pinewood toolwright’s bench","road_folk:7":"Stonebridge eastern road watch","road_folk:8":"Stonebridge drainage works, southeast of the forge","road_folk:9":"Outside Stonebridge survey hall"}.get(id,"")
 
 static func upgrade_record(id:String,d:Dictionary):
  if not CAST.has(id):return

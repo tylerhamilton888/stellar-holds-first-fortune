@@ -1,3 +1,11 @@
+# Ridge courtship 124 — implementation and validation
+
+Added Alden Pineward and Maren Hearthwell as two optional romances, with dedicated portraits, 48 whole painted world poses, personal errands, keepsakes, three dates each and betrothal. Their saved shared story progresses to mutual courtship and betrothal when neither is pursued; explicit player interest and commitments take priority. Alden joins Maren at the Wayfarer's Hearth once paired. Stable road IDs 10/11, additive save state, eight candidates and 26 named world bundles.
+
+Native art and conversation review completed. Full source/export and hosted checks are in progress; completion evidence will be appended separately. No Windows release is included. Prior completed batches and releases remain intact.
+
+---
+
 # Final named cast batch 123 — all 24 complete
 
 Dagr, Odrin, Osvik, Tovan and Kelvar complete the named world cast with 184 whole painted poses. Four-view locomotion/resting covers all five; existing drinking, hammering and directional mining roles have their own complete figures. Yrsa also receives sixteen missing work poses, preserving her earlier 24. Total new poses: 200. Existing stature, identities, gameplay and saves remain unchanged; named cache revision 23 refreshes derived art.

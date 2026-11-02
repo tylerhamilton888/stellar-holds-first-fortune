@@ -82,7 +82,7 @@ static func people(g):
   var actions=VBoxContainer.new();actions.custom_minimum_size.x=145;row.add_child(actions)
   if HoldConversation.local(g,id):g.small_button(actions,"Talk",func():HoldConversation.start(g,id))
   if not HoldPeople.background(id):g.small_button(actions,"Track location" if g.state.tracked_npc!=id else "Stop tracking",func():g.state.tracked_npc=id if g.state.tracked_npc!=id else "";g.save_game();g.close_panel())
-  elif HoldRoadCharacters.CAST.has(id):g.label(actions,HoldRoadCharacters.whereabouts(id),14)
+  elif HoldRoadCharacters.CAST.has(id):g.label(actions,HoldRoadCharacters.whereabouts(id,g.state),14)
  search.text_changed.connect(func(query):
   for row in rows:row.node.visible=query.strip_edges().to_lower() in row.name)
 

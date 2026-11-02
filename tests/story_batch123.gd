@@ -46,7 +46,7 @@ func run():
  for id in BATCH+["yrsa"]:
   profiles[id]=(HoldWorkplace98.profile() if id=="odrin" else g.state.npc(id)).duplicate(true)
   verify_bundle(id,profiles[id])
- check(HoldStoryWorld105.APPROVED.size()==24 and HoldStoryWorld105.CAST.size()==24,"All twenty-four named world bundles enabled")
+ check(HoldStoryWorld105.APPROVED.size()==26 and HoldStoryWorld105.CAST.size()==26,"Original twenty-four plus two ridge characters enabled")
  for id in HoldStoryArt105.CAST:
   check(id in HoldStoryWorld105.APPROVED,"Every portrait cast member has a world bundle "+id)
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player art preserved")

@@ -16,7 +16,7 @@ Keep the shared movement/system foundation where useful, but author complete cha
 
 ## Existing authored candidates
 
-The implementation now contains six adult, single candidates: three women and three men. Each has an individual material errand, personal choice and keepsake, three authored courtship scenes, explicit reciprocal courtship and betrothal. Marriage and household life remain milestone six. Defaults use reviewed portrait/whole-character families; previously saved identities remain intact, including names and preferences.
+The implementation now contains eight initially single adult candidates: four women and four men. Each has an individual material errand, personal choice and keepsake, three authored courtship scenes, explicit reciprocal courtship and betrothal. Marriage and household life remain milestone six. Defaults use reviewed portrait/whole-character families; previously saved identities remain intact, including names and preferences.
 
 | Character | Appearance direction | Personality and attraction |
 | --- | --- | --- |
@@ -27,6 +27,11 @@ The implementation now contains six adult, single candidates: three women and th
 
 | Brynja Brasshaven, toolwright | Flaxen braid, ochre work clothes, expressive feminine face and sturdy build | Ambitious and exacting, with dry humor; learns to set down her work and share credit without surrendering her craft. |
 | Hakon Ironroot, road guard | Copper hair and substantial full beard, slate blue, broad masculine build | Courageous, attentive and quietly tender; protects others, admits fatigue and makes room for a life beyond duty. |
+
+| Alden Pineward, huntsman and ridge ranger | Swept-back auburn waves, loose full red beard, ochre buckskin and green mantle; powerful masculine build | Confident, blunt and affectionate; reads a mountain better than a room, and learns to ask rather than assume. |
+| Maren Hearthwell, trail cook and seamstress | Blonde waves and side braid, blue ribbon, cornflower dress and cream apron; pretty feminine adult Dwarf | Warm, spirited and practical; loves supper and dancing, and insists kindness leaves room for her own wishes. |
+
+Alden and Maren carry a discreet film homage requested by the owner. Each has a full personal errand, keepsake, three dates and reciprocal betrothal. If neither is pursued they eventually court and become betrothed to each other; explicit player interest or a commitment to either protects that path. See art/ridge124/README.md for timing and production records.
 
 The current personalities, friendships, work, tastes and personal stories remain the foundation. Affection should grow through shared life, earned trust, kindness and explicit reciprocal interest. Give each ambitions, humor, vulnerabilities and flaws without making relentless hostility the main romantic hook. Their language, commitments and habits should express kinship, craftsmanship, loyalty, ancestry and pride in the hold.
 

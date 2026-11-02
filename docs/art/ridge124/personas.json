@@ -1,0 +1,60 @@
+{
+  "road_folk:10": {
+    "trait": "Bold, capable, stubbornly affectionate",
+    "want": "A roof above the treeline, a well-stocked larder, and somebody who is glad to hear my boots at the door. I used to think the first two would arrange the third. Apparently there is more to it.",
+    "worry": "I can read a slope before the snow moves. Reading a room is a different trade. Six younger brothers have not improved my instruction.",
+    "close": "I am used to being the one who knows the way. With you, I would rather find out where we want to go. Together, if you will have me.",
+    "like": "river_fish",
+    "dislike": "iron_slag",
+    "work": "wood",
+    "reason": "Dry trail markers for the high ridge",
+    "adult": true,
+    "gender": 0,
+    "relationship": "single",
+    "romance_candidate": true,
+    "future_player_gender": 1,
+    "topics": [
+      [
+        "What brings you down from the ridge?",
+        "Salt, arrow fittings, and occasionally advice I did not ask for. Maren supplies that last item with admirable confidence. The advice is usually sound."
+      ],
+      [
+        "You have a large family?",
+        "Six younger brothers. Fine trackers, every one. None can find a clean shirt without assistance. I blame the shirts."
+      ],
+      [
+        "Can a ranger dance?",
+        "I can cross scree in the dark. A few floorboards ought to present no difficulty. That is what I said before the second turn."
+      ]
+    ]
+  },
+  "road_folk:11": {
+    "trait": "Warm, spirited, nobody's fool",
+    "want": "A travelling supper kitchen of my own. Good food, sound canvas, and room for a dance when the work is done. I like making a home; I mean to have a say in the shape of it.",
+    "worry": "People sometimes mistake kindness for agreeing to everything. I can welcome a muddy ranger and still make him clean his boots. Both are acts of hospitality.",
+    "close": "I could make a home almost anywhere. That does not mean I would choose just anyone to share it. With you, I find myself thinking about the choosing.",
+    "like": "barley_bread",
+    "dislike": "coal",
+    "work": "wood",
+    "reason": "A folding shelf for the trail kitchen",
+    "adult": true,
+    "gender": 1,
+    "relationship": "single",
+    "romance_candidate": true,
+    "future_player_gender": 0,
+    "topics": [
+      [
+        "What is your work here?",
+        "Trail suppers, mended coats, and teaching hungry dwarfs that a table has more uses than resting their elbows. Dagna lends me a corner while I build up my own kitchen."
+      ],
+      [
+        "Do you know Alden?",
+        "He can bring a whole winter's supper down a mountain. Asking someone to share it is apparently the difficult part. There is a good heart under all that confidence."
+      ],
+      [
+        "You teach dancing?",
+        "Only the useful parts: listen, make room, and remember there is another person holding your hand. A surprising number of skills begin there."
+      ]
+    ]
+  }
+}

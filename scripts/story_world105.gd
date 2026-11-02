@@ -1,14 +1,14 @@
 class_name HoldStoryWorld105
 extends RefCounted
 # Activate only complete, reviewed bundles. Portrait coverage is independent.
-const CAST=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann","dagr","odrin","osvik","tovan","kelvar"]
-# All twenty-four named bundles have reviewed four-view locomotion and resting stances.
+const CAST=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann","dagr","odrin","osvik","tovan","kelvar","alden","maren"]
+# All twenty-six named bundles have reviewed four-view locomotion and resting stances.
 # Approved social and working keys cover the activities listed below.
 # Future studies remain gated; technical tests never grant approval.
-const APPROVED:Array[String]=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann","dagr","odrin","osvik","tovan","kelvar"]
-const HEIGHTS={"brynja":58.0,"ragnhild":64.0,"edda":63.0,"yrsa":58.0,"sigrid":64.0}
+const APPROVED:Array[String]=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann","dagr","odrin","osvik","tovan","kelvar","alden","maren"]
+const HEIGHTS={"alden":64.0,"maren":60.0,"brynja":58.0,"ragnhild":64.0,"edda":63.0,"yrsa":58.0,"sigrid":64.0}
 const PREFIX="res://assets/story105/world/"
-const ACTIVITIES={"dagna":{"drink":[20,21,22,23]},"orla":{"drink":[20,21,22,23]},"sigrid":{"drink":[20,21,22,23]},"yrsa":{"drink":[20,21,22,23]},"hedrik":{"drink":[20,21,22,23]},"brann":{"drink":[20,21,22,23]},"dagr":{"drink":[20,21,22,23]},"osvik":{"drink":[20,21,22,23]},"tovan":{"drink":[20,21,22,23]},"kelvar":{"drink":[20,21,22,23]}}
+const ACTIVITIES={"alden":{"drink":[20,21,22,23]},"maren":{"drink":[20,21,22,23]},"dagna":{"drink":[20,21,22,23]},"orla":{"drink":[20,21,22,23]},"sigrid":{"drink":[20,21,22,23]},"yrsa":{"drink":[20,21,22,23]},"hedrik":{"drink":[20,21,22,23]},"brann":{"drink":[20,21,22,23]},"dagr":{"drink":[20,21,22,23]},"osvik":{"drink":[20,21,22,23]},"tovan":{"drink":[20,21,22,23]},"kelvar":{"drink":[20,21,22,23]}}
 # Working keys follow the existing contact timing. Pick views match the current
 # front/side/back worker renderer; a hammer is always the authored side view.
 const WORK={
