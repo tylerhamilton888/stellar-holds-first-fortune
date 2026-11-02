@@ -1,0 +1,138 @@
+[
+  {
+    "test": "import",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 0,
+    "seconds": 11.19
+  },
+  {
+    "test": "story_world105",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 1249,
+    "seconds": 19.53
+  },
+  {
+    "test": "story_batch121",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 657,
+    "seconds": 74.64
+  },
+  {
+    "test": "story_batch122",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 660,
+    "seconds": 70.53
+  },
+  {
+    "test": "ambient",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 36,
+    "seconds": 90.59
+  },
+  {
+    "test": "firstvisit99",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 22,
+    "seconds": 70.52
+  },
+  {
+    "test": "lodge100",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 47,
+    "seconds": 74.57
+  },
+  {
+    "test": "mountain104",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 40,
+    "seconds": 53.11
+  },
+  {
+    "test": "story_world108",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 317,
+    "seconds": 54.55
+  },
+  {
+    "test": "story_world111",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 288,
+    "seconds": 54.99
+  },
+  {
+    "test": "story_world112",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 292,
+    "seconds": 51.76
+  },
+  {
+    "test": "story_world113",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 293,
+    "seconds": 55.79
+  },
+  {
+    "test": "story_world116",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 377,
+    "seconds": 49.51
+  },
+  {
+    "test": "story_world117",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 372,
+    "seconds": 57.59
+  },
+  {
+    "test": "story_world118",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 492,
+    "seconds": 55.45
+  },
+  {
+    "test": "story_world119",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 320,
+    "seconds": 55.4
+  },
+  {
+    "test": "story_world120",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 429,
+    "seconds": 59.58
+  }
+]

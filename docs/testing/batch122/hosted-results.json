@@ -1,0 +1,38 @@
+{
+  "run_id": 41508202259,
+  "head_sha": "b329e207c8e7a62d08b68ea68fad8e3ea5fa47ec",
+  "conclusion": "success",
+  "completed_at": "2026-11-02T19:42:38Z",
+  "jobs": [
+    {
+      "name": "gameplay (gameplay-3)",
+      "id": 125494311088,
+      "conclusion": "success",
+      "completed_at": "2026-11-02T19:42:37Z"
+    },
+    {
+      "name": "gameplay (gameplay-4)",
+      "id": 125494311405,
+      "conclusion": "success",
+      "completed_at": "2026-11-02T19:41:50Z"
+    },
+    {
+      "name": "people-preview",
+      "id": 125494311611,
+      "conclusion": "success",
+      "completed_at": "2026-11-02T19:23:46Z"
+    },
+    {
+      "name": "gameplay (gameplay-1)",
+      "id": 125494311834,
+      "conclusion": "success",
+      "completed_at": "2026-11-02T19:33:19Z"
+    },
+    {
+      "name": "gameplay (gameplay-2)",
+      "id": 125494311879,
+      "conclusion": "success",
+      "completed_at": "2026-11-02T19:35:57Z"
+    }
+  ]
+}
