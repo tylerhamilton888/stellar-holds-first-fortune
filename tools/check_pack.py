@@ -10,6 +10,7 @@ def main():
     p.add_argument('--godot', required=True)
     p.add_argument('--pack', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--case', action='append', dest='selected_cases', help='Focused verification only; omit for the complete release gate')
     a = p.parse_args(); output = a.output.resolve(); output.mkdir(parents=True, exist_ok=False)
     engine = str(Path(a.godot).resolve()); pack = str(a.pack.resolve())
     cases = [('ambient', (ROOT/'tests/pack_ambient61.gd').read_text(), 'PACK AMBIENT61')]
@@ -17,6 +18,10 @@ def main():
     fixture = (ROOT/'tests/support/game_fixture.gd').read_text()
     body = (ROOT/'tests/story_art105.gd').read_text().split('\n', 1)[1]
     cases.append(('story_art105', fixture+'\n'+body, 'STORYART105'))
+    body = (ROOT/'tests/story_world105.gd').read_text().split('\n', 1)[1]
+    cases.append(('story_world105', fixture+'\n'+body, 'STORYWORLD105'))
+    body = (ROOT/'tests/story_world108.gd').read_text().split('\n', 1)[1]
+    cases.append(('story_world108', fixture+'\n'+body, 'STORYWORLD108'))
     body = (ROOT/'tests/continuity66.gd').read_text().split('\n', 1)[1]
     cases.append(('continuity', fixture+'\n'+body, 'CONTINUITY66'))
     body = (ROOT/'tests/living67.gd').read_text().split('\n', 1)[1]
@@ -92,6 +97,11 @@ def main():
     cases.append(('greatclaim102', fixture+'\n'+body, 'GREATCLAIM102'))
     body = (ROOT/'tests/courtship101.gd').read_text().split('\n', 1)[1]
     cases.append(('courtship101', fixture+'\n'+body, 'COURTSHIP101'))
+    if a.selected_cases:
+        unknown = set(a.selected_cases)-{name for name, _, _ in cases}
+        if unknown:
+            p.error('Unknown pack case: '+', '.join(sorted(unknown)))
+        cases = [case for case in cases if case[0] in a.selected_cases]
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()
         with tempfile.TemporaryDirectory(prefix='stellar-pack-') as temp:

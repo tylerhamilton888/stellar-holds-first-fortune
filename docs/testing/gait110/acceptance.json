@@ -1,0 +1,46 @@
+{
+  "native": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 745,
+      "seconds": 10.43
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 321,
+      "seconds": 47.46
+    }
+  ],
+  "exported_pack": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 745,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 321,
+      "errors": []
+    }
+  ],
+  "packed_entries_verified": 3443,
+  "visual_review": "Four rear-quarter keys inspected at native62px and2x, including both contacts, opposite passing overlap and toe/torso direction. Physical near/far leg identities tracked in colored diagnostics before brown cleanup.",
+  "owner_acceptance": "Open; gait109 rear-quarter visual conclusion superseded by owner feedback.",
+  "changed_frames": [
+    14,
+    15
+  ],
+  "limits": [
+    "Full hosted gate pending for this correction",
+    "No new Windows build/release",
+    "Other nine candidates remain disabled"
+  ]
+}

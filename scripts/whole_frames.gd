@@ -54,9 +54,11 @@ static func data():
   for key in scales:
    var parts=key.split(":")
    metadata[parts[0]][int(parts[1])].height=scales[key]
+  HoldStoryWorld105.register(metadata)
 static func identity(p:Dictionary)->String:return ("female" if p.gender else "male")+str(int(p.sculpt))
 static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
  data()
+ if HoldStoryWorld105.has_profile(p,action):return HoldStoryWorld105.descriptor(p,d,walking,time,action,phase,metadata)
  var view=HoldDirectional.view(d);var key=posmod(int(time/CYCLE*4),4)
  var sheet=identity(p)+"-core";var index=view
  if walking:index=4+view*4+([0,1,2,1][key] if view==2 else key)
@@ -122,6 +124,7 @@ static func source(sheet:String)->Image:
   sources[sheet]=img
  return sources[sheet]
 static func cache_key(p:Dictionary,sheet:String,index:int,full:bool=false)->String:
+ if sheet.begins_with(HoldStoryWorld105.PREFIX):return "story105-world10:"+sheet+":"+str(index)+":"+str(full)
  return sheet+":"+str(index)+":"+str(p.skin)+":"+HoldAppearance.hair(p).to_html()+":"+str(p.cloth_color)+":"+str(p.jewelry)+":"+str(full)
 static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Texture2D:
  data();var key=cache_key(p,sheet,index,full)
@@ -143,8 +146,9 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
  var hair=HoldAppearance.hair(p);var cloth=HoldAppearance.cloth(p);var skin=HoldAppearance.skin(p)
  # Preserve shading inside each painting, but use the same hair material when
  # changing source sheets. Calibration is measured from reserved hair pigment.
- var calibration=pigment[sheet][index]
- for y in img.get_height():
+ var fixed_colors=sheet.begins_with(HoldStoryWorld105.PREFIX)
+ var calibration=[1,1] if fixed_colors else pigment[sheet][index]
+ for y in (0 if fixed_colors else img.get_height()):
   for x in img.get_width():
    var c=img.get_pixel(x,y)
    if c.a<=0:img.set_pixel(x,y,Color.TRANSPARENT);continue
@@ -227,6 +231,9 @@ static func prepare(g:Node):
  var queued={}
  for entry in people:
   var p=HoldAppearance.normalized(entry.profile)
+  if HoldStoryWorld105.has_profile(p):
+   queue_story_profile(p,queued)
+   continue
   for kind in (["core","town","utility","handling","equipped","motion","shield88"] if entry.player else ["core","utility","town"]):
    var sheet=identity(p)+"-"+kind
    if not metadata.has(sheet):continue
@@ -244,12 +251,19 @@ static func prepare_profile(profile:Dictionary):
  data();var p=HoldAppearance.normalized(profile)
  var queued={}
  for job in warm_jobs:queued[cache_key(job[0],job[1],job[2])]=true
+ if HoldStoryWorld105.has_profile(p):
+  queue_story_profile(p,queued);warm_total=warm_jobs.size();return
  for kind in ["core","town"]:
   var sheet=identity(p)+"-"+kind
   for index in (range(20) if kind=="core" else range(8,12)):
    var key=cache_key(p,sheet,index)
    if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index])
  warm_total=warm_jobs.size()
+static func queue_story_profile(p:Dictionary,queued:Dictionary):
+ var sheet=HoldStoryWorld105.PREFIX+str(p.cast_id)+".webp"
+ for index in metadata[sheet].size():
+  var key=cache_key(p,sheet,index)
+  if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index]);queued[key]=true
 static func warming()->bool:return not warm_jobs.is_empty()
 static func warm_step():
  var started=Time.get_ticks_usec()

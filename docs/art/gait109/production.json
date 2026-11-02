@@ -1,0 +1,14 @@
+{
+  "source": "exec-040efb56-39c0-4014-bf42-9bfdb2f52fab.png",
+  "source_sha256": "180d53460b55044158a4da9c1724e8d1151a7c0fd79a4606f4bac7a2649ef1f7",
+  "reference": "exec-b172d0f1-3bde-43cb-916d-0357a3fde6ac.png",
+  "prompt": "Use case: precise-object-edit. Fix the bow-legged appearance in these two rear-view walking sprites. Keep the complete upper bodies, hair, clothing, skirt, apron bow, arms, size and compact dwarf proportions unchanged. Change ONLY the drawn lower-leg/boot alignment: both figures are walking STRAIGHT AWAY from the camera. Each leg travels in a parallel front-to-back plane directly below its own hip. No outward-flared knees, no duck feet, no sideways or diagonal kick. The raised boot sole must face squarely toward the camera with its heel-to-toe LONG AXIS PERFECTLY VERTICAL, not tilted left or right. The planted boot is straight below its knee, also pointing directly away. In the LEFT figure retain the LEFT foot lifted and RIGHT foot planted; in the RIGHT figure retain the RIGHT foot lifted and LEFT foot planted. Keep the two boots close together, with a narrow natural gap, without crossing the legs. A modest walking heel lift, not a running high-knee kick. Preserve the correct alternation and original squat adult character. Two WHOLE painted sprites, generous transparent margins, no text.",
+  "transparent_background": true,
+  "import": "python tools/import_story_world105.py docs/art/gait109/back-passing-straight.png dagnabackstraight --columns 2 --rows 1",
+  "mapping": {
+    "17": "dagnabackstraight.webp:0 (left heel lifted)",
+    "19": "dagnabackstraight.webp:1 (right heel lifted)"
+  },
+  "cache": "story105-world9",
+  "review": "Native board and four direction loop inspected. Rear contact keys retained; rear-quarter perspective inspected without edits. Owner visual acceptance remains open."
+}

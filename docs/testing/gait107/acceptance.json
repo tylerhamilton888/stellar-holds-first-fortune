@@ -1,0 +1,24 @@
+{
+  "technical_checks": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.17
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 746,
+      "seconds": 11.27
+    }
+  ],
+  "art_approved": false,
+  "runtime_activated": false,
+  "new_windows_release": false,
+  "visual_review": "Native 62px candidate board reviewed. Front frame torso/proportion changes remain unacceptable. Rear contact arm corrected; side and rear have distinct opposing keys, but complete bundle acceptance remains outstanding. Standalone drink frames are not runtime-integrated."
+}

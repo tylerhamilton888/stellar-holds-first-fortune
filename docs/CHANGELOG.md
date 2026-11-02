@@ -1,8 +1,35 @@
+# Unreleased — Dagna rear-quarter alignment
+
+- Repainted the two opposite-step poses with pelvis, knees and boot direction aligned to the upper-right-facing torso. Preserved alternating physical feet and opposing contact arms; rejected repeated-foot and wrong-arm redraws.
+- Native and exported-package affected checks each passed 1,066 assertions; verified 3,443 package entries. Updated native loop/board and exact art provenance are in gait110. Owner visual review remains open.
+
+# Unreleased — Dagna rear alignment correction
+
+- Replaced both rear passing paintings: upright boot soles, narrower parallel tracks and preserved opposite-foot identity. Native four-view board/loop reviewed; prior rear passing art retained.
+- Named-art cache revision bumped. Affected native and exported-package suites each passed 1,066 assertions; 3,440 packed entries verified. Owner visual acceptance remains open.
+
+# Unreleased — Dagna world animation
+
+- Enabled Dagna's reviewed four resting views, sixteen alternating walk keys and four whole drinking poses. Added a brief sip during her existing wayside pauses, preserving movement timing, save identity and inventory.
+- Repaired front proportions/pouch continuity and rear passing steps; measured atlas row boundaries prevent clipped crowns/boots. Other named bundles remain disabled.
+- Added live-route/save/rescue integration checks, explicit exported metadata inclusion and focused pack-case selection while retaining the complete default release gate.
+- Native focused checks: 1,282 passed. Focused exact-pack checks: 1,158 passed. All 3,437 package entries verified. No new Windows release.
+
+# Unreleased local work — gait studies and intro review
+
+- Added whole-frame pair/grid importing and brown-boot Dagna core, opposite-contact, rear-quarter and drink studies. Candidate source routing preserves original assets; all world bundles remain disabled because visual/activity acceptance is incomplete.
+- Godot import and 746 native extraction/quarantine checks passed; no production sprite change or new executable.
+- Audited the complete intro-overhaul directive against code and documented implemented, partial and missing chapters, including the absent Keldrath unlock and post-authentication score-round gap.
+
+# Session recovery and gait review — 2026-11-01
+
+Merged validated portrait/loading PR #77. Preserved uncommitted world-art studies without activating them; repaired importer staging and added production-routing quarantine regression checks. Dagna side diagnostic repaired and captured at native scale; remaining views are unapproved. See docs/art/gait106/README.md.
+
 # Unreleased — story art 105, checkpoint 1
 
 - Added 24 bespoke named dialogue portraits with stable explicit ID routing; retained Eirik and generic/player portraits.
 - Added the four approved loading illustrations with per-event rotation and readable full-canvas presentation.
-- World sprite/stance replacement is not part of this checkpoint; failed walking studies remain excluded.
+- World sprite/stance replacement is not part of this checkpoint; candidate bundles remain disabled pending explicit alternating-foot review. Technical extraction tests do not approve animation.
 
 # 0.89.0 — A hearth of your own (published)
 

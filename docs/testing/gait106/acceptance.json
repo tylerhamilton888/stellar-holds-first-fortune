@@ -1,0 +1,66 @@
+{
+  "baseline": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.16
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 656,
+      "seconds": 11.07
+    },
+    {
+      "test": "story_art105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 92,
+      "seconds": 7.38
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 84,
+      "seconds": 108.48
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 40,
+      "seconds": 51.17
+    }
+  ],
+  "final_quarantine": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.16
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 746,
+      "seconds": 11.49
+    }
+  ],
+  "native_visual": "Side diagnostic contact/passing keys reviewed enlarged and at 62px; four native captures encoded at 130ms per key. Front/rear views rejected. Not an active runtime bundle.",
+  "portrait_merge": "6c821675d1bf0994d5c8c48a370d15ad98a7d14f",
+  "hosted_portrait_validation": 41350992804,
+  "new_windows_release": false
+}

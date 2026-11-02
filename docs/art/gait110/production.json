@@ -1,0 +1,71 @@
+{
+  "method": "built-in image generation edits; whole painted frames",
+  "change": "Dagna metadata14/15 only; retain original first half12/13; named cache10",
+  "attempts": [
+    {
+      "prompt": "Use case: precise-object-edit. Asset: four whole painted game sprites, transparent 2x2 sheet. Inputs are the two halves of Dagna's current rear-three-quarter walk. Correct their inconsistent lower-body direction. Repaint FOUR coherent rear-three-quarter WALK poses of exactly this same compact adult female dwarf, same copper curls, red dress, white apron bow, brown belt and boots, bracers, hoop earring. All four figures face and travel diagonally AWAY toward the UPPER RIGHT of the screen, viewed from behind at 45 degrees. Shoulders, pelvis, knees and boot toes must all agree on that same direction. Keep this camera angle locked. Do not mirror the lower body between steps. Each leg swings on a PARALLEL diagonal track along upper-right / lower-left; NEVER kick out toward lower-right or spread into a V. Short compact legs, modest grounded walking stride, no high running kick, no ballet turnout. A small rear heel lift only. Alternate physical feet correctly: top-left RIGHT foot forward/planted toward upper right, LEFT foot trailing toward lower left, right arm back/left arm forward; top-right RIGHT foot supporting beneath hip, LEFT foot passing close beside it with slight heel lift; bottom-left LEFT foot forward/planted toward upper right, RIGHT foot trailing toward lower left, left arm back/right arm forward; bottom-right LEFT foot supporting beneath hip, RIGHT foot passing close beside it with slight heel lift. Track anatomical identity and near/far occlusion across the four frames; the forward and trailing feet must actually swap. Boots always aim in the travel direction; lifted soles seen obliquely, never a full sole staring straight at camera as if walking due north. Preserve the same adult dwarf shape, hair mass, head size, outfit and short boot height across every frame. Four equally sized full figures with generous transparent gutters, arranged 2x2, no text, no arrows, no floor or shadow. This is a whole-character redraw, not cut-and-pasted limbs.",
+      "source": "exec-160fbb21-74a9-4a5a-b259-b65cd45dfc56.png",
+      "decision": "rejected: repeated leading foot",
+      "references": [
+        "exec-cf1950ee-d603-49e8-8b54-58d12aa1d2ff.png",
+        "exec-72fe7ec1-d94c-49a2-8e33-67eab252b65a.png"
+      ]
+    },
+    {
+      "prompt": "Use case: precise-object-edit. Edit THIS two-character sheet. Preserve both complete upper bodies exactly: red curled hair, faces, arms, bracers, dress and white rear bow, compact adult female dwarf proportions. Fix ONLY the lower-body perspective. Both characters face UPPER RIGHT and walk diagonally AWAY toward UPPER RIGHT. Currently the two legs point in opposite directions; that is the error. The LEFT drawing: its anatomical RIGHT leg (the leg emerging from the RIGHT side of the skirt, currently extending down-right with a huge sole) must trail diagonally DOWN-LEFT instead, continuing from that SAME right hip. Bend it back in the sagittal plane, behind her, not out sideways. Its boot sole is angled obliquely toward lower-left. Its anatomical LEFT leg, emerging on the LEFT side under the skirt, is the weight-bearing FORWARD leg and points UPPER RIGHT, not upper-left. Thus the nearer RIGHT trailing leg partially overlaps the farther LEFT forward leg; this is correct foreshortening in a rear-right three-quarter view. DO NOT swap the leg attachment points to the hips. RIGHT drawing: retain the same physical LEFT leg planted, but turn that planted boot's toe UPPER RIGHT; the physical RIGHT foot passes close beside the supporting LEFT calf with only a small heel lift, toes also aligned upper-right. Reduce the stride to a modest grounded walk. Parallel leg planes; no V stance, no outward kick, no bowed knees, no mirrored lower half. BOTH boot toes must agree with the face/torso facing upper-right. The trailing boot must not point lower-right. Keep short legs, boot size, overall body scale and the two whole sprite positions consistent with the reference. Transparent background, generous margins, two complete whole painted figures, no text or arrows.",
+      "source": "exec-70a772da-8306-404e-8329-c016ee72379c.png",
+      "decision": "rejected: ambiguous repeated contact and passing",
+      "references": [
+        "exec-72fe7ec1-d94c-49a2-8e33-67eab252b65a.png"
+      ]
+    },
+    {
+      "prompt": "Use case: precise-object-edit. Two whole-character diagnostic animation drawings. Reference shows Dagna walking away toward UPPER RIGHT. KEEP her same upper-right-facing camera angle, compact adult proportions, red dress, copper curls, white apron bow. Create the OPPOSITE half of this walk with the legs exchanged FRONT TO BACK, not mirrored left-right. Use diagnostic boot colors to make identity unmistakable. The NEAR leg (her right leg, the large foreground boot that is trailing in the reference) wears a solid RED leather boot. The FAR leg (her left leg, smaller boot currently forward) wears a solid BLUE leather boot. LEFT drawing: move RED near leg FORWARD toward upper right, its planted boot shows the OUTSIDE SIDE and TOE pointing RIGHT/UP-RIGHT, not the sole. BLUE far leg trails down-left BEHIND the red leg, its heel lifting with only a narrow oblique glimpse of sole. The near RED knee overlaps and partly occludes the far BLUE thigh. RIGHT drawing: RED near leg remains supporting, straight beneath the near hip, toe upper-right. BLUE far leg passes behind the red calf with a small bent-knee heel lift. Both drawings have the RED boot in the foreground and BLUE boot further away/partly occluded. The visible near arm swings BACK in the left contact drawing, toward lower left; far arm forward. In passing arms relaxed near sides. All knees, hips and toes face the SAME upper-right direction as her shoulders. Do NOT show a big foreground sole on the left: that would repeat the reference pose and is explicitly wrong. Avoid spreading feet into a V. Two WHOLE painted characters on transparent background, generous margins. No text. Only boots are diagnostic colored; clothing and hair unchanged.",
+      "source": "exec-0263291f-f532-459a-a80b-9719cc331d55.png",
+      "decision": "diagnostic reference: near red forward, far blue back; not production",
+      "references": [
+        "exec-cf1950ee-d603-49e8-8b54-58d12aa1d2ff.png"
+      ]
+    },
+    {
+      "prompt": "Use case: precise-object-edit. Keep both whole Dagna sprites, upper-right facing rear-quarter camera and exact body design. The reference has RED foot forward and BLUE foot back. Make the next OPPOSITE half-step: RED foot BACK and BLUE foot FORWARD. Keep red attached to the same anatomical near/right leg and blue attached to the same far/left leg. Left drawing: the near RED thigh swings back diagonally down-left, the RED boot shows its heel/oblique sole in the foreground at lower left; the far BLUE leg extends forward diagonally upper-right, BLUE toe points upper-right, blue boot partly hidden behind the near red shin. Right drawing: BLUE foot PLANTED below the hips, RED heel lifted passing beside and in FRONT of the blue calf; RED boot is closer to camera and obscures part of BLUE. Both legs still swing along the SAME upper-right/lower-left direction, not outward to opposite sides. Do not rotate the pelvis or mirror the torso. In the left drawing near/right arm swings FORWARD (upper right) opposite the red trailing leg, and far/left arm back. Passing arms relaxed. Short grounded dwarf walk, not a kick; short legs and modest separation. Preserve red and blue diagnostic leather colors, brown soles, gold buckles; every other color and detail unchanged. Two complete whole painted sprites on transparent background, no text.",
+      "source": "exec-135fbc26-7883-4ad9-9166-27332af4ba24.png",
+      "decision": "accepted opposite-half diagnostic: near red back/raised, far blue forward/support",
+      "references": [
+        "exec-0263291f-f532-459a-a80b-9719cc331d55.png"
+      ]
+    },
+    {
+      "prompt": "Use case: precise-object-edit. Finish these TWO whole-character sprites. Replace ONLY the red and blue diagnostic boot leather with matching warm dark-brown leather on all four boots. Keep golden buckles, dark brown soles, EXACT leg poses, knee positions, foot contact, overlap, direction and scale unchanged. RED leg remains forward/planted; BLUE leg remains trailing/lifted. Do not exchange or mirror the legs. Also correct the arm opposition in the LEFT figure only: her near/right arm (the prominent white sleeve on the right) swings BACK toward lower-left, elbow near her side and fist beside the rear hip, while the partly hidden far/left arm swings FORWARD toward upper-right. This opposes her near/right forward leg. The RIGHT passing figure's arms stay relaxed as drawn. Preserve the identical hair, torso, face, dress, apron bow, compact adult dwarf shape and rear-right camera angle. Feet, knees, pelvis and torso all point upper right exactly as now. Keep two whole painted sprites, transparent background, no text, no new props.",
+      "source": "exec-15e9b428-f853-4ce2-9e3d-e849f3849ea5.png",
+      "decision": "rejected: near arm still forward",
+      "references": [
+        "exec-0263291f-f532-459a-a80b-9719cc331d55.png"
+      ]
+    },
+    {
+      "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET: two brown-boot Dagna sprites. Image 2 is ONLY the arm-pose guide. In IMAGE 1 LEFT FIGURE ONLY, redraw the prominent near arm to match the prominent arm of IMAGE 2 LEFT FIGURE: it hangs DOWN and BACK diagonally toward LOWER LEFT; its fist is beside the BACK of the dress near the apron bow, NOT jutting out to the right in front of her chest. The fist must visibly move LEFT and DOWN compared with image 1. The upper arm angles slightly backward and the forearm hangs down-left. This is a relaxed back-swing, not a raised fist. The far arm moves forward, mostly hidden by torso. Keep image 1 legs and boots COMPLETELY UNCHANGED, including their overlap, foot poses, planted near boot and lifted far boot. Keep its head, torso, hair, clothes, proportions and brown colors unchanged. Keep IMAGE 1 RIGHT FIGURE entirely unchanged. Return only the two edited whole figures from image 1, same canvas layout and transparent background, no text.",
+      "source": "exec-79a7706a-e8d1-4010-b689-1dc6ef71df41.png",
+      "decision": "rejected: edit moved far arm instead of near arm; retain original first half",
+      "references": [
+        "exec-15e9b428-f853-4ce2-9e3d-e849f3849ea5.png",
+        "exec-cf1950ee-d603-49e8-8b54-58d12aa1d2ff.png"
+      ]
+    },
+    {
+      "prompt": "Use case: precise-object-edit. COLOR CHANGE ONLY. Change the RED and BLUE leather of every boot in this exact two-sprite image to the same warm dark BROWN leather used for Dagna's bracers. Preserve the dark brown soles and gold hardware. Preserve EVERY POSE EXACTLY: leg attachment, crossed perspective and occlusion, knees, foot positions, raised vs planted heels, toes, arms, hands, torso, hair, head and silhouette. Do not mirror, rotate, move, resize or redraw any body part into a different pose. Near leg remains back in the left drawing and raised in front of the far supporting calf in the right drawing. Both figures still face upper-right. Keep all clothing and other colors unchanged. Two whole compact adult dwarf sprites, same transparent background and generous margins, no text.",
+      "source": "exec-8637dd37-9979-4a42-bffe-0b3a6b13506a.png",
+      "decision": "production: brown cleanup of opposite-half diagnostic",
+      "references": [
+        "exec-135fbc26-7883-4ad9-9166-27332af4ba24.png"
+      ]
+    }
+  ],
+  "mapping": {
+    "14": "dagnarearaligned.webp:0 \u2014 near/right leg trails; far/left leg forward",
+    "15": "dagnarearaligned.webp:1 \u2014 near/right leg passes; far/left supports"
+  },
+  "source_policy": "Original art preserved. No composited or rotated limbs.",
+  "rear-quarter-opposite.png_sha256": "ad43e9f9290561861b160616c9e27a3386ff256a97e93737f78377fb9211a4c4",
+  "opposite-foot-diagnostic.png_sha256": "12d0eb75eee2b455683345e0a0c9b25067b3c5f1766dd80f09ca084764cc2f4c"
+}
