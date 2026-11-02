@@ -1,17 +1,25 @@
 class_name HoldStoryWorld105
 extends RefCounted
 # Activate only complete, reviewed bundles. Portrait coverage is independent.
-const CAST=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann"]
-# Nineteen named bundles have reviewed four-view locomotion and resting stances.
+const CAST=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann","dagr","odrin","osvik","tovan","kelvar"]
+# All twenty-four named bundles have reviewed four-view locomotion and resting stances.
 # Approved social and working keys cover the activities listed below.
-# Remaining studies are quarantined; technical tests never grant approval.
-const APPROVED:Array[String]=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann"]
+# Future studies remain gated; technical tests never grant approval.
+const APPROVED:Array[String]=["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin","ivar","hedrik","borin","eldric","brann","dagr","odrin","osvik","tovan","kelvar"]
 const HEIGHTS={"brynja":58.0,"ragnhild":64.0,"edda":63.0,"yrsa":58.0,"sigrid":64.0}
 const PREFIX="res://assets/story105/world/"
-const ACTIVITIES={"dagna":{"drink":[20,21,22,23]},"orla":{"drink":[20,21,22,23]},"sigrid":{"drink":[20,21,22,23]},"yrsa":{"drink":[20,21,22,23]},"hedrik":{"drink":[20,21,22,23]},"brann":{"drink":[20,21,22,23]}}
+const ACTIVITIES={"dagna":{"drink":[20,21,22,23]},"orla":{"drink":[20,21,22,23]},"sigrid":{"drink":[20,21,22,23]},"yrsa":{"drink":[20,21,22,23]},"hedrik":{"drink":[20,21,22,23]},"brann":{"drink":[20,21,22,23]},"dagr":{"drink":[20,21,22,23]},"osvik":{"drink":[20,21,22,23]},"tovan":{"drink":[20,21,22,23]},"kelvar":{"drink":[20,21,22,23]}}
 # Working keys follow the existing contact timing. Pick views match the current
 # front/side/back worker renderer; a hammer is always the authored side view.
-const WORK={"borin":{"hammer":{1:[20,21,22,23]}},"brann":{"hammer":{1:[24,25,26,27]},"pick":{0:[28,29,30,31],1:[32,33,34,35],3:[36,37,38,39]}}}
+const WORK={
+ "borin":{"hammer":{1:[20,21,22,23]}},"odrin":{"hammer":{1:[20,21,22,23]}},
+ "brann":{"hammer":{1:[24,25,26,27]},"pick":{0:[28,29,30,31],1:[32,33,34,35],3:[36,37,38,39]}},
+ "dagr":{"hammer":{1:[24,25,26,27]},"pick":{0:[28,29,30,31],1:[32,33,34,35],3:[36,37,38,39]}},
+ "osvik":{"hammer":{1:[24,25,26,27]},"pick":{0:[28,29,30,31],1:[32,33,34,35],3:[36,37,38,39]}},
+ "tovan":{"hammer":{1:[24,25,26,27]},"pick":{0:[28,29,30,31],1:[32,33,34,35],3:[36,37,38,39]}},
+ "kelvar":{"hammer":{1:[24,25,26,27]},"pick":{0:[28,29,30,31],1:[32,33,34,35],3:[36,37,38,39]}},
+ "yrsa":{"hammer":{1:[24,25,26,27]},"pick":{0:[28,29,30,31],1:[32,33,34,35],3:[36,37,38,39]}}
+}
 static func has_profile(p:Dictionary,action:String="")->bool:
  var id=str(p.get("cast_id",""))
  # An unsupported future activity must retain its existing action renderer,

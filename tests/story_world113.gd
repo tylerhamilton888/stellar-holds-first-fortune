@@ -13,7 +13,7 @@ func run():
  var sheet="res://assets/story105/world/edda.webp"
  check(HoldWholeFrames.metadata.has(sheet) and HoldWholeFrames.metadata[sheet].size()==20,"Production registers all 20 Edda poses")
  for id in ["dagr","odrin","osvik","tovan","kelvar"]:
-  check(not HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Unreviewed character remains inactive "+id)
+  check(HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Final named cast remains enabled "+id)
  for view in 4:
   var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][view]
   var idle=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)

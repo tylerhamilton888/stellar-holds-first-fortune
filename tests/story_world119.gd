@@ -15,7 +15,7 @@ func run():
  var sheet="res://assets/story105/world/hakon.webp"
  check(HoldWholeFrames.metadata.has(sheet) and HoldWholeFrames.metadata[sheet].size()==20,"Production registers all 20 Hakon poses")
  for id in ["dagr","odrin","osvik","tovan","kelvar"]:
-  check(not HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Unreviewed character remains inactive "+id)
+  check(HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Final named cast remains enabled "+id)
  for frame in HoldWholeFrames.metadata[sheet]:
   check(frame.has("source") and ResourceLoader.exists(frame.source),"Each Hakon pose selects an existing authored atlas")
  for view in 4:

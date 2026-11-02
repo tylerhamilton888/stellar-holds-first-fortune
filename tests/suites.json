@@ -17,7 +17,8 @@
       "story_world119",
       "story_world120",
       "story_batch121",
-      "story_batch122"
+      "story_batch122",
+      "story_batch123"
     ],
     "gameplay": [
       "loading",
@@ -79,7 +80,8 @@
       "story_world119",
       "story_world120",
       "story_batch121",
-      "story_batch122"
+      "story_batch122",
+      "story_batch123"
     ],
     "modular": [
       "modular",
@@ -485,7 +487,8 @@
       "story_world119",
       "story_world120",
       "story_batch121",
-      "story_batch122"
+      "story_batch122",
+      "story_batch123"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -721,6 +724,32 @@
       "story_world118",
       "story_world119",
       "story_world120"
+    ],
+    "story_batch123_focus": [
+      "story_world105",
+      "story_batch123",
+      "story_batch121",
+      "workplace98"
+    ],
+    "story_batch123": [
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "ambient",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "story_batch123",
+      "workplace98"
     ]
   },
   "cases": {
@@ -967,6 +996,10 @@
     "story_batch122": {
       "script": "tests/story_batch122.gd",
       "marker": "STORYBATCH122"
+    },
+    "story_batch123": {
+      "script": "tests/story_batch123.gd",
+      "marker": "STORYBATCH123"
     }
   }
 }
