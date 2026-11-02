@@ -16,7 +16,8 @@
       "story_world118",
       "story_world119",
       "story_world120",
-      "story_batch121"
+      "story_batch121",
+      "story_batch122"
     ],
     "gameplay": [
       "loading",
@@ -77,7 +78,8 @@
       "story_world118",
       "story_world119",
       "story_world120",
-      "story_batch121"
+      "story_batch121",
+      "story_batch122"
     ],
     "modular": [
       "modular",
@@ -482,7 +484,8 @@
       "story_world118",
       "story_world119",
       "story_world120",
-      "story_batch121"
+      "story_batch121",
+      "story_batch122"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -686,6 +689,18 @@
     ],
     "batch121-only": [
       "story_batch121"
+    ],
+    "story_batch122": [
+      "story_world105",
+      "story_batch121",
+      "story_batch122",
+      "ambient",
+      "firstvisit99",
+      "lodge100",
+      "mountain104"
+    ],
+    "story_batch122_focus": [
+      "story_batch122"
     ]
   },
   "cases": {
@@ -928,6 +943,10 @@
     "story_batch121": {
       "script": "tests/story_batch121.gd",
       "marker": "STORYBATCH121"
+    },
+    "story_batch122": {
+      "script": "tests/story_batch122.gd",
+      "marker": "STORYBATCH122"
     }
   }
 }

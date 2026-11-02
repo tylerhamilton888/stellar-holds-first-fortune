@@ -58,7 +58,7 @@ func run():
  check(HoldWholeFrames.texture(p,a.sheet,a.index)==HoldWholeFrames.texture(altered,a.sheet,a.index),"Saved background palettes do not dye named art")
  check(JSON.stringify(p)==original,"Rendering leaves saved appearance intact")
  check(not HoldStoryWorld105.has_profile(s.appearance),"Player stays on shared animation")
- check(not HoldStoryWorld105.has_profile(s.npc("ivar")),"Unreviewed bundles stay inactive")
+ check(not HoldStoryWorld105.has_profile(s.npc("dagr")),"Unreviewed bundles stay inactive")
  HoldWholeFrames.cache.clear();HoldWholeFrames.warm_jobs.clear()
  HoldWholeFrames.queue_story_profile(p,{})
  check(HoldWholeFrames.warm_jobs.size()==24,"Candidate cache helper covers locomotion and all four drink frames")
