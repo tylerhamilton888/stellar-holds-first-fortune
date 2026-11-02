@@ -46,7 +46,7 @@ func run():
    var a=HoldWholeFrames.descriptor(profiles.brann,spec[0],true,0,"pick",[0,.3,.6,.85][k])
    check(a.index==spec[1]+k and a.view==spec[2] and a.sheet.ends_with("/brann.webp") and not a.walking,"Brann mining direction/contact "+str(spec[0])+str(k))
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player art preserved")
- check(not HoldStoryWorld105.has_profile(g.state.npc("dagr")),"Remaining cast stays quarantined")
+ check(HoldStoryWorld105.has_profile(g.state.npc("dagr")),"Final named cast stays enabled")
  # New saves meet the same Ivar in the actual worker lodge.
  HoldFirstVisit99.begin(g);settle();g.surface.enter(HoldFrontier103.lodge(g.state));settle();at(Vector2(510,470))
  check(HoldWorkerLodge100.profile(g,0)==profiles.ivar,"Lodge keeps Ivar's saved identity")

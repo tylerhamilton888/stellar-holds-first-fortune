@@ -24,7 +24,7 @@ func run():
  for id in BATCH:
   var p=profiles[id];var sheet=HoldStoryWorld105.PREFIX+id+".webp";var drinks=id in ["sigrid","orla","yrsa"]
   check(HoldStoryWorld105.has_profile(p),"Batch identity enabled "+id)
-  check(HoldWholeFrames.metadata[sheet].size()==(24 if drinks else 20),"Complete reachable pose coverage "+id)
+  check(HoldWholeFrames.metadata[sheet].size()==(40 if id=="yrsa" else 24 if drinks else 20),"Complete reachable pose coverage "+id)
   for f in HoldWholeFrames.metadata[sheet]:check(f.has("source") and ResourceLoader.exists(f.source),"Existing explicit atlas source "+id)
   for v in 4:
    var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][v];var a=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)
@@ -35,12 +35,13 @@ func run():
     check(a.sheet==sheet and a.index==4+v*4+k,"Ordered whole walking key "+id+str(v)+str(k))
   var generic=p.duplicate(true);generic.erase("cast_id")
   for action in ["pick","hammer","carry_stone","combat_axe"]:
+   if id=="yrsa" and action in ["pick","hammer"]:continue
    check(HoldWholeFrames.descriptor(p,Vector2.RIGHT,false,0,action,.6)==HoldWholeFrames.descriptor(generic,Vector2.RIGHT,false,0,action,.6),"Unsupported action retains functional renderer "+id+action)
   for k in 4:
    var a=HoldWholeFrames.descriptor(p,Vector2.RIGHT,false,0,"drink",k)
    if drinks:check(a.sheet==sheet and a.index==20+k,"Authored whole drinking key "+id+str(k))
    else:check(a==HoldWholeFrames.descriptor(generic,Vector2.RIGHT,false,0,"drink",k),"No invented drinking assignment "+id)
- check(not HoldStoryWorld105.has_profile(g.state.npc("dagr")),"Unreviewed Dagr remains inactive")
+ check(HoldStoryWorld105.has_profile(g.state.npc("dagr")),"Dagr now has complete named art")
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player renderer unchanged")
  for idx in [5,8]:
   var id="road_folk:"+str(idx);var f=HoldRoads.FOLK[idx];var duration=f.a.distance_to(f.b)/38.;var cycle=2*(duration+7)
