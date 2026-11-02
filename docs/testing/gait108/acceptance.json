@@ -1,0 +1,84 @@
+{
+  "character": "dagna",
+  "runtime_activated": true,
+  "remaining_named_world_characters": 23,
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.16
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 745,
+      "seconds": 11.43
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 321,
+      "seconds": 47.32
+    },
+    {
+      "test": "story_art105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 92,
+      "seconds": 7.4
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 84,
+      "seconds": 116.5
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 40,
+      "seconds": 53.45
+    }
+  ],
+  "exported_pack": [
+    {
+      "test": "story_art105",
+      "passed": true,
+      "checks": 92,
+      "errors": []
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 745,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 321,
+      "errors": []
+    }
+  ],
+  "pack_entries_verified": 3437,
+  "pack_sha256": "8e1325cccaf5a6f9b01d1c26517867616ef3d202009bca1c5576f7a57108ba16",
+  "visual_review": "Four-direction whole-frame contact/passing sequence and relaxed idles reviewed enlarged and at 62px; two opposite front contacts, alternate rear lifted heels, opposing arms, brown boots, complete crowns, consistent pouch. Native tavern walking/sipping and exported tavern capture reviewed.",
+  "importer_checks": "Measured row bounds restore complete crown; four malformed/nonmonotonic/out-of-range layouts rejected without replacing existing metadata.",
+  "limitations": [
+    "Other named world bundles remain disabled.",
+    "No new Windows ZIP, hosted full-source gate or device/audio playtest in this local milestone.",
+    "Future Dagna worker/combat roles need authored actions before assignment."
+  ]
+}

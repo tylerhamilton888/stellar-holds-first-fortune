@@ -1,0 +1,57 @@
+{
+  "views": [
+    {
+      "label": "Side: revised contacts and opposing arms",
+      "source": "res://docs/art/gait106/dagna-side-diagnostic.png",
+      "frames": [
+        [
+          42,
+          64,
+          500,
+          569
+        ],
+        [
+          637,
+          62,
+          345,
+          571
+        ],
+        [
+          1135,
+          62,
+          492,
+          570
+        ],
+        [
+          1720,
+          62,
+          386,
+          572
+        ]
+      ],
+      "origin": [
+        271,
+        632
+      ],
+      "height": 568,
+      "origins": [
+        [
+          229,
+          568
+        ],
+        [
+          176,
+          570
+        ],
+        [
+          220,
+          570
+        ],
+        [
+          178,
+          570
+        ]
+      ]
+    }
+  ]
+}

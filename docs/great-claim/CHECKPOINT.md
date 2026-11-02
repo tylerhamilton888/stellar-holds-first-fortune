@@ -1,3 +1,9 @@
+# Current implementation review — 2026-11-01
+
+[Full directive-to-code audit](IMPLEMENTATION_REVIEW.md). v0.92.0 is published; PR #77 portraits/loading merged later. Earlier pending-release entries below are historical. Story ends at authenticated claimant; milestones 04–06 remain unimplemented. The broad ledger and narrative-cast requirements are partial despite completed smaller slices. Close the contest scoring round before the tiebreaker and implement the currently absent Keldrath unlock. Named world animation remains the current unfinished art task; see ../art/gait107/README.md.
+
+---
+
 # 0.92.0 source merged — Windows verification pending
 
 PR #75 merged as 3b46d1c98a55dc8b01830c15080879a7ea6a9d4f after all five jobs in full source run 41342691773 passed. Release source dbb248ea948f1afa4b8135006e9d97adc16f38fd (local 5463f34), identical tree 8a27f05048d201edbc6d907d410c56a9bf4dfc59. The Windows ZIP has built; release run 41342691069 is still testing the exact pack and will publish only on success. Do not call v0.92.0 published until release assets are verified. The previous town/home release v0.91.0 is now published and preserved.

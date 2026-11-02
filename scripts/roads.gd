@@ -180,7 +180,13 @@ func people(area:String,time:float=-1)->Array:
   var start:Vector2=f.a;var end:Vector2=f.b
   if phase>duration+7:phase-=duration+7;start=f.b;end=f.a
   var walking=phase<duration;var at=start.lerp(end,minf(1,phase/duration))
-  result.append({"kind":"citizen","p":at,"profile":profile,"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profile.family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)})
+  var actor={"kind":"citizen","p":at,"profile":profile,"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profile.family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)}
+  # A brief whole-painted sip during Dagna's existing seven-second pause.
+  # Positions, walking speed and the saved-clock route remain unchanged.
+  var resting=phase-duration
+  if i==1 and not walking and resting>=1.0 and resting<4.0:
+   actor.pose="drink";actor.phase=float([0,1,2,2,3,0][clampi(int((resting-1.0)*2),0,5)]);actor.aim=Vector2.DOWN
+  result.append(actor)
  result.append_array(HoldMountain104.guests(g,area))
  return result
 func points()->Array:

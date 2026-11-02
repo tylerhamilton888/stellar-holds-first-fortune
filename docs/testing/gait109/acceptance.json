@@ -1,0 +1,42 @@
+{
+  "native": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 745,
+      "seconds": 10.41
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 321,
+      "seconds": 45.41
+    }
+  ],
+  "exported_pack": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 745,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 321,
+      "errors": []
+    }
+  ],
+  "packed_entries_verified": 3440,
+  "visual_review": "Native 2x/62px board and all four compact frames inspected; rear passing boots now vertical with narrow parallel tracks. Rear-quarter perspective inspected. Owner acceptance remains open.",
+  "scope": "Only Dagna frame metadata indices17/19 and named cache revision change runtime output.",
+  "limits": [
+    "No hosted gate yet",
+    "No new Windows build/release",
+    "Other nine candidate bundles remain disabled"
+  ]
+}

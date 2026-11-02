@@ -1,3 +1,58 @@
+# Dagna rear gait corrected — PR preparation
+
+The owner flagged gait108 as bow-legged/diagonal. Replaced only the two rear passing paintings with straight lower-leg/boot alignment and a narrower parallel foot track; opposite physical feet remain distinct. Reviewed the complete native cycle and rear-quarter perspective. This supersedes gait108 rear-passing visual acceptance; owner acceptance remains open. Evidence: art/gait109/README.md and testing/gait109/dagna-walk.gif.
+
+Native affected checks passed 1,066 assertions; exact exported-pack checks passed 1,066; all 3,440 package entries verified. No new Windows release or hosted gate is claimed. Existing Dagna route/sip/save/rescue behavior and other candidates are unchanged.
+
+The owner explicitly authorized pushing the checkpoint and opening its PR in `tylerhamilton888/stellar-holds-first-fortune`; do not ask again. Shell Git lacks HTTPS credentials; use authenticated GitHub Git-data tools to create an equivalent source tree, verify it matches the local tree, then open the PR. Publication was held for this correction and can proceed after these completed checks. Keep older recovery bundles.
+
+---
+
+# Dagna world animation — local verified milestone, 2026-11-01
+
+Dagna is now the first active named world bundle: four resting views, sixteen physically alternating walk keys and four whole drinking keys. Her wayside pauses include a short sip without changing route positions/timing or inventory. Rescue and saved identity use the same bundle. The remaining 23 named world characters are unfinished; the other nine candidate bundles remain disabled.
+
+Corrected front proportions/pouch placement, distinct rear passing steps and clipped crowns caused by uniform atlas rows. Importer supports measured row boundaries. Native focused checks passed 1,282; focused exact-pack checks passed 1,158; all 3,437 packed entries verified. Reviewed native and exported tavern captures. Read art/gait108/README.md and testing/gait108/acceptance.json. No new Windows release or hosted gate is claimed. Current workspace: `/workspace/scratch/707274750f74/stellar-holds`.
+
+Next art implementation: Ragnhild with her own athletic shape and complete four-view cycle; retain the single-bundle visual/activity gate for the remaining cast. Intro gameplay still ends at authenticated claimant: the public contest/Keldrath chapter remains next after the current art work. Full audit: great-claim/IMPLEMENTATION_REVIEW.md. The prior public-GitHub recovery push was rejected by automatic approval review; do not retry publication without explicit destination authorization. Preserve a private verified recovery bundle.
+
+---
+
+# Current review — 2026-11-01
+
+Read [the intro implementation review](great-claim/IMPLEMENTATION_REVIEW.md) for the directive-to-code audit. The new story stops at authenticated claimant/public contest pending. Final contest, story travel to Keldrath, invasion/trial and the new Thane/household transition remain unimplemented. Keldrath has no current unlock step; contest-round scores also need separation from later useful-work credit.
+
+v0.92.0 is published; portrait/loading PR #77 is merged after that release, with no newer Windows executable claimed. Named world art is still unfinished and disabled. Brown-boot Dagna whole-frame studies and separate drink poses are preserved, but front proportions/accessory consistency and activity routing fail the completion gate. Native import plus 746 extraction/quarantine checks passed. Read art/gait107/README.md and testing/gait107/acceptance.json. Do not call the art milestone complete or treat these tests as visual acceptance.
+
+---
+
+# Recovered romance/art session — 2026-11-01
+
+The stalled chat was Romance Character Design. Resume the named-character world animation milestone; the complete story/game is not finished. No religion/calendar changes are part of this recovery.
+
+- PR #77 (24 named portraits plus Eirik and four loading scenes) passed full hosted validation run 41350992804 and is now merged as 6c821675d1bf0994d5c8c48a370d15ad98a7d14f. The preceding local portrait checkpoint and PR head had identical tree 955a06c8cacc552393d110092857ec3ed6b05412.
+- v0.92.0 was already published; GitHub confirms its Windows ZIP (767283147 bytes), build.json and verification archive. This is publication confirmation, not a new Windows playtest or independent ZIP checksum verification. No newer executable is claimed.
+- Recovered ten unapproved atlases, routing code and tests from the old workspace. Five unprocessed character studies and the prior Dagna diagnostics are preserved in docs/art/gait106/recovered-studies. All new world bundles remain disabled. Never interpret source/rendering assertions as gait approval.
+- Dagna's side diagnostic now has distinct red contact, blue passing, blue contact and red passing poses, with reversed arm swing at the opposite contact. Native 62px proof and enlarged frames are in docs/testing/gait106. This is diagnostic artwork, not a completed production bundle; front/rear-quarter/back studies still fail. The multiview attempt swapped physical boot sides. Do not expand cast production or enable any bundle until all four views and required activities pass.
+- Fixed the importer so in-progress WebP conversion is hidden from Godot's asset scanner and metadata is not replaced before successful conversion. Interrupted visible temp files were preserved outside the project scan.
+- Recovery native checks passed: candidate extraction/routing 656, portrait/loading art 92, roads 84, rescue chapter 40. The strengthened production-quarantine check then passed 746 (including 90 new assertions covering untouched activity routing). No runtime art was activated.
+
+Next: use the side diagnostic as timing reference only. Repair the front, rear-quarter and back with physical leg identity tracked across all four keys, then remove diagnostic colors through an art edit and re-review. Preserve whole frames, body proportions and identity. Complete required work/carry/drink states before activation. Read docs/art/STORY_ART_IMPLEMENTATION.md. The old three-key rear ping-pong is not proof of alternation.
+
+Reproduce the standalone native side review from the project root:
+`godot --path . --script res://tests/review_story_gait106.gd -- res://docs/art/gait106/manifest.json /tmp/gait-review-new`
+A native display is required. This command captures evidence and never grants approval.
+
+---
+
+# Story world art — alternating-foot correction
+
+Owner flagged repeated leading feet in generated walks. All new world bundles are disabled (`HoldStoryWorld105.APPROVED` is empty). Ten candidate atlases and their extraction/routing harness remain as unapproved studies. Technical test success is not gait acceptance; do not describe these as completed character animations. The existing whole-frame runtime remains active.
+
+Stop batch production until one four-view cycle passes explicit physical-foot tracking: left contact, right passing, right contact, left passing, with opposing arm swing. Do not reuse the old three-key rear ping-pong as proof of alternation. Latest Dagna side diagnostic uses red/blue boots to distinguish legs, followed by brown-boot cleanup; neither is yet accepted in native motion. Source filenames/prompts: assets/story105/world/production.json. Native quarantine check evidence: /tmp/stellar-world105-quarantined2. Read art/STORY_ART_IMPLEMENTATION.md before continuing.
+
+---
+
 # Story art 105 — portrait/loading checkpoint
 
 24 named portraits now use explicit cast IDs through the existing portrait widget; Eirik retains his bespoke art. Four approved loading scenes rotate per load with readable overlays. Native focused suites passed 856 assertions (art 92, loading 19, people 446, courtship 299); the exported pack passed the same 92 art checks from an empty directory and isolated save. Captures reviewed; evidence: testing/story105/acceptance.json. Source backed up in PR #77; full hosted gate pending. No release or merge claimed.

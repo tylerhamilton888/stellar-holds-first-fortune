@@ -1,6 +1,32 @@
+# Current art correction — Dagna rear gait
+
+The owner-reported bow-legged/diagonal rear passing motion is corrected in gait109. The new native loop is ready for owner review; source and exact-pack checks passed. Publish the authorized review PR and observe its full hosted gate. Next character remains Ragnhild; the intro gameplay audit priorities are unchanged. See art/gait109/README.md.
+
+---
+
+# Current art progress — Dagna implemented
+
+Dagna's 24 whole-frame bundle is active and locally verified, including save/rescue identity and a brief tavern sip. See art/gait108/README.md. Next: Ragnhild's distinctive athletic shape and complete four-view cycle, then the remaining named cast and their actual work/drink/combat requirements. The full named-world milestone is not complete. Public contest/Keldrath and later intro chapters remain as audited in great-claim/IMPLEMENTATION_REVIEW.md.
+
+---
+
+# Current audited priorities — 2026-11-01
+
+1. Finish named world animation: correct Dagna front proportions/accessories, all four gait directions and reachable activities before activation/expansion. No approved bundle yet. See art/gait107/README.md.
+2. Complete public contest/Keldrath: separate recorded contest scores from later contributions; build real contest, offer/refusal and the missing city unlock.
+3. Build invasion/trial, persistent return as Thane, governing projects and marriage/shared household. Expand ledger/cast depth alongside those chapters.
+
+Full evidence and scope: great-claim/IMPLEMENTATION_REVIEW.md. v0.92.0 is published and portrait/loading PR #77 merged; older pending-release entries below are historical.
+
+---
+
+# Current art blocker
+
+Complete one physically alternating four-view Dagna cycle before expanding named-cast animation. Side diagnostic improved; other directions fail. Preserve work/carry/drink identity before activating bundles. Recovery and reproduction details: docs/art/gait106/README.md.
+
 # Story art production priority
 
-Portrait/loading checkpoint implemented; finish complete named world-frame bundles next. Preserve differentiated female silhouettes and natural idle postures; greetings/explanations/flirtation are contextual gestures. Repair and verify true passing steps before activation. See art/STORY_ART_IMPLEMENTATION.md.
+Portrait/loading checkpoint implemented; finish complete named world-frame bundles next. Preserve differentiated female silhouettes and natural idle postures; greetings/explanations/flirtation are contextual gestures. Repair and verify alternating physical left/right contacts AND distinct passing steps in every view before activation. All new world bundles are currently disabled after the owner caught repeated leading feet. See art/STORY_ART_IMPLEMENTATION.md.
 
 # Mountain source merged
 

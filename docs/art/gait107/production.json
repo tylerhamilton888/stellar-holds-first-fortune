@@ -1,0 +1,47 @@
+{
+  "status": "unapproved studies",
+  "processing": "Whole-frame extraction only; no body-part assembly. PNG sources were exported losslessly to WebP.",
+  "sources": [
+    {
+      "atlas": "assets/story105/world/dagnacore.webp",
+      "generated_source": "exec-4fdf6832-6bf6-40c7-8648-a1b8f5454439.png",
+      "source_sha256": "b7db7cb1aef9ba582fcd8288f1f27a36325d80634fa24d3de61408809c66fe2c",
+      "note": "Brown-boot 20-frame study. Front second half and rear-quarter replaced in candidate metadata; no approval.",
+      "approved": false
+    },
+    {
+      "atlas": "assets/story105/world/dagnafront.webp",
+      "generated_source": "exec-5dd5b93d-1783-4e62-b7c9-61365ffdac6d.png",
+      "source_sha256": "2df1c021106521e9caa4eeb2b3e800dd1443f7a5fd4c3b29c1f4c516ceca6953",
+      "note": "Opposite front half cycle. Rejected proportions: torso shrinks relative to original frames at native height.",
+      "approved": false
+    },
+    {
+      "atlas": "assets/story105/world/dagnarearone.webp",
+      "generated_source": "exec-cf1950ee-d603-49e8-8b54-58d12aa1d2ff.png",
+      "source_sha256": "6b02716fe2b1b52fc7be63b475f195211e189c218d79df1f446383df02d816c6",
+      "note": "First rear-quarter half with corrected opposing contact arm.",
+      "approved": false
+    },
+    {
+      "atlas": "assets/story105/world/dagnareartwo.webp",
+      "generated_source": "exec-72fe7ec1-d94c-49a2-8e33-67eab252b65a.png",
+      "source_sha256": "03271b4ac1642486dd7d815cec7d1c1a00daa2baaefcff02d87b323d6fe66cb6",
+      "note": "Opposite rear-quarter half. Requires complete native cycle acceptance.",
+      "approved": false
+    },
+    {
+      "atlas": "assets/story105/world/dagnadrink.webp",
+      "generated_source": "exec-4616c4c5-cab9-4e44-88b2-b5d81dddb492.png",
+      "source_sha256": "af2cf4331fac3332c04b2096a871d3469939a2d8cc8a40a83c85146397ea296a",
+      "note": "Four whole drinking poses, stored separately. No runtime routing or approval.",
+      "approved": false
+    },
+    {
+      "source": "docs/art/gait107/rejected-front-alternative.png",
+      "generated_source": "exec-ca8a273b-f492-4637-a098-6df676e970ff.png",
+      "note": "Rejected: accessory side changes; proportions still need review. Not used in candidate metadata.",
+      "approved": false
+    }
+  ]
+}

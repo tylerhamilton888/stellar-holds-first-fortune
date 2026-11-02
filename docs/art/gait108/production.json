@@ -1,0 +1,31 @@
+{
+  "method": "Built-in image generation, followed by whole-frame alpha extraction and lossless WebP export. No assembled or rotated body parts.",
+  "approved_character": "dagna",
+  "core_source": "assets/story105/world/dagnacore.webp",
+  "core_import": "python tools/import_story_world105.py assets/story105/world/dagnacore.webp dagnacorefixed --row-edges 0,281,546,817,1073,1374",
+  "front": {
+    "source": "exec-16d546a0-85fb-4239-8b84-348ca623f48f.png",
+    "input": "docs/art/gait107/rejected-front-alternative.png",
+    "output": "assets/story105/world/dagnafrontfixed.webp",
+    "prompt": "Precise illustration edit. The two brown hip pouches are ON THE WRONG SIDE. Move both pouches horizontally to the opposite hip WITHOUT MIRRORING THE CHARACTER. Output same 1774x887 composition. On the left figure, ERASE the pouch centered approximately (600,490) and instead draw it at approximately (330,485), hanging behind the large foreground fist. On the right figure, ERASE the pouch centered approximately (1480,500) and instead draw it at approximately (1165,490), just above/behind the hand nearer the middle gap. This is a real visible change: the right silhouette of each figure must have NO POUCH, just the red dress. Both pouches must be on the LEFT silhouette of their respective figures. Maintain all body/face/clothing/boot pixels and poses as closely as possible. Two complete squat adult dwarf walking sprites on transparent background. No labels or additional elements.",
+    "sha256": "80da88cde7d94509e401ea6b4200a60344ecb89d02ef3ca7929deaae184df871"
+  },
+  "back_passing": {
+    "source": "exec-b172d0f1-3bde-43cb-916d-0357a3fde6ac.png",
+    "inputs": [
+      "docs/art/gait108/long-leg-passing-study.png",
+      "docs/art/gait108/back-passing-reference.png"
+    ],
+    "output": "assets/story105/world/dagnabackpassing.webp",
+    "prompt": "Use case: precise-object-edit. Image 1 is edit target, image 2 is ONLY dwarf body-proportion reference. Keep the correct opposite passing-leg poses of image 1, but shorten the disproportionately LONG planted lower legs/boots. The figures must be squat adult dwarfs like image 2. Preserve image 1's complete curly hair, shoulders, arms, red skirt, white rear apron bow exactly. In each figure, compress the length of the standing shin naturally by redrawing it: reduce the vertical distance from skirt hem to bottom of planted boot by about ONE THIRD. Keep the planted boot compact, not a long tube. Raise the hovering bent boot closer to the skirt accordingly. Left sprite viewer-left boot remains raised, viewer-right boot planted; right sprite viewer-right boot raised, viewer-left boot planted. Do not switch feet or turn view. No part collage; clean whole painted characters. Same body widths and upper-body sizes as image 1; figures become shorter only through their legs. Transparent surrounding space, two complete figures, no text.",
+    "sha256": "43c72edfd16ca2c2ad31c8ea23c2523eec945ee1ea6fab5d335a4747c4e55cd3"
+  },
+  "assembly": "dagna.json indices 0-19 use dagnacorefixed metadata; 6-7 use dagnafrontfixed; 12-13 dagnarearone; 14-15 dagnareartwo; 17 and 19 dagnabackpassing; 20-23 dagnadrink. Each metadata entry names its whole original source.",
+  "preexisting_sources": "docs/art/gait107/production.json",
+  "foot_order": [
+    "right contact",
+    "left passing",
+    "left contact",
+    "right passing"
+  ]
+}
