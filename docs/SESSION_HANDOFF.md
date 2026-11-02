@@ -1,3 +1,15 @@
+# Brynja world animation — verified checkpoint
+
+Brynja is the third active named world bundle: four resting views and sixteen walking keys at her distinct 58px compact, square-shouldered stature. Corrected repeated front passing feet, opposite side/rear-quarter contacts, arm swing and proportions with whole replacement paintings. Original assets remain. Named cache revision 12 and fresh review caches prevent stale frames. Her Pinewood route, saved identity/inventory and partner rescue remain intact. No toolworking activity was invented; future roles require matching art. Seven other extracted candidates stay disabled; 21 named world bundles remain unfinished.
+
+Native focused suite: 1,846 assertions passed. Exact exported-package cases: 1,630 assertions passed; all 3,482 packed entries verified. Reviewed native frame board, four loop frames and actual Pinewood captures from source and export. Evidence: art/gait112/README.md and testing/gait112/acceptance.json. Owner visual review and full hosted validation remain open for Brynja. No new Windows release.
+
+Delivery branch: fix/brynja-world112. Publish the authorized checkpoint using authenticated Git-data tools and verify identical local/remote trees. Dagna PR #78 is merged. Ragnhild PR #79 passed full hosted run 41371859784 and merged as 273f541a25c2fe15726b84e0638958857e05bdd7. That merged tree equals this work's local base, 2b47c038f417fa9caf50f53253d7dbc30e10b1fc. Keep prior recovery bundles; do not request routine publication permission again.
+
+Next extracted art bundle: Edda's narrower upright build and reachable activities. Intro gameplay still ends at authenticated claimant: public contest/Keldrath, then invasion/trial and Thaneship/household remain. See great-claim/IMPLEMENTATION_REVIEW.md.
+
+---
+
 # Ragnhild world animation — verified checkpoint
 
 Ragnhild is now the second active named world bundle: four resting views and sixteen alternating walking keys at 64px, retaining her athletic build, crown braid and green outfit. Her existing field route, saved identity/inventory and partner rescue remain intact. No farming/drinking activity was invented; future roles need authored art before assignment. Eight other extracted candidates stay disabled; 22 named world bundles remain unfinished. See art/gait111/README.md and testing/gait111/ragnhild-walk.gif.

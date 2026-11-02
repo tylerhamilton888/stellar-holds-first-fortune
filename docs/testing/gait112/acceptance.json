@@ -1,0 +1,107 @@
+{
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.16
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 727,
+      "seconds": 11.43
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 319,
+      "seconds": 49.53
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 290,
+      "seconds": 51.38
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 294,
+      "seconds": 51.45
+    },
+    {
+      "test": "story_art105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 92,
+      "seconds": 7.64
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 84,
+      "seconds": 114.47
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 40,
+      "seconds": 52.46
+    }
+  ],
+  "exported_pack": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 727,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 319,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 290,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 294,
+      "errors": []
+    }
+  ],
+  "packed_entries_verified": 3482,
+  "visual_review": "Fresh-cache native board and four ordered loop frames reviewed at 58px and 2x, plus native and exported Pinewood scenes. Opposite contact proportions, arms and front passing feet corrected with whole paintings. Owner visual review remains open.",
+  "limits": [
+    "Brynja full hosted gate pending",
+    "No new Windows build or release",
+    "No independent Windows-device/audio playtest"
+  ],
+  "prior_delivery": {
+    "ragnhild_pr": 79,
+    "full_hosted_run": 41371859784,
+    "conclusion": "success",
+    "merge_sha": "273f541a25c2fe15726b84e0638958857e05bdd7"
+  }
+}
