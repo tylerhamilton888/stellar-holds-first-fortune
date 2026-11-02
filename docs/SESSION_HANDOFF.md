@@ -1,3 +1,13 @@
+# Named character quality pass — 115
+
+Reviewed all four active named world sets (84 poses including Dagna drinking). Brynja had the largest continuity defects: oversized opposite-contact head/hair, missing ochre shirt, inconsistent rear apron and pouch position. Replaced her twenty poses with a consistent costume and proportions. Corrected Dagna rear hair continuity and Ragnhild rear neckline/belt keeper. Edda passed visual review without art changes. Original assets and character heights remain; named cache revision 15 refreshes existing frames.
+
+Fresh native boards and animation previews are in testing/quality115; findings and scope are in art/quality115/REVIEW.md. Focused source and exact-export regression checks each passed 1,912 assertions. Export integrity verified 3,533 entries. No new Windows release. Four active bundles, 20 unfinished; intro story work is unchanged.
+
+Delivery branch: fix/character-quality115, based on Ragnhild PR #82. Edda PR #81 passed full hosted run 41379134962 and merged as 412e9f9a10841f5c1f59ac37d654fee2d1e14b21. PR #82 now targets master and awaits its hosted gate. Publish this correction separately and verify identical tested local/remote trees. Owner visual review remains open.
+
+---
+
 # Ragnhild outfit and stride correction (gait114)
 
 Corrected the rear-quarter far-hand overlap that read as a chest growth, removed the deep inner-thigh crack, and extended the green skirt to above the knees with shallow hem notches across all twenty poses. Preserved the sleeveless fitted style, athletic build, 64px stature, alternating feet and existing behavior. Original atlases remain. Named cache revision 14 refreshes existing cached frames. Fresh native boards and all four ordered walk captures reviewed.

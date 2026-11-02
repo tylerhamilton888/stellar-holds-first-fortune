@@ -1,3 +1,11 @@
+# Named character continuity gate — quality115
+
+Before accepting a new or replacement pose, compare it beside the same character's resting front, side, rear-quarter and back views. A passing gameplay test does not grant visual acceptance. Inspect at gameplay size and enlarged: head-to-torso ratio, shoulder/hip width, limb length, braid/bun silhouette, shirt/neckline, apron front versus back, belt/pouch side, cuffs and boot design. Preserve the character's own stature; do not normalize different characters to one build. Review the full ordered stride for opposite physical feet and arm swing, plus rest/walk transitions. Repeated contact poses and a missing costume layer fail review even if the importer and route tests pass.
+
+Brynja: compact square shoulders, flaxen braid, ochre sleeveless collared shirt, brown bib/front apron, crossed rear straps, short split rear waist tails, charcoal trousers and one right-hip pouch. Ragnhild: pine-green sleeveless dress with low square back neckline, above-knee hem with shallow notches, copper crown braid. Dagna: loose chestnut waves, red/white host outfit and rear apron bow. Edda: glasses, silver-streaked braided bun, cream rolled sleeves, blue vest and charcoal trousers. Current view sheets and findings: art/quality115/REVIEW.md. Whole-frame replacements only; preserve historical sources.
+
+---
+
 # Romance candidates — owner direction, 2026-11-01
 
 Every romance candidate must be conventionally attractive for their gender: handsome, masculine, fully bearded men and pretty, feminine, unbearded women, all unmistakably adult Dwarfs. Preserve the established whole-character style and identity across portraits and animation. Personalities should have individual romantic appeal grounded in Dwarven kinship, craft, loyalty and tradition. Story characters may use bespoke faces, outfits, silhouettes, portraits, expressions and key animations beyond the shared background-cast variations; recolored common designs are a baseline, not their final target. See [ROMANCE_CAST.md](ROMANCE_CAST.md) for the cast, specific visual targets and production acceptance criteria.
