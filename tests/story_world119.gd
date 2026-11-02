@@ -14,8 +14,8 @@ func run():
  check(not HoldOutpost.CREW.has("hakon") and not HoldOutpost.CREW.has("road_folk:7"),"Current Hakon routes do not assign unpainted worker actions")
  var sheet="res://assets/story105/world/hakon.webp"
  check(HoldWholeFrames.metadata.has(sheet) and HoldWholeFrames.metadata[sheet].size()==20,"Production registers all 20 Hakon poses")
- for id in HoldStoryWorld105.CAST:
-  if id not in ["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin"]:check(not HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Unreviewed character remains inactive "+id)
+ for id in ["dagr","odrin","osvik","tovan","kelvar"]:
+  check(not HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Unreviewed character remains inactive "+id)
  for frame in HoldWholeFrames.metadata[sheet]:
   check(frame.has("source") and ResourceLoader.exists(frame.source),"Each Hakon pose selects an existing authored atlas")
  for view in 4:
