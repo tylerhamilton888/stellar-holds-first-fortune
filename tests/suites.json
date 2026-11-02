@@ -14,7 +14,8 @@
       "story_world116",
       "story_world117",
       "story_world118",
-      "story_world119"
+      "story_world119",
+      "story_world120"
     ],
     "gameplay": [
       "loading",
@@ -73,7 +74,8 @@
       "story_world116",
       "story_world117",
       "story_world118",
-      "story_world119"
+      "story_world119",
+      "story_world120"
     ],
     "modular": [
       "modular",
@@ -476,7 +478,8 @@
       "story_world116",
       "story_world117",
       "story_world118",
-      "story_world119"
+      "story_world119",
+      "story_world120"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -649,6 +652,21 @@
     ],
     "story119-only": [
       "story_world119"
+    ],
+    "story_world120": [
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120"
+    ],
+    "story120-only": [
+      "story_world120"
     ]
   },
   "cases": {
@@ -883,6 +901,10 @@
     "story_world119": {
       "script": "tests/story_world119.gd",
       "marker": "STORYWORLD119"
+    },
+    "story_world120": {
+      "script": "tests/story_world120.gd",
+      "marker": "STORYWORLD120"
     }
   }
 }

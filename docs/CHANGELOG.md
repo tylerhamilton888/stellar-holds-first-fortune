@@ -1,3 +1,15 @@
+# Bram world locomotion — 120
+
+Bram is the ninth enabled named world character: four resting views and sixteen walking keys at his existing 62px stature. Older bald crown, grey fringe and full beard, patched blue hooded tunic, leather harness, two hip pouches, bracers and short boots. Corrected repeated contacts, rear-facing footwear, patch continuity and arm anatomy with complete painted replacements. Original atlas retained; named cache revision 20 refreshes existing frames.
+
+His Stonebridge road route, normal first-interaction name, conversation, save/load and inventory remain unchanged. Bram stays married/non-romance and outside the rescue victim group. No worker or drinking activity was invented. Native twenty-pose board and ordered loops reviewed. Evidence and exact prompts: art/gait120/README.md; focused integration results: testing/gait120/acceptance.json. Focused source and exact-export validation each passed 3,821 assertions across ten cases; all 3,659 packed entries verified. No new Windows release; full hosted validation and owner visual feedback remain open.
+
+Delivery branch: fix/bram-world120, based on merged Hakon PR #87. Hakon passed hosted run 41464807431 and merged as ae0b9293dc8bd553042f70d72cb7ab4fd4837e43; verified base tree 100ec88de8bf39c93fae447207b908af7131d0a1. Verify the published Bram tree against the tested local tree.
+
+Nine named bundles active, 15 unfinished. Next extracted character: Sten. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished. Existing Pinewood tutorial/workbench hint overlap remains outside this art pass.
+
+---
+
 # Hakon world locomotion — 119
 
 Hakon is the eighth enabled named world character, with four resting views and sixteen walking keys at his existing 62px stature. Copper half-tied hair, substantial ringed beard, slate-blue guard tunic/hood, mail trim, two hip pouches, bracers and matching boots. Whole-frame corrections address repeated footfalls, inconsistent hardware and replacement-pose proportions. Original atlas retained; named cache revision 19 refreshes old frames.
