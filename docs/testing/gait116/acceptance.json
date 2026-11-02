@@ -1,0 +1,113 @@
+{
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.2
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 709,
+      "seconds": 11.49
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 317,
+      "seconds": 46.35
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 288,
+      "seconds": 50.8
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 292,
+      "seconds": 53.1
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 293,
+      "seconds": 56.45
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 377,
+      "seconds": 54.43
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 70.48
+    }
+  ],
+  "export": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 709,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 317,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 288,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 292,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 293,
+      "errors": []
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "checks": 377,
+      "errors": []
+    }
+  ],
+  "native_checks": 2323,
+  "export_checks": 2276,
+  "packed_entries": 3557,
+  "pack_sha256": "4123cd96957f8625cb7dd6a49b90efee21fb8716da718695c410dafcce6c7759",
+  "visual_review": "Native 20-pose board, ordered four-view loop, source and exported lodge screenshots reviewed.",
+  "hosted": "Pending publication/full hosted gate",
+  "windows_release": false
+}

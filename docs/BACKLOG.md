@@ -1,3 +1,15 @@
+# Rurik world animation — 116
+
+Rurik Stonehand is the fifth enabled named world bundle: four resting views and sixteen walking keys at his existing 62px stature. Broad male dwarf proportions, full reddish beard, red shirt, leather harness and matching boots. Corrected repeated opposite steps and restored complete resting feet. Original atlas remains; named cache revision 16 refreshes old frames. Existing lodge route and conversation are unchanged.
+
+Native focused checks passed 2323 assertions; exact exported-package checks passed 2276. Export integrity verified 3557 entries. Reviewed native twenty-pose board, ordered loop and live lodge captures from source and export. Evidence: art/gait116/README.md and testing/gait116/acceptance.json. No new Windows release. Full hosted acceptance and owner visual feedback remain open.
+
+Delivery branch: fix/rurik-world116, based on the merged quality115 tree. PR #82 passed hosted run 41380716121 and merged as 5585f4d7f0a063c0d046a169dd1f1ffdf4742480. PR #83 passed run 41382225668 and merged as 7b5b690c4ad8f994e1c2c66887cff1db0ede6fa2. Publish Rurik against master and verify identical local/remote trees.
+
+Five active bundles; 19 unfinished. Next extracted character: Torvik, including every reachable activity. Five extracted candidates remain disabled. Intro gameplay remains at authenticated claimant; public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished.
+
+---
+
 # Named character quality pass — 115
 
 Reviewed all four active named world sets (84 poses including Dagna drinking). Brynja had the largest continuity defects: oversized opposite-contact head/hair, missing ochre shirt, inconsistent rear apron and pouch position. Replaced her twenty poses with a consistent costume and proportions. Corrected Dagna rear hair continuity and Ragnhild rear neckline/belt keeper. Edda passed visual review without art changes. Original assets and character heights remain; named cache revision 15 refreshes existing frames.
