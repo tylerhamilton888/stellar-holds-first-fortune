@@ -124,7 +124,7 @@ static func source(sheet:String)->Image:
   sources[sheet]=img
  return sources[sheet]
 static func cache_key(p:Dictionary,sheet:String,index:int,full:bool=false)->String:
- if sheet.begins_with(HoldStoryWorld105.PREFIX):return "story105-world14:"+sheet+":"+str(index)+":"+str(full)
+ if sheet.begins_with(HoldStoryWorld105.PREFIX):return "story105-world15:"+sheet+":"+str(index)+":"+str(full)
  return sheet+":"+str(index)+":"+str(p.skin)+":"+HoldAppearance.hair(p).to_html()+":"+str(p.cloth_color)+":"+str(p.jewelry)+":"+str(full)
 static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Texture2D:
  data();var key=cache_key(p,sheet,index,full)
