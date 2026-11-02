@@ -1,3 +1,15 @@
+# Edda world animation — verified checkpoint
+
+Edda is the fourth active named world bundle: four resting views and sixteen walking keys at 63px, with her narrower upright build, glasses and silver-streaked brown braided bun. Corrected the repeated rear-quarter contact and restored resting boots clipped by uniform original atlas rows. Original artwork remains intact. Her survey route, saved identity/inventory and non-romance/non-victim role are preserved; she remains at her post during the rescue chapter. Current activity is walking/resting. Six other extracted candidates stay disabled; 20 named world bundles remain unfinished.
+
+Native focused suite: 2,128 assertions passed. Exact exported-package cases: 1,912 assertions passed; all 3,497 packed entries verified. Reviewed fresh 63px/2x frames and actual survey-route captures from source and export. Evidence: art/gait113/README.md and testing/gait113/acceptance.json. Named cache revision 13 prevents stale frames. Owner visual review and full hosted validation remain open for Edda. No new Windows release.
+
+Delivery branch: fix/edda-world113. Publish the authorized checkpoint using authenticated Git-data tools and verify identical local/remote trees. Dagna PR #78 and Ragnhild PR #79 are merged. Brynja PR #80 passed full hosted run 41374454443 and merged as 1082e8964546a1c760716cfc3413ec756b7e0ea6. That merged tree equals this work's local base, 58b996cafe53523c209898f4a85da45fee113e8e. Keep prior recovery bundles; no renewed routine publication permission is needed.
+
+Next extracted art bundle: Rurik and every reachable activity. Intro gameplay still ends at authenticated claimant: public contest/Keldrath, then invasion/trial and Thaneship/household remain. See great-claim/IMPLEMENTATION_REVIEW.md.
+
+---
+
 # Brynja world animation — verified checkpoint
 
 Brynja is the third active named world bundle: four resting views and sixteen walking keys at her distinct 58px compact, square-shouldered stature. Corrected repeated front passing feet, opposite side/rear-quarter contacts, arm swing and proportions with whole replacement paintings. Original assets remain. Named cache revision 12 and fresh review caches prevent stale frames. Her Pinewood route, saved identity/inventory and partner rescue remain intact. No toolworking activity was invented; future roles require matching art. Seven other extracted candidates stay disabled; 21 named world bundles remain unfinished.

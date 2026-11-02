@@ -1,0 +1,83 @@
+{
+  "tool": "built-in image_gen",
+  "whole_frame_only": true,
+  "records": [
+    {
+      "purpose": "front",
+      "prompt": "Use case: precise-object-edit. Image1 supplies FOUR EXACT MOVEMENT POSES in a row. Image2 supplies EDDA'S IDENTITY in four views. Replace every figure in image1 with Edda while preserving each specific physical leg forward/back and planted/lifted foot, arm swing and body orientation. Direction: FRONT walking toward viewer. Edda is an attractive mature adult female dwarf with narrower upright build, brown braided bun with silver streak and face curl, round glasses, cream rolled-sleeve blouse, fitted navy-blue waistcoat with brass toggles, brown waist belt, charcoal trousers, sturdy short brown boots; NO bracers, no skirt, no bare legs, no red hair. Same head/body proportions across ALL four figures, compact short dwarf legs, upright torso, distinguish her from muscular Ragnhild template. EXACT foot sequence: pose1 image-left foot forward, pose2 image-left planted and image-right lifted behind, pose3 image-right foot forward, pose4 image-right planted and image-left lifted behind. Opposing arms. Both passing poses stand vertically over planted boot without extended forward sole. Four equally spaced columns ONE ROW, full uncropped whole painted figures on genuine transparent background, no text, no ground/glow. Copy motion ONLY from image1, all appearance from image2.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-9ff330e5-2e74-4279-8f30-82e0bb9544e2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "reference_pose": "pose-0.png",
+      "reference_identity": "edda-identity.png",
+      "decision": "All four keys retained"
+    },
+    {
+      "purpose": "side",
+      "prompt": "Use case: precise-object-edit. Image1 supplies FOUR EXACT MOVEMENT POSES in a row. Image2 supplies EDDA'S IDENTITY in four views. Replace every figure in image1 with Edda while preserving each specific physical leg forward/back and planted/lifted foot, arm swing and body orientation. Direction: RIGHT-FACING SIDE profile walking right. Edda is an attractive mature adult female dwarf with narrower upright build, brown braided bun with silver streak and face curl, round glasses, cream rolled-sleeve blouse, fitted navy-blue waistcoat with brass toggles, brown waist belt, charcoal trousers, sturdy short brown boots; NO bracers, no skirt, no bare legs, no red hair. Same head/body proportions across ALL four figures, compact short dwarf legs, upright torso, distinguish her from muscular Ragnhild template. EXACT movement sequence: pose1 near leg forward/right and near arm back/left; pose2 near leg planted beneath hip, far heel lifted behind; pose3 near leg trailing left and near arm forward/right; pose4 far leg planted and near foot passing forward. Contact poses 1 and 3 have OPPOSITE anatomical legs leading and opposite arm swings. Copy each pose's overlaps precisely. Both passing poses stand vertically over planted boot without extended forward sole. Four equally spaced columns ONE ROW, full uncropped whole painted figures on genuine transparent background, no text, no ground/glow. Copy motion ONLY from image1, all appearance from image2.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-c3854aa6-4060-4790-b25a-d4437023c885.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "reference_pose": "pose-1.png",
+      "reference_identity": "edda-identity.png",
+      "decision": "All four keys retained"
+    },
+    {
+      "purpose": "rear-quarter",
+      "prompt": "Use case: precise-object-edit. Image1 supplies FOUR EXACT MOVEMENT POSES in a row. Image2 supplies EDDA'S IDENTITY in four views. Replace every figure in image1 with Edda while preserving each specific physical leg forward/back and planted/lifted foot, arm swing and body orientation. Direction: REAR-RIGHT THREE-QUARTER walking away toward UPPER RIGHT. Torso, hips, knees and toes all agree on this direction in every pose. Edda is an attractive mature adult female dwarf with narrower upright build, brown braided bun with silver streak and face curl, round glasses, cream rolled-sleeve blouse, fitted navy-blue waistcoat with brass toggles, brown waist belt, charcoal trousers, sturdy short brown boots; NO bracers, no skirt, no bare legs, no red hair. Same head/body proportions across ALL four figures, compact short dwarf legs, upright torso, distinguish her from muscular Ragnhild template. EXACT movement sequence: copy image1's distinct near/far limb occlusion in all four figures. Pose1 near leg forward/upper-right and near arm back/down; pose2 near leg planted beneath hip, far heel raised behind; pose3 near leg trails lower-left and near arm forward/upper-right; pose4 far leg planted and near heel lifted. The two contact steps use OPPOSITE physical legs forward and the two passing steps use OPPOSITE supporting feet. Both contacts must have clearly opposite arm swings. Do not mirror the lower body or turn any figure straight back. Both passing poses stand vertically over planted boot without extended forward sole. Four equally spaced columns ONE ROW, full uncropped whole painted figures on genuine transparent background, no text, no ground/glow. Copy motion ONLY from image1, all appearance from image2.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-dc6162b0-d0f6-40f0-afa0-10e900f54096.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "reference_pose": "pose-2.png",
+      "reference_identity": "edda-identity.png",
+      "decision": "Keys 1,2,3 retained; contact key 0 replaced"
+    },
+    {
+      "purpose": "back",
+      "prompt": "Use case: precise-object-edit. Image1 supplies FOUR EXACT MOVEMENT POSES in a row. Image2 supplies EDDA'S IDENTITY in four views. Replace every figure in image1 with Edda while preserving each specific physical leg forward/back and planted/lifted foot, arm swing and body orientation. Direction: STRAIGHT BACK walking directly away, no diagonal hips or torso. Edda is an attractive mature adult female dwarf with narrower upright build, brown braided bun with silver streak and face curl, round glasses, cream rolled-sleeve blouse, fitted navy-blue waistcoat with brass toggles, brown waist belt, charcoal trousers, sturdy short brown boots; NO bracers, no skirt, no bare legs, no red hair. Same head/body proportions across ALL four figures, compact short dwarf legs, upright torso, distinguish her from muscular Ragnhild template. EXACT foot sequence: pose1 image-left foot trails nearer viewer with its sole slightly showing while image-right foot is farther forward; pose2 image-right boot planted flat and image-left heel lifted, sole square to viewer; pose3 image-right foot trails nearer viewer and image-left steps away; pose4 image-left boot planted flat and image-right heel lifted. Narrow natural parallel foot tracks, vertical shins, no outward kick or bow legs. Opposing natural arm swing. Both passing poses stand vertically over planted boot without extended forward sole. Four equally spaced columns ONE ROW, full uncropped whole painted figures on genuine transparent background, no text, no ground/glow. Copy motion ONLY from image1, all appearance from image2.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-718aad7f-db6b-43ae-94c0-93983cb70562.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "reference_pose": "pose-3.png",
+      "reference_identity": "edda-identity.png",
+      "decision": "All four keys retained"
+    },
+    {
+      "purpose": "Rear-quarter opposite contact",
+      "prompt": "Use case: precise-object-edit. Edit this exact full Edda sprite into the OPPOSITE rear-quarter contact step, preserving scale, head, hair, face, glasses, costume and upper-right direction. On the RIGHT side of the image, lower the NEAR ARM down/back with fist below her belt at thigh level. Far arm swings forward and is mostly hidden behind torso. NEAR LEG attaches at image-right hip and steps forward toward upper-right to the right-side boot; it OVERLAPS and HIDES the top of the far thigh. FAR LEG attaches at image-left hip and trails toward lower-left boot, behind the near thigh. Change the pants seam/occlusion to make this depth clear. Keep both boots pointing the same upper-right travel direction, sole of trailing far boot visible. Keep exact compact upright dwarf body/head/boot sizes, no elongation. Whole painted figure on genuine transparent background, no text.",
+      "source": "Generated images are saved to /workspace/scratch/707274750f74/generated_images as /workspace/scratch/707274750f74/generated_images/exec-78da2b15-6a05-4108-88fa-80938fc41c20.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "reference": "quarter-contact-before.png",
+      "decision": "Opposite arm swing and near/far leg overlap corrected"
+    }
+  ],
+  "original_idle_row_edges": [
+    0,
+    290,
+    565,
+    840,
+    1110,
+    1374
+  ],
+  "runtime_mapping": {
+    "0": "res://assets/story105/world/edda.webp",
+    "1": "res://assets/story105/world/edda.webp",
+    "2": "res://assets/story105/world/edda.webp",
+    "3": "res://assets/story105/world/edda.webp",
+    "4": "res://assets/story105/world/eddafront.webp",
+    "5": "res://assets/story105/world/eddafront.webp",
+    "6": "res://assets/story105/world/eddafront.webp",
+    "7": "res://assets/story105/world/eddafront.webp",
+    "8": "res://assets/story105/world/eddaside.webp",
+    "9": "res://assets/story105/world/eddaside.webp",
+    "10": "res://assets/story105/world/eddaside.webp",
+    "11": "res://assets/story105/world/eddaside.webp",
+    "12": "res://assets/story105/world/eddaquarteropposite.webp",
+    "13": "res://assets/story105/world/eddaquarter.webp",
+    "14": "res://assets/story105/world/eddaquarter.webp",
+    "15": "res://assets/story105/world/eddaquarter.webp",
+    "16": "res://assets/story105/world/eddaback.webp",
+    "17": "res://assets/story105/world/eddaback.webp",
+    "18": "res://assets/story105/world/eddaback.webp",
+    "19": "res://assets/story105/world/eddaback.webp"
+  },
+  "lossless_atlas_sha256": {
+    "eddaback.webp": "d679af22ed3f4baedafc24f3bafbde98af3b4ff651d251d24225c14cd873fc87",
+    "eddafront.webp": "63ba4e183932ba1b8d05cd1159cf83c6441b6e819b6027fbed8f73989470e46f",
+    "eddaside.webp": "7c81e782b499678bae4e3b402b54871bf4537d4414e390d1daabc6b74578922e",
+    "eddaquarteropposite.webp": "e0fffca79c4d14f80218ef49a695e773d0f9360beb51e69c52db19f997b4c7c3",
+    "eddaquarter.webp": "d2dac40c06c95e99eaf35919dda639a87d68392460cf22d75b7685cfe1c14331",
+    "edda.webp": "e52f82aec03152cdaa7049961985c885a02a3a435ff748496ef4e13f1b699e5a"
+  }
+}

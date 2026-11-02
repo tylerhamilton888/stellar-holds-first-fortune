@@ -1,3 +1,9 @@
+# Edda world locomotion — current checkpoint
+
+Dagna, Ragnhild, Brynja and Edda now have active world bundles. Edda adds four complete resting views and sixteen walking keys at 63px, preserving her narrower upright build, glasses and silver-streaked braided bun. Six other extracted candidates remain disabled; 20 named world bundles remain unfinished. Her existing survey route, saved identity and non-romance/non-victim role are preserved. See gait113/README.md and testing/gait113/acceptance.json. Next extracted character: Rurik, including every reachable activity.
+
+---
+
 # Brynja world locomotion — current checkpoint
 
 Dagna, Ragnhild and Brynja now have active world bundles. Brynja adds four resting views and sixteen walking keys at her distinct 58px compact stature. Her Pinewood route and named partner rescue retain their identity. Seven other extracted candidates remain disabled; 21 named world bundles remain unfinished. Future tool/worker activities need matching whole art before assignment. See gait112/README.md and testing evidence. Next extracted character: Edda, preserving her narrower upright build.

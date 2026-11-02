@@ -1,0 +1,121 @@
+{
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.17
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 718,
+      "seconds": 12.38
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 318,
+      "seconds": 51.65
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 289,
+      "seconds": 55.36
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 293,
+      "seconds": 57.28
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 294,
+      "seconds": 58.48
+    },
+    {
+      "test": "story_art105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 92,
+      "seconds": 7.07
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 84,
+      "seconds": 111.53
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 40,
+      "seconds": 52.44
+    }
+  ],
+  "exported_pack": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 718,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 318,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 289,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 293,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 294,
+      "errors": []
+    }
+  ],
+  "packed_entries_verified": 3497,
+  "visual_review": "Fresh native 63px and 2x board and four ordered loop frames reviewed; complete resting boots restored; rear-quarter opposite contact corrected. Actual survey-route walking/resting source captures and exported walking capture inspected. Owner review remains open.",
+  "limits": [
+    "Edda full hosted gate pending",
+    "No new Windows build or release",
+    "No independent Windows-device/audio playtest"
+  ],
+  "prior_delivery": {
+    "brynja_pr": 80,
+    "full_hosted_run": 41374454443,
+    "conclusion": "success",
+    "merge_sha": "1082e8964546a1c760716cfc3413ec756b7e0ea6"
+  }
+}
