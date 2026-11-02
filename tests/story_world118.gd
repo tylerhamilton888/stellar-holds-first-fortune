@@ -15,7 +15,7 @@ func run():
  var sheet="res://assets/story105/world/ketil.webp"
  check(HoldWholeFrames.metadata.has(sheet) and HoldWholeFrames.metadata[sheet].size()==20,"Production registers all 20 Ketil poses")
  for id in HoldStoryWorld105.CAST:
-  if id not in ["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram"]:check(not HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Unreviewed character remains inactive "+id)
+  if id not in ["dagna","ragnhild","brynja","edda","rurik","torvik","ketil","hakon","bram","sten","orla","sigrid","yrsa","skarrin"]:check(not HoldStoryWorld105.has_profile(HoldStoryArt105.tag(p,id)),"Unreviewed character remains inactive "+id)
  for view in 4:
   var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][view]
   var idle=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)

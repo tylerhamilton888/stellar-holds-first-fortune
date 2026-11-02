@@ -1,0 +1,208 @@
+{
+  "source": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 12.19
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 924,
+      "seconds": 16.48
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 312,
+      "seconds": 51.58
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 283,
+      "seconds": 58.67
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 287,
+      "seconds": 56.08
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 288,
+      "seconds": 55.62
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 377,
+      "seconds": 55.58
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 367,
+      "seconds": 51.59
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 487,
+      "seconds": 62.47
+    },
+    {
+      "test": "story_world119",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 315,
+      "seconds": 60.54
+    },
+    {
+      "test": "story_world120",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 424,
+      "seconds": 63.47
+    },
+    {
+      "test": "story_batch121",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 657,
+      "seconds": 77.53
+    }
+  ],
+  "focused_final": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 12.2
+    },
+    {
+      "test": "story_batch121",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 657,
+      "seconds": 83.66
+    }
+  ],
+  "pack_status": "passed",
+  "pack_integrity": {
+    "count": 3743,
+    "sha256": "c3ea3f6f5bed00a73e7c40a65d1ab92a65d6e1683aa5ba4273f0b9601b3cd1cc"
+  },
+  "visual_review": {
+    "individual_boards": 5,
+    "logical_poses": 112,
+    "ordered_group_keys": 4,
+    "activities": [
+      "rest",
+      "four-direction walk",
+      "drink: Orla, Sigrid, Yrsa"
+    ],
+    "scope": "native Godot captures; owner feedback remains open"
+  },
+  "known_limits": [
+    "No new Windows release",
+    "Full hosted validation pending publication",
+    "Unreviewed ten named bundles remain disabled"
+  ],
+  "pack": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 924,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 312,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 283,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 287,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 288,
+      "errors": []
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "checks": 377,
+      "errors": []
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "checks": 367,
+      "errors": []
+    },
+    {
+      "test": "story_world118",
+      "passed": true,
+      "checks": 487,
+      "errors": []
+    },
+    {
+      "test": "story_world119",
+      "passed": true,
+      "checks": 315,
+      "errors": []
+    },
+    {
+      "test": "story_world120",
+      "passed": true,
+      "checks": 424,
+      "errors": []
+    },
+    {
+      "test": "story_batch121",
+      "passed": true,
+      "checks": 657,
+      "errors": []
+    }
+  ],
+  "fixture_corrections": "Initial run used an obstructed south approach to Sten and compared transient worker state before save flushed it. Final fixture selects an accessible approach and compares saved assignments/progress after the flush."
+}

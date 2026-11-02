@@ -1,3 +1,7 @@
+# Batch delivery — owner direction, 2026-11-02
+
+Deliver remaining named characters in groups of five. Review and correct each character internally, including every reachable activity, then present one combined preview and test report. Do not pause for routine owner approval between characters. Batching does not waive anatomy, outfit, footfall or native-review requirements below.
+
 # Named character continuity gate — quality115
 
 Arm anatomy gate (gait118): trace each shoulder through one elbow, wrist and hand at full resolution and gameplay size. Exactly two arms and hands; no false sleeve feeding into another arm. Check one bracer per forearm when the costume includes bracers. Footfall review never substitutes for this check. Ketil's rejected side contact exposed the same defect in Torvik's reference; both require complete-pose replacement.

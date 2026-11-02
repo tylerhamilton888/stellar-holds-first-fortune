@@ -1,3 +1,15 @@
+# Named cast batch 121 — five characters
+
+Sten, Orla, Sigrid, Yrsa and Skarrin are enabled together: 112 complete poses, including four-view resting/walking for all five and drinking for Orla, Sigrid and Yrsa. Preserved their individual stature, names, routes, conversations, recruitment/crew state and rescue roles. Corrected opposite footfalls, pouch/strap/shoulder-pad continuity, backgrounds, boots and drinking proportions. Original artwork remains; named cache revision 21 refreshes derived frames.
+
+All 4,721 focused source assertions and all 4,721 exact-export assertions passed across eleven cases. Export integrity verified 3,743 entries. Native individual boards, four ordered group keys and live scenes reviewed. Evidence: testing/batch121/acceptance.json and testing/batch121/batch-walk.gif; production records: art/batch121/README.md. Full hosted validation remains pending publication; merge the authorized change only after that gate passes. No new Windows release. Owner visual feedback remains open.
+
+Delivery branch: fix/cast-batch121. Bram PR #88 passed hosted run 41474776743 and merged as c1d1457245a834ab8069f6677c41a1dd76dd2055. Its verified tree 5774278610c9df7542768ea87066204ff6dadc06 is this batch's base. Publish using Git-data tools and require equality with the tested local tree.
+
+Fourteen named world bundles active, ten unfinished. Owner directed groups of five with internal correction and one combined delivery; no individual thumbs-up cycle. Next group: Ivar, Hedrik, Borin, Eldric and Brann, including every reachable activity. Last group: Dagr, Odrin, Osvik, Tovan and Kelvar. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished. Existing tutorial/hint overlap is outside this art pass.
+
+---
+
 # Bram world locomotion — 120
 
 Bram is the ninth enabled named world character: four resting views and sixteen walking keys at his existing 62px stature. Older bald crown, grey fringe and full beard, patched blue hooded tunic, leather harness, two hip pouches, bracers and short boots. Corrected repeated contacts, rear-facing footwear, patch continuity and arm anatomy with complete painted replacements. Original atlas retained; named cache revision 20 refreshes existing frames.
