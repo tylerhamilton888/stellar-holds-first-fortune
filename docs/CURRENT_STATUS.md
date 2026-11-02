@@ -1,8 +1,10 @@
-# Ridge courtship 124 — implementation and validation
+# Ridge courtship 124 — Alden and Maren complete
 
-Added Alden Pineward and Maren Hearthwell as two optional romances, with dedicated portraits, 48 whole painted world poses, personal errands, keepsakes, three dates each and betrothal. Their saved shared story progresses to mutual courtship and betrothal when neither is pursued; explicit player interest and commitments take priority. Alden joins Maren at the Wayfarer's Hearth once paired. Stable road IDs 10/11, additive save state, eight candidates and 26 named world bundles.
+Added Alden Pineward and Maren Hearthwell as two optional adult romances: dedicated portraits, 48 whole painted world poses, personal errands, keepsakes, three dates each and reciprocal betrothal. Their original dialogue and appearance carry the owner's quiet film homage. When neither is pursued they gradually court and become betrothed; explicit interest or a player commitment to either protects that choice. Alden joins Maren at the Wayfarer's Hearth, with current directions and shared-life dialogue. Eight romance candidates and 26 named world bundles are active.
 
-Native art and conversation review completed. Full source/export and hosted checks are in progress; completion evidence will be appended separately. No Windows release is included. Prior completed batches and releases remain intact.
+All 4,027 source assertions passed across nine cases; all 3,931 exact-export assertions passed across eight. Export integrity verified 3,839 entries and four exact animation-metadata matches. Native gait, portraits, courtship panels and shared Hearth scene reviewed. Both new partners also pass the existing rescue integration. All five jobs in hosted run 41530415605 passed by 2026-11-02T22:05:13Z. PR #95 merged as fe9d028180c6b80a7096ec2b0e9760e367db11a3, with the identical tested source tree 6019b4c43c6236fd07a1d8a9abf6ccfde78d9f58.
+
+Evidence: testing/ridge124/acceptance.json and cast-walk.gif. Production: art/ridge124/README.md. Additive saved state and stable appended road IDs preserve earlier characters and saves. No Windows release is included; owner visual feedback remains open. Original intro/contest, invasion/trial and household milestones remain separate unfinished work. Prior source and release backups remain intact.
 
 ---
 
