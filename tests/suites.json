@@ -11,7 +11,8 @@
       "story_world111",
       "story_world112",
       "story_world113",
-      "story_world116"
+      "story_world116",
+      "story_world117"
     ],
     "gameplay": [
       "loading",
@@ -67,7 +68,8 @@
       "story_world111",
       "story_world112",
       "story_world113",
-      "story_world116"
+      "story_world116",
+      "story_world117"
     ],
     "modular": [
       "modular",
@@ -467,7 +469,8 @@
       "story_world111",
       "story_world112",
       "story_world113",
-      "story_world116"
+      "story_world116",
+      "story_world117"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -597,6 +600,18 @@
       "story_world113",
       "story_world116",
       "lodge100"
+    ],
+    "story_world117": [
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117"
+    ],
+    "story117-only": [
+      "story_world117"
     ]
   },
   "cases": {
@@ -819,6 +834,10 @@
     "story_world116": {
       "script": "tests/story_world116.gd",
       "marker": "STORYWORLD116"
+    },
+    "story_world117": {
+      "script": "tests/story_world117.gd",
+      "marker": "STORYWORLD117"
     }
   }
 }

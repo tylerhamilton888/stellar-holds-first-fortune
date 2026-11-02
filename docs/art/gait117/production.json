@@ -1,0 +1,59 @@
+{
+  "front": {
+    "source": "exec-36f27c3a-5777-4b69-9410-a774535f36d6.png",
+    "source_sha256": "4c2e386def18d209fbeaedaef9dfac6ef6ca70e614fe8912bbb0397c49770d5b",
+    "runtime": "assets/story105/world/torvikfront.webp",
+    "runtime_sha256": "b0edd479b25360cdbc85d676618ab37e629889847876507cc127afb852f81b35",
+    "selected": "all4"
+  },
+  "side": {
+    "source": "exec-7aa55209-174f-4ead-9a41-bdc3e21a3c39.png",
+    "source_sha256": "39869ce545994ff17c850fa745d0a383045132f689873f3597b6c8aab3bec30d",
+    "runtime": "assets/story105/world/torvikside.webp",
+    "runtime_sha256": "4ab95b3d61b9da7e6d0718c887ac5866e0746da92ff64a738404027794c34c4b",
+    "selected": "keys0,1,3; key2 replaced"
+  },
+  "quarter": {
+    "source": "exec-a7264711-2257-417d-abcb-a62b68bf8b2c.png",
+    "source_sha256": "ed69c09d83e5c1d4cd36a19883ce327282100e7d5e5cf47fee6e831f47bb4d6a",
+    "runtime": "assets/story105/world/torvikquarter.webp",
+    "runtime_sha256": "265d114175aaf53c000ec68145ee0bf02d6619c5fdc0a63e806434b393aad5a1",
+    "selected": "keys0,1,3; key2 replaced"
+  },
+  "back": {
+    "source": "exec-90e18594-f24f-41a1-b2f4-02b824507071.png",
+    "source_sha256": "318e4d56f29c14b56e197311146c47d1df476807b18c51f1394f6753876d518c",
+    "runtime": "assets/story105/world/torvikback.webp",
+    "runtime_sha256": "b32355d6e5105051fcd38fdb6b5949406af2a0e813846f6f96b657b50454ba73",
+    "selected": "all4"
+  },
+  "short": {
+    "source": "exec-b3123907-53df-4992-a02a-9ca91a90c581.png",
+    "source_sha256": "3e04f43c797b091c8daee98e6ab3fac06f438fce49c77cb6975e78435e00e527",
+    "runtime": "assets/story105/world/torviksideopposite.webp",
+    "runtime_sha256": "d6554f0bced2ca4d945439287f93168082952783ee6705abacb746f778372a4f",
+    "selected": "side key2"
+  },
+  "contact": {
+    "source": "exec-576a1fc6-7e17-4099-a28b-f020c5e849f7.png",
+    "source_sha256": "fa5c960b4895173afc172da894ca427d5e54917da04c23f166a8c9c56b11ab4b",
+    "runtime": "assets/story105/world/torvikquarteropposite.webp",
+    "runtime_sha256": "895ac28d9cdc8e5fc91d94c54bdf8ae8aea12476fc8545d2a79dfba88a2b6e92",
+    "selected": "quarter key2"
+  },
+  "heels": {
+    "source": "exec-3413fdf5-5dc3-4c1d-b153-d4be3e35cfda.png",
+    "source_sha256": "4017f3e7163794fdf5fb682c57b0b825a08148bd4d43937bd8ab89031f8c6867",
+    "runtime": "assets/story105/world/torvikidle.webp",
+    "runtime_sha256": "a437b2dcb1876b9e43965eb6f146234749c7f3b3cd2a61ee3d8b0045d4a9b031",
+    "selected": "all4"
+  },
+  "rejected": {
+    "sideopposite": "Superseded to shorten legs",
+    "sidestout": "Rejected arm continuity drift",
+    "quarteropposite": "Did not reverse contact clearly",
+    "quarterright": "Torso/leg angle mismatch",
+    "idle": "Wrong boot fastenings",
+    "idlefinal": "Rear boots faced viewer; corrected heels"
+  }
+}

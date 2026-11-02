@@ -1,0 +1,120 @@
+{
+  "source": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.14
+    },
+    {
+      "test": "story_world105",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 700,
+      "seconds": 12.53
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 316,
+      "seconds": 51.29
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 287,
+      "seconds": 51.42
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 291,
+      "seconds": 50.41
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 292,
+      "seconds": 56.44
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 377,
+      "seconds": 57.45
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 371,
+      "seconds": 55.46
+    }
+  ],
+  "export": [
+    {
+      "test": "story_world105",
+      "passed": true,
+      "checks": 700,
+      "errors": []
+    },
+    {
+      "test": "story_world108",
+      "passed": true,
+      "checks": 316,
+      "errors": []
+    },
+    {
+      "test": "story_world111",
+      "passed": true,
+      "checks": 287,
+      "errors": []
+    },
+    {
+      "test": "story_world112",
+      "passed": true,
+      "checks": 291,
+      "errors": []
+    },
+    {
+      "test": "story_world113",
+      "passed": true,
+      "checks": 292,
+      "errors": []
+    },
+    {
+      "test": "story_world116",
+      "passed": true,
+      "checks": 377,
+      "errors": []
+    },
+    {
+      "test": "story_world117",
+      "passed": true,
+      "checks": 371,
+      "errors": []
+    }
+  ],
+  "source_checks": 2634,
+  "export_checks": 2634,
+  "packed_entries": 3578,
+  "pack_sha256": "a3448fa05e078c9284459080df3952548f1bd299a1a23c82b3673e223b80cf02",
+  "visual_review": "Native 20-pose board and all four ordered walk captures, native and exact-export Pinewood captures and conversation reviewed.",
+  "iterations": "Initial fixture failed its accidentally duplicated approved ID list; corrected. Final fixture uses normal first meeting before recording identity and verifies authored first name. Final Torvik native and export checks rerun after art selection.",
+  "hosted": "Pending publication and full hosted acceptance",
+  "windows_release": false
+}

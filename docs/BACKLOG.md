@@ -1,3 +1,15 @@
+# Torvik world animation — 117
+
+Torvik is the sixth enabled named world character: twenty walking/resting poses at his existing 62px stature. Oak-brown half-tied hair, twin beard braids, pine-green cream-cuffed shirt, brown harness and boots. Replaced repeated opposite contacts, corrected resting footwear and reviewed all four directions at native size and 2x. Original assets remain; named cache revision 17 refreshes existing frames.
+
+Focused source checks passed 2634 assertions and exact-export checks passed 2634; 3578 packed entries verified. The final Torvik case passed 371 assertions in each mode, including 108 route samples, normal first meeting/name, conversation, save/load, inventory and mountain rescue identity. Evidence: testing/gait117/acceptance.json and art/gait117/README.md. No new Windows release. Full hosted acceptance and owner visual feedback remain open.
+
+Delivery branch: fix/torvik-world117. Rurik PR #84 passed full hosted run 41386266164 and merged as 2164608c4a16a54f1ab417587cf40e28271e1905; its tree dde06b776a4dc1c5abfa162495fc71350d5d26a9 is this work's base. Publish against master and verify the remote tree matches the tested local tree.
+
+Six named bundles active, 18 unfinished. Next extracted character: Ketil, including every reachable activity. Ketil, Hakon, Bram and Sten remain quarantined. Intro progression is unchanged: public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished. Pinewood screenshots also expose an existing overlapping tutorial/workbench hint; track for the UI pass, outside this character-art change.
+
+---
+
 # Rurik world animation — 116
 
 Rurik Stonehand is the fifth enabled named world bundle: four resting views and sixteen walking keys at his existing 62px stature. Broad male dwarf proportions, full reddish beard, red shirt, leather harness and matching boots. Corrected repeated opposite steps and restored complete resting feet. Original atlas remains; named cache revision 16 refreshes old frames. Existing lodge route and conversation are unchanged.
