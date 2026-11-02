@@ -10,4 +10,4 @@ Eldric's rear sleeves and beard bindings were corrected. Brann's rear mining con
 
 Reachable activities were traced through lodge/escort, tavern, forge, research, recruitment and underground worker/workshop code. Unsupported future actions retain their existing functional renderer. Brann's masonry cargo remains the existing separate world block. No new activities, gameplay balance or save fields were invented.
 
-Native visual review, source checks and exact-package checks are recorded in `docs/testing/batch122/acceptance.json` when complete. User visual acceptance remains open; technical tests alone do not establish art quality.
+Native visual review, all 5,891 source assertions and all 5,866 exact-package assertions passed; 3,773 packed entries verified. Results are recorded in `docs/testing/batch122/acceptance.json`. The combined GIF shows ordered keys at the walking cadence; actual activity timing is verified in the live captures. User visual acceptance remains open; technical tests alone do not establish art quality.

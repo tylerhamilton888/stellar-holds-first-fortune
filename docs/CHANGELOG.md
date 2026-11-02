@@ -1,3 +1,15 @@
+# Named cast batch 122 — five characters
+
+Ivar, Hedrik, Borin, Eldric and Brann are enabled together with 128 complete poses: four-view locomotion/resting for all five, drinking for Hedrik/Brann, hammering for Borin/Brann, and front/side/back mining for Brann. Corrected Eldric’s sleeve/beard continuity and Brann’s mining grip and two-point pick heads following owner feedback. Complete-figure bounds prevent clipped tools; fixed body calibration preserves scale through raised poses. Borin’s hammer now contacts the anvil on the existing strike beat. Named cache revision 22 refreshes derived frames.
+
+All 5,891 focused source assertions and 5,866 exact-export assertions passed across sixteen cases. Export integrity verified 3,773 entries; all ten packaged art metadata files match the final source. Native ordered group keys, the three-view mining board, conversations, escort, tavern, forge, recruitment, mining/workshop and reload reviewed. Evidence: testing/batch122/acceptance.json, batch-poses.gif and mining-correction.png. Art provenance: art/batch122/README.md. No new Windows release; owner visual acceptance remains open.
+
+Delivery PR #91: published head b329e207c8e7a62d08b68ea68fad8e3ea5fa47ec exactly matches tested local tree e885241515368cf355dcdb537f562717cc5d8cfa. All earlier-character regressions passed with the remaining-character expectations updated. Full hosted run 41508202259 is in progress; merge only after every job passes. Prior source, releases and recovery records remain intact.
+
+Nineteen named world bundles active, five unfinished: Dagr, Odrin, Osvik, Tovan and Kelvar form the next group. Keep the owner’s groups-of-five workflow with internal corrections and one combined delivery. Intro public contest/Keldrath, invasion/trial and Thaneship/household remain unfinished. Existing tutorial/hint overlap is outside this art pass.
+
+---
+
 # Named cast batch 121 — five characters
 
 Sten, Orla, Sigrid, Yrsa and Skarrin are enabled together: 112 complete poses, including four-view resting/walking for all five and drinking for Orla, Sigrid and Yrsa. Preserved their individual stature, names, routes, conversations, recruitment/crew state and rescue roles. Corrected opposite footfalls, pouch/strap/shoulder-pad continuity, backgrounds, boots and drinking proportions. Original artwork remains; named cache revision 21 refreshes derived frames.
