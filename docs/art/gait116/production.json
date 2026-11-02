@@ -1,0 +1,122 @@
+{
+  "Front": {
+    "prompt": "Use case: identity-preserve. Game sprite production. Image1 defines RURIK: adult male dwarf stone hauler, broad muscular barrel torso, short powerful legs, masculine face, full thick reddish-brown beard and swept-back wavy hair half tied at back, red short-sleeved work shirt, brown leather shoulder harness, belt with brass buckle, single right-hip pouch, charcoal trousers, brown bracers and boots. Image2 is POSE REFERENCE ONLY, do not use its woman or clothing. Paint exactly FOUR FRONT walking Rurik sprites following image2's four distinct foot positions: right contact, left planted passing, left contact, right planted passing. Physically alternate forward legs and opposite arm swings. All four same Rurik face, beard, proportions and outfit. His strongman dwarf build must stay broad and compact, no giant head or long legs. Whole complete figures with feet, one row, transparent background, no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "FrontPass": {
+    "prompt": "Use case: precise-object-edit. Fix feet ONLY in figures TWO and FOUR of this four Rurik sprite row. Figure2 is PASSING: image-left boot planted directly below hip, image-right boot lifted behind with knee bent, feet close together. Figure4 is OPPOSITE PASSING: image-right boot planted directly below hip, image-left boot lifted behind with bent knee, feet close together. Neither passing pose may extend a big boot toward viewer. Keep figures1 and3 contact strides unchanged. Preserve Rurik beard, face, broad muscular dwarf torso, red shirt, harness, belt pouch, same bracers and boots. Four full figures one transparent row no text.",
+    "decision": "keys 0\u20132; key 3 overridden",
+    "source": "exec-dab8b176-bb66-4da7-bd23-2b62ae36610e.png",
+    "source_sha256": "deda6bf54b5ddf88892f5b5493297c863cca956dd7c46ce61faf4054aff52fb2",
+    "runtime": "assets/story105/world/rurikfront.webp",
+    "runtime_sha256": "28ff45cb8d2e06973f4e176474818a744f98ca6ff128e168731928f907146568"
+  },
+  "Side": {
+    "prompt": "Use case: identity-preserve. Create FOUR SIDE VIEW walking sprites facing RIGHT of Rurik from image1. Image2 is movement reference ONLY. Rurik is a broad strong adult male dwarf with full thick reddish brown beard, swept-back half-tied long hair, red short sleeves, brown leather shoulder harness and belt, one RIGHT hip pouch, charcoal trousers, bracers and matching boots. Keep proportions and clothing exactly identical across all four. Four physically distinct poses: near leg BACK/far leg FORWARD with near arm forward; near leg planted/far foot lifted behind; near leg FORWARD/far leg BACK with near arm back; far leg planted/near foot lifted behind. Knees and boots must alternate which leg supports him. Short powerful legs, broad torso. Four full figures one row transparent background no text.",
+    "decision": "keys 0,1,3; key 2 overridden",
+    "source": "exec-d9eda526-277a-4760-8c26-be064e7d6ec1.png",
+    "source_sha256": "9fba0baf904a6ceae17303e32dffe289a72e4a670558b4f0378f532a1dbc7fa0",
+    "runtime": "assets/story105/world/rurikside.webp",
+    "runtime_sha256": "dff1385aa054e25a01e83217c6061aa1b5e18375f8a40f2c8c1e4714ddff643b"
+  },
+  "Back": {
+    "prompt": "Use case: identity-preserve. Create FOUR STRAIGHT BACK walking Rurik sprites. Image1 is character reference: broad muscular adult male dwarf, reddish brown wavy half-tied hair, red short-sleeved work shirt, brown leather shoulder straps and belt, ONE right-hip pouch on image-RIGHT, charcoal trousers, brown bracers and short thick boots. Image2 is feet/stride reference only. Exactly copy its four different physical leg arrangements: image-left foot behind then image-left lifted; image-right foot behind then image-right lifted. All four same broad compact body and costume, upper back red with two harness straps, no apron. Four full figures one transparent row no text.",
+    "decision": "keys 0,1,3; key 2 overridden",
+    "source": "exec-2479c2c3-d036-4cd9-b52e-9cda5bafd6ae.png",
+    "source_sha256": "c4b6dc3f7b68650c895b778ee254151bfa373d364f2772f320aea3fb0814e307",
+    "runtime": "assets/story105/world/rurikback.webp",
+    "runtime_sha256": "5f15748930e1e45d19b3e7e81b5e426ed00a517d51891a5f7058de1f5f02bd3a"
+  },
+  "Quarter": {
+    "prompt": "Use case: identity-preserve. Four REAR-QUARTER walking sprites of Rurik facing upper right, torso pelvis and knees aligned. Match image1 male dwarf identity: broad muscular compact build, red short sleeved shirt, brown harness, belt and bracers, dark trousers, thick boots, reddish-brown half-tied wavy hair and full beard. Single tool pouch must stay on his RIGHT HIP (near side image-right), not swap sides. Image2 is pose reference only. Four distinct contact/passing/opposite contact/opposite passing poses. Opposite contact must visibly reverse which physical boot reaches backward, opposite arm swing. Same proportions and clothes all four. Whole figures one transparent row no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "FrontOpp": {
+    "prompt": "Use case: precise-object-edit. ONE complete Rurik dwarf sprite on transparent background. Reverse ONLY his leg positions. Viewer RIGHT leg now straight planted under hip; viewer LEFT knee bent with boot raised backward. Keep torso, face, hair, beard, harness, red shirt and pouch on viewer LEFT unchanged. This is one front passing-step sprite with right image-side planted and left image-side floating, not mirrored upper body. Keep muscular compact adult dwarf proportions. One whole figure, no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "SideOpp": {
+    "prompt": "Use case: precise-object-edit. ONE complete Rurik dwarf sprite on transparent background. Make the OPPOSITE contact step. Near camera leg reaches FORWARD to image-right and far leg extends BACK to image-left. Near arm swings BACK, far arm swings FORWARD. Preserve face, head size, red shirt, harness, single near hip pouch and boots. Read the near leg from its upper thigh to boot: it must be forward, not the existing backward pose. Keep muscular compact adult dwarf proportions. One whole figure, no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "BackOpp": {
+    "prompt": "Use case: precise-object-edit. ONE complete Rurik dwarf sprite on transparent background. Reverse ONLY leg positions: viewer RIGHT leg extends BACK toward viewer, boot largest/lower and sole slightly visible; viewer LEFT leg is forward farther away, boot smaller/higher. Preserve upper body exactly, especially pouch on viewer RIGHT, red shirt, harness and hair. This is opposite back contact, not mirrored whole body. Keep muscular compact adult dwarf proportions. One whole figure, no text.",
+    "decision": "back key 2",
+    "source": "exec-fde2b84f-f514-4563-ad5c-5636d2a90948.png",
+    "source_sha256": "14e8919611326d4b5a1ef4052ee4f3a8eb128f63990fe05a6e3ed3633ceea31e",
+    "runtime": "assets/story105/world/rurikbackopposite.webp",
+    "runtime_sha256": "c060efadadfbe2492c434a85a76e4d6956b4c2c08e6d0b0a5910353bb16877a6"
+  },
+  "FrontFinal": {
+    "prompt": "Use case: identity-preserve. Image1 is EXACT POSE TEMPLATE. Replace that character with Rurik from image2 while keeping image1's leg pose exactly: boot on RIGHT side of image planted, LEFT side boot lifted behind. Rurik is muscular broad adult male dwarf with huge reddish beard, red short sleeve shirt, leather harness and belt, right hip pouch appearing on image-left, dark trousers, bracers and brown boots. Preserve his compact proportions. One whole character on transparent background, no text. Do not copy image2's foot pose; image1 defines legs.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "SideFinal": {
+    "prompt": "Use case: identity-preserve. Image1 is EXACT WHOLE POSE TEMPLATE: copy its arms and physical leg arrangement. Replace woman with Rurik from image2. Rurik is broad muscular squat adult male dwarf with full reddish beard, half tied swept-back hair, red short sleeves, brown harness belt hip pouch and bracers, dark trousers and boots. Near arm must be FORWARD bent with fist in front of abdomen and far arm BACK. Do not reproduce image2's arm pose. Match Rurik's head-to-body ratio and short legs. One whole figure transparent background no text.",
+    "decision": "side key 2",
+    "source": "exec-c55bf508-c454-43fa-88a0-97ac847995cd.png",
+    "source_sha256": "e1770bf92a7a2aa9710fe041a5e66c5c0183c5b550534db12f2ba51c246cffb9",
+    "runtime": "assets/story105/world/ruriksideopposite.webp",
+    "runtime_sha256": "800a3204815a5e60628ea608d7c672129bcfa3570a5eef22349ae9b2c694e5b9"
+  },
+  "QuarterContact": {
+    "prompt": "Use case: identity-preserve. Image1 defines EXACT POSE; image2 defines Rurik identity. Replace the woman in image1 with broad squat muscular male dwarf Rurik, preserving image1's exact rear-quarter torso direction, feet and arms. Near arm swung BACK, far arm forward, same feet. Full reddish beard and half-tied swept-back hair, red short sleeve shirt, brown shoulder harness and belt, one pouch on RIGHT hip near camera, bracers, dark trousers, thick boots. Short powerful legs and broad torso, not tall. One whole figure transparent background no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "QuarterA": {
+    "prompt": "Use case: identity-preserve. Preserve this EXACT whole-body pose, foot positions, arm positions and direction. Replace this female dwarf with RURIK: broad muscular adult MALE DWARF, full thick reddish-brown beard, swept-back long wavy hair HALF TIED at back. RED SHORT SLEEVED WORK SHIRT with NO apron, NO bow, NO skirt, NO white sleeve. Brown leather shoulder harness and belt, one right hip pouch near camera, charcoal TROUSERS, thick brown boots and bracers. Short stocky strongman proportions. Keep the image's exact planted/lifted physical feet and arm swing. One complete male figure transparent background no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "QuarterB": {
+    "prompt": "Use case: identity-preserve. Preserve this EXACT whole-body pose, foot positions, arm positions and direction. Replace this female dwarf with RURIK: broad muscular adult MALE DWARF, full thick reddish-brown beard, swept-back long wavy hair HALF TIED at back. RED SHORT SLEEVED WORK SHIRT with NO apron, NO bow, NO skirt, NO white sleeve. Brown leather shoulder harness and belt, one right hip pouch near camera, charcoal TROUSERS, thick brown boots and bracers. Short stocky strongman proportions. Keep the image's exact planted/lifted physical feet and arm swing. One complete male figure transparent background no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "QuarterC": {
+    "prompt": "Use case: identity-preserve. Preserve this EXACT whole-body pose, foot positions, arm positions and direction. Replace this female dwarf with RURIK: broad muscular adult MALE DWARF, full thick reddish-brown beard, swept-back long wavy hair HALF TIED at back. RED SHORT SLEEVED WORK SHIRT with NO apron, NO bow, NO skirt, NO white sleeve. Brown leather shoulder harness and belt, one right hip pouch near camera, charcoal TROUSERS, thick brown boots and bracers. Short stocky strongman proportions. Keep the image's exact planted/lifted physical feet and arm swing. One complete male figure transparent background no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "QuarterD": {
+    "prompt": "Use case: identity-preserve. Preserve this EXACT whole-body pose, foot positions, arm positions and direction. Replace this female dwarf with RURIK: broad muscular adult MALE DWARF, full thick reddish-brown beard, swept-back long wavy hair HALF TIED at back. RED SHORT SLEEVED WORK SHIRT with NO apron, NO bow, NO skirt, NO white sleeve. Brown leather shoulder harness and belt, one right hip pouch near camera, charcoal TROUSERS, thick brown boots and bracers. Short stocky strongman proportions. Keep the image's exact planted/lifted physical feet and arm swing. One complete male figure transparent background no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "QuarterFinal": {
+    "prompt": "Use case: identity-preserve. Image1 is the EXACT FOUR-POSE layout to keep: preserve each distinct leg and arm arrangement, including near arm back in first, near arm forward in third, opposite lifted feet in second/fourth. Replace each character's identity/clothing/PROPORTIONS with Rurik in image2: broad squat muscular dwarf, short powerful legs, compact head with swept back reddish hair ending at shoulders not waist, half-tied small gold band; thick full beard, simple red short sleeve work shirt, two simple brown shoulder straps and brass buckles, plain brown belt, single flap pouch near RIGHT hip in every figure, charcoal trousers WITHOUT rear pockets, plain brown riveted bracers and same boots. Do not retain long-haired tall silhouette or elaborate clothing from image1. All four same proportions and design as image2, but different exact poses from image1. Four full whole figures one transparent row no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "QuarterAlpha": {
+    "prompt": "Use case: background-extraction. Remove the entire brown background, lighting halo and all shadows outside the four figures. Output actual transparent alpha. Preserve all four whole sprite poses and details. Also correct only second figure's pouch: remove pouch from image-left/far hip, place one same flap pouch on image-right/near hip beneath near elbow, matching other figures. No other costume changes. Four full figures transparent background, no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "QuarterCutout": {
+    "prompt": "Remove the brown backdrop completely. Return only the four character cutouts on genuine transparent alpha, with absolutely no background color, glow, vignette, ground, or shadow. Do not change the figures.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "Idle": {
+    "prompt": "Use case: precise-object-edit. Clean this Rurik four-direction STANDING reference into four complete game sprites. Preserve his broad squat muscular dwarf proportions, full reddish beard, swept-back half tied hair, red short sleeve shirt, brown shoulder harness and belt, charcoal trousers, bracers and boots. Fix only rear-quarter third figure's pouch: move it from far image-left hip to NEAR image-right hip to match right-hip placement in other views. Ensure full boots and soles are present. Keep all four standing orientations front, side, rear-quarter, straight back. Same design unchanged, four whole figures transparent background no text.",
+    "decision": "Intermediate study; not selected for runtime"
+  },
+  "FrontStout": {
+    "prompt": "Use case: precise-object-edit. Correct this one Rurik passing sprite's proportions. He must be a MUCH BROADER, SQUAT strongman dwarf: increase shoulder/chest/belly width by about 25 percent and shorten exposed trouser legs about 15 percent, so broad torso dominates, matching muscular compact dwarves. Keep head size and facial identity unchanged, full beard, red shirt and harness, belt and pouch on image-left, boots and bracers unchanged. Preserve EXACT foot sides: image-right planted, image-left lifted behind. Do NOT swap feet or change pose. One complete whole figure transparent background.",
+    "decision": "front key 3",
+    "source": "exec-a824a8c6-b1f6-405d-a091-922e48990d49.png",
+    "source_sha256": "f8e839a0a4a59e884dac64d26049e198c0f4309495b2859317bd7356c5e9e2a3",
+    "runtime": "assets/story105/world/rurikfrontopposite.webp",
+    "runtime_sha256": "f22ce4a357cafd66335b39532e2e61f27507b16f1093ffa0c40cb6183d300f54"
+  },
+  "QuarterStout": {
+    "prompt": "Use case: precise-object-edit. Make these four Rurik rear-quarter walking figures more COMPACT and BROAD like muscular dwarves. Broaden torso/shoulders/waist by about 20%, shorten thighs about 15%, keep head size. Preserve each EXACT distinct arm and foot pose, correct pouch on near right hip, short half-tied hair, full beard, red work shirt, harness, belt, trousers, boots and bracers. All four same proportions. No new costume details. Four complete whole figures, actual transparent background, no halo or floor.",
+    "decision": "all four keys",
+    "source": "exec-bbd12a22-e95b-4315-90aa-b93e4959d1fd.png",
+    "source_sha256": "4c353b7747715fc8adb0b856a59693966cfd11bca6cbc605965ff9db4cb57320",
+    "runtime": "assets/story105/world/rurikquarter.webp",
+    "runtime_sha256": "94b0bb9bc60b06b9a8a00ae9aa496280f87db2feba3f464239f03c5e2cfd5dea"
+  },
+  "IdleBoots": {
+    "prompt": "Use case: precise-object-edit. Change ONLY the boot fastening design across these four standing Rurik sprites. Boots must match his walking boots: two vertically stacked SMALL rectangular brass buckles on the FRONT instep/shin, broad plain brown top cuff, no oversized horizontal gold ornament across toe. Front and side views show two buckles, rear views show plain boot backs with hardware only on visible front/side. Keep boot size, stance, head, full beard, proportions, hair, red shirt, harness, pouch, belt, bracers and every other detail exactly the same. Four complete whole figures transparent background.",
+    "decision": "all four views",
+    "source": "exec-650efc98-8beb-4c64-84f1-1220ff1d1206.png",
+    "source_sha256": "a242a197fdd9258d986b0d968268f00165df5db3442ea8523b9dfa0a1ab09715",
+    "runtime": "assets/story105/world/rurikidle.webp",
+    "runtime_sha256": "135b0dbdc85bb3716b8c0e5a5afda40be8ea96017e73370478ec5bdb6b6756a9"
+  }
+}
