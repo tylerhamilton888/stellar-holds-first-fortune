@@ -2,7 +2,7 @@
 
 Alden and Maren now begin courting when the player successfully begins courting another candidate, even before their introductions. Player betrothal to another candidate advances their betrothal. Elapsed days, friendship and rejected invitations never trigger either step. Choosing either Alden or Maren keeps their player romance available. Early interest is released by choosing somebody else; a later player breakup does not dissolve the NPC couple. Existing NPC commitments and historical hints are preserved; unfinished countdowns never expire. Existing player commitments elsewhere reconcile on load without spending items or inventing introductions.
 
-Verification pending. No Windows release requested. Marriage/shared households remain milestone 06.
+Complete: 624 native and 681 exact-export assertions passed; all five hosted jobs passed; source PR #105 merged. Evidence: testing/pair129/acceptance.json. No Windows release requested. Marriage/shared households remain milestone 06.
 
 # Hearthknot courtship gift — source complete
 
