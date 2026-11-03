@@ -31,7 +31,8 @@ static func points(g)->Array:
 static func can_reception(g)->bool:
  return eligible(g.state) and data(g.state).arrived and not data(g.state).welcomed and data(g.state).wards.size()==3 and g.surface.area=="room:throne" and g.player.distance_to(HoldRoyalStage.current(g).p)<160
 static func start(g,kind:String)->bool:
- if not eligible(g.state) or is_instance_valid(g.opening_scene) or g.handworks.busy_hands():return false
+ if not eligible(g.state) or is_instance_valid(g.opening_scene):return false
+ if g.handworks.busy_hands():g.notify("Set down your load or park your cart before joining the gathering or journey.");return false
  var d=data(g.state)
  if kind=="trial" and (d.stage!=0 or not HoldFrontier103.near(g,"lodge")):return false
  if kind=="verdict" and (d.stage!=2 or not at_yard(g)):return false
@@ -87,8 +88,9 @@ static func panel(g):
   g.label(g.panel_body,"%d / 3 fittings · Next: %s · %s" % [i,spec.name,HoldData.cost_text(spec.cost)],17)
   if at_part(g,i):
    g.label(g.panel_body,spec.hint,16)
+   if g.handworks.busy_hands():g.label(g.panel_body,"Set down your load or park your cart before fitting the lift.",15)
    for n in spec.choices.size():
-    var answer=n;g.button(g.panel_body,spec.choices[n],func():begin_work(g,i,answer))
+    var answer=n;var b=g.button(g.panel_body,spec.choices[n],func():begin_work(g,i,answer));b.disabled=g.handworks.busy_hands()
   else:g.label(g.panel_body,"Walk to "+spec.name+" in the trial yard, south of the communal forge. E reads the drawing.",15)
  if d.stage==2 and at_yard(g):g.button(g.panel_body,"Call Ivar · test the lift",func():start(g,"verdict"))
  if d.arrived:
