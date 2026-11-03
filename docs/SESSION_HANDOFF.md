@@ -1,3 +1,21 @@
+# The rightful claimant 127 — complete
+
+The authenticated Stonebridge claim now continues through a playable three-fitting ore-lift trial, a public proof load, victory, the honorable Master of Works offer and Skarrin's refusal. The western road opens Keldrath; actual Great Stair crossings record exploration of its three wards before a staged royal reception. The contribution round closes at authentication without deleting later work records.
+
+Four short in-world scenes use the original actors and locations, visible load/character motion, Continue/Skip and saved-beat recovery. The player builds the lift through normal interact input; scenes cannot bypass that work. Homes, inventory beyond explicit material costs, chest contents and romance progress are preserved. No early Thaneship is granted.
+
+The final source and exported chapter case each pass 380 assertions. All 3,845 exported entries passed integrity checks. Native/exported trial, load/refusal motion, King's Gate and royal reception reviewed. All five hosted source jobs passed in [run 41575490804](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575490804), completed 2026-11-03T04:29:50Z. PR #101 merged as 1a68d7c808f36175d770e9d01848d811a37af2d5; its tree exactly matches tested source tree 1d712bb95491d620869688231d33e0e601014627 (source 921d72b4bf69e4807c44fd19d44c6d13182a7447).
+
+Windows [0.93.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.93.0). The complete ZIP preserves the older releases and save locations. All 55 cases passed against the release pack in [run 41575487210](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575487210), completed 2026-11-03T04:52:42Z. Published build metadata confirms the tested source, Godot 4.4.1 and a clean tree; ZIP size and digest match the release asset. Windows hardware and audible presentation still require an owner playtest.
+
+Next: milestone 05, the interrupted investiture and playable invasion/trial. Milestone 06, Thaneship and household/marriage, remains queued. Current romances reach betrothal; all 26 named world bundles and the restrained Dwarven traditions are included. The royal reception is not the formal investiture. Earlier rescue homecoming/authentication presentation remains future polish.
+
+Evidence: [claim127 acceptance](testing/claim127/acceptance.json). Scene policy: [Story scenes](great-claim/STORY_SCENES.md).
+
+Exact next action: read the milestone 05 owner directive and current combat/royal-stage code, then implement its ceremony choices and substantial playable encounters with staged interruptions.
+
+---
+
 # Dwarven traditions 126 — complete
 
 The eight-day week preserves 28-day seasons, absolute saved dates and existing festival invitations. Optional worker-lodge memorial repair, a buildable household hearthstone, two optional miner topics, Sigrid's Cupday/Namesday evening activities, and selected festival/inscription details provide a restrained first integration. Default greetings and required opening instructions remain unchanged.

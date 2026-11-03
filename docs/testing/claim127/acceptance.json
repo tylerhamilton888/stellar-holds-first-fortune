@@ -1,0 +1,208 @@
+{
+  "status": "complete",
+  "source": {
+    "head": "921d72b4bf69e4807c44fd19d44c6d13182a7447",
+    "tree": "1d712bb95491d620869688231d33e0e601014627",
+    "pr": 101,
+    "merge": "1a68d7c808f36175d770e9d01848d811a37af2d5",
+    "validation_run": 41575490804,
+    "validation_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575490804",
+    "completed_at": "2026-11-03T04:29:50Z",
+    "jobs": [
+      {
+        "name": "gameplay (gameplay-2)",
+        "conclusion": "success"
+      },
+      {
+        "name": "people-preview",
+        "conclusion": "success"
+      },
+      {
+        "name": "gameplay (gameplay-4)",
+        "conclusion": "success"
+      },
+      {
+        "name": "gameplay (gameplay-1)",
+        "conclusion": "success"
+      },
+      {
+        "name": "gameplay (gameplay-3)",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "native": {
+    "suite": "claim127-focus",
+    "assertions": 380,
+    "result": "passed",
+    "engine": "Godot 4.4.1 stable",
+    "renderer": "native Linux, Mesa llvmpipe, gl_compatibility",
+    "case": "tests/claim127.gd"
+  },
+  "exact_export": {
+    "case": "claim127",
+    "assertions": 380,
+    "result": "passed",
+    "entries_verified": 3845,
+    "inventory": "Every entry hash, bound and relative path verified",
+    "preset": "Windows Desktop",
+    "pck_sha256": "b1ea14ae88fde569e0e74b6216267594f27a716c24029e704ff7b342f23b492a"
+  },
+  "adjacent_checks": {
+    "cases": [
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "royal",
+      "roads",
+      "courtship101"
+    ],
+    "result": "passed locally; all also included in final full hosted validation"
+  },
+  "visual_review": {
+    "source": "Local exact exported pack",
+    "captures": [
+      "trial.png",
+      "verdict.png",
+      "journey.png",
+      "reception.png"
+    ],
+    "motion": [
+      "Competing proof loads rising; rival load returns to the ground; player catch holds",
+      "Skarrin walks north out of the shot",
+      "High King rises and approaches down the aisle"
+    ],
+    "reviewed": true,
+    "capture_sha256": {
+      "trial.png": "8d182f3c087656ffc9b3f2cb7049c79d8d6012c1a2439cfe5a4d8505c5f5c850",
+      "journey.png": "7c72058093cb9bb3964487d9c0a5fc3b5d5869394c2a47c3214dc5ab851aae0b",
+      "reception.png": "b88cc122dd53ed5f6deff288d687d83fd3b18ccae0ebbc7e68b5dbc5b14f5961",
+      "verdict.png": "588fa6db9dd4802972eb0bc4eae86f95c593d12f6d4457ea6e52859df808dc44"
+    }
+  },
+  "saves": {
+    "additive_state": "surface.claim127",
+    "closed_round": "Existing work_at_award, rival_at_award and allowance remain authoritative",
+    "recovery": "Current scene beat restages on reload; all four scene skips restore controls",
+    "preserved": [
+      "Household plot and built home",
+      "Chest contents",
+      "Inventory beyond explicitly paid materials",
+      "Romance progress"
+    ],
+    "grant": "Rightful claimant and royal reception; no Thaneship"
+  },
+  "windows": {
+    "status": "published",
+    "version": "0.93.0",
+    "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.93.0",
+    "tag": "v0.93.0",
+    "published_at": "2026-11-03T04:52:26Z",
+    "source": "921d72b4bf69e4807c44fd19d44c6d13182a7447",
+    "run": 41575487210,
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575487210",
+    "conclusion": "success",
+    "completed_at": "2026-11-03T04:52:42Z",
+    "assets": [
+      {
+        "name": "build.json",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.93.0/build.json",
+        "bytes": 822,
+        "sha256": "40d876761ca48507b308ec823bbc489bb8d69870d06ec1dd9b69079fec1b93cd"
+      },
+      {
+        "name": "Stellar-Holds-First-Fortune-0.93.0-Windows.zip",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.93.0/Stellar-Holds-First-Fortune-0.93.0-Windows.zip",
+        "bytes": 943496644,
+        "sha256": "8d20f79276c141bfbd631e57e58805ee0b291543df0eb7b7110811416dc6342d"
+      },
+      {
+        "name": "verification-evidence.tar.gz",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.93.0/verification-evidence.tar.gz",
+        "bytes": 420385235,
+        "sha256": "2f160e9428a85161c23daa6eaa676f6e5b579fde1d0bcfc80db84197e29bc5e1"
+      }
+    ],
+    "exact_pack": {
+      "result": "passed",
+      "cases": [
+        "ambient",
+        "story_art105",
+        "story_world105",
+        "story_world108",
+        "story_world111",
+        "story_world112",
+        "story_world113",
+        "story_world116",
+        "story_world117",
+        "story_world118",
+        "story_world119",
+        "story_world120",
+        "story_batch121",
+        "story_batch122",
+        "story_batch123",
+        "continuity",
+        "living",
+        "civic",
+        "firstshift",
+        "ancestral",
+        "disciplines",
+        "polish",
+        "firsthour",
+        "appearance",
+        "roads",
+        "work",
+        "keldrath",
+        "homestead",
+        "royal",
+        "people",
+        "combat",
+        "enemies",
+        "dev_testing",
+        "architecture",
+        "architecture_style",
+        "combat_art",
+        "energy",
+        "traditions126",
+        "calendar",
+        "menu92",
+        "menu_quality100",
+        "equipment93",
+        "navigation94",
+        "mouselook95",
+        "bench96",
+        "expedition97",
+        "workplace98",
+        "firstvisit99",
+        "lodge100",
+        "mountain104",
+        "frontier103",
+        "greatclaim102",
+        "ridge124",
+        "courtship101",
+        "claim127"
+      ]
+    },
+    "build": {
+      "version": "0.93.0",
+      "commit": "921d72b4bf69e4807c44fd19d44c6d13182a7447",
+      "dirty": false,
+      "engine": "4.4.1.stable.official.49a5bc7b6",
+      "files": {
+        "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+        "FirstFortune.pck": "7fb51529fcc7b87e8ecf8f595647f61a76b363bf850b85143914c30cf1236109",
+        "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+        "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+        "version.txt": "8f87a4bd7120d2d78631d5713ab3deb5700a7b1cba5a20c0ccaca1f8f609a911",
+        "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+      },
+      "zip_sha256": "8d20f79276c141bfbd631e57e58805ee0b291543df0eb7b7110811416dc6342d",
+      "zip_bytes": 943496644
+    }
+  },
+  "limitations": [
+    "Audible quality and Windows hardware performance require an owner-device playtest",
+    "Formal interrupted investiture, invasion/trial and Thaneship/household remain queued",
+    "Earlier rescue homecoming and ancestry scenes remain future presentation polish"
+  ]
+}

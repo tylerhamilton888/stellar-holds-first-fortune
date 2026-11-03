@@ -5,12 +5,16 @@ Owner authorization: implement the full attached directive and six romance candi
 Read CHECKPOINT.md first on every continuation. Read only the active milestone and relevant source owners next. Update the checkpoint after every tested coherent change and before a context handoff. Advance a milestone only after its acceptance criteria pass; a data scaffold or document is not completed gameplay. Preserve original assets, UIDs, stable NPC IDs, existing saves and previous releases.
 
 1. [Six lives at the claim](01-cast-relationships.md) — implemented; native checks passed.
-2. [A Dwarf’s Worth](02-frontier-ledger.md) — frontier town and local services implemented; native and full hosted source acceptance passed; merged as PR #74; Windows gate pending.
-3. [A hearth of your own](02b-player-home.md) — earned plot, player-designed home and Z-level construction; native and full hosted source acceptance passed; merged as PR #74; Windows gate pending.
-4. [The mountain remembers](03-rescue-ancestry.md) — playable rescue/authentication implemented; native, local exported and full hosted source acceptance passed; merged as PR #75. Windows gate pending. Bespoke art remains queued.
-5. [The rightful claimant](04-contest-keldrath.md) — queued.
+2. [A Dwarf’s Worth](02-frontier-ledger.md) — frontier town and local services implemented; native and full hosted source acceptance passed; merged as PR #74; delivered in 0.92.0.
+3. [A hearth of your own](02b-player-home.md) — earned plot, player-designed home and Z-level construction; native and full hosted source acceptance passed; merged as PR #74; delivered in 0.92.0.
+4. [The mountain remembers](03-rescue-ancestry.md) — playable rescue/authentication implemented; native, local exported and full hosted source acceptance passed; merged as PR #75. Delivered in 0.92.0; all named story artwork is now complete and included in 0.93.0.
+5. [The rightful claimant](04-contest-keldrath.md) — implemented; source PR #101 merged after all five hosted checks; 380 native and 380 exact-export chapter assertions passed. Windows 0.93.0 published.
 6. [The King returns](05-invasion-trial.md) — queued.
 7. [The First Fortune](06-thaneship-household.md) — queued.
+
+## Story presentation
+
+Follow [Story scenes](STORY_SCENES.md) for short in-world staging, explicit choice handling, skip/reload recovery and the remaining notable beats. Eight romance candidates are now present, including Alden and Maren.
 
 ## Cultural reference
 

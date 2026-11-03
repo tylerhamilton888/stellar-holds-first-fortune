@@ -1,0 +1,30 @@
+# Short scenes in a playable world
+
+The owner's presentation direction applies throughout the story: notable beats should include brief, enjoyable in-game scenes. Use the established whole-character artwork, actual locations, actor movement and a visible action. Let the player read at their own pace, then return promptly to useful play. Keep ordinary conversations ordinary.
+
+## Implemented in the rightful-claimant chapter
+
+| Beat | Visible action | Return to play |
+| --- | --- | --- |
+| Public challenge | Ivar and the workers gather beside both claimants' lift frames; Skarrin steps forward. | The player reads drawings, selects fittings and physically builds the lift. |
+| Proof load and verdict | Both crates rise; Skarrin's unsecured load drops back while the player's catch holds. Ivar offers Master of Works; Skarrin refuses and walks away. | The western road opens. The household and its belongings remain in place. |
+| First journey | The player and Ivar walk west; the next shot frames the actual King's Gate and its neighboring streets. | Free exploration of all three wards, including their seamless stairs. |
+| Royal reception | Eirik rises from the throne and walks down the aisle to receive the claimant. | Free exploration or the road home. No early Thaneship is granted. |
+
+The reception prepares for the formal investiture; it does not replace the interrupted ceremony in milestone 05. The completed-chapter journal does not reveal that future interruption.
+
+## Queued presentation alongside the remaining gameplay
+
+- **Milestone 05:** stage the formal procession, Skarrin's interruption, the opening of the defenses, the King's intervention and return, and the solemn trial. Keep the invasion, rescues and required player battles playable. The duel and trial responses need explicit choices; skipping a scene must never silently choose a response.
+- **Milestone 06:** use short household and community scenes for investiture, courtship conclusions, marriage and the first shared hearth. Preserve the player's chosen house, possessions, partner and relationships.
+- **Earlier-story polish:** the rescue's homecoming celebration and ancestry authentication are suitable for brief staged scenes when that chapter is revisited. Their existing playable rescue and evidence-gathering remain authoritative; current text panels are not completed cinematic staging.
+
+These queued scenes are presentation requirements, not claims of implemented gameplay. Follow the existing milestone order and avoid delaying core playable encounters to build an elaborate cinematic system.
+
+## Recovery and continuity
+
+`HoldClaimScene127` currently uses the existing `HoldOpeningScene` pause/input boundary and the surface's depth-sorted actor rendering. Each saved beat restages its current movement after a load. Scene completion is idempotent. Continue waits for the current movement; Skip completes that scene without bypassing construction requirements. Session changes remove old staged nodes, and resumed scenes hide interactive HUD controls immediately.
+
+For new scenes, test both normal completion and interruption: save during motion, reload, skip, leave to title, and resume. Check actor routes against current buildings, prevent duplicate residents, preserve camera/actor continuity, and restore control and HUD state. Give useful feedback when a carried load or attached cart prevents joining a scene. Test the real movement and interaction paths, not only direct state transitions.
+
+Use religious customs sparingly where an oath, family gathering or remembrance naturally calls for them. Ordinary craftsmanship and fellowship already express the culture; most lines need no divine reference. See [Dwarven religion](../lore/DWARVEN_RELIGION.md).
