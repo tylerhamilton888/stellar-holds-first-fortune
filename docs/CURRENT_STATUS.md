@@ -1,6 +1,6 @@
 # Ridge dialogue song nods
 
-Added the owner's two requested phrases for Alden: his description of Maren appears in their couple greeting, and his blessing appears after the trail-post personal choice. Maren gains a good-spirits topic and revised dancing advice with brief song nods. Dialogue and matching authoring records only; no relationship rules, art or saved state changed. String replacements and JSON consistency checked; local execution is unavailable this session, so native validation uses the hosted workflow. No Windows build is included.
+Added the owner's two requested phrases for Alden: his description of Maren appears in their couple greeting, and his blessing appears after the trail-post personal choice. Maren gains a good-spirits topic and revised dancing advice with brief song nods. Dialogue and matching authoring records only; no relationship rules, art or saved state changed. String replacements and JSON consistency checked. All five hosted jobs (four gameplay shards and people-preview) passed for source head 3229a6bbf6faabc8148453bc06e6955d2330b5f4 in [run 41541396792](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41541396792), completed by 2026-11-02T23:16:31Z. PR #97 merged as b0baf9f5e7960ad31355e15904af775b673d5c67; its tree exactly matches tested source tree df8b60cd46e4495b47dc874e887c4a875d84ec22. Local execution was unavailable during this dialogue edit; no additional local/native or exact-export verification is claimed. No Windows build is included.
 
 ---
 
