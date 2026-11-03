@@ -243,6 +243,7 @@ func load_world(geo:Geology)->Dictionary:
  migrate_population(int(d.get("npc_population_version",1)))
  for key in npc_appearances:npc_appearances[key]=HoldAppearance.normalized(npc_appearances[key])
  HoldCulture.repair_legacy_entries(self)
+ HoldRidgePair124.advance(self)
  geo.restore({"mountain":d.get("mountain",{}),"structures":d.get("structures",[]),"world_address":d.get("world_address",{}),"cells":d.cells,"damage":d.get("damage",{}),"seed":int(d.get("geo_seed",seed_value)),"grain_bank":d.get("grain_bank",{}),"active_grains":d.get("active_grains",[])})
  for k in inventory:inventory[k]=int(inventory[k])
  for i in trees.size():trees[i]=int(trees[i])

@@ -1,4 +1,6 @@
-# 0.93.1 — A Hearthknot invitation
+# 0.93.2 — Courtship by choice
+
+Alden and Maren will begin courting one another when you begin courting someone else. They become betrothed when you do. Take all the time you like choosing a partner: waiting alone never advances their romance. Established couples remain together.
 
 Craft a Hearthknot at a forge from one timber and one copper ingot. After completing a candidate's personal story and becoming familiar friends, offer the token through their personal conversation to ask to begin courting. They accept it with their own response; the token is only spent when courtship actually begins. It cannot be bought or accidentally used as an ordinary gift.
 

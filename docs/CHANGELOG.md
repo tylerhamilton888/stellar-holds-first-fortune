@@ -1,3 +1,9 @@
+# Choice-driven Alden/Maren romance (0.93.2)
+
+Alden and Maren now begin courting when the player successfully begins courting another candidate, even before their introductions. Player betrothal to another candidate advances their betrothal. Elapsed days, friendship and rejected invitations never trigger either step. Choosing either Alden or Maren keeps their player romance available. Early interest is released by choosing somebody else; a later player breakup does not dissolve the NPC couple. Existing NPC commitments and historical hints are preserved; unfinished countdowns never expire. Existing player commitments elsewhere reconcile on load without spending items or inventing introductions.
+
+Verification pending. No Windows release requested. Marriage/shared households remain milestone 06.
+
 # Hearthknot courtship gift — source complete
 
 New courtships begin with a crafted Hearthknot: a carved timber token with copper inlay, made at an existing forge from 1 timber + 1 copper ingot in 4 seconds with no research unlock. The pack shows its own icon and purpose. Complete the candidate's personal story, become familiar friends, then explicitly offer it in a local personal conversation. Exactly one token leaves the pack only when every existing courtship check passes and the character accepts. The accepted response opens from the top of the conversation.

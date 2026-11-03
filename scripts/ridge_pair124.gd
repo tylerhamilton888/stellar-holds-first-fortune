@@ -1,6 +1,6 @@
 class_name HoldRidgePair124
 extends RefCounted
-# Additive, game-day-only story. Friendship never silently reserves a romance.
+# Player commitments advance this story; elapsed days never reserve a romance.
 const IDS=["road_folk:10","road_folk:11"]
 const NAMES={"road_folk:10":"Alden","road_folk:11":"Maren"}
 const KEY="ridge_pair124"
@@ -24,21 +24,15 @@ static func meet(s,id:String):
 static func event(d:Dictionary,stage:int,day:int):
  d.stage=stage;d.events.append({"stage":stage,"day":day})
 static func advance(s):
- if not s.surface.has(KEY):return
- var d=data(s)
- if d.start<0:return
- var today=HoldCourtship101.day(s);var elapsed=maxi(0,today-int(d.last_day))
- d.last_day=maxi(today,int(d.last_day))
+ # Reconcile existing saves and successful commitment events, never elapsed time.
  var commitment=HoldCourtship101.partner(s)
- if commitment!="" and commitment not in IDS:d.interest=""
- if blocked(s,d):return
+ if commitment=="" or commitment in IDS:return
+ var d=data(s);var today=HoldCourtship101.day(s)
+ d.interest=""
  if d.stage<2:
-  d.free_days+=elapsed
-  if d.stage==0 and d.free_days>=14:event(d,1,today-(d.free_days-14))
-  if d.stage==1 and d.free_days>=56:
-   d.courted_day=today-(d.free_days-56);event(d,2,d.courted_day)
- if d.stage==2 and today-d.courted_day>=28:
-  d.betrothed_day=d.courted_day+28;event(d,3,d.betrothed_day)
+  d.courted_day=today;event(d,2,today)
+ if d.stage==2 and int(HoldCourtship101.record(s,commitment).stage)==2:
+  d.betrothed_day=today;event(d,3,today)
 static func available(s,id:String)->bool:
  if id not in IDS:return true
  advance(s)
@@ -53,7 +47,7 @@ static func release_interest(g,id:String)->bool:
  player_ended(g.state,id);g.save_game();return true
 static func player_ended(s,id:String):
  if id not in IDS or not s.surface.has(KEY):return
- var d=data(s);d.interest="";d.free_days=mini(int(d.free_days),42);d.last_day=HoldCourtship101.day(s)
+ var d=data(s);d.interest=""
 static func summary(s,id:String)->String:
  if id not in IDS or not s.surface.has(KEY):return ""
  var d=data(s)
