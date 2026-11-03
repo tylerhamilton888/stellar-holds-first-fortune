@@ -69,12 +69,12 @@ func show_line():
   target_camera=Vector2(170,395)
  elif mode=="king":
   locate("hearthward",HoldInvasion131.point(game,Vector2(850,850)));game.surface.direction=Vector2.RIGHT
-  royal={"from":Vector2(850,780) if step==1 else Vector2(1000,780),"to":Vector2(1000,780),"p":Vector2(1000,780)}
+  royal={"from":Vector2(850,780) if step==1 else Vector2(1040,780),"to":Vector2(1040,780),"p":Vector2(1040,780)}
   if step==0:royal.p=Vector2(900,800);royal.from=royal.p;royal.to=royal.p
   for i in 5:
-   var p=HoldInvasion131.point(game,[Vector2(1120,810),Vector2(1140,680),Vector2(1230,710),Vector2(1140,900),Vector2(1240,930)][i],30)
+   var p=HoldInvasion131.point(game,[Vector2(1120,810),Vector2(1170,710),Vector2(1270,730),Vector2(1110,900),Vector2(1250,900)][i],30)
    var e=game.fight.make_enemy("royal_troll_"+str(i),p,3);e.dir=Vector2.LEFT;e.state="windup" if step==2 else "idle";e.time=1.0;foes.append(e)
-  duration=3.0;target_camera=Vector2(650,470)
+  duration=3.0;target_camera=Vector2(650,520)
  elif mode=="return":
   locate("crownward",HoldInvasion131.point(game,Vector2(780,835)))
   royal={"from":Vector2(980,750) if step==1 else Vector2(800,750),"to":Vector2(800,750),"p":Vector2(800,750)}
