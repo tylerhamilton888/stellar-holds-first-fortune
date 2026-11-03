@@ -98,7 +98,7 @@ HoldMineView94 owns optional capture, unscaled screen-relative mouse look, bound
 
 ## Restrained Dwarven traditions
 
-`HoldCalendar.weekday` owns the continuous eight-day cycle without changing saved day indices or 28-day seasons. `HoldTraditions126` owns optional remembrance, one guarded memorial errand and Sigrid's sampled lodge activity. Never reseed existing rooms to install a memorial. Preserve calendar invitation keys and absolute relationship timers. Lore and scope: [Dwarven religion](lore/DWARVEN_RELIGION.md).
+`HoldCalendar.weekday` owns the continuous eight-day cycle without changing saved day indices or 28-day seasons. `HoldTraditions126` owns optional remembrance, one guarded memorial errand and Sigrid's sampled lodge activity. Never reseed existing rooms to install a memorial. Preserve calendar invitation keys and player date timing. Alden/Maren progression is driven by player commitments, never calendar advancement. Lore and scope: [Dwarven religion](lore/DWARVEN_RELIGION.md).
 
 ## Rightful claimant and story scenes
 

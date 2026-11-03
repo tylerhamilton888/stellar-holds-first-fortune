@@ -60,16 +60,16 @@ func run():
   check(HoldCourtship101.partner(g.state)==id and not HoldRidgePair124.paired(g.state),"Saved betrothal protects player choice "+name)
   visit(id);check(HoldCourtship101.end(g,id),"Kind breakup remains available "+name)
   await snap(name+"-conversation")
- reset_story();meet_both();HoldCalendar.advance(g.state,1440*55)
- check(HoldRidgePair124.data(g.state).stage==1 and HoldRidgePair124.available(g.state,IDS[0]),"Growing friendship gives a long visible courtship window")
- visit(IDS[0]);g.state.appearance.gender=1;HoldCourtship101.record(g.state,IDS[0]).quest=3;HoldPeople.records(g.state)[IDS[0]].bond=12
+ reset_story();meet_both();HoldCalendar.advance(g.state,1440*500)
+ check(HoldRidgePair124.data(g.state).stage==0 and HoldRidgePair124.available(g.state,IDS[0]),"Waiting indefinitely leaves both romance options open")
+ visit("road_folk:1");g.state.appearance.gender=0
+ g.state.inventory.hearthknot=0
+ check(not HoldCourtship101.begin(g,"road_folk:1") and not HoldRidgePair124.paired(g.state),"Failed invitation does not start NPC romance")
+ HoldCourtship101.record(g.state,"road_folk:1").quest=3;HoldPeople.records(g.state)["road_folk:1"].bond=12
+ check(not HoldCourtship101.begin(g,"road_folk:1") and not HoldRidgePair124.paired(g.state),"Missing Hearthknot does not start NPC romance")
  g.state.add("hearthknot",1)
- check(HoldCourtship101.begin(g,IDS[0]),"Player may court during their growing friendship")
- HoldCalendar.advance(g.state,1440*100);visit(IDS[0]);HoldCourtship101.end(g,IDS[0])
- HoldCalendar.advance(g.state,1440*13)
- check(not HoldRidgePair124.paired(g.state),"Breakup allows at least fourteen free days before NPC commitment")
- HoldCalendar.advance(g.state,1440)
- check(HoldRidgePair124.paired(g.state) and HoldRidgePair124.data(g.state).stage==2,"Unpursued pair choose each other after the grace period")
+ check(HoldCourtship101.begin(g,"road_folk:1") and HoldRidgePair124.data(g.state).stage==2,"Successful courtship elsewhere immediately brings the pair together")
+ check(g.state.inventory.hearthknot==0 and HoldRidgePair124.data(g.state).courted_day==HoldCourtship101.day(g.state),"Only the player invitation spends a token; event uses current day")
  visit(IDS[0]);check(not HoldCourtship101.begin(g,IDS[0]),"Stale courtship callback cannot interrupt NPC commitment")
  for id in IDS:
   visit(id);check(HoldCourtship101.local(g,id),"Coupled NPC remains reachable "+id)
@@ -87,20 +87,48 @@ func run():
  g.close_panel()
  visit(IDS[1]);check(HoldCourtship101.accept(g,IDS[1]),"NPC commitment leaves personal friendship story available")
  await snap("together-conversation");g.close_panel();at(Vector2(480,550));await snap("together-at-hearth")
- HoldCalendar.advance(g.state,1440*28);var saved=HoldRidgePair124.data(g.state).duplicate(true);reload()
- check(HoldRidgePair124.data(g.state)==saved and int(saved.stage)==3,"NPC betrothal and history survive reload")
+ HoldCalendar.advance(g.state,1440*500)
+ check(HoldRidgePair124.data(g.state).stage==2,"Waiting alone never advances the couple to betrothal")
+ visit("road_folk:1")
+ check(not HoldCourtship101.promise(g,"road_folk:1") and HoldRidgePair124.data(g.state).stage==2,"Rejected promise does not advance the pair")
+ for i in 3:
+  HoldCalendar.advance(g.state,1440)
+  check(HoldCourtship101.share_date(g,"road_folk:1",i,0),"Existing player date progression remains available")
+ HoldCalendar.advance(g.state,1440)
+ check(HoldCourtship101.promise(g,"road_folk:1") and HoldRidgePair124.data(g.state).stage==3,"Player betrothal elsewhere advances their betrothal")
+ var saved=HoldRidgePair124.data(g.state).duplicate(true);reload()
+ check(HoldRidgePair124.data(g.state)==saved,"NPC betrothal and history survive reload")
  check(HoldCourtship101.status(g.state,IDS[1])=="Betrothed to Alden","NPC betrothal is readable")
  HoldRidgePair124.advance(g.state);HoldRidgePair124.meet(g.state,IDS[0])
- check(HoldRidgePair124.data(g.state).events.size()==3,"Repeated checks and meetings do not duplicate shared events")
- reset_story();meet_both();var inventory=g.state.inventory.duplicate(true);HoldCalendar.advance(g.state,1440*84)
- check(HoldRidgePair124.data(g.state).stage==3 and HoldRidgePair124.data(g.state).events.size()==3,"Large time skip advances each shared event exactly once")
- check(inventory==g.state.inventory,"NPC relationship never spends player possessions")
+ check(HoldRidgePair124.data(g.state).events.size()==2,"Repeated checks and meetings do not duplicate shared events")
+ visit("road_folk:1");check(HoldCourtship101.end(g,"road_folk:1"),"Player may end their own relationship")
+ reload();check(HoldRidgePair124.data(g.state).stage==3,"Player breakup does not dissolve the NPC couple")
+ for id in ["road_folk:1","road_folk:2","road_folk:3","road_folk:4","road_folk:6","road_folk:7"]:
+  reset_story();visit(id)
+  g.state.appearance.gender=1-int(g.state.npc(id).gender)
+  HoldCourtship101.record(g.state,id).quest=3;HoldPeople.records(g.state)[id].bond=12
+  g.state.add("hearthknot",1)
+  check(HoldCourtship101.begin(g,id) and HoldRidgePair124.paired(g.state),"Every other candidate triggers pairing before introductions: "+id)
+  check(HoldRidgePair124.data(g.state).met.is_empty(),"Pairing does not invent introductions: "+id)
  reset_story();meet_both();visit(IDS[1]);g.state.appearance.gender=0;HoldRidgePair124.express_interest(g,IDS[1])
  visit("road_folk:1");HoldCourtship101.record(g.state,"road_folk:1").quest=3;HoldPeople.records(g.state)["road_folk:1"].bond=12
  g.state.add("hearthknot",1)
- check(HoldCourtship101.begin(g,"road_folk:1") and HoldRidgePair124.data(g.state).interest=="","Choosing somebody else releases early interest immediately")
+ check(HoldCourtship101.begin(g,"road_folk:1") and HoldRidgePair124.data(g.state).interest=="" and HoldRidgePair124.paired(g.state),"Choosing somebody else releases early interest and immediately pairs them")
  check(HoldCourtship101.end(g,"road_folk:1"),"Same-day change of mind cannot restore an old reservation")
- HoldCalendar.advance(g.state,1440*84)
- check(HoldRidgePair124.data(g.state).interest=="" and HoldRidgePair124.paired(g.state),"Choosing somebody else releases early interest")
+ reload();check(HoldRidgePair124.paired(g.state),"Same-day breakup does not undo the pair")
+ reset_story();var legacy=HoldRidgePair124.data(g.state)
+ legacy.stage=1;legacy.free_days=55;legacy.start=0;legacy.last_day=0
+ legacy.events=[{"stage":1,"day":14}]
+ reload();HoldCalendar.advance(g.state,1440*500)
+ check(HoldRidgePair124.data(g.state).stage==1 and HoldRidgePair124.available(g.state,IDS[0]),"Legacy uncommitted hints never turn into an expired deadline")
+ for stage in [2,3]:
+  reset_story();legacy=HoldRidgePair124.data(g.state);legacy.stage=stage;legacy.courted_day=1;legacy.betrothed_day=29 if stage==3 else -1
+  var history=legacy.duplicate(true);reload();HoldCalendar.advance(g.state,1440*500)
+  check(HoldRidgePair124.data(g.state)==history,"Existing NPC commitment is preserved without timed advancement")
+ for stage in [1,2]:
+  reset_story();HoldCourtship101.record(g.state,"road_folk:1").stage=stage
+  var inventory=g.state.inventory.duplicate(true);reload()
+  check(HoldRidgePair124.data(g.state).stage==stage+1,"Old saves already committed elsewhere reconcile on load")
+  check(g.state.inventory==inventory,"Save reconciliation never spends possessions")
  print("RIDGE124: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)

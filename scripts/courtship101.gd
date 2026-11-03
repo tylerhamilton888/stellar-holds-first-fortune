@@ -415,7 +415,9 @@ static func can_promise(s,id:String)->bool:
  return not d.is_empty() and d.stage==1 and partner(s)==id and d.dates.size()==3 and day(s)>d.last_date and bond(s,id)>=12
 static func promise(g,id:String)->bool:
  if not local(g,id) or not can_promise(g.state,id):return false
- record(g.state,id).stage=2;g.save_game();return true
+ record(g.state,id).stage=2
+ HoldRidgePair124.advance(g.state)
+ g.save_game();return true
 static func end(g,id:String)->bool:
  if not local(g,id):return false
  var d=record(g.state,id)

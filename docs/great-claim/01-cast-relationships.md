@@ -4,6 +4,8 @@ There are eight authored candidates. New courtship requires a crafted Hearthknot
 
 The Hearthknot is an invitation, not a marriage ring. Friendship, personal errands and Alden/Maren's early-interest option remain available without it. Their independent relationship never consumes player possessions. Wedding and shared household gameplay remain milestone 06. Romance scenes currently use authored dialogue choices; moving-actor presentation remains future polish under STORY_SCENES.md.
 
+Alden and Maren now begin courting when the player successfully begins courting another candidate, even before their introductions. Player betrothal to another candidate advances their betrothal. Elapsed days, friendship and rejected invitations never trigger either step. Choosing either Alden or Maren keeps their player romance available. Early interest is released by choosing somebody else; a later player breakup does not dissolve the NPC couple. Existing NPC commitments and historical hints are preserved; unfinished countdowns never expire. Existing player commitments elsewhere reconcile on load without spending items or inventing introductions.
+
 ---
 
 # Six lives at the claim
