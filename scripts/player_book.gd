@@ -80,6 +80,7 @@ static func people(g):
    if HoldCourtship101.ARCS.has(id):g.label(body,HoldCourtship101.status(g.state,id),14)
    if d.known:g.label(body,"Likes "+HoldData.ITEMS[d.persona.like].name.to_lower()+" · Dislikes "+HoldData.ITEMS[d.persona.dislike].name.to_lower(),14)
   else:g.label(body,"Not yet acquainted",14)
+  HoldFriendship130.notebook(g,id,body)
   var actions=VBoxContainer.new();actions.custom_minimum_size.x=145;row.add_child(actions)
   if HoldConversation.local(g,id):g.small_button(actions,"Talk",func():HoldConversation.start(g,id))
   if not HoldPeople.background(id):g.small_button(actions,"Track location" if g.state.tracked_npc!=id else "Stop tracking",func():g.state.tracked_npc=id if g.state.tracked_npc!=id else "";g.save_game();g.close_panel())

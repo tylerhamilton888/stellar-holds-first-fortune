@@ -106,7 +106,13 @@ func run():
  check(g.opening_scene==null,"Title clears staged scene nodes")
  g.start_game(true);settle();check(g.opening_scene is HoldFriendScene130,"Continue resumes interrupted friendship scene")
  if g.opening_scene is HoldFriendScene130:g.opening_scene.finish()
- g.open_panel("roster");await shot("friendship-memories")
+ g.open_panel("roster")
+ for search in g.panel_body.find_children("*","LineEdit",true,false):search.text="Maren";search.text_changed.emit("Maren")
+ var memory_visible=false
+ for label in g.panel_body.find_children("*","Label",true,false):
+  if label.text.begins_with("Memory ·") and label.is_visible_in_tree():memory_visible=true
+ check(memory_visible,"People screen displays the saved friendship memory")
+ await shot("friendship-memories")
  # Starting a different fortune cannot retain the prior staged cast or story.
  visit("road_folk:11");HoldFriendship130.accept(g,"road_folk:11")
  d=HoldFriendship130.record(g.state,"road_folk:11");at(Vector2(d.pos[0],d.pos[1]));g.state.add("barley_bread",2);HoldFriendship130.work(g,"road_folk:11",0)

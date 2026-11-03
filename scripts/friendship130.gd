@@ -122,9 +122,10 @@ static func journal(g):
   g.label(g.panel_body,g.state.npc(id).first_name+" · "+e.title,17)
   g.label(g.panel_body,("Return to your friend for the scene." if d.worked else "Marked errand: "+d.place+" · "+HoldData.cost_text(e.cost) if d.accepted else "A new story is available. Visit them when you like."),15)
   g.label(g.panel_body,HoldRoadCharacters.whereabouts(id,g.state) if id.begins_with("road_folk:") else g.npc_where(id).label,14)
-static func notebook(g,id:String):
+static func notebook(g,id:String,parent=null):
  if not STORIES.has(id):return
+ var target=g.panel_body if parent==null else parent
  var d=record(g.state,id);var e=episode(g.state,id)
- g.label(g.panel_body,"Friendship "+str(bond(g.state,id))+" / 20 · "+str(d.memories.size())+" / 3 stories shared",14)
- if not e.is_empty():g.label(g.panel_body,("Story ready · " if ready(g.state,id) or d.accepted else "At "+str(e.bond)+" friendship · ")+e.title,14)
- for m in d.memories:g.label(g.panel_body,"Memory · "+m.keepsake,14)
+ g.label(target,"Friendship "+str(bond(g.state,id))+" / 20 · "+str(d.memories.size())+" / 3 stories shared",14)
+ if not e.is_empty():g.label(target,("Story ready · " if ready(g.state,id) or d.accepted else "At "+str(e.bond)+" friendship · ")+e.title,14)
+ for m in d.memories:g.label(target,"Memory · "+m.keepsake,14)
