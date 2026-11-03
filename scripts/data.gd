@@ -2,6 +2,7 @@ class_name HoldData
 extends RefCounted
 
 const ITEMS = {
+ "hearthknot":{"name":"Hearthknot","price":20,"color":"c58c59","trade":false,"desc":"A hand-carved timber knot with copper inlay. Offer it during a personal conversation to ask someone to begin courting."},
  "hold_ale":{"name":"Hold ale","price":8,"color":"cf9c55"},
  "barley":{"name":"Hold barley","price":4,"color":"d9ba65"},
  "barley_seed":{"name":"Barley seed","price":1,"color":"d9ba65"},
@@ -41,6 +42,7 @@ const ITEMS = {
  "assembly": {"name":"Drive assembly", "price":95, "color":"a6dfc7"}
 }
 const RECIPES = {
+ "hearthknot":{"name":"Craft a Hearthknot","cost":{"wood":1,"copper":1},"out":{"hearthknot":1},"time":4.0,"tech":""},
  "hold_ale":{"name":"Brew hold ale","cost":{"barley":2,"water":2},"out":{"hold_ale":2},"time":15.0,"tech":""},
  "root_hotpot":{"name":"Root & hearthcap hotpot","cost":{"turnip":1,"hearthcap":1,"water":1},"out":{"root_hotpot":1},"time":4.0,"tech":""},
  "barley_bread":{"name":"Hearth barley bread","cost":{"barley":2,"water":1},"out":{"barley_bread":1},"time":4.0,"tech":""},

@@ -1,3 +1,11 @@
+# Current courtship entry — Hearthknot
+
+There are eight authored candidates. New courtship requires a crafted Hearthknot (1 timber and 1 copper ingot at an existing forge), a completed personal story, at least 5 friendship, an eligible available partner, and an explicit local offer. The accepted offer consumes one token from the pack. Ordinary gifts cannot spend it; exchanges do not sell it. Three shared moments and the existing betrothal requirements follow unchanged. Existing commitments are preserved without retroactive token payment. Renewed courtship after a breakup needs a new token.
+
+The Hearthknot is an invitation, not a marriage ring. Friendship, personal errands and Alden/Maren's early-interest option remain available without it. Their independent relationship never consumes player possessions. Wedding and shared household gameplay remain milestone 06. Romance scenes currently use authored dialogue choices; moving-actor presentation remains future polish under STORY_SCENES.md.
+
+---
+
 # Six lives at the claim
 
 Status: implemented; focused native acceptance passed.

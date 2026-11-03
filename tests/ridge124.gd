@@ -52,6 +52,7 @@ func run():
   visit(id);button("A personal word");button("Tell them you would prefer friendship")
   check(HoldRidgePair124.data(g.state).interest=="","Player can release early interest "+name)
   var court=HoldCourtship101.record(g.state,id);court.quest=3;HoldPeople.records(g.state)[id].bond=12
+  g.state.add("hearthknot",1)
   check(HoldCourtship101.begin(g,id),"New candidate can begin actual courtship "+name)
   HoldCalendar.advance(g.state,1440*100)
   check(not HoldRidgePair124.paired(g.state),"Active courtship prevents NPC pairing "+name)
@@ -62,6 +63,7 @@ func run():
  reset_story();meet_both();HoldCalendar.advance(g.state,1440*55)
  check(HoldRidgePair124.data(g.state).stage==1 and HoldRidgePair124.available(g.state,IDS[0]),"Growing friendship gives a long visible courtship window")
  visit(IDS[0]);g.state.appearance.gender=1;HoldCourtship101.record(g.state,IDS[0]).quest=3;HoldPeople.records(g.state)[IDS[0]].bond=12
+ g.state.add("hearthknot",1)
  check(HoldCourtship101.begin(g,IDS[0]),"Player may court during their growing friendship")
  HoldCalendar.advance(g.state,1440*100);visit(IDS[0]);HoldCourtship101.end(g,IDS[0])
  HoldCalendar.advance(g.state,1440*13)
@@ -95,6 +97,7 @@ func run():
  check(inventory==g.state.inventory,"NPC relationship never spends player possessions")
  reset_story();meet_both();visit(IDS[1]);g.state.appearance.gender=0;HoldRidgePair124.express_interest(g,IDS[1])
  visit("road_folk:1");HoldCourtship101.record(g.state,"road_folk:1").quest=3;HoldPeople.records(g.state)["road_folk:1"].bond=12
+ g.state.add("hearthknot",1)
  check(HoldCourtship101.begin(g,"road_folk:1") and HoldRidgePair124.data(g.state).interest=="","Choosing somebody else releases early interest immediately")
  check(HoldCourtship101.end(g,"road_folk:1"),"Same-day change of mind cannot restore an old reservation")
  HoldCalendar.advance(g.state,1440*84)

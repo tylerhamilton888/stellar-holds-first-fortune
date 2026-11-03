@@ -17,6 +17,7 @@ static func inventory(g):
   for child in details.get_children():details.remove_child(child);child.queue_free()
   var head=g.row(details);HoldItemArt.icon(head,id);g.label(head,HoldData.ITEMS[id].name,20)
   g.label(details,"%d in your pack" % g.state.count(id),18)
+  if HoldData.ITEMS[id].has("desc"):g.label(details,HoldData.ITEMS[id].desc,15)
   g.label(details,"Pin to quick bar",16)
   var pins=g.row(details)
   for slot in range(5,10):

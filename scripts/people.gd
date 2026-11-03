@@ -83,6 +83,7 @@ static func chat(g,id:String)->String:
  return p.close if int(d.bond)>=5 else (p.want if day%2==0 else p.worry)
 static func gift(g,id:String,item:String)->String:
  if not HoldConversation.local(g,id):return "Come and see me first."
+ if item=="hearthknot":return "A Hearthknot is an invitation to court. Offer it through a personal word when you are both ready."
  var d=records(g.state).get(id,{})
  if d.is_empty() or not HoldData.ITEMS.has(item):return "Let us introduce ourselves first."
  var day=int(g.state.elapsed/600.0)
@@ -143,10 +144,11 @@ static func gifts(g,id:String):
   g.label(g.panel_body,"Choose one item. Giving it removes one from your pack.",15)
   var count=0
   for item in g.state.inventory:
-   if g.state.count(item)<=0 or not HoldData.ITEMS.has(item):continue
+   if item=="hearthknot" or g.state.count(item)<=0 or not HoldData.ITEMS.has(item):continue
    count+=1
    HoldConversation.choose(g,HoldData.ITEMS[item].name+" ("+str(g.state.count(item))+")",func():g.talk_line=gift(g,id,item);g.talk_topic="person";g.refresh_panel())
-  if count==0:g.label(g.panel_body,"Your pack has no gifts to give.",16)
+  if g.state.count("hearthknot")>0:g.label(g.panel_body,"Your Hearthknot is for a courtship invitation. Offer it through a personal word.",15)
+  if count==0:g.label(g.panel_body,"Your pack has no ordinary gifts to give.",16)
  HoldConversation.choose(g,"Back to our conversation",func():g.talk_topic="person";g.refresh_panel())
 static func notebook(g):
  var all=records(g.state)

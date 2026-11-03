@@ -395,6 +395,7 @@ static func begin(g,id:String)->bool:
  if not local(g,id) or not eligible(g.state,id) or partner(g.state)!="":return false
  var d=record(g.state,id)
  if d.quest!=3 or d.stage!=0 or bond(g.state,id)<5 or d.ended==day(g.state):return false
+ if not g.state.pay({"hearthknot":1}):return false
  d.stage=1;d.began=day(g.state);d.dates=[];d.last_date=day(g.state)
  HoldRidgePair124.advance(g.state)
  g.save_game();return true
@@ -470,9 +471,12 @@ static func panel(g,id:String):
     if partner(g.state)!="":g.label(g.panel_body,"You have made a commitment to someone else. This friendship can still grow.",15)
     elif bond(g.state,id)<5:g.label(g.panel_body,"Spend a little more time getting to know each other. Friendship can stay friendship.",15)
     elif d.ended==day(g.state):g.label(g.panel_body,"Give each other a little time before beginning again.",15)
-    else:HoldConversation.choose(g,"Ask whether we might court each other",func():
-     if begin(g,id):g.talk_line=arc.yes
-     g.refresh_panel())
+    else:
+     g.label(g.panel_body,"A Hearthknot is a small invitation to court: carved timber with copper inlay. Craft one at a forge with 1 timber and 1 copper ingot, then bring it in your pack.",15)
+     var invitation=HoldConversation.choose(g,"Offer a Hearthknot and ask to court",func():
+      if begin(g,id):g.talk_line=g.state.npc(id).first_name+" accepts your Hearthknot.\n\n"+arc.yes
+      g.refresh_panel())
+     invitation.disabled=g.state.count("hearthknot")<1
    else:g.label(g.panel_body,"A valued friendship. Their personal story remains yours to share.",15)
   elif d.stage==1:
    if date_ready(g.state,id):

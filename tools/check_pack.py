@@ -80,6 +80,8 @@ def main():
     cases.append(('enemies', fixture+'\n'+body, 'ENEMIES84'))
     body = (ROOT/'tests/dev_testing85.gd').read_text().split('\n', 1)[1]
     cases.append(('dev_testing', fixture+'\n'+body, 'DEV_TESTING85'))
+    body = (ROOT/'tests/hearthknot128.gd').read_text().split('\n', 1)[1]
+    cases.append(('hearthknot128', fixture+'\n'+body, 'HEARTHKNOT128'))
     results = []
     body = (ROOT/'tests/architecture86.gd').read_text().split('\n', 1)[1]
     cases.append(('architecture', fixture+'\n'+body, 'ARCHITECTURE86'))

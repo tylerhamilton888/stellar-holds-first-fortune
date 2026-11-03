@@ -42,11 +42,14 @@ func run():
   var friendship=HoldPeople.records(g.state)[id].bond
   check(not HoldCourtship101.resolve(g,id,1) and HoldPeople.records(g.state)[id].bond==friendship,"Choice cannot pay friendship twice")
   HoldPeople.records(g.state)[id].bond=12
+  g.state.inventory.hearthknot=2
   g.state.appearance.gender=int(cast.gender)
   check(not HoldCourtship101.begin(g,id),"Ineligible romantic match retains friendship")
   g.state.appearance.gender=1-int(cast.gender)
-  g.talk_line="";g.refresh_panel();button("Ask whether we might court")
-  check(HoldCourtship101.record(g.state,id).stage==1 and g.talk_line==arc.yes,"Courtship begins with explicit reciprocal dialogue")
+  g.talk_line="";g.refresh_panel();button("Offer a Hearthknot")
+  check(HoldCourtship101.record(g.state,id).stage==1 and g.talk_line.ends_with(arc.yes) and g.talk_line.contains("accepts your Hearthknot"),"Courtship begins with explicit reciprocal dialogue")
+  check(g.state.count("hearthknot")==1,"Courtship consumes exactly one Hearthknot")
+  check(not HoldCourtship101.begin(g,id) and g.state.count("hearthknot")==1,"Repeated invitation cannot consume another token")
   check(not HoldCourtship101.share_date(g,id,0,0),"First date waits for another calendar day")
   for n in 3:
    HoldCalendar.advance(g.state,1440)
