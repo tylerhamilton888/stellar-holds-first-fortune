@@ -85,7 +85,8 @@
       "story_batch122",
       "story_batch123",
       "ridge124",
-      "traditions126"
+      "traditions126",
+      "claim127"
     ],
     "modular": [
       "modular",
@@ -494,7 +495,8 @@
       "story_batch122",
       "story_batch123",
       "ridge124",
-      "traditions126"
+      "traditions126",
+      "claim127"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -783,6 +785,18 @@
       "homestead",
       "keldrath",
       "ridge124"
+    ],
+    "claim127-focus": [
+      "claim127"
+    ],
+    "claim127": [
+      "claim127",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "royal",
+      "roads",
+      "courtship101"
     ]
   },
   "cases": {
@@ -1041,6 +1055,10 @@
     "traditions126": {
       "script": "tests/traditions126.gd",
       "marker": "TRADITIONS126"
+    },
+    "claim127": {
+      "script": "tests/claim127.gd",
+      "marker": "CLAIM127"
     }
   }
 }

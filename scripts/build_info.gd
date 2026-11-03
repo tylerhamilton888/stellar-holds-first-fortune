@@ -2,8 +2,8 @@ class_name HoldBuild
 extends RefCounted
 
 # Authoritative metadata for the title screen, validation and packaging.
-const VERSION="0.92.0"
-const CHAPTER="THE MOUNTAIN REMEMBERS"
+const VERSION="0.93.0"
+const CHAPTER="THE RIGHTFUL CLAIMANT"
 const ENGINE="4.4.1"
 
 

@@ -99,3 +99,9 @@ HoldMineView94 owns optional capture, unscaled screen-relative mouse look, bound
 ## Restrained Dwarven traditions
 
 `HoldCalendar.weekday` owns the continuous eight-day cycle without changing saved day indices or 28-day seasons. `HoldTraditions126` owns optional remembrance, one guarded memorial errand and Sigrid's sampled lodge activity. Never reseed existing rooms to install a memorial. Preserve calendar invitation keys and absolute relationship timers. Lore and scope: [Dwarven religion](lore/DWARVEN_RELIGION.md).
+
+## Rightful claimant and story scenes
+
+`HoldClaim127` owns additive `surface.claim127` progression, local engineering validation, ward visits and the royal invitation. Existing authentication records (`work_at_award`, `rival_at_award`, `allowance`) are the authoritative closed-round tally, including for saves made before this chapter. Later work records remain intact. Construction consumes pack materials once at completion; partial manual work is transient and safely restarts after a load.
+
+`HoldClaimScene127` uses the existing opening-scene input/simulation pause boundary and whole-character/world renderers. Save `scene` and `beat` before each shot; reload restages the current beat. Completion is idempotent, Skip completes only that scene, and no scene skip substitutes for required gameplay. Clear staged nodes on session load/title return. All new notable story beats should include brief in-world staging: actor motion, an observable action and a clear return to play. Keep mechanical work and combat playable. The royal reception does not complete the interrupted investiture owned by milestone 05.

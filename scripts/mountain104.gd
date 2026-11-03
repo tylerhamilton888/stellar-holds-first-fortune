@@ -76,6 +76,8 @@ static func act(g,action:String)->bool:
  return done
 static func description(s)->String:
  var q=HoldAncestralClaim.data(s);var d=data(s)
+ if q.stage>=5 and HoldClaim127.stage(s)>0:
+  return "Your descent from this mountain's founding house is authenticated. Work marks: %d; hereditary allowance: %d. The contribution round is closed; the public trial and royal invitation are recorded under The Rightful Claimant. Your household remains yours." % [int(d.get("work_at_award",0)),int(d.allowance)]
  match int(q.stage):
   0:return "After registering your home and earning 180 contribution marks, visit Ivar's shift book."
   1:return "A fall has sealed a survey refuge in Old Workings, depth 1. Sten and his companions are trapped. Excavate a bypass, light and brace their refuge, then press E beside them. There is no countdown. V: lamps; O: rooms and masonry pillars."+(" Survey location: column %d, row %d." % [q.site[0],q.site[1]] if not q.site.is_empty() else " Enter Old Workings to locate the refuge.")
