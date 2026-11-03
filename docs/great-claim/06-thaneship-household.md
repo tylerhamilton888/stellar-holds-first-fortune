@@ -1,6 +1,6 @@
 # The First Fortune
 
-Status: Thaneship/investiture and same-world homecoming implemented in 131, acceptance in progress. Household/marriage and the broader directed-development expansion remain queued after opening-chapter polish.
+Status: Thaneship/investiture and same-world homecoming implemented in 131, source PR #109 merged after native, exact-export and hosted acceptance. Household/marriage and the broader directed-development expansion remain queued after opening-chapter polish.
 
 ## Deliverable
 

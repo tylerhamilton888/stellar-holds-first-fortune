@@ -1,6 +1,6 @@
 # The King returns
 
-Status: implemented; native, exact-export and hosted acceptance in progress. See [Thane opening](THANESHIP_OPENING.md).
+Status: implemented; native, exact-export and all five hosted checks passed; source PR #109 merged. See [Thane opening](THANESHIP_OPENING.md).
 
 ## Deliverable
 

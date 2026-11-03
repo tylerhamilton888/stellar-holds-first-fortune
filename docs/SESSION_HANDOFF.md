@@ -1,8 +1,10 @@
-# Thaneship opening 131 — verification in progress
+# Thaneship opening 131 — source complete
 
-The claimant now continues through three ward preparations, explicit duel response, a visible breach, seven playable defense fronts, familiar-character rescues, the player's troll battle, Eirik's five-troll intervention, Skarrin's combat defeat, the King's trophy return, an explicit fixed-verdict trial, investiture and homecoming as Thane. Twelve enemy groups contain 27 combatants. The same household, possessions and relationships remain; no marriage/district expansion is claimed.
+The claimant now continues through three ward preparations, an explicit duel response, a visible breach, seven playable defense fronts, familiar-character rescues, the player's troll battle, Eirik's five-troll intervention, Skarrin's combat defeat, the King's trophy return, an explicit fixed-verdict trial, investiture and homecoming as Thane. Twelve enemy groups contain 27 combatants. The same household, possessions and relationships remain; no marriage/district expansion is claimed.
 
-Source version 0.95.0. Native, exported-pack and hosted acceptance are in progress. Windows 0.93.0 remains the current download; no new release requested. This is the opening-chapter stopping point for polish. Human completion time remains unmeasured; the pacing goal is multiple substantial sessions without forced waiting. See [Thane opening](great-claim/THANESHIP_OPENING.md).
+Source version 0.95.0. Final focused native and exact-export acceptance passed 639 / 639 assertions. The preceding seven-case native and five-case exact-export regressions passed 2582 / 2363 assertions; only royal scene framing changed afterward. All 3,863 final PCK entries passed integrity checks. All five hosted jobs passed in [run 41695999934](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41695999934). PR #109 merged as `496ccc9a1a86cf81ce2d2a191cdb7a8652bbc5be`; its tree matches tested source `f2627d5ccd2c24012ae10b7f1123ad2b0aa94cb8` (tree `ec99c3a53f9fe58e7eff88bba0d1c98e6aa1f43f`). Evidence: [Thane acceptance](testing/thane131/acceptance.json).
+
+The user authorized completing delivery. Windows 0.95.0 is building in run 41705684539; 0.93.0 remains the current download until publication is verified. Recovery opener checks also passed all 325 assertions across menus, first visit, lodge and frontier home-building. Future visual validation receives a 45-minute job budget; all test commands remain unchanged. Stop opening-chapter expansion here and polish. Human completion time remains unmeasured; the pacing goal is multiple substantial sessions without forced waiting. See [Thane opening](great-claim/THANESHIP_OPENING.md).
 
 ---
 

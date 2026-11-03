@@ -1,0 +1,46 @@
+{
+  "source_sha": "f2627d5ccd2c24012ae10b7f1123ad2b0aa94cb8",
+  "source_tree": "ec99c3a53f9fe58e7eff88bba0d1c98e6aa1f43f",
+  "pack_sha256": "dececf27db01dcf8f852f509458b267df8537253e4f20ab20c818e1bd85d874d",
+  "checks": 325,
+  "cases": [
+    {
+      "test": "menu_quality100",
+      "passed": true,
+      "checks": 32,
+      "errors": []
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "checks": 22,
+      "errors": []
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "checks": 47,
+      "errors": []
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "checks": 224,
+      "errors": []
+    }
+  ],
+  "reviewed": [
+    "Title screen: no gameplay HUD, readable primary actions",
+    "Three separate save slots",
+    "First-shift journal and home-restoration lead",
+    "Shared bunkhouse and upstairs room",
+    "Constructed player home and usable entrance",
+    "Final royal intervention, explicit trial choices and Thane homecoming"
+  ],
+  "follow_up": [
+    "Prioritize immediate first-shift instructions above future ancestry in the journal",
+    "Remove duplicate chapter name in the title footer",
+    "Measure normal-speed pacing and difficulty on a Windows playtest"
+  ],
+  "scope": "Recovery verification of unchanged runtime. No claim that normal-speed human playthrough or audio evaluation is complete."
+}

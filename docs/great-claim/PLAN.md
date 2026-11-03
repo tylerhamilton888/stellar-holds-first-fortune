@@ -9,8 +9,8 @@ Read CHECKPOINT.md first on every continuation. Read only the active milestone a
 3. [A hearth of your own](02b-player-home.md) — earned plot, player-designed home and Z-level construction; native and full hosted source acceptance passed; merged as PR #74; delivered in 0.92.0.
 4. [The mountain remembers](03-rescue-ancestry.md) — playable rescue/authentication implemented; native, local exported and full hosted source acceptance passed; merged as PR #75. Delivered in 0.92.0; all named story artwork is now complete and included in 0.93.0.
 5. [The rightful claimant](04-contest-keldrath.md) — implemented; source PR #101 merged after all five hosted checks; 380 native and 380 exact-export chapter assertions passed. Windows 0.93.0 published.
-6. [The King returns](05-invasion-trial.md) — implemented in 131; acceptance in progress.
-7. [The First Fortune](06-thaneship-household.md) — investiture/homecoming implemented in 131; acceptance in progress. Marriage and directed-development expansion remain queued.
+6. [The King returns](05-invasion-trial.md) — implemented in 131; source PR #109 merged after native, exact-export and hosted acceptance.
+7. [The First Fortune](06-thaneship-household.md) — investiture/homecoming implemented in 131; source PR #109 merged after native, exact-export and hosted acceptance. Marriage and directed-development expansion remain queued.
 
 ## Story presentation
 
