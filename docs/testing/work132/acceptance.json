@@ -1,0 +1,180 @@
+{
+  "source_sha": "e30b29004990ff738d2a82702ca15fc061fbef77",
+  "source_tree": "c49f1dd321bd222b24978cd765b2b9cbd7850ac7",
+  "local_source_commit": "6c8ce2b",
+  "source_pr": 112,
+  "source_run": 41723527857,
+  "release_run": 41725064185,
+  "native_feature": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.22
+    },
+    {
+      "test": "work132",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 146,
+      "seconds": 63.53
+    }
+  ],
+  "native_regression": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.16
+    },
+    {
+      "test": "work132",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 145,
+      "seconds": 57.48
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 22,
+      "seconds": 59.5
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 224,
+      "seconds": 57.52
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 44,
+      "seconds": 51.89
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 380,
+      "seconds": 81.54
+    },
+    {
+      "test": "hearthknot128",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 22,
+      "seconds": 47.5
+    },
+    {
+      "test": "roads",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 85,
+      "seconds": 105.5
+    },
+    {
+      "test": "bench96",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 6,
+      "seconds": 21.41
+    },
+    {
+      "test": "disciplines",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 38,
+      "seconds": 46.49
+    },
+    {
+      "test": "menu_quality100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 32,
+      "seconds": 48.44
+    }
+  ],
+  "exact_pack": [
+    {
+      "test": "work132",
+      "passed": true,
+      "checks": 146,
+      "errors": []
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "checks": 22,
+      "errors": []
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "checks": 224,
+      "errors": []
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "checks": 380,
+      "errors": []
+    }
+  ],
+  "pack_entries": 3867,
+  "reviewed": [
+    "first-step",
+    "ore-lesson",
+    "metal-delivery",
+    "metal-delivery-options",
+    "specialist-milestone",
+    "closed-contest"
+  ],
+  "limitations": [
+    "Human specialist/mixed active completion times are unmeasured.",
+    "Native captures use Linux/software rendering; Windows-device performance and audio require owner playtesting."
+  ],
+  "hosted_status": "success",
+  "release_status": "pending",
+  "source_merge_sha": "70d4ac7da94013aea4960cbe453fec6af852562e",
+  "hosted_jobs": [
+    {
+      "id": 126222214149,
+      "conclusion": "success"
+    },
+    {
+      "id": 126222214500,
+      "conclusion": "success"
+    },
+    {
+      "id": 126222214517,
+      "conclusion": "success"
+    },
+    {
+      "id": 126222214555,
+      "conclusion": "success"
+    },
+    {
+      "id": 126222214713,
+      "conclusion": "success"
+    }
+  ]
+}
