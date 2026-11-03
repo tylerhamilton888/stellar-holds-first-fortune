@@ -6,7 +6,7 @@ func run():
  var d=HoldCalendar.data(s)
  check(d.day==0 and d.minute==480,"Old fortunes begin Spring 1 at 08:00 regardless of old playtime")
  HoldCalendar.tick(g,2400);check(d.day==1 and d.minute==480,"A full day preserves clock time")
- HoldCalendar.advance(s,26*1440);check(HoldCalendar.date(d.day)=="Spring 28 · Year 1","Four-week seasons use day 28")
+ HoldCalendar.advance(s,26*1440);check(HoldCalendar.date(d.day)=="Spring 28 · Year 1","Existing seasons retain day 28")
  HoldCalendar.advance(s,1440);check(HoldCalendar.date(d.day)=="Summer 1 · Year 1","Season rollover")
  HoldCalendar.advance(s,84*1440);check(HoldCalendar.date(d.day)=="Spring 1 · Year 2","Year rollover")
  check(d.events.size()==4,"Skipping through a year keeps all four invitations")

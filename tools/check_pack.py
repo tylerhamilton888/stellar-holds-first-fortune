@@ -89,6 +89,8 @@ def main():
     cases.append(('combat_art', fixture+'\n'+body, 'COMBAT88'))
     body = (ROOT/'tests/energy90.gd').read_text().split('\n', 1)[1]
     cases.append(('energy', fixture+'\n'+body, 'ENERGY90'))
+    body = (ROOT/'tests/traditions126.gd').read_text().split('\n', 1)[1]
+    cases.append(('traditions126', fixture+'\n'+body, 'TRADITIONS126'))
     body = (ROOT/'tests/calendar91.gd').read_text().split('\n', 1)[1]
     cases.append(('calendar', fixture+'\n'+body, 'CALENDAR91'))
     body = (ROOT/'tests/menu92.gd').read_text().split('\n', 1)[1]

@@ -1,7 +1,7 @@
 class_name HoldQuarters
 extends RefCounted
 # The starting room uses the existing furnishing catalogue and saved surface records.
-const PLANS=["pantry","hearth_table","hearth","chair","lamp","table","tea_table","chest","bookcase","desk","bed"]
+const PLANS=["pantry","hearth_table","hearth","chair","lamp","table","tea_table","chest","bookcase","desk","bed","ancestral_shrine"]
 static func panel(g):
  g.button(g.panel_body,"Hearth & Homestead · meals and comfort",func():g.open_panel("hearth"))
  var local=g.surface.area=="room:home" or HoldFrontier103.private_room(g)
@@ -23,7 +23,9 @@ static func panel(g):
  for kind in PLANS:
   var id=str(kind);var item=HoldFurnishings.ITEMS[id];var geometry=HoldFurnishings.geometry(id)
   var b=g.small_button(grid,item.title+"\n"+HoldFurnishings.cost_text(id),func():g.surface.start_placement(id))
-  var icon=AtlasTexture.new();icon.atlas=HoldFurnishings.ATLAS;icon.region=HoldFurnishings.CROPS[geometry.art]
+  var icon=AtlasTexture.new()
+  icon.atlas=HoldLooseProps.ATLAS if id=="ancestral_shrine" else HoldFurnishings.ATLAS
+  icon.region=HoldLooseProps.CROPS.plinth if id=="ancestral_shrine" else HoldFurnishings.CROPS[geometry.art]
   b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",44);b.custom_minimum_size=Vector2(290,66);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
   b.disabled=not local or not g.state.afford(item.cost)
   b.tooltip_text="Craft & place "+item.title+". Materials are spent only after a valid placement."

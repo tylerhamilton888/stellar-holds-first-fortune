@@ -95,3 +95,7 @@ HoldDepthNavigation94 owns transient explored-floor browsing and walking-route h
 ## Mouse-look input ownership
 
 HoldMineView94 owns optional capture, unscaled screen-relative mouse look, bounded pitch/zoom, shoulder framing and persisted comfort settings. main._input routes only camera input before GUI dispatch; normal gameplay retains _unhandled_input. Modal opening releases capture immediately. sync_pointer handles survey, placement and zone transitions. actions_allowed gates polled mining/combat so Alt/menu clicks cannot leak into attacks; in-flight contacts retain their existing resolution. Camera-facing movement and world_mouse remain the simulation boundary. Continuous yaw adjusts existing MultiMesh wall transforms, not world data or terrain allocation. Run mouselook95 plus navigation94/combat/mining/dev_testing/menu92 and the exact-pack gate.
+
+## Restrained Dwarven traditions
+
+`HoldCalendar.weekday` owns the continuous eight-day cycle without changing saved day indices or 28-day seasons. `HoldTraditions126` owns optional remembrance, one guarded memorial errand and Sigrid's sampled lodge activity. Never reseed existing rooms to install a memorial. Preserve calendar invitation keys and absolute relationship timers. Lore and scope: [Dwarven religion](lore/DWARVEN_RELIGION.md).
