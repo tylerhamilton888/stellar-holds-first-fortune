@@ -472,7 +472,7 @@ static func panel(g,id:String):
     elif bond(g.state,id)<5:g.label(g.panel_body,"Spend a little more time getting to know each other. Friendship can stay friendship.",15)
     elif d.ended==day(g.state):g.label(g.panel_body,"Give each other a little time before beginning again.",15)
     else:
-     g.label(g.panel_body,"A Hearthknot is a small invitation to court: carved timber with copper inlay. Craft one at a forge with 1 timber and 1 copper ingot, then bring it in your pack.",15)
+     g.label(g.panel_body,"Craft a Hearthknot at a forge: 1 timber + 1 copper ingot. Bring it in your pack to invite courtship.",15)
      var invitation=HoldConversation.choose(g,"Offer a Hearthknot and ask to court",func():
       if begin(g,id):g.talk_line=g.state.npc(id).first_name+" accepts your Hearthknot.\n\n"+arc.yes
       g.refresh_panel())

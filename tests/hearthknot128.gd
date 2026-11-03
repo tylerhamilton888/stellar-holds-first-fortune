@@ -31,18 +31,21 @@ func run():
  g.talk_topic="gift";g.refresh_panel()
  check(not g.panel.find_children("*","Button",true,false).any(func(b):return b.text.contains("Hearthknot")),"Ordinary gift list cannot spend a courtship token")
  check(not HoldCourtship101.begin(g,ID) and g.state.count("hearthknot")==1,"Token cannot bypass personal story")
- HoldCourtship101.record(g.state,ID).quest=3;person.bond=4
+ HoldCourtship101.record(g.state,ID).quest=3;HoldCourtship101.record(g.state,ID).keepsake=HoldCourtship101.ARCS[ID].keepsake;person.bond=4
  check(not HoldCourtship101.begin(g,ID) and g.state.count("hearthknot")==1,"Token cannot bypass familiarity")
  person.bond=5;g.state.inventory.hearthknot=0
  button("Back to our conversation");button("A personal word")
  check(g.panel.find_children("*","Button",true,false).any(func(b):return b.text.contains("Offer a Hearthknot") and b.disabled),"Missing token visibly disables the invitation")
  check(not HoldCourtship101.begin(g,ID) and HoldCourtship101.partner(g.state)=="","Missing token blocks a stale invitation callback")
+ await process_frame;g.menu_scroll.scroll_vertical=int(g.menu_scroll.get_v_scroll_bar().max_value)
  await snap("invitation-needs-token")
  g.state.add("hearthknot",2);g.state.appearance.gender=1
  check(not HoldCourtship101.begin(g,ID) and g.state.count("hearthknot")==2,"Ineligible match keeps the token")
  g.state.appearance.gender=0;g.player+=Vector2(250,0)
  check(not HoldCourtship101.begin(g,ID) and g.state.count("hearthknot")==2,"Remote offer keeps the token")
- visit();button("A personal word");await snap("invitation-ready")
+ visit();button("A personal word")
+ await process_frame;g.menu_scroll.scroll_vertical=int(g.menu_scroll.get_v_scroll_bar().max_value)
+ await snap("invitation-ready")
  button("Offer a Hearthknot")
  check(HoldCourtship101.partner(g.state)==ID and g.state.count("hearthknot")==1 and g.talk_line.ends_with(HoldCourtship101.ARCS[ID].yes) and g.talk_line.contains("accepts your Hearthknot"),"Explicit offer begins mutually accepted courtship and spends exactly one token")
  check(not HoldCourtship101.begin(g,ID) and g.state.count("hearthknot")==1,"Repeated offer spends nothing")
