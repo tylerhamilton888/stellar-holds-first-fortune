@@ -81,6 +81,17 @@ func run():
  # The optional perspective view uses the same new whole-body frames and landing circle.
  g.depth_nav.explore.enabled=true;g.depth_nav.explore.mouse_look=false;g.depth_nav.explore.sync(.1)
  check(g.depth_nav.explore.textures.keys().any(func(k):return "trolls133" in k),"Perspective view resolves the new troll atlas")
+ var view=g.depth_nav.explore;var preference=view.distance
+ for mode in 4:
+  view.mouse_look=mode!=0;view.pitch=.38 if mode==1 else 1.18 if mode==2 else .62;view.distance=5 if mode>0 else preference
+  HoldTroll133.begin(f,e);f.update(.7);view.sync(.1)
+  var facing:Vector2=e.dir.rotated(view.heading());var pose=HoldTroll133.region(e,facing)
+  var top=view.point(e.p)-view.camera.global_basis.y*(pose.source.position.y-pose.root.y)*pose.scale/40
+  var head=view.camera.unproject_position(top);var feet=view.camera.unproject_position(view.point(g.player))
+  check(head.y>77 and feet.y<374,"Perspective giant head and player feet clear the HUD at camera mode "+str(mode))
+  check(view.distance==(5 if mode>0 else preference),"Encounter framing preserves the saved zoom preference")
+  await snap("perspective-%d"%mode)
+ view.distance=preference;view.pitch=.62
  g.depth_nav.explore.enabled=false;g.depth_nav.explore.sync(.1)
  # Stage the actual royal encounter, including reload and all five giant silhouettes.
  g.start_game(false);settle();HoldFirstVisit99.begin(g);settle();HoldFrontier103.data(g.state).home_reward=true;g.state.claim_id="copper_ridge";HoldGreatClaim102.data(g.state).points=220

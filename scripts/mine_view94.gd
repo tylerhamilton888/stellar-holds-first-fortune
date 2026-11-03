@@ -108,7 +108,7 @@ func sync(dt:float):
  g.deep.ensure();var w=g.deep.world
  update_camera()
  timer-=dt
- var key=g.state.active_site+":"+str(w.depth())+":"+str(Deepworks.cell(g.player))
+ var key=g.state.active_site+":"+str(w.depth())+":"+str(Deepworks.cell(g.player))+":"+str(g.fight.giant_near())
  if context!=key or timer<=0:
   context=key;timer=.25;rebuild();rebuild_props()
  update_cutaway();update_actors()
@@ -117,13 +117,15 @@ func sync(dt:float):
 func update_camera():
  if not is_instance_valid(camera):return
  var center=point(g.player);var back=Vector3(sin(yaw),0,cos(yaw))
+ var giant=g.fight!=null and g.fight.giant_near()
+ var framing=maxf(distance,16.0) if giant else distance
  if mouse_look:
   # Close zoom eases over the shoulder and raises the dwarf above the hotbar.
-  var close=clampf((9.5-distance)/4.5,0,1);var right=Vector3(cos(yaw),0,-sin(yaw))
-  camera.position=center+back*cos(pitch)*distance+right*close*1.4+Vector3.UP*(.8+sin(pitch)*distance)
-  camera.look_at(center-back*lerpf(2.0,.7,close)+right*close*.9+Vector3.UP*.8)
+  var close=clampf((9.5-framing)/4.5,0,1);var right=Vector3(cos(yaw),0,-sin(yaw))
+  camera.position=center+back*cos(pitch)*framing+right*close*1.4+Vector3.UP*(.8+sin(pitch)*framing)
+  camera.look_at(center-back*lerpf(2.0,.7,close)+right*close*.9+Vector3.UP*(2.2 if giant else .8))
  else:
-  camera.position=center+back*7.4+Vector3.UP*6.2;camera.look_at(center+Vector3.UP*.35)
+  camera.position=center+back*(13.0 if giant else 7.4)+Vector3.UP*(10.0 if giant else 6.2);camera.look_at(center+Vector3.UP*(2.2 if giant else .35))
 func update_cutaway():
  for wall in walls:
   var height=tile_height(wall.c,wall.kind)
@@ -150,8 +152,9 @@ func clear_children(node:Node):
 func rebuild():
  walls.clear();clear_children(terrain)
  var groups={};var w=g.deep.world;var c=Deepworks.cell(g.player)
- for y in range(maxi(0,c.y-12),mini(Deepworks.H,c.y+13)):
-  for x in range(maxi(0,c.x-12),mini(Deepworks.W,c.x+13)):
+ var extent=20 if g.fight.giant_near() else 12
+ for y in range(maxi(0,c.y-extent),mini(Deepworks.H,c.y+extent+1)):
+  for x in range(maxi(0,c.x-extent),mini(Deepworks.W,c.x+extent+1)):
    var tile=Vector2i(x,y);var seen=w.layer().seen.has(Deepworks.key(tile));var k=w.at(tile) if seen else 8
    # Unexplored space remains opaque; previewing cannot reveal caverns or ore.
    var height=tile_height(tile,k)
