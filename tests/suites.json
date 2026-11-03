@@ -23,7 +23,8 @@
       "traditions126",
       "hearthknot128",
       "friendship130",
-      "invasion131"
+      "invasion131",
+      "work132"
     ],
     "gameplay": [
       "loading",
@@ -92,7 +93,8 @@
       "claim127",
       "hearthknot128",
       "friendship130",
-      "invasion131"
+      "invasion131",
+      "work132"
     ],
     "modular": [
       "modular",
@@ -371,7 +373,8 @@
       "dev_testing",
       "combat_art",
       "menu92",
-      "friendship130"
+      "friendship130",
+      "work132"
     ],
     "gameplay-3": [
       "orientation",
@@ -846,6 +849,21 @@
       "enemies",
       "combat_art",
       "menu92"
+    ],
+    "work132-focus": [
+      "work132"
+    ],
+    "work132": [
+      "work132",
+      "firstvisit99",
+      "frontier103",
+      "mountain104",
+      "claim127",
+      "hearthknot128",
+      "roads",
+      "bench96",
+      "disciplines",
+      "menu_quality100"
     ]
   },
   "cases": {
@@ -1120,6 +1138,10 @@
     "invasion131": {
       "script": "tests/invasion131.gd",
       "marker": "INVASION131"
+    },
+    "work132": {
+      "script": "tests/work132.gd",
+      "marker": "WORK132"
     }
   }
 }

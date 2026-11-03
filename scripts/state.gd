@@ -137,6 +137,7 @@ func tick(dt:float)->String:
   var id=queue[0].id
   for k in HoldData.RECIPES[id].out:add(k,HoldData.RECIPES[id].out[k])
   HoldDisciplines.award(self,HoldDisciplines.recipe_path(id))
+  HoldWork132.cooked(self,id)
   if id in HoldHearth.MEALS:HoldHearth.record_cooking(self,id)
   if id=="energy_cell" and HoldDisciplines.has(self,"rune_economy"):add("energy_cell",1)
   if id=="iron":HoldOnboarding.fact(self,"smelt")

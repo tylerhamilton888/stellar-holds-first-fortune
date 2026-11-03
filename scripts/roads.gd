@@ -113,7 +113,7 @@ func moved(before:Vector2,dt:float)->bool:
  if portal_cooldown>0:return false
  if link.is_empty():return false
  if link.target=="claim" and g.state.claim_id=="":
-  g.player=before;g.notify("Earn a household plot at Ivar’s shift book: first shift and two civic projects." if HoldFrontier103.active(g.state) else "Unclaimed mountain. Ivar or the Survey Office can help you earn or buy a charter.");portal_cooldown=1;return false
+  g.player=before;g.notify("Earn a household plot at Ivar’s shift book: first shift and two civic projects or trade seals." if HoldFrontier103.active(g.state) else "Unclaimed mountain. Ivar or the Survey Office can help you earn or buy a charter.");portal_cooldown=1;return false
  if link.target in OUTDOORS and g.state.opening==0:
   g.player=before;g.notify(g.region_travel_hint());portal_cooldown=1;return false
  var gait=g.gait_clock;var from=s.area

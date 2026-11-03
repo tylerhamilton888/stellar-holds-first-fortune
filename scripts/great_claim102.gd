@@ -43,9 +43,12 @@ static func furnishings(w,area:String)->Array:
  return result
 static func panel(g):
  if not active(g.state):g.label(g.panel_body,"This fortune is not entered in the Great Claim.",18);return
+ if HoldFrontier103.active(g.state):
+  g.button(g.panel_body,"Trade seals · contribute through your favorite work",func():HoldWorkView132.open(g,"contribute"))
+  g.label(g.panel_body,"Any two civic projects or trade seals earn a household plot after your first shift. A registered home and 180 marks open the rescue lead. Trade seals: %d / 3 · 40 marks each." % HoldWork132.seals(g.state),16)
  if HoldFrontier103.active(g.state):g.button(g.panel_body,"Town plan and player-home milestone",func():g.open_panel("frontier103"))
  HoldClaim127.panel(g)
- if HoldClaim127.eligible(g.state):g.label(g.panel_body,"The scoring round closed when the claim was authenticated. Later contributions remain in the town work record; they cannot change the tied final tally or the public trial verdict.",15)
+ if HoldClaim127.eligible(g.state):g.label(g.panel_body,"The scoring round closed when the claim was authenticated. Later contributions remain in the town work record; they cannot change the final tally or the public trial verdict.",15)
  g.label(g.panel_body,"THE GREAT CLAIM LEDGER",22,Color("edc98a"))
  g.label(g.panel_body,"Ivar records useful work and supplies freely committed to the settlement. The first eight completed work units in each discipline earn a mark apiece; civic projects earn their stated marks once. Nothing is awarded for waiting.",16)
  g.label(g.panel_body,"Charter law: authenticated ancestral rights carry a separate hereditary allowance. Until authenticated, no claimant receives that allowance. A tie must be settled by a public test of skill.",15)

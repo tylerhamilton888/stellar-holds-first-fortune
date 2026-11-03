@@ -1249,7 +1249,7 @@ func open_panel(id:String,remember:bool=true):
  if remember and panel_id!="" and panel_id!=id:
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
- menu_paused=id=="invasion131" or id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
+ menu_paused=id=="work132" or id=="invasion131" or id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
  if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126","claim127","friend130"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
@@ -1334,6 +1334,7 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Good fortune to you",close_panel)
   "claim_stories":HoldClaimStories.panel(self)
   "guidance":HoldOnboarding.journal(self)
+  "work132":HoldWorkView132.panel(self)
   "lesson":HoldOnboarding.lesson_panel(self)
   "throne":HoldRoyalHall.panel(self)
   "training":
@@ -1660,7 +1661,7 @@ func ivar_welcome_panel():
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel(details:bool=false):
  if HoldInvasion131.eligible(state) and not details:
-  HoldInvasion131.panel(self);HoldFriendship130.journal(self);HoldTraditions126.journal(self);return
+  HoldInvasion131.panel(self);button(panel_body,"Useful hands · optional lessons",func():HoldWorkView132.open(self));HoldFriendship130.journal(self);HoldTraditions126.journal(self);return
  if HoldFirstVisit99.active(state) and not details:
   HoldFirstVisit99.journal(self);HoldTraditions126.journal(self);HoldFriendship130.journal(self);HoldInvasion131.panel(self);return
  var current=HoldOnboarding.primary(state)

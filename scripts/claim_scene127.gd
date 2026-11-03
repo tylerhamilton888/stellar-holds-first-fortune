@@ -22,7 +22,7 @@ func _ready():
  var insights=HoldMountain104.data(game.state).insights
  match mode:
   "trial":
-   lines=[["IVAR DEEPMEASURE","The books are closed. Work, deliveries and the charter allowance leave two equal claims. Today, the load decides."],
+   lines=[["IVAR DEEPMEASURE",("The books are closed. Your work already exceeds Skarrin's tally, but he challenges your right to lead. Let the public test answer him. Today, the load decides." if HoldClaim127.closed_score(game.state)>int(HoldMountain104.data(game.state).rival_at_award) else "The books are closed. Work, deliveries and the charter allowance leave two equal claims. Today, the load decides.")],
     ["SKARRIN","My retaining wall already holds half this town. I trust we shall measure stone today, not grandfathers."],
     ["IVAR DEEPMEASURE","A safe ore lift: level footings, a frame that cannot rack, and a catch that holds when the operator lets go. Both claimants get the same proof load."],
     ["RURIK STONEHAND","If it holds my winter provisions, it will hold anything. No, Sigrid, I am not getting in the crate."],

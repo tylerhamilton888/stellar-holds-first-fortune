@@ -1,3 +1,13 @@
+# Useful hands 132 — implementation and validation
+
+Source version 0.96.0 adds twelve optional Stonebridge lessons and three shared trade seals (40 marks each). Fresh processing, smelting, crops, fish and cooking provide production proof; purchases, rewards and refunds do not. Mining, timber, metalworking and food deliveries may be mixed or repeated in one trade. Two civic projects/seals, in any combination, earn the plot after the paid introduction; a real registered home plus 180 marks still opens the rescue. Lesson reports and deliveries validate locality and pay once.
+
+The journal prioritizes the immediate instruction and active story, tracks selected lessons and displays the contribution target. The local forge now offers the researched steel pick. Existing scores, civic improvements, households and closed-round results are preserved; scores above Skarrin's total receive accurate challenge dialogue. No later story chapter is added.
+
+The initial native feature case passed 145 assertions. Final native regression, exported-pack review and hosted validation are in progress; do not claim publication yet. Windows 0.95.0 remains the verified published build. Design, balancing assumptions and save ownership: [Useful hands](WORK132.md). Human specialist/mixed-route completion times still need normal-speed playtesting.
+
+---
+
 # Thaneship opening 131 — source complete
 
 The claimant now continues through three ward preparations, an explicit duel response, a visible breach, seven playable defense fronts, familiar-character rescues, the player's troll battle, Eirik's five-troll intervention, Skarrin's combat defeat, the King's trophy return, an explicit fixed-verdict trial, investiture and homecoming as Thane. Twelve enemy groups contain 27 combatants. The same household, possessions and relationships remain; no marriage/district expansion is claimed.
