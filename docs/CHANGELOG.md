@@ -1,4 +1,4 @@
-# The rightful claimant 127 — source verified; Windows verification running
+# The rightful claimant 127 — complete
 
 The authenticated Stonebridge claim now continues through a playable three-fitting ore-lift trial, a public proof load, victory, the honorable Master of Works offer and Skarrin's refusal. The western road opens Keldrath; actual Great Stair crossings record exploration of its three wards before a staged royal reception. The contribution round closes at authentication without deleting later work records.
 
@@ -6,7 +6,7 @@ Four short in-world scenes use the original actors and locations, visible load/c
 
 The final source and exported chapter case each pass 380 assertions. All 3,845 exported entries passed integrity checks. Native/exported trial, load/refusal motion, King's Gate and royal reception reviewed. All five hosted source jobs passed in [run 41575490804](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575490804), completed 2026-11-03T04:29:50Z. PR #101 merged as 1a68d7c808f36175d770e9d01848d811a37af2d5; its tree exactly matches tested source tree 1d712bb95491d620869688231d33e0e601014627 (source 921d72b4bf69e4807c44fd19d44c6d13182a7447).
 
-Windows 0.93.0 is preparing in [release run 41575487210](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575487210). Publication still requires its full exact-pack gate; do not call this build released yet.
+Windows [0.93.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.93.0). The complete ZIP preserves the older releases and save locations. All 55 cases passed against the release pack in [run 41575487210](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575487210), completed 2026-11-03T04:52:42Z. Published build metadata confirms the tested source, Godot 4.4.1 and a clean tree; ZIP size and digest match the release asset. Windows hardware and audible presentation still require an owner playtest.
 
 Next: milestone 05, the interrupted investiture and playable invasion/trial. Milestone 06, Thaneship and household/marriage, remains queued. Current romances reach betrothal; all 26 named world bundles and the restrained Dwarven traditions are included. The royal reception is not the formal investiture. Earlier rescue homecoming/authentication presentation remains future polish.
 

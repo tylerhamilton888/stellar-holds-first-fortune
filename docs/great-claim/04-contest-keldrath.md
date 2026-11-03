@@ -1,6 +1,6 @@
 # The rightful claimant
 
-Status: source complete; Windows 0.93.0 verification running.
+Status: source complete; Windows 0.93.0 published.
 
 ## Deliverable
 
@@ -30,6 +30,6 @@ Source PR #101 merged as `1a68d7c808f36175d770e9d01848d811a37af2d5`; tested sour
 
 State is additive `surface.claim127`: `stage`, `built`, `scene`, `beat`, `wards`, `arrived`, `welcomed`. Existing authenticated saves use their recorded work/allowance tally; later work remains intact. Partial manual work is transient and costs nothing until completion. Scenes restage the current saved beat; Skip never substitutes for the construction requirements. The royal reception does not grant Thaneship or resolve the formal ceremony.
 
-Windows 0.93.0 is preparing in [release run 41575487210](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575487210). Publication still requires its full exact-pack gate; do not call this build released yet.
+Windows [0.93.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.93.0). The complete ZIP preserves the older releases and save locations. All 55 cases passed against the release pack in [run 41575487210](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575487210), completed 2026-11-03T04:52:42Z. Published build metadata confirms the tested source, Godot 4.4.1 and a clean tree; ZIP size and digest match the release asset. Windows hardware and audible presentation still require an owner playtest.
 
 [Acceptance and reviewed captures](../testing/claim127/acceptance.json). [Story-scene requirements](STORY_SCENES.md). After delivery, continue with [milestone 05](05-invasion-trial.md): ceremony responses, substantial invasion encounters, royal intervention and trial. Do not mark those queued encounters complete on the strength of this reception.
