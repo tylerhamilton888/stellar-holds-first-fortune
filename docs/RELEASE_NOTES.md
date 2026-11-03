@@ -4,7 +4,7 @@ Get to know twelve familiar faces through three optional friendship stories each
 
 Help Maren set supper, then discover what happens when rude miners mistake hospitality for permission to insult the cook. Her table-flipping moment has its own whole-character animation, and the culprits put the table right afterward. Other stories explore music, craftsmanship, family, courage and the difficulty of accepting a little kindness yourself.
 
-Scenes can be skipped or resumed after loading. Rewards are given once. Existing homes, possessions, friendships and courtships are preserved. These changes are source-complete only after verification below; no new Windows release has been published yet.
+Scenes can be skipped or resumed after loading. Rewards are given once. Existing homes, possessions, friendships and courtships are preserved. The source and exported-pack checks passed. No new Windows release has been published yet; the current download remains 0.93.0.
 
 # 0.93.2 — Courtship by choice
 
