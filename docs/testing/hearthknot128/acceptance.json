@@ -1,12 +1,41 @@
 {
-  "status": "local_verified_hosted_pending",
+  "status": "source_complete",
   "source": {
     "head": "b42c4f19327f9d04588f3d8c3acebb04910986f1",
     "tree": "270d299fd16df662ccc385dae5886c5e48a1c208",
     "pr": 103,
     "validation_run": 41645315632,
     "validation_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41645315632",
-    "hosted_conclusion": "pending"
+    "hosted_conclusion": "success",
+    "merge": "af1c267f0e6c319c55e20029faafe2d450d10a09",
+    "hosted_completed_at": "2026-11-03T14:03:43Z",
+    "jobs": [
+      {
+        "id": 125949682454,
+        "name": "people-preview",
+        "conclusion": "success"
+      },
+      {
+        "id": 125949682876,
+        "name": "gameplay (gameplay-4)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125949682991,
+        "name": "gameplay (gameplay-2)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125949683081,
+        "name": "gameplay (gameplay-3)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125949683357,
+        "name": "gameplay (gameplay-1)",
+        "conclusion": "success"
+      }
+    ]
   },
   "native": {
     "engine": "4.4.1.stable.official.49a5bc7b6",

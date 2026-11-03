@@ -1,4 +1,4 @@
-# Hearthknot courtship gift — local verification complete; hosted checks running
+# Hearthknot courtship gift — source complete
 
 New courtships begin with a crafted Hearthknot: a carved timber token with copper inlay, made at an existing forge from 1 timber + 1 copper ingot in 4 seconds with no research unlock. The pack shows its own icon and purpose. Complete the candidate's personal story, become familiar friends, then explicitly offer it in a local personal conversation. Exactly one token leaves the pack only when every existing courtship check passes and the character accepts. The accepted response opens from the top of the conversation.
 
@@ -6,7 +6,7 @@ Ordinary gifts and exchanges cannot consume or supply the token. Existing courts
 
 Final native Hearthknot acceptance: 22 assertions passed. Final exact-export acceptance: Hearthknot 22, all-eight courtship 413, menu 35 (470 total), all passed. Every one of 3,847 PCK entries passed hash/bounds/path checks, including the new icon. Reviewed the exact-pack inventory, disabled/ready invitation and accepted response. Tests use isolated saves and native Linux/software rendering.
 
-Full hosted validation is still running in [run 41645315632](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41645315632). Source PR #103 must not be merged until the required checks pass.
+All five hosted jobs passed in [run 41645315632](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41645315632). Source PR #103 merged as `af1c267f0e6c319c55e20029faafe2d450d10a09`; its tree matches tested source `b42c4f19327f9d04588f3d8c3acebb04910986f1` (tree `270d299fd16df662ccc385dae5886c5e48a1c208`).
 
 Source version 0.93.1; no new Windows release was requested or published. The last published Windows build remains 0.93.0. Include this change in the next Windows build. Next development milestone remains the interrupted investiture/invasion/trial; marriage and shared households remain milestone 06.
 
