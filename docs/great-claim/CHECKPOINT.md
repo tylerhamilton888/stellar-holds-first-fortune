@@ -1,3 +1,21 @@
+# The rightful claimant 127 — source verified; Windows verification running
+
+The authenticated Stonebridge claim now continues through a playable three-fitting ore-lift trial, a public proof load, victory, the honorable Master of Works offer and Skarrin's refusal. The western road opens Keldrath; actual Great Stair crossings record exploration of its three wards before a staged royal reception. The contribution round closes at authentication without deleting later work records.
+
+Four short in-world scenes use the original actors and locations, visible load/character motion, Continue/Skip and saved-beat recovery. The player builds the lift through normal interact input; scenes cannot bypass that work. Homes, inventory beyond explicit material costs, chest contents and romance progress are preserved. No early Thaneship is granted.
+
+The final source and exported chapter case each pass 380 assertions. All 3,845 exported entries passed integrity checks. Native/exported trial, load/refusal motion, King's Gate and royal reception reviewed. All five hosted source jobs passed in [run 41575490804](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575490804), completed 2026-11-03T04:29:50Z. PR #101 merged as 1a68d7c808f36175d770e9d01848d811a37af2d5; its tree exactly matches tested source tree 1d712bb95491d620869688231d33e0e601014627 (source 921d72b4bf69e4807c44fd19d44c6d13182a7447).
+
+Windows 0.93.0 is preparing in [release run 41575487210](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41575487210). Publication still requires its full exact-pack gate; do not call this build released yet.
+
+Next: milestone 05, the interrupted investiture and playable invasion/trial. Milestone 06, Thaneship and household/marriage, remains queued. Current romances reach betrothal; all 26 named world bundles and the restrained Dwarven traditions are included. The royal reception is not the formal investiture. Earlier rescue homecoming/authentication presentation remains future polish.
+
+Evidence: [claim127 acceptance](../testing/claim127/acceptance.json). Scene policy: [Story scenes](STORY_SCENES.md).
+
+Exact next action: finish release run 41575487210, verify its 0.93.0 assets and source hash, update acceptance/release status, and merge the separate delivery documentation. Do not restart or alter the verified runtime without a new finding.
+
+---
+
 # Current implementation review — 2026-11-01
 
 [Full directive-to-code audit](IMPLEMENTATION_REVIEW.md). v0.92.0 is published; PR #77 portraits/loading merged later. Earlier pending-release entries below are historical. Story ends at authenticated claimant; milestones 04–06 remain unimplemented. The broad ledger and narrative-cast requirements are partial despite completed smaller slices. Close the contest scoring round before the tiebreaker and implement the currently absent Keldrath unlock. Named world animation remains the current unfinished art task; see ../art/gait107/README.md.
