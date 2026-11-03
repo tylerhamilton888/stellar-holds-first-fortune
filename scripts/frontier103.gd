@@ -48,7 +48,7 @@ static func points(g)->Array:
  return out
 static func permit(g)->bool:
  var s=g.state
- if not near(g,"lodge") or data(s).permit or not HoldFirstVisit99.data(s).get("rewarded",false) or HoldGreatClaim102.data(s).projects.size()<2:return false
+ if not near(g,"lodge") or data(s).permit or not HoldFirstVisit99.data(s).get("rewarded",false) or HoldWork132.contributions(s)<2:return false
  if s.claim_id!="":return false
  s.claim_id="copper_ridge";s.camp_stage=0;data(s).permit=true
  HoldOutpost.ensure(s);s.outpost.name="Stonebridge household grounds"
@@ -97,6 +97,9 @@ static func finish_home(g)->bool:
  var d=HoldGreatClaim102.data(g.state);d.points=int(d.points)+60
  g.save_game();g.notify("A hearth of your own · 60 Claim marks. Keep designing and extending your home.");return true
 static func transact(g,kind:String,id:String,buy:bool=true)->bool:
+ if kind=="tool" and id=="steel":
+  if not near(g,"forge") or g.state.opening<2 or g.state.steel or not g.state.tech.has("extraction") or not g.state.pay({"iron":5,"wood":2}):return false
+  g.state.steel=true;return true
  if kind=="trade" and HoldData.ITEMS.has(id) and (near(g,"watch") or (data(g.state).get("storehouse",false) and near(g,"stores"))):return g.state.trade(id,buy)
  if kind=="craft" and HoldData.RECIPES.has(id) and near(g,"forge") and g.state.opening>=2:return g.state.craft(id)
  if kind=="research" and HoldData.RESEARCH.has(id) and near(g,"survey"):return g.state.research(id)
@@ -104,14 +107,15 @@ static func transact(g,kind:String,id:String,buy:bool=true)->bool:
 static func panel(g):
  if not active(g.state):return
  var s=g.state
+ g.button(g.panel_body,"Useful hands · lessons & contest contributions",func():HoldWorkView132.open(g))
  HoldClaim127.panel(g)
  HoldMountain104.panel(g)
  g.label(g.panel_body,"STONEBRIDGE · A TOWN TAKING ROOT",22,Color("edc98a"))
  g.button(g.panel_body,"Field kit · fishing and farming",func():g.open_panel("fieldwork"))
  g.label(g.panel_body,"West: bunkhouse and Wayfarer's Hearth. North: Old Workings and the communal forge. Across the bridge: survey hall and watch stores. South: Pinewood and Greenhearth. The eastern rise is reserved for households.",16)
- g.label(g.panel_body,"Your home: "+("registered · keep building" if data(s).home_reward else "plot granted · build and furnish your home" if data(s).permit else "earn a paid first shift and two civic projects"),17,Color("edc98a"))
+ g.label(g.panel_body,"Your home: "+("registered · keep building" if data(s).home_reward else "plot granted · build and furnish your home" if data(s).permit else "a paid first shift and two civic projects or trade seals"),17,Color("edc98a"))
  if near(g,"lodge"):
-  g.label(g.panel_body,"Ivar: 'The upstairs room is yours while you find your feet. Two civic projects and a paid first shift earn a home plot. A roof you chose yourself is worth working toward.'",16)
+  g.label(g.panel_body,"Ivar: 'The upstairs room is yours while you find your feet. A paid first shift and two contributions earn a home plot: civic projects, trade seals, or one of each. A roof you chose yourself is worth working toward.'",16)
   if s.opening in [1,2,3]:
    var job=HoldCampaign.JOBS[s.opening-1]
    g.label(g.panel_body,job.name+" · "+HoldData.cost_text(job.cost)+" · "+str(job.pay)+" crowns",16)
@@ -125,13 +129,17 @@ static func panel(g):
   g.button(g.panel_body,"Read contribution ledger",func():g.open_panel("great_claim102"))
   if not data(s).permit:
    var b=g.button(g.panel_body,"Accept a household plot",func():permit(g);g.refresh_panel())
-   b.disabled=not HoldFirstVisit99.data(s).get("rewarded",false) or HoldGreatClaim102.data(s).projects.size()<2
+   b.disabled=not HoldFirstVisit99.data(s).get("rewarded",false) or HoldWork132.contributions(s)<2
   else:
    g.label(g.panel_body,"Your home milestone: walk east through town to the household grounds. O opens the same building plans used here, or build floors, walls, roofs and stairs piece by piece. Choose your layout, materials, furniture and upper floors. Add a bed and hearth or lamp, then report to Ivar. Your belongings stay where you put them.",16)
    var b=g.button(g.panel_body,"Register my finished home · 60 marks",func():finish_home(g);g.refresh_panel())
    b.disabled=data(s).home_reward or not home_ready(g)
  elif near(g,"forge"):
   g.label(g.panel_body,"Bring ore and coal. Ivar's first coal commission relights this communal hearth. The toolwright's methods and fittings are shared with the whole town.",16)
+  var tool=g.button(g.panel_body,"Forge steel pick · 5 iron + 2 timber",func():
+   if transact(g,"tool","steel"):g.save_game();g.notify("Steel pick forged · stronger contacts and basalt access.");g.refresh_panel())
+  tool.disabled=s.opening<2 or s.steel or not s.tech.has("extraction") or not s.afford({"iron":5,"wood":2})
+  if not s.steel:g.label(g.panel_body,"First research Tempered steel at Stonebridge's survey desk.",14)
   g.button(g.panel_body,"Forge weapons and armor",func():g.gear_tab="forge";g.open_panel("equipment"))
   for id in HoldData.RECIPES:
    var r=HoldData.RECIPES[id]

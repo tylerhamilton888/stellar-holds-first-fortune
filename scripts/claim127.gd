@@ -82,6 +82,7 @@ static func panel(g):
  var d=data(g.state)
  g.label(g.panel_body,"THE RIGHTFUL CLAIMANT",22,Color("edc98a"))
  var texts=["The contribution round is closed at authentication. Your work and hereditary allowance tie Skarrin's verified total. Meet Ivar at the bunkhouse shift book for the public test.","Build a safe ore lift in the yard south of the communal forge. Read each load-path clue, choose its fitting, then hold E at the marked station. Stone, timber and iron come from your pack. There is no time limit.","All three fittings are sound. Return to the lift yard and call Ivar for the proof load and public verdict.","You won the public trial. Skarrin refused the office of Master of Works. Follow the western road to Keldrath whenever you are ready; your home, belongings and friendships remain yours."]
+ if closed_score(g.state)>int(HoldMountain104.data(g.state).rival_at_award):texts[0]="The contribution round is closed. Your work exceeds Skarrin’s verified tally; he still challenges your right to lead. Meet Ivar at the bunkhouse shift book for the public test."
  g.label(g.panel_body,texts[mini(3,int(d.stage))],16)
  if d.stage==0 and HoldFrontier103.near(g,"lodge"):g.button(g.panel_body,"Gather for the public trial",func():start(g,"trial"))
  if d.stage==1:

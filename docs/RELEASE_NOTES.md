@@ -1,3 +1,13 @@
+# 0.96.0 — Useful hands
+
+Choose how you earn your place in Stonebridge. Twelve optional lessons guide ore processing, smelting, tool upgrades, timber, loaded carts, furnishing, surveys, safe descents, crystal recovery, fieldwork and cooking. J shows the immediate step, your chosen lesson and the 180-mark contribution goal.
+
+The Great Claim ledger now accepts three trade seals worth 40 marks each. Contribute materials you produced through mining, woodworking, metalworking or food production. Specialize or mix trades; the three seals are shared. Existing civic projects remain available and visibly improve town. A paid first shift and any two projects/seals earn your household plot. Registering a furnished home adds 60 marks: three seals plus a home reach the rescue milestone.
+
+Report lessons at Stonebridge's forge, survey desk or Ivar's shift book for supplies and wages. Trade deliveries require both recorded work and carried materials. Rewards cannot be collected twice. The communal forge now makes the steel pick after Tempered steel research. Existing saves, houses and contest results persist; older finished inventory is not guessed to be player-made.
+
+Human completion time and specialist/mixed-route pacing still need normal-speed playtesting. No deadlines or mandatory completion of every profession are added. The opening still ends with the Thane homecoming.
+
 # 0.95.0 — The First Fortune
 
 The opening chapter now continues from the miners' lodge through building your own home, uncovering your ancestry, proving your claim and earning the title of Thane.

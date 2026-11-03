@@ -124,6 +124,7 @@ func update(dt:float):
     if HoldDisciplines.has(g.state,"river_lore") and int(data().catches)%3==2:count+=1
     var place=spot();var catches=int(data().locations.get(cast_area,0));var fish=place.fish[catches%place.fish.size()]
     HoldDisciplines.award(g.state,"fishing")
+    HoldWork132.produced(g.state,fish,count,"caught")
     g.state.add(fish,count);data().locations[cast_area]=catches+1;data().catches=int(data().catches)+1;data().facts.fish=true
     g.sound.effect("water",-12);g.notify("%s ×%d · a good catch for the hearth or exchange." % [HoldData.ITEMS[fish].name,count]);reward();g.save_game();cancel()
   else:elapsed=bite
@@ -144,6 +145,7 @@ func update(dt:float):
   elif action=="harvest" and ripe(b):
    var id=crop(b);var amount=(3 if int(data().harvests)>=8 else 2)+(1 if HoldDisciplines.has(g.state,"seed_selection") else 0)
    if b.get("tended",false) and HoldDisciplines.has(g.state,"gentle_tending"):amount+=1
+   HoldWork132.produced(g.state,id,amount,"grown")
    HoldDisciplines.award(g.state,"farming");g.state.add(id,amount);g.state.add(HoldHearth.CROPS[id].seed,1);data().harvests=int(data().harvests)+1;data().facts.harvest=true
    b.planted=false;b.watered=false;b.prepared=false;b.tended=false;g.sound.effect("build",-20);g.notify("%s ×%d · seed saved for another planting." % [HoldHearth.CROPS[id].name,amount])
   reward();g.save_game()

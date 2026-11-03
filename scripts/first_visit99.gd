@@ -97,7 +97,8 @@ static func goal(g)->String:
   if not q.get("ivar_spoken",false):return "First morning · speak with Ivar by the bunkhouse hearth · E"
   if not q.get("room_seen",false):return "First morning · bunkhouse stairs → your room above · J"
   if not q.get("rewarded",false):return "First shift · northern town path → Old Workings · J"
-  if not HoldFrontier103.data(g.state).permit:return "A place of your own · two civic projects → Ivar’s shift book · J"
+  if not HoldMountain104.eligible(g.state) and HoldWork132.goal(g.state)!="":return HoldWork132.goal(g.state)
+  if not HoldFrontier103.data(g.state).permit:return "A place of your own · two civic projects or trade seals → Ivar’s shift book · J"
   if HoldMountain104.eligible(g.state):
    var stage=int(HoldAncestralClaim.data(g.state).stage)
    if stage==0:return "A runner from the mine · visit Ivar’s shift book · J"
@@ -181,14 +182,13 @@ static func journal(g):
 
 static func frontier_journal(g):
  HoldClaim127.panel(g)
- HoldMountain104.panel(g)
+ if HoldMountain104.eligible(g.state) or int(HoldAncestralClaim.data(g.state).stage)>0:HoldMountain104.panel(g)
+ HoldWorkView132.summary(g)
  var s=g.state;var q=data(s)
  g.label(g.panel_body,"A DWARF'S WORTH · STONEBRIDGE",22,Color("edc98a"))
  g.label(g.panel_body,"A bunkhouse room today; a home you design and build as you settle into town. Nothing decays while you are away. Take these steps at your own pace.",16)
- for line in ["Meet Ivar by the bunkhouse hearth. The stairs lead to your private room above.","Leave the bunkhouse into Stonebridge. Follow the northern path to Old Workings; the western rack and stonebreaker are on loan.","Complete your first load for wages, then furnish your upstairs room with O.","Use the ledger beside Ivar to complete two civic projects. The town changes when you contribute.","Accept your household plot at Ivar's shift book, then follow the east road. Design a home with the building book or piece-by-piece construction, including stairs and upper floors.","Add your bed and a lamp or hearth, then register your home for 60 Claim marks. You can keep extending it throughout the story."]:
+ for line in ["Your room above the bunkhouse remains yours. O opens furnishings.","Complete civic projects at the ledger beside Ivar, or earn trade seals with supplies you produce. Any two contributions earn your household plot after the first shift.","Accept your plot at Ivar's shift book, then follow the east road. Design a home with the building book or piece-by-piece construction, including upper floors.","Add your bed and a lamp or hearth, then register your home for 60 Claim marks. Keep extending it throughout the story."]:
   g.label(g.panel_body,line,16)
- if q.get("work_started",false) and step(s)<5:
-  g.label(g.panel_body,TASKS[step(s)][0]+": "+TASKS[step(s)][1],16)
  g.button(g.panel_body,"View Great Claim ledger",func():g.open_panel("great_claim102"))
  g.button(g.panel_body,"Town services and home milestone",func():g.open_panel("frontier103"))
  g.small_button(g.panel_body,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())

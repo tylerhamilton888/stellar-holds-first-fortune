@@ -1,3 +1,7 @@
+# Useful hands 132
+
+`work132-focus` covers local quest reports, real bench/forge/fieldwork/hauling/survey/return-route hooks, once-only rewards, forged tool guards, specialist and mixed 180-mark paths, material budgets, household construction, migration, reload and closed-contest preservation. `work132` adds the affected opening, frontier, ancestry, trial, crafting, roads, bench, discipline and menu regressions. The case is mandatory in core/gameplay/gameplay-2 and the exact-pack harness. Review first-step, active lesson, contribution options, plot/home milestone and closed-contest captures. Balance by active play time remains a human playtest item.
+
 # Thaneship opening 131
 
 `invasion131_focus` covers preparations, physical E interactions, sequential combat groups, actual weapon contacts, escort/mechanism tasks, defeat/infirmary recovery, saved wounds, scene choices/skip/load, royal routes, once-only title awards, all trial opinions and original-house continuity. `invasion131` adds the prior claimant/friendship and combat/menu regressions. The new case is mandatory in core/gameplay/gameplay-1 and the exact-pack harness. Human pacing is not inferred from accelerated tests.

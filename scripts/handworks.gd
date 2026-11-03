@@ -285,7 +285,9 @@ func update(dt:float):
   if vehicle(f) and f.hitched:
    # Only explicit, validated passages transfer equipment; abandoned carts stay put.
    if not local(f) or pos(f).distance_to(g.player)>145:f.hitched=false
-   else:f.x=g.player.x;f.y=g.player.y
+   else:
+    HoldWork132.cart_moved(g,f,pos(f).distance_to(g.player))
+    f.x=g.player.x;f.y=g.player.y
  if g.combat.armed:return
  var f=facility()
  if f.is_empty() and g.zone=="mine" and Input.is_key_pressed(KEY_SHIFT) and Input.is_action_pressed("interact") and Input.get_vector("left","right","up","down")==Vector2.ZERO:
@@ -295,6 +297,7 @@ func update(dt:float):
    var before=float(raw.get("dressing",0));raw.dressing=before+dt*HoldWorkEnergy.speed(g.state);HoldWorkEnergy.spend(g.state,dt*.05)
    if int((before+.315)/.7)!=int((float(raw.dressing)+.315)/.7):g.sound.effect("stone_0",-14)
    if float(raw.dressing)>=2.1:
+    HoldWork132.processed(g,raw)
     if raw in d.carry:d.carry.erase(raw)
     else:d.loose.erase(raw)
     g.deep.haul.collect(raw_item(raw),int(raw.units),g.player);d.facts.process=true;d.facts.field_dress=true;field_raw={};working=false;g.save_game()
@@ -325,6 +328,7 @@ func update(dt:float):
  if float(f.job.progress)<1.26:return
  var raw=f.job.raw;var item=raw_item(raw)
  HoldExpedition97.processed(g,raw)
+ HoldWork132.processed(g,raw)
  f.cargo[item]=int(f.cargo.get(item,0))+int(raw.units)+(1 if HoldDisciplines.has(g.state,"sawyer" if raw.kind=="log" else "stone_finish") else 0)
  f.job={}
  if raw.kind=="log":
