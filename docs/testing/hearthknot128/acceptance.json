@@ -1,0 +1,110 @@
+{
+  "status": "local_verified_hosted_pending",
+  "source": {
+    "head": "b42c4f19327f9d04588f3d8c3acebb04910986f1",
+    "tree": "270d299fd16df662ccc385dae5886c5e48a1c208",
+    "pr": 103,
+    "validation_run": 41645315632,
+    "validation_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41645315632",
+    "hosted_conclusion": "pending"
+  },
+  "native": {
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "renderer": "Native Linux / Mesa llvmpipe / gl_compatibility",
+    "results": [
+      {
+        "test": "import",
+        "passed": true,
+        "exit_code": 0,
+        "errors": [],
+        "checks": 0,
+        "seconds": 12.19
+      },
+      {
+        "test": "hearthknot128",
+        "passed": true,
+        "exit_code": 0,
+        "errors": [],
+        "checks": 22,
+        "seconds": 56.59
+      }
+    ]
+  },
+  "exact_export": {
+    "preset": "Windows Desktop",
+    "pck_sha256": "e7e87b2e5bc79ca0426078f99b966bb49d447ba572298731bc864f8d8a271fa5",
+    "entries_verified": 3847,
+    "results": [
+      {
+        "test": "hearthknot128",
+        "passed": true,
+        "checks": 22,
+        "errors": []
+      },
+      {
+        "test": "menu92",
+        "passed": true,
+        "checks": 35,
+        "errors": []
+      },
+      {
+        "test": "courtship101",
+        "passed": true,
+        "checks": 413,
+        "errors": []
+      }
+    ],
+    "checks": 470
+  },
+  "visual_review": {
+    "reviewed": true,
+    "source": "Final exact exported pack",
+    "captures": [
+      {
+        "file": "crafted-hearthknot.webp",
+        "sha256": "d4e680ec9f57e6b00bc0dad8dd58254af0504e08c28365b0b6427e62fc4a8e4e",
+        "source_png_sha256": "41bded0fdb9557fb569b5225ec9af51bee72923ee649e97fbf00c49fa883055d",
+        "bytes": 95486
+      },
+      {
+        "file": "invitation-needs-token.webp",
+        "sha256": "ab4999580c7e2792e68d65f5db6bdee64fb51985acecda36d2c91e971ee841d6",
+        "source_png_sha256": "8f4a104e6b549b0d3b813b86731301b6c2ccd793d44c82db8b3a8d2657c7fda5",
+        "bytes": 194200
+      },
+      {
+        "file": "invitation-ready.webp",
+        "sha256": "fdd3b82866f3ebc4308047615b312fb9e6d339c5bc175d3e38d536deb946462e",
+        "source_png_sha256": "2a8c31302dcc9ba73896a2f8cb97d657b5a0517432fc19e2e39a6d01ded61fc0",
+        "bytes": 194804
+      },
+      {
+        "file": "invitation-accepted.webp",
+        "sha256": "ec63c12b1091c73ae43873a8972dc9882a154ef038a8032263e9a1ee551980fa",
+        "source_png_sha256": "358986d49974eaf6df53e2e667bcf951040db2c4939f1b9b70397a891a73d13d",
+        "bytes": 228418
+      }
+    ],
+    "findings": "Token icon and purpose are legible; missing/ready invitation states are clear; accepted gift restores the top of the conversation after deferred menu layout."
+  },
+  "behavior": {
+    "recipe": {
+      "wood": 1,
+      "copper": 1,
+      "seconds": 4,
+      "research": null
+    },
+    "spend": "Exactly one carried Hearthknot after all existing courtship guards pass",
+    "ordinary_gifts": "Cannot consume Hearthknots or start courtship",
+    "trade": "Token is craft-only, not bought/sold",
+    "saved_relationships": "Existing courting and betrothed stages remain valid without a token",
+    "restart": "New invitation after breakup requires a new token",
+    "pairing": "Alden/Maren early-interest and independent pairing rules unchanged"
+  },
+  "delivery": {
+    "source_version": "0.93.1",
+    "windows_release_created": false,
+    "latest_published_windows": "0.93.0",
+    "note": "Include this source change in the next Windows build."
+  }
+}
