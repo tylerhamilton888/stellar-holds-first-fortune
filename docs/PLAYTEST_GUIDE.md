@@ -1,3 +1,41 @@
+# 0.95.0 — Worker to Thane
+
+Choose **First visit to the hold** on the title screen, then an empty fortune slot, for the current Stonebridge opening. Continue an existing frontier fortune to keep its earned progress. Older non-frontier fortunes retain their earlier story route. Keep the previous build and save backups while testing.
+
+## First session
+
+Meet Ivar in the bunkhouse with **E**, visit your room upstairs, then take the northern town path to Old Workings. **J** holds the next useful step; menus pause the world. Select the pick with **1**, stand still and hold the left mouse button to excavate. **E** lifts a freed load or stocks the western loan rack. Hold **E** at the western stonebreaker to work. New output enters your pack; **E** collects older bench output. The eastern crew's stock belongs to the hold.
+
+Return to the bunkhouse and use the shift book. Help with two civic projects to earn a household plot. Build and furnish the home you want; keep exploring, crafting and meeting neighbors between story leads. The plot and your own design remain yours through the Thane homecoming.
+
+## Follow the chapter
+
+| Phase | Next lead | What to watch |
+| --- | --- | --- |
+| Bunkhouse and first shift | Ivar, your upstairs room, Old Workings | Is the next useful action clear without rereading instructions? |
+| Civic work and your own home | Bunkhouse shift book and the household plot | Do material trips and construction feel useful and free? |
+| Rescue and ancestry | Ivar's runner, the trapped survey crew, the recovered evidence | Can you find a safe route, return to survivors and resume after loading? |
+| Proving the claim | Ivar's engineering contest and the public proof load | Are each fitting and its material cost clear? |
+| Keldrath and preparations | Western road, three wards, royal reception | Is each route legible, and can you choose when to attend the ceremony? |
+| Defense and judgment | Seven fronts, refugees, mechanisms, Skarrin and the court | Are attacks readable, recovery fair and the choices explicit? |
+| Thane homecoming | Return to the same Stonebridge trial yard | Are the house, workshop, belongings, discoveries and friendships intact? |
+
+## Useful detours
+
+Twelve characters offer optional friendship stories at 5, 12 and 18 bond, with rewards and saved memories in People. Craft a Hearthknot at a forge to invite a suitable partner to court. Waiting does not advance Alden and Maren's own relationship; your commitment to another candidate does. Farming, fishing, cooking and improving your home remain available alongside the chapter.
+
+## Feedback that will guide polish
+
+Record active time for each phase, optional activities separately, and any point where you lost the route or could not tell what would advance the task. Note gear and retries during the defense. Try one scene skip, one save/load during a scene and a normal return to the title screen. Check that returning to play restores control and keeps possessions.
+
+The goal is several substantial sessions without forced waiting. Automated checks accelerate actions, so they do not establish real completion time, difficulty or enjoyment. Windows performance, audio balance and normal-speed animation are part of this playtest. Marriage and district management belong to the next chapter.
+
+---
+
+# Historical playtests
+
+The entries below describe older versions and legacy fortunes. Use the current route and controls above for 0.95.0.
+
 # 0.85.0 mouse-look trial
 
 Title → Dev Testing → Mine views & depth routes, then F6. Mouse-look is the new default; F7 offers Free cursor if desired. Turn and tilt while moving with WASD, wheel from close shoulder view to wide exploration, and try Space dodging after drawing a weapon. Aim at the highlighted iron face and hold LMB while planted. RMB must guard rather than rotate the camera. Combat must remain available at zero work energy.
