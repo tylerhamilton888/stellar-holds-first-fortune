@@ -96,7 +96,7 @@ static func panel(g):
   g.label(g.panel_body,"Take your time in Hearthward, Forgeward and Crownward. Stairs connect the wards. High King Eirik receives you in the Crownward royal hall after you have seen all three.",16)
   for ward in ["hearthward","forgeward","crownward"]:g.label(g.panel_body,("✓ " if d.wards.has(ward) else "○ ")+ward.capitalize(),16)
   if can_reception(g):g.button(g.panel_body,"Present the Stonebridge invitation",func():start(g,"reception"))
-  if d.welcomed:g.label(g.panel_body,"Royal reception complete. The formal investiture and its interruption belong to the next chapter. Continue exploring or take King's Gate back to Stonebridge.",16)
+  if d.welcomed:g.label(g.panel_body,"The King has received your claim. This story chapter is complete; keep exploring Keldrath or take King's Gate home to Stonebridge.",16)
 static func draw_rig(g,p:Vector2,built:int,lift:float=0):
  # Shared painted materials at character scale; ropes and load travel are live.
  for x in [-42,42]:
