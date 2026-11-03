@@ -1,6 +1,6 @@
 # The King returns
 
-Status: queued.
+Status: implemented; native, exact-export and hosted acceptance in progress. See [Thane opening](THANESHIP_OPENING.md).
 
 ## Deliverable
 

@@ -1,3 +1,11 @@
+# Thaneship opening 131 — verification in progress
+
+The claimant now continues through three ward preparations, explicit duel response, a visible breach, seven playable defense fronts, familiar-character rescues, the player's troll battle, Eirik's five-troll intervention, Skarrin's combat defeat, the King's trophy return, an explicit fixed-verdict trial, investiture and homecoming as Thane. Twelve enemy groups contain 27 combatants. The same household, possessions and relationships remain; no marriage/district expansion is claimed.
+
+Source version 0.95.0. Native, exported-pack and hosted acceptance are in progress. Windows 0.93.0 remains the current download; no new release requested. This is the opening-chapter stopping point for polish. Human completion time remains unmeasured; the pacing goal is multiple substantial sessions without forced waiting. See [Thane opening](great-claim/THANESHIP_OPENING.md).
+
+---
+
 # Friendship stories 130 — source complete
 
 Twelve characters receive three optional friendship episodes at 5, 12 and 18 bond (36 total): all eight romance candidates plus Ivar, Borin, Orla and Hedrik. Practical tasks lead to short in-world scenes, useful item rewards, modest discipline XP and persistent memories. Maren's trusted-friend episode stages the rude-miner table flip. Scenes are resumable/skippable and rewards are once-only; actual furniture, household storage and romance remain untouched.
