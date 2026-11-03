@@ -22,7 +22,8 @@
       "ridge124",
       "traditions126",
       "hearthknot128",
-      "friendship130"
+      "friendship130",
+      "invasion131"
     ],
     "gameplay": [
       "loading",
@@ -90,7 +91,8 @@
       "traditions126",
       "claim127",
       "hearthknot128",
-      "friendship130"
+      "friendship130",
+      "invasion131"
     ],
     "modular": [
       "modular",
@@ -353,7 +355,8 @@
       "keldrath",
       "quest_ui",
       "enemies",
-      "architecture_style"
+      "architecture_style",
+      "invasion131"
     ],
     "gameplay-2": [
       "menus",
@@ -831,6 +834,18 @@
       "ridge124",
       "claim127",
       "menu92"
+    ],
+    "invasion131_focus": [
+      "invasion131"
+    ],
+    "invasion131": [
+      "invasion131",
+      "claim127",
+      "friendship130",
+      "combat",
+      "enemies",
+      "combat_art",
+      "menu92"
     ]
   },
   "cases": {
@@ -1101,6 +1116,10 @@
     "friendship130": {
       "script": "tests/friendship130.gd",
       "marker": "FRIENDSHIP130"
+    },
+    "invasion131": {
+      "script": "tests/invasion131.gd",
+      "marker": "INVASION131"
     }
   }
 }

@@ -1,3 +1,7 @@
+# 0.95.0 — The First Fortune (source, not published)
+
+Continue from the royal reception to the invasion, seven defense objectives, Skarrin's trial, Thaneship and homecoming. Explicit choices, familiar-character rescues and short in-world scenes accompany real combat. The original settlement and belongings persist. This completes the opening narrative endpoint for polish; marriage and the larger settlement expansion remain future work. Validation is in progress; no new Windows download is published.
+
 # 0.94.0 — Time for Friends
 
 Get to know twelve familiar faces through three optional friendship stories each. Small errands and practical choices lead to brief in-world scenes, useful gifts, skill experience and lasting memories. New stories appear at 5, 12 and 18 friendship; they have no deadlines and do not require romance.

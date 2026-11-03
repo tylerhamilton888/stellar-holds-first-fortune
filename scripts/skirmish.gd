@@ -33,7 +33,7 @@ var impacts=[]
 var show_hitboxes=false
 func _init(game):g=game
 func practice()->bool:return g.room_id=="training"
-func enabled()->bool:return practice() or (g.zone=="mine" and HoldOnboarding.combat_ready(g.state))
+func enabled()->bool:return HoldInvasion131.combat_here(g) or practice() or (g.zone=="mine" and HoldOnboarding.combat_ready(g.state))
 func cancel_actions():
  hit_stop=0;impacts.clear();shield_recoil=0;bash_wait=0;bash_left=0;bash_hit=false
  swing=0;buffered=0;guard=false;guard_was=false;parry=0;dodge=0;g.combat.riposte=0
@@ -47,6 +47,7 @@ func clear(a:Vector2,b:Vector2)->bool:
   if not open_at(a.lerp(b,float(i)/maxi(2,int(a.distance_to(b)/5)))):return false
  return true
 func spawn():
+ if HoldInvasion131.combat_here(g):HoldInvasion131.spawn(g);return
  var context="practice" if practice() else g.handworks.context()
  if key==context:return
  key=context;enemies.clear();hit_stop=0;impacts.clear();shield_recoil=0;bash_wait=0;bash_left=0;bash_hit=false;swing=0;buffered=0;guard=false;guard_was=false;dodge=0;g.combat.riposte=0
@@ -322,6 +323,9 @@ func draw_enemy(e:Dictionary):
  if practice():
   var phase=.18+.33*(1-e.time/.72) if e.state=="windup" else CONTACT_PHASE+(1-e.time/.75)*(1-CONTACT_PHASE) if e.state=="recover" else 0.0
   HoldDrawnAnimation.paint(g,p-cam,g.state.npc("borin"),e.dir,e.walk,e.gait,.85,-cam,"combat_axe" if e.state in ["windup","recover"] else "hold_combat_axe",phase)
+ elif e.has("profile"):
+  var phase=.3 if e.state=="windup" else .65 if e.state=="recover" else 0.0
+  HoldDrawnAnimation.paint(g,p-cam,e.profile,e.dir,e.walk,e.gait,.85,-cam,"hammer" if e.state in ["windup","recover"] else "town_walk" if e.walk else "",phase)
  elif e.kind!=1:
   HoldEnemyRoster.draw(g,e)
  else:
@@ -340,7 +344,7 @@ func draw_enemy(e:Dictionary):
    g.draw_rect(Rect2(p+Vector2(-22,top+6),Vector2(44*minf(1,poise/limit),2)),Color("8fe3d1"))
   if e.state=="stun":HoldArt.text(g,p+Vector2(-30,22),"Off balance",11,Color("8fe3d1"))
   g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44,4)),Color("312b2a"));g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44*e.hp/e.max,4)),Color("cf956c"))
-  HoldArt.text(g,p+Vector2(-44,top-5),spec.name,11,Color("ead6ac"))
+  HoldArt.text(g,p+Vector2(-44,top-5),e.get("display_name",spec.name),11,Color("ead6ac"))
   if e.kind==3 and e.state=="windup":HoldArt.text(g,p+Vector2(-64,22),"Heavy · dodge / parry",12,Color("f0b97a"))
 func player_pose()->String:
  if g.state.combat.weapon=="axe":
@@ -368,7 +372,7 @@ func overlay():
  if practice():
   var f=HoldOnboarding.ensure(g.state).facts
   text="Practice · Blows %d/3   Guard %d/1   Evade a strike %d/1" % [mini(3,int(f.get("practice_hit",0))),mini(1,int(f.get("practice_guard",0))),mini(1,int(f.get("practice_dodge",0)))]
- var y=178.0 if g.hotbar.bar_y()<100 else 82.0
+ var y=178.0 if g.hotbar.bar_y()<100 else 108.0 if HoldInvasion131.combat_here(g) else 82.0
  g.draw_rect(Rect2(18,y,620,49 if practice() else 28),Color(.03,.08,.10,.93))
  HoldArt.text(g,Vector2(28,y+19),text,14,Color("ead6ac"))
  if practice():HoldArt.text(g,Vector2(28,y+39),"Mouse faces · hold LMB strike · RMB guard · Space dodge · F tools",13,Color("afd2c5"))

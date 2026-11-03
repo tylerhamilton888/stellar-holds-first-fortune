@@ -113,6 +113,7 @@ func spawn(id:String)->Vector2:
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
  return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"greenfields":Vector2(940,285),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
 func enter(id:String,at:Vector2=Vector2.INF):
+ g.invasion_work131=false
  HoldClaim127.cancel(g)
  if HoldClaim127.eligible(g.state) and HoldClaim127.stage(g.state)>=3 and not HoldClaim127.data(g.state).arrived and HoldWorldZones.ward(id) and not is_instance_valid(g.opening_scene):
   HoldClaim127.start(g,"journey");return
@@ -215,6 +216,7 @@ func points()->Array:
   if area=="claim":result=result.filter(func(p):return p.action in ["trail","mine"] or str(p.action).begins_with("house:"))
  result.append_array(HoldFrontier103.points(g))
  result.append_array(HoldFriendship130.points(g))
+ result.append_array(HoldInvasion131.points(g))
  result.append_array(HoldClaim127.points(g))
  result.append_array(architecture.points())
  result.append_array(architecture.service_points())
@@ -308,6 +310,8 @@ func start_rest(point:Dictionary,nap:bool=false)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="invasion131":
+  HoldInvasion131.interact(g);return
  if id.begins_with("friend130:"):
   var who=id.trim_prefix("friend130:")
   if HoldFriendship130.at_task(g,who):g.talk_id=who;g.open_panel("friend130")
@@ -679,7 +683,8 @@ func hud():
  g.objectives.visible=false
  if HoldFirstVisit99.lodge_intro(g.state) and HoldFirstVisit99.data(g.state).get("guided",false) and g.panel_id=="":
   g.objectives.text=HoldFirstVisit99.goal(g);g.objectives.visible=true
- g.hud.text=label().to_upper()+"   %d CROWNS" % g.state.money
+ if HoldInvasion131.eligible(g.state) and g.panel_id=="":g.objectives.text=HoldInvasion131.goal(g);g.objectives.visible=true
+ g.hud.text=("THANE · " if HoldInvasion131.eligible(g.state) and HoldInvasion131.data(g.state).thane else "")+label().to_upper()+"   %d CROWNS" % g.state.money
  if g.panel_id=="":
   var p=nearest()
   g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
@@ -737,6 +742,8 @@ func draw():
  if not room():objects.append_array(roads.furnishings(area))
  objects.append_array(roads.people(area))
  objects.append_array(g.fight.objects())
+ objects.append_array(HoldInvasion131.objects(g))
+ if HoldInvasion131.active(g.state) and HoldWorldZones.ward(area):objects=objects.filter(func(o):return o.kind!="citizen")
  objects.append_array(g.handworks.objects())
  objects.append_array(g.fieldwork.objects())
  if g.opening_scene is HoldArrivalEscort:objects.append({"p":g.opening_scene.guide,"kind":"escort"})
@@ -744,7 +751,10 @@ func draw():
  for o in objects:
   if o.kind=="landmark" and o.art in [1,2]:o.sort_y=o.p.y-125
   elif o.kind=="building":o.sort_y=HoldWorldZones.building_footprint(o).end.y
- if g.opening_scene is HoldClaimScene127:
+ if g.opening_scene is HoldThaneScene131:
+  objects=objects.filter(func(o):return str(o.get("id",""))!="eirik" and not g.opening_scene.cast.any(func(a):return a.id==str(o.get("interaction",o.get("id","")))))
+  objects.append_array(g.opening_scene.objects())
+ elif g.opening_scene is HoldClaimScene127:
   objects=objects.filter(func(o):return not g.opening_scene.cast.any(func(a):return a.id==str(o.get("interaction",o.get("id","")))))
   objects.append_array(g.opening_scene.objects())
  if g.opening_scene is HoldFriendScene130:
@@ -764,7 +774,11 @@ func draw():
   elif o.kind=="citizen":world.draw_citizen(o)
   elif o.kind=="fighter":g.fight.draw_enemy(o.enemy)
   elif o.kind=="escort":g.opening_scene.draw_guide()
-  elif o.kind in ["claim_actor127","friend_actor130"]:g.opening_scene.draw_actor(o.index)
+  elif o.kind=="invasion_person131":HoldInvasion131.draw_person(g,o)
+  elif o.kind=="thane_gate131":g.opening_scene.draw_gate()
+  elif o.kind=="thane_king131":g.opening_scene.draw_royal()
+  elif o.kind=="thane_troll131":HoldEnemyRoster.draw(g,g.opening_scene.foes[o.index])
+  elif o.kind in ["claim_actor127","friend_actor130","thane_actor131"]:g.opening_scene.draw_actor(o.index)
   elif o.kind=="friend_prop130":g.opening_scene.draw_prop()
   elif o.kind=="garden":g.fieldwork.draw_bed(o.bed)
   elif o.kind=="handwork":g.handworks.draw_object(o)
@@ -788,6 +802,7 @@ func draw():
  house.roof_draw()
  HoldCalendar.lighting(g,objects)
  HoldWardDesign.motion(g)
+ HoldInvasion131.draw_ground(g)
  if g.opening_scene is HoldArrivalEscort or g.opening_scene is HoldClaimScene127 or g.opening_scene is HoldFriendScene130:
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area not in ["hearthward","crownward","forgeward"] and not room():

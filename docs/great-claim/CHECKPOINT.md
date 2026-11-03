@@ -1,3 +1,11 @@
+# Thaneship opening 131 — verification in progress
+
+The claimant now continues through three ward preparations, explicit duel response, a visible breach, seven playable defense fronts, familiar-character rescues, the player's troll battle, Eirik's five-troll intervention, Skarrin's combat defeat, the King's trophy return, an explicit fixed-verdict trial, investiture and homecoming as Thane. Twelve enemy groups contain 27 combatants. The same household, possessions and relationships remain; no marriage/district expansion is claimed.
+
+Source version 0.95.0. Native, exported-pack and hosted acceptance are in progress. Windows 0.93.0 remains the current download; no new release requested. This is the opening-chapter stopping point for polish. Human completion time remains unmeasured; the pacing goal is multiple substantial sessions without forced waiting. See [Thane opening](THANESHIP_OPENING.md).
+
+---
+
 # The rightful claimant 127 — complete
 
 The authenticated Stonebridge claim now continues through a playable three-fitting ore-lift trial, a public proof load, victory, the honorable Master of Works offer and Skarrin's refusal. The western road opens Keldrath; actual Great Stair crossings record exploration of its three wards before a staged royal reception. The contribution round closes at authentication without deleting later work records.

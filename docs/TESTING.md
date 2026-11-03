@@ -1,3 +1,7 @@
+# Thaneship opening 131
+
+`invasion131_focus` covers preparations, physical E interactions, sequential combat groups, actual weapon contacts, escort/mechanism tasks, defeat/infirmary recovery, saved wounds, scene choices/skip/load, royal routes, once-only title awards, all trial opinions and original-house continuity. `invasion131` adds the prior claimant/friendship and combat/menu regressions. The new case is mandatory in core/gameplay/gameplay-1 and the exact-pack harness. Human pacing is not inferred from accelerated tests.
+
 # Friendship stories 130
 
 `--suite friendship130_focus` checks all 36 episode paths, thresholds, local tasks, wrong/missing-cost guards, unique payouts, romance/storage preservation, actor routes, native scenes, saved-beat recovery and title/resume. `--suite friendship130` adds people, courtship, pairing, main-story scenes and menu regression checks. The new case is mandatory in core/gameplay/gameplay-2 and the exact-pack harness.

@@ -98,7 +98,9 @@ static func panel(g):
  else:
   header(g,g.panel_body,id,greeting(g,id))
   responses(g)
-  if id=="eirik" and HoldClaim127.eligible(s):HoldClaim127.panel(g)
+  if id=="eirik" and HoldClaim127.eligible(s):
+   if HoldInvasion131.eligible(s):HoldInvasion131.panel(g)
+   else:HoldClaim127.panel(g)
   if q.fresh and q.stage==2 and id in ["borin","orla","hedrik"] and not q.met.has(id):
    choose(g,"Introduce myself. Ivar sent me.",func():g.talk_topic="intro";g.refresh_panel(),true)
   if id in ["ivar","eldric","eirik"] and (HoldAncestralClaim.data(s).stage>0 or (id=="ivar" and HoldAncestralClaim.eligible(s))):

@@ -78,6 +78,7 @@ static func tick(g,dt:float,held:bool):
 static func cancel(g):g.claim_work127=-1;g.claim_time127=0
 static func panel(g):
  if not eligible(g.state):return
+ if data(g.state).welcomed:HoldInvasion131.panel(g);return
  var d=data(g.state)
  g.label(g.panel_body,"THE RIGHTFUL CLAIMANT",22,Color("edc98a"))
  var texts=["The contribution round is closed at authentication. Your work and hereditary allowance tie Skarrin's verified total. Meet Ivar at the bunkhouse shift book for the public test.","Build a safe ore lift in the yard south of the communal forge. Read each load-path clue, choose its fitting, then hold E at the marked station. Stone, timber and iron come from your pack. There is no time limit.","All three fittings are sound. Return to the lift yard and call Ivar for the proof load and public verdict.","You won the public trial. Skarrin refused the office of Master of Works. Follow the western road to Keldrath whenever you are ready; your home, belongings and friendships remain yours."]
@@ -121,6 +122,7 @@ static func draw(g):
   var t=g.opening_scene.age
   rival_lift=52*smoothstep(0,1.2,t)*(1-smoothstep(1.8,2.4,t))
  draw_rig(g,Vector2(550,800),3,rival_lift)
+ if g.opening_scene is HoldThaneScene131:return
  g.surface.plaque(Vector2(550,685),"Skarrin's trial lift")
  g.surface.plaque(Vector2(780,650),"Your trial lift")
  for i in 3:
