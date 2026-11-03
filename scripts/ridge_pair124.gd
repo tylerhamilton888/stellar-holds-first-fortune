@@ -68,7 +68,7 @@ static func greeting(s,id:String)->String:
  if int(data(s).stage)==3:
   if id==IDS[0]:return "Alden brushes flour from his sleeve. 'Maren and I are to be married. Six brothers have offered advice. I have asked them to bring clean cups instead.'"
   return "Maren touches her blue ribbon. 'Alden asked where I wanted our home to be. Then he listened to the answer. I believe we shall do very well together.'"
- if id==IDS[0]:return "Alden grins. 'Maren says I have improved considerably. I remembered to ask before planning supper. Apparently that counts for a great deal.'"
+ if id==IDS[0]:return "Alden grins. 'Maren is simple and sweet and sassy as can be. And she says I have improved considerably. I remembered to ask before planning supper.'"
  return "Maren smiles towards Alden. 'A good heart, a clean shirt, and he is learning to listen. I call that a promising beginning.'"
 static func options(g,id:String):
  if id not in IDS:return

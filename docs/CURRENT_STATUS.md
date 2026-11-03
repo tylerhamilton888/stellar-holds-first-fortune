@@ -1,3 +1,9 @@
+# Ridge dialogue song nods
+
+Added the owner's two requested phrases for Alden: his description of Maren appears in their couple greeting, and his blessing appears after the trail-post personal choice. Maren gains a good-spirits topic and revised dancing advice with brief song nods. Dialogue and matching authoring records only; no relationship rules, art or saved state changed. String replacements and JSON consistency checked; local execution is unavailable this session, so native validation uses the hosted workflow. No Windows build is included.
+
+---
+
 # Ridge courtship 124 — Alden and Maren complete
 
 Added Alden Pineward and Maren Hearthwell as two optional adult romances: dedicated portraits, 48 whole painted world poses, personal errands, keepsakes, three dates each and reciprocal betrothal. Their original dialogue and appearance carry the owner's quiet film homage. When neither is pursued they gradually court and become betrothed; explicit interest or a player commitment to either protects that choice. Alden joins Maren at the Wayfarer's Hearth, with current directions and shared-life dialogue. Eight romance candidates and 26 named world bundles are active.
