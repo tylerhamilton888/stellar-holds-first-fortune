@@ -1,3 +1,13 @@
+# Hearthknot courtship gift — implementation in verification
+
+Beginning a new courtship now requires a Hearthknot made at an existing forge: 1 timber + 1 copper ingot, 4 seconds, no research unlock. The carved timber token with copper inlay has its own item icon and pack description. Bring it in the carried inventory and explicitly offer it through the candidate's personal conversation after completing their personal story and reaching familiar friendship. One token is spent only after all existing eligibility, locality, exclusivity and day checks pass.
+
+Ordinary gift menus and trade cannot spend or supply the token. Existing courtships/betrothals require no migration or retroactive payment; renewed courtship after a breakup requires a new token. Alden/Maren early interest and their autonomous pairing retain their existing rules. Betrothal, marriage scope and the main story priorities are unchanged.
+
+Validation in progress: dedicated hearthknot128 native/export case, all-eight courtship and ridge pairing regressions, people, frontier services and menus. The last published Windows build remains 0.93.0; 0.93.1 is the source version for this change. Do not call it a published Windows build.
+
+---
+
 # The rightful claimant 127 — complete
 
 The authenticated Stonebridge claim now continues through a playable three-fitting ore-lift trial, a public proof load, victory, the honorable Master of Works offer and Skarrin's refusal. The western road opens Keldrath; actual Great Stair crossings record exploration of its three wards before a staged royal reception. The contribution round closes at authentication without deleting later work records.

@@ -150,6 +150,7 @@ static func panel(g):
   g.label(g.panel_body,"The watch's provision counter buys surplus and sells supplies. Trade uses the same stock, prices and purse as other exchanges.",16)
   var goods=HoldData.ITEMS.keys()
   for id in goods:
+   if not HoldData.ITEMS[id].get("trade",true):continue
    var line=g.row(g.panel_body)
    g.label(line,HoldData.ITEMS[id].name+" · in pack "+str(s.count(id)),16)
    g.small_button(line,"Buy · "+str(s.price(id,true)),func():if transact(g,"trade",id,true):g.save_game();g.refresh_panel())

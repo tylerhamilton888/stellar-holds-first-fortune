@@ -104,6 +104,7 @@ func price(k:String,buy:bool)->int:
  var demand=clampf(1.0-supply*.018,.55,1.5)
  return maxi(1,int(round(HoldData.ITEMS[k].price*demand*(1.40 if buy else (.85 if bargain>0 else .72)))))
 func trade(k:String,buy:bool)->bool:
+ if not HoldData.ITEMS.get(k,{}).get("trade",true):return false
  var p=price(k,buy)
  if buy:
   if money<p:return false

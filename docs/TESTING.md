@@ -25,3 +25,7 @@ The targeted case checks early-interest choices and release, same-day changes of
 ## Dwarven traditions 126
 
 `--suite traditions126` covers the new behavioral case plus calendar, lodge, frontier, furnishing, Keldrath and ridge relationships. `--suite traditions126-focus` runs only the new case. It is also included in core, gameplay and gameplay-4. `tools/check_pack.py --case traditions126` runs the fixture against the exported game. Review the eight-column seasonal offsets, shrine/catalogue, memorial, Cupday/Namesday scenes and optional Oath Stone inscription.
+
+## Hearthknot 128
+
+`--suite hearthknot128` exercises crafting/payment, queue and relationship reloads, missing/stale/remote/ineligible offers, ordinary-gift protection, trade protection, all eight courtships, ridge pairing, people, frontier services and book menus. `--suite hearthknot128-focus` runs the new case only. It is mandatory in core, gameplay and gameplay-4, and available through `tools/check_pack.py --case hearthknot128`. Review the crafted-token pack view, missing-token instruction, ready invitation and accepted response captures.

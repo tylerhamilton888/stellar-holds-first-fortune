@@ -20,7 +20,8 @@
       "story_batch122",
       "story_batch123",
       "ridge124",
-      "traditions126"
+      "traditions126",
+      "hearthknot128"
     ],
     "gameplay": [
       "loading",
@@ -86,7 +87,8 @@
       "story_batch123",
       "ridge124",
       "traditions126",
-      "claim127"
+      "claim127",
+      "hearthknot128"
     ],
     "modular": [
       "modular",
@@ -496,7 +498,8 @@
       "story_batch123",
       "ridge124",
       "traditions126",
-      "claim127"
+      "claim127",
+      "hearthknot128"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -797,6 +800,17 @@
       "royal",
       "roads",
       "courtship101"
+    ],
+    "hearthknot128": [
+      "hearthknot128",
+      "courtship101",
+      "ridge124",
+      "people",
+      "frontier103",
+      "menu92"
+    ],
+    "hearthknot128-focus": [
+      "hearthknot128"
     ]
   },
   "cases": {
@@ -1059,6 +1073,10 @@
     "claim127": {
       "script": "tests/claim127.gd",
       "marker": "CLAIM127"
+    },
+    "hearthknot128": {
+      "script": "tests/hearthknot128.gd",
+      "marker": "HEARTHKNOT128"
     }
   }
 }
