@@ -77,7 +77,7 @@ func run():
   at(p);check(HoldClaim127.begin_work(g,i,HoldClaim127.PARTS[i].answer),"Resume unfinished fitting")
   at(p+Vector2(0,100));HoldClaim127.tick(g,.1,true);check(g.claim_work127==-1,"Walking away cancels manual work")
   at(p);HoldClaim127.begin_work(g,i,HoldClaim127.PARTS[i].answer)
-  for tick in 25:HoldClaim127.tick(g,.1,true)
+  key(KEY_E);Input.action_press("interact");await frames(150);Input.action_release("interact")
   check(HoldClaim127.data(s).built==i+1 and s.count(item)==before-int(HoldClaim127.PARTS[i].cost[item]),"One finished fitting consumes exactly its materials")
   check(not HoldClaim127.begin_work(g,i,HoldClaim127.PARTS[i].answer),"Completed fitting cannot charge twice")
  await snap("assembled-lift")
@@ -88,7 +88,12 @@ func run():
  g.surface.enter("hearthward");await watch("journey");s=g.state
  check(HoldClaim127.data(s).arrived and HoldClaim127.data(s).wards.has("hearthward"),"Journey ends in playable Hearthward")
  g.surface.enter("room:throne",Vector2(650,600));settle();check(not HoldClaim127.start(g,"reception"),"Time to visit the wards before reception")
- for ward in ["forgeward","crownward"]:g.surface.enter(ward);settle()
+ g.surface.enter("hearthward");settle();at(Vector2(1700,HoldTerraces.STRIDE-1))
+ Input.action_press("down");g.surface.move(.02);Input.action_release("down")
+ check(g.surface.area=="forgeward" and HoldClaim127.data(s).wards.has("forgeward"),"Walking the seamless Great Stair records Forgeward")
+ at(Vector2(1700,1));Input.action_press("up");g.surface.move(.02);Input.action_release("up")
+ at(Vector2(150,1));Input.action_press("up");g.surface.move(.02);Input.action_release("up")
+ check(g.surface.area=="crownward" and HoldClaim127.data(s).wards.has("crownward"),"Walking the seamless Great Stair records Crownward")
  g.surface.enter("room:throne",Vector2(650,600));settle();at(HoldRoyalStage.current(g).p+Vector2(0,60))
  check(HoldClaim127.start(g,"reception"),"Three wards and royal locality enable reception");await watch("reception");s=g.state
  check(HoldClaim127.data(s).welcomed and HoldAncestralClaim.data(s).stage==5,"Royal reception does not prematurely confer Thaneship")

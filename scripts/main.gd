@@ -367,7 +367,7 @@ func _process(dt):
     deep.move(dt)
     if zone=="mine":deep.mine(dt)
    elif surface.active():
-    surface.move(dt);HoldClaim127.tick(self,dt,Input.is_physical_key_pressed(KEY_E))
+    surface.move(dt);HoldClaim127.tick(self,dt,Input.is_action_pressed("interact"))
    else:move_player(dt)
    if zone=="mine":pass
    elif impact_pause>0:impact_pause=maxf(0,impact_pause-dt)

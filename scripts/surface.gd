@@ -442,6 +442,7 @@ func move(dt:float):
    var cart=g.handworks.attached();var old_origin=HoldTerraces.origin(area)
    remember();area=crossing.area;g.player=crossing.p;g.camera+=old_origin-HoldTerraces.origin(area)
    g.handworks.arrive(cart)
+   HoldClaim127.enter(g,area)
    g.state.surface.area=area;world.speech="";remember();g.save_game()
  if roads.moved(before,dt):return
  cut_flash=maxf(0,cut_flash-dt)
@@ -835,7 +836,7 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
   elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
   elif g.handworks.pushing():animation="push"
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
- if is_player and g.claim_work127>=0 and Input.is_physical_key_pressed(KEY_E):animation="hammer";action=fmod(g.claim_time127,.42)/.42;aim=Vector2.UP
+ if is_player and g.claim_work127>=0 and Input.is_action_pressed("interact"):animation="hammer";action=fmod(g.claim_time127,.42)/.42;aim=Vector2.UP
  if animation in ["plant","tend"]:animation="hoe"
  if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not is_instance_valid(g.opening_scene):animation=g.hotbar.pose()
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
