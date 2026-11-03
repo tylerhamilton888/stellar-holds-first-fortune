@@ -174,7 +174,7 @@ func drill(lesson:String):
  match lesson:
   "Flanking":tip="Keep both foes in view. The goblin circles while the orc commits."
   "Stagger":tip="Land repeated axe hits before turquoise pressure fades. Switch to hammer with B to compare."
-  "Parry":tip="Tap RMB just before the troll connects, then counter with LMB. Space evades."
+  "Parry":tip="Watch the troll's marked fist landing. Tap RMB at contact to interrupt, or Space out of the circle. Watch for its second fist before countering."
   "Wall impact":
    var w=g.deep.world
    for y in range(17,25):w.set_cell(Vector2i(24,y),2)

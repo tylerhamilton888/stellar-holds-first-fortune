@@ -1,3 +1,11 @@
+# Giants at the stairs 133 — validation in progress
+
+Source version 0.97.0 doubles troll height to 220 world units and increases the physical base to 50. New whole painted poses support two separate, committed fist slams: marked landing, opposite-fist follow-up, then a long counterattack window. Health, rewards, wounds and encounter identities are preserved. Dodge, guard/parry, interruption and terrain checks remain in the existing combat owner. Nearby giant encounters gain camera headroom; the optional mine perspective uses the new art and circular warning.
+
+The King's five trolls retain full gameplay scale in the open street. His return has a larger trophy and a clear approach. Native combat, geometry and scene review are in progress; no completed source/release claim yet. Design and ownership: [Giants at the stairs](GIANT_TROLLS133.md). The existing 0.96.0 release run [41725064185](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41725064185) is independent and must not be restarted just because it is still verifying the pack.
+
+---
+
 # Useful hands 132 — source complete
 
 Source version 0.96.0 adds twelve optional Stonebridge lessons and three shared trade seals (40 marks each). Fresh processing, smelting, crops, fish and cooking provide production proof; purchases, rewards and refunds do not. Mining, timber, metalworking and food deliveries may be mixed or repeated in one trade. Two civic projects/seals, in any combination, earn the plot after the paid introduction; a real registered home plus 180 marks still opens the rescue. Lesson reports and deliveries validate locality and pay once.

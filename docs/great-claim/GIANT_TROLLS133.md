@@ -1,0 +1,11 @@
+# Giants at the stairs
+
+Trolls are 220 world units tall, twice their former height and roughly three standing Dwarfs, with a 50-unit ground radius. Existing health (220), damage (34), rewards, saved wounds and encounter identities remain unchanged. Their physical footprint affects terrain clearance, spacing, weapon contact and spawning. Original club artwork remains preserved; active trolls use new whole painted front, side and rear poses with distinct left/right fist preparation and contact.
+
+A troll marks a circular fist landing, takes a bounded planting step, and commits without tracking the player. The first warning lasts 1.45 seconds; after a 0.6-second pause the opposite fist gets a fresh 1.1-second warning. The second blow leaves 1.8 seconds of recovery. Each 32-unit circle is the actual damage footprint, with player-body overlap included. Moving out, Space dodge, or a timed parry works. Stagger interrupts the pending blow and follow-up; terrain can cancel a blocked step. Menus pause the sequence. Missed blows still make a brief impact sound/ring but do no area damage beyond the marked circle.
+
+`HoldTroll133` owns whole-frame selection, measured foot/fist anchors, committed contacts and two-blow timing. `HoldSkirmish` retains health, guard/parry/dodge, interruption, rewards and saves. `HoldEnemyRoster` retains species metadata. The optional mine perspective uses the same current atlases and world-space landing circle. Combat framing leaves more headroom when a living troll is nearby; the redundant wide control strip yields to the local fist prompt.
+
+The King's five trolls are staged in the open street, at the same size as playable encounters. Eirik's return uses a new complete four-frame painting with a larger trophy head. The story outcome and saved scene beats do not change. Generated sources, prompts and measured crops are preserved under `assets/trolls133`; no floating fists or rotated body parts are used.
+
+Acceptance covers eight attack directions, fixed targets, exact contact boundaries, both blows, real Space input, interruption, pause, terrain, enlarged scene bases, perspective resources and saved royal scenes. Review native size, both warning/contact pairs, walking contacts, five-giant staging, royal counter and trophy return. Human difficulty and device performance remain playtest items.

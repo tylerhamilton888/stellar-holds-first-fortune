@@ -7,7 +7,11 @@ class AtlasBoard extends Node2D:
   for r in 3:
    for c in 6:
     var e={"kind":kind,"p":Vector2(78+c*153,148+r*170),"dir":[Vector2(1,1),Vector2.RIGHT,Vector2(1,-1)][r],"hp":0 if c==5 else 100,"state":"windup" if c==3 else "recover" if c==4 else "idle","time":HoldEnemyRoster.spec(kind).recover,"walk":c in [1,2],"gait":.2 if c==2 else 0.0,"flash":0.0,"dead_time":2.0}
-    HoldEnemyRoster.draw(self,e)
+    if kind==3:
+     e.slam_contact133=.3
+     var pose=HoldTroll133.region(e,e.dir);var scale=pose.scale*.45
+     draw_texture_rect_region(pose.texture,Rect2(e.p+(pose.source.position-pose.root)*scale,pose.source.size*scale),pose.source)
+    else:HoldEnemyRoster.draw(self,e)
     draw_circle(e.p,2,Color("66aa99"))
     HoldArt.text(self,e.p+Vector2(-45,20),["Ready","Left contact","Right contact","Windup","Impact","Defeated"][c],12)
 func capture_board(kind:int):
@@ -65,17 +69,21 @@ func run():
  f.parry=0;f.guard=false;f.dodge=.1;f.hurt_wait=0;f.receive(troll)
  check(g.state.combat.health==hp,"Dodge avoids heavy damage")
  f.dodge=0;g.combat.riposte=0;f.hurt_wait=0;f.hit_stop=0;g.combat.armed=false
- var origin=g.player;troll.p=origin-Vector2.from_angle(.8)*120;troll.home=troll.p;troll.dir=Vector2.RIGHT;troll.state="windup";troll.time=.01;f.update(.02)
- check(g.state.combat.health==hp,"Troll slam misses outside its drawn narrow arc")
- troll.p=origin-Vector2.from_angle(.6)*120;troll.state="windup";troll.time=.01;f.update(.02)
- check(g.state.combat.health==hp-34,"Troll reach and damage apply inside its telegraph")
+ var origin=g.player;troll.p=origin-Vector2(120,0);troll.home=troll.p
+ check(HoldTroll133.begin(f,troll),"Troll commits a reachable fist landing")
+ var landing:Vector2=HoldTroll133.contact(troll);g.player=landing+Vector2(0,HoldTroll133.RADIUS+HoldSkirmish.PLAYER_BODY+1)
+ f.update(HoldTroll133.FIRST_WINDUP+.01)
+ check(g.state.combat.health==hp,"Outside the marked fist circle is safe")
+ f.hit_stop=0;g.player=landing;troll.state="idle";HoldTroll133.begin(f,troll);f.update(HoldTroll133.FIRST_WINDUP+.01)
+ check(g.state.combat.health==hp-34,"Standing on the marked landing takes the heavy blow")
+ g.player=origin
  g.state.combat.health=100;g.combat.armed=true;g.state.combat.weapon="gun";g.state.add("ammo",3);f.locked_aim=Vector2.RIGHT
  orc=f.make_enemy("alert84",origin+Vector2(370,0),2);f.enemies=[orc];f.resolve();var before=orc.p;f.update(.1)
  check(orc.alert>0 and orc.p.distance_to(origin)<before.distance_to(origin),"Ranged hits alert enemies beyond normal sight range")
  g.state.combat.weapon="hammer";troll=f.make_enemy("loot84",origin+Vector2(70,0),3);troll.hp=1;f.enemies=[troll];f.locked_aim=Vector2.RIGHT
  var iron=g.state.count("iron_ore");var crystal=g.state.count("crystal");var xp=HoldDisciplines.xp(g.state,"warrior");f.resolve();f.resolve()
  check(g.state.count("iron_ore")==iron+4 and g.state.count("crystal")==crystal+1 and HoldDisciplines.xp(g.state,"warrior")==xp+1,"Troll grants its material salvage and mastery once")
- check(troll.hp==0 and HoldEnemyRoster.frame(troll)==5 and f.objects().size()==1,"Defeat uses the fallen pose before fading")
+ check(troll.hp==0 and HoldEnemyRoster.frame(troll)==7 and f.objects().size()==1,"Defeat uses the fallen pose before fading")
  f.update(2.5);check(f.objects().is_empty(),"Defeated body fades without blocking or respawning")
  # Exact circle/sector boundaries, not approximate center-only aim checks.
  check(HoldSkirmish.sector_hits(Vector2.ZERO,Vector2.RIGHT,76,.9,Vector2(87,0),12),"Weapon catches a body overlapping its outer edge")

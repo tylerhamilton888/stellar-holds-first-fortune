@@ -1,3 +1,7 @@
+# Giant trolls 133
+
+`troll133-focus` checks eight approach directions, committed fist targets, painted-contact alignment, circle boundaries, both blows, actual Space input, interruption, pause, blocked steps, large-body clearance, saved wounds, perspective art and five-giant scene reload. `troll133` adds enemy, combat, equipment-art, developer-room, invasion and perspective regressions. The case is mandatory in core/gameplay/gameplay-3 and the exact-pack harness. Review native giant/player scale, both fists, walking contacts, King counter and trophy. Do not infer human difficulty from accelerated checks.
+
 # Useful hands 132
 
 `work132-focus` covers local quest reports, real bench/forge/fieldwork/hauling/survey/return-route hooks, once-only rewards, forged tool guards, specialist and mixed 180-mark paths, material budgets, household construction, migration, reload and closed-contest preservation. `work132` adds the affected opening, frontier, ancestry, trial, crafting, roads, bench, discipline and menu regressions. The case is mandatory in core/gameplay/gameplay-2 and the exact-pack harness. Review first-step, active lesson, contribution options, plot/home milestone and closed-contest captures. Balance by active play time remains a human playtest item.

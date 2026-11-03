@@ -625,7 +625,7 @@ func draw_worksite(entry:Vector2):
    for side in [-1,1]:g.draw_line(Vector2(entry.x+side*13,y-6),Vector2(entry.x+side*13,y+6),Color("9ca9a6"),2)
 
 
-func camera_target()->Vector2:return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-290,0,Deepworks.H*40-540))
+func camera_target()->Vector2:return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-(355 if g.fight.giant_near() else 290),0,Deepworks.H*40-540))
 
 func unload():
  if g.zone!="mine":g.notify("Deliver cargo at the mine entrance.");return

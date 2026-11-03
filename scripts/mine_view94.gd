@@ -212,9 +212,11 @@ func update_actors():
   if kind==1:
    var index=2 if e.state=="windup" else 3 if e.state=="recover" else int(e.gait*8)%2
    source=[Rect2(35,585,375,275),Rect2(465,585,400,275),Rect2(880,540,375,320),Rect2(1270,625,504,235)][index];root=[Vector2(220,845),Vector2(650,845),Vector2(1060,845),Vector2(1480,845)][index];scale=.16;tex=HoldCombat.ENEMIES
+  elif kind==3:
+   var pose=HoldTroll133.region(e,facing);source=pose.source;root=pose.root;scale=pose.scale;tex=pose.texture
   else:
    var row=HoldEnemyRoster.row(facing);var frame=HoldEnemyRoster.frame(e);source=HoldEnemyRoster.RECTS[kind][row][frame];root=HoldEnemyRoster.ROOTS[kind][row][frame];scale=float(HoldEnemyRoster.spec(kind).height)/[194.0,1.0,191.0,194.0][kind];tex=HoldEnemyRoster.GOBLIN if kind==0 else HoldEnemyRoster.ORC if kind==2 else HoldEnemyRoster.TROLL
-  var key=str(kind)+":"+str(source)
+  var key=str(kind)+":"+tex.resource_path+":"+str(source)
   if not textures.has(key):var atlas=AtlasTexture.new();atlas.atlas=tex;atlas.region=source;textures[key]=atlas
   apply_sprite(s,textures[key],Rect2((source.position-root)*scale,source.size*scale),e.p,facing.x<0)
  for a in g.agents:
@@ -281,6 +283,7 @@ func update_effects():
   if e.state=="windup":
    var tool=SurfaceTool.new();tool.begin(Mesh.PRIMITIVE_TRIANGLES)
    var center=point(e.p)+Vector3(0,.04,0);var a=e.dir.angle();var angle=float(spec.angle);var radius=float(spec.reach)/40
+   if e.kind==3:center=point(HoldTroll133.contact(e))+Vector3(0,.04,0);a=0;angle=PI;radius=HoldTroll133.RADIUS/40
    for i in 16:
     for v in [Vector3.ZERO,Vector3(cos(a-angle+i*angle/8)*radius,0,sin(a-angle+i*angle/8)*radius),Vector3(cos(a-angle+(i+1)*angle/8)*radius,0,sin(a-angle+(i+1)*angle/8)*radius)]:tool.add_vertex(center+v)
    var marker=MeshInstance3D.new();marker.mesh=tool.commit();var mat=StandardMaterial3D.new();mat.shading_mode=BaseMaterial3D.SHADING_MODE_UNSHADED;mat.transparency=BaseMaterial3D.TRANSPARENCY_ALPHA;mat.cull_mode=BaseMaterial3D.CULL_DISABLED;mat.albedo_color=Color(1,.65,.2,.45);marker.material_override=mat;effects.add_child(marker)

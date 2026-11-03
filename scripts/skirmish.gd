@@ -33,6 +33,7 @@ var impacts=[]
 var show_hitboxes=false
 func _init(game):g=game
 func practice()->bool:return g.room_id=="training"
+func giant_near()->bool:return enabled() and enemies.any(func(e):return e.kind==3 and e.hp>0 and e.p.distance_to(g.player)<310)
 func enabled()->bool:return HoldInvasion131.combat_here(g) or practice() or (g.zone=="mine" and HoldOnboarding.combat_ready(g.state))
 func cancel_actions():
  hit_stop=0;impacts.clear();shield_recoil=0;bash_wait=0;bash_left=0;bash_hit=false
@@ -67,8 +68,7 @@ func spawn():
     for site in sites:
      if p.distance_to(Vector2(site[0],site[1]))<450:roomy=false
     if roomy and w.depth()>=2 and sites.size()==1:
-     for off in [Vector2(80,0),Vector2(-80,0),Vector2(0,80),Vector2(0,-80)]:
-      if not body_open(p+off,26):roomy=false
+     roomy=HoldTroll133.room(self,p)
     if roomy:sites.append([p.x,p.y])
     if sites.size()==2:break
    if sites.size()==2:break
@@ -80,21 +80,29 @@ func spawn():
    var home=Vector2(sites[i][0],sites[i][1])
    var lead=0 if i==0 and w.depth()==1 else 3 if i==1 and w.depth()>=2 else 2
    if lead==3:
-    for off in [Vector2(80,0),Vector2(-80,0),Vector2(0,80),Vector2(0,-80)]:
-     if not body_open(home+off,26):lead=2
+    if not HoldTroll133.room(self,home):lead=2
    w.layer().encounter_roster[str(i)]={"lead":lead,"companion":2 if lead==0 else 0}
-   for off in [Vector2(64,0),Vector2(-64,0),Vector2(0,64),Vector2(0,-64)]:
+   var spacing=96.0 if lead==3 else 64.0
+   for off in [Vector2(spacing,0),Vector2(-spacing,0),Vector2(0,spacing),Vector2(0,-spacing)]:
     if body_open(home+off) and clear(home,home+off):
      w.layer().encounter_companions[str(i)]=[home.x+off.x,home.y+off.y];break
  for i in w.layer().encounters.size():
   var id="deep53/"+str(g.state.seed_value)+"/"+context+"/"+str(i)
   var p=w.layer().encounters[i];var home=Vector2(p[0],p[1])
   var roster=w.layer().get("encounter_roster",{}).get(str(i),{"lead":i%2,"companion":1-i%2})
-  if not g.state.combat.cleared.has(id):enemies.append(make_enemy(id,home,int(roster.lead)))
+  if not g.state.combat.cleared.has(id):
+   var anchor=HoldTroll133.fit_spawn(self,home) if int(roster.lead)==3 else home
+   if anchor!=null:enemies.append(make_enemy(id,anchor,int(roster.lead)))
   var companions=w.layer().get("encounter_companions",{})
   if companions.has(str(i)):
    var companion=id+"/companion";var pos=companions[str(i)]
-   if not g.state.combat.cleared.has(companion):enemies.append(make_enemy(companion,Vector2(pos[0],pos[1]),int(roster.companion)))
+   if not g.state.combat.cleared.has(companion):
+    var at=Vector2(pos[0],pos[1])
+    for giant in enemies:
+     if giant.kind!=3 or at.distance_to(giant.p)>=float(HoldEnemyRoster.spec(3).body)+24:continue
+     for off in [Vector2(96,0),Vector2(-96,0),Vector2(0,96),Vector2(0,-96)]:
+      if body_open(giant.p+off) and clear(giant.p,giant.p+off):at=giant.p+off;break
+    if enemies.all(func(e):return e.kind!=3 or e.p.distance_to(at)>=float(HoldEnemyRoster.spec(3).body)+24):enemies.append(make_enemy(companion,at,int(roster.companion)))
 func make_enemy(id:String,p:Vector2,kind:int)->Dictionary:
  var hp=float(HoldEnemyRoster.spec(kind).hp)
  return {"id":id,"p":p,"home":p,"kind":kind,"hp":float(g.state.combat.wounds.get(id,hp)),"max":hp,"state":"idle","time":0.0,"dir":Vector2.LEFT,"walk":false,"gait":0.0,"flash":0.0,"stagger_wait":0.0,"dead_time":0.0,"alert":0.0}
@@ -198,6 +206,9 @@ func update(dt:float):
   e.poise=maxf(0,float(e.get("poise",0.0))-dt*12)
   e.flash=maxf(0,e.flash-dt);e.stagger_wait=maxf(0,e.get("stagger_wait",0.0)-dt);e.walk=false
   var toward=g.player-e.p
+  if e.kind==3 and HoldTroll133.tick(self,e,dt):
+   if hit_stop>0:return
+   continue
   if e.state=="windup":
    e.time-=dt
    if e.time<=0:
@@ -216,9 +227,12 @@ func update(dt:float):
   e.dir=toward.normalized()
   if toward.length()<float(spec.reach)-10:
    if attack_slot(e):
-    e.state="windup";e.time=.72 if practice() else float(spec.windup);e.evaded=false
-    continue
-   if practice() or e.kind!=0:continue
+    if e.kind==3:
+     if HoldTroll133.begin(self,e):continue
+    else:
+     e.state="windup";e.time=.72 if practice() else float(spec.windup);e.evaded=false
+     continue
+   elif practice() or e.kind!=0:continue
   var destination:Vector2=g.player
   # Goblins flank while another fighter commits; heavy fighters hold their approach.
   if not practice() and e.kind==0 and not attack_slot(e):
@@ -234,6 +248,9 @@ func update(dt:float):
 func body_open(p:Vector2,radius:float=12)->bool:
  for offset in [Vector2.ZERO,Vector2(radius,0),Vector2(-radius,0),Vector2(0,radius),Vector2(0,-radius)]:
   if not open_at(p+offset):return false
+ if radius>=float(HoldEnemyRoster.spec(3).body):
+  for i in 4:
+   if not open_at(p+Vector2.from_angle(PI/4+i*PI/2)*radius):return false
  return true
 func attack_slot(candidate:Dictionary)->bool:
  # One nearby committed attack at a time, including its recovery window.
@@ -243,6 +260,7 @@ func attack_slot(candidate:Dictionary)->bool:
 func stagger(e:Dictionary,duration:float):
  if e.get("stagger_wait",0.0)>0:return
  e.state="stun";e.time=duration*(.5 if e.kind==3 else 1.0);e.stagger_wait=duration+(2.0 if e.kind==3 else 1.0)
+ if e.kind==3:e.slam_follow133=false;e.slam_contact133=0.0
 func resolve():
  var weapon=g.combat.weapon();var ranged=g.state.combat.weapon=="gun"
  if ranged:g.state.pay({"ammo":1});g.sound.effect("carbine",-14)
@@ -314,7 +332,8 @@ func objects()->Array:
 func draw_enemy(e:Dictionary):
  var cam=g.camera.round();var p=e.p;var spec=HoldEnemyRoster.spec(e.kind)
  g.draw_set_transform(-cam)
- if e.hp>0 and e.state=="windup":
+ if e.kind==3:HoldTroll133.draw_warning(g,e)
+ elif e.hp>0 and e.state=="windup":
   var radius=float(spec.reach);var half=float(spec.angle)
   var points=PackedVector2Array([p]);var angle=e.dir.angle()
   for i in 17:points.append(p+Vector2.from_angle(angle-half+2*half*i/16)*radius)
@@ -345,7 +364,11 @@ func draw_enemy(e:Dictionary):
   if e.state=="stun":HoldArt.text(g,p+Vector2(-30,22),"Off balance",11,Color("8fe3d1"))
   g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44,4)),Color("312b2a"));g.draw_rect(Rect2(p+Vector2(-22,top),Vector2(44*e.hp/e.max,4)),Color("cf956c"))
   HoldArt.text(g,p+Vector2(-44,top-5),e.get("display_name",spec.name),11,Color("ead6ac"))
-  if e.kind==3 and e.state=="windup":HoldArt.text(g,p+Vector2(-64,22),"Heavy · dodge / parry",12,Color("f0b97a"))
+  if e.kind==3 and e.state=="windup":
+   var landing:Vector2=HoldTroll133.contact(e)
+   var side=-192 if landing.x-g.camera.x>750 else 44
+   HoldArt.text(g,landing+Vector2(side,4),"Fist %d · Space dodge" % (int(e.get("fist133",0))+1),12,Color("f0b97a"))
+  elif e.kind==3 and e.state=="recover":HoldArt.text(g,p+Vector2(-66,25),"Other fist next" if e.get("slam_follow133",false) else "Recovering · strike!",12,Color("ead6ac"))
 func player_pose()->String:
  if g.state.combat.weapon=="axe":
   if bash_left>0:return "guard_axe" if bash_left>.20 or bash_left<.08 else "parry_axe"
@@ -373,8 +396,9 @@ func overlay():
   var f=HoldOnboarding.ensure(g.state).facts
   text="Practice · Blows %d/3   Guard %d/1   Evade a strike %d/1" % [mini(3,int(f.get("practice_hit",0))),mini(1,int(f.get("practice_guard",0))),mini(1,int(f.get("practice_dodge",0)))]
  var y=178.0 if g.hotbar.bar_y()<100 else 108.0 if HoldInvasion131.combat_here(g) else 82.0
- g.draw_rect(Rect2(18,y,620,49 if practice() else 28),Color(.03,.08,.10,.93))
- HoldArt.text(g,Vector2(28,y+19),text,14,Color("ead6ac"))
+ if not giant_near():
+  g.draw_rect(Rect2(18,y,620,49 if practice() else 28),Color(.03,.08,.10,.93))
+  HoldArt.text(g,Vector2(28,y+19),text,14,Color("ead6ac"))
  if practice():HoldArt.text(g,Vector2(28,y+39),"Mouse faces · hold LMB strike · RMB guard · Space dodge · F tools",13,Color("afd2c5"))
  else:
   g.draw_rect(Rect2(720,y,220,28),Color(.03,.08,.10,.93))
@@ -432,7 +456,9 @@ func draw_impacts():
   if e.hp<=0:continue
   var spec=HoldEnemyRoster.spec(e.kind)
   g.draw_arc(e.p,float(spec.body),0,TAU,32,Color("ef9690"),2)
-  if e.state=="windup":draw_sector(e.p,e.dir,float(spec.reach),float(spec.angle),Color("ffbe62"))
+  if e.state=="windup":
+   if e.kind==3:g.draw_arc(HoldTroll133.contact(e),HoldTroll133.RADIUS,0,TAU,40,Color("ffbe62"),2)
+   else:draw_sector(e.p,e.dir,float(spec.reach),float(spec.angle),Color("ffbe62"))
  if g.combat.armed:
   var direction=locked_aim if swing>0 else aim
   if g.state.combat.weapon=="gun":g.draw_line(g.player,g.player+direction*g.combat.weapon().reach,Color(.5,.9,1,.4),SHOT_RADIUS*2)
