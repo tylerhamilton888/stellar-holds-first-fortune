@@ -1,4 +1,8 @@
-# 0.93.0 — The rightful claimant
+# 0.93.1 — A Hearthknot invitation
+
+Craft a Hearthknot at a forge from one timber and one copper ingot. After completing a candidate's personal story and becoming familiar friends, offer the token through their personal conversation to ask to begin courting. They accept it with their own response; the token is only spent when courtship actually begins. It cannot be bought or accidentally used as an ordinary gift.
+
+Existing courtships and betrothals continue unchanged. Starting a new courtship after a breakup needs a new token. Alden and Maren's early-interest option and their independent relationship remain intact. The token is a courtship invitation, not a wedding ring; marriage and shared household gameplay remain a later chapter.
 
 Stonebridge's authenticated claim now continues into a playable engineering tiebreaker. Meet Ivar at the bunkhouse shift book. Read the load-path drawings and fit stone footings, a diagonal timber brace and a locking winch at the public yard. Materials are checked locally and paid once when each fitting is complete. Work can be paused or resumed without a timer or penalty.
 
