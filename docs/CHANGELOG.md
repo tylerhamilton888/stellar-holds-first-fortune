@@ -1,8 +1,10 @@
-# Dwarven traditions 126 — restrained cultural integration
+# Dwarven traditions 126 — complete
 
-The eight-day week preserves 28-day seasons, absolute saved dates and existing festival invitations. Optional worker-lodge memorial repair, a buildable household hearthstone, two optional miner topics, Sigrid's Cupday/Namesday evening activities, and selected festival/inscription details provide the first small integrations. There are no worship meters, exclusive patrons, mandatory observances or routine manifestations.
+The eight-day week preserves 28-day seasons, absolute saved dates and existing festival invitations. Optional worker-lodge memorial repair, a buildable household hearthstone, two optional miner topics, Sigrid's Cupday/Namesday evening activities, and selected festival/inscription details provide a restrained first integration. Default greetings and required opening instructions remain unchanged.
 
-Canonical gods, domains, ancestor ascension, tone limits and future quest guidance: [Dwarven religion](lore/DWARVEN_RELIGION.md). Current story priorities remain contest/Keldrath, invasion/trial and Thaneship/household. This task does not complete those milestones or publish a Windows release. Validation is in progress; see the traditions126 suite and exact-export case.
+All 1,439 source assertions passed across eight cases; all 1,439 exact-export assertions passed across the same eight. Package integrity verified all 3,841 entries. Native calendar, memorial, optional lore, shrine/catalogue, both gatherings and Oath Stone reviewed. All five hosted jobs in run 41556315027 passed. PR #99 merged as 36c745992d3672307db76a49a460b59ccd7cfba9; its tree exactly matches source tree b658808c2c5b7b71f30cd467abed702d0751b707. Evidence: [traditions126 acceptance](testing/traditions126/acceptance.json).
+
+Canonical gods, domains, ancestor ascension, tone limits and future quest guidance: [Dwarven religion](lore/DWARVEN_RELIGION.md). Current story priorities remain contest/Keldrath, invasion/trial and Thaneship/household. No Windows release, routine divine manifestation, worship meter or new marriage milestone is included. Preserve prior source and release backups.
 
 ---
 

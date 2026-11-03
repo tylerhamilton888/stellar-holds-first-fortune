@@ -1,0 +1,187 @@
+{
+  "source_head": "20b938a817a6bafe57e5b92881b04dd9b7f0dced",
+  "source_tree": "b658808c2c5b7b71f30cd467abed702d0751b707",
+  "source_merge": "36c745992d3672307db76a49a460b59ccd7cfba9",
+  "source": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.21
+    },
+    {
+      "test": "traditions126",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 493,
+      "seconds": 52.55
+    },
+    {
+      "test": "calendar",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 56.04
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 68.47
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 224,
+      "seconds": 56.46
+    },
+    {
+      "test": "architecture",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 339,
+      "seconds": 58.03
+    },
+    {
+      "test": "homestead",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 69,
+      "seconds": 82.51
+    },
+    {
+      "test": "keldrath",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 66.53
+    },
+    {
+      "test": "ridge124",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 185,
+      "seconds": 65.13
+    }
+  ],
+  "exact_export": [
+    {
+      "test": "keldrath",
+      "passed": true,
+      "checks": 47,
+      "errors": []
+    },
+    {
+      "test": "homestead",
+      "passed": true,
+      "checks": 69,
+      "errors": []
+    },
+    {
+      "test": "architecture",
+      "passed": true,
+      "checks": 339,
+      "errors": []
+    },
+    {
+      "test": "traditions126",
+      "passed": true,
+      "checks": 493,
+      "errors": []
+    },
+    {
+      "test": "calendar",
+      "passed": true,
+      "checks": 35,
+      "errors": []
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "checks": 47,
+      "errors": []
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "checks": 224,
+      "errors": []
+    },
+    {
+      "test": "ridge124",
+      "passed": true,
+      "checks": 185,
+      "errors": []
+    }
+  ],
+  "package": {
+    "entries_verified": 3841,
+    "sha256": "1255f430b4fcaeecb6be55365aeb1624032e028f28956a70ef01a0d88fe09ae5"
+  },
+  "hosted": {
+    "run_id": 41556315027,
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41556315027",
+    "head_sha": "20b938a817a6bafe57e5b92881b04dd9b7f0dced",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "people-preview",
+        "conclusion": "success",
+        "completed_at": "2026-11-03T01:01:28Z"
+      },
+      {
+        "name": "gameplay (gameplay-3)",
+        "conclusion": "success",
+        "completed_at": "2026-11-03T01:20:20Z"
+      },
+      {
+        "name": "gameplay (gameplay-4)",
+        "conclusion": "success",
+        "completed_at": "2026-11-03T01:22:35Z"
+      },
+      {
+        "name": "gameplay (gameplay-2)",
+        "conclusion": "success",
+        "completed_at": "2026-11-03T01:14:13Z"
+      },
+      {
+        "name": "gameplay (gameplay-1)",
+        "conclusion": "success",
+        "completed_at": "2026-11-03T01:15:25Z"
+      }
+    ]
+  },
+  "native_review": {
+    "captures": [
+      "calendar.png",
+      "memorial.png",
+      "namesday.png",
+      "shrine-plans.png"
+    ],
+    "reviewed": [
+      "Eight-column calendar with continuous season offset",
+      "Optional memorial and full lore panels",
+      "Household shrine placement, icon and cost display",
+      "Namesday remembrance and Cupday company",
+      "Optional Oath Stone inscription"
+    ],
+    "assets": "Reuses the existing carved plinth and approved character poses; no new runtime artwork."
+  },
+  "limitations": [
+    "No Windows release or player-device performance claim.",
+    "Contest/Keldrath, invasion/trial and Thaneship/household remain separate unfinished story milestones.",
+    "No manifestation or marriage system is implemented by this cultural pass."
+  ]
+}
