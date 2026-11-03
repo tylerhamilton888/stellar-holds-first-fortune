@@ -1,8 +1,8 @@
-# Friendship stories 130 — verification in progress
+# Friendship stories 130 — source complete
 
 Twelve characters receive three optional friendship episodes at 5, 12 and 18 bond (36 total): all eight romance candidates plus Ivar, Borin, Orla and Hedrik. Practical tasks lead to short in-world scenes, useful item rewards, modest discipline XP and persistent memories. Maren's trusted-friend episode stages the rude-miner table flip. Scenes are resumable/skippable and rewards are once-only; actual furniture, household storage and romance remain untouched.
 
-Source version 0.94.0. Native, export and hosted verification pending. Windows 0.93.0 remains published; no new release requested. Main-story milestone 05 remains next. Design: [friendship stories](great-claim/FRIENDSHIP_STORIES.md).
+Source version 0.94.0. Final native friendship acceptance: 1,265 assertions passed. Final exact-export friendship/people/menu acceptance: 1,770 assertions passed. The preceding six-case native/export regressions (2,771 / 2,773 assertions) also covered courtship, autonomous pairing and main-story scenes; only the People-screen memory hook changed afterward. All 3,855 final PCK entries passed integrity checks. Reviewed exported task UI, Maren lifting/overturning the table, conversational spacing and visible saved memories. All five hosted jobs passed in [run 41681488921](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41681488921). Source PR #107 merged as `5d5d390859f78dd94b6ddb2bc64c150712969000`; its tree matches tested source `5ef9f32527291d887223b0bc54f48fcedc0e5b60` (tree `f3d9cafb429a3fc32029b798fc3fab194cb4801b`). Evidence: [friendship acceptance](testing/friendship130/acceptance.json). Windows 0.93.0 remains published; no new release requested. Main-story milestone 05 remains next. Design: [friendship stories](great-claim/FRIENDSHIP_STORIES.md).
 
 ---
 

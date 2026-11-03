@@ -1,0 +1,185 @@
+{
+  "source_sha": "5ef9f32527291d887223b0bc54f48fcedc0e5b60",
+  "source_tree": "f3d9cafb429a3fc32029b798fc3fab194cb4801b",
+  "source_merge": "5d5d390859f78dd94b6ddb2bc64c150712969000",
+  "source_pr": 107,
+  "native": [
+    {
+      "test": "friendship130",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 1265,
+      "seconds": 125.0
+    }
+  ],
+  "exact_export": [
+    {
+      "test": "friendship130",
+      "passed": true,
+      "checks": 1265,
+      "errors": []
+    },
+    {
+      "test": "people",
+      "passed": true,
+      "checks": 470,
+      "errors": []
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "checks": 35,
+      "errors": []
+    }
+  ],
+  "pack_sha256": "657e07c6d0e24cc77e600f83a6c7d35859ba48e6705165353b876eb329c6942a",
+  "verified_pack_entries": 3855,
+  "hosted": {
+    "merge": "5d5d390859f78dd94b6ddb2bc64c150712969000",
+    "run": {
+      "id": 41681488921,
+      "head_sha": "5ef9f32527291d887223b0bc54f48fcedc0e5b60",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-11-03T17:41:22Z",
+      "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41681488921"
+    },
+    "jobs": [
+      {
+        "id": 126076953491,
+        "name": "gameplay (gameplay-1)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126076954036,
+        "name": "people-preview",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126076954059,
+        "name": "gameplay (gameplay-4)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126076954126,
+        "name": "gameplay (gameplay-3)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126076954202,
+        "name": "gameplay (gameplay-2)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "visual_review": [
+    "Exported friendship errand title, task, costs and rewards readable",
+    "Whole-character Maren lift, visible table rotation and clear miner retreats",
+    "Separated conversational actors and whole-character social poses",
+    "People notebook shows saved friendship memories"
+  ],
+  "prior_native_regression": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 12.19
+    },
+    {
+      "test": "friendship130",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 1262,
+      "seconds": 87.58
+    },
+    {
+      "test": "people",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 470,
+      "seconds": 91.61
+    },
+    {
+      "test": "courtship101",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 413,
+      "seconds": 95.59
+    },
+    {
+      "test": "ridge124",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 211,
+      "seconds": 75.68
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 380,
+      "seconds": 93.63
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 60.62
+    }
+  ],
+  "prior_export_regression": [
+    {
+      "test": "friendship130",
+      "passed": true,
+      "checks": 1264,
+      "errors": []
+    },
+    {
+      "test": "people",
+      "passed": true,
+      "checks": 470,
+      "errors": []
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "checks": 35,
+      "errors": []
+    },
+    {
+      "test": "ridge124",
+      "passed": true,
+      "checks": 211,
+      "errors": []
+    },
+    {
+      "test": "courtship101",
+      "passed": true,
+      "checks": 413,
+      "errors": []
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "checks": 380,
+      "errors": []
+    }
+  ],
+  "test_notes": "The initial six-case source/export regressions passed at 12c6f3b. Visual review then found the current People screen missing the memory hook; final source adds that hook and one visible-memory assertion. Final native friendship and exported friendship/people/menu checks were rerun, alongside the full hosted gate.",
+  "limitations": "Native Linux/software rendering and exact Windows PCK; no new Windows release or hardware playtest. Music stories have no recorded instrument performance."
+}
