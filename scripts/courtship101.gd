@@ -477,7 +477,7 @@ static func panel(g,id:String):
       var accepted=begin(g,id)
       if accepted:g.talk_line=g.state.npc(id).first_name+" accepts your Hearthknot.\n\n"+arc.yes
       g.refresh_panel()
-      if accepted:g.menu_scroll.scroll_vertical=0)
+      if accepted:g.restore_menu.call_deferred(0,""))
      invitation.disabled=g.state.count("hearthknot")<1
    else:g.label(g.panel_body,"A valued friendship. Their personal story remains yours to share.",15)
   elif d.stage==1:
