@@ -1,3 +1,11 @@
+# Thaneship recovery — complete
+
+Source PR #109 and delivery PR #110 are merged. Windows 0.95.0 is published after all source and exact-package gates passed. The release ZIP size and SHA-256 agree with its clean build report. See [release receipt](release.json) and [source acceptance](acceptance.json). No further recovery action or rebuild is pending.
+
+Next work is opening-chapter polish: prioritize the immediate journal task, remove the duplicated title footer, and measure normal-speed pacing, combat retries, audio and Windows-device performance. Keep the story endpoint at Thane homecoming; marriage and districts remain future work.
+
+## Recovery history
+
 # Thaneship recovery — source merged, release pending
 
 All five hosted checks passed in attempt 2 at 2026-11-03T19:54:11Z. PR #109 merged as `496ccc9a1a86cf81ce2d2a191cdb7a8652bbc5be`; its tree matches tested source exactly. The four additional exported opener cases passed 325 assertions. Windows release run 41705684539 remains in progress.

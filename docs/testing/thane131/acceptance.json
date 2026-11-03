@@ -189,12 +189,6 @@
     "Audible mix and player-device performance need a normal playtest",
     "Marriage, household expansion and directed districts remain future chapter work"
   ],
-  "release_pending": {
-    "run_id": 41705684539,
-    "source_sha": "0744f011ebdf09c4c65cf0f6e968b6988d1765fe",
-    "version": "0.95.0",
-    "status": "Building; exact-package acceptance and publication pending"
-  },
   "recovery_opener": {
     "source_sha": "f2627d5ccd2c24012ae10b7f1123ad2b0aa94cb8",
     "source_tree": "ec99c3a53f9fe58e7eff88bba0d1c98e6aa1f43f",
@@ -240,5 +234,120 @@
       "Measure normal-speed pacing and difficulty on a Windows playtest"
     ],
     "scope": "Recovery verification of unchanged runtime. No claim that normal-speed human playthrough or audio evaluation is complete."
+  },
+  "release": {
+    "version": "0.95.0",
+    "conclusion": "success",
+    "source_sha": "0744f011ebdf09c4c65cf0f6e968b6988d1765fe",
+    "source_tree": "abfa0e71d94ed72763033bedd4a1c570c8f2fc29",
+    "validated_source_sha": "f2627d5ccd2c24012ae10b7f1123ad2b0aa94cb8",
+    "source_validation_run": 41695999934,
+    "release_run": 41705684539,
+    "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.95.0",
+    "published_at": "2026-11-03T20:58:58Z",
+    "zip_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.95.0/Stellar-Holds-First-Fortune-0.95.0-Windows.zip",
+    "zip_bytes": 945895802,
+    "zip_sha256": "1524bb7b030b0317c08f3a7a2316bd7ad7f6f43aefc9705b3ea4e076c346a5ea",
+    "build_report": {
+      "version": "0.95.0",
+      "commit": "0744f011ebdf09c4c65cf0f6e968b6988d1765fe",
+      "dirty": false,
+      "engine": "4.4.1.stable.official.49a5bc7b6",
+      "files": {
+        "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+        "FirstFortune.pck": "427f918f9f9438f97865d4014eb2988619f6c330b9d9a806ab98b30e8c4dc2b2",
+        "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+        "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+        "version.txt": "e6d2ed2d3f2b92e44748b7e0673e4a30a2a08c2c563c5cba00782b953a6d8c90",
+        "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+      },
+      "zip_sha256": "1524bb7b030b0317c08f3a7a2316bd7ad7f6f43aefc9705b3ea4e076c346a5ea",
+      "zip_bytes": 945895802
+    },
+    "exact_pack_cases": 58,
+    "passed_cases": [
+      "ambient",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "metadata_verified": true,
+    "assets": [
+      {
+        "name": "build.json",
+        "bytes": 822,
+        "digest": "sha256:7fab952f5754e6ce3598b74a6cff4f82521af172bf9d534b2cdbed89c01f69cc",
+        "state": "uploaded",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.95.0/build.json"
+      },
+      {
+        "name": "Stellar-Holds-First-Fortune-0.95.0-Windows.zip",
+        "bytes": 945895802,
+        "digest": "sha256:1524bb7b030b0317c08f3a7a2316bd7ad7f6f43aefc9705b3ea4e076c346a5ea",
+        "state": "uploaded",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.95.0/Stellar-Holds-First-Fortune-0.95.0-Windows.zip"
+      },
+      {
+        "name": "verification-evidence.tar.gz",
+        "bytes": 449544098,
+        "digest": "sha256:e9ce4b9638a6c64f6c9875fa56b70cae272fba815c7d3bbb2726449240dfe8a1",
+        "state": "uploaded",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.95.0/verification-evidence.tar.gz"
+      }
+    ]
   }
 }
