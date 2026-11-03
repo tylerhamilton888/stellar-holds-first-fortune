@@ -123,6 +123,8 @@ var creator:HoldCreator
 var visitor_key="visitor_0"
 var outpost_tab=0
 var anniversary_scene:HoldAnniversaryScene
+var claim_work127=-1
+var claim_time127=0.0
 var opening_scene:HoldOpeningScene
 var room_return=""
 var lesson_id=""
@@ -215,6 +217,8 @@ func setup_ui():
 var first_visit_pending=false
 
 func show_title():
+ if opening_scene is HoldClaimScene127:opening_scene.layer.queue_free();opening_scene=null
+ HoldClaim127.cancel(self)
  first_visit_pending=false
  if depth_nav!=null:depth_nav.explore.release_pointer()
  dev.leave()
@@ -242,6 +246,8 @@ func show_title():
  var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
+ if opening_scene is HoldClaimScene127:opening_scene.layer.queue_free();opening_scene=null
+ HoldClaim127.cancel(self)
  var first_visit=first_visit_pending and not load_saved and not testing
  first_visit_pending=false
  if depth_nav!=null:depth_nav.reset()
@@ -293,6 +299,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  elif not HoldOnboarding.ensure(state).arrival_seen:
   opening_scene=HoldOpeningScene.begin(self,"arrival")
  elif HoldOnboarding.ensure(state).get("escort_pending",false):opening_scene=HoldArrivalEscort.start(self)
+ if load_saved and HoldClaim127.eligible(state) and HoldClaim127.data(state).scene!="":HoldClaimScene127.start_scene(self)
 
 func spawn_agents():
  var previous=agents.duplicate()
@@ -359,7 +366,8 @@ func _process(dt):
    if zone=="mine":
     deep.move(dt)
     if zone=="mine":deep.mine(dt)
-   elif surface.active():surface.move(dt)
+   elif surface.active():
+    surface.move(dt);HoldClaim127.tick(self,dt,Input.is_action_pressed("interact"))
    else:move_player(dt)
    if zone=="mine":pass
    elif impact_pause>0:impact_pause=maxf(0,impact_pause-dt)
@@ -906,7 +914,7 @@ func goal()->String:
  if not state.tech.has("automation"):return "GROW YOUR HOLD: Research clockwork industry; recruit a crew."
  return "YOUR FIRST STARSHIP: Build at the eastern launchyard (%d/3)." % state.ship_stage
 func sync_hud_controls():
- var show=playing and panel_id=="" and not is_instance_valid(creator)
+ var show=playing and panel_id=="" and not is_instance_valid(creator) and not is_instance_valid(opening_scene)
  if is_instance_valid(calendar_button):calendar_button.visible=show
  if is_instance_valid(energy_button):energy_button.visible=show
  if is_instance_valid(energy_bar):energy_bar.visible=show
@@ -1233,7 +1241,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
- if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126"]:menu_paused=true
+ if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126","claim127"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
  HoldMenuView.build_shell(self,id)
@@ -1278,6 +1286,7 @@ func open_panel(id:String,remember:bool=true):
   "hearth126":HoldTraditions126.home_panel(self)
   "eight126":HoldTraditions126.lore_panel(self)
   "lodge_talk":HoldWorkerLodge100.panel(self)
+  "claim127":HoldClaim127.panel(self)
   "great_claim102":HoldGreatClaim102.panel(self)
   "frontier103":HoldFrontier103.panel(self)
   "frontier_archive103":HoldFrontier103.archive_panel(self)

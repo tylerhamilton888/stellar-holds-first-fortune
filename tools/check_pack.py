@@ -123,6 +123,8 @@ def main():
     cases.append(('ridge124', fixture+'\n'+body, 'RIDGE124'))
     body = (ROOT/'tests/courtship101.gd').read_text().split('\n', 1)[1]
     cases.append(('courtship101', fixture+'\n'+body, 'COURTSHIP101'))
+    body = (ROOT/'tests/claim127.gd').read_text().split('\n', 1)[1]
+    cases.append(('claim127', fixture+'\n'+body, 'CLAIM127'))
     if a.selected_cases:
         unknown = set(a.selected_cases)-{name for name, _, _ in cases}
         if unknown:

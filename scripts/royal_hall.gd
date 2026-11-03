@@ -18,6 +18,7 @@ static func portrait()->HoldPortrait:
  var p=HoldPortrait.new();p.profile=HoldAppearance.npc_profile("eirik",0)
  return p
 static func panel(g):
+ HoldClaim127.panel(g)
  if HoldConversation.local(g,"eirik"):
   g.talk_id="eirik";g.talk_topic="";g.talk_line="";HoldConversation.panel(g)
  else:

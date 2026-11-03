@@ -26,7 +26,7 @@ static func contribute(g,id:String)->bool:
  g.save_game();g.notify(p.title+" completed · "+str(p.points)+" Claim marks recorded.");return true
 static func standings(s)->Array:
  var count=data(s).get("projects",{}).size()
- if HoldMountain104.active(s) and HoldMountain104.data(s).get("authenticated",false):return [["Skarrin",int(HoldMountain104.data(s).rival_at_award),"Verified works at authentication; public contest pending"],["Rurik Stonehand",150,"Haulage and settlement deliveries"],["You",int(data(s).points),"Work plus separately recorded hereditary allowance"]]
+ if HoldMountain104.active(s) and HoldMountain104.data(s).get("authenticated",false):return [["Skarrin",int(HoldMountain104.data(s).rival_at_award),"Verified works at the close of the contribution round"],["Rurik Stonehand",150,"Haulage and settlement deliveries"],["You",HoldClaim127.closed_score(s),"Closed-round work plus separately recorded hereditary allowance"]]
  # Named deliveries at civic milestones; no elapsed-time or player-score chasing.
  return [["Skarrin",300+([0,35,35,80][mini(count,3)]),"Prior survey, retaining wall; later a brace delivery and drainage cut"],["Rurik Stonehand",110+20*mini(count,2),"Prior haulage; timber and stone deliveries"],["You",int(data(s).get("points",0)),"Verified work and completed civic projects"]]
 static func furnishings(w,area:String)->Array:
@@ -44,6 +44,8 @@ static func furnishings(w,area:String)->Array:
 static func panel(g):
  if not active(g.state):g.label(g.panel_body,"This fortune is not entered in the Great Claim.",18);return
  if HoldFrontier103.active(g.state):g.button(g.panel_body,"Town plan and player-home milestone",func():g.open_panel("frontier103"))
+ HoldClaim127.panel(g)
+ if HoldClaim127.eligible(g.state):g.label(g.panel_body,"The scoring round closed when the claim was authenticated. Later contributions remain in the town work record; they cannot change the tied final tally or the public trial verdict.",15)
  g.label(g.panel_body,"THE GREAT CLAIM LEDGER",22,Color("edc98a"))
  g.label(g.panel_body,"Ivar records useful work and supplies freely committed to the settlement. The first eight completed work units in each discipline earn a mark apiece; civic projects earn their stated marks once. Nothing is awarded for waiting.",16)
  g.label(g.panel_body,"Charter law: authenticated ancestral rights carry a separate hereditary allowance. Until authenticated, no claimant receives that allowance. A tie must be settled by a public test of skill.",15)

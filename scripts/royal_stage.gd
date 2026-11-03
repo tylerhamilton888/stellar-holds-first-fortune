@@ -30,7 +30,7 @@ static func sample(t:float)->Dictionary:
  if phase<49:return actor(THRONE-Vector2(0,17*(phase-48)),13)
  return actor(THRONE-Vector2(0,17),14)
 static func current(g)->Dictionary:
- if is_instance_valid(g.opening_scene) and g.opening_scene.mode=="audience":return g.opening_scene.king
+ if is_instance_valid(g.opening_scene) and g.opening_scene.mode in ["audience","reception"]:return g.opening_scene.king
  return sample(g.state.elapsed-float(g.state.surface.facts.get("royal_epoch",0)))
 static func draw_actor(g,a:Dictionary):
  prepare()

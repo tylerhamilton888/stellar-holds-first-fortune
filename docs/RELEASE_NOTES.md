@@ -1,11 +1,11 @@
-# 0.92.0 — The mountain remembers
+# 0.93.0 — The rightful claimant
 
-After registering your home and earning 180 Great Claim marks, visit Ivar's shift book. A sealed refuge in Old Workings holds Sten, Torvik and your partner (or Brynja). Excavate a real bypass, light the refuge and brace it with the ordinary masonry system. The survivors walk out through the tunnels you opened. There is no countdown; blocked routes halt evacuation and progress survives saves.
+Stonebridge's authenticated claim now continues into a playable engineering tiebreaker. Meet Ivar at the bunkhouse shift book. Read the load-path drawings and fit stone footings, a diagonal timber brace and a locking winch at the public yard. Materials are checked locally and paid once when each fitting is complete. Work can be paused or resumed without a timer or penalty.
 
-Join the survivors at the bunkhouse hearth. Edda then examines their ancient fragment. Compare the upstairs charter archive and Ivar's family register before authenticating descent from this mountain's founding house. Work and hereditary marks are recorded separately; the allowance ties Skarrin's standing at authentication. Your home, property and upper floors remain yours. No early Thaneship is granted.
+Short in-world scenes stage the public challenge, competing proof loads, your victory, the honorable Master of Works offer and Skarrin's refusal. Follow the western road for your first substantial visit to Keldrath. Explore Hearthward, Forgeward and Crownward, then present your invitation to High King Eirik in the royal hall. Actors move through the existing world; scenes have readable captions, Continue and Skip controls, and saved beat recovery.
 
-Relationship investment reveals Skarrin's credit-taking and suspicious contacts. Survivors and a rescued partner have personal follow-up dialogue. J tracks the chapter. Existing fortunes retain their earlier rescue and appointment sequence.
+The contribution round closes at authentication. Later civic work remains recorded without changing its tied final tally. Your home, chest contents, inventory, friendships and romance progress remain yours. The road home stays open. The royal reception prepares for the formal investiture; the interrupted ceremony, invasion, trial, Thaneship and marriage remain future chapters.
 
-The public contest, Keldrath story, invasion, trial, Thaneship/marriage and bespoke story-character artwork remain in development. This chapter uses established whole-character identities and the existing mine art; it does not add a cinematic collapse sequence.
+This build also includes the completed named-character artwork, Alden and Maren's optional courtships and eventual pairing, and restrained Dwarven traditions: the continuous eight-day week, an optional memorial errand, household hearthstones, occasional observances and contextual dialogue.
 
-Extract the verified Windows ZIP into a fresh folder and run **FirstFortune.exe**. Keep previous saves and releases.
+Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Preserve your previous saves and builds. Verification establishes native Linux/software-rendered gameplay and the exact exported Windows pack; it does not substitute for a Windows hardware playtest.

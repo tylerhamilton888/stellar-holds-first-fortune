@@ -176,6 +176,7 @@ func people(area:String,time:float=-1)->Array:
   var f=FOLK[i]
   if i==10 and HoldRidgePair124.paired(g.state):
    f=f.duplicate(true);f.area="room:wayfarer";f.a=Vector2(535,510);f.b=Vector2(625,510)
+  if HoldClaim127.absent(g.state,"road_folk:"+str(i)):continue
   if area!=f.area or HoldMountain104.missing(g.state,"road_folk:"+str(i)) or HoldMountain104.gathering(g.state,"road_folk:"+str(i)):continue
   var key=str(g.state.seed_value)+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+7500+i,f.gender)

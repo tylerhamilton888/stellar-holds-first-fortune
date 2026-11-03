@@ -180,6 +180,7 @@ static func journal(g):
  g.small_button(g.panel_body,"Just let me explore",func():focus(g,"free"))
 
 static func frontier_journal(g):
+ HoldClaim127.panel(g)
  HoldMountain104.panel(g)
  var s=g.state;var q=data(s)
  g.label(g.panel_body,"A DWARF'S WORTH · STONEBRIDGE",22,Color("edc98a"))

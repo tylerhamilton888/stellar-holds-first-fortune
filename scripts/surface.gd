@@ -113,12 +113,15 @@ func spawn(id:String)->Vector2:
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
  return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"greenfields":Vector2(940,285),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
 func enter(id:String,at:Vector2=Vector2.INF):
+ HoldClaim127.cancel(g)
+ if HoldClaim127.eligible(g.state) and HoldClaim127.stage(g.state)>=3 and not HoldClaim127.data(g.state).arrived and HoldWorldZones.ward(id) and not is_instance_valid(g.opening_scene):
+  HoldClaim127.start(g,"journey");return
  if g.fieldwork:g.fieldwork.cancel()
  ensure()
  if HoldFrontier103.active(g.state) and (HoldWorldZones.ward(id) or id in ["room:throne","room:research","room:market","room:forge","room:commission"]) and not HoldFrontier103.data(g.state).keldrath_open:
   g.notify("Keldrath lies beyond the frontier. The survey hall, communal forge and watch stores serve Stonebridge.");return
  if id=="claim" and g.state.claim_id=="":g.open_panel("frontier103" if HoldFrontier103.active(g.state) else "charters");return
- if id=="room:throne" and HoldOnboarding.ensure(g.state).fresh and HoldOnboarding.stage(g.state)<4:g.notify("Ivar's first-shift reference opens the royal audience.");return
+ if id=="room:throne" and not HoldClaim127.eligible(g.state) and HoldOnboarding.ensure(g.state).fresh and HoldOnboarding.stage(g.state)<4:g.notify("Ivar's first-shift reference opens the royal audience.");return
  if id in HoldRoads.OUTDOORS and g.state.opening==0:g.notify(g.region_travel_hint());return
  if g.room_id=="training":g.state.resident_visits.erase("borin")
  if g.zone=="mine":g.deep.depart()
@@ -135,6 +138,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
   elif id!=old:return_area="claim" if claim_site else ("crownward" if id in ["room:throne","room:research",HoldHouseholds.ARCHIVE] else "forgeward" if id in ["room:forge","room:practice"] else "hearthward")
  if old=="claim" and id!="claim":house.data().z=0
  area=id
+ HoldClaim127.enter(g,id)
  HoldTraditions126.ensure_lodge(g)
  g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id in ["trail","greenfields"] else "hub")
  g.room_id="home" if id.begins_with("home:") else id.trim_prefix("room:") if id.begins_with("room:") else ""
@@ -210,6 +214,7 @@ func points()->Array:
    result.append(spot(100,690,"Road to Keldrath · later journey","hearthward"))
   if area=="claim":result=result.filter(func(p):return p.action in ["trail","mine"] or str(p.action).begins_with("house:"))
  result.append_array(HoldFrontier103.points(g))
+ result.append_array(HoldClaim127.points(g))
  result.append_array(architecture.points())
  result.append_array(architecture.service_points())
  result.append_array(g.hearth.points())
@@ -302,6 +307,9 @@ func start_rest(point:Dictionary,nap:bool=false)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="claim127":
+  if HoldClaim127.at_yard(g) and g.claim_work127<0:g.open_panel(id)
+  return
  if id=="traditions126":
   if HoldTraditions126.at_memorial(g):g.open_panel(id)
   return
@@ -366,6 +374,7 @@ func base_obstacles()->Array:
  return list
 func obstacles(ignore:Dictionary={})->Array:
  var list=base_obstacles()
+ if area=="trail" and HoldClaim127.eligible(g.state) and HoldClaim127.stage(g.state)>0:list.append_array([Rect2(498,780,104,20),Rect2(728,780,104,20)])
  if not room():
   list.append_array(roads.obstacles(area))
   if house.level()==0:list.append_array(architecture.obstacles(area))
@@ -433,6 +442,7 @@ func move(dt:float):
    var cart=g.handworks.attached();var old_origin=HoldTerraces.origin(area)
    remember();area=crossing.area;g.player=crossing.p;g.camera+=old_origin-HoldTerraces.origin(area)
    g.handworks.arrive(cart)
+   HoldClaim127.enter(g,area)
    g.state.surface.area=area;world.speech="";remember();g.save_game()
  if roads.moved(before,dt):return
  cut_flash=maxf(0,cut_flash-dt)
@@ -682,6 +692,7 @@ func draw():
  else:draw_outdoors()
  if area=="claim" and house.level()>0:g.draw_rect(Rect2(Vector2.ZERO,SIZE),Color(.02,.06,.08,.5))
  house.floor_draw()
+ HoldClaim127.draw(g)
  var objects=[]
  if HoldWorldZones.ward(area):
   objects.append_array(world.buildings());objects.append_array(world.people());objects.append_array(world.landmarks())
@@ -728,6 +739,9 @@ func draw():
  for o in objects:
   if o.kind=="landmark" and o.art in [1,2]:o.sort_y=o.p.y-125
   elif o.kind=="building":o.sort_y=HoldWorldZones.building_footprint(o).end.y
+ if g.opening_scene is HoldClaimScene127:
+  objects=objects.filter(func(o):return not g.opening_scene.cast.any(func(a):return a.id==str(o.get("interaction",o.get("id","")))))
+  objects.append_array(g.opening_scene.objects())
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))
  for o in objects:
   g.draw_set_transform(-cam)
@@ -742,6 +756,7 @@ func draw():
   elif o.kind=="citizen":world.draw_citizen(o)
   elif o.kind=="fighter":g.fight.draw_enemy(o.enemy)
   elif o.kind=="escort":g.opening_scene.draw_guide()
+  elif o.kind=="claim_actor127":g.opening_scene.draw_actor(o.index)
   elif o.kind=="garden":g.fieldwork.draw_bed(o.bed)
   elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
@@ -764,7 +779,7 @@ func draw():
  house.roof_draw()
  HoldCalendar.lighting(g,objects)
  HoldWardDesign.motion(g)
- if g.opening_scene is HoldArrivalEscort:
+ if g.opening_scene is HoldArrivalEscort or g.opening_scene is HoldClaimScene127:
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area not in ["hearthward","crownward","forgeward"] and not room():
   for point in points():
@@ -821,6 +836,7 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
   elif g.handworks.carry_action()!="":animation=g.handworks.carry_action();action=g.handworks.carry_phase()
   elif g.handworks.pushing():animation="push"
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
+ if is_player and g.claim_work127>=0 and Input.is_action_pressed("interact"):animation="hammer";action=fmod(g.claim_time127,.42)/.42;aim=Vector2.UP
  if animation in ["plant","tend"]:animation="hoe"
  if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not is_instance_valid(g.opening_scene):animation=g.hotbar.pose()
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))

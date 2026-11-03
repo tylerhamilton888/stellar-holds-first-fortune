@@ -104,6 +104,7 @@ static func transact(g,kind:String,id:String,buy:bool=true)->bool:
 static func panel(g):
  if not active(g.state):return
  var s=g.state
+ HoldClaim127.panel(g)
  HoldMountain104.panel(g)
  g.label(g.panel_body,"STONEBRIDGE · A TOWN TAKING ROOT",22,Color("edc98a"))
  g.button(g.panel_body,"Field kit · fishing and farming",func():g.open_panel("fieldwork"))
