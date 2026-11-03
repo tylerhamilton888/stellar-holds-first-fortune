@@ -922,7 +922,7 @@ func update_hud():
    var day=int(HoldCalendar.data(state).day)
    var holiday=HoldCalendar.holiday(day)
    calendar_button.text=HoldCalendar.date(day)+" · "+HoldCalendar.clock_text(state)+" · "+HoldCalendar.phase(state)+(" ★" if not holiday.is_empty() else "")
-   calendar_button.tooltip_text="Open calendar"+(" · "+holiday.name if not holiday.is_empty() else "")
+   calendar_button.tooltip_text=HoldCalendar.weekday_name(day)+" · Open calendar"+(" · "+holiday.name if not holiday.is_empty() else "")
  if is_instance_valid(energy_button):
   if playing:
    var reserve=HoldWorkEnergy.data(state)
@@ -1233,7 +1233,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
- if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103"]:menu_paused=true
+ if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
  HoldMenuView.build_shell(self,id)
@@ -1274,6 +1274,9 @@ func open_panel(id:String,remember:bool=true):
   "calendar":HoldCalendar.panel(self)
   "festivals":HoldCalendar.festivals_panel(self)
   "energy":HoldWorkEnergy.panel(self)
+  "traditions126":HoldTraditions126.memorial_panel(self)
+  "hearth126":HoldTraditions126.home_panel(self)
+  "eight126":HoldTraditions126.lore_panel(self)
   "lodge_talk":HoldWorkerLodge100.panel(self)
   "great_claim102":HoldGreatClaim102.panel(self)
   "frontier103":HoldFrontier103.panel(self)
@@ -1636,7 +1639,7 @@ func ivar_welcome_panel():
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel(details:bool=false):
  if HoldFirstVisit99.active(state) and not details:
-  HoldFirstVisit99.journal(self);return
+  HoldFirstVisit99.journal(self);HoldTraditions126.journal(self);return
  var current=HoldOnboarding.primary(state)
  if current!="":
   var objective=HoldMenuView.section(panel_body,"Current objective")
@@ -1645,6 +1648,7 @@ func commission_panel(details:bool=false):
  HoldExpedition97.journal(self)
  HoldFirstShift.journal(self)
  HoldAncestralClaim.journal(self)
+ HoldTraditions126.journal(self)
  if HoldOnboarding.side_stories(state):
   button(panel_body,"River & Root · fishing and gardening",func():open_panel("fieldwork"))
   button(panel_body,"Hands of the Dwarf · workshop lesson",func():open_panel("handworks"))

@@ -3,13 +3,15 @@ extends RefCounted
 # Saved game time only. Seasons never destroy crops, close services or expire quests.
 const MINUTES_PER_SECOND=.6
 const SEASONS=["Spring","Summer","Autumn","Winter"]
-const WEEK=["Stone","Ember","Iron","Gold","Hearth","Ale","Ancestor"]
+const WEEK=["Stoneday","Hammerday","Roadday","Shieldday","Oathday","Hearthday","Cupday","Namesday"]
 const HOLIDAYS=[
- {"id":"first_hearth","name":"First Hearth","season":0,"day":7,"food":"barley_bread","story":"Fresh bread is broken for every household, old and new. Your host raises a tankard: May every returning boot find a warm hearth."},
- {"id":"forgefire","name":"Forgefire","season":1,"day":14,"food":"char_plate","story":"Smiths toast the hands behind every tool, from the youngest apprentice to the oldest master. Your host calls for a tankard to honest work, and another to a sound edge."},
+ {"id":"first_hearth","name":"First Hearth","season":0,"day":7,"food":"barley_bread","story":"Fresh bread is broken for every household, old and new. A little is set beside the hearth in Brenna's honor. Your host raises a tankard: May every returning boot find a warm hearth."},
+ {"id":"forgefire","name":"Forgefire","season":1,"day":14,"food":"char_plate","story":"Smiths toast the hands behind every tool, from the youngest apprentice to the oldest master. An apprentice lays the year's first sound work beneath Borund's mark. Your host calls for a tankard to honest work, and another to a sound edge."},
  {"id":"barleywake","name":"Barleywake","season":2,"day":21,"food":"root_hotpot","story":"The harvest tables fill with roots, bread and the new barley brew. Your host toasts the growers, haulers and brewers who keep a hold fed."},
- {"id":"ancestors","name":"Ancestor's Vigil","season":3,"day":26,"food":"fish_chowder","story":"Names of the departed are spoken beside the hearth. A place is kept for those far from home. Your host raises a quiet tankard to those who built the road beneath your feet."}]
+ {"id":"ancestors","name":"Ancestor's Vigil","season":3,"day":26,"food":"fish_chowder","story":"Names of the departed are spoken beside the hearth, commended to Nyrda's keeping. Families bring an inherited tool and tell its maker's story. Your host raises a quiet tankard to those who built the road beneath your feet."}]
 static var glow:GradientTexture2D
+static func weekday(day:int)->int:return posmod(day,WEEK.size())
+static func weekday_name(day:int)->String:return WEEK[weekday(day)]
 static func data(s)->Dictionary:
  if not s.surface.has("calendar91"):s.surface.calendar91={"day":0,"minute":480.0,"events":{}}
  return s.surface.calendar91
@@ -94,23 +96,26 @@ static func panel(g):
  g.small_button(nav,"Today · "+date(d.day),func():g.calendar_page=int(d.day)/28;g.calendar_selected=int(d.day);g.refresh_panel())
  g.small_button(nav,"Next ›",func():g.calendar_page+=1;g.refresh_panel())
  g.small_button(nav,"Feasts · %d waiting" % pending(g.state),func():g.open_panel("festivals"))
- g.label(g.panel_body,"%s · Year %d    |    Now %s · %s" % [SEASONS[season],year,clock_text(g.state),phase(g.state)],21)
- var grid=GridContainer.new();grid.columns=7;grid.add_theme_constant_override("h_separation",5);grid.add_theme_constant_override("v_separation",4);g.panel_body.add_child(grid)
+ g.label(g.panel_body,"%s · Year %d    |    Now %s · %s" % [SEASONS[season],year,weekday_name(int(d.day)),clock_text(g.state)],21)
+ var grid=GridContainer.new();grid.columns=WEEK.size();grid.add_theme_constant_override("h_separation",5);grid.add_theme_constant_override("v_separation",4);g.panel_body.add_child(grid)
  for day_name in WEEK:
-  var label=g.label(grid,day_name,14,Color("b7cfc6"));label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;label.custom_minimum_size.x=96
+  var label=g.label(grid,day_name,14,Color("b7cfc6"));label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;label.custom_minimum_size.x=88
+ # Preserve 28-day seasons; the eight-day week continues across page boundaries.
+ for blank in weekday(g.calendar_page*28):grid.add_child(Control.new())
  for day in range(28):
   var absolute=g.calendar_page*28+day;var h=holiday(absolute)
   var b=g.small_button(grid,str(day+1)+("  ★" if not h.is_empty() else "")+(" · today" if absolute==int(d.day) else ""),func():g.calendar_selected=absolute;g.refresh_panel())
   b.alignment=HORIZONTAL_ALIGNMENT_CENTER;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.toggle_mode=true;b.button_pressed=absolute==g.calendar_selected
-  b.tooltip_text=date(absolute)+(": "+h.name if not h.is_empty() else "")
+  b.tooltip_text=weekday_name(absolute)+" · "+date(absolute)+(": "+h.name if not h.is_empty() else "")
   if absolute==int(d.day):b.add_theme_color_override("font_color",Color("355d54"))
  if g.calendar_selected>=0 and g.calendar_selected/28==g.calendar_page:
   var selected=holiday(g.calendar_selected)
-  g.label(g.panel_body,date(g.calendar_selected)+(": "+selected.name if not selected.is_empty() else " · A day for your own plans"),17,Color("edc98a"))
+  g.label(g.panel_body,weekday_name(g.calendar_selected)+" · "+date(g.calendar_selected)+(": "+selected.name if not selected.is_empty() else " · A day for your own plans"),17,Color("edc98a"))
   if not selected.is_empty():g.label(g.panel_body,selected.story,15)
+  if weekday(g.calendar_selected) in [6,7]:g.label(g.panel_body,"18:00–20:00 at the miners' lodge: "+("Sigrid shares a mug and company on Cupday." if weekday(g.calendar_selected)==6 else "Sigrid keeps the family names at the shared memorial."),15)
  var h=HOLIDAYS[season]
  g.label(g.panel_body,"★ %s · %s %d–%d. Share a toast and feast at the Copper Kettle or Wayfarer's Hearth." % [h.name,SEASONS[season],h.day,h.day+2],16)
- g.label(g.panel_body,"A day lasts 40 active minutes. Menus pause the clock; nothing advances while the game is closed. Sleep until 08:00 or nap for two hours. Crops and queued crafting advance while you sleep; crops never wither. Services stay open, and missed feasts remain available.",15)
+ g.label(g.panel_body,"Eight days make a week; each season keeps its 28 days. A day lasts 40 active minutes. Menus pause the clock; nothing advances while the game is closed. Sleep until 08:00 or nap for two hours. Crops and queued crafting advance while you sleep; crops never wither. Services stay open, and missed feasts remain available.",15)
 static func festivals_panel(g):
  advance(g.state,0);var d=data(g.state);var h=holiday(d.day)
  g.label(g.panel_body,h.name+" · the tables are laid" if not h.is_empty() else "The hold remembers its celebrations",22)

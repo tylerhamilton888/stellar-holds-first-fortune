@@ -97,6 +97,7 @@ func restore():
  if g.zone=="claim" and not desired.begins_with("home:") and not HoldBuildingPlans.owned_room(desired):desired="claim"
  elif g.zone=="road":desired="pinewood"
  elif g.zone=="approach" and desired not in ["trail","greenfields"]:desired="trail"
+ HoldTraditions126.ensure_lodge(g)
  area=desired;return_area=str(g.state.surface.get("return_area","hearthward"))
  g.room_id="home" if area.begins_with("home:") else (area.trim_prefix("room:") if area.begins_with("room:") else "")
  var p=g.state.surface.positions.get(area,[])
@@ -134,6 +135,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
   elif id!=old:return_area="claim" if claim_site else ("crownward" if id in ["room:throne","room:research",HoldHouseholds.ARCHIVE] else "forgeward" if id in ["room:forge","room:practice"] else "hearthward")
  if old=="claim" and id!="claim":house.data().z=0
  area=id
+ HoldTraditions126.ensure_lodge(g)
  g.zone="claim" if claim_site else ("road" if id=="pinewood" else "approach" if id in ["trail","greenfields"] else "hub")
  g.room_id="home" if id.begins_with("home:") else id.trim_prefix("room:") if id.begins_with("room:") else ""
  if id=="room:home" or (HoldFrontier103.active(g.state) and id==HoldFrontier103.quarters(g.state)):HoldFirstVisit99.room_entered(g)
@@ -224,6 +226,7 @@ func points()->Array:
   var c=g.state.surface.chests[id]
   if house.local(c):result.append(spot(c.x,c.y,"Storage chest","chest:"+id))
  result.append_array(house.points())
+ result.append_array(HoldTraditions126.points(g))
  for d in g.state.surface.decor:
   if house.local(d) and d.kind in ["bed","double_bed"]:
    var bed=Vector2(d.x,d.y)
@@ -299,6 +302,12 @@ func start_rest(point:Dictionary,nap:bool=false)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id=="traditions126":
+  if HoldTraditions126.at_memorial(g):g.open_panel(id)
+  return
+ if id=="hearth126":
+  if HoldTraditions126.home_shrine(g):g.open_panel(id)
+  return
  if id=="frontier_archive103":g.open_panel(id);return
  if id=="frontier103":g.open_panel(id);return
  if id=="great_claim102":g.open_panel(id);return
@@ -485,6 +494,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
  if not HoldFurnishings.ITEMS.has(kind) or p.distance_to(g.player)>140:return false
  var base=HoldFurnishings.footprint(kind,p)
  if kind=="chest" and not walkable(p+Vector2(0,25),moving_furnishing):return false
+ if kind=="ancestral_shrine" and not walkable(p+Vector2(0,30),moving_furnishing):return false
  if kind in ["bed","double_bed"] and not (walkable(HoldFurnishings.bedside(p,1,kind),moving_furnishing) or walkable(HoldFurnishings.bedside(p,-1,kind),moving_furnishing)):return false
  for corner in [base.position,Vector2(base.end.x,base.position.y),base.end,Vector2(base.position.x,base.end.y),base.get_center()]:
   if not walkable(corner,moving_furnishing):return false
@@ -498,6 +508,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
     if not house.on_floor(Vector2(x,y),house.level()):return false
  for point in points():
   if point.action=="hearth":continue
+  if moving_furnishing.get("kind","")=="ancestral_shrine" and point.action=="hearth126" and point.p==Vector2(moving_furnishing.x,moving_furnishing.y)+Vector2(0,30):continue
   if not moving_furnishing.is_empty() and point.action.begins_with("chest:") and g.state.surface.chests.get(point.action.trim_prefix("chest:"),{})==moving_furnishing:continue
   if moving_furnishing.get("kind","") in ["bed","double_bed"] and point.action=="house_rest" and point.get("bed",Vector2.INF)==Vector2(moving_furnishing.x,moving_furnishing.y):continue
   if point.action.begins_with("chest:") or point.action=="house_rest":

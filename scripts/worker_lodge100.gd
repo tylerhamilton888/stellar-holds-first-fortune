@@ -22,11 +22,13 @@ static func people(g)->Array:
  var x=lerpf(250.0,350.0,clampf((phase-4.0)/6.0,0,1)) if phase<14 else lerpf(350.0,250.0,clampf((phase-18.0)/6.0,0,1))
  var walking=(phase>=4 and phase<10) or (phase>=18 and phase<24)
  result.append({"p":Vector2(x,490),"kind":"citizen","profile":profile(g,1),"aim":Vector2.RIGHT if phase<14 else Vector2.LEFT,"walking":walking,"name":MINERS[0],"role":"Stone hauler","time":t,"gait":t,"interaction":"lodge_folk:1"})
- result.append({"p":Vector2(620,480),"kind":"citizen","profile":profile(g,2),"aim":Vector2.DOWN,"walking":false,"name":MINERS[1],"role":"Miner","time":t,"gait":0.0,"pose":"drink","phase":float([0,1,2,1][posmod(int(t*2),4)]),"interaction":"lodge_folk:2"})
+ var sigrid=HoldTraditions126.sigrid(g,t)
+ sigrid.merge({"kind":"citizen","profile":profile(g,2),"name":MINERS[1],"time":t,"interaction":"lodge_folk:2"})
+ result.append(sigrid)
  return result
 
 static func furnishings(w)->Array:
- return [w.furn("bed",235,375),w.furn("bed",305,375),w.furn("bed",375,375),w.furn("hearth",510,335),w.furn("table",485,450),w.furn("chair",435,470),w.furn("chair",535,470),w.furn("bookcase",585,325),w.furn("barrel",775,450),w.furn("crate",765,500),w.furn("lamp",200,540)]
+ return [w.furn("bed",235,375),w.furn("bed",305,375),w.furn("bed",375,375),w.furn("hearth",510,335),w.furn("table",485,450),w.furn("chair",435,470),w.furn("chair",535,470),w.furn("bookcase",585,325),w.furn("barrel",775,450),w.furn("crate",765,500),w.furn("lamp",200,540),w.furn("ancestral_shrine",HoldTraditions126.MEMORIAL.x,HoldTraditions126.MEMORIAL.y)]
 
 static func draw_private_door(w,x:float=720):
  # Existing painted door, set in the north wall; the interaction is on the floor below it.
@@ -57,4 +59,7 @@ static func panel(g):
   text=text.replace("room through that door","room upstairs").replace("north door","stairs").replace("The trail out to work starts at King's Gate.","Old Workings lies north of the town square.")
  g.label(body,text,16)
  if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Shift book and household plot",func():g.open_panel("frontier103"))
+ if index in [1,2]:
+  g.button(g.panel_body,"Whose names are on that stone?",func():
+   g.label(g.panel_body,"Rurik rubs his shoulder. 'The old shift. Keldran gets a nod before I go below, but I still check the props. My grandfather would haunt me for skipping that.'" if index==1 else "Sigrid sets down her mug. 'Our departed. Nyrda keeps them; we keep their names. I read them on Namesday. Come if you like. Grandmother preferred a useful deed to a long speech.'",16))
  g.button(g.panel_body,"Thanks · back to the lodge",g.close_panel)

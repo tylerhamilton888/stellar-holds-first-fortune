@@ -162,7 +162,7 @@ static func style_page(a):
  g.label(g.panel_body,"Mix any collection. The original frontage remains unchanged; finishes cover rooms, new partitions and additions. Existing furniture and painted floor tiles stay in place.",14,Color("a8b9b6"))
 static func furniture(a):
  var g=a.g;var tabs=g.row(g.panel_body)
- var groups={"Hearth":["double_bed","bed","hearth","hearth_table","tea_table","table","chair","pantry","counter","serving_counter"],"Study & storage":["chest","desk","bookcase","lamp","orrery","notice_board"],"Workshop":["anvil","worktable","pressure_manifold","training_rack"],"Stonework":["stone_pillar","royal_pillar","royal_throne","royal_arch","royal_brazier","oath_stone"],"Roadside":["runestone","signpost","road_lantern","barrel","crate","plinth"]}
+ var groups={"Hearth":["double_bed","bed","hearth","hearth_table","tea_table","table","chair","pantry","counter","serving_counter","ancestral_shrine"],"Study & storage":["chest","desk","bookcase","lamp","orrery","notice_board"],"Workshop":["anvil","worktable","pressure_manifold","training_rack"],"Stonework":["stone_pillar","royal_pillar","royal_throne","royal_arch","royal_brazier","oath_stone"],"Roadside":["runestone","signpost","road_lantern","barrel","crate","plinth"]}
  for key in groups:tab(g,tabs,key,a.details_group==key,func():a.details_group=key;g.refresh_panel())
  g.label(g.panel_body,"Choose a piece, then place it on the grid. Keep doors, stairs and work approaches clear.",14,Color("b8c5bc"))
  var cards=grid(g.panel_body,3)

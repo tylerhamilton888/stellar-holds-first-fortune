@@ -19,7 +19,8 @@
       "story_batch121",
       "story_batch122",
       "story_batch123",
-      "ridge124"
+      "ridge124",
+      "traditions126"
     ],
     "gameplay": [
       "loading",
@@ -83,7 +84,8 @@
       "story_batch121",
       "story_batch122",
       "story_batch123",
-      "ridge124"
+      "ridge124",
+      "traditions126"
     ],
     "modular": [
       "modular",
@@ -491,7 +493,8 @@
       "story_batch121",
       "story_batch122",
       "story_batch123",
-      "ridge124"
+      "ridge124",
+      "traditions126"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -767,6 +770,19 @@
       "story_art105",
       "story_world105",
       "story_batch123"
+    ],
+    "traditions126-focus": [
+      "traditions126"
+    ],
+    "traditions126": [
+      "traditions126",
+      "calendar",
+      "lodge100",
+      "frontier103",
+      "architecture",
+      "homestead",
+      "keldrath",
+      "ridge124"
     ]
   },
   "cases": {
@@ -1021,6 +1037,10 @@
     "ridge124": {
       "script": "tests/ridge124.gd",
       "marker": "RIDGE124"
+    },
+    "traditions126": {
+      "script": "tests/traditions126.gd",
+      "marker": "TRADITIONS126"
     }
   }
 }

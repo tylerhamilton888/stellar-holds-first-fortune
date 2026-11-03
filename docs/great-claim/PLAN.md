@@ -12,6 +12,10 @@ Read CHECKPOINT.md first on every continuation. Read only the active milestone a
 6. [The King returns](05-invasion-trial.md) — queued.
 7. [The First Fortune](06-thaneship-household.md) — queued.
 
+## Cultural reference
+
+Use [Dwarven religion](../lore/DWARVEN_RELIGION.md) at sensible moments in the remaining milestones. Keep religious references occasional; this reference does not add a new story gate or change milestone order.
+
 ## Delivery rules
 
 Keep the game launchable after each phase. Commit and back up coherent work through the existing repository review workflow. Use focused native tests during iteration, full hosted validation for merges, and exact-package checks for Windows publication. If the full story cannot reach a competent standard in one pass, the owner directive explicitly prioritizes a polished vertical slice and durable systems; report the remaining milestone list accurately. Never label the full narrative complete because its outline or flags exist.

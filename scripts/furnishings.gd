@@ -8,6 +8,7 @@ const ATLAS=preload("res://assets/furnishings-v56/interior.png")
 const CROPS=[Rect2(40,83,316,237),Rect2(424,22,308,300),Rect2(805,57,326,271),Rect2(1250,36,210,289),Rect2(15,429,407,224),Rect2(442,397,320,258),Rect2(805,376,325,282),Rect2(1180,328,323,340),Rect2(54,661,288,342),Rect2(491,668,188,334),Rect2(853,751,257,226),Rect2(1204,698,280,291)]
 # size is the visible silhouette; base is its ground-plane occupied rectangle.
 const ITEMS={
+ "ancestral_shrine":{"title":"Ancestral hearthstone","base_kind":"plinth","cost":{"dressed_stone":4,"wood":2}},
  "runestone":{"title":"Roadside rune-stone","size":Vector2(54,70.53),"base":Rect2(-23,-16,46,16),"cost":{"dressed_stone":6,"crystal":1}},
  "signpost":{"title":"Timber direction sign","anchor_x":.126,"size":Vector2(44,60.5),"base":Rect2(-8,-9,16,9),"cost":{"wood":3}},
  "road_lantern":{"title":"Roadside lantern post","anchor_x":.287,"size":Vector2(38,67.68),"base":Rect2(-10,-11,20,11),"cost":{"wood":3,"iron":2}},
@@ -44,7 +45,7 @@ const ITEMS={
  "mug":{"title":"Copper mug","art":10,"size":Vector2(6,6),"base":Rect2(),"cost":{}},
  "kettle":{"title":"Tea kettle","art":11,"size":Vector2(12,12),"base":Rect2(),"cost":{}}
 }
-const BUILDABLE=["anvil","double_bed","royal_throne","royal_pillar","royal_arch","royal_brazier","pantry","hearth_table","chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","worktable","hearth","stone_pillar","orrery","notice_board","oath_stone","pressure_manifold","training_rack","runestone","signpost","road_lantern","barrel","crate","plinth"]
+const BUILDABLE=["anvil","double_bed","royal_throne","royal_pillar","royal_arch","royal_brazier","pantry","hearth_table","chest","table","tea_table","chair","lamp","bed","desk","bookcase","counter","serving_counter","worktable","hearth","stone_pillar","orrery","notice_board","oath_stone","pressure_manifold","training_rack","runestone","signpost","road_lantern","barrel","crate","plinth","ancestral_shrine"]
 static func geometry(kind:String)->Dictionary:
  var item=ITEMS.get(kind,ITEMS.table)
  return ITEMS[item.base_kind] if item.has("base_kind") else item
@@ -56,7 +57,8 @@ static func silhouette(kind:String,p:Vector2)->Rect2:
  return Rect2(p-Vector2(size.x*float(item.get("anchor_x",.5)),size.y),size)
 static func draw(n:CanvasItem,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
- if kind.begins_with("royal_"):
+ if kind=="ancestral_shrine":HoldLooseProps.draw(n,silhouette(kind,p),"plinth",tint)
+ elif kind.begins_with("royal_"):
   var index=["royal_throne","royal_pillar","royal_arch","royal_brazier"].find(kind)
   HoldRoyalStage.draw_prop(n,{"p":p,"art":index,"width":item.size.x},float(n.get("clock")),tint)
  elif HoldLooseProps.CROPS.has(kind):HoldLooseProps.draw(n,silhouette(kind,p),kind,tint)
@@ -75,5 +77,5 @@ static func bedside(p:Vector2,side:int=1,kind:String="bed")->Vector2:return p+Ve
 static func desk_access(p:Vector2)->Vector2:return p+Vector2(0,22)
 static func cost_text(kind:String)->String:
  var parts=PackedStringArray()
- for resource in ITEMS[kind].cost:parts.append(str(ITEMS[kind].cost[resource])+" "+("timber" if resource=="wood" else resource))
+ for resource in ITEMS[kind].cost:parts.append(str(ITEMS[kind].cost[resource])+" "+("timber" if resource=="wood" else resource.replace("_"," ")))
  return " + ".join(parts)

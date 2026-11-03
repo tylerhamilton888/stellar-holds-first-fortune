@@ -21,3 +21,7 @@ Historical evidence and acceptance notes: [0.61.0](testing/ambient61.md), [found
 `--suite ridge124` runs the new relationship story plus courtship, people, calendar, roads, mountain rescue, portraits, named world art and final-cast regressions. `--suite ridge124_focus` runs the targeted story alone. The new case is also mandatory in core, gameplay and gameplay-4. Exact-export checks use `tools/check_pack.py --case ridge124` alongside the affected existing cases.
 
 The targeted case checks early-interest choices and release, same-day changes of mind, active player courtship/betrothal, both introductions, long skips, saved numeric normalization, warning/courtship/betrothal transitions, stale callbacks, friendship access, actor uniqueness, collision/approaches and both location displays. Existing courtship101 now exercises all eight candidates; mountain104 verifies both new partners in the physical rescue. Native review: `tests/review_ridge124.gd`, with production records in art/ridge124/README.md and final evidence in testing/ridge124.
+
+## Dwarven traditions 126
+
+`--suite traditions126` covers the new behavioral case plus calendar, lodge, frontier, furnishing, Keldrath and ridge relationships. `--suite traditions126-focus` runs only the new case. It is also included in core, gameplay and gameplay-4. `tools/check_pack.py --case traditions126` runs the fixture against the exported game. Review the eight-column seasonal offsets, shrine/catalogue, memorial, Cupday/Namesday scenes and optional Oath Stone inscription.

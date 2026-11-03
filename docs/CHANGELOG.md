@@ -1,3 +1,11 @@
+# Dwarven traditions 126 — restrained cultural integration
+
+The eight-day week preserves 28-day seasons, absolute saved dates and existing festival invitations. Optional worker-lodge memorial repair, a buildable household hearthstone, two optional miner topics, Sigrid's Cupday/Namesday evening activities, and selected festival/inscription details provide the first small integrations. There are no worship meters, exclusive patrons, mandatory observances or routine manifestations.
+
+Canonical gods, domains, ancestor ascension, tone limits and future quest guidance: [Dwarven religion](lore/DWARVEN_RELIGION.md). Current story priorities remain contest/Keldrath, invasion/trial and Thaneship/household. This task does not complete those milestones or publish a Windows release. Validation is in progress; see the traditions126 suite and exact-export case.
+
+---
+
 # Ridge dialogue song nods
 
 Added the owner's two requested phrases for Alden: his description of Maren appears in their couple greeting, and his blessing appears after the trail-post personal choice. Maren gains a good-spirits topic and revised dancing advice with brief song nods. Dialogue and matching authoring records only; no relationship rules, art or saved state changed. String replacements and JSON consistency checked. All five hosted jobs (four gameplay shards and people-preview) passed for source head 3229a6bbf6faabc8148453bc06e6955d2330b5f4 in [run 41541396792](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41541396792), completed by 2026-11-02T23:16:31Z. PR #97 merged as b0baf9f5e7960ad31355e15904af775b673d5c67; its tree exactly matches tested source tree df8b60cd46e4495b47dc874e887c4a875d84ec22. Local execution was unavailable during this dialogue edit; no additional local/native or exact-export verification is claimed. No Windows build is included.
