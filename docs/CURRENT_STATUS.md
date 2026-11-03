@@ -1,8 +1,10 @@
-# Giants at the stairs 133 — validation in progress
+# Giants at the stairs 133 — local acceptance complete
 
-Source version 0.97.0 doubles troll height to 220 world units and increases the physical base to 50. New whole painted poses support two separate, committed fist slams: marked landing, opposite-fist follow-up, then a long counterattack window. Health, rewards, wounds and encounter identities are preserved. Dodge, guard/parry, interruption and terrain checks remain in the existing combat owner. Nearby giant encounters gain camera headroom; the optional mine perspective uses the new art and circular warning.
+Source 0.97.0 makes trolls twice as tall, with matching physical bases, new whole painted poses and two individually marked fist slams followed by a counterattack window. The King faces five full-size trolls and returns with a larger trophy. Old health, rewards, wounds and story outcomes remain intact. Both camera modes leave room for the giants.
 
-The King's five trolls retain full gameplay scale in the open street. His return has a larger trophy and a clear approach. Native combat, geometry and scene review are in progress; no completed source/release claim yet. Design and ownership: [Giants at the stairs](great-claim/GIANT_TROLLS133.md). The existing 0.96.0 release run [41725064185](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41725064185) is independent and must not be restarted just because it is still verifying the pack.
+[Source PR114](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/114), commit `d80873ffc856bca7782b32ceeb01b003377957d2`, is backed up. Local native regression, final troll/camera checks, exact-pack checks and all 3,882 package entries pass; native visuals reviewed. [Full source CI41735880935](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41735880935) and [Windows 0.97.0 run41736178290](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41736178290) are running. Do not restart healthy jobs or treat an active build as published. The independent 0.96.0 run41725064185 remains preserved.
+
+Design: GIANT_TROLLS133.md. Evidence: docs/testing/troll133/acceptance.json and REVIEW.md. Runtime work is complete; remaining steps are successful source gate, merge and verified publication. Human difficulty and device performance remain playtest items.
 
 ---
 

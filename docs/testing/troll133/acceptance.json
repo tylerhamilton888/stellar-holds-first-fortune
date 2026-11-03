@@ -1,0 +1,717 @@
+{
+  "source_sha": "d80873ffc856bca7782b32ceeb01b003377957d2",
+  "source_tree": "b47344563ad37d3ce73e4cd26a777a98eda20103",
+  "local_source_commit": "4ee4ed3c887b78df6a8e5c09e1b4e9e03b5f0518",
+  "source_pr": 114,
+  "source_run": 41735880935,
+  "source_ci_status": "in_progress",
+  "native_regression": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.19
+    },
+    {
+      "test": "troll133",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 107,
+      "seconds": 82.53
+    },
+    {
+      "test": "enemies",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 98,
+      "seconds": 48.46
+    },
+    {
+      "test": "combat",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 44,
+      "seconds": 46.37
+    },
+    {
+      "test": "combat_art",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 123,
+      "seconds": 75.48
+    },
+    {
+      "test": "dev_testing",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 49,
+      "seconds": 91.47
+    },
+    {
+      "test": "invasion131",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 639,
+      "seconds": 125.26
+    },
+    {
+      "test": "navigation94",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 31,
+      "seconds": 54.57
+    },
+    {
+      "test": "mouselook95",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 46,
+      "seconds": 27.56
+    }
+  ],
+  "native_assertions": 1137,
+  "exact_pack_status": "passed",
+  "pack": {
+    "sha256": "bbcd8e5fffcedccfbcf36f40629b8355e1a719364862ff27a65a754c414abdf2",
+    "bytes": 1051076624,
+    "entries": 3882,
+    "inventory": "All entry hashes, bounds and relative paths pass."
+  },
+  "native_visuals": [
+    {
+      "path": "troll133/01-dwarf-and-giant.png",
+      "sha256": "f639f792afb4375a4bc7a8b596d9e2f58ca0265f75257c3eb1e208709418ed2e",
+      "bytes": 714367
+    },
+    {
+      "path": "troll133/02-first-fist-warning.png",
+      "sha256": "e318b2f3b77ec95c31aceafbe16a66cb9c61575cadfa71f130a6499e34d084bf",
+      "bytes": 725584
+    },
+    {
+      "path": "troll133/03-first-fist-contact.png",
+      "sha256": "92dffa28f7617017665f268819b7df68757fc52c45d096ddb4cac081e4712995",
+      "bytes": 731538
+    },
+    {
+      "path": "troll133/04-second-fist-warning.png",
+      "sha256": "f83260ccc8ce15e05782b6f158c2c9a4f39a91dffc5d8e7ceafb0867196f284d",
+      "bytes": 751240
+    },
+    {
+      "path": "troll133/05-second-fist-contact.png",
+      "sha256": "ee976757fb535760e06abb3b2fb91f7c527ef69074a0d454231cd530f0add3e0",
+      "bytes": 730983
+    },
+    {
+      "path": "troll133/06-king-five-giants.png",
+      "sha256": "68c71270058488ca427cac62e680bc91e517b81b762e3c5e8fb10d277d7c8db3",
+      "bytes": 878857
+    },
+    {
+      "path": "troll133/07-king-meets-fist.png",
+      "sha256": "499fb65c0cf97c516fd7ceea6811a72212c6222fd7b9ec9ada2e6b745b25ab61",
+      "bytes": 872116
+    },
+    {
+      "path": "troll133/08-king-counter.png",
+      "sha256": "addc5a796840dc20e2cec45d5b9c5a95154be9b14c6dded92f2c0f000dc9933f",
+      "bytes": 861762
+    },
+    {
+      "path": "troll133/09-king-trophy.png",
+      "sha256": "1f19507545b7ccbef70f1e8e4508b0215ac930859f191661ba9778d185db04ba",
+      "bytes": 569867
+    },
+    {
+      "path": "troll133/walk-0-00.png",
+      "sha256": "05d3822afc8aaad47246d7e2f9d8238d2f68baec5f38d407aeb650c50d819699",
+      "bytes": 739766
+    },
+    {
+      "path": "troll133/walk-0-01.png",
+      "sha256": "05d3822afc8aaad47246d7e2f9d8238d2f68baec5f38d407aeb650c50d819699",
+      "bytes": 739766
+    },
+    {
+      "path": "troll133/walk-0-02.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-03.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-04.png",
+      "sha256": "a5bc5ea814e756b6be3e38044d95bc1af38e8ebc02287a73e69fd719be5488c3",
+      "bytes": 750721
+    },
+    {
+      "path": "troll133/walk-0-05.png",
+      "sha256": "a5bc5ea814e756b6be3e38044d95bc1af38e8ebc02287a73e69fd719be5488c3",
+      "bytes": 750721
+    },
+    {
+      "path": "troll133/walk-0-06.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-07.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-1-00.png",
+      "sha256": "9a0c546fe71a19c23a41acbfa6bf117fe8886e79dc43cb1cbc7f43eafffb2fa2",
+      "bytes": 728232
+    },
+    {
+      "path": "troll133/walk-1-01.png",
+      "sha256": "9a0c546fe71a19c23a41acbfa6bf117fe8886e79dc43cb1cbc7f43eafffb2fa2",
+      "bytes": 728232
+    },
+    {
+      "path": "troll133/walk-1-02.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-03.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-04.png",
+      "sha256": "991c29566c87ef3bd5da6f7919e16c76486ff894801a0e0242a35d4ecf930592",
+      "bytes": 719710
+    },
+    {
+      "path": "troll133/walk-1-05.png",
+      "sha256": "991c29566c87ef3bd5da6f7919e16c76486ff894801a0e0242a35d4ecf930592",
+      "bytes": 719710
+    },
+    {
+      "path": "troll133/walk-1-06.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-07.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-2-00.png",
+      "sha256": "db738cdbaf414a1cbb8078bb35ea39c6053a3044cddfd40d7d0f737429aa724a",
+      "bytes": 740060
+    },
+    {
+      "path": "troll133/walk-2-01.png",
+      "sha256": "db738cdbaf414a1cbb8078bb35ea39c6053a3044cddfd40d7d0f737429aa724a",
+      "bytes": 740060
+    },
+    {
+      "path": "troll133/walk-2-02.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-03.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-04.png",
+      "sha256": "48cf90cea49b15b38e8344ca4289766c2d92227facada26b6609b05f49da43d2",
+      "bytes": 759047
+    },
+    {
+      "path": "troll133/walk-2-05.png",
+      "sha256": "48cf90cea49b15b38e8344ca4289766c2d92227facada26b6609b05f49da43d2",
+      "bytes": 759047
+    },
+    {
+      "path": "troll133/walk-2-06.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-07.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    }
+  ],
+  "limitations": [
+    "Human difficulty and device-performance testing remain separate from automated acceptance.",
+    "No completed Windows release is claimed by this pending receipt."
+  ],
+  "release_run": 41736178290,
+  "release_status": "in_progress",
+  "native_final": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 12.19
+    },
+    {
+      "test": "troll133",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 115,
+      "seconds": 92.19
+    },
+    {
+      "test": "mouselook95",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 46,
+      "seconds": 28.49
+    },
+    {
+      "test": "navigation94",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 31,
+      "seconds": 53.57
+    }
+  ],
+  "exact_pack_final": [
+    {
+      "test": "troll133",
+      "passed": true,
+      "checks": 115,
+      "errors": []
+    },
+    {
+      "test": "navigation94",
+      "passed": true,
+      "checks": 31,
+      "errors": []
+    },
+    {
+      "test": "mouselook95",
+      "passed": true,
+      "checks": 46,
+      "errors": []
+    }
+  ],
+  "exact_pack_before_camera": [
+    {
+      "test": "troll133",
+      "passed": true,
+      "checks": 107,
+      "errors": []
+    },
+    {
+      "test": "invasion131",
+      "passed": true,
+      "checks": 639,
+      "errors": []
+    },
+    {
+      "test": "enemies",
+      "passed": true,
+      "checks": 98,
+      "errors": []
+    },
+    {
+      "test": "navigation94",
+      "passed": true,
+      "checks": 31,
+      "errors": []
+    }
+  ],
+  "final_native_visuals": [
+    {
+      "path": "troll133/01-dwarf-and-giant.png",
+      "sha256": "f639f792afb4375a4bc7a8b596d9e2f58ca0265f75257c3eb1e208709418ed2e",
+      "bytes": 714367
+    },
+    {
+      "path": "troll133/02-first-fist-warning.png",
+      "sha256": "e318b2f3b77ec95c31aceafbe16a66cb9c61575cadfa71f130a6499e34d084bf",
+      "bytes": 725584
+    },
+    {
+      "path": "troll133/03-first-fist-contact.png",
+      "sha256": "92dffa28f7617017665f268819b7df68757fc52c45d096ddb4cac081e4712995",
+      "bytes": 731538
+    },
+    {
+      "path": "troll133/04-second-fist-warning.png",
+      "sha256": "f83260ccc8ce15e05782b6f158c2c9a4f39a91dffc5d8e7ceafb0867196f284d",
+      "bytes": 751240
+    },
+    {
+      "path": "troll133/05-second-fist-contact.png",
+      "sha256": "ee976757fb535760e06abb3b2fb91f7c527ef69074a0d454231cd530f0add3e0",
+      "bytes": 730983
+    },
+    {
+      "path": "troll133/06-king-five-giants.png",
+      "sha256": "b47614543ed0f176deb9c56dd0e065f67c3b23705b56bae1cb249449dcf85b28",
+      "bytes": 878855
+    },
+    {
+      "path": "troll133/07-king-meets-fist.png",
+      "sha256": "221edc1fee29e9596ee4b99e9f1a44030b8f889484b302c13f92753d540062c3",
+      "bytes": 872120
+    },
+    {
+      "path": "troll133/08-king-counter.png",
+      "sha256": "0537c2e0a12909cfc5ec57cc047187f42923eaf429b138bb03357c4182f3bdf6",
+      "bytes": 862256
+    },
+    {
+      "path": "troll133/09-king-trophy.png",
+      "sha256": "cc041f7985f316c19b8c1d79657b7881e15b7e869afab16ae89cf8501aa652c6",
+      "bytes": 570041
+    },
+    {
+      "path": "troll133/perspective-0.png",
+      "sha256": "6ae53f3a0a6a9044f68f6698e0809af2b26320fb8160413998d0b49ddb16a71b",
+      "bytes": 760159
+    },
+    {
+      "path": "troll133/perspective-1.png",
+      "sha256": "05a506377751dc7774dd4a162cf34235b121076bca3e8d6b628a143f17e1ffb1",
+      "bytes": 618914
+    },
+    {
+      "path": "troll133/perspective-2.png",
+      "sha256": "d8c1c9c3ce77f87894305ef082338bb6adbbfcb10a10cab6bc0de4559d9a7bf7",
+      "bytes": 882658
+    },
+    {
+      "path": "troll133/perspective-3.png",
+      "sha256": "80669b811a0c90e375a3e31b811a1ec4cd4f69de12af77ec495eb2391be14927",
+      "bytes": 709369
+    },
+    {
+      "path": "troll133/walk-0-00.png",
+      "sha256": "05d3822afc8aaad47246d7e2f9d8238d2f68baec5f38d407aeb650c50d819699",
+      "bytes": 739766
+    },
+    {
+      "path": "troll133/walk-0-01.png",
+      "sha256": "05d3822afc8aaad47246d7e2f9d8238d2f68baec5f38d407aeb650c50d819699",
+      "bytes": 739766
+    },
+    {
+      "path": "troll133/walk-0-02.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-03.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-04.png",
+      "sha256": "a5bc5ea814e756b6be3e38044d95bc1af38e8ebc02287a73e69fd719be5488c3",
+      "bytes": 750721
+    },
+    {
+      "path": "troll133/walk-0-05.png",
+      "sha256": "a5bc5ea814e756b6be3e38044d95bc1af38e8ebc02287a73e69fd719be5488c3",
+      "bytes": 750721
+    },
+    {
+      "path": "troll133/walk-0-06.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-07.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-1-00.png",
+      "sha256": "9a0c546fe71a19c23a41acbfa6bf117fe8886e79dc43cb1cbc7f43eafffb2fa2",
+      "bytes": 728232
+    },
+    {
+      "path": "troll133/walk-1-01.png",
+      "sha256": "9a0c546fe71a19c23a41acbfa6bf117fe8886e79dc43cb1cbc7f43eafffb2fa2",
+      "bytes": 728232
+    },
+    {
+      "path": "troll133/walk-1-02.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-03.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-04.png",
+      "sha256": "991c29566c87ef3bd5da6f7919e16c76486ff894801a0e0242a35d4ecf930592",
+      "bytes": 719710
+    },
+    {
+      "path": "troll133/walk-1-05.png",
+      "sha256": "991c29566c87ef3bd5da6f7919e16c76486ff894801a0e0242a35d4ecf930592",
+      "bytes": 719710
+    },
+    {
+      "path": "troll133/walk-1-06.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-07.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-2-00.png",
+      "sha256": "db738cdbaf414a1cbb8078bb35ea39c6053a3044cddfd40d7d0f737429aa724a",
+      "bytes": 740060
+    },
+    {
+      "path": "troll133/walk-2-01.png",
+      "sha256": "db738cdbaf414a1cbb8078bb35ea39c6053a3044cddfd40d7d0f737429aa724a",
+      "bytes": 740060
+    },
+    {
+      "path": "troll133/walk-2-02.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-03.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-04.png",
+      "sha256": "48cf90cea49b15b38e8344ca4289766c2d92227facada26b6609b05f49da43d2",
+      "bytes": 759047
+    },
+    {
+      "path": "troll133/walk-2-05.png",
+      "sha256": "48cf90cea49b15b38e8344ca4289766c2d92227facada26b6609b05f49da43d2",
+      "bytes": 759047
+    },
+    {
+      "path": "troll133/walk-2-06.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-07.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    }
+  ],
+  "final_export_visuals": [
+    {
+      "path": "troll133/01-dwarf-and-giant.png",
+      "sha256": "f639f792afb4375a4bc7a8b596d9e2f58ca0265f75257c3eb1e208709418ed2e",
+      "bytes": 714367
+    },
+    {
+      "path": "troll133/02-first-fist-warning.png",
+      "sha256": "e318b2f3b77ec95c31aceafbe16a66cb9c61575cadfa71f130a6499e34d084bf",
+      "bytes": 725584
+    },
+    {
+      "path": "troll133/03-first-fist-contact.png",
+      "sha256": "92dffa28f7617017665f268819b7df68757fc52c45d096ddb4cac081e4712995",
+      "bytes": 731538
+    },
+    {
+      "path": "troll133/04-second-fist-warning.png",
+      "sha256": "f83260ccc8ce15e05782b6f158c2c9a4f39a91dffc5d8e7ceafb0867196f284d",
+      "bytes": 751240
+    },
+    {
+      "path": "troll133/05-second-fist-contact.png",
+      "sha256": "ee976757fb535760e06abb3b2fb91f7c527ef69074a0d454231cd530f0add3e0",
+      "bytes": 730983
+    },
+    {
+      "path": "troll133/06-king-five-giants.png",
+      "sha256": "ece867923d59992d34fefa887f00fdeb2d740d0c44184c123366056348052b58",
+      "bytes": 878855
+    },
+    {
+      "path": "troll133/07-king-meets-fist.png",
+      "sha256": "4956cc96c6144bdb75a6736deebf878a8a0d7b7cefadd52fb526d71c7148de20",
+      "bytes": 872106
+    },
+    {
+      "path": "troll133/08-king-counter.png",
+      "sha256": "f79e88338751dace7e949ca9f0b7149dddfff2cde81775bf4d24eb91dbcd971b",
+      "bytes": 856033
+    },
+    {
+      "path": "troll133/09-king-trophy.png",
+      "sha256": "2939decbd4ae312d06fcada60f65e161c9efce8e38b867e6c981f9db49c88851",
+      "bytes": 567946
+    },
+    {
+      "path": "troll133/perspective-0.png",
+      "sha256": "6ae53f3a0a6a9044f68f6698e0809af2b26320fb8160413998d0b49ddb16a71b",
+      "bytes": 760159
+    },
+    {
+      "path": "troll133/perspective-1.png",
+      "sha256": "05a506377751dc7774dd4a162cf34235b121076bca3e8d6b628a143f17e1ffb1",
+      "bytes": 618914
+    },
+    {
+      "path": "troll133/perspective-2.png",
+      "sha256": "d8c1c9c3ce77f87894305ef082338bb6adbbfcb10a10cab6bc0de4559d9a7bf7",
+      "bytes": 882658
+    },
+    {
+      "path": "troll133/perspective-3.png",
+      "sha256": "80669b811a0c90e375a3e31b811a1ec4cd4f69de12af77ec495eb2391be14927",
+      "bytes": 709369
+    },
+    {
+      "path": "troll133/walk-0-00.png",
+      "sha256": "05d3822afc8aaad47246d7e2f9d8238d2f68baec5f38d407aeb650c50d819699",
+      "bytes": 739766
+    },
+    {
+      "path": "troll133/walk-0-01.png",
+      "sha256": "05d3822afc8aaad47246d7e2f9d8238d2f68baec5f38d407aeb650c50d819699",
+      "bytes": 739766
+    },
+    {
+      "path": "troll133/walk-0-02.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-03.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-04.png",
+      "sha256": "a5bc5ea814e756b6be3e38044d95bc1af38e8ebc02287a73e69fd719be5488c3",
+      "bytes": 750721
+    },
+    {
+      "path": "troll133/walk-0-05.png",
+      "sha256": "a5bc5ea814e756b6be3e38044d95bc1af38e8ebc02287a73e69fd719be5488c3",
+      "bytes": 750721
+    },
+    {
+      "path": "troll133/walk-0-06.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-0-07.png",
+      "sha256": "47de9c70768b7b8c7ddec47c12fbe2d7a624dcf88637f75b6f2197f143271fe4",
+      "bytes": 742228
+    },
+    {
+      "path": "troll133/walk-1-00.png",
+      "sha256": "9a0c546fe71a19c23a41acbfa6bf117fe8886e79dc43cb1cbc7f43eafffb2fa2",
+      "bytes": 728232
+    },
+    {
+      "path": "troll133/walk-1-01.png",
+      "sha256": "9a0c546fe71a19c23a41acbfa6bf117fe8886e79dc43cb1cbc7f43eafffb2fa2",
+      "bytes": 728232
+    },
+    {
+      "path": "troll133/walk-1-02.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-03.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-04.png",
+      "sha256": "991c29566c87ef3bd5da6f7919e16c76486ff894801a0e0242a35d4ecf930592",
+      "bytes": 719710
+    },
+    {
+      "path": "troll133/walk-1-05.png",
+      "sha256": "991c29566c87ef3bd5da6f7919e16c76486ff894801a0e0242a35d4ecf930592",
+      "bytes": 719710
+    },
+    {
+      "path": "troll133/walk-1-06.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-1-07.png",
+      "sha256": "bc867971e6c2fc5db1876f001705053a981bf623ba0140bc0960cef107b94360",
+      "bytes": 723964
+    },
+    {
+      "path": "troll133/walk-2-00.png",
+      "sha256": "db738cdbaf414a1cbb8078bb35ea39c6053a3044cddfd40d7d0f737429aa724a",
+      "bytes": 740060
+    },
+    {
+      "path": "troll133/walk-2-01.png",
+      "sha256": "db738cdbaf414a1cbb8078bb35ea39c6053a3044cddfd40d7d0f737429aa724a",
+      "bytes": 740060
+    },
+    {
+      "path": "troll133/walk-2-02.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-03.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-04.png",
+      "sha256": "48cf90cea49b15b38e8344ca4289766c2d92227facada26b6609b05f49da43d2",
+      "bytes": 759047
+    },
+    {
+      "path": "troll133/walk-2-05.png",
+      "sha256": "48cf90cea49b15b38e8344ca4289766c2d92227facada26b6609b05f49da43d2",
+      "bytes": 759047
+    },
+    {
+      "path": "troll133/walk-2-06.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    },
+    {
+      "path": "troll133/walk-2-07.png",
+      "sha256": "882ed7a4525d1ab1383a8df7c3c3d1282d8f5e72e1e1d8d2d3da27172a86a57e",
+      "bytes": 739674
+    }
+  ]
+}
