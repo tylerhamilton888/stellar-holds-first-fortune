@@ -1,0 +1,244 @@
+{
+  "source_sha": "f2627d5ccd2c24012ae10b7f1123ad2b0aa94cb8",
+  "source_tree": "ec99c3a53f9fe58e7eff88bba0d1c98e6aa1f43f",
+  "source_merge": "496ccc9a1a86cf81ce2d2a191cdb7a8652bbc5be",
+  "source_pr": 109,
+  "exported_button_review": {
+    "checks": 5,
+    "passed": true,
+    "scope": "Actual duel/trial button callbacks save and advance; all response labels and obscured execution reviewed"
+  },
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.16
+    },
+    {
+      "test": "invasion131",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 639,
+      "seconds": 131.73
+    }
+  ],
+  "exact_export": [
+    {
+      "test": "invasion131",
+      "passed": true,
+      "checks": 639,
+      "errors": []
+    }
+  ],
+  "preceding_native_regression": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 10.17
+    },
+    {
+      "test": "invasion131",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 638,
+      "seconds": 118.55
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 380,
+      "seconds": 91.65
+    },
+    {
+      "test": "friendship130",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 1265,
+      "seconds": 114.23
+    },
+    {
+      "test": "combat",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 44,
+      "seconds": 50.56
+    },
+    {
+      "test": "enemies",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 97,
+      "seconds": 58.82
+    },
+    {
+      "test": "combat_art",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 123,
+      "seconds": 92.56
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 54.63
+    }
+  ],
+  "preceding_exact_regression": [
+    {
+      "test": "invasion131",
+      "passed": true,
+      "checks": 639,
+      "errors": []
+    },
+    {
+      "test": "friendship130",
+      "passed": true,
+      "checks": 1265,
+      "errors": []
+    },
+    {
+      "test": "combat",
+      "passed": true,
+      "checks": 44,
+      "errors": []
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "checks": 35,
+      "errors": []
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "checks": 380,
+      "errors": []
+    }
+  ],
+  "regression_scope_note": "Final changes after broad regression only refine royal intervention framing. Final focused native and exact-export acceptance cover that scene and all chapter progression.",
+  "pack_sha256": "dececf27db01dcf8f852f509458b267df8537253e4f20ab20c818e1bd85d874d",
+  "verified_pack_entries": 3863,
+  "hosted": {
+    "run_id": 41695999934,
+    "attempt": 2,
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41695999934",
+    "head_sha": "f2627d5ccd2c24012ae10b7f1123ad2b0aa94cb8",
+    "conclusion": "success",
+    "completed_at": "2026-11-03T19:54:11Z",
+    "jobs": [
+      {
+        "id": 126158841215,
+        "name": "people-preview",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126158843796,
+        "name": "gameplay (gameplay-2)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126158894211,
+        "name": "gameplay (gameplay-4)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126158901782,
+        "name": "gameplay (gameplay-3)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126158932847,
+        "name": "gameplay (gameplay-1)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "visual_review": [
+    "Ceremony witnesses and explicit response buttons; no HUD or loading-overlay collision after transition",
+    "Visible gate-bar opening and enemy arrival",
+    "Five royal opponents framed in the open street; complete painted axe poses",
+    "King returns with intact trophy walking poses",
+    "Trial opinion acknowledgement and brief obscured execution",
+    "Combat instructions separated from objective; practical markers and escort movement",
+    "Same-world homecoming with clear actors and restored player control"
+  ],
+  "limitations": [
+    "Human opening-chapter completion time remains unmeasured",
+    "Audible mix and player-device performance need a normal playtest",
+    "Marriage, household expansion and directed districts remain future chapter work"
+  ],
+  "release_pending": {
+    "run_id": 41705684539,
+    "source_sha": "0744f011ebdf09c4c65cf0f6e968b6988d1765fe",
+    "version": "0.95.0",
+    "status": "Building; exact-package acceptance and publication pending"
+  },
+  "recovery_opener": {
+    "source_sha": "f2627d5ccd2c24012ae10b7f1123ad2b0aa94cb8",
+    "source_tree": "ec99c3a53f9fe58e7eff88bba0d1c98e6aa1f43f",
+    "pack_sha256": "dececf27db01dcf8f852f509458b267df8537253e4f20ab20c818e1bd85d874d",
+    "checks": 325,
+    "cases": [
+      {
+        "test": "menu_quality100",
+        "passed": true,
+        "checks": 32,
+        "errors": []
+      },
+      {
+        "test": "firstvisit99",
+        "passed": true,
+        "checks": 22,
+        "errors": []
+      },
+      {
+        "test": "lodge100",
+        "passed": true,
+        "checks": 47,
+        "errors": []
+      },
+      {
+        "test": "frontier103",
+        "passed": true,
+        "checks": 224,
+        "errors": []
+      }
+    ],
+    "reviewed": [
+      "Title screen: no gameplay HUD, readable primary actions",
+      "Three separate save slots",
+      "First-shift journal and home-restoration lead",
+      "Shared bunkhouse and upstairs room",
+      "Constructed player home and usable entrance",
+      "Final royal intervention, explicit trial choices and Thane homecoming"
+    ],
+    "follow_up": [
+      "Prioritize immediate first-shift instructions above future ancestry in the journal",
+      "Remove duplicate chapter name in the title footer",
+      "Measure normal-speed pacing and difficulty on a Windows playtest"
+    ],
+    "scope": "Recovery verification of unchanged runtime. No claim that normal-speed human playthrough or audio evaluation is complete."
+  }
+}

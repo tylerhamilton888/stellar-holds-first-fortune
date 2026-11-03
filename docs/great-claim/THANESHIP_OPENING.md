@@ -34,3 +34,15 @@ Polish acceptance for this delivery includes readable journal/HUD instructions, 
 `HoldSkirmish`: authoritative player/enemy contacts and rewards; no duplicate combat engine.
 
 Eirik's battle and trophy-return poses are complete original paintings based on his existing identity. Source and exact prompt: `assets/thane131/PRODUCTION.md`. The execution uses a brief obscured impact, no gore display. Fallen scorched beams mark the damaged streets without destroying player furniture or creating hidden collision blockers.
+
+## Next: full opening-chapter playtest and polish
+
+| Phase | What to record | Polish signal |
+| --- | --- | --- |
+| First shift and civic work | Active work time, instruction rereads, supply trips | Remove unclear steps and unnecessary backtracking. |
+| Home, rescue and ancestry | Building freedom, navigation stalls, rescue retries | Protect player ownership and make the next useful action clear. |
+| Contest and Keldrath | Contest retries, ward navigation, ceremony readiness | Keep the handoff into the finale legible without rushing exploration. |
+| Invasion and judgment | Combat retries, gear used, escort clarity, scene readability | Tune abrupt difficulty changes; preserve explicit choices and recovery. |
+| Thane homecoming | Actual house, belongings, workshops and relationships | Confirm the endpoint feels earned and leaves ordinary play available. |
+
+Play once following the main story with modest gear and once including crafting and friendship detours. Record optional activity time separately. Review camera, motion, sound, skipping and reloads at normal speed. Tune rushed or repetitive stretches before adding the next chapter's districts, marriage and household conclusions.

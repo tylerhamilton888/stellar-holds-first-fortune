@@ -15,7 +15,7 @@ The reception prepares for the formal investiture; it does not replace the inter
 
 ## Thaneship presentation in implementation 131
 
-The interrupted procession, visible gate breach, royal intervention and trophy return, trial, investiture and same-world homecoming now have staged scenes. The invasion has playable battles and practical rescue/defense objectives. Explicit duel and trial decisions cannot be skipped. Acceptance is in progress; see [Thane opening](THANESHIP_OPENING.md).
+The interrupted procession, visible gate breach, royal intervention and trophy return, trial, investiture and same-world homecoming now have staged scenes. The invasion has playable battles and practical rescue/defense objectives. Explicit duel and trial decisions cannot be skipped. Native, exact-export and all five hosted checks passed; source PR #109 merged; see [Thane opening](THANESHIP_OPENING.md).
 
 ## Next presentation work after the opening chapter
 

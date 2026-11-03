@@ -42,7 +42,9 @@ jobs:
           retention-days: 7
   people-preview:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    # A cold checkout of the retained source/art history can consume ~17 minutes.
+    # Match the gameplay budget so checkout does not crowd out visual validation.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Install pinned official engine

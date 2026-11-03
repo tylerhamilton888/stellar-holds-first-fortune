@@ -31,7 +31,9 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
-A Hearth of Your Own (0.89.0) begins new fortunes in a shared miners’ lodge. Meet Ivar, take your first shift and furnish your quarters before following the next lead. [Download the complete Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.89.0). Existing fortunes remain available. See [current status](docs/CURRENT_STATUS.md) and the [playtest guide](docs/PLAYTEST_GUIDE.md).
+The First Fortune (0.95.0 source) follows a new worker from Stonebridge's bunkhouse through a player-built home, ancestral rescue, the engineering contest, Keldrath's defense and a homecoming as Thane. Twelve characters offer optional friendship episodes. Existing homes, possessions and relationships persist. Marriage and district management remain future work.
+
+For the current opening, choose **First visit to the hold** and an empty fortune slot. Continue an existing frontier fortune to keep its earned progress. Download playable builds from [Releases](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases); the [current status](docs/CURRENT_STATUS.md) distinguishes merged source from published Windows builds. See the [current playtest route](docs/PLAYTEST_GUIDE.md).
 
 ## Project map
 
