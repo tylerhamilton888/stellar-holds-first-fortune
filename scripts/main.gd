@@ -217,7 +217,7 @@ func setup_ui():
 var first_visit_pending=false
 
 func show_title():
- if opening_scene is HoldClaimScene127:opening_scene.layer.queue_free();opening_scene=null
+ if opening_scene is HoldClaimScene127 or opening_scene is HoldFriendScene130:opening_scene.layer.queue_free();opening_scene=null
  HoldClaim127.cancel(self)
  first_visit_pending=false
  if depth_nav!=null:depth_nav.explore.release_pointer()
@@ -246,7 +246,7 @@ func show_title():
  var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
- if opening_scene is HoldClaimScene127:opening_scene.layer.queue_free();opening_scene=null
+ if opening_scene is HoldClaimScene127 or opening_scene is HoldFriendScene130:opening_scene.layer.queue_free();opening_scene=null
  HoldClaim127.cancel(self)
  var first_visit=first_visit_pending and not load_saved and not testing
  first_visit_pending=false
@@ -299,6 +299,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  elif not HoldOnboarding.ensure(state).arrival_seen:
   opening_scene=HoldOpeningScene.begin(self,"arrival")
  elif HoldOnboarding.ensure(state).get("escort_pending",false):opening_scene=HoldArrivalEscort.start(self)
+ if load_saved:HoldFriendScene130.start_scene(self)
  if load_saved and HoldClaim127.eligible(state) and HoldClaim127.data(state).scene!="":HoldClaimScene127.start_scene(self)
 
 func spawn_agents():
@@ -427,6 +428,7 @@ func _unhandled_input(e):
  if depth_nav.input(e):get_viewport().set_input_as_handled();return
  if panel_id!="" and e is InputEventKey and e.pressed and not e.echo and e.keycode in [KEY_PAGEUP,KEY_PAGEDOWN]:
   HoldMenuView.cycle_tab(self,-1 if e.keycode==KEY_PAGEUP else 1);get_viewport().set_input_as_handled();return
+ if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldFriendship130.interact(self):get_viewport().set_input_as_handled();return
  if fight.input(e):get_viewport().set_input_as_handled();return
  if fieldwork.input(e):get_viewport().set_input_as_handled();return
  if panel_id=="" and e is InputEventKey and e.pressed and not e.echo and e.keycode==KEY_E and not e.shift_pressed and HoldAncestralClaim.interact(self):get_viewport().set_input_as_handled();return
@@ -1241,7 +1243,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
- if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126","claim127"]:menu_paused=true
+ if id in ["lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126","claim127","friend130"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
  HoldMenuView.build_shell(self,id)
@@ -1287,6 +1289,7 @@ func open_panel(id:String,remember:bool=true):
   "eight126":HoldTraditions126.lore_panel(self)
   "lodge_talk":HoldWorkerLodge100.panel(self)
   "claim127":HoldClaim127.panel(self)
+  "friend130":HoldFriendship130.panel(self,talk_id,true)
   "great_claim102":HoldGreatClaim102.panel(self)
   "frontier103":HoldFrontier103.panel(self)
   "frontier_archive103":HoldFrontier103.archive_panel(self)
@@ -1648,12 +1651,13 @@ func ivar_welcome_panel():
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel(details:bool=false):
  if HoldFirstVisit99.active(state) and not details:
-  HoldFirstVisit99.journal(self);HoldTraditions126.journal(self);return
+  HoldFirstVisit99.journal(self);HoldTraditions126.journal(self);HoldFriendship130.journal(self);return
  var current=HoldOnboarding.primary(state)
  if current!="":
   var objective=HoldMenuView.section(panel_body,"Current objective")
   label(objective,current,17)
   small_button(objective,"View steps & local quests",func():open_panel("guidance"))
+ HoldFriendship130.journal(self)
  HoldExpedition97.journal(self)
  HoldFirstShift.journal(self)
  HoldAncestralClaim.journal(self)

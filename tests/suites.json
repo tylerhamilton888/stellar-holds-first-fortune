@@ -21,7 +21,8 @@
       "story_batch123",
       "ridge124",
       "traditions126",
-      "hearthknot128"
+      "hearthknot128",
+      "friendship130"
     ],
     "gameplay": [
       "loading",
@@ -88,7 +89,8 @@
       "ridge124",
       "traditions126",
       "claim127",
-      "hearthknot128"
+      "hearthknot128",
+      "friendship130"
     ],
     "modular": [
       "modular",
@@ -365,7 +367,8 @@
       "people",
       "dev_testing",
       "combat_art",
-      "menu92"
+      "menu92",
+      "friendship130"
     ],
     "gameplay-3": [
       "orientation",
@@ -817,6 +820,17 @@
       "courtship101",
       "hearthknot128",
       "calendar"
+    ],
+    "friendship130_focus": [
+      "friendship130"
+    ],
+    "friendship130": [
+      "friendship130",
+      "people",
+      "courtship101",
+      "ridge124",
+      "claim127",
+      "menu92"
     ]
   },
   "cases": {
@@ -1083,6 +1097,10 @@
     "hearthknot128": {
       "script": "tests/hearthknot128.gd",
       "marker": "HEARTHKNOT128"
+    },
+    "friendship130": {
+      "script": "tests/friendship130.gd",
+      "marker": "FRIENDSHIP130"
     }
   }
 }

@@ -70,7 +70,7 @@ static func meet(g,id:String):
  HoldRidgePair124.meet(s,id)
  g.save_game()
 static func level(d:Dictionary)->String:
- return "Trusted friend" if int(d.bond)>=12 else "Familiar face" if int(d.bond)>=5 else "Acquaintance"
+ return "Close friend" if int(d.bond)>=18 else "Trusted friend" if int(d.bond)>=12 else "Familiar face" if int(d.bond)>=5 else "Acquaintance"
 static func role(s,id:String)->String:
  if id.begins_with("road_folk:"):return HoldRoads.FOLK[int(id.trim_prefix("road_folk:"))].role
  if id.begins_with("resident:"):return "Neighbor of "+id.split(":")[1].capitalize()
@@ -117,6 +117,7 @@ static func panel(g,id:String):
  HoldConversation.choose(g,"Any small jobs need doing?",func():g.talk_topic="favor";g.refresh_panel())
  if HoldRoadCharacters.CAST.has(id):HoldConversation.choose(g,"Tell me about life here",func():g.talk_line="";g.talk_topic="road_story";g.refresh_panel())
  HoldMountain104.reaction(g,id)
+ HoldFriendship130.option(g,id)
  HoldCourtship101.option(g,id)
  HoldConversation.return_choice(g,id)
 static func favor(g,id:String):
@@ -158,6 +159,7 @@ static func notebook(g):
   var d=all[id]
   g.label(g.panel_body,g.state.npc(id).name+" · "+level(d),17)
   if HoldRoadCharacters.CAST.has(id):g.label(g.panel_body,HoldRoadCharacters.whereabouts(id,g.state),14,Color("a7c7c6"))
+  HoldFriendship130.notebook(g,id)
   var shared=HoldRidgePair124.summary(g.state,id)
   if shared!="":g.label(g.panel_body,shared,14)
   g.label(g.panel_body,d.persona.trait+". "+d.last,14)
