@@ -1,4 +1,4 @@
-Current handoff: docs/SESSION_HANDOFF.md. Release 0.89.0 is published, verified and merged; the records below are historical.
+Current handoff: docs/SESSION_HANDOFF.md. Source 0.97.0 giant trolls are backed up in PR114; final source gate and Windows delivery are active. The records below are historical.
 
 # 0.64.0 — The Hold of Three Hearths (source verified)
 
