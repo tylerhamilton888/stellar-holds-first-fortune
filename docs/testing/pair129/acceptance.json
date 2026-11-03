@@ -1,0 +1,100 @@
+{
+  "source_sha": "59bea68c974308759dc102cc5cae9c597a1a48f6",
+  "source_tree": "d9537a099ebcb20cd90fb9642afc12c7111e6da9",
+  "source_merge": "30f4254f27fc26aa77c13973cea1d9328bd64e81",
+  "source_pr": 105,
+  "native": [
+    {
+      "test": "ridge124",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 211,
+      "seconds": 71.77
+    },
+    {
+      "test": "courtship101",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 413,
+      "seconds": 96.29
+    }
+  ],
+  "exact_export": [
+    {
+      "test": "hearthknot128",
+      "passed": true,
+      "checks": 22,
+      "errors": []
+    },
+    {
+      "test": "calendar",
+      "passed": true,
+      "checks": 35,
+      "errors": []
+    },
+    {
+      "test": "ridge124",
+      "passed": true,
+      "checks": 211,
+      "errors": []
+    },
+    {
+      "test": "courtship101",
+      "passed": true,
+      "checks": 413,
+      "errors": []
+    }
+  ],
+  "pack_sha256": "42a964a9d4374b72f8c42649b36afd0c820891521d0729ec1fb1b0a3025fd0e3",
+  "verified_pack_entries": 3847,
+  "hosted": {
+    "merge": "30f4254f27fc26aa77c13973cea1d9328bd64e81",
+    "run": {
+      "id": 41669637501,
+      "head_sha": "59bea68c974308759dc102cc5cae9c597a1a48f6",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-11-03T16:30:46Z",
+      "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41669637501"
+    },
+    "jobs": [
+      {
+        "id": 126034254775,
+        "name": "people-preview",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126034255005,
+        "name": "gameplay (gameplay-1)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126034255012,
+        "name": "gameplay (gameplay-2)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126034255470,
+        "name": "gameplay (gameplay-4)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126034255630,
+        "name": "gameplay (gameplay-3)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "visual_review": [
+    "Exported couple conversation readable",
+    "Both actors together at Wayfarer Hearth, clear approaches"
+  ],
+  "limitations": "Native Linux/software rendering and exact Windows PCK; no new Windows release or hardware playtest."
+}

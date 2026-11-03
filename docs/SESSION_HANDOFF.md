@@ -1,8 +1,8 @@
-# Choice-driven Alden/Maren romance — verification in progress
+# Choice-driven Alden/Maren romance — source complete
 
 Alden and Maren now begin courting when the player successfully begins courting another candidate, even before their introductions. Player betrothal to another candidate advances their betrothal. Elapsed days, friendship and rejected invitations never trigger either step. Choosing either Alden or Maren keeps their player romance available. Early interest is released by choosing somebody else; a later player breakup does not dissolve the NPC couple. Existing NPC commitments and historical hints are preserved; unfinished countdowns never expire. Existing player commitments elsewhere reconcile on load without spending items or inventing introductions.
 
-Source version 0.93.2; Windows 0.93.0 remains the published build. Native and exact-export regression checks are being run before delivery.
+Source version 0.93.2; Windows 0.93.0 remains the published build. Native acceptance: 211 pairing assertions and 413 all-eight courtship assertions passed. Exact-export acceptance: pairing 211, courtship 413, Hearthknot 22 and calendar 35 (681 total), all passed. All 3,847 PCK entries passed integrity checks. Reviewed the exported couple dialogue and shared tavern placement. All five hosted jobs passed in [run 41669637501](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41669637501). PR #105 merged as `30f4254f27fc26aa77c13973cea1d9328bd64e81`; its tree matches tested source `59bea68c974308759dc102cc5cae9c597a1a48f6` (tree `d9537a099ebcb20cd90fb9642afc12c7111e6da9`). Evidence: [pairing acceptance](testing/pair129/acceptance.json).
 
 ---
 
