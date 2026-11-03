@@ -2,7 +2,9 @@ extends "res://tests/support/game_fixture.gd"
 func desk(id:String):
  g.surface.enter(HoldFrontier103.room(g.state,id));settle();at(Vector2(480,500))
 func reload_scene():
- g.save_game();g.start_game(true);settle()
+ g.save_game();g.start_game(true)
+ if g.opening_scene is HoldClaimScene127:check(not g.calendar_button.visible and not g.energy_button.visible,"Resumed scene hides interactive HUD before the next frame")
+ settle()
  if g.opening_scene is HoldClaimScene127:g.opening_scene.set_process(false)
 func shot(name:String):
  g.queue_redraw()

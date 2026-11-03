@@ -48,6 +48,7 @@ func _ready():
     ["IVAR DEEPMEASURE","We will return for the ceremony. For now, there is a city to enjoy—and I have been promised supper without a ledger beside the plate."]]
  step=clampi(step,0,lines.size()-1)
  for n in [game.hud,game.status,game.objectives,game.footer]:n.visible=false
+ game.sync_hud_controls()
  var ui=Control.new();ui.theme=game.ui.theme;add_child(ui)
  var top=ColorRect.new();top.size=Vector2(960,46);top.color=Color("101f2b");ui.add_child(top)
  scene_title=Label.new();scene_title.position=Vector2(26,10);scene_title.modulate=Color("edc98a");ui.add_child(scene_title)
