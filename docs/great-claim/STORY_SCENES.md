@@ -28,3 +28,7 @@ These queued scenes are presentation requirements, not claims of implemented gam
 For new scenes, test both normal completion and interruption: save during motion, reload, skip, leave to title, and resume. Check actor routes against current buildings, prevent duplicate residents, preserve camera/actor continuity, and restore control and HUD state. Give useful feedback when a carried load or attached cart prevents joining a scene. Test the real movement and interaction paths, not only direct state transitions.
 
 Use religious customs sparingly where an oath, family gathering or remembrance naturally calls for them. Ordinary craftsmanship and fellowship already express the culture; most lines need no divine reference. See [Dwarven religion](../lore/DWARVEN_RELIGION.md).
+
+## Friendship scenes
+
+Friendship milestones now have their own optional staged moments. See [Friendship stories](FRIENDSHIP_STORIES.md) for scope, task/reward ownership and the table-flip incident. These do not replace the remaining main-story milestones or add romance prerequisites.

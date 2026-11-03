@@ -214,6 +214,7 @@ func points()->Array:
    result.append(spot(100,690,"Road to Keldrath · later journey","hearthward"))
   if area=="claim":result=result.filter(func(p):return p.action in ["trail","mine"] or str(p.action).begins_with("house:"))
  result.append_array(HoldFrontier103.points(g))
+ result.append_array(HoldFriendship130.points(g))
  result.append_array(HoldClaim127.points(g))
  result.append_array(architecture.points())
  result.append_array(architecture.service_points())
@@ -307,6 +308,10 @@ func start_rest(point:Dictionary,nap:bool=false)->bool:
  rest_bed=point.bed;rest_approach=point.p;rest_time=1.4;rest_elapsed=0
  g.notify("Settle at the bedside · move to cancel");return true
 func action(id:String):
+ if id.begins_with("friend130:"):
+  var who=id.trim_prefix("friend130:")
+  if HoldFriendship130.at_task(g,who):g.talk_id=who;g.open_panel("friend130")
+  return
  if id=="claim127":
   if HoldClaim127.at_yard(g) and g.claim_work127<0:g.open_panel(id)
   return
@@ -742,6 +747,9 @@ func draw():
  if g.opening_scene is HoldClaimScene127:
   objects=objects.filter(func(o):return not g.opening_scene.cast.any(func(a):return a.id==str(o.get("interaction",o.get("id","")))))
   objects.append_array(g.opening_scene.objects())
+ if g.opening_scene is HoldFriendScene130:
+  objects=objects.filter(func(o):return not g.opening_scene.hide_object(o))
+  objects.append_array(g.opening_scene.objects())
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))
  for o in objects:
   g.draw_set_transform(-cam)
@@ -756,7 +764,8 @@ func draw():
   elif o.kind=="citizen":world.draw_citizen(o)
   elif o.kind=="fighter":g.fight.draw_enemy(o.enemy)
   elif o.kind=="escort":g.opening_scene.draw_guide()
-  elif o.kind=="claim_actor127":g.opening_scene.draw_actor(o.index)
+  elif o.kind in ["claim_actor127","friend_actor130"]:g.opening_scene.draw_actor(o.index)
+  elif o.kind=="friend_prop130":g.opening_scene.draw_prop()
   elif o.kind=="garden":g.fieldwork.draw_bed(o.bed)
   elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
@@ -779,7 +788,7 @@ func draw():
  house.roof_draw()
  HoldCalendar.lighting(g,objects)
  HoldWardDesign.motion(g)
- if g.opening_scene is HoldArrivalEscort or g.opening_scene is HoldClaimScene127:
+ if g.opening_scene is HoldArrivalEscort or g.opening_scene is HoldClaimScene127 or g.opening_scene is HoldFriendScene130:
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area not in ["hearthward","crownward","forgeward"] and not room():
   for point in points():

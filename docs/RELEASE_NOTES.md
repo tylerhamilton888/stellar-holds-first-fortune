@@ -1,3 +1,11 @@
+# 0.94.0 — Time for Friends
+
+Get to know twelve familiar faces through three optional friendship stories each. Small errands and practical choices lead to brief in-world scenes, useful gifts, skill experience and lasting memories. New stories appear at 5, 12 and 18 friendship; they have no deadlines and do not require romance.
+
+Help Maren set supper, then discover what happens when rude miners mistake hospitality for permission to insult the cook. Her table-flipping moment has its own whole-character animation, and the culprits put the table right afterward. Other stories explore music, craftsmanship, family, courage and the difficulty of accepting a little kindness yourself.
+
+Scenes can be skipped or resumed after loading. Rewards are given once. Existing homes, possessions, friendships and courtships are preserved. These changes are source-complete only after verification below; no new Windows release has been published yet.
+
 # 0.93.2 — Courtship by choice
 
 Alden and Maren will begin courting one another when you begin courting someone else. They become betrothed when you do. Take all the time you like choosing a partner: waiting alone never advances their romance. Established couples remain together.

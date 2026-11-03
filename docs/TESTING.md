@@ -1,3 +1,7 @@
+# Friendship stories 130
+
+`--suite friendship130_focus` checks all 36 episode paths, thresholds, local tasks, wrong/missing-cost guards, unique payouts, romance/storage preservation, actor routes, native scenes, saved-beat recovery and title/resume. `--suite friendship130` adds people, courtship, pairing, main-story scenes and menu regression checks. The new case is mandatory in core/gameplay/gameplay-2 and the exact-pack harness.
+
 # Current acceptance checks
 
 Use Godot 4.4.1, Python 3.11+, and isolated test data. Never test against personal saves.

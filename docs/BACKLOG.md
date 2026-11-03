@@ -1,3 +1,11 @@
+# Friendship stories 130 — verification in progress
+
+Twelve characters receive three optional friendship episodes at 5, 12 and 18 bond (36 total): all eight romance candidates plus Ivar, Borin, Orla and Hedrik. Practical tasks lead to short in-world scenes, useful item rewards, modest discipline XP and persistent memories. Maren's trusted-friend episode stages the rude-miner table flip. Scenes are resumable/skippable and rewards are once-only; actual furniture, household storage and romance remain untouched.
+
+Source version 0.94.0. Native, export and hosted verification pending. Windows 0.93.0 remains published; no new release requested. Main-story milestone 05 remains next. Design: [friendship stories](great-claim/FRIENDSHIP_STORIES.md).
+
+---
+
 # Choice-driven Alden/Maren romance (0.93.2)
 
 Alden and Maren now begin courting when the player successfully begins courting another candidate, even before their introductions. Player betrothal to another candidate advances their betrothal. Elapsed days, friendship and rejected invitations never trigger either step. Choosing either Alden or Maren keeps their player romance available. Early interest is released by choosing somebody else; a later player breakup does not dissolve the NPC couple. Existing NPC commitments and historical hints are preserved; unfinished countdowns never expire. Existing player commitments elsewhere reconcile on load without spending items or inventing introductions.
