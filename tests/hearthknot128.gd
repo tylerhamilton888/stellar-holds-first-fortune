@@ -50,6 +50,7 @@ func run():
  check(HoldCourtship101.partner(g.state)==ID and g.state.count("hearthknot")==1 and g.talk_line.ends_with(HoldCourtship101.ARCS[ID].yes) and g.talk_line.contains("accepts your Hearthknot"),"Explicit offer begins mutually accepted courtship and spends exactly one token")
  check(not HoldCourtship101.begin(g,ID) and g.state.count("hearthknot")==1,"Repeated offer spends nothing")
  await snap("invitation-accepted")
+ check(g.menu_scroll.scroll_vertical==0,"Accepted offer returns to the top so the reciprocal response is visible")
  g.state.inventory.hearthknot=0;g.save_game();g.start_game(true);settle()
  check(HoldCourtship101.partner(g.state)==ID,"Existing courtship reloads without a token")
  visit();HoldCalendar.advance(g.state,1440)
