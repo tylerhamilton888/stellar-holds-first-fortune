@@ -115,7 +115,7 @@ func trade(k:String,buy:bool)->bool:
  return true
 func craft(id:String)->bool:
  var r=HoldData.RECIPES[id]
- if r.tech!="" and not tech.has(r.tech):return false
+ if HoldCollections141.recipe_reason(self,id)!="":return false
  if queue.size()>=12 or not pay(r.cost):return false
  queue.append({"id":id,"left":r.time})
  return true

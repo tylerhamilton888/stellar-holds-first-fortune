@@ -29,7 +29,8 @@
       "polish135",
       "ledger137",
       "campaign138",
-      "restoration139"
+      "restoration139",
+      "collections141"
     ],
     "gameplay": [
       "loading",
@@ -104,7 +105,8 @@
       "polish135",
       "ledger137",
       "campaign138",
-      "restoration139"
+      "restoration139",
+      "collections141"
     ],
     "modular": [
       "modular",
@@ -388,7 +390,8 @@
       "polish135",
       "ledger137",
       "campaign138",
-      "restoration139"
+      "restoration139",
+      "collections141"
     ],
     "gameplay-3": [
       "orientation",
@@ -965,6 +968,18 @@
       "claim127",
       "invasion131",
       "troll133"
+    ],
+    "collections141-focus": [
+      "collections141"
+    ],
+    "collections141": [
+      "collections141",
+      "ledger137",
+      "work132",
+      "campaign138",
+      "restoration139",
+      "equipment93",
+      "menu92"
     ]
   },
   "cases": {
@@ -1263,6 +1278,10 @@
     "restoration139": {
       "script": "tests/restoration139.gd",
       "marker": "RESTORATION139"
+    },
+    "collections141": {
+      "script": "tests/collections141.gd",
+      "marker": "COLLECTIONS141"
     }
   }
 }

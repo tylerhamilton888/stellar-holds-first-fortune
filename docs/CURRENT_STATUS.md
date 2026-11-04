@@ -1,3 +1,13 @@
+# Collections141 — source 0.101.0, release in preparation
+
+The three optional profession collections are implemented in the Hold’s Ledger. Saved partial deliveries spend shared Work132 production credit. Rewards are the reusable Surveyor’s dressed-stone recipe, a tempered hammer, and a supper-table plan/materials; Hearthkeeper accepts farming or fishing. No campaign gate or score award is added. See [scope](great-claim/COLLECTIONS141.md).
+
+The focused native case passed 83 assertions, including real save/load, reward duplication guards, recipe/equipment behavior, both food routes, construction/shared meals and closed-contest access. All 24 tooling tests pass. Collection pages and the placed table were visually reviewed. Related regression checks and hosted source/package checks are in progress. Do not call the Windows release published until its final verifier and publish job pass.
+
+Continue on feature/collections141; remote base is master f94ea6509bb604061a2519e33c12d59fe943b3f8. The recovered local repository has a fresh checkpoint because its prior worktree Git directory was unavailable; runtime/test baseline bytes were checked against GitHub. Publish only the task’s changed files on the remote base tree; preserve all unrelated assets and history.
+
+Next after delivery: fresh-save pacing feedback. Pause system expansion for that playtest. Marriage and district expansion remain deferred.
+
 # Validation140 — focused development checks
 
 PR #126 implements conservative affected-test selection, removes duplicate people

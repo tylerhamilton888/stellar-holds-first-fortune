@@ -1256,7 +1256,7 @@ func open_panel(id:String,remember:bool=true):
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="work132" or id=="invasion131" or id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
  if id=="camera_controls":menu_paused=true
- if id in ["restoration139","campaign138","lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126","claim127","friend130"]:menu_paused=true
+ if id in ["collections141","restoration139","campaign138","lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126","claim127","friend130"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
  HoldMenuView.build_shell(self,id)
@@ -1305,6 +1305,7 @@ func open_panel(id:String,remember:bool=true):
   "invasion131":HoldInvasion131.panel(self)
   "friend130":HoldFriendship130.panel(self,talk_id,true)
   "great_claim102":HoldGreatClaim102.panel(self)
+  "collections141":HoldCollections141.panel(self)
   "restoration139":HoldRestoration139.panel(self)
   "campaign138":HoldCampaign138.panel(self)
   "frontier103":HoldFrontier103.panel(self)
@@ -1472,12 +1473,13 @@ func forge_panel():
   var r=row(panel_body)
   var text=label(r,recipe.name+"\nInputs: "+HoldData.cost_text(recipe.cost)+"\nMakes: "+HoldData.cost_text(recipe.out)+" • %d sec" % recipe.time,16)
   text.tooltip_text="Outputs: "+HoldData.cost_text(recipe.out)
-  var unlocked=recipe.tech=="" or state.tech.has(recipe.tech)
-  var b=button(r,"Queue" if unlocked else "Research needed",func():
+  var locked_reason=HoldCollections141.recipe_reason(state,k)
+  var unlocked=locked_reason==""
+  var b=button(r,"Queue" if unlocked else "Locked",func():
    if state.craft(k):sound.effect("build");refresh_panel()
    else:notify("Not enough materials, or queue is full."))
   b.disabled=not unlocked or not state.afford(recipe.cost) or state.queue.size()>=12
-  var need=requirements(recipe.cost) if unlocked else "Research "+HoldData.RESEARCH[recipe.tech].name
+  var need=requirements(recipe.cost) if unlocked else locked_reason
   if need!="Ready":text.text+="\n"+need
   if state.queue.size()>=12:text.text+=" • Queue full"
   var bulk=button(r,"Up to 5",func():

@@ -1,3 +1,7 @@
+# Collections141 — implementation and release validation
+
+Three optional collections implemented. Next priority is a fresh-save pacing playtest through the opening chapter; pause new system expansion for that feedback. Advanced transport/production adventures and later Skarrin scenes remain future work; marriage/district expansion remain deferred. See great-claim/COLLECTIONS141.md.
+
 # Validation follow-up
 
 Affected selection and explicit full rehearsals are implemented in PR #126. Expand

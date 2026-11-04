@@ -152,7 +152,8 @@ static func panel(g):
    var r=HoldData.RECIPES[id]
    var b=g.button(g.panel_body,r.name+" · "+HoldData.cost_text(r.cost),func():
     if transact(g,"craft",id):g.save_game();g.refresh_panel())
-   b.disabled=s.opening<2 or not s.afford(r.cost) or (r.tech!="" and not s.tech.has(r.tech)) or s.queue.size()>=12
+   b.disabled=s.opening<2 or not s.afford(r.cost) or HoldCollections141.recipe_reason(s,id)!="" or s.queue.size()>=12
+   if HoldCollections141.recipe_reason(s,id)!="":b.tooltip_text=HoldCollections141.recipe_reason(s,id)
  elif near(g,"survey"):
   g.label(g.panel_body,"Edda keeps the surveys here. The upper archive is reached by the hall's stairs; its floor and rooms use the same construction plans available to you. Ancestral privileges require authenticated evidence, not a surname.",16)
   for id in HoldData.RESEARCH:

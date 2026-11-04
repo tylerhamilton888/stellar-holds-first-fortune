@@ -48,7 +48,7 @@ func comforts()->Array:
   for f in things:
    if f.kind in GROUPS[group]:result.append(group);break
  for f in things:
-  if f.kind not in ["table","tea_table","hearth_table","counter","serving_counter"]:continue
+  if f.kind not in ["table","tea_table","hearthkeeper_table","hearth_table","counter","serving_counter"]:continue
   for seat in things:
    if seat.kind=="chair" and seat.p.distance_to(f.p)<110:
     result.append("Dining");return result
@@ -62,12 +62,12 @@ func near_kind(kinds:Array)->bool:
 func kitchen()->bool:
  return own_home() and near_kind(["hearth","counter","serving_counter"])
 func table_near()->bool:
- return own_home() and near_kind(["table","tea_table","hearth_table","counter","serving_counter"])
+ return own_home() and near_kind(["table","tea_table","hearthkeeper_table","hearth_table","counter","serving_counter"])
 func points()->Array:
  var result=[]
  if own_home():
   for f in furniture():
-   if f.kind in ["hearth","counter","serving_counter","table","tea_table","hearth_table"]:result.append({"p":f.p+Vector2(0,28),"name":"Hearth & Homestead","action":"hearth"})
+   if f.kind in ["hearth","counter","serving_counter","table","tea_table","hearthkeeper_table","hearth_table"]:result.append({"p":f.p+Vector2(0,28),"name":"Hearth & Homestead","action":"hearth"})
  # Optional visit at an existing host; no new actor or changed routine.
  if g.surface.area=="room:tavern":result.append({"p":Vector2(365,470),"name":"Hedrik's supper invitation","action":"hearth"})
  return result
@@ -192,7 +192,7 @@ func draw_table():
  var m=saved(g.state).meal
  if float(m.get("until",0))<=g.state.elapsed or m.get("area","")!=g.surface.area or int(m.get("z",0))!=g.surface.house.level() or m.get("claim","")!=g.state.claim_id:return
  for f in furniture():
-  if f.kind not in ["table","tea_table","hearth_table","counter","serving_counter"]:continue
+  if f.kind not in ["table","tea_table","hearthkeeper_table","hearth_table","counter","serving_counter"]:continue
   var p=f.p+Vector2(10,-36)
   g.draw_set_transform(-g.camera.round());HoldItemArt.draw(g,Rect2(p+Vector2(-9,-5),Vector2(18,14)),HoldItemArt.item_index(m.id))
   for i in 2:g.draw_arc(p+Vector2(i*7-4,-12-fmod(g.clock*4,8)),4,-PI/2,PI/2,8,Color(1,.93,.8,.3),1)

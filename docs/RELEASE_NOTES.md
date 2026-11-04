@@ -1,3 +1,11 @@
+# 0.101.0 — Collections of the hold
+
+The Hold’s Ledger now has optional Miner, Smith and Hearthkeeper collections. Deliver a little at a time and earn a useful masonry recipe, a tempered hammer, or a supper-table plan. Hearthkeepers may grow crops or catch fish. Progress is saved, with no deadlines, and collections remain available after the contest.
+
+This build also brings the staged Cold Forge, practical campaign milestones, Winter Stores and North Crossing from source versions 0.98–0.100 into the Windows download. The contest guides authored story acts; the required introductions and later Thane sequence remain in place.
+
+Extract the full ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. For pacing feedback, select **First visit to the hold** in an empty fortune slot. Follow **J**, review **M**, and use the physical bunkhouse Ledger for deliveries. Try one optional profession alongside the town projects and note unclear objectives, resource bottlenecks and whether each new day offers a useful goal. Windows audio, performance and normal-speed pacing need your playtest.
+
 # 0.97.2 — A clearer first shift
 
 The opening has a compact quick bar, clearer objectives, illustrated journal tasks and a more coherent path from your first paid shift to a space of your own. Contextual prompts replace several floating world labels. Twenty-six painted material, food and workshop sprites match the top-down camera, with improved masonry and royal gallery dressing.
