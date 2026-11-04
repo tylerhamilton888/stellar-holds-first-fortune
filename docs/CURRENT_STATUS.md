@@ -1,3 +1,17 @@
+# 0.97.2 delivery recovery
+
+The owner authorized merging the finished polish and publishing an updated Windows download. Runtime source is PR #117, commit `35eb33a39abf247d96f8b774a39b87f53c859f32`, tree `33666dc62525121009ead56fecb49a57c6b0c3dc`. The recovered local commit `99142990a4c4293797d92a5bd012b472b9925f35` has the identical tree.
+
+Final local native checks passed 172 assertions; final exact-pack checks passed 811 across polish, menus, homestead and invasion. All 3,893 package entries passed integrity verification. Earlier native/exported regression results remain in `docs/testing/polish135/acceptance.json`. The sequential native and exported homestead replays passed after an earlier concurrent process exited -9.
+
+Source gate: https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41760487374 . One visual job had passed and four gameplay jobs were running at recovery. Merge only after the complete gate succeeds. Publish through the existing `release/0.97.2` branch workflow; it verifies a clean Windows ZIP and the complete exact-export suite before publication. Do not launch a duplicate release if one is already running. Windows 0.97.0 remains the confirmed download until the new release is verified.
+
+Next: finish source validation, merge #117, verify the Windows release and record its URL/digest. Then owner playtests First visit to the hold in an empty slot: Ivar, first paid shift, mining/crafting, room/home progression, readability, combat feel, audio and device performance. Stop expansion at the Thane homecoming.
+
+This is the current recovery entry; the sections below are historical checkpoints.
+
+---
+
 # Visual polish 135 — source 0.97.2, delivery verification in progress
 
 The opening now has a compact adaptive quick bar, readable objective backing, illustrated task cards and optional longer-goal/direction sections. The first-shift HUD and journal share one sequence; the paid handoff leads to the optional room project and Ivar acknowledges the work. Floating stock counts, entrance sentences, farming prompts and trial/defense labels have been removed or moved into the interaction footer. Upper-floor coping uses painted masonry; royal gallery rugs group existing furnishings without changing collision. Scorched timber uses a painted log.

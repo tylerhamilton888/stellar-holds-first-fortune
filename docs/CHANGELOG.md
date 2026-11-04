@@ -1,3 +1,7 @@
+# 0.97.2 delivery preparation
+
+Recovered the exact saved polish tree, consolidated final native and exported test evidence, and prepared Windows release notes and a current recovery entry. No runtime or asset changes.
+
 # 0.97.2 — A clearer first shift
 
 Compact quick bar and readable objectives; fewer floating world labels; focused illustrated opening guidance, coherent first-wage/room handoff and responsive Ivar dialogue. Town directions and long-term ambitions expand on demand. Twenty-six painted resource, food and workshop icons use the top-down camera perspective. Matching upstairs masonry and grouped royal gallery furnishings replace flat or scattered presentation. Existing inventory, progression, transactions, scenes and save formats remain intact.

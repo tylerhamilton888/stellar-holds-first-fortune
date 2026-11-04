@@ -1,3 +1,9 @@
+# 0.97.2 delivery
+
+- Finish hosted source validation, merge PR #117 and verify the authorized Windows 0.97.2 release.
+- Final local native/exact-pack checks passed; see testing/polish135/acceptance.json.
+- Next: owner opening playtest; preserve the Thaneship stopping point.
+
 # Visual135 polish
 
 - Implemented: compact HUD, contextual interaction text, illustrated opening menus, room handoff, Ivar acknowledgment, twenty-six painted material/food/workshop sprites, top-down icon perspective, masonry coping and royal gallery dressing.
