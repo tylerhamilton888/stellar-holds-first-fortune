@@ -123,8 +123,8 @@ func run():
  g.surface.enter("claim");settle();s.add("stone",200);s.add("wood",200);s.add("iron",200)
  g.surface.architecture.selected="cottage";g.surface.architecture.furnish_plan=true;at(Vector2(2480,820))
  check(g.surface.architecture.place(Vector2(2480,700)),"Specialist constructs an ordinary furnished home")
- desk("lodge");check(HoldFrontier103.finish_home(g) and HoldMountain104.eligible(s),"Three same-trade seals plus a real home reach the rescue")
- check(int(ledger_data.points)==180,"Specialist target is exactly the displayed 180 marks")
+ desk("lodge");check(HoldFrontier103.finish_home(g) and not HoldMountain104.eligible(s),"Three same-trade seals earn recognition and a home; campaign foundations still gate rescue")
+ check(int(ledger_data.points)==180,"Specialist awards remain 180 marks without bypassing campaign foundations")
  g.open_panel("commission");await snap("specialist-milestone");g.close_panel()
  # Mixed routes use the same budgets, not a new 120-mark pot for each profession.
  var specialist=W.data(s).duplicate(true);s.surface.erase("work132");ledger_data.points=0

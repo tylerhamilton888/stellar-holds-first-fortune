@@ -70,7 +70,14 @@ func run():
  at(Vector2(480,500));check(HoldFrontier103.permit(g) and s.claim_id!="","First shift and two projects earn permanent residential plot")
  check(not HoldFrontier103.permit(g),"Residential permit cannot repeat")
  for item in {"stone":30,"wood":24,"iron":2}:s.add(item,{"stone":30,"wood":24,"iron":2}[item])
- check(HoldFrontier103.build_storehouse(g) and not HoldFrontier103.build_storehouse(g),"Construction site becomes one actual storehouse exactly once")
+ HoldWork132.produced(s,"iron",2,"made");HoldWork132.produced(s,"wood",4,"cut");HoldWork132.data(s).facts.cart_distance=160
+ for item in HoldCampaign138.STRUCTURE:
+  at(Vector2(670,440));check(HoldLedger137.contribute(g,"storehouse",item,int(HoldCampaign138.STRUCTURE[item])),"Deliver storehouse supplies through Ledger")
+ g.surface.enter("trail");settle();at(HoldCampaign138.SITE);check(HoldCampaign138.inspect(g),"Inspect the real construction site")
+ check(HoldCampaign138.assemble(g) and not HoldCampaign138.assemble(g),"Construction site becomes one actual storehouse exactly once")
+ g.fieldwork.data().kit=true;HoldWork132.produced(s,"river_fish",4,"caught");HoldWork132.cooked(s,"trout_supper");s.add("food",12)
+ desk("lodge");at(Vector2(670,440));check(HoldLedger137.contribute(g,"winter","food",12),"Deliver the storehouse provisions")
+ g.surface.enter("trail");settle();at(HoldCampaign138.SITE);check(HoldCampaign138.stock(g),"Open the stocked public building")
  g.surface.enter("trail");settle();at(Vector2(1020,940));await snap("completed-storehouse")
  for t in range(0,80,5):
   for actor in g.surface.roads.people("trail",t):check(g.surface.walkable(actor.p),"Completed storehouse preserves patrol: "+actor.name)

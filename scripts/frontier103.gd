@@ -100,7 +100,7 @@ static func transact(g,kind:String,id:String,buy:bool=true)->bool:
  if kind=="tool" and id=="steel":
   if not near(g,"forge") or g.state.opening<2 or g.state.steel or not g.state.tech.has("extraction") or not g.state.pay({"iron":5,"wood":2}):return false
   g.state.steel=true;return true
- if kind=="trade" and HoldData.ITEMS.has(id) and (near(g,"watch") or (data(g.state).get("storehouse",false) and near(g,"stores"))):return g.state.trade(id,buy)
+ if kind=="trade" and HoldData.ITEMS.has(id) and (near(g,"watch") or (HoldCampaign138.data(g.state).get("winter_ready",false) and near(g,"stores"))):return g.state.trade(id,buy)
  if kind=="craft" and HoldData.RECIPES.has(id) and near(g,"forge") and g.state.opening>=2:return g.state.craft(id)
  if kind=="research" and HoldData.RESEARCH.has(id) and near(g,"survey"):return g.state.research(id)
  return false
@@ -132,10 +132,7 @@ static func panel(g):
    var b=g.button(g.panel_body,"Deliver shift commission",func():
     if near(g,"lodge") and s.finish_commission():g.save_game();g.refresh_panel())
    b.disabled=not s.afford(job.cost)
-  if not data(s).get("storehouse",false):
-   HoldMenuView.illustrated_text(g.panel_body,"stone","The eastern storehouse","30 stone · 24 timber · 2 iron. Complete a new public building for Stonebridge.")
-   var build=g.button(g.panel_body,"Complete the storehouse · 70 marks",func():build_storehouse(g);g.refresh_panel())
-   build.disabled=not s.afford({"stone":30,"wood":24,"iron":2})
+  g.button(g.panel_body,"The Winter Stores · restoration stages",func():g.open_panel("campaign138"))
   g.button(g.panel_body,"Read contribution ledger",func():g.open_panel("great_claim102"))
   if not data(s).permit:
    var b=g.button(g.panel_body,"Accept a household plot",func():permit(g);g.refresh_panel())
@@ -164,7 +161,7 @@ static func panel(g):
    var b=g.button(g.panel_body,r.name+" · "+HoldData.cost_text(r.cost)+" · "+str(r.money)+" crowns",func():
     if transact(g,"research",id):g.save_game();g.refresh_panel())
    b.disabled=not s.afford(r.cost,r.money) or (r.requires!="" and not s.tech.has(r.requires))
- elif (near(g,"watch") or (data(g.state).get("storehouse",false) and near(g,"stores"))):
+ elif (near(g,"watch") or (HoldCampaign138.data(g.state).get("winter_ready",false) and near(g,"stores"))):
   g.label(g.panel_body,"The watch's provision counter buys surplus and sells supplies. Trade uses the same stock, prices and purse as other exchanges.",16)
   var goods=HoldData.ITEMS.keys()
   for id in goods:
@@ -177,7 +174,8 @@ static func panel(g):
  else:g.label(g.panel_body,"Visit a town service desk to work, trade or register your home. Keldrath is a later journey; your daily life and services are here.",16)
 
 static func build_storehouse(g)->bool:
- if not near(g,"lodge") or data(g.state).get("storehouse",false) or not g.state.pay({"stone":30,"wood":24,"iron":2}):return false
+ if not HoldCampaign138.near_site(g) or not HoldLedger137.ready(g.state,"storehouse") or data(g.state).get("storehouse",false):return false
+ if not g.state.pay(HoldLedger137.remaining(g.state,"storehouse")):return false
  var a=g.surface.architecture;var d=a.data();var id=str(int(d.next));d.next=int(d.next)+1
  var b={"id":id,"plan":"frontier_watch","name":"Stonebridge community storehouse","area":"trail","x":1020,"y":900,"extend_x":0,"extend_y":0,"rooms":["room:market"],"construction":{},"shell_paid":{},"public103":true}
  d.instances.append(b);a.seed_room(b,0,true)
@@ -185,7 +183,7 @@ static func build_storehouse(g)->bool:
   if f.area==HoldBuildingPlans.room_id(id):f.fixed=true
  data(g.state).storehouse=true;data(g.state).buildings.stores=id
  var ledger=HoldGreatClaim102.data(g.state);ledger.points=int(ledger.points)+70;ledger.projects.storehouse=true
- g.save_game();g.notify("The community storehouse is open. Its plan is also in your building book.");return true
+ g.save_game();g.notify("The storehouse shell is complete. Provision it through the Hold’s Ledger, then return to open the community counter.");return true
 static func works(g,area:String)->Array:
  if not active(g.state) or area!="trail" or data(g.state).get("storehouse",false):return []
  var w=g.surface.world

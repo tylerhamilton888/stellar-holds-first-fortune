@@ -1,3 +1,7 @@
+# Campaign138 — implementation under validation
+
+Implemented: authored rescue foundations, staged Winter Stores, visible stocked interior, saved milestones and legacy invitation preservation. Next: additional projects/collections and later-act production/transport/specialization. Do not equate this batch with completing the full five-act restructure. See great-claim/CAMPAIGN138.md.
+
 # Campaign restructuring — current batch
 
 Ledger foundation, forge staging and welcoming Skarrin implemented; validation pending. Next: authored act requirements, substantial restoration projects, optional collections and specialization. Do not treat the current 180-mark rescue gate as the finished five-act pacing. See great-claim/LEDGER137.md.

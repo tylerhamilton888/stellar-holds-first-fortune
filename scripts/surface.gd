@@ -215,6 +215,7 @@ func points()->Array:
    result.append(spot(100,690,"Road to Keldrath · later journey","hearthward"))
   if area=="claim":result=result.filter(func(p):return p.action in ["trail","mine"] or str(p.action).begins_with("house:"))
  result.append_array(HoldFrontier103.points(g))
+ result.append_array(HoldCampaign138.points(g))
  result.append_array(HoldFriendship130.points(g))
  result.append_array(HoldInvasion131.points(g))
  result.append_array(HoldClaim127.points(g))
@@ -326,6 +327,7 @@ func action(id:String):
   if HoldTraditions126.home_shrine(g):g.open_panel(id)
   return
  if id=="frontier_archive103":g.open_panel(id);return
+ if id=="campaign138":g.open_panel(id);return
  if id=="frontier103":g.open_panel(id);return
  if id=="great_claim102":g.open_panel(id);return
  if id=="architecture_leave":architecture.leave();return

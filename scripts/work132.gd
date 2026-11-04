@@ -3,7 +3,6 @@ extends RefCounted
 # Proof comes from completed production, never inventory changes or discipline XP.
 const SEAL_MARKS=40
 const SEAL_LIMIT=3
-const TARGET=180
 const TRADES={
  "quarry":{"title":"Stone for the next foundations","kind":"Mining","items":{"stone":24,"iron_ore":10,"copper_ore":8,"coal":12},"hint":"Mine and process stone, ore or coal in Old Workings. Choose one supply below for each delivery."},
  "timber":{"title":"Timber for the town","kind":"Woodworking","items":{"wood":12},"hint":"Follow the southern path to Pinewood. Fell and section trees, carry logs to the loan rack, then hold E at the sawbench."},
@@ -50,7 +49,7 @@ static func processed(g,raw:Dictionary):
 static func cooked(s,id:String):
  if not active(s):return
  for item in HoldData.RECIPES[id].out:produced(s,item,int(HoldData.RECIPES[id].out[item]),"made")
- if id in ["trout_supper","root_hotpot","barley_bread","fish_chowder","char_plate"]:
+ if id in ["turnip_stew","trout_supper","root_hotpot","barley_bread","fish_chowder","char_plate"]:
   var f=data(s).facts;f.meals=int(f.get("meals",0))+1
 static func cart_moved(g,f:Dictionary,distance:float):
  if not active(g.state) or not g.walking_pose or (f.raw.is_empty() and f.cargo.is_empty()) or f.get("fixed",false):return

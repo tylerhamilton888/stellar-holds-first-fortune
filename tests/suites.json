@@ -27,7 +27,8 @@
       "work132",
       "troll133",
       "polish135",
-      "ledger137"
+      "ledger137",
+      "campaign138"
     ],
     "gameplay": [
       "loading",
@@ -100,7 +101,8 @@
       "work132",
       "troll133",
       "polish135",
-      "ledger137"
+      "ledger137",
+      "campaign138"
     ],
     "modular": [
       "modular",
@@ -382,7 +384,8 @@
       "friendship130",
       "work132",
       "polish135",
-      "ledger137"
+      "ledger137",
+      "campaign138"
     ],
     "gameplay-3": [
       "orientation",
@@ -921,6 +924,30 @@
       "people",
       "polish135",
       "firstvisit99"
+    ],
+    "campaign138-focus": [
+      "campaign138"
+    ],
+    "campaign138": [
+      "campaign138",
+      "work132",
+      "frontier103",
+      "mountain104",
+      "claim127",
+      "greatclaim102",
+      "ledger137",
+      "firstvisit99"
+    ],
+    "campaign138-scenes": [
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121"
     ]
   },
   "cases": {
@@ -1211,6 +1238,10 @@
     "ledger137": {
       "script": "tests/ledger137.gd",
       "marker": "LEDGER137"
+    },
+    "campaign138": {
+      "script": "tests/campaign138.gd",
+      "marker": "CAMPAIGN138"
     }
   }
 }

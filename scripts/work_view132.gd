@@ -40,7 +40,7 @@ static func summary(g):
    if W.ready(s,id):g.label(card,"Ready to report at the Stonebridge "+W.LESSONS[id].host+" desk.",16,Color("a7dfcb"))
  if not W.closed(s):
   if not HoldFrontier103.data(s).permit:meter(g,g.panel_body,"A plot of your own · contributions",W.contributions(s),2)
-  else:meter(g,g.panel_body,"Contribution marks",int(HoldGreatClaim102.data(s).points),W.TARGET)
+  else:HoldCampaign138.summary(g)
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Learn a trade · step by step",func():open(g))
  g.small_button(nav,"Contribute · choose your route",func():open(g,"contribute"))
@@ -85,7 +85,8 @@ static func contributions(g):
  if W.closed(s):
   g.label(g.panel_body,"The contest round is closed. Your authenticated tally is preserved. Lessons, home building and town improvements remain available.",17)
  else:
-  meter(g,g.panel_body,"Contribution marks",int(HoldGreatClaim102.data(s).points),W.TARGET)
+  g.label(g.panel_body,"Recorded recognition · %d marks" % int(HoldGreatClaim102.data(s).points),16)
+  HoldCampaign138.summary(g)
  g.label(g.panel_body,"Trade seals: %d / 3 · 40 marks each · Mix trades or specialize in one." % W.seals(s),16,Color("a7dfcb"))
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Civic projects · improve the town",func():g.open_panel("great_claim102"))
@@ -106,4 +107,4 @@ static func contributions(g):
   var b=g.button(card,"Deliver %d %s · made/gathered %d/%d · pack %d/%d" % [amount,HoldData.ITEMS[item].name,mini(credit,amount),amount,mini(s.count(item),amount),amount],func():W.deliver(g,trade,key);g.refresh_panel())
   b.disabled=not HoldGreatClaim102.near(g) or not W.can_deliver(s,trade,item)
  g.label(g.panel_body,"Deliver supplies you produced. Three seals are shared across all trades; each spends its supplies and work credit once. Buying finished goods alone earns no seal. No deadlines.",15)
- g.label(g.panel_body,"Your milestones: paid first shift + any two projects or seals → household plot. Register your home → 60 marks. Home + 180 marks → rescue lead. Three seals + home reach 180; civic projects also count toward the goal.",15)
+ g.label(g.panel_body,"Your milestones: paid first shift + any two projects or seals → household plot. Register your home → 60 marks. The campaign foundations and Winter Stores open the rescue. Trade seals and civic projects count equally toward community service.",15)

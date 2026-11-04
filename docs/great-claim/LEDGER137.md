@@ -1,5 +1,7 @@
 # Hold's Ledger — first integration batch
 
+The [owner’s full campaign directive](OPENING_CAMPAIGN_DIRECTIVE.md) is retained for subsequent batches.
+
 Source 0.98.0 adds a project interface over existing Stonebridge progression. It is the first batch of the five-act/community-restoration direction, not the completed campaign restructure.
 
 - The Cold Forge: inspect locally, process coal using existing production proof, contribute eight coal in saved installments, then return for its first firing. Existing commission authority pays 65 crowns and opens the existing forge recipes. Its cold hearth has no animated glow; firing restores flame and workshop ambience.
@@ -10,6 +12,6 @@ Source 0.98.0 adds a project interface over existing Stonebridge progression. It
 
 State lives in `surface.ledger137`: partial paid quantities, hearth inspection, accepted welcome gift. Existing forge/project/home/story state remains authoritative. Migration does not grant new inventory or repeat rewards. Supplies are taken only from the pack at the physical ledger; remote viewing is read-only. An old direct commission completion consumes the outstanding fuel only.
 
-Remaining batches: replace the 180-mark rescue eligibility with authored act prerequisites; substantial multi-stage restoration/transport/production projects; optional collection rewards; late-act specialization; further Skarrin scenes and stronger public trial. Existing rescue, ancestry, invasion, judgment and Thane homecoming are preserved. Marriage and districts remain deferred.
+Campaign138 now replaces the rescue score gate and stages the Winter Stores; see [the next batch](CAMPAIGN138.md). Remaining batches: further substantial restoration/transport/production projects; optional collection rewards; late-act specialization; further Skarrin scenes and stronger public trial. Existing rescue, ancestry, invasion, judgment and Thane homecoming are preserved. Marriage and districts remain deferred.
 
 Validation: `ledger137-focus` plus `ledger137` regression suite; native visual review of the Ledger, home checklist, forge first-firing controls and Skarrin. New case also belongs to gameplay-2/core/gameplay and the exact-pack harness. Final delivery status belongs in CURRENT_STATUS and SESSION_HANDOFF.

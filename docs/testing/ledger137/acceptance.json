@@ -1,0 +1,210 @@
+{
+  "source": "5af1ebfdc9247540d455a749035dfa88f49d7f69",
+  "native_regression": [
+    {
+      "test": "ledger137",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 62.8
+    },
+    {
+      "test": "work132",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 146,
+      "seconds": 72.51
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 225,
+      "seconds": 63.52
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 68.83
+    },
+    {
+      "test": "people",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 470,
+      "seconds": 79.31
+    },
+    {
+      "test": "polish135",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 68,
+      "seconds": 37.49
+    }
+  ],
+  "final_ledger": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.15
+    },
+    {
+      "test": "ledger137",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 59.59
+    }
+  ],
+  "visual_review": [
+    "Hold\u2019s Ledger project cards",
+    "expandable home milestone",
+    "cold-forge first-firing controls",
+    "lit communal hearth",
+    "Skarrin welcome portrait/dialogue",
+    "Exported first-firing controls"
+  ],
+  "limitations": [
+    "No Windows-device performance or audible mix playtest.",
+    "Five-act restructuring beyond this foundation batch remains unfinished."
+  ],
+  "final_opening_save": {
+    "case": "firstvisit99",
+    "checks": 23,
+    "failed": 0,
+    "native": true
+  },
+  "pipeline_unit_tests": 13,
+  "hosted": {
+    "native_run": 41867138581,
+    "package_rehearsal_run": 41867138211,
+    "status": "running",
+    "supersedes": {
+      "native_run": 41862441567,
+      "package_rehearsal_run": 41862441458,
+      "reason": "Updated the obsolete greatclaim102 UI expectation; corrected exported case passes 114 assertions."
+    }
+  },
+  "scope": "First integration batch only; 180-mark rescue gate and later authored act restructuring are unchanged.",
+  "focused_export": {
+    "schema": 1,
+    "source_sha": "5b3d04ee20e28a5af4330447df8e147419465014",
+    "pack_sha256": "7ce62d6ec35fdf0f50365f0dccf7ee1c5261d620bde4eac764a4af6040680816",
+    "shard_index": 0,
+    "shard_count": 1,
+    "focused": true,
+    "expected_cases": [
+      "ambient",
+      "ledger137",
+      "polish135",
+      "troll133",
+      "work132",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "assigned_cases": [
+      "ledger137",
+      "firstvisit99"
+    ],
+    "results": [
+      {
+        "test": "ledger137",
+        "passed": true,
+        "checks": 29,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 60.67
+      },
+      {
+        "test": "firstvisit99",
+        "passed": true,
+        "checks": 23,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 69.63
+      }
+    ],
+    "complete": true
+  },
+  "package_integrity": {
+    "entries": 3895,
+    "hashes_bounds_relative_paths": "pass"
+  },
+  "corrected_civic_export": [
+    {
+      "test": "greatclaim102",
+      "passed": true,
+      "checks": 114,
+      "errors": [],
+      "exit_code": 0,
+      "seconds": 53.76
+    }
+  ]
+}
