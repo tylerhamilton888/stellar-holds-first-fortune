@@ -23,7 +23,7 @@ func run():
  var inventory=s.inventory.duplicate(true)
  check(not C.inspect(g) and not C.assemble(g) and s.inventory==inventory,"Remote site actions cannot spend supplies")
  site();check(g.surface.walkable(g.player) and C.near_site(g),"Construction site has a clear physical approach")
- g.surface.action("campaign138");check(g.panel_id=="campaign138" and g.menu_paused,"Physical project point opens a paused restoration panel");await snap("01-project");g.close_panel()
+ key(KEY_E);check(g.panel_id=="campaign138" and g.menu_paused,"Physical project point opens a paused restoration panel");await snap("01-project");g.close_panel()
  check(C.inspect(g) and not C.inspect(g),"Site investigation is local and once-only")
  ledger();var wood=s.count("wood")
  check(L.contribute(g,"storehouse","wood",7) and s.count("wood")==wood-7,"Structural materials accept partial deliveries")

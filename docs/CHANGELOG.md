@@ -1,3 +1,7 @@
+# 0.99.0 — Hands of the hold (source)
+
+Authored practical milestones replace the rescue score threshold. Winter Stores investigation, saved material deliveries, local construction, provisioning and opening reuse the real storehouse. Older earned invitations survive. Farming and fishing remain alternate introductions; recognition and the existing finale stay intact. Validation is in progress.
+
 # 0.98.0 — The Hold’s Ledger (source)
 
 Saved partial community contributions; Cold Forge inspection, production and first firing; home milestone checklist; Skarrin’s optional welcome timber and story-driven attitude. Existing completed work and finale preserved.

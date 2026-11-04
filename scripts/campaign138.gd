@@ -1,7 +1,7 @@
 class_name HoldCampaign138
 extends RefCounted
 # Milestones derive from existing work and story owners; no rival clock or score gate.
-const SITE=Vector2(1170,940)
+const SITE=Vector2(1020,940)
 const STRUCTURE={"stone":30,"wood":24,"iron":2}
 static func active(s)->bool:return HoldFrontier103.active(s)
 static func data(s)->Dictionary:
@@ -79,7 +79,7 @@ static func panel(g):
  HoldMenuView.illustrated_text(g.panel_body,"wood",title(s),"Make a home, learn the essentials, and help Stonebridge prepare. The rescue opens after these foundations; contribution marks record recognition.")
  if data(s).get("legacy_rescue",false):g.label(g.panel_body,"Your previously earned rescue invitation is preserved. New projects remain optional for this established fortune.",15)
  var box=HoldMenuView.section(g.panel_body,"The Winter Stores · "+("Open" if data(s).winter_ready else "Stock the shelves" if HoldFrontier103.data(s).get("storehouse",false) else "Raise the shell" if HoldLedger137.remaining(s,"storehouse").is_empty() else "Inspect and supply"))
- g.label(box,"Eastern site: south of the bridge, beside the building’s southeast corner. Inspect here, deliver materials at the bunkhouse Ledger, then return to raise the shell. Twelve provisions finish the stores after you have learned harvesting/fishing and cooking.",15)
+ g.label(box,"Eastern site: south of the bridge, in front of the storehouse foundations. Inspect here, deliver materials at the bunkhouse Ledger, then return to raise the shell. Twelve provisions finish the stores after you have learned harvesting/fishing and cooking.",15)
  if not data(s).inspected and not HoldFrontier103.data(s).get("storehouse",false):
   var b=g.button(box,"Inspect the eastern foundations",func():inspect(g);g.refresh_panel());b.disabled=not near_site(g)
  elif not HoldFrontier103.data(s).get("storehouse",false):
