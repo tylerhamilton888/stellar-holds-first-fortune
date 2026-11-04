@@ -1,0 +1,34 @@
+{
+  "source_sha": "35eb33a39abf247d96f8b774a39b87f53c859f32",
+  "source_tree": "33666dc62525121009ead56fecb49a57c6b0c3dc",
+  "merge_sha": "83444ee7141417ce677c8592fb3a708c5e51df54",
+  "workflow_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41760487374",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 126346772060,
+      "name": "gameplay (gameplay-2)",
+      "conclusion": "success"
+    },
+    {
+      "id": 126346772075,
+      "name": "gameplay (gameplay-1)",
+      "conclusion": "success"
+    },
+    {
+      "id": 126346772307,
+      "name": "people-preview",
+      "conclusion": "success"
+    },
+    {
+      "id": 126346772369,
+      "name": "gameplay (gameplay-4)",
+      "conclusion": "success"
+    },
+    {
+      "id": 126346772797,
+      "name": "gameplay (gameplay-3)",
+      "conclusion": "success"
+    }
+  ]
+}

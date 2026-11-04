@@ -1,3 +1,13 @@
+# 0.97.2 — A clearer first shift
+
+The opening has a compact quick bar, clearer objectives, illustrated journal tasks and a more coherent path from your first paid shift to a space of your own. Contextual prompts replace several floating world labels. Twenty-six painted material, food and workshop sprites match the top-down camera, with improved masonry and royal gallery dressing.
+
+This Windows build also includes Eirik's corrected royal axe, natural shoulder-rest grip and alternating return steps from 0.97.1. Giant trolls and the full opening through the Thane homecoming remain included. Existing saves and earned progress are preserved.
+
+Extract the entire Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep the previous build and saves. For the complete opener, choose **First visit to the hold**, use an empty fortune slot, speak with Ivar in the bunkhouse and follow **J**.
+
+Playtest the first shift, mining/crafting, earning your room and home, menu clarity, combat feel, audio and performance on your PC. Normal-speed pacing and Windows hardware quality still require human playtesting. Opening-chapter development stops at the Thane homecoming; marriage and district expansion remain future work.
+
 # 0.97.0 — Giants at the stairs
 
 Trolls now tower over Dwarfs at twice their previous height. Their larger physical footprint and new whole painted animations carry into the mines, Keldrath's defense and the King's five-troll encounter. Eirik returns with a much larger trophy head.

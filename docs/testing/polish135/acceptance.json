@@ -1,6 +1,6 @@
 {
   "version": "0.97.2",
-  "status": "final art and hosted verification pending",
+  "status": "Source merged after all five hosted jobs passed; Windows release checks running",
   "native_regression": [
     {
       "test": "import",
@@ -126,6 +126,74 @@
   ],
   "limitations": [
     "Scripted review does not establish human pacing, audible quality or Windows-device performance.",
-    "No new Windows download published."
-  ]
+    "Windows 0.97.2 is authorized but publication is pending its full release gate."
+  ],
+  "final_native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.19
+    },
+    {
+      "test": "polish135",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 68,
+      "seconds": 36.45
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 49.42
+    },
+    {
+      "test": "homestead",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 69,
+      "seconds": 71.48
+    }
+  ],
+  "final_export_art": [
+    {
+      "test": "polish135",
+      "passed": true,
+      "checks": 68,
+      "errors": []
+    },
+    {
+      "test": "homestead",
+      "passed": true,
+      "checks": 69,
+      "errors": []
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "checks": 35,
+      "errors": []
+    }
+  ],
+  "final_export_scenes": [
+    {
+      "test": "invasion131",
+      "passed": true,
+      "checks": 639,
+      "errors": []
+    }
+  ],
+  "source_commit": "35eb33a39abf247d96f8b774a39b87f53c859f32",
+  "source_tree": "33666dc62525121009ead56fecb49a57c6b0c3dc",
+  "package_entries_verified": 3893,
+  "source_workflow_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41760487374",
+  "merge_sha": "83444ee7141417ce677c8592fb3a708c5e51df54",
+  "hosted_record": "hosted.json"
 }
