@@ -2,7 +2,8 @@
 
 - Implemented: straight royal axe, natural shoulder-rest grip, opposite physical return steps, whole-pose crop/root registration.
 - Verified: 754 source checks and 754 exact-pack checks, all 3,887 package entries, native combat and shoulder-carry review.
-- Pending: hosted validation and merge, now explicitly authorized by the owner. Windows 0.97.1 is not published.
+- Completed: all five hosted jobs passed; PR #115 merged the corrected royal art and prior giant-troll PR #114.
+- Windows 0.97.0 remains published; the 0.97.1 source correction is ready for a future requested Windows build.
 
 # Giants at the stairs 133 — validation in progress
 
