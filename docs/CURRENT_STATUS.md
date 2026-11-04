@@ -1,11 +1,20 @@
-# Validation140 — development workflow optimization
+# Validation140 — focused development checks
 
-A separate tooling change adds conservative affected-test selection, removes the
-duplicate people run and post-merge rerun, and reserves full Windows rehearsals
-for explicit runs/releases. All source and package release checks are retained.
-Implementation and validation are in progress; no new gameplay or public build.
-See [VALIDATION_POLICY.md](VALIDATION_POLICY.md). Preserve the independent
-North Crossing worktree and its existing runs.
+PR #126 implements conservative affected-test selection, removes duplicate people
+validation and the automatic post-merge rerun, and makes Windows rehearsals
+explicit. Actual releases retain the full native suite and all 64 exported cases.
+Read [VALIDATION_POLICY.md](VALIDATION_POLICY.md) for the current workflow.
+
+All 24 Python safety tests passed. Native startup/save checks passed 42 assertions
+locally and both selected hosted cases passed. Hosted run 41897781913 passed its
+planner, gameplay worker and final validation gate. Its tested source files match
+620ffe3b7d733192d91e32564874a792fe6a88ce exactly. See
+[acceptance receipt](testing/validation140/acceptance.json). No gameplay, artwork,
+saves, version or public release changes accompany this tooling work.
+
+North Crossing delivery notes below are preserved from merged PR #127. Continue
+from GitHub master; do not reset the older dirty worktrees. The complete campaign
+overhaul and normal-speed pacing playtest remain outstanding.
 
 # Source 0.100.0 — The North Crossing
 
@@ -13,9 +22,11 @@ The next authored Act IV milestone restores a northern river crossing between Ol
 
 Return to fit the span, then gather Ivar and Skarrin for a short saved scene. The crossing changes real collision and uses the existing bridge art. Fresh fortunes need the witnessed restoration before final ancestral authentication; saves already at archive research or beyond retain eligibility. Closed contest scores, homes, courtships and the existing trial/Thane sequence remain authoritative. No deadlines or simulated rival economy.
 
-Local verification passed: seven affected source cases / 999 assertions, two exact-export cases / 151 assertions, all 3,901 PCK entries, and 13 release-pipeline unit tests. Native and exported visuals were reviewed. [Acceptance receipt](testing/restoration139/acceptance.json). These focused checks do not replace the full hosted source and 64-case exported gates.
+Nine affected source cases pass 1,755 assertions; four focused exported cases pass 907. All 3,901 package entries and 13 pipeline unit tests pass. Native and exported visuals were reviewed. All five hosted source jobs and all 64 exported cases (13,917 assertions) passed, including the final identical-build verifier. [Acceptance receipt](testing/restoration139/acceptance.json).
 
-Local branch `campaign/restoration139` is implemented and committed. The owner explicitly authorized push, hosted checks and merge on 2026-11-04. Delivery is underway; no hosted pass or merge is claimed yet. Windows 0.97.2 remains published. See [design and acceptance scope](great-claim/RESTORATION139.md).
+Merged in [PR #125](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/125) as `279ac1648762b18b9f35b622b2a18b6701315edf`. Its tree `48458e516ce5184b160f937478e364e2fe8dcf19` matches the tested source. Head `cd6e68389e34bf3a8361b00197f2c4a356e4cb53`; tested PR merge `f2a1347b8ce6a99afff85deba1fc8feabe86bae6`. [Native run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41893233736) and [complete package rehearsal](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41893233723) succeeded. Windows 0.97.2 remains published; this work did not publish a new release.
+
+See [design and acceptance scope](great-claim/RESTORATION139.md). Next: advanced transport/production adventures, optional collections, and human pacing/specialty-cost playtesting.
 
 # Source 0.99.0 — Hands of the hold
 
@@ -29,6 +40,6 @@ Implementation merged in [PR #123](https://github.com/tylerhamilton888/stellar-h
 
 [PR #121](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/121) contains Ledger137’s partial contributions, staged Cold Forge, home checklist and welcoming Skarrin. It merged as `bcd0bad5ef77f86a91783ad5f95b5b954683be08` after all five source jobs and all 62 exported cases passed in runs `41867138581` and `41867138211`; its tree matches the validated source. The earlier obsolete civic UI test expectation was corrected and verified.
 
-[Windows 0.97.2](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.97.2) remains published. The four-runner release process is preserved; the export catalogue now includes 63 cases. PR rehearsals do not publish. See [release process](RELEASE_PIPELINE.md).
+[Windows 0.97.2](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.97.2) remains published. The four-runner release process is preserved; the export catalogue now includes 64 cases. PR rehearsals do not publish. See [release process](RELEASE_PIPELINE.md).
 
 Next after this batch: more substantial restoration and optional collections, advanced transport/production adventures, and stronger late-act specialization. Existing rescue, ancestry, invasion, trial and Thane homecoming remain. Marriage/district expansion remain deferred. Campaign duration and normal-speed pacing need human playtesting.

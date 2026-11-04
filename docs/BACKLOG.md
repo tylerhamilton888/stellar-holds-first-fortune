@@ -1,13 +1,13 @@
 # Validation follow-up
 
-Focused selection and explicit full rehearsals implemented in Validation140.
-Measure hosted elapsed time; expand dependency mappings only with reviewed
-coverage. Profile shared character initialization before consolidating historical
-character cases; retain distinct gait, identity, save and rescue assertions.
+Affected selection and explicit full rehearsals are implemented in PR #126. Expand
+the dependency map only with reviewed coverage. Profile shared character startup
+before consolidating old cases; preserve distinct gait, identity and rescue checks.
+Cold checkout/import overhead remains a separate performance opportunity.
 
-# Restoration139 — locally complete, authorized delivery underway
+# Restoration139 — merged
 
-Implemented and locally verified (999 native / 151 exported assertions): northern crossing restoration, repeatable or mixed specialist work orders, real route opening, saved dedication and milestone dialogue. Remaining: further optional collections and late-act projects, richer transport adventures, and human measurement of route costs and pacing. This batch does not claim completion of the entire five-act restructure.
+PR #125 delivers northern crossing restoration, repeatable or mixed specialist work orders, a real route opening, saved dedication and milestone dialogue. All five source jobs and all 64 exported cases passed. Remaining: further optional collections and late-act projects, richer transport adventures, and human measurement of route costs and pacing. This batch does not complete the entire five-act restructure.
 
 # Campaign138 — merged
 

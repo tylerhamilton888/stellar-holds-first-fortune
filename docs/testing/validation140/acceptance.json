@@ -1,0 +1,47 @@
+{
+  "source": "620ffe3b7d733192d91e32564874a792fe6a88ce",
+  "tree": "32e91daf67b22b270fc67014d12048b2d8591d6f",
+  "pr": 126,
+  "python_tests": 24,
+  "native_cases": [
+    {
+      "test": "loading",
+      "checks": 19,
+      "passed": true
+    },
+    {
+      "test": "firstvisit99",
+      "checks": 23,
+      "passed": true
+    }
+  ],
+  "hosted": {
+    "run": 41897781913,
+    "tested_merge": "0b5004d37d1cb076440639a0816f355b78a7d92f",
+    "planner": "success",
+    "gameplay": "success",
+    "validation": "success",
+    "source_matches": true
+  },
+  "selection_examples": {
+    "ledger_only": 11,
+    "character_test_only": 3,
+    "export_registration": 0,
+    "shared_runtime": 73
+  },
+  "release": {
+    "full_native": true,
+    "package_cases": 64,
+    "manual_run_publishes": false
+  },
+  "documentation_resolution": {
+    "preserves_delivery_pr": 127,
+    "master": "9933e6a804a358a930b0008b240691d0900808db",
+    "non_documentation_files_unchanged": true
+  },
+  "limitations": [
+    "Full Windows workflow rewiring checked structurally and with pipeline safety tests; not rehearsed again for this tooling-only PR.",
+    "Hosted cold checkout/import overhead remains; no guaranteed timing claim.",
+    "Character cases retained for full/art coverage; only duplicate scheduling removed."
+  ]
+}

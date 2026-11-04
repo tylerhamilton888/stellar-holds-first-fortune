@@ -1,11 +1,20 @@
-# Validation140 — development workflow optimization
+# Validation140 — focused development checks
 
-A separate tooling change adds conservative affected-test selection, removes the
-duplicate people run and post-merge rerun, and reserves full Windows rehearsals
-for explicit runs/releases. All source and package release checks are retained.
-Implementation and validation are in progress; no new gameplay or public build.
-See [VALIDATION_POLICY.md](VALIDATION_POLICY.md). Preserve the independent
-North Crossing worktree and its existing runs.
+PR #126 implements conservative affected-test selection, removes duplicate people
+validation and the automatic post-merge rerun, and makes Windows rehearsals
+explicit. Actual releases retain the full native suite and all 64 exported cases.
+Read [VALIDATION_POLICY.md](VALIDATION_POLICY.md) for the current workflow.
+
+All 24 Python safety tests passed. Native startup/save checks passed 42 assertions
+locally and both selected hosted cases passed. Hosted run 41897781913 passed its
+planner, gameplay worker and final validation gate. Its tested source files match
+620ffe3b7d733192d91e32564874a792fe6a88ce exactly. See
+[acceptance receipt](testing/validation140/acceptance.json). No gameplay, artwork,
+saves, version or public release changes accompany this tooling work.
+
+North Crossing delivery notes below are preserved from merged PR #127. Continue
+from GitHub master; do not reset the older dirty worktrees. The complete campaign
+overhaul and normal-speed pacing playtest remain outstanding.
 
 # Source 0.100.0 — The North Crossing
 
@@ -13,13 +22,13 @@ The next authored Act IV milestone restores a northern river crossing between Ol
 
 Return to fit the span, then gather Ivar and Skarrin for a short saved scene. The crossing changes real collision and uses the existing bridge art. Fresh fortunes need the witnessed restoration before final ancestral authentication; saves already at archive research or beyond retain eligibility. Closed contest scores, homes, courtships and the existing trial/Thane sequence remain authoritative. No deadlines or simulated rival economy.
 
-Local verification passed: seven affected source cases / 999 assertions, two exact-export cases / 151 assertions, all 3,901 PCK entries, and 13 release-pipeline unit tests. Native and exported visuals were reviewed. [Acceptance receipt](testing/restoration139/acceptance.json). These focused checks do not replace the full hosted source and 64-case exported gates.
+Nine affected source cases pass 1,755 assertions; four focused exported cases pass 907. All 3,901 package entries and 13 pipeline unit tests pass. Native and exported visuals were reviewed. All five hosted source jobs and all 64 exported cases (13,917 assertions) passed, including the final identical-build verifier. [Acceptance receipt](testing/restoration139/acceptance.json).
 
-Implementation uploaded in [PR #125](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/125), head `017bbd361e52d9dc37d6f264513fce3476881ba3`, identical tree `9e4f85d8999a2da911e1d828057911a17d9bc457`. The owner explicitly authorized pushing, hosted checks and merging on 2026-11-04. No new public Windows release was requested.
+Merged in [PR #125](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/125) as `279ac1648762b18b9f35b622b2a18b6701315edf`. Its tree `48458e516ce5184b160f937478e364e2fe8dcf19` matches the tested source. Head `cd6e68389e34bf3a8361b00197f2c4a356e4cb53`; tested PR merge `f2a1347b8ce6a99afff85deba1fc8feabe86bae6`. [Native run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41893233736) and [complete package rehearsal](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41893233723) succeeded. Windows 0.97.2 remains published; this work did not publish a new release.
 
-The initial package run 41889960968 found two obsolete late-story fixtures: invasion131 and troll133 fabricated archive progress on explicitly fresh fortunes, so the new restoration requirement correctly prevented authentication. Both fixtures and the standalone royal review now reconstruct established pre-crossing archive saves and explicitly assert authentication. No runtime requirement was weakened. The restoration139 regression suite now includes invasion131 and troll133. Corrected native/exported checks and the replacement hosted gates must pass before merge; do not count the initial failed run as acceptance.
+The first hosted attempt exposed obsolete invasion/troll fixtures that fabricated archive progress on fresh fortunes. They now reconstruct established pre-crossing saves and assert authentication; no gameplay requirement was weakened. The corrected complete runs supersede the failed/cancelled initial runs.
 
-Recovery: worktree `/workspace/scratch/86ae07301d4b/stellar-holds`. Do not edit or reset the older dirty `stellar-ledger` worktree. Command-line Git lacks credentials; publish through the connected GitHub tools with an expected-head lease. Finish the authorized validation and merge, then record delivery evidence separately.
+Recovery: source and delivery are complete. Do not restart the passing runs after chat recovery. Worktree: /workspace/scratch/86ae07301d4b/stellar-holds. Preserve the older dirty stellar-ledger worktree. Next: advanced transport/production adventures and optional collections, with human pacing and specialty-cost playtesting. Marriage and district expansion remain deferred.
 
 # Stellar Holds recovery — Campaign138
 
