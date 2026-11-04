@@ -1,0 +1,244 @@
+{
+  "source": "8f1d974424c80bdb8e48cc419d4a7e6175fbae3f",
+  "tree": "5c235f7668a51346cebd8f3c8da762e3d2a469cf",
+  "pr": 123,
+  "native_regression": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 12.16
+    },
+    {
+      "test": "campaign138",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 59,
+      "seconds": 54.73
+    },
+    {
+      "test": "work132",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 146,
+      "seconds": 62.49
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 231,
+      "seconds": 61.58
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 44,
+      "seconds": 58.43
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 383,
+      "seconds": 86.54
+    },
+    {
+      "test": "greatclaim102",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 114,
+      "seconds": 55.59
+    },
+    {
+      "test": "ledger137",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 58.22
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 73.6
+    }
+  ],
+  "final_native": [
+    {
+      "test": "campaign138",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 59,
+      "seconds": 66.04
+    }
+  ],
+  "focused_export": {
+    "schema": 1,
+    "source_sha": "local",
+    "pack_sha256": "9e2ccc90a08711d54305bfe2492da42077abc2ee2bce4c180f59cd67b9352633",
+    "shard_index": 0,
+    "shard_count": 1,
+    "focused": true,
+    "expected_cases": [
+      "ambient",
+      "campaign138",
+      "ledger137",
+      "polish135",
+      "troll133",
+      "work132",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "assigned_cases": [
+      "campaign138",
+      "mountain104",
+      "frontier103"
+    ],
+    "results": [
+      {
+        "test": "campaign138",
+        "passed": true,
+        "checks": 59,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 57.53
+      },
+      {
+        "test": "mountain104",
+        "passed": true,
+        "checks": 44,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 55.84
+      },
+      {
+        "test": "frontier103",
+        "passed": true,
+        "checks": 231,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 61.52
+      }
+    ],
+    "complete": true
+  },
+  "integrity": {
+    "entries": 3897,
+    "hashes_bounds_relative_paths": "passed"
+  },
+  "pipeline_unit_tests": 13,
+  "visual_review": [
+    "Native project and restoration controls",
+    "Physical E approach in front of the storehouse",
+    "Restored building",
+    "Native and exported stocked interior",
+    "Campaign acts/milestones panel"
+  ],
+  "hosted": {
+    "native": 41870338658,
+    "package_rehearsal": 41870338511,
+    "status": "passed",
+    "source_jobs": 5,
+    "exported_cases": 63,
+    "assertions": 13808,
+    "final_verifier": "passed",
+    "publish": "skipped",
+    "package_summary": {
+      "version": "0.99.0",
+      "source_sha": "93c6a090c88369f5c997052938dc910f84759f84",
+      "pack_sha256": "a1806cf9ae32b6405f7e5aeabb4cdf1f12f9048519086a5020b7ecbe662433f1",
+      "zip_sha256": "75eb110a1b2e3f0a8cf456206f2f92c1b11b864263662237fc05ace5ff524558",
+      "cases": 63,
+      "assertions": 13808,
+      "shards": 4,
+      "shard_seconds": [
+        984.96,
+        769.4300000000001,
+        1091.76,
+        1082.42
+      ],
+      "passed": true
+    },
+    "source_note": "The package tested the PR synthetic merge commit. Its tree equals the final source and merged master tree."
+  },
+  "limitations": [
+    "Normal-speed pacing and full campaign duration unmeasured.",
+    "No Windows-device or audible-mix playtest.",
+    "Further restoration/collection projects and late-act specialization remain future batches."
+  ],
+  "local_export_note": "Focused local export from the final runtime files. The harness source label remains local; this is not the hosted clean Windows release proof.",
+  "merge": {
+    "sha": "c6a026c3589d81531eda749e59a7a39cdf271506",
+    "tree": "5c235f7668a51346cebd8f3c8da762e3d2a469cf",
+    "matches_tested_tree": true
+  }
+}

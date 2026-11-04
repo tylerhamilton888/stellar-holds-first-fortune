@@ -1,6 +1,6 @@
 # 0.99.0 — Hands of the hold (source)
 
-Authored practical milestones replace the rescue score threshold. Winter Stores investigation, saved material deliveries, local construction, provisioning and opening reuse the real storehouse. Older earned invitations survive. Farming and fishing remain alternate introductions; recognition and the existing finale stay intact. Validation is in progress.
+Authored practical milestones replace the rescue score threshold. Winter Stores investigation, saved material deliveries, local construction, provisioning and opening reuse the real storehouse. Older earned invitations survive. Farming and fishing remain alternate introductions; recognition and the existing finale stay intact. All five source jobs and 63 exported cases (13,808 assertions) passed. PR #123 merged; Windows 0.97.2 remains the published download.
 
 # 0.98.0 — The Hold’s Ledger (source)
 

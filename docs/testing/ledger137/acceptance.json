@@ -90,12 +90,15 @@
   "hosted": {
     "native_run": 41867138581,
     "package_rehearsal_run": 41867138211,
-    "status": "running",
+    "status": "passed",
     "supersedes": {
       "native_run": 41862441567,
       "package_rehearsal_run": 41862441458,
       "reason": "Updated the obsolete greatclaim102 UI expectation; corrected exported case passes 114 assertions."
-    }
+    },
+    "source_jobs": 5,
+    "exported_cases": 62,
+    "final_verifier": "passed"
   },
   "scope": "First integration batch only; 180-mark rescue gate and later authored act restructuring are unchanged.",
   "focused_export": {
@@ -206,5 +209,11 @@
       "exit_code": 0,
       "seconds": 53.76
     }
-  ]
+  ],
+  "merge": {
+    "pr": 121,
+    "sha": "bcd0bad5ef77f86a91783ad5f95b5b954683be08",
+    "tree": "3db5e1d1a24a83b776ba2c7f5243a1d171126ee2",
+    "matches_tested_tree": true
+  }
 }
