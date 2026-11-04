@@ -25,6 +25,21 @@ static func section(parent:Node,title:String)->VBoxContainer:
  if title!="":label(body,title,18,Color("edc98a"))
  return body
 
+static func illustrated_text(parent:Node,item:String,title:String,description:String)->VBoxContainer:
+ var line=row(parent);line.add_theme_constant_override("separation",16)
+ HoldItemArt.icon(line,item)
+ var icon=line.get_child(0);icon.custom_minimum_size=Vector2(58,58);icon.size_flags_vertical=Control.SIZE_SHRINK_CENTER
+ var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",6);line.add_child(body)
+ if title!="":label(body,title,19,Color("edc98a"))
+ if description!="":label(body,description,16)
+ return body
+
+static func disclosure(g,parent:Node,title:String,key:String)->VBoxContainer:
+ var expanded=bool(g.get_meta(key,false))
+ small_button(parent,("− " if expanded else "+ ")+title,func():g.set_meta(key,not expanded);g.refresh_panel())
+ if not expanded:return null
+ return section(parent,"")
+
 static func make_theme()->Theme:
  var theme=Theme.new();theme.default_font=ThemeDB.fallback_font;theme.default_font_size=16
  for type in ["Button","PanelContainer"]:

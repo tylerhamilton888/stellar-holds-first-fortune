@@ -1,3 +1,7 @@
+# Visual polish 135
+
+`polish135-focus` exercises the real first-load payment and room handoff, optional trade route, Ivar acknowledgment, quick-bar viewport/actor clearance, preserved inventory, material resources and progressive disclosure. `polish135` adds lodge, first-visit, menu, handling, frontier and work regressions; `polish135-art` verifies the final art in the opening, full inventory/recipes and homestead. The focused case runs in gameplay-2 and the exact-pack harness. Inspect the actual captures: packed inventory, recipes, worksite, stair landing, reward card, garden/river context, trial gallery and combat workers. Use sequential engine runs on memory-limited hosts.
+
 # Giant trolls 133
 
 `troll133-focus` checks eight approach directions, committed fist targets, painted-contact alignment, circle boundaries, both blows, actual Space input, interruption, pause, blocked steps, large-body clearance, saved wounds, perspective art and five-giant scene reload. `troll133` adds enemy, combat, equipment-art, developer-room, invasion and perspective regressions. The case is mandatory in core/gameplay/gameplay-3 and the exact-pack harness. Review native giant/player scale, both fists, walking contacts, King counter and trophy. Do not infer human difficulty from accelerated checks.

@@ -16,12 +16,12 @@ func data()->Dictionary:
 func restore():select(clampi(int(data().get("selected",0)),0,9),false)
 func available()->bool:return not HoldFolk.warming() and g.playing and g.panel_id=="" and not is_instance_valid(g.creator) and not is_instance_valid(g.opening_scene) and not is_instance_valid(g.anniversary_scene)
 func bar_y()->float:
- if g.depth_nav!=null and g.depth_nav.explore.active():return 374.0
- if g.surface.active() and g.surface.area in HoldWorldZones.WARDS and g.player.y>1510:return 80.0
- if g.zone=="mine":return 112.0 if (g.player-g.camera).y>390 else 374.0
- return 80.0 if (g.player-g.camera).y>430 else 414.0
-func slot_rect(i:int)->Rect2:return Rect2(230+i*50,bar_y()+24,46,51)
-func over()->bool:return available() and not g.depth_nav.explore.captured and Rect2(224,bar_y(),512,80).has_point(g.get_global_mouse_position())
+ # Lift the compact bar only when it would cover the player's feet.
+ if g.depth_nav!=null and g.depth_nav.explore.active():return 436.0
+ var feet=g.player-g.camera
+ return 112.0 if feet.y>428 and feet.x>200 and feet.x<760 else 436.0
+func slot_rect(i:int)->Rect2:return Rect2(258+i*44,bar_y()+18,40,38)
+func over()->bool:return available() and not g.depth_nav.explore.captured and Rect2(250,bar_y(),460,60).has_point(g.get_global_mouse_position())
 func blocked_work()->bool:return item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!="" or g.fieldwork.placing or g.fieldwork.action!="" or not g.handworks.setting_down.is_empty()
 func title(id:String)->String:
  if id.begins_with("tool:"):return g.TOOL_NAMES[clampi(int(id.get_slice(":",1)),0,3)]
@@ -71,7 +71,7 @@ func _draw():
  if not visible:return
  var d=data();var current=selected();var id=str(d.slots[current])
  var box=StyleBoxFlat.new();box.bg_color=Color(.04,.09,.12,.95);box.border_color=Color("8c7953");box.set_border_width_all(1);box.set_corner_radius_all(7)
- draw_style_box(box,Rect2(224,bar_y(),512,80))
+ draw_style_box(box,Rect2(250,bar_y(),460,60))
  var text=("Weapon · "+g.combat.weapon().name) if g.combat.armed else ("Selected · " if item!="" and g.state.count(item)==0 else "Holding · ")+title(id)
  if g.combat.armed and g.state.combat.weapon=="gun":text+=" · %d cartridges" % g.state.count("ammo")
  elif not g.combat.armed and id=="slagcaster":text+=" · %d charge" % int(g.state.outpost.get("gun_charge",0))
@@ -79,7 +79,7 @@ func _draw():
  var held=g.handworks.held_label()
  if held!="":text=held
  if g.fieldwork.action!="":text=g.fieldwork.held_label()
- draw_string(ThemeDB.fallback_font,Vector2(238,bar_y()+17),text,HORIZONTAL_ALIGNMENT_LEFT,480,13,Color("ead6ab"))
+ draw_string(ThemeDB.fallback_font,Vector2(260,bar_y()+13),text,HORIZONTAL_ALIGNMENT_LEFT,440,11,Color("ead6ab"))
  for i in 10:
   var r=slot_rect(i);var key=str(d.slots[i]);var chosen=i==current and not g.combat.armed
   var locked=key=="slagcaster" and not g.state.outpost.get("mining_gun",false)
@@ -88,10 +88,10 @@ func _draw():
   box.bg_color=Color("3c615e") if chosen else Color("172e38");box.border_color=Color("f1cb7d") if chosen else Color("54645e");box.set_border_width_all(2 if chosen else 1);box.set_corner_radius_all(4);draw_style_box(box,r)
   var index=int(key.get_slice(":",1)) if key.begins_with("tool:") else (9 if key=="slagcaster" else HoldItemArt.item_index(key))
   var color=HoldItemArt.tint(key);color.a=.28 if locked or empty else 1.0
-  HoldItemArt.draw(self,Rect2(r.position+Vector2(9,8),Vector2(29,31)),index,color)
-  draw_string(ThemeDB.fallback_font,r.position+Vector2(4,13),str((i+1)%10),HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color("f0deba"))
-  var count="LOCK" if locked else (str(g.state.count(key)) if resource else "")
-  draw_string(ThemeDB.fallback_font,r.position+Vector2(3,46),count,HORIZONTAL_ALIGNMENT_RIGHT,39,11,Color("cdded4"))
+  HoldItemArt.draw(self,Rect2(r.position+Vector2(10,5),Vector2(24,26)),index,color)
+  draw_string(ThemeDB.fallback_font,r.position+Vector2(3,11),str((i+1)%10),HORIZONTAL_ALIGNMENT_LEFT,-1,11,Color("f0deba"))
+  var count="·" if locked else (str(g.state.count(key)) if resource else "")
+  draw_string(ThemeDB.fallback_font,r.position+Vector2(2,35),count,HORIZONTAL_ALIGNMENT_RIGHT,35,10,Color("cdded4"))
 func pose()->String:
  if g.handworks.busy_hands() or g.fieldwork.action!="":return ""
  if g.mining_gun.selected:return "hold_rifle"

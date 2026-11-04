@@ -235,10 +235,10 @@ static func draw_ground(g):
    var p=point(g,FRONTS[i].p+Vector2(0,120))
    g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,38,Color(.10,.08,.06,.3));g.draw_set_transform(-cam)
    # Scorched fallen timber is visual damage, never a new invisible collision wall.
-   g.draw_line(p+Vector2(-28,-3),p+Vector2(24,6),Color("51443a"),8,true);g.draw_line(p+Vector2(-24,-6),p+Vector2(20,3),Color("826147"),2,true)
+   HoldRawArt135.draw(g,Rect2(p-Vector2(34,28),Vector2(68,34)),"wood",Color(.55,.50,.45))
  if is_instance_valid(g.opening_scene):return
  for marker in points(g):
   g.draw_arc(marker.p,23,0,TAU,24,Color("edc98a"),2,true)
-  if not is_instance_valid(g.opening_scene):g.surface.plaque(marker.p+Vector2(0,30),marker.name)
+  # The objective and interaction footer identify the marker without covering workers.
  if g.invasion_work131:
   g.draw_rect(Rect2(g.player+Vector2(-28,15),Vector2(56,5)),Color("172a30"));g.draw_rect(Rect2(g.player+Vector2(-28,15),Vector2(56*clampf(g.invasion_time131/3.5,0,1),5)),Color("edc98a"))

@@ -1,3 +1,13 @@
+# Visual polish 135 — source 0.97.2, delivery verification in progress
+
+The opening now has a compact adaptive quick bar, readable objective backing, illustrated task cards and optional longer-goal/direction sections. The first-shift HUD and journal share one sequence; the paid handoff leads to the optional room project and Ivar acknowledges the work. Floating stock counts, entrance sentences, farming prompts and trial/defense labels have been removed or moved into the interaction footer. Upper-floor coping uses painted masonry; royal gallery rugs group existing furnishings without changing collision. Scorched timber uses a painted log.
+
+Six painted raw-material loads and twenty painted food/workshop icons replace generic mineral spots, flat symbols and reused ore piles. The final inventory atlas was revised against actual gameplay for the owner's top-down camera requirement. Existing art, saves, transactions and whole-character grips are preserved. Exact prompts and measured regions: `assets/polish135/PRODUCTION.md`, `assets/polish135/INVENTORY.md`, `scripts/raw_art135.gd`.
+
+The initial eight-case native regression passed 606 assertions. The preceding six-case exported regression passed 1,238 assertions. Final icon/perspective verification and hosted checks are being completed; consult `docs/testing/polish135/acceptance.json` before claiming delivery. A separate local homestead run was killed with exit -9 during concurrent engine runs; the exported homestead case passed 69 assertions and the final native run is being repeated sequentially. Windows 0.97.0 remains the published download; this work does not publish a new Windows build.
+
+---
+
 # Royal axe and shoulder carry 134 — merged and verified
 
 Source 0.97.1 replaces Eirik's combat and trophy-return paintings with whole poses using a straight, consistent royal axe. The return uses a natural shoulder-rest grip and truly opposite physical walking contacts. Original artwork remains preserved. Updated crops/root registration retain the complete crown, boots and weapon; the return silhouette has stronger screen presence. Story outcomes and saved beats are unchanged.

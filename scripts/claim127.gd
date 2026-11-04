@@ -124,12 +124,11 @@ static func draw(g):
   rival_lift=52*smoothstep(0,1.2,t)*(1-smoothstep(1.8,2.4,t))
  draw_rig(g,Vector2(550,800),3,rival_lift)
  if g.opening_scene is HoldThaneScene131:return
- g.surface.plaque(Vector2(550,685),"Skarrin's trial lift")
- g.surface.plaque(Vector2(780,650),"Your trial lift")
+ # Dialogue and the contextual footer identify the lifts; keep the stage clear.
  for i in 3:
   var color=Color("78b2a2") if i<int(d.built) else Color("e1c285")
   g.draw_arc(STATIONS[i],23,0,TAU,24,color,2,true)
-  if not is_instance_valid(g.opening_scene):g.surface.plaque(STATIONS[i]+Vector2(0,44),str(i+1)+" · "+PARTS[i].name)
+  # Station names appear in the interaction footer on approach.
  if g.claim_work127>=0:
   g.draw_rect(Rect2(g.player+Vector2(-28,15),Vector2(56,5)),Color("172a30"))
   g.draw_rect(Rect2(g.player+Vector2(-28,15),Vector2(56*clampf(g.claim_time127/2.4,0,1),5)),Color("e1c285"))

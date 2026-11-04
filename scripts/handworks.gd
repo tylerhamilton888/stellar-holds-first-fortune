@@ -391,7 +391,7 @@ func objects()->Array:
   if local(f) and pos(f).distance_to(g.player)<900:list.append({"p":pos(f),"kind":"handwork","facility":f})
  return list
 func raw_sprite(raw:Dictionary,p:Vector2,width:float=40):
- var tex=HoldFolk.raw_texture(raw.kind=="log");var height=width*tex.get_height()/tex.get_width()
+ var tex=HoldRawArt135.texture("wood" if raw.kind=="log" else raw_item(raw));var height=width*tex.get_height()/tex.get_width()
  HoldFolk.raw_draw(g,raw,Rect2(p-Vector2(width/2,height),Vector2(width,height)))
 func vehicle_loads(f:Dictionary,p:Vector2):
  # Pack lengthwise into the bed, two rows per tier; never build a tall icon tower.
@@ -420,9 +420,6 @@ func draw_object(o:Dictionary):
    if item in ["stone","dressed_stone"]:sprite(8,at,30)
    else:HoldItemArt.draw(g,Rect2(at-Vector2(15,24),Vector2(30,24)),HoldItemArt.item_index(item),HoldItemArt.tint(item))
    bundle+=1
- if g.player.distance_to(o.p)<200 and f.kind in ["stone_pile","timber_pile","store","cart","wagon"]:
-  var count=DeepHaul.amount(f.cargo) if f.kind=="store" else f.raw.size()
-  HoldArt.text(g,o.p+Vector2(-22,16),"%d / %d" % [count,load_capacity(f)],11,Color("f1d8a0"))
  if not f.job.is_empty():
   var resident_working=HoldWorkplace98.is_working(g,str(f.id))
   var work_side=-1 if resident_working or f.id=="firstshift:crewbench" or g.player.x<=f.x else 1
@@ -473,7 +470,7 @@ func overlay():
      g.draw_dashed_line(p,pos(stock),Color("97c6bb"),2,6)
  var text=prompt()
  g.draw_set_transform(Vector2.ZERO)
- if text!="":
+ if text!="" and not g.surface.active():
   var width=minf(924,ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+24)
   g.draw_rect(Rect2(18,82,width,27),Color(.03,.08,.10,.9));HoldArt.text(g,Vector2(28,101),text,13,Color("ead6a4"))
 

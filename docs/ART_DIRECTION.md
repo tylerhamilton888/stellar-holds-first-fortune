@@ -1,3 +1,9 @@
+# Prop and icon camera — owner direction, 2026-11-04
+
+Match the top-down, Stardew-style gameplay camera. New icons and world props need visible top surfaces and coherent three-quarter depth; judge them beside the Dwarf, benches and stairs at native gameplay size. Loose parts should rest on the ground; upright objects should show their top plane. Review both 30-unit menu icons and 40-unit world loads. Painted detail does not excuse an incompatible viewing angle. Preserve whole-character carry grips when updating separate material artwork.
+
+---
+
 # Batch delivery — owner direction, 2026-11-02
 
 Deliver remaining named characters in groups of five. Review and correct each character internally, including every reachable activity, then present one combined preview and test report. Do not pause for routine owner approval between characters. Batching does not waive anatomy, outfit, footfall or native-review requirements below.

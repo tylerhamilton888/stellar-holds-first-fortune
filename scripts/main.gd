@@ -210,7 +210,9 @@ func setup_ui():
  ui.theme=HoldMenuView.make_theme()
  hud=Label.new();hud.position=Vector2(24,17);hud.add_theme_font_size_override("font_size",19);ui.add_child(hud)
  status=Label.new();status.position=Vector2(24,48);status.add_theme_color_override("font_color",Color("a3c4bd"));ui.add_child(status)
- objectives=Label.new();objectives.position=Vector2(24,84);objectives.add_theme_font_size_override("font_size",14);ui.add_child(objectives)
+ objectives=Label.new();objectives.position=Vector2(24,84);objectives.add_theme_font_size_override("font_size",14);objectives.size.x=900;objectives.clip_text=true
+ var objective_style=StyleBoxFlat.new();objective_style.bg_color=Color("10232dee");objective_style.border_color=Color("bd9b59");objective_style.border_width_left=3;objective_style.content_margin_left=10;objective_style.content_margin_right=10;objective_style.content_margin_top=4;objective_style.content_margin_bottom=4
+ objectives.add_theme_stylebox_override("normal",objective_style);ui.add_child(objectives)
  footer=Label.new();footer.position=Vector2(24,507);footer.size.x=912;footer.clip_text=true;footer.add_theme_font_size_override("font_size",14);ui.add_child(footer)
  menu_shade=ColorRect.new();menu_shade.color=Color(.025,.04,.045,.45);menu_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);menu_shade.z_index=9;menu_shade.mouse_filter=Control.MOUSE_FILTER_STOP;menu_shade.visible=false;ui.add_child(menu_shade)
  panel=PanelContainer.new();panel.z_index=10;panel.position=Vector2(60,44);panel.size=Vector2(840,452);panel.visible=false;ui.add_child(panel)
@@ -247,7 +249,7 @@ func show_title():
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=6 if HoldBuild.DEV_TESTING else 8;style.content_margin_bottom=6 if HoldBuild.DEV_TESTING else 8;b.add_theme_stylebox_override(key,style)
  var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
  var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,459);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
- var credit=Label.new();credit.text="THE FIRST FORTUNE  /  %s  /  %s" % [HoldBuild.VERSION,HoldBuild.CHAPTER];credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
+ var credit=Label.new();credit.text="Version "+HoldBuild.VERSION;credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
  ui.visible=true;invasion_work131=false;invasion_time131=0;guard_clock131=0
@@ -954,7 +956,7 @@ func update_hud():
  if zone=="mine" and state.active_site=="hold" and HoldFrontier103.active(state):place="STONEBRIDGE"
  hud.text=place+" / "+("DEEP WORKINGS" if zone=="mine" else ("KELDRATH" if zone=="approach" else "TIMBER COUPE" if zone=="road" else "MOUNTAIN HOLD"))+"   %d CROWNS" % state.money
  status.text="IRON ORE %d   COPPER %d   COAL %d   CRYSTAL %d   TIMBER %d" % [state.count("iron_ore"),state.count("copper_ore"),state.count("coal"),state.count("crystal"),state.count("wood")]
- objectives.text=goal()
+ objectives.text=goal();objectives.tooltip_text=objectives.text
  objectives.visible=zone!="mine" and playing
  for item in [hud,status,footer]:item.visible=playing and not (zone=="mine" and panel_id!="")
  if menu_paused or panel_id in ["pause","settings"]:footer.text="PAUSED — TAKE YOUR TIME   |   CLOSE TO RESUME"
@@ -966,12 +968,14 @@ func update_hud():
  elif construction.selected!="":footer.text="BUILD: "+HoldConstruction.OPTIONS[construction.selected].name+"   LMB PLACE   1–4 CANCEL   V OPTIONS"
  elif zone=="road":footer.text=HoldForestry.hint(self)
  elif zone=="approach":footer.text="HIGH TRAIL LOOKOUT   |   G BASIN MAP   E PLAN JOURNEY   A/D WALK"
- elif zone=="mine":footer.text=HoldFirstShift.goal(self) if HoldFirstShift.goal(self)!="" else "WASD move   LMB mine   E interact   O rooms   H haulage   X survey   F1 help"
+ elif zone=="mine":footer.text=HoldFirstVisit99.goal(self) if HoldFirstVisit99.active(state) and HoldFirstVisit99.data(state).guided else HoldFirstShift.goal(self) if HoldFirstShift.goal(self)!="" else "WASD move   LMB mine   E interact   O rooms   H haulage   X survey   F1 help"
  else:
   var nearest=nearest_station()
   footer.text="E  "+nearest.name.to_upper()+"    |    A/D MOVE   I PACK   M CREW   F1 HELP" if absf(nearest.x-player.x)<95 else "A/D MOVE   E INTERACT   C CHARACTER   I PACK   M CREW   F1 HELP"
 
  if surface and surface.active():surface.hud()
+ objectives.size.x=clampf(objectives.get_theme_font("font").get_string_size(objectives.text,HORIZONTAL_ALIGNMENT_LEFT,-1,14).x+24,220,900)
+ objectives.tooltip_text=objectives.text
  status.visible=false
  dev.update_badge()
  sync_hud_controls()

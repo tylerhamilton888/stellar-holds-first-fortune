@@ -65,6 +65,10 @@ static func floor_draw(w,area:String="room:throne"):
  for x in [185,865]:
   w.tile(0,Rect2(x,320,245,700),110,Color("79898b"))
   g.draw_rect(Rect2(x,320,245,700),Color("a88e59"),false,3)
+ # Small gallery rugs group the clerk's desk and instruments without moving
+ # furniture, changing collision or obstructing the royal procession.
+ for mat in [Rect2(190,550,115,150),Rect2(985,565,110,90),Rect2(975,785,135,125)]:
+  HoldRoomLayout.rug(w,mat,Color("486c6b"))
  for step in 4:
   var r=Rect2(495+step*10,342-step*14,310-step*20,120)
   g.draw_style_box(w.stone_style(Color("77898c").lightened(step*.06)),r)

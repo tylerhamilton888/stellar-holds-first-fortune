@@ -94,6 +94,11 @@ static func goal(g)->String:
  if not active(g.state):return ""
  var q=data(g.state)
  if HoldFrontier103.active(g.state) and q.guided:
+  if g.zone=="mine" and q.get("work_started",false) and not q.get("rewarded",false):
+   var n=step(g.state)
+   return "First shift · %d/5 · %s · J: help" % [mini(n+1,5),TASKS[mini(n,4)][0]]
+  if q.get("rewarded",false) and not q.get("home_made",false) and q.focus=="home":
+   return "Your own corner · O: place a chair, lamp or table" if HoldFrontier103.private_room(g) else "First wages earned · return to your room above the bunkhouse · J"
   if not q.get("ivar_spoken",false):return "First morning · speak with Ivar by the bunkhouse hearth · E"
   if not q.get("room_seen",false):return "First morning · bunkhouse stairs → your room above · J"
   if not q.get("rewarded",false):return "First shift · northern town path → Old Workings · J"
@@ -185,10 +190,12 @@ static func frontier_journal(g):
  if HoldMountain104.eligible(g.state) or int(HoldAncestralClaim.data(g.state).stage)>0:HoldMountain104.panel(g)
  HoldWorkView132.summary(g)
  var s=g.state;var q=data(s)
- g.label(g.panel_body,"A DWARF'S WORTH · STONEBRIDGE",22,Color("edc98a"))
- g.label(g.panel_body,"A bunkhouse room today; a home you design and build as you settle into town. Nothing decays while you are away. Take these steps at your own pace.",16)
- for line in ["Your room above the bunkhouse remains yours. O opens furnishings.","Complete civic projects at the ledger beside Ivar, or earn trade seals with supplies you produce. Any two contributions earn your household plot after the first shift.","Accept your plot at Ivar's shift book, then follow the east road. Design a home with the building book or piece-by-piece construction, including upper floors.","Add your bed and a lamp or hearth, then register your home for 60 Claim marks. Keep extending it throughout the story."]:
-  g.label(g.panel_body,line,16)
- g.button(g.panel_body,"View Great Claim ledger",func():g.open_panel("great_claim102"))
- g.button(g.panel_body,"Town services and home milestone",func():g.open_panel("frontier103"))
- g.small_button(g.panel_body,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())
+ var nav=g.row(g.panel_body)
+ g.small_button(nav,"Town services",func():g.open_panel("frontier103"))
+ g.small_button(nav,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())
+ if not q.get("rewarded",false):return
+ var ambitions=HoldMenuView.disclosure(g,g.panel_body,"Longer ambitions","journal135_ambitions")
+ if ambitions!=null:
+  HoldMenuView.illustrated_text(ambitions,"wood","A home you build","Complete any two civic projects or trade seals, then accept your household plot from Ivar. Your upstairs room stays yours.")
+  g.label(ambitions,"Build a home with a bed and a nearby lamp or hearth. Register it for 60 marks. A registered home and 180 marks earn Ivar’s next lead.",15)
+  g.small_button(ambitions,"View Great Claim ledger",func():g.open_panel("great_claim102"))

@@ -1,0 +1,131 @@
+{
+  "version": "0.97.2",
+  "status": "final art and hosted verification pending",
+  "native_regression": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.17
+    },
+    {
+      "test": "polish135",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 68,
+      "seconds": 35.43
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 68.53
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 22,
+      "seconds": 63.57
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 96.09
+    },
+    {
+      "test": "menu_quality100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 32,
+      "seconds": 50.34
+    },
+    {
+      "test": "handworks",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 32,
+      "seconds": 65.57
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 224,
+      "seconds": 57.44
+    },
+    {
+      "test": "work132",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 146,
+      "seconds": 60.64
+    }
+  ],
+  "export_regression": [
+    {
+      "test": "polish135",
+      "passed": true,
+      "checks": 68,
+      "errors": []
+    },
+    {
+      "test": "invasion131",
+      "passed": true,
+      "checks": 639,
+      "errors": []
+    },
+    {
+      "test": "homestead",
+      "passed": true,
+      "checks": 69,
+      "errors": []
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "checks": 35,
+      "errors": []
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "checks": 47,
+      "errors": []
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "checks": 380,
+      "errors": []
+    }
+  ],
+  "final_art_native_path": "/tmp/polish135-art-final/results.json",
+  "final_art_export_path": "/tmp/polish135-art-exact/results.json",
+  "visual_review": [
+    "compact HUD and upstairs landing",
+    "illustrated first-step and paid-room journal",
+    "distinct raw loads at world scale",
+    "top-down inventory and crafting icons at native size",
+    "painted masonry coping",
+    "royal gallery grouping",
+    "unobscured combat workers"
+  ],
+  "limitations": [
+    "Scripted review does not establish human pacing, audible quality or Windows-device performance.",
+    "No new Windows download published."
+  ]
+}

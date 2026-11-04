@@ -25,7 +25,8 @@
       "friendship130",
       "invasion131",
       "work132",
-      "troll133"
+      "troll133",
+      "polish135"
     ],
     "gameplay": [
       "loading",
@@ -96,7 +97,8 @@
       "friendship130",
       "invasion131",
       "work132",
-      "troll133"
+      "troll133",
+      "polish135"
     ],
     "modular": [
       "modular",
@@ -376,7 +378,8 @@
       "combat_art",
       "menu92",
       "friendship130",
-      "work132"
+      "work132",
+      "polish135"
     ],
     "gameplay-3": [
       "orientation",
@@ -880,6 +883,29 @@
       "invasion131",
       "navigation94",
       "mouselook95"
+    ],
+    "polish135-focus": [
+      "polish135"
+    ],
+    "polish135": [
+      "polish135",
+      "lodge100",
+      "firstvisit99",
+      "menu92",
+      "menu_quality100",
+      "handworks",
+      "frontier103",
+      "work132"
+    ],
+    "polish135-details": [
+      "homestead",
+      "claim127",
+      "invasion131"
+    ],
+    "polish135-art": [
+      "polish135",
+      "menu92",
+      "homestead"
     ]
   },
   "cases": {
@@ -1162,6 +1188,10 @@
     "troll133": {
       "script": "tests/troll133.gd",
       "marker": "TROLL133"
+    },
+    "polish135": {
+      "script": "tests/polish135.gd",
+      "marker": "POLISH135"
     }
   }
 }
