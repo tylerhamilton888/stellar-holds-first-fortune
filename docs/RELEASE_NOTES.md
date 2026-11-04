@@ -1,3 +1,11 @@
+# 0.101.1 — New Game and Load Game
+
+The title menu now uses **New Game** and **Load Game**. Choose **New Game** and an empty fortune slot to begin the standard opening in the miners’ bunkhouse; choose **Load Game** to resume a saved fortune. The new-game slot banner uses the same wording.
+
+This patch changes menu wording only. It includes all of 0.101.0’s content and preserves existing saves and progression.
+
+Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves.
+
 # 0.101.0 — Collections of the hold
 
 The Hold’s Ledger now has optional Miner, Smith and Hearthkeeper collections. Deliver a little at a time and earn a useful masonry recipe, a tempered hammer, or a supper-table plan. Hearthkeepers may grow crops or catch fish. Progress is saved, with no deadlines, and collections remain available after the contest.

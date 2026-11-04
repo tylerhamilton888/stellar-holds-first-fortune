@@ -1,3 +1,7 @@
+# Title labels142 — delivered in Windows 0.101.1
+
+New Game / Load Game wording is merged and published with complete release verification. Next priority remains fresh-player pacing feedback through the Thane homecoming; no additional feature work is part of this patch.
+
 # Collections141 — delivered in Windows 0.101.0
 
 Three optional collections are merged and published after complete source/package verification. Next priority is a fresh-save pacing playtest through the opening chapter; pause new system expansion for that feedback. Advanced transport/production adventures and later Skarrin scenes remain future work; marriage/district expansion remain deferred. See great-claim/COLLECTIONS141.md.

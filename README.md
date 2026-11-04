@@ -31,9 +31,9 @@ The runtime must be the unchanged official 4.4.1 template already shipped in 0.6
 
 ## Current chapter
 
-The First Fortune (0.101.0) follows a new worker from Stonebridge's bunkhouse through a player-built home, ancestral rescue, the engineering contest, Keldrath's defense and a homecoming as Thane. The Hold’s Ledger guides practical campaign milestones, Winter Stores and North Crossing restoration, with three optional profession collections. Twelve characters offer optional friendship episodes. Existing homes, possessions and relationships persist. Marriage and district management remain future work.
+The First Fortune (0.101.1) follows a new worker from Stonebridge's bunkhouse through a player-built home, ancestral rescue, the engineering contest, Keldrath's defense and a homecoming as Thane. The Hold’s Ledger guides practical campaign milestones, Winter Stores and North Crossing restoration, with three optional profession collections. Twelve characters offer optional friendship episodes. Existing homes, possessions and relationships persist. Marriage and district management remain future work.
 
-For the current opening, choose **New Game** (**First visit to the hold** in Windows 0.101.0) and an empty fortune slot. Continue an existing frontier fortune to keep its earned progress. Download [the complete 0.101.0 Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.0); the [current status](docs/CURRENT_STATUS.md) distinguishes merged source from published Windows builds. See the [current playtest route](docs/PLAYTEST_GUIDE.md).
+For the current opening, choose **New Game** and an empty fortune slot. Continue an existing frontier fortune to keep its earned progress. Download [the complete 0.101.1 Windows build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.1); the [current status](docs/CURRENT_STATUS.md) distinguishes merged source from published Windows builds. See the [current playtest route](docs/PLAYTEST_GUIDE.md).
 
 ## Project map
 
