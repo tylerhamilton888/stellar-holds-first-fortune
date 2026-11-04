@@ -49,7 +49,7 @@ func run():
  check(not HoldFrontier103.near(g,"lodge"),"Remote journal does not imply local delivery permission")
  g.surface.enter(HoldFrontier103.lodge(g.state));settle();at(Vector2(480,500));g.state.add("coal",8);g.open_panel("frontier103")
  # Legacy commission API remains supported; ledger137 covers the new staged UI.
- check(g.state.finish_commission(),"Legacy commission completion remains compatible");g.close_panel()
+ check(g.state.finish_commission(),"Legacy commission completion remains compatible");g.save_game();g.close_panel()
  check(g.state.opening==remote+1,"Actual frontier commission advances first-shift progression")
  g.state.save_slot=3;g.start_game(false);settle()
  check(not HoldFirstVisit99.active(g.state) and g.state.opening==0,"Standard new fortunes retain their original arrival")
