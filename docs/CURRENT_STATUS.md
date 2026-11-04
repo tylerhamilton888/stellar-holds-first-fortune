@@ -1,3 +1,7 @@
+# Release pipeline refinement — validation pending
+
+Implemented four independent exported-test runners, one shared verified Windows candidate and strict full-suite aggregation. All 61 harness scripts/markers are unchanged. Thirteen local pipeline safety tests pass; a full hosted benchmark is required before claiming a measured speedup. No gameplay version change and no restart of the existing 0.97.2 release. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md).
+
 # Current status — 0.97.2 release in progress
 
 The opening chapter through the Thane homecoming is implemented. Current work is delivery of the completed visual polish and royal-axe correction, followed by owner playtesting. Marriage and district expansion remain deferred.

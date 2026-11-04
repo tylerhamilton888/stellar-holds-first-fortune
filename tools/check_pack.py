@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
 """Native checks against the exported pack, from empty working and save directories."""
-import argparse, json, os, re, subprocess, tempfile
+import argparse, hashlib, json, os, re, subprocess, tempfile, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def main():
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--godot', required=True)
-    p.add_argument('--pack', type=Path, required=True)
-    p.add_argument('--output', type=Path, required=True)
-    p.add_argument('--case', action='append', dest='selected_cases', help='Focused verification only; omit for the complete release gate')
-    a = p.parse_args(); output = a.output.resolve(); output.mkdir(parents=True, exist_ok=False)
-    engine = str(Path(a.godot).resolve()); pack = str(a.pack.resolve())
+def load_cases():
     cases = [('ambient', (ROOT/'tests/pack_ambient61.gd').read_text(), 'PACK AMBIENT61')]
     # Inline only the test fixture. Game scripts/assets must resolve inside the pack.
     fixture = (ROOT/'tests/support/game_fixture.gd').read_text()
@@ -92,7 +85,6 @@ def main():
     cases.append(('dev_testing', fixture+'\n'+body, 'DEV_TESTING85'))
     body = (ROOT/'tests/hearthknot128.gd').read_text().split('\n', 1)[1]
     cases.append(('hearthknot128', fixture+'\n'+body, 'HEARTHKNOT128'))
-    results = []
     body = (ROOT/'tests/architecture86.gd').read_text().split('\n', 1)[1]
     cases.append(('architecture', fixture+'\n'+body, 'ARCHITECTURE86'))
     body = (ROOT/'tests/architecture87.gd').read_text().split('\n', 1)[1]
@@ -137,28 +129,89 @@ def main():
     cases.append(('courtship101', fixture+'\n'+body, 'COURTSHIP101'))
     body = (ROOT/'tests/claim127.gd').read_text().split('\n', 1)[1]
     cases.append(('claim127', fixture+'\n'+body, 'CLAIM127'))
-    if a.selected_cases:
-        unknown = set(a.selected_cases)-{name for name, _, _ in cases}
+    return cases
+
+
+def select_cases(cases, selected=None, shard_index=0, shard_count=1):
+    if shard_count < 1 or not 0 <= shard_index < shard_count:
+        raise ValueError('Shard index must be in [0, shard_count)')
+    if selected and shard_count != 1:
+        raise ValueError('Focused --case checks cannot be combined with release shards')
+    names = [case[0] for case in cases]
+    if len(set(names)) != len(names):
+        raise ValueError('Duplicate case names in exported suite')
+    if selected:
+        unknown = set(selected) - set(names)
         if unknown:
-            p.error('Unknown pack case: '+', '.join(sorted(unknown)))
-        cases = [case for case in cases if case[0] in a.selected_cases]
+            raise ValueError('Unknown pack case: ' + ', '.join(sorted(unknown)))
+        cases = [case for case in cases if case[0] in selected]
+    shard = cases[shard_index::shard_count]
+    if not shard:
+        raise ValueError('Empty release shard')
+    return shard
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--godot')
+    p.add_argument('--pack', type=Path)
+    p.add_argument('--output', type=Path)
+    p.add_argument('--case', action='append', dest='selected_cases', help='Focused verification only; cannot satisfy the full release gate')
+    p.add_argument('--shard-index', type=int, default=0)
+    p.add_argument('--shard-count', type=int, default=1)
+    p.add_argument('--source-sha', default=os.environ.get('GITHUB_SHA', 'local'))
+    p.add_argument('--list-cases', action='store_true')
+    a = p.parse_args()
+    all_cases = load_cases()
+    try:
+        cases = select_cases(all_cases, a.selected_cases, a.shard_index, a.shard_count)
+    except ValueError as exc:
+        p.error(str(exc))
+    if a.list_cases:
+        print(json.dumps([name for name, _, _ in cases])); return
+    if not all((a.godot, a.pack, a.output)):
+        p.error('--godot, --pack and --output are required for execution')
+    output = a.output.resolve(); output.mkdir(parents=True, exist_ok=False)
+    engine = str(Path(a.godot).resolve()); pack = str(a.pack.resolve())
+    with open(pack, 'rb') as stream:
+        pack_sha = hashlib.file_digest(stream, 'sha256').hexdigest()
+    results = []
+    report = dict(schema=1, source_sha=a.source_sha, pack_sha256=pack_sha,
+                  shard_index=a.shard_index, shard_count=a.shard_count,
+                  focused=bool(a.selected_cases), expected_cases=[x[0] for x in all_cases],
+                  assigned_cases=[x[0] for x in cases], results=results, complete=False)
+    def record():
+        (output/'results.json').write_text(json.dumps(results, indent=2))
+        (output/'report.json').write_text(json.dumps(report, indent=2))
+    record()
     for name, script, marker in cases:
         capture = output/name; capture.mkdir()
+        started = time.monotonic()
         with tempfile.TemporaryDirectory(prefix='stellar-pack-') as temp:
             directory = Path(temp); harness = directory/'check.gd'; harness.write_text(script)
             env = os.environ.copy(); env.update(XDG_DATA_HOME=str(directory/'save'), APPDATA=str(directory/'save'), LOCALAPPDATA=str(directory/'save'))
-            proc = subprocess.run([engine, '--path', temp, '--main-pack', pack, '--audio-driver', 'Dummy',
-                                   '--rendering-method', 'gl_compatibility', '--script', str(harness), '--', str(capture)],
-                                  cwd=temp, env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=360)
-        log = proc.stdout; (output/(name+'.log')).write_text(log)
+            try:
+                proc = subprocess.run([engine, '--path', temp, '--main-pack', pack, '--audio-driver', 'Dummy',
+                                       '--rendering-method', 'gl_compatibility', '--script', str(harness), '--', str(capture)],
+                                      cwd=temp, env=env, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=360)
+                log, code = proc.stdout, proc.returncode
+            except subprocess.TimeoutExpired as exc:
+                raw = exc.stdout or ''
+                log = (raw.decode(errors='replace') if isinstance(raw, bytes) else raw) + '\nERROR: Test timed out after 360 seconds\n'
+                code = -1
+        (output/(name+'.log')).write_text(log)
         match = re.search(re.escape(marker)+r': (\d+) passed / 0 failed', log)
         errors = [line for line in log.splitlines() if ('SCRIPT ERROR:' in line or line.startswith('ERROR:'))
                   and not re.search(r'ERROR: \d+ resources still in use at exit', line)]
-        ok = proc.returncode == 0 and bool(match) and not errors
-        results.append(dict(test=name, passed=ok, checks=int(match[1]) if match else 0, errors=errors))
-        (output/'results.json').write_text(json.dumps(results, indent=2))
+        ok = code == 0 and bool(match) and not errors
+        results.append(dict(test=name, passed=ok, checks=int(match[1]) if match else 0, errors=errors,
+                            exit_code=code, seconds=round(time.monotonic()-started, 2)))
+        record()
         print(name, 'PASS' if ok else 'FAIL', flush=True)
-        if not ok: print(log[-5000:]); raise SystemExit(1)
+        if not ok:
+            print(log[-5000:]); raise SystemExit(1)
+    report['complete'] = True
+    record()
+
 
 if __name__ == '__main__': main()
-

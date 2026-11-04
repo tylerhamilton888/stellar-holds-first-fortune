@@ -1,3 +1,7 @@
+# Release orchestration
+
+Windows exact-package checks run on four independent runners, with sequential isolated cases per runner. All 61 cases remain mandatory; the final gate verifies exact coverage and common source/PCK/ZIP identity. Focused checks never satisfy release coverage. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md). Test pipeline failure handling with `python3 -m unittest discover -s tools -p test_release_pipeline.py -v`.
+
 # Visual polish 135
 
 `polish135-focus` exercises the real first-load payment and room handoff, optional trade route, Ivar acknowledgment, quick-bar viewport/actor clearance, preserved inventory, material resources and progressive disclosure. `polish135` adds lodge, first-visit, menu, handling, frontier and work regressions; `polish135-art` verifies the final art in the opening, full inventory/recipes and homestead. The focused case runs in gameplay-2 and the exact-pack harness. Inspect the actual captures: packed inventory, recipes, worksite, stair landing, reward card, garden/river context, trial gallery and combat workers. Use sequential engine runs on memory-limited hosts.
