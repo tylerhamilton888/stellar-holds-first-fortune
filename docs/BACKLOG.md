@@ -1,3 +1,10 @@
+# Validation follow-up
+
+Focused selection and explicit full rehearsals implemented in Validation140.
+Measure hosted elapsed time; expand dependency mappings only with reviewed
+coverage. Profile shared character initialization before consolidating historical
+character cases; retain distinct gait, identity, save and rescue assertions.
+
 # Restoration139 — locally complete, authorized delivery underway
 
 Implemented and locally verified (999 native / 151 exported assertions): northern crossing restoration, repeatable or mixed specialist work orders, real route opening, saved dedication and milestone dialogue. Remaining: further optional collections and late-act projects, richer transport adventures, and human measurement of route costs and pacing. This batch does not claim completion of the entire five-act restructure.

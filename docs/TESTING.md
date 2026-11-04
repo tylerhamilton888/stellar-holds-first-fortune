@@ -1,3 +1,11 @@
+# Validation policy update — focused development checks
+
+Routine PRs now select affected cases plus startup/save checks; shared or unknown
+runtime changes still run the full source suite. Full Windows rehearsals are
+explicit, and actual releases retain complete native and exported coverage.
+See [VALIDATION_POLICY.md](VALIDATION_POLICY.md). The prior five-job / automatic
+PR package-rehearsal instructions below describe the historical workflow.
+
 # Restoration139
 
 The affected suite includes invasion131 and troll133. Their late-story fixtures reconstruct established pre-crossing archive saves and assert authentication; the fresh progression guard remains covered by restoration139.

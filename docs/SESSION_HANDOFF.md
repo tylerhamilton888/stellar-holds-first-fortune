@@ -1,3 +1,12 @@
+# Validation140 — development workflow optimization
+
+A separate tooling change adds conservative affected-test selection, removes the
+duplicate people run and post-merge rerun, and reserves full Windows rehearsals
+for explicit runs/releases. All source and package release checks are retained.
+Implementation and validation are in progress; no new gameplay or public build.
+See [VALIDATION_POLICY.md](VALIDATION_POLICY.md). Preserve the independent
+North Crossing worktree and its existing runs.
+
 # Source 0.100.0 — The North Crossing
 
 The next authored Act IV milestone restores a northern river crossing between Old Workings and the survey hall. Inspect the west abutment after the rescue and Winter Stores, deliver 12 dressed stone / 24 timber / 4 iron through the Ledger, and supply three crew shifts. Smiths supply forged parts, builders processed timber or stone, and provisioners cooked bread, hotpot or chowder. Repeat one route or mix them. Research and unspent production evidence are checked on every deposit; partial deliveries persist.

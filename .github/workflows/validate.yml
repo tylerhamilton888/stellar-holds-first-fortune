@@ -1,59 +1,77 @@
 name: Game validation
 on:
-  push:
-    branches: [master, main]
-    paths: [project.godot, "scripts/**", "tests/**", "tools/**", "assets/**", "audio/**"]
   pull_request:
-    paths: [project.godot, "scripts/**", "tests/**", "tools/**", "assets/**", "audio/**"]
-  workflow_dispatch:
+  workflow_dispatch: # Manual runs always use the full source suite.
 permissions:
   contents: read
 concurrency:
   group: validation-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+      run_gameplay: ${{ steps.select.outputs.run_gameplay }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            tools
+            tests
+            scripts
+      - name: Verify selection and release safety
+        run: python3 -m unittest discover -s tools -p 'test_*.py' -v
+      - name: Select affected cases
+        id: select
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          args=()
+          if [ -n "$BASE_SHA" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE_SHA" || true
+            args+=(--base "$BASE_SHA")
+          fi
+          python3 tools/plan_validation.py "${args[@]}"
   gameplay:
+    needs: plan
+    if: needs.plan.outputs.run_gameplay == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     strategy:
       fail-fast: false
-      matrix:
-        suite: [gameplay-1, gameplay-2, gameplay-3, gameplay-4]
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Install pinned official engine
-        run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
-      - name: Native gameplay, menus and isolated save regressions
-        env:
-          LIBGL_ALWAYS_SOFTWARE: '1'
-        run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite ${{ matrix.suite }} --output test-results/ci
-      - name: Log character and entrance visual evidence
-        if: always()
-        run: python3 tools/print_folk82_evidence.py
-      - name: Retain evidence
-        if: always()
-        # Test failures still fail the preceding step. An account artifact quota
-        # must not misreport a passing gameplay run as a gameplay failure.
-        continue-on-error: true
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: gameplay-evidence-${{ matrix.suite }}-${{ github.sha }}
-          path: test-results/ci
-          retention-days: 7
-  people-preview:
-    runs-on: ubuntu-24.04
-    # A cold checkout of the retained source/art history can consume ~17 minutes.
-    # Match the gameplay budget so checkout does not crowd out visual validation.
-    timeout-minutes: 45
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Install pinned official engine
         run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
-      - name: Verify entrances, characters and gifts
+      - name: Native affected-system and save checks
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
-        run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite people-preview --output test-results/ci
-      - name: Retain readable visual evidence
+          CASES: ${{ toJSON(matrix.cases) }}
+        run: |
+          mapfile -t cases < <(python3 -c 'import json,os; print("\n".join(json.loads(os.environ["CASES"])))')
+          args=()
+          for case in "${cases[@]}"; do args+=(--case "$case"); done
+          xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" "${args[@]}" --output test-results/ci
+      - name: Retain test and visual evidence
         if: always()
-        run: python3 tools/print_folk82_evidence.py
-
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gameplay-evidence-${{ matrix.shard }}-${{ github.sha }}
+          path: test-results/ci
+          retention-days: 7
+  validation:
+    if: always()
+    needs: [plan, gameplay]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require the complete selected plan
+        env:
+          PLAN_RESULT: ${{ needs.plan.result }}
+          GAME_RESULT: ${{ needs.gameplay.result }}
+          GAME_REQUIRED: ${{ needs.plan.outputs.run_gameplay }}
+        run: |
+          test "$PLAN_RESULT" = success
+          if [ "$GAME_REQUIRED" = true ]; then test "$GAME_RESULT" = success; fi

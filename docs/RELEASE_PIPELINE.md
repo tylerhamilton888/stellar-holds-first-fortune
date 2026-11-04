@@ -1,3 +1,11 @@
+# Validation policy update — focused development checks
+
+Routine PRs now select affected cases plus startup/save checks; shared or unknown
+runtime changes still run the full source suite. Full Windows rehearsals are
+explicit, and actual releases retain complete native and exported coverage.
+See [VALIDATION_POLICY.md](VALIDATION_POLICY.md). The prior five-job / automatic
+PR package-rehearsal instructions below describe the historical workflow.
+
 # Parallel Windows release checks
 
 The 0.97.2 release spent **66m 50s** running all 61 exported-game cases sequentially. The verified four-runner trial completed the same case catalogue in **14m 59s elapsed test time**, a **77.6% reduction**. All **13,706 assertions** passed, and the aggregate gate confirmed every case exactly once against one source/PCK/ZIP identity. The 13 local pipeline safety tests also passed.

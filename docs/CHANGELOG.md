@@ -1,3 +1,10 @@
+# Validation140 (tooling only)
+
+- Select affected PR cases with startup/save coverage and full fallback.
+- Remove duplicate character execution and automatic post-merge reruns.
+- Stop triggering Windows rehearsals when registering exported tests.
+- Keep full source/package gates on releases and manual rehearsals; manual runs do not publish.
+
 # 0.100.0 — The North Crossing (locally verified, delivery pending)
 
 Staged bridge restoration with saved structural deliveries and three specialist work orders, a permanent northern river route, and a short Ivar/Skarrin dedication. Fresh fortunes complete the witnessed project before ancestral authentication. Existing archive progress and closed trial scores remain intact. Player production cannot be counted twice across work orders and earlier trade seals. Seven affected source cases pass 999 assertions; two exact-export cases pass 151. The owner authorized push and merge after hosted checks; delivery is underway.

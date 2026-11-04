@@ -2,14 +2,7 @@ name: Verified Windows release
 on:
   push:
     branches: ['release/*']
-  pull_request:
-    paths:
-      - '.github/workflows/windows-release.yml'
-      - 'tools/check_pack.py'
-      - 'tools/verify_release.py'
-      - 'tools/verify_source_gate.sh'
-      - 'tools/test_release_pipeline.py'
-  workflow_dispatch:
+  workflow_dispatch: # Explicit non-publishing full rehearsal on the selected ref.
 permissions:
   contents: read
   actions: read
@@ -18,15 +11,15 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
-    if: startsWith(github.ref, 'refs/heads/release/') || github.event_name == 'pull_request'
+    if: startsWith(github.ref, 'refs/heads/release/') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Test release orchestration
-        run: python3 -m unittest discover -s tools -p test_release_pipeline.py -v
+        run: python3 -m unittest discover -s tools -p 'test_*.py' -v
       - name: Check version and preserve existing releases
-        if: startsWith(github.ref, 'refs/heads/release/')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -56,24 +49,27 @@ jobs:
           overwrite: true
 
   source-gate:
-    if: startsWith(github.ref, 'refs/heads/release/') || github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
-    timeout-minutes: 70
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [gameplay-1, gameplay-2, gameplay-3, gameplay-4]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          fetch-depth: 64
-      - name: Require the complete identical-source native gate
+      - name: Install pinned official engine
+        run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+      - name: Full native coverage of this exact release source
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: bash tools/verify_source_gate.sh
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite ${{ matrix.suite }} --output test-results/source
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
         with:
-          name: source-proof-${{ github.run_id }}
-          path: test-results/release-source.txt
+          name: source-proof-${{ github.run_id }}-${{ matrix.suite }}
+          path: test-results/source
           if-no-files-found: error
-          retention-days: 1
-          overwrite: true
+          retention-days: 7
 
   pack:
     needs: build
@@ -134,7 +130,7 @@ jobs:
           path: test-results/shards
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: source-proof-${{ github.run_id }}
+          pattern: source-proof-${{ github.run_id }}-*
           path: test-results/source
       - name: Require every case exactly once against identical bytes
         run: |
@@ -153,7 +149,7 @@ jobs:
           overwrite: true
 
   publish:
-    if: startsWith(github.ref, 'refs/heads/release/')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')
     needs: verify
     permissions:
       contents: write
