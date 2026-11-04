@@ -30,6 +30,6 @@ After the rescue and Winter Stores, follow the project from the Ledger. Make a s
 
 ## Acceptance and delivery
 
-Seven affected source cases pass 999 assertions, two exact-export cases pass 151, all 3,901 PCK entries pass integrity checks, and the 13 release-orchestration unit tests pass. Native and exported visuals were reviewed. See [receipt and limits](../testing/restoration139/acceptance.json). Runtime/test source is `1d66f76d6527a5db1faa59d79d102c9a0db8cabe`.
+Nine affected source cases pass 1,755 assertions; four focused exported cases pass 907. All 3,901 package entries and 13 pipeline unit tests pass. Native and exported visuals were reviewed. All five hosted source jobs and all 64 exported cases (13,917 assertions) passed, including the final identical-build verifier. See [receipt and limits](../testing/restoration139/acceptance.json).
 
-The owner explicitly authorized the GitHub push, hosted checks and merge on 2026-11-04. Delivery is underway; hosted gates and merge are not yet complete. Windows 0.97.2 remains the published version.
+Merged in [PR #125](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/125) as `279ac1648762b18b9f35b622b2a18b6701315edf`. Its tree `48458e516ce5184b160f937478e364e2fe8dcf19` matches the tested source. Head `cd6e68389e34bf3a8361b00197f2c4a356e4cb53`; tested PR merge `f2a1347b8ce6a99afff85deba1fc8feabe86bae6`. [Native run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41893233736) and [complete package rehearsal](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41893233723) succeeded. Windows 0.97.2 remains published; this work did not publish a new release.

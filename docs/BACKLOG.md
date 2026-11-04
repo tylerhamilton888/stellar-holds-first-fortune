@@ -1,6 +1,6 @@
-# Restoration139 — locally complete, authorized delivery underway
+# Restoration139 — merged
 
-Implemented and locally verified (999 native / 151 exported assertions): northern crossing restoration, repeatable or mixed specialist work orders, real route opening, saved dedication and milestone dialogue. Remaining: further optional collections and late-act projects, richer transport adventures, and human measurement of route costs and pacing. This batch does not claim completion of the entire five-act restructure.
+PR #125 delivers northern crossing restoration, repeatable or mixed specialist work orders, a real route opening, saved dedication and milestone dialogue. All five source jobs and all 64 exported cases passed. Remaining: further optional collections and late-act projects, richer transport adventures, and human measurement of route costs and pacing. This batch does not complete the entire five-act restructure.
 
 # Campaign138 — merged
 
