@@ -55,7 +55,10 @@ func run():
  var home=architecture.data().instances[-1].duplicate(true)
  g.surface.enter(HoldBuildingPlans.room_id(str(home.id)));settle()
  g.surface.house.data();home=architecture.record(str(home.id)).duplicate(true)
- desk("lodge");check(HoldFrontier103.build_storehouse(g),"Post-round civic construction remains available")
+ desk("lodge");at(Vector2(670,440));HoldFirstVisit99.data(s).rewarded=true
+ for item in HoldCampaign138.STRUCTURE:check(HoldLedger137.contribute(g,"storehouse",item,int(HoldCampaign138.STRUCTURE[item])),"Post-round supplies accepted")
+ g.surface.enter("trail");settle();at(HoldCampaign138.SITE);HoldCampaign138.inspect(g)
+ check(HoldCampaign138.assemble(g),"Post-round civic construction remains available")
  check(HoldGreatClaim102.standings(s)[2][1]==closed,"Post-round town project cannot alter contest result")
  s.surface.chests["keldrath:quarters"].items={"coal":7};var chest=s.surface.chests["keldrath:quarters"].duplicate(true)
  HoldCourtship101.record(s,"road_folk:11").stage=1;var romance=HoldCourtship101.record(s,"road_folk:11").duplicate(true)

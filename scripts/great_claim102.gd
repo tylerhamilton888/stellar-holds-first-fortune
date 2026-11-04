@@ -46,7 +46,7 @@ static func panel(g):
  if not active(g.state):g.label(g.panel_body,"This fortune is not entered in the Great Claim.",18);return
  if HoldFrontier103.active(g.state):
   g.button(g.panel_body,"Trade seals · contribute through your favorite work",func():HoldWorkView132.open(g,"contribute"))
-  g.label(g.panel_body,"Any two civic projects or trade seals earn a household plot after your first shift. A registered home and 180 marks open the rescue lead. Trade seals: %d / 3 · 40 marks each." % HoldWork132.seals(g.state),16)
+  g.label(g.panel_body,"Any two civic projects or trade seals earn a household plot after your first shift. Campaign foundations open the rescue lead. Trade seals: %d / 3 · 40 marks each." % HoldWork132.seals(g.state),16)
  if HoldFrontier103.active(g.state):g.button(g.panel_body,"Town plan and player-home milestone",func():g.open_panel("frontier103"))
  HoldClaim127.panel(g)
  if HoldClaim127.eligible(g.state):g.label(g.panel_body,"The scoring round closed when the claim was authenticated. Later contributions remain in the town work record; they cannot change the final tally or the public trial verdict.",15)

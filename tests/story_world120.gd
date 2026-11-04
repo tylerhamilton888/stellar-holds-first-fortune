@@ -57,6 +57,7 @@ func run():
  check(not HoldCourtship101.ARCS.has("road_folk:0") and not HoldRoadCharacters.CAST["road_folk:0"].romance_candidate,"Bram remains the non-romance road keeper")
  HoldFrontier103.data(g.state).home_reward=true;HoldGreatClaim102.data(g.state).points=220
  g.surface.enter(HoldFrontier103.lodge(g.state));settle();at(Vector2(480,500))
+ g.state.surface.erase("campaign138") # Legacy established-save fixture; campaign138 tests new eligibility.
  check(HoldMountain104.act(g,"rescue"),"Rescue can begin without displacing the road keeper")
  g.surface.enter("trail");g.surface.action("mine");settle()
  var q=HoldAncestralClaim.data(g.state)

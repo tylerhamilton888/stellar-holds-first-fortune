@@ -92,6 +92,7 @@ func run():
  for spec in [["sten","road_folk:5"],["skarrin","road_folk:8"],["orla","orla"],["yrsa","yrsa"]]:check(g.state.npc(spec[1])==profiles[spec[0]],"Save/load preserves identity "+spec[0])
  check(HoldWorkerLodge100.profile(g,2)==profiles.sigrid,"Save/load preserves Sigrid")
  HoldFrontier103.data(g.state).home_reward=true;HoldGreatClaim102.data(g.state).points=220;g.surface.enter(HoldFrontier103.lodge(g.state));settle();at(Vector2(480,500))
+ g.state.surface.erase("campaign138") # Legacy established-save fixture; campaign138 tests new eligibility.
  check(HoldMountain104.act(g,"rescue"),"Rescue starts with batch art")
  g.surface.enter("trail");g.surface.action("mine");settle()
  var q=HoldAncestralClaim.data(g.state)

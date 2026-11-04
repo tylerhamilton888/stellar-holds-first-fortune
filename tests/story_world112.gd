@@ -50,6 +50,7 @@ func run():
  HoldCourtship101.record(g.state,"road_folk:6").stage=1
  HoldFrontier103.data(g.state).home_reward=true;HoldGreatClaim102.data(g.state).points=220
  g.surface.enter(HoldFrontier103.lodge(g.state));settle();at(Vector2(480,500))
+ g.state.surface.erase("campaign138") # Legacy established-save fixture; campaign138 tests new eligibility.
  check(HoldMountain104.act(g,"rescue"),"Partner rescue can begin with authored Brynja")
  g.surface.enter("trail");g.surface.action("mine");settle()
  var q=HoldAncestralClaim.data(g.state);var index=q.victims.find("road_folk:6")

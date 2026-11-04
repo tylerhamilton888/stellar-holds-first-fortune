@@ -2,7 +2,7 @@ class_name HoldBuild
 extends RefCounted
 
 # Authoritative metadata for the title screen, validation and packaging.
-const VERSION="0.98.0"
+const VERSION="0.99.0"
 const CHAPTER="THE FIRST FORTUNE"
 const ENGINE="4.4.1"
 

@@ -9,6 +9,7 @@ func run():
  var s=g.state
  desk("lodge");check(not HoldMountain104.act(g,"rescue"),"Rescue waits for established home and contribution")
  HoldFrontier103.data(s).home_reward=true;HoldGreatClaim102.data(s).points=220;s.claim_id="copper_ridge"
+ s.surface.erase("campaign138") # Preserve the invitation earned by an established older save.
  check(HoldMountain104.act(g,"rescue"),"Local foreman dispatches established contributor")
  check(not HoldMountain104.act(g,"rescue"),"Dispatch once only")
  g.open_panel("commission");check(g.panel.find_children("*","Label",true,false).any(func(label):return label.text=="THE MOUNTAIN REMEMBERS"),"J journal presents current rescue chapter");g.close_panel()

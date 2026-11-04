@@ -3,6 +3,8 @@ extends RefCounted
 # Additive contributions; existing campaign owners remain authoritative for rewards.
 const DEEDS="Stone · Flame · Hearth · Harvest · Road · Shield · Kin · Oath"
 const PROJECTS={
+ "storehouse":{"title":"Winter Stores · the building","deeds":"Stone · Flame · Road","cost":{"stone":30,"wood":24,"iron":2},"reward":"Permanent community storehouse · 70 marks","hint":"Inspect the eastern site south of the bridge. Supply the shell here; learn smelting, timber processing and loaded-cart hauling, then return to raise it."},
+ "winter":{"title":"Winter Stores · the provisions","deeds":"Harvest · Hearth · Kin","cost":{"food":12},"reward":"Stocked storehouse and community trading counter","hint":"After raising the storehouse, contribute twelve provisions. Learn fishing OR farming and cook a meal, then return to the site to open the stores."},
  "forge":{"title":"The Cold Forge","deeds":"Stone · Flame","cost":{"coal":8},"reward":"Relight the communal forge · 65 crowns · smelting and crafting","hint":"Inspect the hearth at the communal forge. Process a coal load at the borrowed stonebreaker, contribute eight coal here, then return to the forge to relight it."},
  "watch":{"title":"Lights for the night watch","deeds":"Flame · Shield","cost":{"wood":6,"iron":2},"reward":"Two permanent road lamps · 40 marks","hint":"Supply finished timber and iron. The watch will light the bridge approaches."},
  "rest":{"title":"A table for the work crews","deeds":"Hearth · Kin","cost":{"wood":8,"stone":4},"reward":"A roadside table and seats · 45 marks","hint":"Supply processed timber and stone for a place to share supper."},
@@ -13,6 +15,7 @@ static func data(s)->Dictionary:
  if not s.surface.has("ledger137"):s.surface.ledger137={"version":1,"paid":{},"inspected":false,"gift":false}
  return s.surface.ledger137
 static func complete(s,id:String)->bool:
+ if id=="winter":return bool(HoldCampaign138.data(s).get("winter_ready",false))
  return s.opening>=2 if id=="forge" else HoldGreatClaim102.complete(s,id)
 static func paid(s,id:String,item:String)->int:
  return int(data(s).get("paid",{}).get(id,{}).get(item,0))
@@ -24,7 +27,7 @@ static func remaining(s,id:String)->Dictionary:
   if n>0:cost[item]=n
  return cost
 static func unlocked(s,id:String)->bool:
- return active(s) and PROJECTS.has(id) and HoldFirstVisit99.data(s).get("rewarded",false)
+ return active(s) and PROJECTS.has(id) and HoldFirstVisit99.data(s).get("rewarded",false) and (id!="winter" or HoldFrontier103.data(s).get("storehouse",false))
 static func contribute(g,id:String,item:String,amount:int)->bool:
  if not active(g.state) or not HoldGreatClaim102.near(g) or not unlocked(g.state,id) or complete(g.state,id) or amount<=0:return false
  if not PROJECTS[id].cost.has(item) or amount>int(remaining(g.state,id).get(item,0)):return false
@@ -39,9 +42,13 @@ static func inspect(g)->bool:
  g.notify("The hearth is sound but cold. Process coal at the loan benches; eight coal will feed its first firing.");return true
 static func ready(s,id:String)->bool:
  if not unlocked(s,id) or complete(s,id) or not remaining(s,id).is_empty():return false
+ if id=="storehouse":return HoldCampaign138.structure_ready(s)
+ if id=="winter":return HoldCampaign138.learned(s,"kit") and HoldCampaign138.learned(s,"harvest") and HoldCampaign138.learned(s,"cook")
  return id!="forge" or (data(s).inspected and HoldWork132.proof(s,"cut:coal")>=1)
 static func finish(g,id:String)->bool:
  if not ready(g.state,id):return false
+ if id=="storehouse":return HoldCampaign138.assemble(g)
+ if id=="winter":return HoldCampaign138.stock(g)
  if id=="forge":
   if not HoldFrontier103.near(g,"forge") or not g.state.finish_commission():return false
   g.sound.set_context("forge");g.notify("Borin kindles the first firing. The communal forge is open · 65 crowns earned.")
@@ -78,14 +85,15 @@ static func panel(g):
  var s=g.state
  HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Build a place in Stonebridge. Contributions stay recorded; there are no deadlines. M reviews this ledger anywhere. Deliver carried supplies at the bunkhouse ledger.")
  g.label(g.panel_body,DEEDS,13)
+ HoldCampaign138.summary(g)
  var home=HoldMenuView.disclosure(g,g.panel_body,"Personal ambition · A place of your own","ledger137_home")
  if home!=null:
   for entry in [[HoldFirstVisit99.data(s).get("rewarded",false),"Learn the first shift and earn your wages"],[HoldFirstVisit99.data(s).get("home_made",false),"Furnish your upstairs room · O opens plans"],[HoldFrontier103.data(s).permit,"Complete two civic projects or trade seals; collect your plot at Ivar’s shift book"],[HoldFrontier103.data(s).home_reward,"Build a home on the eastern rise, with bed and light; register it with Ivar · 60 marks"]]:
    g.label(home,("✓ " if entry[0] else "○ ")+entry[1],15)
   g.button(home,"Town services and household plot",func():g.open_panel("frontier103"))
- for id in PROJECTS:
+ for id in ["forge","watch","rest","stores","storehouse","winter"]:
   var p=PROJECTS[id];var done=complete(s,id)
-  var status="Complete" if done else "Locked · finish your first shift" if not unlocked(s,id) else "In progress" if not data(s).paid.get(id,{}).is_empty() else "Available"
+  var status="Complete" if done else ("Locked · raise the storehouse" if id=="winter" else "Locked · finish your first shift") if not unlocked(s,id) else "In progress" if not data(s).paid.get(id,{}).is_empty() else "Available"
   var box=HoldMenuView.section(g.panel_body,p.title+" · "+status)
   g.label(box,p.deeds+" — "+p.reward,14,Color("a7dfcb"));g.label(box,p.hint,15)
   if done:continue
@@ -95,12 +103,14 @@ static func panel(g):
    var amount=mini(s.count(item),int(remaining(s,id).get(item,0)))
    var b=g.small_button(row,"Contribute %d" % amount,func():contribute(g,id,item,amount);g.refresh_panel())
    b.disabled=amount<=0 or not unlocked(s,id) or not HoldGreatClaim102.near(g)
-  if id!="forge":
+  if id in ["storehouse","winter"]:
+   g.button(box,"Review restoration stages",func():g.open_panel("campaign138"))
+  elif id!="forge":
    var b=g.button(box,"Complete project",func():finish(g,id);g.refresh_panel());b.disabled=not ready(s,id) or not HoldGreatClaim102.near(g)
   else:g.label(box,"First firing takes place at the communal forge after inspection, coal processing and delivery.",14)
  g.button(g.panel_body,"Optional work lessons and trade collections",func():HoldWorkView132.open(g,"contribute"))
  var recognition=HoldMenuView.disclosure(g,g.panel_body,"Contest recognition and story","ledger137_recognition")
  if recognition!=null:
   for entry in HoldGreatClaim102.standings(s):g.label(recognition,"%s · %d marks — %s" % [entry[0],entry[1],entry[2]],14)
-  g.label(recognition,"A registered home and 180 contribution marks open Ivar’s rescue lead. Your home, belongings and relationships remain yours throughout the contest.",14)
+  g.label(recognition,"Complete the campaign foundations to open Ivar’s rescue lead. Marks record your recognition. Your home, belongings and relationships remain yours throughout the contest.",14)
  HoldClaim127.panel(g)

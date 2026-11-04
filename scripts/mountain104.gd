@@ -7,7 +7,7 @@ static func data(s)->Dictionary:
  if not q.has("mountain104"):q.mountain104={"celebrated":false,"allowance":0,"authenticated":false,"insights":{},"reactions":{}}
  return q.mountain104
 static func eligible(s)->bool:
- return active(s) and HoldFrontier103.data(s).get("home_reward",false) and int(HoldGreatClaim102.data(s).get("points",0))>=180
+ return HoldCampaign138.eligible(s)
 static func missing(s,id:String)->bool:
  if not active(s):return false
  var q=HoldAncestralClaim.data(s)
@@ -79,7 +79,7 @@ static func description(s)->String:
  if q.stage>=5 and HoldClaim127.stage(s)>0:
   return "Your descent from this mountain's founding house is authenticated. Work marks: %d; hereditary allowance: %d. The contribution round is closed; the public trial and royal invitation are recorded under The Rightful Claimant. Your household remains yours." % [int(d.get("work_at_award",0)),int(d.allowance)]
  match int(q.stage):
-  0:return "After registering your home and earning 180 contribution marks, visit Ivar's shift book."
+  0:return "Complete the practical foundations and Winter Stores listed in the Hold’s Ledger, then visit Ivar’s shift book."
   1:return "A fall has sealed a survey refuge in Old Workings, depth 1. Sten and his companions are trapped. Excavate a bypass, light and brace their refuge, then press E beside them. There is no countdown. V: lamps; O: rooms and masonry pillars."+(" Survey location: column %d, row %d." % [q.site[0],q.site[1]] if not q.site.is_empty() else " Enter Old Workings to locate the refuge.")
   2:return "Stay on depth 1 while the crew walks out. Blocked routes halt evacuation; clear the obstruction. Their ancient fragment can wait until everyone is safe."
   3:return "The crew is safe. Gather at Ivar's shift book for the communal celebration, then bring the recovered fragment to Edda's survey desk." if not d.celebrated else "Around the shared hearth, Sten raises his mug: 'To the hands that came back for us.' Torvik can scarcely finish his tune. Ivar names every worker. The fragment belongs at Edda's survey desk; your home and belongings await you."

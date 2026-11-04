@@ -16,6 +16,7 @@ static func begin(g):
  s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
  HoldGreatClaim102.begin(s)
  HoldFrontier103.begin(g)
+ HoldCampaign138.begin(s)
  s.opening=1;s.tracked_npc=""
  var q=HoldOnboarding.ensure(s)
  q.fresh=false;q.stage=3;q.arrival_seen=true;q.escort_pending=false;q.settle_required=false;q.combat=true
@@ -109,7 +110,7 @@ static func goal(g)->String:
    if stage==0:return "A runner from the mine · visit Ivar’s shift book · J"
    if stage<3:return "The mountain remembers · rescue the trapped survey crew · J"
    if stage<5:return "The mountain remembers · survivors and ancestral evidence · J"
-  if HoldFrontier103.data(g.state).home_reward:return "A hearth of your own · build, work and meet your neighbors · J"
+  if HoldFrontier103.data(g.state).home_reward:return "Hands of the hold · campaign foundations %d/7 · M: Ledger" % HoldCampaign138.progress(g.state)
   return "Your household plot · east road · O: design and build your home · J"
  if not q.guided:return "Explore at your own pace · J: resume guidance or choose a goal"
  match str(q.focus):
@@ -197,5 +198,5 @@ static func frontier_journal(g):
  var ambitions=HoldMenuView.disclosure(g,g.panel_body,"Longer ambitions","journal135_ambitions")
  if ambitions!=null:
   HoldMenuView.illustrated_text(ambitions,"wood","A home you build","Complete any two civic projects or trade seals, then accept your household plot from Ivar. Your upstairs room stays yours.")
-  g.label(ambitions,"Build a home with a bed and a nearby lamp or hearth. Register it for 60 marks. A registered home and 180 marks earn Ivar’s next lead.",15)
+  g.label(ambitions,"Build a home with a bed and a nearby lamp or hearth. Register it for 60 marks. The campaign milestones in the Hold’s Ledger lead to Ivar’s rescue.",15)
   g.small_button(ambitions,"View Hold’s Ledger",func():g.open_panel("great_claim102"))
