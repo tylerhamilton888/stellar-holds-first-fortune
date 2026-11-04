@@ -49,7 +49,8 @@ func run():
  check(not HoldInvasion131.eligible(g.state),"Legacy fortunes do not receive the frontier invasion")
  HoldFirstVisit99.begin(g);settle();HoldFrontier103.data(g.state).home_reward=true;g.state.claim_id="copper_ridge";HoldGreatClaim102.data(g.state).points=220
  var q=HoldAncestralClaim.data(g.state);q.stage=4;q.family=true;q.archive=true
- g.surface.enter(HoldFrontier103.room(g.state,"survey"));settle();at(Vector2(480,500));HoldMountain104.act(g,"translate")
+ g.state.surface.erase("restoration139") # Established pre-crossing archive save, not a fresh campaign shortcut.
+ g.surface.enter(HoldFrontier103.room(g.state,"survey"));settle();at(Vector2(480,500));check(HoldMountain104.act(g,"translate"),"Established archive save authenticates before invasion")
  var c=HoldClaim127.data(g.state);c.stage=3;c.arrived=true;c.wards={"crownward":true,"hearthward":true,"forgeward":true};HoldFrontier103.data(g.state).keldrath_open=true
  check(not HoldInvasion131.eligible(g.state),"Reception is required before chapter")
  c.welcomed=true

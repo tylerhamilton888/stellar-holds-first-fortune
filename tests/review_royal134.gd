@@ -11,7 +11,8 @@ func run():
  # Stage the actual royal encounter, including reload and all five giant silhouettes.
  g.start_game(false);settle();HoldFirstVisit99.begin(g);settle();HoldFrontier103.data(g.state).home_reward=true;g.state.claim_id="copper_ridge";HoldGreatClaim102.data(g.state).points=220
  var q=HoldAncestralClaim.data(g.state);q.stage=4;q.family=true;q.archive=true
- g.surface.enter(HoldFrontier103.room(g.state,"survey"));settle();at(Vector2(480,500));HoldMountain104.act(g,"translate")
+ g.state.surface.erase("restoration139") # Established pre-crossing archive save, not a fresh campaign shortcut.
+ g.surface.enter(HoldFrontier103.room(g.state,"survey"));settle();at(Vector2(480,500));check(HoldMountain104.act(g,"translate"),"Established archive save authenticates before royal review")
  var c=HoldClaim127.data(g.state);c.stage=3;c.arrived=true;c.welcomed=true;HoldFrontier103.data(g.state).keldrath_open=true
  var d=HoldInvasion131.data(g.state);d.stage=2;d.front=3;d.scene="king";d.beat=0
  HoldThaneScene131.start_scene(g);settle()

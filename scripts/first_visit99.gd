@@ -17,6 +17,7 @@ static func begin(g):
  HoldGreatClaim102.begin(s)
  HoldFrontier103.begin(g)
  HoldCampaign138.begin(s)
+ HoldRestoration139.begin(s)
  s.opening=1;s.tracked_npc=""
  var q=HoldOnboarding.ensure(s)
  q.fresh=false;q.stage=3;q.arrival_seen=true;q.escort_pending=false;q.settle_required=false;q.combat=true
@@ -109,6 +110,7 @@ static func goal(g)->String:
    var stage=int(HoldAncestralClaim.data(g.state).stage)
    if stage==0:return "A runner from the mine · visit Ivar’s shift book · J"
    if stage<3:return "The mountain remembers · rescue the trapped survey crew · J"
+   if stage in [3,4] and not HoldRestoration139.witnessed(g.state):return "The North Crossing · "+HoldRestoration139.goal(g.state)+" · M"
    if stage<5:return "The mountain remembers · survivors and ancestral evidence · J"
   if HoldFrontier103.data(g.state).home_reward:return "Hands of the hold · campaign foundations %d/7 · M: Ledger" % HoldCampaign138.progress(g.state)
   return "Your household plot · east road · O: design and build your home · J"

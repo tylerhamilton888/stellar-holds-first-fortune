@@ -1,3 +1,7 @@
+# Restoration139 — locally complete, authorized delivery underway
+
+Implemented and locally verified (999 native / 151 exported assertions): northern crossing restoration, repeatable or mixed specialist work orders, real route opening, saved dedication and milestone dialogue. Remaining: further optional collections and late-act projects, richer transport adventures, and human measurement of route costs and pacing. This batch does not claim completion of the entire five-act restructure.
+
 # Campaign138 — merged
 
 Merged in PR #123 after all five source jobs and all 63 exported cases passed: authored rescue foundations, staged Winter Stores, visible stocked interior, saved milestones and legacy invitation preservation. Next: additional projects/collections and later-act production/transport/specialization. Do not equate this batch with completing the full five-act restructure. See great-claim/CAMPAIGN138.md.

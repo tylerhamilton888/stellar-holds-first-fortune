@@ -1,3 +1,17 @@
+# Source 0.100.0 — The North Crossing
+
+The next authored Act IV milestone restores a northern river crossing between Old Workings and the survey hall. Inspect the west abutment after the rescue and Winter Stores, deliver 12 dressed stone / 24 timber / 4 iron through the Ledger, and supply three crew shifts. Smiths supply forged parts, builders processed timber or stone, and provisioners cooked bread, hotpot or chowder. Repeat one route or mix them. Research and unspent production evidence are checked on every deposit; partial deliveries persist.
+
+Return to fit the span, then gather Ivar and Skarrin for a short saved scene. The crossing changes real collision and uses the existing bridge art. Fresh fortunes need the witnessed restoration before final ancestral authentication; saves already at archive research or beyond retain eligibility. Closed contest scores, homes, courtships and the existing trial/Thane sequence remain authoritative. No deadlines or simulated rival economy.
+
+Local verification passed: seven affected source cases / 999 assertions, two exact-export cases / 151 assertions, all 3,901 PCK entries, and 13 release-pipeline unit tests. Native and exported visuals were reviewed. [Acceptance receipt](testing/restoration139/acceptance.json). These focused checks do not replace the full hosted source and 64-case exported gates.
+
+Implementation uploaded in [PR #125](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/125), head `017bbd361e52d9dc37d6f264513fce3476881ba3`, identical tree `9e4f85d8999a2da911e1d828057911a17d9bc457`. The owner explicitly authorized pushing, hosted checks and merging on 2026-11-04. No new public Windows release was requested.
+
+The initial package run 41889960968 found two obsolete late-story fixtures: invasion131 and troll133 fabricated archive progress on explicitly fresh fortunes, so the new restoration requirement correctly prevented authentication. Both fixtures and the standalone royal review now reconstruct established pre-crossing archive saves and explicitly assert authentication. No runtime requirement was weakened. The restoration139 regression suite now includes invasion131 and troll133. Corrected native/exported checks and the replacement hosted gates must pass before merge; do not count the initial failed run as acceptance.
+
+Recovery: worktree `/workspace/scratch/86ae07301d4b/stellar-holds`. Do not edit or reset the older dirty `stellar-ledger` worktree. Command-line Git lacks credentials; publish through the connected GitHub tools with an expected-head lease. Finish the authorized validation and merge, then record delivery evidence separately.
+
 # Stellar Holds recovery — Campaign138
 
 Repository: https://github.com/tylerhamilton888/stellar-holds-first-fortune. Integration branch: master. Godot 4.4.1. New source: 0.99.0. Published Windows remains 0.97.2; no public release requested.

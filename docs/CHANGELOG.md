@@ -1,3 +1,7 @@
+# 0.100.0 — The North Crossing (locally verified, delivery pending)
+
+Staged bridge restoration with saved structural deliveries and three specialist work orders, a permanent northern river route, and a short Ivar/Skarrin dedication. Fresh fortunes complete the witnessed project before ancestral authentication. Existing archive progress and closed trial scores remain intact. Player production cannot be counted twice across work orders and earlier trade seals. Seven affected source cases pass 999 assertions; two exact-export cases pass 151. The owner authorized push and merge after hosted checks; delivery is underway.
+
 # 0.99.0 — Hands of the hold (source)
 
 Authored practical milestones replace the rescue score threshold. Winter Stores investigation, saved material deliveries, local construction, provisioning and opening reuse the real storehouse. Older earned invitations survive. Farming and fishing remain alternate introductions; recognition and the existing finale stay intact. All five source jobs and 63 exported cases (13,808 assertions) passed. PR #123 merged; Windows 0.97.2 remains the published download.

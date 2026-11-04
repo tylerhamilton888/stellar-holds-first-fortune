@@ -71,6 +71,7 @@ func run():
  check(HoldMountain104.act(g,"archive"),"Real upstairs archive verifies seal")
  check(not HoldMountain104.act(g,"archive"),"Archive evidence cannot repeat")
  desk("survey");var points=int(HoldGreatClaim102.data(g.state).points)
+ g.state.surface.erase("restoration139") # Established pre-crossing archive progress.
  check(HoldMountain104.act(g,"translate"),"Independent evidence authenticates local mountain ancestry")
  check(int(HoldGreatClaim102.data(g.state).points)==int(HoldGreatClaim102.standings(g.state)[0][1]),"Separate hereditary allowance exactly ties contest")
  check(HoldMountain104.data(g.state).allowance==300-points,"Allowance arithmetic is transparent")

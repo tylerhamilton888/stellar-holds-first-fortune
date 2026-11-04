@@ -1,3 +1,9 @@
+# Restoration139
+
+The affected suite includes invasion131 and troll133. Their late-story fixtures reconstruct established pre-crossing archive saves and assert authentication; the fresh progression guard remains covered by restoration139.
+
+`restoration139-focus` exercises staged locality, partial structure and work orders, real research/forge/cooking, shared production-credit spending, arbitrary/overfill inputs, every pure specialty and mixed service, physical river/rail collision, unchanged southern crossing, once-only recognition, authored scene/skip/save recovery, new authentication gate and old-save preservation. `restoration139` adds campaign138, ledger137, work132, frontier103, mountain104 and claim127. Included in core/gameplay/gameplay-2 and the exact-pack catalogue (64 cases). Inspect the ruined seats, restored crossing, project book and Ivar/Skarrin scene at gameplay scale. Human completion time and perceived fairness of specialty costs are not established by automated checks.
+
 # Campaign138
 
 `campaign138-focus` verifies fresh eligibility, production/technology requirements, saved partial structural/provision deliveries, actual local assembly and trading, unchanged rewards, visible supplies, fishing/farming and specialist/mixed alternatives, local rescue dispatch and migration. `campaign138` adds work132, frontier103, mountain104, claim127, greatclaim102, ledger137 and firstvisit99. The focused case is in core/gameplay/gameplay-2 and the exact-pack harness (63 cases). Review native and exported project controls, physical approach, stocked interior and the campaign panel.
@@ -8,7 +14,7 @@
 
 # Release orchestration
 
-Windows exact-package checks run on four independent runners, with sequential isolated cases per runner. All 63 cases remain mandatory; the final gate verifies exact coverage and common source/PCK/ZIP identity. Focused checks never satisfy release coverage. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md). Test pipeline failure handling with `python3 -m unittest discover -s tools -p test_release_pipeline.py -v`.
+Windows exact-package checks run on four independent runners, with sequential isolated cases per runner. All 64 cases remain mandatory; the final gate verifies exact coverage and common source/PCK/ZIP identity. Focused checks never satisfy release coverage. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md). Test pipeline failure handling with `python3 -m unittest discover -s tools -p test_release_pipeline.py -v`.
 
 # Visual polish 135
 

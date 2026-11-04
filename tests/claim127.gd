@@ -42,6 +42,7 @@ func run():
  check(not HoldClaim127.start(g,"trial"),"No trial before authenticated ancestry")
  HoldFrontier103.data(s).home_reward=true;s.claim_id="copper_ridge";HoldGreatClaim102.data(s).points=220
  var q=HoldAncestralClaim.data(s);q.stage=4;q.family=true;q.archive=true
+ s.surface.erase("restoration139") # Established pre-crossing save has already reached the archive.
  desk("survey");check(HoldMountain104.act(g,"translate"),"Existing archive/family authentication unlocks chapter")
  var closed=HoldClaim127.closed_score(s)
  HoldGreatClaim102.credit(s,"mining",3)

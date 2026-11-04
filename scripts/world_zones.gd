@@ -291,13 +291,13 @@ func draw_river():
  for y in range(220,990,34):
   var phase=sin(g.clock*.8+y)*8
   g.draw_line(Vector2(1185+phase,y),Vector2(1275+phase,y+4),Color("609195"),2)
-func draw_bridge():
- g.draw_rect(Rect2(1140,648,190,108),Color("302d2b"))
- g.draw_set_transform(Vector2(1140,750)-g.camera.round(),-PI/2)
+func draw_bridge(offset_y:float=0):
+ g.draw_rect(Rect2(1140,648+offset_y,190,108),Color("302d2b"))
+ g.draw_set_transform(Vector2(1140,750+offset_y)-g.camera.round(),-PI/2)
  tile(1,Rect2(0,0,100,190),190,Color("d6be98"))
  g.draw_set_transform(-g.camera.round())
- for x in range(1144,1330,18):g.draw_line(Vector2(x,650),Vector2(x,750),Color("674c36"),1)
- for y in [649,751]:
+ for x in range(1144,1330,18):g.draw_line(Vector2(x,650+offset_y),Vector2(x,750+offset_y),Color("674c36"),1)
+ for y in [649+offset_y,751+offset_y]:
   g.draw_line(Vector2(1138,y),Vector2(1332,y),Color("47392e"),9)
   g.draw_line(Vector2(1138,y-3),Vector2(1332,y-3),Color("c3a471"),3)
   for x in [1140,1190,1280,1330]:g.draw_style_box(stone_style(Color("937650")),Rect2(x-6,y-15,12,25))
