@@ -1,5 +1,5 @@
 # Recovery and checkpoint workflow
-Persistent folder: `The Stellar Holds - Development`. PROJECT_INDEX.md is the entry point; filenames are versioned. No remote is configured, and nothing was pushed.
+Current authoritative repository: https://github.com/tylerhamilton888/stellar-holds-first-fortune. Read current `master` docs/SESSION_HANDOFF.md and docs/CURRENT_STATUS.md, then inspect any referenced active PR/release run before restoring or rebuilding. Existing Library bundles remain fallback backups. The restore example below is historical 0.40.0 and must never replace a newer checkpoint. Owner-authorized work includes routine merge/release after verification.
 
 ## Restore the organized project
 Download/materialize `Stellar-Holds-0.40.0.bundle` and run:
