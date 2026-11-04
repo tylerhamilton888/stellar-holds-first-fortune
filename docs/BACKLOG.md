@@ -1,3 +1,9 @@
+# Release pipeline speed
+
+- Implemented: four isolated exact-pack runners, strict aggregate coverage/package identity gate, sparse test checkouts and parallel source verification.
+- Verified locally: 13 pipeline safety tests and byte-identical existing harness scripts/markers.
+- Pending: complete the hosted full pipeline trial, measure actual duration, then merge. Preserve the running 0.97.2 release.
+
 # 0.97.2 delivery
 
 - Completed: all five hosted source jobs passed; PR #117 merged with an identical tested tree.

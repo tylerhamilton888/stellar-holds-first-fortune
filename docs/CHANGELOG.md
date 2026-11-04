@@ -1,3 +1,7 @@
+# Parallel Windows release validation
+
+Replace the sequential exported-game release gate with four isolated runners against one checksum-verified candidate. Require every case exactly once and identical source/PCK/ZIP identity before publishing. Check the native gate in parallel, retain full evidence and add a non-publishing PR rehearsal. Prior timings estimate 15–18 minutes per group instead of 65 minutes serial; hosted measurement pending.
+
 # 0.97.2 delivery preparation
 
 Recovered the exact saved polish tree, consolidated final native and exported test evidence, and prepared Windows release notes and a current recovery entry. No runtime or asset changes.

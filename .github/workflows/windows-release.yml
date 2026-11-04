@@ -2,24 +2,31 @@ name: Verified Windows release
 on:
   push:
     branches: ['release/*']
+  pull_request:
+    paths:
+      - '.github/workflows/windows-release.yml'
+      - 'tools/check_pack.py'
+      - 'tools/verify_release.py'
+      - 'tools/verify_source_gate.sh'
+      - 'tools/test_release_pipeline.py'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
   actions: read
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  windows:
-    if: startsWith(github.ref, 'refs/heads/release/')
+  build:
+    if: startsWith(github.ref, 'refs/heads/release/') || github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
-    # Includes waiting for the full source gate, a cold art import and exact-pack checks.
-    timeout-minutes: 110
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          fetch-depth: 8
+      - name: Test release orchestration
+        run: python3 -m unittest discover -s tools -p test_release_pipeline.py -v
       - name: Check version and preserve existing releases
+        if: startsWith(github.ref, 'refs/heads/release/')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -30,71 +37,152 @@ jobs:
             echo "Release already exists; refusing to replace it."
             exit 1
           fi
-          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-      - name: Install and verify official engine and Windows runtime
+      - name: Install verified engine and Windows runtime
         run: |
           python3 tools/install_engine.py "$RUNNER_TEMP/godot"
           python3 tools/install_windows_runtime.py "$RUNNER_TEMP/windows_release_x86_64.exe"
-      # Prepare the clean package while the identical-source gate runs elsewhere.
       - name: Build one complete Windows ZIP
         run: python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
-      - name: Test the exact exported pack
-        env:
-          LIBGL_ALWAYS_SOFTWARE: '1'
-        run: xvfb-run -a python3 tools/check_pack.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --pack "$RUNNER_TEMP/windows-build/FirstFortune.pck" --output test-results/pack
-      - name: Native gameplay and save verification
-        env:
-          LIBGL_ALWAYS_SOFTWARE: '1'
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          VERIFIED=""
-          # A release-only/documentation commit may reuse the existing full gate
-          # only when every other tracked file is byte-identical to its source.
-          for SOURCE in $(git log -8 --format=%H); do
-            if ! git diff --quiet "$SOURCE" HEAD -- . ':(exclude)docs/**' ':(exclude)SESSION_HANDOFF.md' ':(exclude).github/workflows/windows-release.yml'; then
-              continue
-            fi
-            CHECK=$(gh api -X GET "repos/$GITHUB_REPOSITORY/actions/runs" -f head_sha="$SOURCE" -f event=pull_request --jq '[.workflow_runs[] | select(.path == ".github/workflows/validate.yml")][0] // empty')
-            test -n "$CHECK" || continue
-            # Wait for that exact source instead of launching a duplicate suite.
-            for ATTEMPT in $(seq 1 240); do
-              test "$(echo "$CHECK" | jq -r .status)" = completed && break
-              sleep 15
-              CHECK=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$(echo "$CHECK" | jq -r .id)")
-            done
-            if test "$(echo "$CHECK" | jq -r .conclusion)" != success; then
-              echo "The identical source gate did not pass; release remains blocked."
-              exit 1
-            fi
-            RUN=$(echo "$CHECK" | jq -r .html_url)
-            if test -n "$RUN"; then
-              VERIFIED="$SOURCE $RUN"
-              break
-            fi
-          done
-          if test -n "$VERIFIED"; then
-            mkdir -p test-results
-            echo "Identical source passed full native gameplay: $VERIFIED" | tee test-results/release-source.txt
-          else
-            xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/release
-          fi
-      - name: Publish the verified version without replacing older builds
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          # Release assets preserve exact-pack evidence even when the separate
-          # Actions artifact allowance is full.
-          tar -czf "$RUNNER_TEMP/windows-build/verification-evidence.tar.gz" test-results
-          gh release create "v$VERSION" "$RUNNER_TEMP/windows-build/Stellar-Holds-First-Fortune-$VERSION-Windows.zip" "$RUNNER_TEMP/windows-build/build.json" \
-            "$RUNNER_TEMP/windows-build/verification-evidence.tar.gz" \
-            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "The Stellar Holds — $VERSION" --notes-file docs/RELEASE_NOTES.md
-      - name: Retain native evidence
-        if: always()
-        continue-on-error: true
+      - name: Share immutable candidate with all test runners
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: windows-release-evidence-${{ github.sha }}
+          name: windows-candidate-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/windows-build/Stellar-Holds-First-Fortune-*-Windows.zip
+            ${{ runner.temp }}/windows-build/build.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+          overwrite: true
+
+  source-gate:
+    if: startsWith(github.ref, 'refs/heads/release/') || github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 64
+      - name: Require the complete identical-source native gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash tools/verify_source_gate.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: source-proof-${{ github.run_id }}
+          path: test-results/release-source.txt
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+
+  pack:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          # The game comes exclusively from the candidate PCK. No art checkout/import here.
+          sparse-checkout: |
+            tools
+            tests
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: windows-candidate-${{ github.run_id }}
+          path: candidate
+      - name: Verify candidate bytes and extract the tested PCK
+        run: python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --extract-pack
+      - name: Install verified engine
+        run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+      - name: Run disjoint exact-package tests
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          SHARD: ${{ matrix.shard }}
+        run: xvfb-run -a python3 tools/check_pack.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --pack candidate/FirstFortune.pck --output "test-results/pack-$SHARD" --shard-count 4 --shard-index "$SHARD" --source-sha "$GITHUB_SHA"
+      - name: Retain complete shard proof and visual evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pack-evidence-${{ github.run_id }}-${{ matrix.shard }}
           path: test-results/
-          retention-days: 14
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+          overwrite: true
+
+  verify:
+    needs: [build, source-gate, pack]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          sparse-checkout: |
+            tools
+            tests
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: windows-candidate-${{ github.run_id }}
+          path: candidate
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: pack-evidence-${{ github.run_id }}-*
+          path: test-results/shards
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: source-proof-${{ github.run_id }}
+          path: test-results/source
+      - name: Require every case exactly once against identical bytes
+        run: |
+          python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --reports test-results/shards --shard-count 4 --output test-results/release-summary.json
+          cat test-results/release-summary.json >> "$GITHUB_STEP_SUMMARY"
+          tar -czf verification-evidence.tar.gz test-results
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: verified-release-evidence-${{ github.run_id }}
+          path: |
+            verification-evidence.tar.gz
+            test-results/release-summary.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+          overwrite: true
+
+  publish:
+    if: startsWith(github.ref, 'refs/heads/release/')
+    needs: verify
+    permissions:
+      contents: write
+      actions: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          sparse-checkout: |
+            tools
+            tests
+            docs
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: windows-candidate-${{ github.run_id }}
+          path: candidate
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: verified-release-evidence-${{ github.run_id }}
+          path: evidence
+      - name: Verify and publish without replacing older builds
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --summary evidence/test-results/release-summary.json
+          VERSION=$(python3 -c 'import json; print(json.load(open("candidate/build.json"))["version"])')
+          test "$GITHUB_REF_NAME" = "release/$VERSION"
+          gh release create "v$VERSION" "candidate/Stellar-Holds-First-Fortune-$VERSION-Windows.zip" candidate/build.json \
+            evidence/verification-evidence.tar.gz evidence/test-results/release-summary.json \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "The Stellar Holds — $VERSION" --notes-file docs/RELEASE_NOTES.md
