@@ -33,7 +33,7 @@
   },
   "package_integrity_entries": 3887,
   "visual_review": "Native battle ready/windup/contact/recovery and trophy return inspected. Final trophy carry follows owner direction: axe supported over right shoulder, neutral hand steadies haft. Opposite physical return contacts retained. Crown, axe and boots fit registered crops. Original atlases preserved.",
-  "delivery": "Owner explicitly authorized push and merge. Local native and exact-pack validation passed; hosted gate and merge pending. No Windows 0.97.1 release exists.",
+  "delivery": "PR #115 merged as cae1a6f1e2dd1f36c24a1e1c4109b147d4155cf6 after all five hosted jobs passed in run 41750108937. Merge tree equals verified source 89b16905eb643139e9ff44d51f9da25602f30538. PR #114 is included and merged. Windows 0.97.0 remains published; no 0.97.1 Windows release was requested.",
   "exported": [
     {
       "test": "troll133",

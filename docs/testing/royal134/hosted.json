@@ -1,0 +1,42 @@
+{
+  "pull_request": 115,
+  "source_commit": "89b16905eb643139e9ff44d51f9da25602f30538",
+  "source_tree": "fb4613e027e5da72c241660a7d22ec40765c124c",
+  "merge_commit": "cae1a6f1e2dd1f36c24a1e1c4109b147d4155cf6",
+  "merged_tree": "fb4613e027e5da72c241660a7d22ec40765c124c",
+  "workflow_run": 41750108937,
+  "jobs": [
+    {
+      "id": 126312802555,
+      "name": "gameplay (gameplay-2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126312802890,
+      "name": "gameplay (gameplay-1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126312802952,
+      "name": "people-preview",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126312803035,
+      "name": "gameplay (gameplay-3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126312803044,
+      "name": "gameplay (gameplay-4)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "includes_prior_pull_request": 114,
+  "windows_release": "0.97.0 remains published; no 0.97.1 Windows build requested or published in this correction."
+}
