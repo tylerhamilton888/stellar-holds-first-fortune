@@ -1,12 +1,12 @@
-# 0.101.1 — Windows release preparation
+# 0.101.1 — New Game / Load Game · published
 
-The owner requested a Windows build of the merged New Game / Load Game wording (PR #130). Version metadata is now 0.101.1. The release branch runs the complete native and exported-package gates before publication. Publication is pending; 0.101.0 remains the last confirmed public build until the release workflow succeeds. The 102 focused label assertions and visual review below already passed; no gameplay changes are included.
+[Download Windows 0.101.1](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.1). The title menu now says **New Game** and **Load Game**, and the new-game slot banner matches. New Game starts the standard bunkhouse opening in an empty fortune slot; Load Game resumes existing progress. This patch contains only the three wording changes and version metadata; gameplay and saves are unchanged.
 
-# Title menu wording — unreleased source update
+All 74 native source scenarios and all 65 exported scenarios passed. The package verifier recorded 14,000 assertions against identical PCK/ZIP hashes. [Release workflow](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41925565984) succeeded. The published tag targets `85e45668224f28c0e7dbca910fdf546cf4037c05`, tree `416128b9ac40f12461d72b3875224fec6067b3df`. The uploaded ZIP is 961,201,218 bytes and its SHA-256 matches the build report. [Acceptance receipt](testing/title-labels142/acceptance.json).
 
-The title buttons now read **New Game** and **Load Game**. The new-game save-slot banner also says **NEW GAME**. Runtime changes are exactly three displayed-string substitutions; callbacks, save slots, opening selection and gameplay are unchanged. Existing menu/startup test selectors use the new labels. README and playtest instructions identify the old labels for the still-published Windows 0.101.0 build.
+The earlier focused menu/startup checks passed 102 assertions and title/slot visuals were reviewed. Publication is complete; do not restart these checks after recovery. Final delivery changes are documentation only; release verification is authoritative for this exact runtime. Earlier releases are preserved.
 
-Validation passed: menu_quality100 (32 assertions), firstvisit99 (23) and lodge100 (47), for 102 assertions total. Native title and save-slot visuals were reviewed. A full hosted gameplay run and Windows rebuild are intentionally omitted for this verified text-only edit. No new release has been published for it. Continue with the previously planned pacing playtest.
+Next: use **New Game** in a fresh slot and follow the [playtest guide](PLAYTEST_GUIDE.md). Collect pacing, clarity, Windows performance and audio feedback before adding systems. Continue from GitHub master; preserve remote ancestry because this recovered local checkout has different history.
 
 # 0.101.0 — Collections of the hold · published and merged
 

@@ -1,6 +1,6 @@
-# Unreleased — standard new/load labels
+# 0.101.1 — New Game and Load Game
 
-Renamed the title entries to New Game and Load Game and aligned the new-game slot heading. Save and opening behavior is unchanged; Windows 0.101.0 retains its published labels until the next build.
+Published the standard title-menu labels and matching new-game slot banner. Existing saves, opening flow and gameplay are unchanged. All 74 source and 65 package scenarios passed, with 14,000 exported assertions. Published ZIP identity verified against the build report. See [acceptance](testing/title-labels142/acceptance.json).
 
 # 0.101.0 — Collections of the hold
 

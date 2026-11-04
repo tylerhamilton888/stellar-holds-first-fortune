@@ -1,0 +1,119 @@
+{
+  "build": {
+    "version": "0.101.1",
+    "commit": "85e45668224f28c0e7dbca910fdf546cf4037c05",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "b6e9bd67bc58df819a9606d95f0ed923eec67680d99e46671e1c7d3882462b8b",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "3b9cf59b970095c8cc5f9f4d72ef9968cd76c8964eb630d786aef290f805bc2c",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "9ca6794b83541bed39327b14cf5709c127ff8e01969bc36ba1dd304efc50f826",
+    "zip_bytes": 961201218
+  },
+  "source_sha": "85e45668224f28c0e7dbca910fdf546cf4037c05",
+  "tree_sha": "416128b9ac40f12461d72b3875224fec6067b3df",
+  "run_id": 41925565984,
+  "publication": {
+    "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.1",
+    "published_at": "2026-11-04T22:58:46Z",
+    "tag": {
+      "sha": "85e45668224f28c0e7dbca910fdf546cf4037c05",
+      "type": "commit",
+      "url": "https://api.github.com/repos/tylerhamilton888/stellar-holds-first-fortune/git/commits/85e45668224f28c0e7dbca910fdf546cf4037c05"
+    },
+    "assets": [
+      {
+        "name": "build.json",
+        "state": "uploaded",
+        "size": 823,
+        "digest": "sha256:eef9c15e8c0672f1c49319f70107faccb0237914c2351a84a68d47721b746394",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.101.1/build.json"
+      },
+      {
+        "name": "release-summary.json",
+        "state": "uploaded",
+        "size": 401,
+        "digest": "sha256:a98897331b24576db677f36813a7babd62af4f579b48a7ebc16bc994057f8c41",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.101.1/release-summary.json"
+      },
+      {
+        "name": "Stellar-Holds-First-Fortune-0.101.1-Windows.zip",
+        "state": "uploaded",
+        "size": 961201218,
+        "digest": "sha256:9ca6794b83541bed39327b14cf5709c127ff8e01969bc36ba1dd304efc50f826",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.101.1/Stellar-Holds-First-Fortune-0.101.1-Windows.zip"
+      },
+      {
+        "name": "verification-evidence.tar.gz",
+        "state": "uploaded",
+        "size": 1142647767,
+        "digest": "sha256:d3308bbccac210417339ec297d7f896cc05e3139accd5d63235e4d1be464fcc8",
+        "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.101.1/verification-evidence.tar.gz"
+      }
+    ],
+    "workflow_conclusion": "success"
+  },
+  "native_source_cases": 74,
+  "exported_verification": {
+    "version": "0.101.1",
+    "source_sha": "85e45668224f28c0e7dbca910fdf546cf4037c05",
+    "pack_sha256": "b6e9bd67bc58df819a9606d95f0ed923eec67680d99e46671e1c7d3882462b8b",
+    "zip_sha256": "9ca6794b83541bed39327b14cf5709c127ff8e01969bc36ba1dd304efc50f826",
+    "cases": 65,
+    "assertions": 14000,
+    "shards": 4,
+    "shard_seconds": [
+      1121.56,
+      1133.7,
+      987.26,
+      965.41
+    ],
+    "passed": true
+  },
+  "local_focused_cases": [
+    {
+      "test": "menu_quality100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 32,
+      "seconds": 52.52
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 63.48
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 66.04
+    }
+  ],
+  "local_assertions": 102,
+  "visual_review": {
+    "reviewed": true,
+    "captures": [
+      {
+        "name": "menu_quality100/01-title.png",
+        "sha256": "378a1c8a18475ed650d64201dcf08ddf8878654acf47278d972f65bdcb92fb6b"
+      },
+      {
+        "name": "firstvisit99/choose-fortune.png",
+        "sha256": "58b6056d86de6742b3a207120a69fdf8df29c20ed1c52d3c996a0785747a5468"
+      }
+    ]
+  },
+  "delivery_policy": "Full exact-source release workflow passed. Final integration adds documentation only; skip duplicate PR gameplay validation."
+}
