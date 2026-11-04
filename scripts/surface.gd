@@ -489,6 +489,7 @@ static func snap_furnishing(p:Vector2)->Vector2:return (p/FURNITURE_GRID).round(
 func cancel_placement():
  placing="";moving_furnishing={}
 func start_placement(kind:String):
+ if not HoldCollections141.furnishing_unlocked(g.state,kind):g.notify("Complete the Hearthkeeper’s collection for this plan.");return
  if kind in ["pantry","hearth_table"] and not g.state.tech.has("hearthkeeping"):
   g.notify("Research Hearthkeeping for these plans. Ordinary shelves and tables provide the same comfort.");return
  cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
@@ -514,7 +515,7 @@ func furniture_ready(p:Vector2,kind:String)->bool:
 func build_bounds()->Rect2:
  return HoldRoomLayout.bounds(area) if room() else Rect2(90,210,3400,1850) if area=="claim" else Rect2(90,210,1700,750)
 func furniture_valid(p:Vector2,kind:String)->bool:
- if not can_furnish():return false
+ if not can_furnish() or not HoldCollections141.furnishing_unlocked(g.state,kind):return false
  if not HoldFurnishings.ITEMS.has(kind) or p.distance_to(g.player)>140:return false
  var base=HoldFurnishings.footprint(kind,p)
  if kind=="chest" and not walkable(p+Vector2(0,25),moving_furnishing):return false

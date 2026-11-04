@@ -117,7 +117,8 @@ static func panel(g):
   elif id!="forge":
    var b=g.button(box,"Complete project",func():finish(g,id);g.refresh_panel());b.disabled=not ready(s,id) or not HoldGreatClaim102.near(g)
   else:g.label(box,"First firing takes place at the communal forge after inspection, coal processing and delivery.",14)
- g.button(g.panel_body,"Optional work lessons and trade collections",func():HoldWorkView132.open(g,"contribute"))
+ g.button(g.panel_body,"Optional collections · miner, smith & hearthkeeper",func():g.open_panel("collections141"))
+ g.button(g.panel_body,"Work lessons and contest trade seals",func():HoldWorkView132.open(g,"contribute"))
  var recognition=HoldMenuView.disclosure(g,g.panel_body,"Contest recognition and story","ledger137_recognition")
  if recognition!=null:
   for entry in HoldGreatClaim102.standings(s):g.label(recognition,"%s · %d marks — %s" % [entry[0],entry[1],entry[2]],14)

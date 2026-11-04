@@ -1,3 +1,7 @@
+# 0.101.0 — Collections of the hold
+
+Optional saved Miner/Smith/Hearthkeeper collections; exclusive reusable masonry recipe, tempered hammer and supper-table plan; farming or fishing route; shared production proof and once-only rewards. Campaign gates and existing saves remain authoritative. See [design](great-claim/COLLECTIONS141.md).
+
 # Validation140 — development workflow
 
 Affected PR checks with startup/save coverage; full fallback for shared or unknown

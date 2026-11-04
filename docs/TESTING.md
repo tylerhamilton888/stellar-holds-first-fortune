@@ -1,3 +1,7 @@
+# Collections141
+
+`collections141-focus` verifies saved partial deliveries, shared production credit, local/invalid input guards, once-only rewards, real recipe/tool/equipment transactions, both Hearthkeeper alternatives, table placement and meals, and optional access after authentication. `collections141` adds affected ledger/work/campaign/restoration/equipment/menu coverage. The new case is registered in gameplay-2 and the full exported catalogue (65 cases). Review the collection tabs, delivery controls, route choice, completion notes and placed table. Normal-speed pacing remains a human check.
+
 # Validation policy update — focused development checks
 
 Routine PRs now select affected cases plus startup/save checks; shared or unknown

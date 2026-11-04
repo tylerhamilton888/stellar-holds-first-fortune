@@ -102,14 +102,15 @@ static func recipes(g):
   g.label(detail,"Makes "+HoldData.cost_text(recipe.out),15)
   for item in recipe.cost:
    var row=g.row(detail);HoldItemArt.icon(row,item);g.label(row,"%s · %d / %d" % [HoldData.ITEMS[item].name,g.state.count(item),recipe.cost[item]],14)
-  var unlocked=recipe.tech=="" or g.state.tech.has(recipe.tech)
-  g.label(detail,("Materials ready" if g.state.afford(recipe.cost) else "Gather the missing materials") if unlocked else "Research "+HoldData.RESEARCH[recipe.tech].name,15)
+  var locked_reason=HoldCollections141.recipe_reason(g.state,id)
+  var unlocked=locked_reason==""
+  g.label(detail,("Materials ready" if g.state.afford(recipe.cost) else "Gather the missing materials") if unlocked else locked_reason,15)
   g.label(detail,"%d seconds per batch at a workstation" % recipe.time,14)
   for key in buttons:buttons[key].button_pressed=key==id
  for id in HoldData.RECIPES:
   var recipe=HoldData.RECIPES[id];var b=Button.new();b.custom_minimum_size=Vector2(58,58);b.toggle_mode=true;b.tooltip_text=recipe.name;grid.add_child(b);buttons[id]=b
   HoldItemArt.icon(b,recipe.out.keys()[0]);var icon=b.get_child(0);icon.position=Vector2(10,7);icon.size=Vector2(38,38);icon.mouse_filter=Control.MOUSE_FILTER_IGNORE
-  if recipe.tech!="" and not g.state.tech.has(recipe.tech):icon.modulate.a=.45;b.tooltip_text+=" · Research required"
+  if HoldCollections141.recipe_reason(g.state,id)!="":icon.modulate.a=.45;b.tooltip_text+=" · "+HoldCollections141.recipe_reason(g.state,id)
   b.pressed.connect(func():select.call(id))
  select.call(g.recipe_selection if HoldData.RECIPES.has(g.recipe_selection) else HoldData.RECIPES.keys()[0])
  if g.room_id=="forge":g.button(g.panel_body,"Use this forge",func():g.open_panel("forge"))

@@ -42,6 +42,7 @@ const ITEMS = {
  "hearthknot":{"name":"Hearthknot","price":20,"color":"c58c59","trade":false,"desc":"A hand-carved timber knot with copper inlay. Offer it during a personal conversation to ask someone to begin courting."}
 }
 const RECIPES = {
+ "surveyors_stone":{"name":"Surveyor’s dressed stone","cost":{"stone":5,"water":1},"out":{"dressed_stone":3},"time":4.0,"tech":"stoneworking","collection":"miner"},
  "hearthknot":{"name":"Craft a Hearthknot","cost":{"wood":1,"copper":1},"out":{"hearthknot":1},"time":4.0,"tech":""},
  "hold_ale":{"name":"Brew hold ale","cost":{"barley":2,"water":2},"out":{"hold_ale":2},"time":15.0,"tech":""},
  "root_hotpot":{"name":"Root & hearthcap hotpot","cost":{"turnip":1,"hearthcap":1,"water":1},"out":{"root_hotpot":1},"time":4.0,"tech":""},

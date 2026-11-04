@@ -82,6 +82,7 @@ static func panel(g):
  if not later.is_empty():g.label(g.panel_body,"Then: "+" → ".join(later),14)
 static func contributions(g):
  var s=g.state;var d=W.data(s)
+ g.button(g.panel_body,"Optional collections · lasting trade rewards",func():g.open_panel("collections141"))
  if W.closed(s):
   g.label(g.panel_body,"The contest round is closed. Your authenticated tally is preserved. Lessons, home building and town improvements remain available.",17)
  else:

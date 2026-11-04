@@ -1,7 +1,7 @@
 class_name HoldQuarters
 extends RefCounted
 # The starting room uses the existing furnishing catalogue and saved surface records.
-const PLANS=["pantry","hearth_table","hearth","chair","lamp","table","tea_table","chest","bookcase","desk","bed","ancestral_shrine"]
+const PLANS=["hearthkeeper_table","pantry","hearth_table","hearth","chair","lamp","table","tea_table","chest","bookcase","desk","bed","ancestral_shrine"]
 static func panel(g):
  g.button(g.panel_body,"Hearth & Homestead · meals and comfort",func():g.open_panel("hearth"))
  var local=g.surface.area=="room:home" or HoldFrontier103.private_room(g)
@@ -27,8 +27,9 @@ static func panel(g):
   icon.atlas=HoldLooseProps.ATLAS if id=="ancestral_shrine" else HoldFurnishings.ATLAS
   icon.region=HoldLooseProps.CROPS.plinth if id=="ancestral_shrine" else HoldFurnishings.CROPS[geometry.art]
   b.icon=icon;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",44);b.custom_minimum_size=Vector2(290,66);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  b.disabled=not local or not g.state.afford(item.cost)
+  b.disabled=not local or not g.state.afford(item.cost) or not HoldCollections141.furnishing_unlocked(g.state,id)
   b.tooltip_text="Craft & place "+item.title+". Materials are spent only after a valid placement."
+  if not HoldCollections141.furnishing_unlocked(g.state,id):b.text+=" · Collection reward";b.tooltip_text="Complete the Hearthkeeper’s collection at the Hold’s Ledger."
  var edits=g.row(g.panel_body)
  var move=g.small_button(edits,"Move a furnishing",g.surface.move_nearby_furnishing);move.disabled=not local
  var recover=g.small_button(edits,"Recover a furnishing",g.surface.recover_decor);recover.disabled=not local

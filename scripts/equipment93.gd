@@ -97,7 +97,7 @@ static func panel(g):
   if slot(item.kind)!=g.gear_tab:continue
   var selected=d.equipped[g.gear_tab]==item.id
   var body=card(g,grid,title(item));body.get_parent().custom_minimum_size.x=390;body.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  g.label(body,MATERIALS[item.kind]+" · "+("Tempered" if item.grade==1 else "Standard")+" · #"+item.id.trim_prefix("gear_").trim_prefix("legacy_"),14)
+  g.label(body,MATERIALS[item.kind]+" · "+("Tempered" if item.grade==1 else "Standard")+(" · Borin’s collection gift" if item.id=="collection_smith141" else " · #"+item.id.trim_prefix("gear_").trim_prefix("legacy_")),14)
   g.label(body,comparison(c,item),15)
   var b=g.small_button(body,"Equipped" if selected else "Equip "+title(item),func():if equip(g,item.id):g.refresh_panel())
   b.disabled=selected;b.tooltip_text=spec(item.kind).get("desc","Protects against unblocked damage. No movement penalty.")
