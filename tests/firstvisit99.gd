@@ -5,7 +5,7 @@ func run():
  g.depth_nav.update(0);await snap("title")
  var entry=false
  for b in g.title_ui.find_children("*","Button",true,false):
-  if b.text=="First visit to the hold":b.pressed.emit();entry=true;break
+  if b.text=="New Game":b.pressed.emit();entry=true;break
  check(entry and g.first_visit_pending and g.panel_id=="save_slots","Title offers the first visit through protected normal save slots")
  g.depth_nav.update(0);await snap("choose-fortune")
  g.state.save_slot=2;g.start_game(false);settle()

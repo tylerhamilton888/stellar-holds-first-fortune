@@ -18,11 +18,11 @@ func run():
  check(g.menu_shade.visible,"Title panel blocks background controls")
  g.close_panel();g.open_panel("settings");await capture_screen("03-title-settings");g.close_panel()
  for b in g.title_ui.find_children("*","Button",true,false):
-  if b.text=="First visit to the hold":b.pressed.emit();break
+  if b.text=="New Game":b.pressed.emit();break
  check(g.first_visit_pending,"First visit selection is remembered while choosing a slot")
  g.close_panel()
  for b in g.title_ui.find_children("*","Button",true,false):
-  if b.text=="Continue / choose a fortune":b.pressed.emit();break
+  if b.text=="Load Game":b.pressed.emit();break
  check(not g.first_visit_pending,"Returning to ordinary fortunes clears the first-visit selection")
  g.close_panel()
  g.open_creator(true);await capture_screen("04-creator")

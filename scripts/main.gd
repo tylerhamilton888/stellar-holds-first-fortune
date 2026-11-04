@@ -237,8 +237,8 @@ func show_title():
  var sub=Label.new();sub.text="THE FIRST FORTUNE";sub.position=Vector2(69,218);sub.add_theme_font_size_override("font_size",19);sub.modulate=Color("85c9bc");title_ui.add_child(sub)
  var description=Label.new();description.text="Earn your mountain. Found your house.";description.position=Vector2(69,254);description.add_theme_font_size_override("font_size",14);title_ui.add_child(description)
  var box=VBoxContainer.new();box.position=Vector2(69,288);box.size=Vector2(288,150);box.add_theme_constant_override("separation",6);title_ui.add_child(box)
- button(box,"Continue / choose a fortune",func():first_visit_pending=false;open_panel("save_slots"))
- button(box,"First visit to the hold",func():first_visit_pending=true;open_panel("save_slots"))
+ button(box,"Load Game",func():first_visit_pending=false;open_panel("save_slots"))
+ button(box,"New Game",func():first_visit_pending=true;open_panel("save_slots"))
  button(box,"Settings & sound",func():open_panel("settings"))
  if HoldBuild.DEV_TESTING:button(box,"Dev Testing",func():open_panel("dev_testing"))
  button(box,"Quit",shutdown)
@@ -1996,7 +1996,7 @@ func arrive_region(destination:String):
 
 
 func save_slots_panel():
- if first_visit_pending:label(panel_body,"FIRST VISIT · Meet the miners, make a room your own and earn your first wages. Choose a slot and create your Dwarf. Existing fortunes keep their progress.",17)
+ if first_visit_pending:label(panel_body,"NEW GAME · Meet the miners, make a room your own and earn your first wages. Choose a slot and create your Dwarf. Existing fortunes keep their progress.",17)
  label(panel_body,"Separate characters, mountains and progress. Autosave stays in the slot you choose.",16)
  for slot in range(1,4):
   var summary=HoldState.slot_summary(slot)

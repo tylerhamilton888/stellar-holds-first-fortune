@@ -1,6 +1,6 @@
 # 0.101.0 — A place in the hold
 
-Choose **First visit to the hold**, then an empty fortune slot, for a fresh pacing test. Existing frontier fortunes keep their progress, while older non-frontier fortunes retain their earlier route. Extract the complete Windows ZIP into a new folder and keep the previous build and saves.
+Choose **New Game** (**First visit to the hold** in Windows 0.101.0), then an empty fortune slot, for a fresh pacing test. Existing frontier fortunes keep their progress, while older non-frontier fortunes retain their earlier route. Extract the complete Windows ZIP into a new folder and keep the previous build and saves.
 
 ## First session
 
