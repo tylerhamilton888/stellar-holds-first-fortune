@@ -1,13 +1,13 @@
 # Hands of the hold — authored foundations and Winter Stores
 
-Source 0.99.0 replaces the score threshold for new Stonebridge fortunes. Recognition marks still support the authored contest and closed-round trial; they do not unlock the rescue.
+Source 0.99.0 replaces the score threshold for new Stonebridge fortunes. Recognition marks still support the authored contest and closed-round trial; they do not unlock the rescue. The first paid shift remains the prerequisite to the seven foundations below.
 
 ## Seven practical milestones
 
 - Register the existing player-built home after earning its plot.
 - Process two iron ore and one coal, relight the forge, smelt two iron, research Tempered steel and forge the pick.
 - Process four timber and travel with a loaded handcart.
-- Craft field tools, catch fish OR harvest four crops, and cook one meal. Turnip stew now counts alongside fish and advanced meals.
+- Craft field tools, catch four fish OR harvest four crops, and cook one meal. Turnip stew now counts alongside fish and advanced meals.
 - Read an underground survey, descend and return through a passage, and research Stoneworking for rescue supports.
 - Complete the Winter Stores.
 - Complete three civic projects or trade seals in any combination, including the storehouse. Repeated specialization and mixed trades have equal narrative eligibility.
@@ -33,3 +33,9 @@ State contains only version, site inspection, Winter Stores completion and prese
 campaign138-focus verifies prerequisites, staged world changes, local/remote actions, partial deliveries, save/reload, once-only rewards, food/specialist alternatives, zero-score eligibility, and legacy invitation preservation. campaign138 adds the affected trade, frontier, rescue, trial, civic, Ledger and opening regressions. Authored character-rescue tests explicitly reconstruct established older-save eligibility; the new case covers fresh progression.
 
 Remaining: additional substantial restoration and optional collection projects, advanced production/transport adventures, deeper late-act specialization and further Skarrin scenes. Normal-speed pacing, overall campaign duration and Windows device performance still require playtesting. Preserve the existing Thane homecoming and defer marriage/district expansion.
+
+## Next owner playtest
+
+Start a new fortune, finish the paid shift, and follow the Ledger at normal speed. Note whether each unfinished foundation tells you where to go and whether the required technologies feel like natural discoveries. Try a farming-led food route or a repeated trade specialization; neither should require switching to fishing or completing every optional lesson.
+
+Make a partial Winter Stores delivery, save and reload, then inspect and assemble it in person. Check the provisioning stage, the stocked interior, and the newly opened counter. Finally, complete the remaining foundations and speak to Ivar for the rescue. Record active play time and any stretches that feel repetitive; accelerated regression tests do not establish campaign length.

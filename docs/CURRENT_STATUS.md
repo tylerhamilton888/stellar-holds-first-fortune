@@ -8,7 +8,7 @@ Implementation is backed up in [PR #123](https://github.com/tylerhamilton888/ste
 
 ## Previous batch and published download
 
-[PR #121](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/121) contains Ledger137’s partial contributions, staged Cold Forge, home checklist and welcoming Skarrin. Its final civic UI test was updated after the complete suite found an obsolete button expectation; the corrected exported civic case passes all 114 assertions. The current reruns are native `41867138581` and package rehearsal `41867138211`.
+[PR #121](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/121) contains Ledger137’s partial contributions, staged Cold Forge, home checklist and welcoming Skarrin. It merged as `bcd0bad5ef77f86a91783ad5f95b5b954683be08` after all five source jobs and all 62 exported cases passed in runs `41867138581` and `41867138211`; its tree matches the validated source. The earlier obsolete civic UI test expectation was corrected and verified.
 
 [Windows 0.97.2](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.97.2) remains published. The four-runner release process is preserved; the export catalogue now includes 63 cases. PR rehearsals do not publish. See [release process](RELEASE_PIPELINE.md).
 

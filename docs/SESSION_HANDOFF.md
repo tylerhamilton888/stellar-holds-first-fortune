@@ -4,7 +4,7 @@ Repository: https://github.com/tylerhamilton888/stellar-holds-first-fortune. Int
 
 ## Active work and dependencies
 
-- Ledger137 PR #121, branch campaign/ledger137: final correction `5af1ebfdc9247540d455a749035dfa88f49d7f69`, tree `3db5e1d1a24a83b776ba2c7f5243a1d171126ee2`. The earlier complete source/export runs failed the obsolete greatclaim102 UI-button expectation. The updated case exercises the new slots and passes all 114 exported assertions.
+- Ledger137 PR #121 merged as `bcd0bad5ef77f86a91783ad5f95b5b954683be08` with a matching tested tree. All five source jobs and all 62 exported cases passed. Branch campaign/ledger137: final correction `5af1ebfdc9247540d455a749035dfa88f49d7f69`, tree `3db5e1d1a24a83b776ba2c7f5243a1d171126ee2`. The earlier complete source/export runs failed the obsolete greatclaim102 UI-button expectation. The updated case exercises the new slots and passes all 114 exported assertions.
 - Ledger137 current native run: [41867138581](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41867138581). Complete non-publishing package rehearsal: [41867138211](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41867138211). Inspect them; do not restart duplicates after chat recovery.
 - Campaign138 is backed up in PR #123 on campaign/hands138, source `8f1d974424c80bdb8e48cc419d4a7e6175fbae3f`, tree `5c235f7668a51346cebd8f3c8da762e3d2a469cf`, built on corrected Ledger137. Native run: 41870338658. Full 63-case package rehearsal: 41870338511. Merge only after required checks and visual review. The earlier docs/ledger137-delivery checkpoint is retained; its full directive and evidence are incorporated here.
 
