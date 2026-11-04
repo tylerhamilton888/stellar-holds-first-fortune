@@ -1,10 +1,10 @@
 # Ledger 137
 
-`ledger137-focus` covers escrow, invalid/remote/excess deliveries, JSON reload, forge inspection and production requirements, exact wage/payment, legacy completion, visible civic rewards, and Skarrin’s local once-only welcome gift and milestone dialogue. `ledger137` adds work132, frontier, lodge, people and polish regressions. Included in gameplay-2/core/gameplay and the exact-pack harness.
+`ledger137-focus` covers escrow, invalid/remote/excess deliveries, JSON reload, forge inspection and production requirements, exact wage/payment, legacy completion, visible civic rewards, and Skarrin’s local once-only welcome gift and milestone dialogue. `ledger137` adds work132, frontier, lodge, people, polish and first-visit save regressions. Included in gameplay-2/core/gameplay and the exact-pack harness.
 
 # Release orchestration
 
-Windows exact-package checks run on four independent runners, with sequential isolated cases per runner. All 61 cases remain mandatory; the final gate verifies exact coverage and common source/PCK/ZIP identity. Focused checks never satisfy release coverage. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md). Test pipeline failure handling with `python3 -m unittest discover -s tools -p test_release_pipeline.py -v`.
+Windows exact-package checks run on four independent runners, with sequential isolated cases per runner. All 62 cases remain mandatory; the final gate verifies exact coverage and common source/PCK/ZIP identity. Focused checks never satisfy release coverage. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md). Test pipeline failure handling with `python3 -m unittest discover -s tools -p test_release_pipeline.py -v`.
 
 # Visual polish 135
 

@@ -1,5 +1,7 @@
 # Hold's Ledger — first integration batch
 
+The [owner’s full campaign directive](OPENING_CAMPAIGN_DIRECTIVE.md) is retained for subsequent batches.
+
 Source 0.98.0 adds a project interface over existing Stonebridge progression. It is the first batch of the five-act/community-restoration direction, not the completed campaign restructure.
 
 - The Cold Forge: inspect locally, process coal using existing production proof, contribute eight coal in saved installments, then return for its first firing. Existing commission authority pays 65 crowns and opens the existing forge recipes. Its cold hearth has no animated glow; firing restores flame and workshop ambience.
