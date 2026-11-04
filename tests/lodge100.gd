@@ -4,7 +4,7 @@ func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true
  for b in g.title_ui.find_children("*","Button",true,false):
-  if b.text=="Continue / choose a fortune":b.pressed.emit();break
+  if b.text=="Load Game":b.pressed.emit();break
  button("New fortune")
  check(is_instance_valid(g.creator) and g.first_visit_pending,"An ordinary new save selects the lodge opening")
  g.creator.cancelled.emit();await process_frame

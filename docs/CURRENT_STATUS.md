@@ -1,3 +1,9 @@
+# Title menu wording — unreleased source update
+
+The title buttons now read **New Game** and **Load Game**. The new-game save-slot banner also says **NEW GAME**. Runtime changes are exactly three displayed-string substitutions; callbacks, save slots, opening selection and gameplay are unchanged. Existing menu/startup test selectors use the new labels. README and playtest instructions identify the old labels for the still-published Windows 0.101.0 build.
+
+Validation passed: menu_quality100 (32 assertions), firstvisit99 (23) and lodge100 (47), for 102 assertions total. Native title and save-slot visuals were reviewed. A full hosted gameplay run and Windows rebuild are intentionally omitted for this verified text-only edit. No new release has been published for it. Continue with the previously planned pacing playtest.
+
 # 0.101.0 — Collections of the hold · published and merged
 
 [Download Windows 0.101.0](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.0). Three optional Ledger collections save partial deliveries and award a reusable masonry recipe, Borin’s tempered hammer, or a functional supper-table plan/materials. Hearthkeepers choose farming or fishing. Collections consume shared production credit, remain available after the contest, and grant no campaign marks, seals or research. This release also delivers the previously merged Cold Forge, practical campaign milestones, Winter Stores and North Crossing. Existing saves and later story owners remain authoritative.
