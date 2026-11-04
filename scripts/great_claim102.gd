@@ -21,7 +21,7 @@ static func complete(s,id:String)->bool:return active(s) and bool(data(s).projec
 static func contribute(g,id:String)->bool:
  if not near(g) or not PROJECTS.has(id) or complete(g.state,id):return false
  var p=PROJECTS[id]
- if not g.state.pay(p.cost):return false
+ if not g.state.pay(HoldLedger137.remaining(g.state,id) if HoldLedger137.active(g.state) else p.cost):return false
  var d=data(g.state);d.projects[id]=true;d.points=int(d.points)+int(p.points)
  g.save_game();g.notify(p.title+" completed · "+str(p.points)+" Claim marks recorded.");return true
 static func standings(s)->Array:
@@ -42,6 +42,7 @@ static func furnishings(w,area:String)->Array:
    result.append(w.furn("barrel",870,520));result.append(w.furn("crate",920,520));result.append(w.furn("crate",970,520))
  return result
 static func panel(g):
+ if HoldLedger137.active(g.state):HoldLedger137.panel(g);return
  if not active(g.state):g.label(g.panel_body,"This fortune is not entered in the Great Claim.",18);return
  if HoldFrontier103.active(g.state):
   g.button(g.panel_body,"Trade seals · contribute through your favorite work",func():HoldWorkView132.open(g,"contribute"))

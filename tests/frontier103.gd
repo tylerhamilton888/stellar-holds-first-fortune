@@ -37,7 +37,12 @@ func run():
   check(not g.surface.recover_decor() and not g.surface.can_furnish(),"Public furniture is protected")
   check(not a.add_floor() and not a.expand("extend_x") and not a.recover(),"Shared town shell protected from free recovery")
  desk("lodge");check(not HoldFrontier103.permit(g),"Home plot must be earned")
- s.add("coal",8);button("Deliver shift commission")
+ s.add("coal",8)
+ HoldFirstVisit99.data(s).rewarded=true
+ desk("forge");button("Inspect the cold hearth")
+ HoldWork132.produced(s,"coal",1,"cut")
+ desk("lodge");at(Vector2(670,425));check(HoldLedger137.contribute(g,"forge","coal",8),"Ledger accepts forge fuel")
+ desk("forge");button("Relight the communal forge")
  check(s.opening==2,"Local foreman accepts real coal and relights communal forge")
  desk("forge");s.add("iron_ore",4);s.add("coal",2)
  check(HoldFrontier103.transact(g,"craft","iron") and s.queue.size()>0,"Local forge starts real smelting")

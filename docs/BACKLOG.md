@@ -1,3 +1,7 @@
+# Campaign restructuring — current batch
+
+Ledger foundation, forge staging and welcoming Skarrin implemented; validation pending. Next: authored act requirements, substantial restoration projects, optional collections and specialization. Do not treat the current 180-mark rescue gate as the finished five-act pacing. See great-claim/LEDGER137.md.
+
 # Release pipeline speed — complete
 
 - PR #119 merged; all native jobs and the complete parallel package trial passed.

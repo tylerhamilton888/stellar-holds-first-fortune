@@ -98,6 +98,7 @@ static func panel(g):
  else:
   header(g,g.panel_body,id,greeting(g,id))
   responses(g)
+  HoldLedger137.skarrin_options(g)
   if id=="eirik" and HoldClaim127.eligible(s):
    if HoldInvasion131.eligible(s):HoldInvasion131.panel(g)
    else:HoldClaim127.panel(g)
@@ -148,6 +149,8 @@ static func ivar_options(g):
  elif q.fresh and q.stage==5:
   choose(g,"What needs doing next?",func():
    q.stage=6;s.tracked_npc="ivar";g.save_game();g.talk_line="Sixteen stone and eight timber for the lift footings. Pinewood has straight firs. Follow the High Trail south from the King’s Gate. Borin and Eldric have useful lessons when you have a moment; listen for other work as you visit the hold.";g.refresh_panel(),true)
+ elif HoldLedger137.active(s) and s.opening==1:
+  choose(g,"The Cold Forge · Hold’s Ledger",func():g.open_panel("great_claim102"),true)
  elif HoldOnboarding.commission_allowed(s) and s.opening in [1,2,3]:
   var job=HoldCampaign.JOBS[s.opening-1]
   choose(g,"Commission: "+job.name,func():g.open_panel("commission"),true)

@@ -26,7 +26,8 @@
       "invasion131",
       "work132",
       "troll133",
-      "polish135"
+      "polish135",
+      "ledger137"
     ],
     "gameplay": [
       "loading",
@@ -98,7 +99,8 @@
       "invasion131",
       "work132",
       "troll133",
-      "polish135"
+      "polish135",
+      "ledger137"
     ],
     "modular": [
       "modular",
@@ -379,7 +381,8 @@
       "menu92",
       "friendship130",
       "work132",
-      "polish135"
+      "polish135",
+      "ledger137"
     ],
     "gameplay-3": [
       "orientation",
@@ -906,6 +909,17 @@
       "polish135",
       "menu92",
       "homestead"
+    ],
+    "ledger137-focus": [
+      "ledger137"
+    ],
+    "ledger137": [
+      "ledger137",
+      "work132",
+      "frontier103",
+      "lodge100",
+      "people",
+      "polish135"
     ]
   },
   "cases": {
@@ -1192,6 +1206,10 @@
     "polish135": {
       "script": "tests/polish135.gd",
       "marker": "POLISH135"
+    },
+    "ledger137": {
+      "script": "tests/ledger137.gd",
+      "marker": "LEDGER137"
     }
   }
 }

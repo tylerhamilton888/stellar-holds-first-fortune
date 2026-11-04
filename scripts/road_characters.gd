@@ -113,6 +113,7 @@ static func persona(id:String)->Dictionary:
  return result
 
 static func greeting(g,id:String)->String:
+ if id=="road_folk:8" and HoldLedger137.active(g.state):return HoldLedger137.skarrin(g.state)
  var paired_line=HoldRidgePair124.greeting(g.state,id)
  if paired_line!="":return paired_line
  var practical:String=HoldRoads.FOLK[int(id.trim_prefix("road_folk:"))].line
@@ -145,6 +146,9 @@ static func future_candidate(id:String,player_gender:int)->bool:
 static func panel(g,id:String):
  if not CAST.has(id):HoldConversation.return_choice(g,id);return
  HoldConversation.header(g,g.panel_body,id,g.talk_line if g.talk_line!="" else "What would you like to know?",true)
+ if id=="road_folk:8" and HoldLedger137.active(g.state):
+  g.label(g.panel_body,HoldLedger137.skarrin(g.state),16)
+  HoldConversation.return_choice(g,id);return
  for topic in CAST[id].topics:
   var answer:String=topic[1]
   HoldConversation.choose(g,topic[0],func():g.talk_line=answer;g.refresh_panel())

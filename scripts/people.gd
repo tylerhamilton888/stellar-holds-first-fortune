@@ -79,6 +79,7 @@ static func chat(g,id:String)->String:
  if not HoldConversation.local(g,id):return "Let us talk when we are together."
  meet(g,id);var d=records(g.state)[id];var day=int(g.state.elapsed/600.0)
  if d.chat_day!=day:d.chat_day=day;d.bond=mini(10 if id=="road_folk:8" else 20,int(d.bond)+1);d.last="We made time for a conversation.";g.save_game()
+ if id=="road_folk:8" and HoldLedger137.active(g.state):return HoldLedger137.skarrin(g.state)
  var p=d.persona
  return p.close if int(d.bond)>=5 else (p.want if day%2==0 else p.worry)
 static func gift(g,id:String,item:String)->String:
@@ -93,6 +94,7 @@ static func gift(g,id:String,item:String)->String:
  d.gift_day=day;d.bond=clampi(int(d.bond)+(3 if liked else -1 if disliked else 1),0,10 if id=="road_folk:8" else 20)
  d.last=("Loved" if liked else "Disliked" if disliked else "Appreciated")+" your gift of "+HoldData.ITEMS[item].name.to_lower()+"."
  g.save_game()
+ if id=="road_folk:8" and HoldLedger137.active(g.state) and HoldLedger137.phase(g.state)==0:return "A thoughtful welcome in return. Thank you; there is a place for useful hands here."
  if id=="road_folk:8":return "Useful. I can put this to work. Do not expect me to mistake a gift for an argument." if not disliked else "What am I supposed to do with this? The survey figures will not improve themselves."
  return "You remembered! That is a particular favorite of mine." if liked else "Thank you for thinking of me, but this isn't really to my taste." if disliked else "That's kind of you. Thank you."
 static func help(g,id:String)->bool:
@@ -108,8 +110,8 @@ static func panel(g,id:String):
  var d=records(g.state).get(id,{})
  if d.is_empty():return
  var p=d.persona
- HoldConversation.header(g,g.panel_body,id,g.talk_line if g.talk_line!="" else p.want,true)
- g.label(g.panel_body,d.persona.trait+" · "+level(d),15,Color("a7c7c6"))
+ HoldConversation.header(g,g.panel_body,id,g.talk_line if g.talk_line!="" else HoldLedger137.skarrin(g.state) if id=="road_folk:8" and HoldLedger137.active(g.state) else p.want,true)
+ g.label(g.panel_body,("Welcoming, capable, self-assured" if id=="road_folk:8" and HoldLedger137.active(g.state) and HoldLedger137.phase(g.state)==0 else d.persona.trait)+" · "+level(d),15,Color("a7c7c6"))
  g.label(g.panel_body,d.last,14)
  if d.known:g.label(g.panel_body,"Enjoys "+HoldData.ITEMS[p.like].name.to_lower()+" · Not fond of "+HoldData.ITEMS[p.dislike].name.to_lower(),15)
  HoldConversation.choose(g,"What do you enjoy?",func():d.known=true;g.save_game();g.talk_line="I am always glad of "+HoldData.ITEMS[p.like].name.to_lower()+". "+HoldData.ITEMS[p.dislike].name+" isn't for me, though. A visit is welcome either way.";g.refresh_panel())

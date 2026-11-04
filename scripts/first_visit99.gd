@@ -198,4 +198,4 @@ static func frontier_journal(g):
  if ambitions!=null:
   HoldMenuView.illustrated_text(ambitions,"wood","A home you build","Complete any two civic projects or trade seals, then accept your household plot from Ivar. Your upstairs room stays yours.")
   g.label(ambitions,"Build a home with a bed and a nearby lamp or hearth. Register it for 60 marks. A registered home and 180 marks earn Ivar’s next lead.",15)
-  g.small_button(ambitions,"View Great Claim ledger",func():g.open_panel("great_claim102"))
+  g.small_button(ambitions,"View Hold’s Ledger",func():g.open_panel("great_claim102"))
