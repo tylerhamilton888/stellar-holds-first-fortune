@@ -1,6 +1,6 @@
 # 0.101.0 — Collections of the hold
 
-Optional saved Miner/Smith/Hearthkeeper collections; exclusive reusable masonry recipe, tempered hammer and supper-table plan; farming or fishing route; shared production proof and once-only rewards. Campaign gates and existing saves remain authoritative. See [design](great-claim/COLLECTIONS141.md).
+Optional saved Miner/Smith/Hearthkeeper collections; exclusive reusable masonry recipe, tempered hammer and supper-table plan; farming or fishing route; shared production proof and once-only rewards. Campaign gates and existing saves remain authoritative. See [design](great-claim/COLLECTIONS141.md). Merged in PR #128 and published as Windows 0.101.0 after all 74 source and 65 exported cases passed. The public ZIP identity matches the verified build. [Acceptance](testing/collections141/acceptance.json).
 
 # Validation140 — development workflow
 

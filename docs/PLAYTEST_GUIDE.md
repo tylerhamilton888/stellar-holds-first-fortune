@@ -1,40 +1,54 @@
-# 0.95.0 — Worker to Thane
+# 0.101.0 — A place in the hold
 
-Choose **First visit to the hold** on the title screen, then an empty fortune slot, for the current Stonebridge opening. Continue an existing frontier fortune to keep its earned progress. Older non-frontier fortunes retain their earlier story route. Keep the previous build and save backups while testing.
+Choose **First visit to the hold**, then an empty fortune slot, for a fresh pacing test. Existing frontier fortunes keep their progress, while older non-frontier fortunes retain their earlier route. Extract the complete Windows ZIP into a new folder and keep the previous build and saves.
 
 ## First session
 
-Meet Ivar in the bunkhouse with **E**, visit your room upstairs, then take the northern town path to Old Workings. **J** holds the next useful step; menus pause the world. Select the pick with **1**, stand still and hold the left mouse button to excavate. **E** lifts a freed load or stocks the western loan rack. Hold **E** at the western stonebreaker to work. New output enters your pack; **E** collects older bench output. The eastern crew's stock belongs to the hold.
+Meet Ivar in the bunkhouse with **E**, visit your upstairs room, and follow **J** to the first paid stone load at Old Workings. Select the pick with **1**, stand still and hold the left mouse button to excavate. **E** lifts a freed load or stocks the western loan rack. Hold **E** at the western stonebreaker to work. New output enters your pack; **E** collects older bench output. The eastern crew’s stock belongs to the hold.
 
-Return to the bunkhouse and use the shift book. Help with two civic projects to earn a household plot. Build and furnish the home you want; keep exploring, crafting and meeting neighbors between story leads. The plot and your own design remain yours through the Thane homecoming.
+Return to Ivar’s shift book. **M** reviews the Hold’s Ledger anywhere, but deliveries require standing at the physical bunkhouse Ledger with the goods in your pack. Partial deliveries are saved. Read the Cold Forge project, process coal, contribute it, and return to the forge for its first firing.
+
+Choose a trade lesson and one optional collection you like. You do not need all three collections. Keep the main Ledger’s milestones in view: two civic projects or trade seals earn the household plot; three provide the required community service. Build and register the home you want.
 
 ## Follow the chapter
 
+The contest is a story framework, with no rival countdown. Marks provide recognition; practical milestones move the campaign forward.
+
 | Phase | Next lead | What to watch |
 | --- | --- | --- |
-| Bunkhouse and first shift | Ivar, your upstairs room, Old Workings | Is the next useful action clear without rereading instructions? |
-| Civic work and your own home | Bunkhouse shift book and the household plot | Do material trips and construction feel useful and free? |
-| Rescue and ancestry | Ivar's runner, the trapped survey crew, the recovered evidence | Can you find a safe route, return to survivors and resume after loading? |
-| Proving the claim | Ivar's engineering contest and the public proof load | Are each fitting and its material cost clear? |
-| Keldrath and preparations | Western road, three wards, royal reception | Is each route legible, and can you choose when to attend the ceremony? |
-| Defense and judgment | Seven fronts, refugees, mechanisms, Skarrin and the court | Are attacks readable, recovery fair and the choices explicit? |
-| Thane homecoming | Return to the same Stonebridge trial yard | Are the house, workshop, belongings, discoveries and friendships intact? |
+| First shift and Cold Forge | Ivar, Old Workings, communal forge | Is the next action clear? Do lifting, processing and partial contributions feel natural? |
+| A home and useful trades | Work lessons, Ledger projects or trade seals, household plot | Are the material trips satisfying? Can you mix occupations or favor one without feeling trapped? |
+| Campaign foundations | Ore to steel; timber and a loaded cart; a field kit, farming OR fishing and cooking; a survey, descent/return and Stoneworking | Does each introduction teach its purpose? Note repetitive work and unclear research requirements. |
+| Winter Stores | Inspect the eastern site, deliver its structure, assemble it, contribute provisions and open it | Are investigation, deposits and local construction clearly distinguished? |
+| Rescue | Ivar’s invitation and the trapped survey crew | Can you find a safe route, return to survivors and resume after loading? |
+| North Crossing | After the rescue and Winter Stores, inspect the west abutment north of the old bridge | Deliver structure and three specialist shifts, fit the span, then gather the crew. Does your chosen specialty feel fairly priced? |
+| Ancestry and proof | Recovered evidence, survey hall, authenticated claim and engineering trial | Are the remaining requirements legible? Fresh fortunes need the witnessed crossing before authentication. |
+| Keldrath, defense and judgment | Western road, royal reception, battle fronts and court | Are routes and attacks readable, recovery fair, and scene choices clear? |
+| Thane homecoming | Return to Stonebridge | Are your same home, possessions, discoveries and relationships intact? |
 
-## Useful detours
+## Optional collections
 
-Twelve characters offer optional friendship stories at 5, 12 and 18 bond, with rewards and saved memories in People. Craft a Hearthknot at a forge to invite a suitable partner to court. Waiting does not advance Alden and Maren's own relationship; your commitment to another candidate does. Farming, fishing, cooking and improving your home remain available alongside the chapter.
+Use the Ledger’s **Optional collections** page after the first paid shift. Bring goods you produced; materials and the work behind them can be committed only once across collections, trade seals and bridge orders. Each collection has saved partial deliveries and a once-only reward, and remains available after the contest.
 
-## Feedback that will guide polish
+- **Miner:** varied seams, dressed stone and a deeper crystal discovery; earns the reusable Surveyor’s dressed-stone recipe.
+- **Smith:** ingots, fittings and cartridges, with the relevant forge/tool training; earns Borin’s tempered hammer. Equip it from the Gear page.
+- **Hearthkeeper:** choose **Garden harvest** or **River catch before the first deposit**; cook provisions and furnish a home. The chosen route then stays with its deliveries. Earn the supper-table plan and materials for the first table; use O in your own room or home to place it.
 
-Record active time for each phase, optional activities separately, and any point where you lost the route or could not tell what would advance the task. Note gear and retries during the defense. Try one scene skip, one save/load during a scene and a normal return to the title screen. Check that returning to play restores control and keeps possessions.
+Try a partial delivery, save and reload, then finish it later. Note whether the reward gives you something useful to look forward to, and whether collection costs compete too heavily with the required town projects. No collection substitutes for the campaign foundations or unlocks research automatically.
 
-The goal is several substantial sessions without forced waiting. Automated checks accelerate actions, so they do not establish real completion time, difficulty or enjoyment. Windows performance, audio balance and normal-speed animation are part of this playtest. Marriage and district management belong to the next chapter.
+## Other detours and feedback
+
+Twelve characters offer friendship episodes, gifts and saved memories. Craft a Hearthknot to invite a suitable partner to court. Waiting does not advance Alden and Maren’s relationship; your commitment to another candidate does. Gathering, cooking and improving your home remain available alongside the chapter.
+
+Record active time for each phase and optional activity separately. Note any unclear next step, resource bottleneck, repeated chore, or moment that makes you want another day. During the later chapter, note equipment and retries; try a scene skip and a scene save/load, then check that control and possessions return normally.
+
+Automated checks do not establish real completion time, difficulty or enjoyment. Windows performance, audio balance and normal-speed animation need your playtest. The stopping point for this polish pass is the Thane homecoming; marriage and district expansion remain future work.
 
 ---
 
 # Historical playtests
 
-The entries below describe older versions and legacy fortunes. Use the current route and controls above for 0.95.0.
+The entries below describe older versions and legacy fortunes. Use the current route and controls above for 0.101.0.
 
 # 0.85.0 mouse-look trial
 

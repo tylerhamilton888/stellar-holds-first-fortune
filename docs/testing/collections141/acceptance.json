@@ -1,0 +1,184 @@
+{
+  "version": "0.101.0",
+  "source_sha": "5239351c37f738227f107cae679c87bc08aafd18",
+  "tree_sha": "84684c27b22ff5f4482d03b477c35098da173dca",
+  "pr": 128,
+  "local_native_cases": [
+    {
+      "test": "collections141",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 83,
+      "seconds": 50.54
+    },
+    {
+      "test": "ledger137",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 54.46
+    },
+    {
+      "test": "work132",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 146,
+      "seconds": 60.78
+    },
+    {
+      "test": "campaign138",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 59,
+      "seconds": 56.47
+    },
+    {
+      "test": "restoration139",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 107,
+      "seconds": 57.5
+    },
+    {
+      "test": "equipment93",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 43,
+      "seconds": 49.6
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 35,
+      "seconds": 57.51
+    }
+  ],
+  "local_native_assertions": 502,
+  "tooling_tests": 24,
+  "native_visual_review": {
+    "reviewed": true,
+    "scope": [
+      "partial collection and delivery controls",
+      "garden and river choice",
+      "completed acknowledgment",
+      "unlocked crafting recipe",
+      "tempered equipment reward",
+      "supplied table plan",
+      "placed supper table"
+    ],
+    "captures": [
+      {
+        "name": "02-hearthkeeper-table.png",
+        "sha256": "381d0e1cbdc3108417503971f1faf81f17082c3a8ee5365576b13371dda4cd73"
+      },
+      {
+        "name": "hearth-garden.png",
+        "sha256": "fe5ae44ccab1c74410087f13b552f66f63bd22231796bdb5aeeab82fe4b227a7"
+      },
+      {
+        "name": "hearth-river.png",
+        "sha256": "fe5ae44ccab1c74410087f13b552f66f63bd22231796bdb5aeeab82fe4b227a7"
+      },
+      {
+        "name": "02a-smith-reward.png",
+        "sha256": "e40c1e060b54be383b38641844e7eca820e29f8b0e53bf696aef569c4cb42e1d"
+      },
+      {
+        "name": "03-completed-hearth.png",
+        "sha256": "cf7d805a239d62bd2241806ba77e898e1b72c0cf40edb9ba717fc9c17db7bf22"
+      },
+      {
+        "name": "01-miner-partial.png",
+        "sha256": "01845022031475032696fbd3e5cc49423317f598a509c14f544e626ecc2dc248"
+      },
+      {
+        "name": "04-closed-contest-optional.png",
+        "sha256": "d0c8ea22649bab2e992cfa3bac1b96e51d2830fc0104716e9fc6fdced2d61601"
+      },
+      {
+        "name": "01b-delivery-controls.png",
+        "sha256": "ffa97699f4d51d2b98d9538a9fab8f62c6e23b8377c16ba77540a3665d973f49"
+      },
+      {
+        "name": "01-river-choice.png",
+        "sha256": "9aab880b3b642b4affac0abf39a4ac3c571b8b28232ba720619a9229a0dc24e4"
+      },
+      {
+        "name": "04-table-plan.png",
+        "sha256": "103c856c63879950e3ee576cb487ed173aff66eb3953fe964e960094cb8afea6"
+      },
+      {
+        "name": "02-reward-recipe.png",
+        "sha256": "79e1b2e69c4e4c024d4daf3d5b243b94a6c01a9ee5dd723be43e1d055672b984"
+      },
+      {
+        "name": "05-completed-note.png",
+        "sha256": "cf7d805a239d62bd2241806ba77e898e1b72c0cf40edb9ba717fc9c17db7bf22"
+      },
+      {
+        "name": "03-reward-equipment.png",
+        "sha256": "0de7701a35e9b5449f95a81d57248e0a33ed56883640b4c844cde696989cfc0e",
+        "final_gift_caption": true
+      }
+    ]
+  },
+  "hosted": {
+    "source_run": 41910396704,
+    "release_run": 41910383093,
+    "status": "merged and published after every hosted gate passed",
+    "native_cases": 74,
+    "source_validation_passed": true,
+    "release_source_groups_passed": 4,
+    "package_groups_passed": 4,
+    "verifier_passed": true,
+    "merge_sha": "2fcbfe89032a65423e3064008330202b9ecb6e79",
+    "merged_tree_matches_source": true,
+    "local_remote_source_match": {
+      "files": 28,
+      "mismatches": []
+    },
+    "publish_passed": true
+  },
+  "limits": [
+    "Normal-speed pacing, Windows device performance and audio require human playtesting."
+  ],
+  "superseded_runs": {
+    "source": 41909836198,
+    "release": 41909837248,
+    "reason": "Cancelled by a one-line equipment-card wording correction found during visual review."
+  },
+  "hosted_summary": {
+    "version": "0.101.0",
+    "source_sha": "5239351c37f738227f107cae679c87bc08aafd18",
+    "pack_sha256": "61b7bbb0f54b5ecf8cab958a14421bfeff9c7782c24751083e9cd5c6b186ed57",
+    "zip_sha256": "447142f11a8d223edf00aaa23595b016581931ce2ac7dc922d7663b7eada8f03",
+    "cases": 65,
+    "assertions": 14000,
+    "shards": 4,
+    "shard_seconds": [
+      882.08,
+      1122.9,
+      990.3100000000001,
+      756.9
+    ],
+    "passed": true
+  },
+  "published": {
+    "version": "v0.101.0",
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.0",
+    "published_at": "2026-11-04T21:23:15Z",
+    "tag_commit": "5239351c37f738227f107cae679c87bc08aafd18",
+    "zip_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.101.0/Stellar-Holds-First-Fortune-0.101.0-Windows.zip",
+    "zip_bytes": 961203100,
+    "zip_sha256": "447142f11a8d223edf00aaa23595b016581931ce2ac7dc922d7663b7eada8f03",
+    "identity_verified": true
+  }
+}
