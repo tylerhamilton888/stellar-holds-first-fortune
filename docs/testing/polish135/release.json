@@ -1,0 +1,12 @@
+{
+  "version": "0.97.2",
+  "status": "published",
+  "source_commit": "b305023db9889d46ce5fb244bb2b48f0f6b6bcf2",
+  "workflow_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41761990982",
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.97.2",
+  "pack_cases": 61,
+  "clean_build": true,
+  "zip_bytes": 961165419,
+  "zip_sha256": "f9022df68c6b3fe85eaf735c351f6c556c17fa823943303128fc2389a1129554",
+  "digest_matches_published_asset": true
+}

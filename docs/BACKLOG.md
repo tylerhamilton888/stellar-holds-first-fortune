@@ -1,13 +1,14 @@
-# Release pipeline speed
+# Release pipeline speed — complete
 
-- Implemented: four isolated exact-pack runners, strict aggregate coverage/package identity gate, sparse test checkouts and parallel source verification.
-- Verified locally: 13 pipeline safety tests and byte-identical existing harness scripts/markers.
-- Pending: complete the hosted full pipeline trial, measure actual duration, then merge. Preserve the running 0.97.2 release.
+- PR #119 merged; all native jobs and the complete parallel package trial passed.
+- Package stage: 66m 50s → 14m 59s; 61 cases, 13,706 assertions; full build/validation rehearsal 30m 29s.
+- Thirteen local safety tests passed. Current Windows 0.97.2 is published and verified.
+- Next: owner opening playtest. Future requested releases should overlap package work with native validation; see RELEASE_PIPELINE.md.
 
 # 0.97.2 delivery
 
 - Completed: all five hosted source jobs passed; PR #117 merged with an identical tested tree.
-- Pending: verify the already-running Windows 0.97.2 release.
+- Completed: Windows 0.97.2 published; all 61 exported cases passed and the ZIP digest matched the build report.
 - Final local native/exact-pack checks passed; see testing/polish135/acceptance.json.
 - Next: owner opening playtest; preserve the Thaneship stopping point.
 
