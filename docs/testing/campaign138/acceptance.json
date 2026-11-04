@@ -206,12 +206,39 @@
   "hosted": {
     "native": 41870338658,
     "package_rehearsal": 41870338511,
-    "status": "running"
+    "status": "passed",
+    "source_jobs": 5,
+    "exported_cases": 63,
+    "assertions": 13808,
+    "final_verifier": "passed",
+    "publish": "skipped",
+    "package_summary": {
+      "version": "0.99.0",
+      "source_sha": "93c6a090c88369f5c997052938dc910f84759f84",
+      "pack_sha256": "a1806cf9ae32b6405f7e5aeabb4cdf1f12f9048519086a5020b7ecbe662433f1",
+      "zip_sha256": "75eb110a1b2e3f0a8cf456206f2f92c1b11b864263662237fc05ace5ff524558",
+      "cases": 63,
+      "assertions": 13808,
+      "shards": 4,
+      "shard_seconds": [
+        984.96,
+        769.4300000000001,
+        1091.76,
+        1082.42
+      ],
+      "passed": true
+    },
+    "source_note": "The package tested the PR synthetic merge commit. Its tree equals the final source and merged master tree."
   },
   "limitations": [
     "Normal-speed pacing and full campaign duration unmeasured.",
     "No Windows-device or audible-mix playtest.",
     "Further restoration/collection projects and late-act specialization remain future batches."
   ],
-  "local_export_note": "Focused local export from the final runtime files. The harness source label remains local; this is not the hosted clean Windows release proof."
+  "local_export_note": "Focused local export from the final runtime files. The harness source label remains local; this is not the hosted clean Windows release proof.",
+  "merge": {
+    "sha": "c6a026c3589d81531eda749e59a7a39cdf271506",
+    "tree": "5c235f7668a51346cebd8f3c8da762e3d2a469cf",
+    "matches_tested_tree": true
+  }
 }

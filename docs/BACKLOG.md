@@ -1,6 +1,6 @@
-# Campaign138 — implementation under validation
+# Campaign138 — merged
 
-Implemented: authored rescue foundations, staged Winter Stores, visible stocked interior, saved milestones and legacy invitation preservation. Next: additional projects/collections and later-act production/transport/specialization. Do not equate this batch with completing the full five-act restructure. See great-claim/CAMPAIGN138.md.
+Merged in PR #123 after all five source jobs and all 63 exported cases passed: authored rescue foundations, staged Winter Stores, visible stocked interior, saved milestones and legacy invitation preservation. Next: additional projects/collections and later-act production/transport/specialization. Do not equate this batch with completing the full five-act restructure. See great-claim/CAMPAIGN138.md.
 
 # Ledger137 foundation — merged
 
