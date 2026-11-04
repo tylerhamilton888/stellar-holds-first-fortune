@@ -1,3 +1,21 @@
+# Validation140 — focused development checks
+
+PR #126 implements conservative affected-test selection, removes duplicate people
+validation and the automatic post-merge rerun, and makes Windows rehearsals
+explicit. Actual releases retain the full native suite and all 64 exported cases.
+Read [VALIDATION_POLICY.md](VALIDATION_POLICY.md) for the current workflow.
+
+All 24 Python safety tests passed. Native startup/save checks passed 42 assertions
+locally and both selected hosted cases passed. Hosted run 41897781913 passed its
+planner, gameplay worker and final validation gate. Its tested source files match
+620ffe3b7d733192d91e32564874a792fe6a88ce exactly. See
+[acceptance receipt](testing/validation140/acceptance.json). No gameplay, artwork,
+saves, version or public release changes accompany this tooling work.
+
+North Crossing delivery notes below are preserved from merged PR #127. Continue
+from GitHub master; do not reset the older dirty worktrees. The complete campaign
+overhaul and normal-speed pacing playtest remain outstanding.
+
 # Source 0.100.0 — The North Crossing
 
 The next authored Act IV milestone restores a northern river crossing between Old Workings and the survey hall. Inspect the west abutment after the rescue and Winter Stores, deliver 12 dressed stone / 24 timber / 4 iron through the Ledger, and supply three crew shifts. Smiths supply forged parts, builders processed timber or stone, and provisioners cooked bread, hotpot or chowder. Repeat one route or mix them. Research and unspent production evidence are checked on every deposit; partial deliveries persist.

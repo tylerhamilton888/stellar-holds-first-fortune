@@ -4,13 +4,16 @@ import argparse, json, os, re, subprocess, tempfile, time
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
-def run(godot, suite, output, skip_import=False):
+def run(godot, suite, output, skip_import=False, selected=None):
     manifest = json.loads((ROOT / 'tests/suites.json').read_text())
     output.mkdir(parents=True, exist_ok=False)
     engine = str(Path(godot).resolve()) if Path(godot).exists() else godot
     results = []
     jobs = [] if skip_import else [('import', ['--headless', '--editor', '--import', '--quit'], None)]
-    for name in manifest['suites'][suite]:
+    names = list(dict.fromkeys(selected if selected is not None else manifest['suites'][suite]))
+    if not names or any(name not in manifest['cases'] for name in names):
+        raise ValueError('A nonempty selection of known cases is required')
+    for name in names:
         case = manifest['cases'][name]
         capture = output / name
         capture.mkdir()
@@ -49,8 +52,10 @@ def run(godot, suite, output, skip_import=False):
 if __name__ == '__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--godot',required=True)
-    p.add_argument('--suite', choices=list(json.loads((ROOT / 'tests/suites.json').read_text())['suites']), default='core')
+    selection=p.add_mutually_exclusive_group()
+    selection.add_argument('--case', action='append', choices=list(json.loads((ROOT / 'tests/suites.json').read_text())['cases']))
+    selection.add_argument('--suite', choices=list(json.loads((ROOT / 'tests/suites.json').read_text())['suites']), default='core')
     p.add_argument('--output',type=Path,required=True,help='New directory; never overwrite previous evidence')
     p.add_argument('--skip-import',action='store_true')
     a=p.parse_args()
-    raise SystemExit(0 if run(a.godot,a.suite,a.output.resolve(),a.skip_import) else 1)
+    raise SystemExit(0 if run(a.godot,a.suite,a.output.resolve(),a.skip_import, selected=a.case) else 1)
