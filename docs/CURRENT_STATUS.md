@@ -1,3 +1,7 @@
+# 0.101.1 — Windows release preparation
+
+The owner requested a Windows build of the merged New Game / Load Game wording (PR #130). Version metadata is now 0.101.1. The release branch runs the complete native and exported-package gates before publication. Publication is pending; 0.101.0 remains the last confirmed public build until the release workflow succeeds. The 102 focused label assertions and visual review below already passed; no gameplay changes are included.
+
 # Title menu wording — unreleased source update
 
 The title buttons now read **New Game** and **Load Game**. The new-game save-slot banner also says **NEW GAME**. Runtime changes are exactly three displayed-string substitutions; callbacks, save slots, opening selection and gameplay are unchanged. Existing menu/startup test selectors use the new labels. README and playtest instructions identify the old labels for the still-published Windows 0.101.0 build.
