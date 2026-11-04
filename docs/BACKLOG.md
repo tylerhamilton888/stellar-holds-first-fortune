@@ -1,3 +1,9 @@
+# Royal134 visual correction
+
+- Implemented: straight royal axe, natural shoulder-rest grip, opposite physical return steps, whole-pose crop/root registration.
+- Verified: 754 source checks and 754 exact-pack checks, all 3,887 package entries, native combat and shoulder-carry review.
+- Pending: hosted validation and merge, now explicitly authorized by the owner. Windows 0.97.1 is not published.
+
 # Giants at the stairs 133 — validation in progress
 
 Source version 0.97.0 doubles troll height to 220 world units and increases the physical base to 50. New whole painted poses support two separate, committed fist slams: marked landing, opposite-fist follow-up, then a long counterattack window. Health, rewards, wounds and encounter identities are preserved. Dodge, guard/parry, interruption and terrain checks remain in the existing combat owner. Nearby giant encounters gain camera headroom; the optional mine perspective uses the new art and circular warning.

@@ -1,3 +1,11 @@
+# Royal axe and shoulder carry 134 — locally verified, awaiting hosted validation
+
+Source 0.97.1 replaces Eirik's combat and trophy-return paintings with whole poses using a straight, consistent royal axe. The return uses a natural shoulder-rest grip and truly opposite physical walking contacts. Original artwork remains preserved. Updated crops/root registration retain the complete crown, boots and weapon; the return silhouette has stronger screen presence. Story outcomes and saved beats are unchanged.
+
+Based on `d80873f` / PR #114. Its source gate and Windows 0.97.0 publication both succeeded; #114 remained open when this correction began. This follow-up includes that giant-troll source. Current review and exact prompts: `assets/royal134/production.json`. Native troll and invasion checks passed 115 + 639 assertions; the exact exported pack passed the same 754 checks. All 3,887 package entries passed integrity checks. Native combat poses and the shoulder-carry return were visually reviewed. Evidence: `docs/testing/royal134/acceptance.json`. The owner explicitly authorized push and merge in the current conversation; hosted validation is the remaining merge gate. Runtime source is local commit `3c292bee961f35745ad41be4051dcfa365a1463c`, with this follow-up recording proof and freezing the manual review captures. No hosted gate, merge or Windows 0.97.1 publication is claimed.
+
+---
+
 # Giants at the stairs 133 — validation in progress
 
 Source version 0.97.0 doubles troll height to 220 world units and increases the physical base to 50. New whole painted poses support two separate, committed fist slams: marked landing, opposite-fist follow-up, then a long counterattack window. Health, rewards, wounds and encounter identities are preserved. Dodge, guard/parry, interruption and terrain checks remain in the existing combat owner. Nearby giant encounters gain camera headroom; the optional mine perspective uses the new art and circular warning.

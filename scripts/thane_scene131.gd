@@ -1,10 +1,13 @@
 class_name HoldThaneScene131
 extends HoldClaimScene127
-const BATTLE=preload("res://assets/thane131/eirik-battle-return.png")
-const RETURN133=preload("res://assets/trolls133/return.png")
-const RETURN_BOXES133=[Rect2(86,27,608,429),Rect2(821,27,644,436),Rect2(50,538,662,441),Rect2(787,577,719,382)]
-const RETURN_ROOTS133=[Vector2(299,442),Vector2(1036,445),Vector2(275,956),Vector2(993,944)]
-const BOXES=[[0, 4, 444, 486], [444, 8, 444, 482], [888, 0, 444, 490], [1332, 0, 441, 490], [0, 490, 444, 397], [444, 490, 444, 397], [888, 490, 444, 397], [1332, 490, 442, 381]]
+const BATTLE=preload("res://assets/royal134/battle.png")
+const RETURN133=preload("res://assets/royal134/return.png")
+# Complete paintings; all feet, crowns and straight axe shafts remain inside each crop.
+const RETURN_BOXES133=[Rect2(85,20,627,435),Rect2(853,20,648,446),Rect2(85,532,643,462),Rect2(836,532,682,427)]
+const RETURN_ROOTS133=[Vector2(294,445),Vector2(1062,445),Vector2(294,955),Vector2(1062,947)]
+const BOXES=[[195,88,466,420],[868,9,430,497],[114,573,615,425],[850,538,583,466]]
+const BATTLE_ROOTS134=[Vector2(396,495),Vector2(1108,495),Vector2(340,982),Vector2(1100,990)]
+const BATTLE_SCALES134=[.235,.235,.235,.215]
 var royal={}
 var foes=[]
 var choice_buttons=[]
@@ -135,13 +138,12 @@ func draw_royal():
  if mode=="return":
   var f=[1,0,2,0][int(age*4)%4] if step==1 and age<duration else 0
   var r:Rect2=RETURN_BOXES133[f];var anchor:Vector2=RETURN_ROOTS133[f]
-  game.draw_texture_rect_region(RETURN133,Rect2(p+(r.position-anchor)*.18,r.size*.18),r);return
+  game.draw_texture_rect_region(RETURN133,Rect2(p+(r.position-anchor)*.22,r.size*.22),r);return
  if mode not in ["king","return"] and not (mode=="trial" and step==3):
   HoldRoyalStage.draw_actor(game,HoldRoyalStage.actor(p,12,Vector2.DOWN,age*.25,age<duration));return
  var frame=0
- if mode=="return":frame=[4,5,7,5][int(age*4)%4] if step==1 and age<duration else 5
- elif mode=="king" and step==2 or mode=="trial" and step==3:frame=mini(3,int(age/0.45))
- var box=BOXES[frame];var r=Rect2(box[0],box[1],box[2],box[3]);var root=Vector2([210,650,1075,1500,185,625,1065,1505][frame],430 if frame<4 else 840);var scale=.235
+ if mode=="king" and step==2 or mode=="trial" and step==3:frame=mini(3,int(age/0.45))
+ var box=BOXES[frame];var r=Rect2(box[0],box[1],box[2],box[3]);var root:Vector2=BATTLE_ROOTS134[frame];var scale:float=BATTLE_SCALES134[frame]
  game.draw_texture_rect_region(BATTLE,Rect2(p+(r.position-root)*scale,r.size*scale),r)
 func _draw():
  if mode=="trial" and step==3 and age>1.0 and age<1.7:draw_rect(Rect2(0,46,960,352),Color(0.025,0.04,0.05,1))

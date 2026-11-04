@@ -1,0 +1,53 @@
+{
+  "source_commit": "3c292bee961f35745ad41be4051dcfa365a1463c",
+  "base_commit": "d80873ffc856bca7782b32ceeb01b003377957d2",
+  "native": [
+    {
+      "test": "import",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 0,
+      "seconds": 11.17
+    },
+    {
+      "test": "troll133",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 115,
+      "seconds": 83.51
+    },
+    {
+      "test": "invasion131",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 639,
+      "seconds": 115.55
+    }
+  ],
+  "source_assets": {
+    "battle.png": "ed9bdb06251a1dfed2b03b57b2d817e4093eb54edbda2b64fb75c03b0998ec25",
+    "return.png": "1da05741098b176c8187a0098e0f4370fcad11dfee248fcf556c5032fe8e6f4c"
+  },
+  "package_integrity_entries": 3887,
+  "visual_review": "Native battle ready/windup/contact/recovery and trophy return inspected. Final trophy carry follows owner direction: axe supported over right shoulder, neutral hand steadies haft. Opposite physical return contacts retained. Crown, axe and boots fit registered crops. Original atlases preserved.",
+  "delivery": "Owner explicitly authorized push and merge. Local native and exact-pack validation passed; hosted gate and merge pending. No Windows 0.97.1 release exists.",
+  "exported": [
+    {
+      "test": "troll133",
+      "passed": true,
+      "checks": 115,
+      "errors": []
+    },
+    {
+      "test": "invasion131",
+      "passed": true,
+      "checks": 639,
+      "errors": []
+    }
+  ],
+  "native_visual_checks": 13,
+  "review_tool": "tests/review_royal134.gd"
+}
