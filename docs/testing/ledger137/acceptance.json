@@ -73,7 +73,8 @@
     "expandable home milestone",
     "cold-forge first-firing controls",
     "lit communal hearth",
-    "Skarrin welcome portrait/dialogue"
+    "Skarrin welcome portrait/dialogue",
+    "Exported first-firing controls"
   ],
   "limitations": [
     "No Windows-device performance or audible mix playtest.",
@@ -91,5 +92,104 @@
     "package_rehearsal_run": 41862441458,
     "status": "pending"
   },
-  "scope": "First integration batch only; 180-mark rescue gate and later authored act restructuring are unchanged."
+  "scope": "First integration batch only; 180-mark rescue gate and later authored act restructuring are unchanged.",
+  "focused_export": {
+    "schema": 1,
+    "source_sha": "5b3d04ee20e28a5af4330447df8e147419465014",
+    "pack_sha256": "7ce62d6ec35fdf0f50365f0dccf7ee1c5261d620bde4eac764a4af6040680816",
+    "shard_index": 0,
+    "shard_count": 1,
+    "focused": true,
+    "expected_cases": [
+      "ambient",
+      "ledger137",
+      "polish135",
+      "troll133",
+      "work132",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "assigned_cases": [
+      "ledger137",
+      "firstvisit99"
+    ],
+    "results": [
+      {
+        "test": "ledger137",
+        "passed": true,
+        "checks": 29,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 60.67
+      },
+      {
+        "test": "firstvisit99",
+        "passed": true,
+        "checks": 23,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 69.63
+      }
+    ],
+    "complete": true
+  },
+  "package_integrity": {
+    "entries": 3895,
+    "hashes_bounds_relative_paths": "pass"
+  }
 }

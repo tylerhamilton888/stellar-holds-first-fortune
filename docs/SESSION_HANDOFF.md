@@ -1,24 +1,28 @@
-# Ledger integration in progress — source 0.98.0
+# Stellar Holds recovery handoff — Ledger137
 
-First batch: partial project deliveries, staged Cold Forge, personal-home checklist and welcoming Skarrin. See [LEDGER137](great-claim/LEDGER137.md). Source validation/visual review are in progress; do not claim a new Windows release. Published download remains 0.97.2. Preserve the existing finale and later story gates until their dedicated campaign batches.
+## Source and delivery
 
-# The Stellar Holds — current recovery handoff
+- Repository: https://github.com/tylerhamilton888/stellar-holds-first-fortune; integration branch: `master`; Godot 4.4.1; new source version 0.98.0.
+- Runtime PR: [#121](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/121), branch `campaign/ledger137`, final source `5b3d04ee20e28a5af4330447df8e147419465014`, tree `f120a68a801241493d6f8eee92ee864c3ede8e86`. Hosted checks and merge pending.
+- Native run: [41862441567](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41862441567). Non-publishing complete-package rehearsal: [41862441458](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41862441458). Inspect these before starting anything new.
+- Published download remains [Windows 0.97.2](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.97.2), release source `b305023db9889d46ce5fb244bb2b48f0f6b6bcf2`. No 0.98.0 release has been requested. [Existing release receipt](testing/polish135/release.json).
 
-## Source and playable build
+## Implemented first batch
 
-- Repository: https://github.com/tylerhamilton888/stellar-holds-first-fortune; integration branch: `master`; engine: Godot 4.4.1; game version: 0.97.2.
-- [Windows 0.97.2](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.97.2) is published. Release source: `b305023db9889d46ce5fb244bb2b48f0f6b6bcf2`. All 61 exported cases passed; published ZIP size/digest match the clean build report. [Receipt](testing/polish135/release.json).
-- Polish PR #117 merged after all five native jobs passed; its source was `35eb33a39abf247d96f8b774a39b87f53c859f32`. Includes compact HUD, contextual prompts, illustrated guidance, room handoff, top-down item art, masonry/gallery dressing, corrected royal axe/shoulder carry and giant trolls.
-- Pipeline PR #119 merged as `a398cb54ea0d5a1fa8ca9a638666f3bf102c0051`; the tested source is `a18252bef72b98b79e66d3132e78324f53ba41dd`, tree `cbcbc8bd6bf0fb6dc594d692a7fa375157b0cf37`. No runtime/art/version changes.
+The Ledger saves partial pack contributions; Cold Forge inspection, production proof, fuel and first firing use existing commission rewards; civic completions charge only the remaining cost. Existing completed projects, homes, forge unlocks and story state remain authoritative. A home checklist follows actual existing milestones. Skarrin’s welcome and optional four-timber gift precede milestone-driven resentment. The cold hearth visibly lights and its workshop sound context resumes after firing.
 
-## Release process
+State owner: `scripts/ledger137.gd`, additive `surface.ledger137`. Existing owners retain inventory, rewards, home registration and story gates. See [scope/state details](great-claim/LEDGER137.md). The owner’s [complete campaign directive](great-claim/OPENING_CAMPAIGN_DIRECTIVE.md) is retained verbatim.
 
-Four independent runners test one verified Windows candidate. Every exported case is required exactly once, with matching source and package hashes. Both the complete native gate and packaged-game gate must pass before publication. The measured package stage fell from 66m 50s to 14m 59s; the complete PR rehearsal took 30m 29s. All 61 cases/13,706 assertions and 13 local pipeline safety tests passed. See [workflow and retry guidance](RELEASE_PIPELINE.md) and [benchmark](testing/release136/benchmark.json).
+Local validation: six native cases / 985 assertions; final focused Ledger / 29; corrected opening save-slot test / 23; pipeline tests / 13. Reviewed rendered Ledger, home checklist, first-firing controls, lit hearth and Skarrin. The two focused exported-package cases pass 52 assertions; all 3,895 package entries pass integrity checks. [Receipt](testing/ledger137/acceptance.json) contains final proof and limitations. The first-visit test now calls the supported legacy commission API and explicitly saves before switching slots; the removed delivery button is covered by the new Ledger test.
 
-When a release is requested, start its reviewed candidate while the source PR's native gate runs; let the two stages overlap. Do not restart an existing release merely because a chat disconnected. Only `release/<version>` branches publish. Existing releases and saves remain preserved. No release is pending from this task.
+## Next batch
 
-## Next work
+Replace the home-plus-180-mark rescue eligibility with authored prerequisites that require brief, practical introductions to the systems. Then add substantial multi-stage restoration, production and transport projects, optional collections and specialization routes. Do not claim those exist merely because their Ledger foundation does. Keep the contest as authored narrative recognition, with no deadline or simulated rival economy.
 
-Owner playtest: First visit to the hold in an empty fortune slot, Ivar, first paid shift, mining/crafting, room/home progression, readability, combat feel, audio and device performance. Automated results do not establish human pacing or enjoyment. Opening expansion stops at the Thane homecoming; marriage/district development remain deferred.
+Preserve the implemented rescue, ancestry, Keldrath journey, invasion, Eirik scenes, trial and Thane homecoming. Keep established homes, courtship and friendship stories. Marriage and district expansion remain deferred. Normal-speed pacing, enjoyment, audible mix and the owner’s Windows-device performance still need human playtesting.
 
-Read [CURRENT_STATUS.md](CURRENT_STATUS.md), then task-relevant code/docs. Preserve original art, paths, UIDs and saves. Follow AGENTS.md, DEVELOPMENT.md and TESTING.md. Owner authorization includes routine merge/delivery after required checks. Keep handoffs concise; [prior full history](https://github.com/tylerhamilton888/stellar-holds-first-fortune/blob/b305023db9889d46ce5fb244bb2b48f0f6b6bcf2/docs/SESSION_HANDOFF.md) remains in Git.
+## Workflow
+
+Read AGENTS.md and CURRENT_STATUS.md, then task-relevant code/docs. Owner authorization includes routine merge after required checks and visual review. No subagents unless requested. Keep original assets, resource paths, UIDs and save compatibility. Follow DEVELOPMENT.md and TESTING.md.
+
+The four-runner release pipeline is verified (PR #119); see RELEASE_PIPELINE.md. Only `release/<version>` branches publish. The exact-package catalogue now contains 62 cases. A package rehearsal is not a public release. Avoid duplicate builds after chat recovery; continue an existing run and distinguish queued, running, failed and verified states.
