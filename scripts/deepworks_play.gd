@@ -478,7 +478,7 @@ func draw():
   if not l.seen.has(Deepworks.key(c)):continue
   var p=Vector2(c)*40
   g.surface.world.detail(5,p+Vector2(20,39),40,38)
-  A.text(g,p+Vector2(-4,-70),"E ↓" if z==int(link.upper) else "⇧ E ↑",12,Color("efd395"))
+  # Passage names and keys are shown in the contextual HUD, never over actors.
  for id in l.fixtures:
   var xy=id.split(",");lamp(Deepworks.center(Vector2i(int(xy[0]),int(xy[1]))))
  if z==0:
@@ -490,7 +490,7 @@ func draw():
    g.draw_line(tread.position+Vector2(0,9),tread.end,Color("b2b5a6"),1)
   lamp(entry+Vector2(-58,0));lamp(entry+Vector2(58,0))
   draw_worksite(entry)
-  if world.entrance(g.player):A.text(g,entry+Vector2(-5,-55),"Walk north · surface",12,Color("edcd8a"))
+  # The entry stairs remain visible without a floating sentence.
  works.draw()
  for prop in HoldWorkplace98.props(g):HoldWorkplace98.draw_prop(g,prop)
  draw_haulage()
@@ -567,13 +567,13 @@ func draw():
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
  g.draw_rect(Rect2(0,0,960,74),Color("0e202c"));g.draw_line(Vector2(24,73),Vector2(936,73),Color("63756c"))
  g.draw_rect(Rect2(0,462,960,36),Color(.04,.09,.12,.9));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"))
- A.text(g,Vector2(24,485),"DEPTH %d / %d · %s" % [z+1,world.data.layers.size(),Deepworks.NAMES[z]],14,Color("eac98b"))
+ A.text(g,Vector2(24,485),"Depth %d / %d" % [z+1,world.data.layers.size()],14,Color("eac98b"))
  var tool_name="Slagcaster" if g.mining_gun.selected else ["Pick","Shovel","Axe","Hammer"][clampi(g.tool,0,3)]
  if aim.x>=0 and g.panel_id=="" and not g.combat.armed:
   var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=world.grade_label(aim)+" "+HoldData.TILES[k].name
   var stage="solid" if d<=0 else "scored" if d/world.resistance(k)<.4 else "split-ready" if d/world.resistance(k)<.65 else "deeply fractured"
-  A.text(g,Vector2(655,480),name+" · "+stage,11,ore_color(k))
- elif g.panel_id=="" and not g.combat.armed:A.text(g,Vector2(680,485),tool_name+" · 1–4 change tool",12,Color("b9d0c8"))
+  A.text(g,Vector2(720,480),(name.left(20)+"…" if name.length()>21 else name),11,ore_color(k))
+
  if g.panel_id=="" and g.handworks.facility().is_empty() and g.handworks.closest(g.handworks.data().loose,65).is_empty() and g.handworks.data().carry.is_empty() and g.handworks.placing=="":
   g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
   A.text(g,Vector2(30,99),"H · Cargo %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))

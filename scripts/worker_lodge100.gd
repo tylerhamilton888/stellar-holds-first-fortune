@@ -57,6 +57,8 @@ static func panel(g):
    text="Sigrid lifts her mug. 'There's a room through the north door if you want a little quiet. A chair and a lamp can make even a borrowed room feel like your own. The trail out to work starts at King's Gate.'"
  if HoldFrontier103.active(g.state):
   text=text.replace("room through that door","room upstairs").replace("north door","stairs").replace("The trail out to work starts at King's Gate.","Old Workings lies north of the town square.")
+ if index==0 and HoldFirstVisit99.data(g.state).get("rewarded",false):
+  text="Good stone, sound work. Your first twenty crowns are earned. Take those supplies upstairs and make that room your own. When you’re ready, the shift book has more work." if not HoldFirstVisit99.data(g.state).get("home_made",false) else "You have a place by the hearth now. Keep making it yours. The shift book has work when you want it, and Stonebridge always has a use for good hands."
  g.label(body,text,16)
  if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Shift book and household plot",func():g.open_panel("frontier103"))
  if index in [1,2]:

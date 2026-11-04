@@ -89,7 +89,10 @@ static func room_floor(w,area:String):
  if HoldBuildingPlans.has_stairs(area):
   var p=HoldBuildingPlans.stair_position(area);var up=HoldBuildingPlans.floor_number(area)==0
   HoldNeighborhood.draw_stairs(w,p,up,96)
-  if not up:g.draw_style_box(w.stone_style(Color("9ca18c")),Rect2(160,floor_area.end.y-30,floor_area.size.x,30))
+  if not up:
+   var coping=Rect2(floor_area.position.x,floor_area.end.y-30,floor_area.size.x,30)
+   HoldArchitectureStyles.wall(g,coping,HoldArchitectureStyles.room(area),false)
+   g.draw_line(coping.position,Vector2(coping.end.x,coping.position.y),Color("c0ae8a"),2)
  HoldCivicArt.exit_floor(g,area)
  if room=="training":
   w.s.house.material(0,Rect2(305,345,330,185));g.draw_rect(Rect2(315,355,310,165),Color("bda673"),false,3)

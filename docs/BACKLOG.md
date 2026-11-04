@@ -1,3 +1,9 @@
+# Visual135 polish
+
+- Implemented: compact HUD, contextual interaction text, illustrated opening menus, room handoff, Ivar acknowledgment, twenty-six painted material/food/workshop sprites, top-down icon perspective, masonry coping and royal gallery dressing.
+- Local native and export regressions passed before the final icon pass. Final art/native/export/hosted verification remains in progress; use testing/polish135/acceptance.json for delivery status.
+- Next human playtest: first paid shift at normal speed, input feel, audio, legibility on the owner's display and specialist/mixed-route pacing. Do not expand beyond Thane to address polish.
+
 # Royal134 visual correction
 
 - Implemented: straight royal axe, natural shoulder-rest grip, opposite physical return steps, whole-pose crop/root registration.

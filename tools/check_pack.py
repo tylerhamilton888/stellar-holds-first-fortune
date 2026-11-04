@@ -16,6 +16,8 @@ def main():
     cases = [('ambient', (ROOT/'tests/pack_ambient61.gd').read_text(), 'PACK AMBIENT61')]
     # Inline only the test fixture. Game scripts/assets must resolve inside the pack.
     fixture = (ROOT/'tests/support/game_fixture.gd').read_text()
+    body = (ROOT/'tests/polish135.gd').read_text().split('\n', 1)[1]
+    cases.append(('polish135', fixture+'\n'+body, 'POLISH135'))
     body = (ROOT/'tests/troll133.gd').read_text().split('\n', 1)[1]
     cases.append(('troll133', fixture+'\n'+body, 'TROLL133'))
     body = (ROOT/'tests/work132.gd').read_text().split('\n', 1)[1]

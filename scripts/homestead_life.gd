@@ -204,12 +204,15 @@ func draw():
    var tip=HoldWholeFrames.tool_tip(g.state.appearance,g.surface.direction,"fish",animation_phase())
    g.draw_line(origin+tip*.85,float_at,Color(.86,.87,.72,.65),.8)
    g.draw_circle(float_at,3,Color("e9dab5"));g.draw_line(float_at+Vector2(0,-4),float_at,Color("cc6852"),2)
-  if near_water():g.surface.plaque(place.bank+Vector2(-38,-100),"E · "+place.name)
- var b=near_bed()
- if not b.is_empty() and action=="":
-  var text="E · Harvest" if ripe(b) else "E · Prepare soil" if not b.planted and not b.get("prepared",false) else "E · Plant "+HoldHearth.CROPS[data().selected].name if not b.planted else "E · Water" if not b.watered else "E · Tend (optional)" if not b.get("tended",false) else "Growing"
-  g.surface.plaque(pos(b)+Vector2(0,-62),text)
  g.draw_set_transform(Vector2.ZERO)
+
+func prompt()->String:
+ if not g.surface.active() or placing or action!="":return ""
+ var b=near_bed()
+ if not b.is_empty():
+  return "E · Harvest" if ripe(b) else "E · Prepare soil" if not b.planted and not b.get("prepared",false) else "E · Plant "+HoldHearth.CROPS[data().selected].name if not b.planted else "E · Water" if not b.watered else "E · Tend (optional)" if not b.get("tended",false) else "Growing · tending is optional"
+ var place=spot()
+ return "E · "+str(place.name) if not place.is_empty() and near_water() else ""
 
 func panel():
  var d=data()

@@ -56,7 +56,7 @@ static func event(g,id:String):
   var previous=step(g);data(g).facts[id]=true
   if step(g)>previous:
    g.sound.effect("quest",-22)
-   if guided(g):g.notify("First shift · "+STEPS[step(g)])
+   if guided(g) and not HoldFirstVisit99.active(g.state):g.notify("First shift · "+STEPS[step(g)])
 static func station(g,id:String)->Dictionary:
  for f in g.handworks.data().facilities:
   if str(f.id)=="firstshift:"+id:return f

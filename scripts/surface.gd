@@ -688,8 +688,10 @@ func hud():
  if g.panel_id=="":
   var p=nearest()
   g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
+  if g.fieldwork.prompt()!="" and placing=="":g.footer.text=g.fieldwork.prompt()
+  if g.handworks.prompt()!="" and placing=="":g.footer.text=g.handworks.prompt()
   if g.notice_time>0:g.footer.text=g.notice
-  if g.handworks.busy_hands():g.footer.text="Shift+B · Workshop lesson & crafting   Q · Set down   Shift+E · Take from storage"
+  if g.handworks.busy_hands() and g.notice_time<=0:g.footer.text=g.handworks.prompt()
 func draw():
  var cam=g.camera.round();g.draw_set_transform(-cam)
  var near=nearest()

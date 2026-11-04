@@ -107,13 +107,19 @@ static func transact(g,kind:String,id:String,buy:bool=true)->bool:
 static func panel(g):
  if not active(g.state):return
  var s=g.state
+ var welcome=HoldMenuView.section(g.panel_body,"")
+ HoldMenuView.illustrated_text(welcome,"wood","A town taking root","Work, trade and make a place of your own. Visit each desk in town to use its services.")
  g.button(g.panel_body,"Useful hands · lessons & contest contributions",func():HoldWorkView132.open(g))
- HoldClaim127.panel(g)
- HoldMountain104.panel(g)
- g.label(g.panel_body,"STONEBRIDGE · A TOWN TAKING ROOT",22,Color("edc98a"))
  g.button(g.panel_body,"Field kit · fishing and farming",func():g.open_panel("fieldwork"))
- g.label(g.panel_body,"West: bunkhouse and Wayfarer's Hearth. North: Old Workings and the communal forge. Across the bridge: survey hall and watch stores. South: Pinewood and Greenhearth. The eastern rise is reserved for households.",16)
- g.label(g.panel_body,"Your home: "+("registered · keep building" if data(s).home_reward else "plot granted · build and furnish your home" if data(s).permit else "a paid first shift and two civic projects or trade seals"),17,Color("edc98a"))
+ var directions=HoldMenuView.disclosure(g,g.panel_body,"Around Stonebridge","town135_directions")
+ if directions!=null:
+  var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",20);directions.add_child(grid)
+  for place in [["West","Bunkhouse & Wayfarer’s Hearth"],["North","Old Workings & communal forge"],["Across the bridge","Survey hall & watch stores"],["South","Pinewood & Greenhearth"]]:
+   g.label(grid,place[0],15,Color("edc98a"));g.label(grid,place[1],15)
+ if HoldFirstVisit99.data(s).get("rewarded",false):
+  g.label(g.panel_body,"Your home · "+("registered" if data(s).home_reward else "plot ready to build" if data(s).permit else "%d / 2 contributions toward a plot" % mini(2,HoldWork132.contributions(s))),16,Color("a7dfcb"))
+ HoldClaim127.panel(g)
+ if HoldMountain104.eligible(s):HoldMountain104.panel(g)
  if near(g,"lodge"):
   g.label(g.panel_body,"Ivar: 'The upstairs room is yours while you find your feet. A paid first shift and two contributions earn a home plot: civic projects, trade seals, or one of each. A roof you chose yourself is worth working toward.'",16)
   if s.opening in [1,2,3]:
@@ -123,7 +129,7 @@ static func panel(g):
     if near(g,"lodge") and s.finish_commission():g.save_game();g.refresh_panel())
    b.disabled=not s.afford(job.cost)
   if not data(s).get("storehouse",false):
-   g.label(g.panel_body,"Town project: complete the eastern storehouse · 30 stone, 24 timber, 2 iron. A real building replaces the marked works yard.",16)
+   HoldMenuView.illustrated_text(g.panel_body,"stone","The eastern storehouse","30 stone · 24 timber · 2 iron. Complete a new public building for Stonebridge.")
    var build=g.button(g.panel_body,"Complete the storehouse · 70 marks",func():build_storehouse(g);g.refresh_panel())
    build.disabled=not s.afford({"stone":30,"wood":24,"iron":2})
   g.button(g.panel_body,"Read contribution ledger",func():g.open_panel("great_claim102"))
@@ -131,7 +137,7 @@ static func panel(g):
    var b=g.button(g.panel_body,"Accept a household plot",func():permit(g);g.refresh_panel())
    b.disabled=not HoldFirstVisit99.data(s).get("rewarded",false) or HoldWork132.contributions(s)<2
   else:
-   g.label(g.panel_body,"Your home milestone: walk east through town to the household grounds. O opens the same building plans used here, or build floors, walls, roofs and stairs piece by piece. Choose your layout, materials, furniture and upper floors. Add a bed and hearth or lamp, then report to Ivar. Your belongings stay where you put them.",16)
+   HoldMenuView.illustrated_text(g.panel_body,"wood","Your household plot","Follow the east road. O opens building plans. Build a home with a bed and a nearby lamp or hearth, then register it here.")
    var b=g.button(g.panel_body,"Register my finished home · 60 marks",func():finish_home(g);g.refresh_panel())
    b.disabled=data(s).home_reward or not home_ready(g)
  elif near(g,"forge"):
@@ -160,6 +166,7 @@ static func panel(g):
   for id in goods:
    if not HoldData.ITEMS[id].get("trade",true):continue
    var line=g.row(g.panel_body)
+   HoldItemArt.icon(line,id)
    g.label(line,HoldData.ITEMS[id].name+" · in pack "+str(s.count(id)),16)
    g.small_button(line,"Buy · "+str(s.price(id,true)),func():if transact(g,"trade",id,true):g.save_game();g.refresh_panel())
    g.small_button(line,"Sell · "+str(s.price(id,false)),func():if transact(g,"trade",id,false):g.save_game();g.refresh_panel())

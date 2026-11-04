@@ -123,13 +123,7 @@ static func head_rect(p:Dictionary,a:Dictionary)->Dictionary:
  if p.gender==1 and a.action=="drink" and a.index==2:at.x-=4
  return {"sheet":sheet,"index":i,"rect":Rect2(at+(Vector2(r.position)-head_anchor(p,m))*HEAD_SCALE[int(p.gender)],Vector2(r.size)*HEAD_SCALE[int(p.gender)])}
 static func raw_texture(log:bool)->Texture2D:
- var key="log" if log else "stone"
- if not raw_cache.has(key):
-  var image=preload("res://assets/animation-v51/homestead-props.png").get_image()
-  if image.is_compressed():image.decompress()
-  image=image.get_region(HoldDrawnAnimation.bounds("homestead-props",1 if log else 0))
-  image=image.get_region(image.get_used_rect());raw_cache[key]=ImageTexture.create_from_image(image)
- return raw_cache[key]
+ return HoldRawArt135.texture("wood" if log else "stone")
 static func cargo(n:Node2D,a:Dictionary,action:String):
  if not (action.begins_with("carry_") or action.begins_with("double_") or action.begins_with("lift_")):return
  var double=action.begins_with("double_");var view=int(a.view)
@@ -149,14 +143,7 @@ static func cargo(n:Node2D,a:Dictionary,action:String):
    elif not hands.setting_down.is_empty():raw=hands.setting_down
   raw_draw(n,raw,Rect2(hand-Vector2(width/2,height*.8),Vector2(width,height)))
 static func raw_draw(n:Node2D,raw:Dictionary,rect:Rect2):
- n.draw_texture_rect(raw_texture(raw.kind=="log"),rect,false)
- var item=HoldHandworks.raw_item(raw)
- if item not in ["iron_ore","copper_ore","coal","crystal"]:return
- var tint=Color(HoldData.ITEMS[item].color);var points=[Vector2(.24,.42),Vector2(.45,.31),Vector2(.59,.53),Vector2(.73,.41)]
- for j in points.size():
-  var p=rect.position+points[j]*rect.size;var r=rect.size.x*.075
-  n.draw_colored_polygon(PackedVector2Array([p+Vector2(-r,0),p+Vector2(-r*.2,-r*.7),p+Vector2(r,r*.1),p+Vector2(r*.2,r*.7)]),tint.darkened(.12))
-  n.draw_line(p+Vector2(-r*.4,-r*.35),p+Vector2(r*.55,0),tint.lightened(.32),maxf(.6,rect.size.x*.025),true)
+ HoldRawArt135.draw(n,rect,"wood" if raw.kind=="log" else HoldHandworks.raw_item(raw))
 static var stride_cache={}
 static var stride_sources={}
 static var equipment_cache={}

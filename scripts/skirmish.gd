@@ -395,7 +395,7 @@ func overlay():
  if practice():
   var f=HoldOnboarding.ensure(g.state).facts
   text="Practice · Blows %d/3   Guard %d/1   Evade a strike %d/1" % [mini(3,int(f.get("practice_hit",0))),mini(1,int(f.get("practice_guard",0))),mini(1,int(f.get("practice_dodge",0)))]
- var y=178.0 if g.hotbar.bar_y()<100 else 108.0 if HoldInvasion131.combat_here(g) else 82.0
+ var y=178.0 if g.hotbar.bar_y()<200 else 116.0 if HoldInvasion131.combat_here(g) else 82.0
  if not giant_near():
   g.draw_rect(Rect2(18,y,620,49 if practice() else 28),Color(.03,.08,.10,.93))
   HoldArt.text(g,Vector2(28,y+19),text,14,Color("ead6ac"))
