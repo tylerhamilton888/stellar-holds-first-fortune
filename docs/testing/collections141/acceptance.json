@@ -133,7 +133,19 @@
   "hosted": {
     "source_run": 41910396704,
     "release_run": 41910383093,
-    "status": "running"
+    "status": "merged and published after every hosted gate passed",
+    "native_cases": 74,
+    "source_validation_passed": true,
+    "release_source_groups_passed": 4,
+    "package_groups_passed": 4,
+    "verifier_passed": true,
+    "merge_sha": "2fcbfe89032a65423e3064008330202b9ecb6e79",
+    "merged_tree_matches_source": true,
+    "local_remote_source_match": {
+      "files": 28,
+      "mismatches": []
+    },
+    "publish_passed": true
   },
   "limits": [
     "Normal-speed pacing, Windows device performance and audio require human playtesting."
@@ -142,5 +154,31 @@
     "source": 41909836198,
     "release": 41909837248,
     "reason": "Cancelled by a one-line equipment-card wording correction found during visual review."
+  },
+  "hosted_summary": {
+    "version": "0.101.0",
+    "source_sha": "5239351c37f738227f107cae679c87bc08aafd18",
+    "pack_sha256": "61b7bbb0f54b5ecf8cab958a14421bfeff9c7782c24751083e9cd5c6b186ed57",
+    "zip_sha256": "447142f11a8d223edf00aaa23595b016581931ce2ac7dc922d7663b7eada8f03",
+    "cases": 65,
+    "assertions": 14000,
+    "shards": 4,
+    "shard_seconds": [
+      882.08,
+      1122.9,
+      990.3100000000001,
+      756.9
+    ],
+    "passed": true
+  },
+  "published": {
+    "version": "v0.101.0",
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.0",
+    "published_at": "2026-11-04T21:23:15Z",
+    "tag_commit": "5239351c37f738227f107cae679c87bc08aafd18",
+    "zip_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.101.0/Stellar-Holds-First-Fortune-0.101.0-Windows.zip",
+    "zip_bytes": 961203100,
+    "zip_sha256": "447142f11a8d223edf00aaa23595b016581931ce2ac7dc922d7663b7eada8f03",
+    "identity_verified": true
   }
 }

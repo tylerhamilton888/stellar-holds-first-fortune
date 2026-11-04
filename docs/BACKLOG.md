@@ -1,6 +1,6 @@
-# Collections141 — implementation and release validation
+# Collections141 — delivered in Windows 0.101.0
 
-Three optional collections implemented. Next priority is a fresh-save pacing playtest through the opening chapter; pause new system expansion for that feedback. Advanced transport/production adventures and later Skarrin scenes remain future work; marriage/district expansion remain deferred. See great-claim/COLLECTIONS141.md.
+Three optional collections are merged and published after complete source/package verification. Next priority is a fresh-save pacing playtest through the opening chapter; pause new system expansion for that feedback. Advanced transport/production adventures and later Skarrin scenes remain future work; marriage/district expansion remain deferred. See great-claim/COLLECTIONS141.md.
 
 # Validation follow-up
 
