@@ -1,3 +1,7 @@
+# Source 0.98.0 — Hold’s Ledger integration awaiting final validation
+
+The first campaign-restructuring batch adds saved partial deliveries, staged forge restoration, a home milestone checklist and Skarrin’s welcoming gift/recognition dialogue. Existing homes, forge unlocks, projects and story progress remain authoritative. See [scope and remaining work](great-claim/LEDGER137.md). Native checks are underway; no new Windows release has been started.
+
 # Current status — 0.97.2 published; faster releases verified
 
 The opening through the Thane homecoming is implemented and polished. [Windows 0.97.2 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.97.2). Its clean build passed all 61 exact-package cases in [run 41761990982](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41761990982); the published ZIP size and digest match the build report. See [release receipt](testing/polish135/release.json).

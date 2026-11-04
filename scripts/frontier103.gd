@@ -38,7 +38,7 @@ static func points(g)->Array:
  var s=g.state;var out=[]
  if g.surface.area==room(s,"survey",1):out.append(g.surface.spot(690,575,"Archive · charter law and town records","frontier_archive103"))
  if g.surface.area==lodge(s):
-  out.append(g.surface.spot(670,425,"Great Claim ledger","great_claim102"))
+  out.append(g.surface.spot(670,425,"Hold’s Ledger","great_claim102"))
   out.append(g.surface.spot(480,500,"Ivar's shift book · work and home plot","frontier103"))
   for p in HoldWorkerLodge100.people(g):out.append({"p":p.p,"name":p.name,"action":p.interaction})
  elif g.surface.area==quarters(s):
@@ -107,6 +107,8 @@ static func transact(g,kind:String,id:String,buy:bool=true)->bool:
 static func panel(g):
  if not active(g.state):return
  var s=g.state
+ if near(g,"forge") and s.opening<2:
+  HoldLedger137.forge_panel(g);return
  var welcome=HoldMenuView.section(g.panel_body,"")
  HoldMenuView.illustrated_text(welcome,"wood","A town taking root","Work, trade and make a place of your own. Visit each desk in town to use its services.")
  g.button(g.panel_body,"Useful hands · lessons & contest contributions",func():HoldWorkView132.open(g))
@@ -122,7 +124,9 @@ static func panel(g):
  if HoldMountain104.eligible(s):HoldMountain104.panel(g)
  if near(g,"lodge"):
   g.label(g.panel_body,"Ivar: 'The upstairs room is yours while you find your feet. A paid first shift and two contributions earn a home plot: civic projects, trade seals, or one of each. A roof you chose yourself is worth working toward.'",16)
-  if s.opening in [1,2,3]:
+  if s.opening==1:
+   g.button(g.panel_body,"The Cold Forge · staged restoration",func():g.open_panel("great_claim102"))
+  if s.opening in [2,3]:
    var job=HoldCampaign.JOBS[s.opening-1]
    g.label(g.panel_body,job.name+" · "+HoldData.cost_text(job.cost)+" · "+str(job.pay)+" crowns",16)
    var b=g.button(g.panel_body,"Deliver shift commission",func():

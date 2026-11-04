@@ -1,3 +1,7 @@
+# Ledger integration in progress — source 0.98.0
+
+First batch: partial project deliveries, staged Cold Forge, personal-home checklist and welcoming Skarrin. See [LEDGER137](great-claim/LEDGER137.md). Source validation/visual review are in progress; do not claim a new Windows release. Published download remains 0.97.2. Preserve the existing finale and later story gates until their dedicated campaign batches.
+
 # The Stellar Holds — current recovery handoff
 
 ## Source and playable build

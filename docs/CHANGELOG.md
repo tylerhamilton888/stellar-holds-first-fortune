@@ -1,3 +1,7 @@
+# 0.98.0 — The Hold’s Ledger (source)
+
+Saved partial community contributions; Cold Forge inspection, production and first firing; home milestone checklist; Skarrin’s optional welcome timber and story-driven attitude. Existing completed work and finale preserved.
+
 # Parallel Windows release validation — verified
 
 PR #119 merged four isolated package runners, a checksum-verified shared candidate and strict complete-suite aggregation. The 61-case stage fell from 66m 50s to 14m 59s (77.6% less time); 13,706 assertions passed. The complete non-publishing trial took 30m 29s, with all native jobs passing. Thirteen local orchestration safety tests passed. Current Windows 0.97.2 was independently published and verified; no gameplay/version change accompanies the pipeline. Evidence: testing/release136/benchmark.json and testing/polish135/release.json.

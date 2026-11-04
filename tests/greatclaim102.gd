@@ -5,7 +5,7 @@ func run():
  check(not HoldGreatClaim102.active(g.state),"Legacy fortune does not silently join claim")
  HoldDisciplines.award(g.state,"mining",1)
  check(not HoldGreatClaim102.active(g.state),"Old work remains unmigrated")
- HoldFirstVisit99.begin(g);settle()
+ HoldFirstVisit99.begin(g);settle();HoldFirstVisit99.data(g.state).rewarded=true
  var d=HoldGreatClaim102.data(g.state)
  check(HoldGreatClaim102.active(g.state) and int(d.points)==0,"New first visit starts ledger with no historical credit")
  HoldDisciplines.award(g.state,"mining",3,"ledger-test")
@@ -24,7 +24,17 @@ func run():
   for item in p.cost:g.state.add(item,p.cost[item])
   var inventory=g.state.inventory.duplicate(true);at(Vector2(240,550))
   check(not HoldGreatClaim102.contribute(g,id) and inventory==g.state.inventory,"Remote contribution cannot consume pack")
-  at(Vector2(670,440));g.surface.action("great_claim102");button("Contribute · "+p.title)
+  at(Vector2(670,440));g.surface.action("great_claim102")
+  var header=g.panel.find_children("*","Label",true,false).filter(func(label):return label.text.begins_with(p.title+" ·"))
+  check(header.size()==1,"Project has one visible Ledger card")
+  if header.size()==1:
+   var card=header[0].get_parent()
+   for item in p.cost:
+    var delivery=card.find_children("*","Button",true,false).filter(func(b):return b.text=="Contribute %d" % int(p.cost[item]) and not b.disabled)
+    if not delivery.is_empty():delivery[0].pressed.emit()
+    header=g.panel.find_children("*","Label",true,false).filter(func(label):return label.text.begins_with(p.title+" ·"));card=header[0].get_parent()
+   for b in card.find_children("*","Button",true,false):
+    if b.text=="Complete project" and not b.disabled:b.pressed.emit();break
   check(HoldGreatClaim102.complete(g.state,id),"UI makes a real civic contribution")
   for item in p.cost:check(g.state.count(item)==0,"Civic materials actually consumed")
   var points=int(d.points)

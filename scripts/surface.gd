@@ -150,7 +150,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.velocity=Vector2.ZERO;g.grounded=true;g.walking_pose=false;g.gait_clock=0;g.swing=0;placing="";moving_furnishing={};cut_clock=0;cut_target=-1;house.impact=0
  g.combat.armed=false;g.combat.reset_actions();g.construction.selected=""
  g.state.region_travel.active=false;g.state.hold_travel.active=false
- g.camera=camera_target();g.close_panel();g.spawn_agents();g.sound.set_context(g.room_id if room() else g.zone)
+ g.camera=camera_target();g.close_panel();g.spawn_agents();g.sound.set_context(("forge_cold" if g.state.opening<2 else "forge") if HoldFrontier103.active(g.state) and area==HoldFrontier103.room(g.state,"forge") else g.room_id if room() else g.zone)
  g.handworks.arrive(travelling_cart)
  g.begin_transition(label().to_upper());g.save_game()
 func leave():

@@ -273,7 +273,10 @@ func draw_furnishing(o:Dictionary):
  if s.area=="room:forge" and o.furnishing=="anvil":return
  # Active public lockboxes are rendered by the persistent storage system once.
  if o.furnishing=="chest" and ward(current_area()) and current_area()==s.area and HoldWardDesign.STORES.get(s.area,[]).has(o.p):return
- HoldFurnishings.draw(g,o.p,o.furnishing)
+ if o.furnishing=="hearth" and HoldFrontier103.active(g.state) and s.area==HoldFrontier103.room(g.state,"forge") and g.state.opening<2:
+  var item=HoldFurnishings.geometry("hearth")
+  g.draw_texture_rect_region(HoldFurnishings.ATLAS,HoldFurnishings.silhouette("hearth",o.p),HoldFurnishings.CROPS[item.art],Color(.36,.39,.43))
+ else:HoldFurnishings.draw(g,o.p,o.furnishing)
  if s.area=="room:forge" and o.furnishing=="worktable":
   var index=[Vector2(970,550),Vector2(970,755),Vector2(680,755)].find(o.p)
   if index>=0:

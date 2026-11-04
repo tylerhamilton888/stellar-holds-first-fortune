@@ -271,7 +271,7 @@ func npc(key:String)->Dictionary:
 func finish_commission()->bool:
  if opening<1 or opening>3 or not HoldOnboarding.commission_allowed(self):return false
  var job=HoldCampaign.JOBS[opening-1]
- if not pay(job.cost):return false
+ if not pay(HoldLedger137.remaining(self,"forge") if opening==1 and HoldLedger137.active(self) else job.cost):return false
  money+=int(job.pay);opening+=1
  HoldOnboarding.after_commission(self)
  return true
