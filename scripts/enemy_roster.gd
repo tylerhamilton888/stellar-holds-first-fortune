@@ -5,7 +5,7 @@ const SPECS=[
  {"name":"Goblin cutthroat","hp":64.0,"damage":16.0,"speed":105.0,"reach":88.0,"windup":.60,"recover":.70,"angle":.9,"body":12.0,"height":58.0,"armor":0.0,"loot":{"scrap":3,"copper_ore":2}},
  {"name":"Ironback beetle","hp":84.0,"damage":16.0,"speed":60.0,"reach":88.0,"windup":1.05,"recover":1.0,"angle":.9,"body":14.0,"height":64.0,"armor":.2,"loot":{"shell":2,"iron_ore":2}},
  {"name":"Orc ironbreaker","hp":112.0,"damage":22.0,"speed":72.0,"reach":104.0,"windup":.95,"recover":1.0,"angle":.85,"body":17.0,"height":80.0,"armor":.25,"loot":{"scrap":4,"iron_ore":3}},
- {"name":"Cave troll","hp":220.0,"damage":34.0,"speed":48.0,"reach":138.0,"windup":1.4,"recover":1.5,"angle":.70,"body":26.0,"height":110.0,"armor":0.0,"loot":{"stone":8,"iron_ore":4,"crystal":1}}
+ {"name":"Cave troll","hp":220.0,"damage":34.0,"speed":48.0,"reach":150.0,"windup":1.45,"recover":1.8,"angle":.70,"body":50.0,"height":220.0,"armor":0.0,"loot":{"stone":8,"iron_ore":4,"crystal":1}}
 ]
 const GOBLIN=preload("res://assets/enemies84/goblin.png")
 const ORC=preload("res://assets/enemies84/orc.png")
@@ -51,12 +51,20 @@ static func row(direction:Vector2)->int:
  if absf(direction.x)>absf(direction.y)*1.8:return 1
  return 2 if direction.y<0 else 0
 static func frame(e:Dictionary)->int:
+ if int(e.kind)==3:return HoldTroll133.frame(e)
  if e.hp<=0:return 5
  if e.state=="windup":return 3
  if e.state=="recover" and e.time>float(spec(e.kind).recover)-.22:return 4
  if e.walk:return [1,0,2,0][int(e.gait*10)%4]
  return 0
 static func draw(g,e:Dictionary):
+ if int(e.kind)==3:
+  var pose=HoldTroll133.region(e,e.dir)
+  var tint=Color(1.3,1.2,1.1) if e.flash>0 else Color.WHITE
+  if e.hp<=0:tint.a=clampf(float(e.get("dead_time",0))/.7,0,1)
+  g.draw_set_transform(e.p-g.camera.round(),0,Vector2(-1 if e.dir.x<0 else 1,1))
+  g.draw_texture_rect_region(pose.texture,Rect2((pose.source.position-pose.root)*pose.scale,pose.source.size*pose.scale),pose.source,tint)
+  g.draw_set_transform(-g.camera.round());return
  var kind=int(e.kind);var r=row(e.dir);var f=frame(e)
  var source:Rect2=RECTS[kind][r][f];var anchor:Vector2=ROOTS[kind][r][f]
  var scale=float(spec(kind).height)/[194.0,1.0,191.0,194.0][kind]

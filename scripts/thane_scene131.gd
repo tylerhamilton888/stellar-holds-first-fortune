@@ -1,7 +1,13 @@
 class_name HoldThaneScene131
 extends HoldClaimScene127
-const BATTLE=preload("res://assets/thane131/eirik-battle-return.png")
-const BOXES=[[0, 4, 444, 486], [444, 8, 444, 482], [888, 0, 444, 490], [1332, 0, 441, 490], [0, 490, 444, 397], [444, 490, 444, 397], [888, 490, 444, 397], [1332, 490, 442, 381]]
+const BATTLE=preload("res://assets/royal134/battle.png")
+const RETURN133=preload("res://assets/royal134/return.png")
+# Complete paintings; all feet, crowns and straight axe shafts remain inside each crop.
+const RETURN_BOXES133=[Rect2(85,20,627,435),Rect2(853,20,648,446),Rect2(85,532,643,462),Rect2(836,532,682,427)]
+const RETURN_ROOTS133=[Vector2(294,445),Vector2(1062,445),Vector2(294,955),Vector2(1062,947)]
+const BOXES=[[195,88,466,420],[868,9,430,497],[114,573,615,425],[850,538,583,466]]
+const BATTLE_ROOTS134=[Vector2(396,495),Vector2(1108,495),Vector2(340,982),Vector2(1100,990)]
+const BATTLE_SCALES134=[.235,.235,.235,.215]
 var royal={}
 var foes=[]
 var choice_buttons=[]
@@ -68,19 +74,19 @@ func show_line():
   if mode=="trial" and step<4:add_actor("road_folk:8",Vector2(650,630),Vector2(650,630))
   target_camera=Vector2(170,395)
  elif mode=="king":
-  locate("hearthward",HoldInvasion131.point(game,Vector2(850,850)));game.surface.direction=Vector2.RIGHT
-  royal={"from":Vector2(850,780) if step==1 else Vector2(1040,780),"to":Vector2(1040,780),"p":Vector2(1040,780)}
-  if step==0:royal.p=Vector2(900,800);royal.from=royal.p;royal.to=royal.p
+  locate("hearthward",HoldInvasion131.point(game,Vector2(390,925)));game.surface.direction=Vector2.RIGHT
+  royal={"from":Vector2(450,925) if step==1 else Vector2(520,925),"to":Vector2(520,925),"p":Vector2(520,925)}
+  if step==0:royal.p=Vector2(450,925);royal.from=royal.p;royal.to=royal.p
   for i in 5:
-   var p=HoldInvasion131.point(game,[Vector2(1120,810),Vector2(1170,710),Vector2(1270,730),Vector2(1110,900),Vector2(1250,900)][i],30)
-   var e=game.fight.make_enemy("royal_troll_"+str(i),p,3);e.dir=Vector2.LEFT;e.state="windup" if step==2 else "idle";e.time=1.0;foes.append(e)
-  duration=3.0;target_camera=Vector2(650,520)
+   var p=HoldInvasion131.point(game,[Vector2(650,933),Vector2(880,840),Vector2(1160,830),Vector2(820,933),Vector2(960,933)][i],float(HoldEnemyRoster.spec(3).body))
+   var e=game.fight.make_enemy("royal_troll_"+str(i),p,3);e.dir=Vector2.LEFT;e.state="windup" if step==2 and i==0 else "idle";e.time=1.0;e.fist133=0;foes.append(e)
+  duration=3.0;target_camera=Vector2(320,550)
  elif mode=="return":
   locate("crownward",HoldInvasion131.point(game,Vector2(780,835)))
-  royal={"from":Vector2(980,750) if step==1 else Vector2(800,750),"to":Vector2(800,750),"p":Vector2(800,750)}
-  if step==0:royal.p=Vector2(1300,750);royal.from=royal.p;royal.to=royal.p
+  royal={"from":Vector2(1040,890) if step==1 else Vector2(870,890),"to":Vector2(870,890),"p":Vector2(870,890)}
+  if step==0:royal.p=Vector2(1400,890);royal.from=royal.p;royal.to=royal.p
   add_actor("ivar",Vector2(660,800),Vector2(660,780));add_actor("borin",Vector2(620,720),Vector2(640,720));add_actor("orla",Vector2(900,830),Vector2(890,830))
-  duration=3;target_camera=Vector2(350,460)
+  duration=3;target_camera=Vector2(350,540)
  else:
   locate("trail",Vector2(760,905));royal={}
   add_actor("ivar",Vector2(650,920),Vector2(690,920));add_actor("road_folk:11",Vector2(850,900),Vector2(850,900));add_actor("lodge_folk:1",Vector2(600,850),Vector2(600,850));add_actor("lodge_folk:2",Vector2(880,970),Vector2(880,970))
@@ -129,12 +135,15 @@ func objects()->Array:
  return out
 func draw_royal():
  var p:Vector2=royal.p
+ if mode=="return":
+  var f=[1,0,2,0][int(age*4)%4] if step==1 and age<duration else 0
+  var r:Rect2=RETURN_BOXES133[f];var anchor:Vector2=RETURN_ROOTS133[f]
+  game.draw_texture_rect_region(RETURN133,Rect2(p+(r.position-anchor)*.22,r.size*.22),r);return
  if mode not in ["king","return"] and not (mode=="trial" and step==3):
   HoldRoyalStage.draw_actor(game,HoldRoyalStage.actor(p,12,Vector2.DOWN,age*.25,age<duration));return
  var frame=0
- if mode=="return":frame=[4,5,7,5][int(age*4)%4] if step==1 and age<duration else 5
- elif mode=="king" and step==2 or mode=="trial" and step==3:frame=mini(3,int(age/0.45))
- var box=BOXES[frame];var r=Rect2(box[0],box[1],box[2],box[3]);var root=Vector2([210,650,1075,1500,185,625,1065,1505][frame],430 if frame<4 else 840);var scale=.235
+ if mode=="king" and step==2 or mode=="trial" and step==3:frame=mini(3,int(age/0.45))
+ var box=BOXES[frame];var r=Rect2(box[0],box[1],box[2],box[3]);var root:Vector2=BATTLE_ROOTS134[frame];var scale:float=BATTLE_SCALES134[frame]
  game.draw_texture_rect_region(BATTLE,Rect2(p+(r.position-root)*scale,r.size*scale),r)
 func _draw():
  if mode=="trial" and step==3 and age>1.0 and age<1.7:draw_rect(Rect2(0,46,960,352),Color(0.025,0.04,0.05,1))

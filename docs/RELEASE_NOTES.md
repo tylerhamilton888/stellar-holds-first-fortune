@@ -1,3 +1,9 @@
+# 0.97.0 — Giants at the stairs
+
+Trolls now tower over Dwarfs at twice their previous height. Their larger physical footprint and new whole painted animations carry into the mines, Keldrath's defense and the King's five-troll encounter. Eirik returns with a much larger trophy head.
+
+Watch each fist. An amber circle marks its committed landing; step or Space-dodge out, prepare for the opposite fist, then attack during the long recovery. Timed parries can interrupt the sequence. Troll health and rewards are unchanged, and saved wounds and cleared encounters remain intact. Combat framing leaves more room for the giants, with the same circular warning in the optional mine perspective.
+
 # 0.96.0 — Useful hands
 
 Choose how you earn your place in Stonebridge. Twelve optional lessons guide ore processing, smelting, tool upgrades, timber, loaded carts, furnishing, surveys, safe descents, crystal recovery, fieldwork and cooking. J shows the immediate step, your chosen lesson and the 180-mark contribution goal.

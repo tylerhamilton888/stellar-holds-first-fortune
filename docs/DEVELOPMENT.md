@@ -1,3 +1,7 @@
+## Giant troll contact ownership
+
+`HoldTroll133` owns whole-pose selection, measured foot/fist anchors, locked ground targets and the two-blow timing. `HoldSkirmish` owns damage, defense, rewards, persistence and interruptions; the roster owns scale and body size. Both camera modes draw the current atlas. Never enlarge only the sprite or replace actual fist contact with an unrelated cone. Preserve original atlas files and numeric enemy IDs. Scene-only giant positions do not alter persistent encounter records.
+
 ## Equipment instances
 
 HoldEquipment93 owns additive combat.gear93 instances and equipped IDs. Existing combat.weapon/armor/owned remain compatibility/art-role keys. A read reconciles old/preset type grants into standard instances; forging creates unique monotonic IDs. Effective stats are derived from immutable type definitions and bounded workmanship, never stored as arbitrary multipliers. Both combat controllers consume these stats. Revalidate forge locality, research and payment at activation; menu enablement alone is insufficient. Preserve the pre-equipment93 save before migration.

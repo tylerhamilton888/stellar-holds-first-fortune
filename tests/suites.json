@@ -24,7 +24,8 @@
       "hearthknot128",
       "friendship130",
       "invasion131",
-      "work132"
+      "work132",
+      "troll133"
     ],
     "gameplay": [
       "loading",
@@ -94,7 +95,8 @@
       "hearthknot128",
       "friendship130",
       "invasion131",
-      "work132"
+      "work132",
+      "troll133"
     ],
     "modular": [
       "modular",
@@ -395,7 +397,8 @@
       "bench96",
       "expedition97",
       "workplace98",
-      "firstvisit99"
+      "firstvisit99",
+      "troll133"
     ],
     "calendar-preview": [
       "calendar"
@@ -864,6 +867,19 @@
       "bench96",
       "disciplines",
       "menu_quality100"
+    ],
+    "troll133-focus": [
+      "troll133"
+    ],
+    "troll133": [
+      "troll133",
+      "enemies",
+      "combat",
+      "combat_art",
+      "dev_testing",
+      "invasion131",
+      "navigation94",
+      "mouselook95"
     ]
   },
   "cases": {
@@ -1142,6 +1158,10 @@
     "work132": {
       "script": "tests/work132.gd",
       "marker": "WORK132"
+    },
+    "troll133": {
+      "script": "tests/troll133.gd",
+      "marker": "TROLL133"
     }
   }
 }

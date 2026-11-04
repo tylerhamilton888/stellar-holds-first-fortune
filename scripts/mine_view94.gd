@@ -108,7 +108,7 @@ func sync(dt:float):
  g.deep.ensure();var w=g.deep.world
  update_camera()
  timer-=dt
- var key=g.state.active_site+":"+str(w.depth())+":"+str(Deepworks.cell(g.player))
+ var key=g.state.active_site+":"+str(w.depth())+":"+str(Deepworks.cell(g.player))+":"+str(g.fight.giant_near())
  if context!=key or timer<=0:
   context=key;timer=.25;rebuild();rebuild_props()
  update_cutaway();update_actors()
@@ -117,13 +117,15 @@ func sync(dt:float):
 func update_camera():
  if not is_instance_valid(camera):return
  var center=point(g.player);var back=Vector3(sin(yaw),0,cos(yaw))
+ var giant=g.fight!=null and g.fight.giant_near()
+ var framing=maxf(distance,16.0) if giant else distance
  if mouse_look:
   # Close zoom eases over the shoulder and raises the dwarf above the hotbar.
-  var close=clampf((9.5-distance)/4.5,0,1);var right=Vector3(cos(yaw),0,-sin(yaw))
-  camera.position=center+back*cos(pitch)*distance+right*close*1.4+Vector3.UP*(.8+sin(pitch)*distance)
-  camera.look_at(center-back*lerpf(2.0,.7,close)+right*close*.9+Vector3.UP*.8)
+  var close=clampf((9.5-framing)/4.5,0,1);var right=Vector3(cos(yaw),0,-sin(yaw))
+  camera.position=center+back*cos(pitch)*framing+right*close*1.4+Vector3.UP*(.8+sin(pitch)*framing)
+  camera.look_at(center-back*lerpf(2.0,.7,close)+right*close*.9+Vector3.UP*(2.2 if giant else .8))
  else:
-  camera.position=center+back*7.4+Vector3.UP*6.2;camera.look_at(center+Vector3.UP*.35)
+  camera.position=center+back*(13.0 if giant else 7.4)+Vector3.UP*(10.0 if giant else 6.2);camera.look_at(center+Vector3.UP*(2.2 if giant else .35))
 func update_cutaway():
  for wall in walls:
   var height=tile_height(wall.c,wall.kind)
@@ -150,8 +152,9 @@ func clear_children(node:Node):
 func rebuild():
  walls.clear();clear_children(terrain)
  var groups={};var w=g.deep.world;var c=Deepworks.cell(g.player)
- for y in range(maxi(0,c.y-12),mini(Deepworks.H,c.y+13)):
-  for x in range(maxi(0,c.x-12),mini(Deepworks.W,c.x+13)):
+ var extent=20 if g.fight.giant_near() else 12
+ for y in range(maxi(0,c.y-extent),mini(Deepworks.H,c.y+extent+1)):
+  for x in range(maxi(0,c.x-extent),mini(Deepworks.W,c.x+extent+1)):
    var tile=Vector2i(x,y);var seen=w.layer().seen.has(Deepworks.key(tile));var k=w.at(tile) if seen else 8
    # Unexplored space remains opaque; previewing cannot reveal caverns or ore.
    var height=tile_height(tile,k)
@@ -212,9 +215,11 @@ func update_actors():
   if kind==1:
    var index=2 if e.state=="windup" else 3 if e.state=="recover" else int(e.gait*8)%2
    source=[Rect2(35,585,375,275),Rect2(465,585,400,275),Rect2(880,540,375,320),Rect2(1270,625,504,235)][index];root=[Vector2(220,845),Vector2(650,845),Vector2(1060,845),Vector2(1480,845)][index];scale=.16;tex=HoldCombat.ENEMIES
+  elif kind==3:
+   var pose=HoldTroll133.region(e,facing);source=pose.source;root=pose.root;scale=pose.scale;tex=pose.texture
   else:
    var row=HoldEnemyRoster.row(facing);var frame=HoldEnemyRoster.frame(e);source=HoldEnemyRoster.RECTS[kind][row][frame];root=HoldEnemyRoster.ROOTS[kind][row][frame];scale=float(HoldEnemyRoster.spec(kind).height)/[194.0,1.0,191.0,194.0][kind];tex=HoldEnemyRoster.GOBLIN if kind==0 else HoldEnemyRoster.ORC if kind==2 else HoldEnemyRoster.TROLL
-  var key=str(kind)+":"+str(source)
+  var key=str(kind)+":"+tex.resource_path+":"+str(source)
   if not textures.has(key):var atlas=AtlasTexture.new();atlas.atlas=tex;atlas.region=source;textures[key]=atlas
   apply_sprite(s,textures[key],Rect2((source.position-root)*scale,source.size*scale),e.p,facing.x<0)
  for a in g.agents:
@@ -281,6 +286,7 @@ func update_effects():
   if e.state=="windup":
    var tool=SurfaceTool.new();tool.begin(Mesh.PRIMITIVE_TRIANGLES)
    var center=point(e.p)+Vector3(0,.04,0);var a=e.dir.angle();var angle=float(spec.angle);var radius=float(spec.reach)/40
+   if e.kind==3:center=point(HoldTroll133.contact(e))+Vector3(0,.04,0);a=0;angle=PI;radius=HoldTroll133.RADIUS/40
    for i in 16:
     for v in [Vector3.ZERO,Vector3(cos(a-angle+i*angle/8)*radius,0,sin(a-angle+i*angle/8)*radius),Vector3(cos(a-angle+(i+1)*angle/8)*radius,0,sin(a-angle+(i+1)*angle/8)*radius)]:tool.add_vertex(center+v)
    var marker=MeshInstance3D.new();marker.mesh=tool.commit();var mat=StandardMaterial3D.new();mat.shading_mode=BaseMaterial3D.SHADING_MODE_UNSHADED;mat.transparency=BaseMaterial3D.TRANSPARENCY_ALPHA;mat.cull_mode=BaseMaterial3D.CULL_DISABLED;mat.albedo_color=Color(1,.65,.2,.45);marker.material_override=mat;effects.add_child(marker)

@@ -13,7 +13,7 @@ static func lines(g,mode:String)->Array:
    ["THE ALARM","A horn answers from King's Gate. Steel rings below. Guards move for the stairs as goblins and orcs pour through the breach."],
    ["HIGH KING EIRIK","Guards, hold the landings! Get the families under stone. You, claimant—take the Oath Court, then the refuge and forge pumps. We save our people first. The title can wait."]]
   "king":return [
-   ["THE GREAT STAIRS","The troll falls. Beyond it, five more climb out of the breached passage, shouldering one another into the street."],
+   ["THE GREAT STAIRS","The giant falls hard enough to shake the landing. Beyond it, five more squeeze out of the breached passage. Their shoulders brush the arch; each fist could crush a Dwarf."],
    ["HIGH KING EIRIK","You have held long enough. Close the gate and find the man who opened it. These are mine."],
    ["THE KING'S AXE","Eirik steps into the first giant's swing. His axe answers with a blow that shakes dust from the arch. The other four hesitate."],
    ["HIGH KING EIRIK","Go! A crown is no excuse to leave the hard work to someone else. I will meet you when the gate is shut."]]
