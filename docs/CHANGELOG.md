@@ -1,6 +1,6 @@
-# Parallel Windows release validation
+# Parallel Windows release validation — verified
 
-Replace the sequential exported-game release gate with four isolated runners against one checksum-verified candidate. Require every case exactly once and identical source/PCK/ZIP identity before publishing. Check the native gate in parallel, retain full evidence and add a non-publishing PR rehearsal. Prior timings estimate 15–18 minutes per group instead of 65 minutes serial; hosted measurement pending.
+PR #119 merged four isolated package runners, a checksum-verified shared candidate and strict complete-suite aggregation. The 61-case stage fell from 66m 50s to 14m 59s (77.6% less time); 13,706 assertions passed. The complete non-publishing trial took 30m 29s, with all native jobs passing. Thirteen local orchestration safety tests passed. Current Windows 0.97.2 was independently published and verified; no gameplay/version change accompanies the pipeline. Evidence: testing/release136/benchmark.json and testing/polish135/release.json.
 
 # 0.97.2 delivery preparation
 

@@ -1,12 +1,13 @@
 {
   "version": "0.97.2",
-  "status": "in_progress",
+  "status": "published",
   "source_commit": "35eb33a39abf247d96f8b774a39b87f53c859f32",
   "release_commit": "b305023db9889d46ce5fb244bb2b48f0f6b6bcf2",
   "source_workflow": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41760487374",
   "release_workflow": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41761990982",
   "expected_pack_cases": 61,
-  "next_action": "Observe existing Windows run; verify release assets and record digest. Do not dispatch duplicate release.",
+  "next_action": "Owner playtest; do not restart this completed release.",
   "source_workflow_status": "success",
-  "source_merge_sha": "83444ee7141417ce677c8592fb3a708c5e51df54"
+  "source_merge_sha": "83444ee7141417ce677c8592fb3a708c5e51df54",
+  "final_record": "release.json"
 }

@@ -1,0 +1,160 @@
+{
+  "status": "passed_and_merged",
+  "version_tested": "0.97.2",
+  "baseline_workflow": 41761990982,
+  "baseline_pack_seconds": 4010,
+  "baseline_total_seconds": 4529,
+  "trial_workflow": 41769966860,
+  "native_workflow": 41769967228,
+  "source_commit": "a18252bef72b98b79e66d3132e78324f53ba41dd",
+  "pack_cases": 61,
+  "shards": 4,
+  "local_safety_tests": 13,
+  "existing_harnesses_byte_identical": true,
+  "parallel_pack_seconds": 899,
+  "package_time_reduction_percent": 77.581,
+  "pack_jobs": [
+    {
+      "id": 126379675488,
+      "name": "pack (3)",
+      "started": "2026-11-04T04:02:44Z",
+      "completed": "2026-11-04T04:18:12Z",
+      "steps": [
+        {
+          "name": "Run disjoint exact-package tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-04T04:03:10Z",
+          "completed_at": "2026-11-04T04:18:08Z"
+        }
+      ]
+    },
+    {
+      "id": 126379675501,
+      "name": "pack (2)",
+      "started": "2026-11-04T04:02:44Z",
+      "completed": "2026-11-04T04:16:16Z",
+      "steps": [
+        {
+          "name": "Run disjoint exact-package tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-04T04:03:15Z",
+          "completed_at": "2026-11-04T04:16:11Z"
+        }
+      ]
+    },
+    {
+      "id": 126379675594,
+      "name": "pack (0)",
+      "started": "2026-11-04T04:02:45Z",
+      "completed": "2026-11-04T04:17:36Z",
+      "steps": [
+        {
+          "name": "Run disjoint exact-package tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-04T04:03:09Z",
+          "completed_at": "2026-11-04T04:17:32Z"
+        }
+      ]
+    },
+    {
+      "id": 126379675638,
+      "name": "pack (1)",
+      "started": "2026-11-04T04:02:45Z",
+      "completed": "2026-11-04T04:14:45Z",
+      "steps": [
+        {
+          "name": "Run disjoint exact-package tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-04T04:03:15Z",
+          "completed_at": "2026-11-04T04:14:40Z"
+        }
+      ]
+    }
+  ],
+  "merge_sha": "a398cb54ea0d5a1fa8ca9a638666f3bf102c0051",
+  "trial_total_seconds": 1829,
+  "publish_exercised": false,
+  "trial_summary": {
+    "version": "0.97.2",
+    "source_sha": "46d34d99817b6444e66d3a40871b4ceb49a2e3ba",
+    "pack_sha256": "80553501e4e70f3aed59cadb277bea4880821e4413e00761c67828e9851993ad",
+    "zip_sha256": "34d5814ca7747364deed9f3608e4ed60a44d631fbea266d4c5ae599dc1c39a9b",
+    "cases": 61,
+    "assertions": 13706,
+    "shards": 4,
+    "shard_seconds": [
+      861.29,
+      684.1800000000001,
+      774.17,
+      895.38
+    ],
+    "passed": true
+  },
+  "native_gate": "success",
+  "trial_jobs": [
+    {
+      "id": 126377094023,
+      "name": "source-gate",
+      "started": "2026-11-04T03:54:39Z",
+      "completed": "2026-11-04T04:24:10Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 126377094204,
+      "name": "build",
+      "started": "2026-11-04T03:54:39Z",
+      "completed": "2026-11-04T04:02:42Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 126379675488,
+      "name": "pack (3)",
+      "started": "2026-11-04T04:02:44Z",
+      "completed": "2026-11-04T04:18:12Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 126379675501,
+      "name": "pack (2)",
+      "started": "2026-11-04T04:02:44Z",
+      "completed": "2026-11-04T04:16:16Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 126379675594,
+      "name": "pack (0)",
+      "started": "2026-11-04T04:02:45Z",
+      "completed": "2026-11-04T04:17:36Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 126379675638,
+      "name": "pack (1)",
+      "started": "2026-11-04T04:02:45Z",
+      "completed": "2026-11-04T04:14:45Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 126386732801,
+      "name": "verify",
+      "started": "2026-11-04T04:24:13Z",
+      "completed": "2026-11-04T04:25:08Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 126387049553,
+      "name": "publish",
+      "started": "2026-11-04T04:25:08Z",
+      "completed": "2026-11-04T04:25:08Z",
+      "conclusion": "skipped"
+    }
+  ]
+}

@@ -1,8 +1,10 @@
 # Parallel Windows release checks
 
-The previous Windows release spent 65 minutes running 60 exported-game cases sequentially. The current catalogue has 61 cases. Four independent GitHub runners now process disjoint round-robin groups from the same catalogue; each runner still executes its cases sequentially with isolated saves. No gameplay test or completion/error check is removed.
+The 0.97.2 release spent **66m 50s** running all 61 exported-game cases sequentially. The verified four-runner trial completed the same case catalogue in **14m 59s elapsed test time**, a **77.6% reduction**. All **13,706 assertions** passed, and the aggregate gate confirmed every case exactly once against one source/PCK/ZIP identity. The 13 local pipeline safety tests also passed.
 
-The previous run's measured timings project roughly 15–18 minutes per group, plus build, transfer and verification time. This is an estimate until the first full hosted benchmark completes. Source validation can still dominate a release started before its native gate passes; runner queues and artifact transfer also affect elapsed time.
+The full non-publishing trial took **30m 29s**, including a fresh build and waiting for the native gate. Its final publication step was deliberately skipped because it was a PR rehearsal. Future elapsed time depends on native validation readiness, GitHub queues and runner performance; the 15-minute measurement covers the package test stage only. No gameplay test or completion/error check was removed.
+
+Evidence: [benchmark.json](testing/release136/benchmark.json), [parallel trial](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41769966860), [native gate](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41769967228). [PR #119](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/119) merged as `a398cb54ea0d5a1fa8ca9a638666f3bf102c0051`; its tree matches the tested PR merge. The game version remains 0.97.2.
 
 ## Workflow
 
@@ -11,6 +13,10 @@ The previous run's measured timings project roughly 15–18 minutes per group, p
 3. Four test runners download the identical candidate, verify ZIP and member hashes, extract its PCK, and run their assigned cases. They check out only tools/tests, without importing the game's historical art.
 4. A read-only aggregation job requires all four jobs plus the native gate to succeed. It rejects missing/extra shards, focused runs, incomplete results, wrong source/package hashes, failures, missing cases and duplicates. Every current exported case must appear exactly once.
 5. Only an explicit `release/<version>` branch can publish. The publishing job rechecks the candidate against the aggregate proof and retains the existing release instead of replacing it. PR runs exercise the full pipeline but never publish.
+
+## Starting a requested release
+
+After local checks and review, open the source PR first. If the owner requested a release, create `release/<version>` from that exact reviewed source (or a documentation-only descendant) once its native validation run exists. Let package checks and native validation overlap; do not wait for the native PR run to finish before starting the release build. Merge the source once its required gates pass. Publication remains blocked until both complete gates succeed. Do not create a release branch when the owner requested source changes only.
 
 ## Evidence and retries
 
