@@ -1,6 +1,7 @@
 # 0.97.2 delivery
 
-- Finish hosted source validation, merge PR #117 and verify the authorized Windows 0.97.2 release.
+- Completed: all five hosted source jobs passed; PR #117 merged with an identical tested tree.
+- Pending: verify the already-running Windows 0.97.2 release.
 - Final local native/exact-pack checks passed; see testing/polish135/acceptance.json.
 - Next: owner opening playtest; preserve the Thaneship stopping point.
 
