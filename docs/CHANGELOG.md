@@ -1,6 +1,6 @@
-# 0.100.0 — The North Crossing (locally verified, delivery pending)
+# 0.100.0 — The North Crossing (merged source)
 
-Staged bridge restoration with saved structural deliveries and three specialist work orders, a permanent northern river route, and a short Ivar/Skarrin dedication. Fresh fortunes complete the witnessed project before ancestral authentication. Existing archive progress and closed trial scores remain intact. Player production cannot be counted twice across work orders and earlier trade seals. Seven affected source cases pass 999 assertions; two exact-export cases pass 151. The owner authorized push and merge after hosted checks; delivery is underway.
+Staged bridge restoration with saved structural deliveries and three specialist work orders, a permanent northern river route, and a short Ivar/Skarrin dedication. Fresh fortunes complete the witnessed project before ancestral authentication. Existing archive progress and closed trial scores remain intact. Player production cannot be counted twice across work orders and earlier trade seals. PR #125 merged after all five hosted source jobs and 64 exported cases (13,917 assertions) passed. Windows 0.97.2 remains published.
 
 # 0.99.0 — Hands of the hold (source)
 
