@@ -72,6 +72,9 @@ static func summary(g):
  g.label(g.panel_body,"CAMPAIGN · "+title(s),18)
  if eligible(s):g.label(g.panel_body,"Ivar’s rescue lead is available." if int(HoldAncestralClaim.data(s).stage)==0 else "Your accepted story continues. Earlier milestones remain recorded.",15)
  else:g.label(g.panel_body,"Foundations · %d / 7 · No deadline. Recognition follows deeds, not a target score." % progress(s),15)
+ if int(HoldAncestralClaim.data(s).stage)>=3:
+  g.label(g.panel_body,HoldRestoration139.goal(s),15)
+  g.small_button(g.panel_body,"The North Crossing · stages and work orders",func():g.open_panel("restoration139"))
  g.small_button(g.panel_body,"View campaign milestones & Winter Stores",func():g.open_panel("campaign138"))
 static func panel(g):
  var s=g.state

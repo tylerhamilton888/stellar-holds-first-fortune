@@ -1,0 +1,188 @@
+{
+  "source_version": "0.100.0",
+  "runtime_commit": "1d66f76d6527a5db1faa59d79d102c9a0db8cabe",
+  "branch": "campaign/restoration139",
+  "native_cases": [
+    {
+      "test": "campaign138",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 59,
+      "seconds": 57.52
+    },
+    {
+      "test": "ledger137",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 53.78
+    },
+    {
+      "test": "work132",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 146,
+      "seconds": 64.53
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 231,
+      "seconds": 61.46
+    },
+    {
+      "test": "mountain104",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 44,
+      "seconds": 52.99
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 383,
+      "seconds": 96.46
+    },
+    {
+      "test": "restoration139",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 107,
+      "seconds": 54.47
+    }
+  ],
+  "native_assertions": 999,
+  "exported_report": {
+    "schema": 1,
+    "source_sha": "1d66f76d6527a5db1faa59d79d102c9a0db8cabe",
+    "pack_sha256": "83810870d6e5a7e521be3152b53cde2803ddb88b014ff4ff8c83891f1b8b537e",
+    "shard_index": 0,
+    "shard_count": 1,
+    "focused": true,
+    "expected_cases": [
+      "ambient",
+      "restoration139",
+      "campaign138",
+      "ledger137",
+      "polish135",
+      "troll133",
+      "work132",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "assigned_cases": [
+      "restoration139",
+      "mountain104"
+    ],
+    "results": [
+      {
+        "test": "restoration139",
+        "passed": true,
+        "checks": 107,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 55.48
+      },
+      {
+        "test": "mountain104",
+        "passed": true,
+        "checks": 44,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 54.51
+      }
+    ],
+    "complete": true
+  },
+  "exported_assertions": 151,
+  "pck_entries_verified": 3901,
+  "pipeline_unit_tests": 13,
+  "visual_review": [
+    "project stages and scroll layout",
+    "specialist ingredient rows",
+    "continuous crossing and original south bridge",
+    "Ivar/Skarrin native scene and exported scene"
+  ],
+  "captures": {
+    "02b-specialist-orders.png": "ac92bdcca69a9f0459e2ed8a4e7fdb5f4d5af7b8c94acfc04e5432f99a98df3a",
+    "01-ruins-panel.png": "67c43ad04b40aaa3d7755c1cab6802ee4f5407222b1ab80a279a9a50251bd5f0",
+    "05-skarrin-credit.png": "89f1b1c539a6380a9e935cd11d6162e72085e678ce75961a2f47076cb09f0a72",
+    "03-restored-crossing.png": "3572c28fe99fc0fede3add92e2c932a5698c83fdfbe216027eb8d1ce403b6446"
+  },
+  "delivery": {
+    "pushed": false,
+    "pr": null,
+    "merged": false,
+    "published_windows": "0.97.2",
+    "blocker": null,
+    "authorization": "Owner explicitly approved pushing, hosted checks and merging on 2026-11-04."
+  },
+  "limits": [
+    "Focused source and package checks do not replace the hosted full native and 64-case export gates.",
+    "Normal-speed pacing, specialty cost fairness, audio and Windows-device performance require human playtesting."
+  ]
+}

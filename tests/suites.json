@@ -28,7 +28,8 @@
       "troll133",
       "polish135",
       "ledger137",
-      "campaign138"
+      "campaign138",
+      "restoration139"
     ],
     "gameplay": [
       "loading",
@@ -102,7 +103,8 @@
       "troll133",
       "polish135",
       "ledger137",
-      "campaign138"
+      "campaign138",
+      "restoration139"
     ],
     "modular": [
       "modular",
@@ -385,7 +387,8 @@
       "work132",
       "polish135",
       "ledger137",
-      "campaign138"
+      "campaign138",
+      "restoration139"
     ],
     "gameplay-3": [
       "orientation",
@@ -948,6 +951,18 @@
       "story_world119",
       "story_world120",
       "story_batch121"
+    ],
+    "restoration139-focus": [
+      "restoration139"
+    ],
+    "restoration139": [
+      "restoration139",
+      "campaign138",
+      "ledger137",
+      "work132",
+      "frontier103",
+      "mountain104",
+      "claim127"
     ]
   },
   "cases": {
@@ -1242,6 +1257,10 @@
     "campaign138": {
       "script": "tests/campaign138.gd",
       "marker": "CAMPAIGN138"
+    },
+    "restoration139": {
+      "script": "tests/restoration139.gd",
+      "marker": "RESTORATION139"
     }
   }
 }

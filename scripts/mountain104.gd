@@ -67,7 +67,7 @@ static func act(g,action:String)->bool:
   "archive":
    if q.stage==4 and not q.archive and g.zone!="mine" and g.surface.area==HoldFrontier103.room(s,"survey",1) and g.player.distance_to(Vector2(690,575))<90:q.archive=true;done=true
   "translate":
-   if q.stage==4 and q.family and q.archive and not d.authenticated and HoldFrontier103.near(g,"survey"):
+   if q.stage==4 and q.family and q.archive and not d.authenticated and HoldFrontier103.near(g,"survey") and HoldRestoration139.witnessed(s):
     var ledger=HoldGreatClaim102.data(s);var rival=int(HoldGreatClaim102.standings(s)[0][1]);var score=int(ledger.points)
     d.allowance=maxi(0,rival-score);d.work_at_award=score;d.rival_at_award=rival;ledger.points=score+int(d.allowance)
     d.authenticated=true;q.stage=5;q.title="Authenticated claimant";done=true
@@ -83,19 +83,20 @@ static func description(s)->String:
   1:return "A fall has sealed a survey refuge in Old Workings, depth 1. Sten and his companions are trapped. Excavate a bypass, light and brace their refuge, then press E beside them. There is no countdown. V: lamps; O: rooms and masonry pillars."+(" Survey location: column %d, row %d." % [q.site[0],q.site[1]] if not q.site.is_empty() else " Enter Old Workings to locate the refuge.")
   2:return "Stay on depth 1 while the crew walks out. Blocked routes halt evacuation; clear the obstruction. Their ancient fragment can wait until everyone is safe."
   3:return "The crew is safe. Gather at Ivar's shift book for the communal celebration, then bring the recovered fragment to Edda's survey desk." if not d.celebrated else "Around the shared hearth, Sten raises his mug: 'To the hands that came back for us.' Torvik can scarcely finish his tune. Ivar names every worker. The fragment belongs at Edda's survey desk; your home and belongings await you."
-  4:return "Edda recognizes the mountain's founding seal, but requires independent evidence. Compare the upstairs archive and Ivar's family register, in either order, then return to the survey desk. Archive: %s · Family: %s." % ["verified" if q.archive else "needed","verified" if q.family else "needed"]
+  4:return ("Before the final recognition, finish and witness the North Crossing. "+HoldRestoration139.goal(s)+" " if not HoldRestoration139.witnessed(s) else "")+"Edda recognizes the mountain's founding seal, but requires independent evidence. Compare the upstairs archive and Ivar's family register, in either order, then return to the survey desk. Archive: %s · Family: %s." % ["verified" if q.archive else "needed","verified" if q.family else "needed"]
  return "Authenticated: you descend from the founding house of this mountain. Recorded work: %d; hereditary allowance: %d; award total: %d. Skarrin demands a public test: 'My walls hold this place up. Your dead ancestors laid none of them.' No title or new land is granted yet. Your household remains yours." % [int(d.get("work_at_award",0)),int(d.allowance),int(d.get("work_at_award",0))+int(d.allowance)]
 static func panel(g):
  if not active(g.state):return
  g.label(g.panel_body,"THE MOUNTAIN REMEMBERS",20,Color("edc98a"));g.label(g.panel_body,description(g.state),16)
  var q=HoldAncestralClaim.data(g.state);var d=data(g.state);var choices=[]
+ if int(q.stage) in [3,4]:g.button(g.panel_body,"The North Crossing · community restoration",func():g.open_panel("restoration139"))
  if HoldFrontier103.near(g,"lodge"):
   if q.stage==0 and eligible(g.state):choices.append(["The missing survey crew · begin rescue","rescue"])
   if q.stage==3 and not d.celebrated:choices.append(["Gather around the hearth · celebrate the survivors","celebrate"])
   if q.stage==4 and not q.family:choices.append(["Compare my family registration","family"])
  if HoldFrontier103.near(g,"survey"):
   if q.stage==3 and d.celebrated:choices.append(["Ask Edda to examine the recovered fragment","examine"])
-  if q.stage==4 and q.archive and q.family:choices.append(["Authenticate the ancestral right and record its allowance","translate"])
+  if q.stage==4 and q.archive and q.family and HoldRestoration139.witnessed(g.state):choices.append(["Authenticate the ancestral right and record its allowance","translate"])
  if q.stage==4 and not q.archive and g.surface.area==HoldFrontier103.room(g.state,"survey",1):choices.append(["Compare the founding charter in the archive","archive"])
  for choice in choices:
   var action=str(choice[1]);g.button(g.panel_body,choice[0],func():act(g,action))

@@ -147,6 +147,7 @@ func cooking_panel():
 func fishing_spot()->Dictionary:
  var area=g.surface.area
  if area not in SPOTS or g.surface.house.level()>0:return {}
+ if area=="trail" and HoldRestoration139.complete(g.state) and g.player.y>=445 and g.player.y<=555:return {}
  var result=SPOTS[area].duplicate();var p:Vector2=g.player
  if area=="claim":
   var x=clampf(p.x,300,1700);result.bank=Vector2(x,940);result.float=Vector2(x,1000)

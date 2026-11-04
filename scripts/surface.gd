@@ -216,6 +216,7 @@ func points()->Array:
   if area=="claim":result=result.filter(func(p):return p.action in ["trail","mine"] or str(p.action).begins_with("house:"))
  result.append_array(HoldFrontier103.points(g))
  result.append_array(HoldCampaign138.points(g))
+ result.append_array(HoldRestoration139.points(g))
  result.append_array(HoldFriendship130.points(g))
  result.append_array(HoldInvasion131.points(g))
  result.append_array(HoldClaim127.points(g))
@@ -327,6 +328,7 @@ func action(id:String):
   if HoldTraditions126.home_shrine(g):g.open_panel(id)
   return
  if id=="frontier_archive103":g.open_panel(id);return
+ if id=="restoration139":g.open_panel(id);return
  if id=="campaign138":g.open_panel(id);return
  if id=="frontier103":g.open_panel(id);return
  if id=="great_claim102":g.open_panel(id);return
@@ -375,6 +377,7 @@ func base_obstacles()->Array:
    for side in [-1,1]:list.append(Rect2(pair[0]+Vector2(side*pair[1]*.32-pair[1]*.14,-pair[1]*.34),Vector2(pair[1]*.28,pair[1]*.42)))
   list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
   list.append_array([Rect2(1134,643,202,12),Rect2(1134,745,202,12)])
+  list.append_array(HoldRestoration139.rails(g.state))
  elif area=="claim":
   for b in world.exterior_objects():
    if b.kind=="building":list.append(HoldBuildingArt.footprint(b))
@@ -410,7 +413,7 @@ func walkable(p:Vector2,ignore:Dictionary={})->bool:
  elif area=="claim":
   if not claim_ground(p):return false
  elif not Rect2(90,210,1700,750).has_point(p):return false
- if area=="trail" and p.x>1170 and p.x<1300 and (p.y<665 or p.y>735):return false
+ if area=="trail" and p.x>1170 and p.x<1300 and (p.y<665 or p.y>735) and not HoldRestoration139.crossing(g.state,p):return false
  for r in obstacles(ignore):
   if r.grow(FOOT_RADIUS).has_point(p):return false
  return true
@@ -914,6 +917,7 @@ func draw_outdoors():
  if area=="trail":world.draw_river()
  g.draw_texture_rect(ground_cache[area],Rect2(Vector2.ZERO,SIZE),false)
  if area=="trail":world.draw_bridge()
+ HoldRestoration139.draw(g)
  HoldFrontier103.draw_ground(g)
  if area=="claim":
   world.tile(0,Rect2(1780,560,800,80),100,Color("b8b29a"))

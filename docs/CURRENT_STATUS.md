@@ -1,3 +1,13 @@
+# Source 0.100.0 — The North Crossing
+
+The next authored Act IV milestone restores a northern river crossing between Old Workings and the survey hall. Inspect the west abutment after the rescue and Winter Stores, deliver 12 dressed stone / 24 timber / 4 iron through the Ledger, and supply three crew shifts. Smiths supply forged parts, builders processed timber or stone, and provisioners cooked bread, hotpot or chowder. Repeat one route or mix them. Research and unspent production evidence are checked on every deposit; partial deliveries persist.
+
+Return to fit the span, then gather Ivar and Skarrin for a short saved scene. The crossing changes real collision and uses the existing bridge art. Fresh fortunes need the witnessed restoration before final ancestral authentication; saves already at archive research or beyond retain eligibility. Closed contest scores, homes, courtships and the existing trial/Thane sequence remain authoritative. No deadlines or simulated rival economy.
+
+Local verification passed: seven affected source cases / 999 assertions, two exact-export cases / 151 assertions, all 3,901 PCK entries, and 13 release-pipeline unit tests. Native and exported visuals were reviewed. [Acceptance receipt](testing/restoration139/acceptance.json). These focused checks do not replace the full hosted source and 64-case exported gates.
+
+Local branch `campaign/restoration139` is implemented and committed. The owner explicitly authorized push, hosted checks and merge on 2026-11-04. Delivery is underway; no hosted pass or merge is claimed yet. Windows 0.97.2 remains published. See [design and acceptance scope](great-claim/RESTORATION139.md).
+
 # Source 0.99.0 — Hands of the hold
 
 The next campaign batch replaces the 180-mark rescue gate with seven practical milestones: a registered home; ore/smelting/steel; timber and loaded hauling; field tools, fishing OR farming and cooking; a survey, descent/return and Stoneworking; the Winter Stores; and three civic projects or trade seals. Marks remain narrative recognition. Existing earned invitations and accepted story stages are preserved.
