@@ -16,14 +16,17 @@ static func entrance(w)->Vector2i:
  var q=data(w)
  if q.has("entrance"):return Vector2i(q.entrance[0],q.entrance[1])
  # Find vacant, reachable floor; never clear or move an old save's property.
- var candidates=[Vector2i(10,10),Vector2i(6,10),Vector2i(10,6),Vector2i(6,6),Vector2i(8,9)]
+ var candidates=[Vector2i(3,3),Vector2i(11,3),Vector2i(10,10),Vector2i(6,10),Vector2i(10,6),Vector2i(6,6),Vector2i(8,9)]
  for y in range(4,16):
   for x in range(4,16):
    if Vector2i(x,y).distance_to(Deepworks.ENTRY)>=3:candidates.append(Vector2i(x,y))
  for c in candidates:
   if not w.walkable(c,0) or w.layer(0).fixtures.has(Deepworks.key(c)):continue
   if w.data.links.has(w.link_key(c,0)) or w.data.get("living",{}).get("furniture",{}).has(w.link_key(c,0)):continue
-  if w.route(Deepworks.ENTRY,0,"",c).is_empty():continue
+  var near_equipment=false
+  for f in w.state.hauling.get("hands",{}).get("facilities",[]):
+   if f.area=="mine:"+w.state.active_site+":0" and Deepworks.center(c).distance_to(Vector2(f.x,f.y))<115:near_equipment=true;break
+  if near_equipment or w.route(Deepworks.ENTRY,0,"",c).is_empty():continue
   q.entrance=[c.x,c.y];return c
  return Vector2i(-1,-1)
 static func prepare(w):
@@ -91,12 +94,19 @@ static func nearby(g)->Dictionary:
  for p in portals(w,w.depth()):
   if g.player.distance_to(Deepworks.center(p.c))<48 and w.visible(g.player,Deepworks.center(p.c)):return p
  return {}
+static func work_priority(g,at:Vector2)->bool:
+ # The closest target owns E; standing on a marked adit takes travel priority.
+ var f=g.handworks.facility()
+ if not f.is_empty() and not (g.handworks.vehicle(f) and f.hitched) and g.player.distance_to(g.handworks.pos(f))<g.player.distance_to(at):return true
+ var raw=g.handworks.closest(g.handworks.data().loose,65)
+ return not raw.is_empty() and g.player.distance_to(g.handworks.pos(raw))<g.player.distance_to(at)
 static func prompt(g)->String:
- if near_bridge(g) and not data(g.deep.world).bridge:return "E · Inspect broken bridge"
+ if near_bridge(g) and not data(g.deep.world).bridge:return "" if work_priority(g,Deepworks.center(Vector2i(23,12))) else "E · Inspect broken bridge"
  var p=nearby(g)
- if p.is_empty():return ""
+ if p.is_empty() or work_priority(g,Deepworks.center(p.c)):return ""
  return "E · Enter "+p.name if p.open else "Basalt seal · Mine with a tempered pick · V details"
 static func interact(g)->bool:
+ if prompt(g)=="":return false
  if near_bridge(g) and not data(g.deep.world).bridge:
   g.deep.works.page="Districts";g.open_panel("living");return true
  var p=nearby(g)

@@ -1,10 +1,10 @@
 {
   "version": "0.102.0",
-  "source_sha": "9b86257da64aced45f9808d1595e41f7ef59c3c2",
-  "tree_sha": "261a895c5547dec9fd4e0706907d2d9e5a34b66f",
+  "source_sha": "77547ef4c0775cb6ae514ef22cffa6b127de9fb9",
+  "tree_sha": "a7c737fde385f78feba0f1d14fe234bfc812696a",
   "status": "validation in progress",
   "pull_request": 132,
-  "source_run_id": 42055757171,
+  "source_run_id": 42060576334,
   "tooling_tests": 24,
   "affected_native_cases": [
     {
@@ -180,7 +180,11 @@
       }
     ]
   },
-  "final_native_cases": [
+  "pck_integrity_entries": 3905,
+  "previous_validation_source_sha": "9b86257da64aced45f9808d1595e41f7ef59c3c2",
+  "previous_validation_tree_sha": "261a895c5547dec9fd4e0706907d2d9e5a34b66f",
+  "previous_source_run_id": 42055757171,
+  "hud_revision_final_native_cases": [
     {
       "test": "mineworks143",
       "passed": true,
@@ -190,8 +194,7 @@
       "seconds": 114.28
     }
   ],
-  "pck_integrity_entries": 3905,
-  "final_exported_checks": {
+  "hud_revision_final_exported_checks": {
     "schema": 1,
     "source_sha": "9b86257da64aced45f9808d1595e41f7ef59c3c2",
     "pack_sha256": "469269255d15ccc7355f8390896ec631ae8be7abb8ff2fd521aa8cf9f26816b4",
@@ -280,5 +283,20 @@
       }
     ],
     "complete": true
+  },
+  "interaction_correction": "Entrances avoid equipment; E resolves the closest work target or adit, with travel winning on the marked landing.",
+  "corrected_firstshift": {
+    "test": "firstshift",
+    "passed": true,
+    "exit_code": 0,
+    "errors": [],
+    "checks": 29,
+    "seconds": 97.88
+  },
+  "intermediate_native_abort": {
+    "case": "mineworks143",
+    "exit_code": -9,
+    "errors": [],
+    "context": "Concurrent export; repeating sequentially after moving temporary PCKs off tmpfs."
   }
 }

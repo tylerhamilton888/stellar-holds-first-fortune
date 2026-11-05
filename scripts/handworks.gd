@@ -476,10 +476,10 @@ func overlay():
   g.draw_rect(Rect2(18,82,width,27),Color(.03,.08,.10,.9));HoldArt.text(g,Vector2(28,101),text,13,Color("ead6a4"))
 
 func prompt()->String:
- var mineworks_hint=HoldMineworks143.prompt(g)
- if mineworks_hint!="":return mineworks_hint
  var workplace_hint=HoldWorkplace98.prompt(g)
  if workplace_hint!="":return workplace_hint
+ var mineworks_hint=HoldMineworks143.prompt(g)
+ if mineworks_hint!="":return mineworks_hint
  var f=facility();var raw=closest(data().loose,65);var text=""
  if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · output to pack" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
