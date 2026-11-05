@@ -2,7 +2,9 @@
 
 Three dedicated lateral mineworks now extend each original mine: Stonewright Delve, Blackvein Reach and Farbank Works. Players reserve named districts, excavate/furnish them, mine a tempered-steel seal and rebuild a real fault bridge. Carts and hired workers follow open connections. Original five-depth excavations and property are preserved. [Design and ownership](MINEWORKS143.md).
 
-The focused route, construction and save checks pass locally; affected regressions and full hosted validation are in progress. Native visuals are being reviewed. Do not describe this as published: Windows 0.101.1 remains the public build. Complete acceptance before merging; no release was requested in this work item.
+[PR #132](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/132) preserves final source `9b86257da64aced45f9808d1595e41f7ef59c3c2`, tree `261a895c5547dec9fd4e0706907d2d9e5a34b66f`. Four affected native cases passed 137 assertions. The final HUD correction passed 43 mineworks assertions in source and the exported pack; the earlier pack also passed navigation. All 3,905 package entries and 24 tooling tests passed. Native/exported visuals, including long district names, were reviewed. [Acceptance checkpoint](testing/mineworks143/acceptance.json).
+
+[Full source validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42055757171) is running against the final head. The earlier run was superseded by the HUD correction. Complete this gate before merging; do not restart the passing local checks after recovery. Windows 0.101.1 remains published; no new release was requested. Follow the new source-only route at the top of [the playtest guide](PLAYTEST_GUIDE.md) after a later build.
 
 # 0.101.1 — New Game / Load Game · published
 

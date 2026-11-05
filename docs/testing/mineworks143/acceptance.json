@@ -1,0 +1,284 @@
+{
+  "version": "0.102.0",
+  "source_sha": "9b86257da64aced45f9808d1595e41f7ef59c3c2",
+  "tree_sha": "261a895c5547dec9fd4e0706907d2d9e5a34b66f",
+  "status": "validation in progress",
+  "pull_request": 132,
+  "source_run_id": 42055757171,
+  "tooling_tests": 24,
+  "affected_native_cases": [
+    {
+      "test": "mineworks143",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 43,
+      "seconds": 91.0
+    },
+    {
+      "test": "mining",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 38,
+      "seconds": 139.09
+    },
+    {
+      "test": "navigation94",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 31,
+      "seconds": 103.97
+    },
+    {
+      "test": "workplace98",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 25,
+      "seconds": 70.29
+    }
+  ],
+  "affected_native_assertions": 137,
+  "previous_tree_pack_checks": {
+    "schema": 1,
+    "source_sha": "d6c95acd7a1b8bc87a9aae69abdcdc1ec63331e5",
+    "pack_sha256": "bb508afb92cb25f096a333fd36887c01c8f44de0ea00d9fcc7ee4282840f5ffd",
+    "shard_index": 0,
+    "shard_count": 1,
+    "focused": true,
+    "expected_cases": [
+      "ambient",
+      "mineworks143",
+      "collections141",
+      "restoration139",
+      "campaign138",
+      "ledger137",
+      "polish135",
+      "troll133",
+      "work132",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "assigned_cases": [
+      "mineworks143",
+      "navigation94"
+    ],
+    "results": [
+      {
+        "test": "mineworks143",
+        "passed": true,
+        "checks": 43,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 84.67
+      },
+      {
+        "test": "navigation94",
+        "passed": true,
+        "checks": 31,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 113.61
+      }
+    ],
+    "complete": true
+  },
+  "previous_tree": "7de3c20ded34d56a4a1969b79679851a73f03970",
+  "final_change": "Elide district HUD names to 218 pixels; add a wide-name visual capture. No simulation change.",
+  "public_windows_version": "0.101.1",
+  "publication_requested": false,
+  "visual_review": {
+    "reviewed": [
+      "native broken/restored bridge",
+      "native district board and workshop",
+      "native perspective adit",
+      "exported restored bridge and workshop",
+      "final wide-name HUD capture: elides inside the left quick-bar margin"
+    ],
+    "pending": [],
+    "captures": [
+      {
+        "name": "03-broken-bridge.png",
+        "sha256": "d63aa177f0ba28513533d929cd136c9bdb2edb01e746dab26ce22367cd216e59"
+      },
+      {
+        "name": "04-restored-bridge.png",
+        "sha256": "cab079fcb13ecc480bba39489fa4a425908a43234476ba54209490426ab17c6f"
+      },
+      {
+        "name": "05-district-board.png",
+        "sha256": "4ce901f4ac2913a3f72d95e9abcbbc3bd2137085aaf2011f49e75ab1806b6183"
+      },
+      {
+        "name": "06-workshop-district.png",
+        "sha256": "9696691f60971ad637618e73c13937114045122e433e3ddeaf7a1ce5032c0cbf"
+      },
+      {
+        "name": "07-adit-perspective.png",
+        "sha256": "454912942a8a3b98d90fa041f11524a67b8c07e543a6bb9c87c2fa1efe69f39a"
+      },
+      {
+        "name": "08-long-district-name.png",
+        "sha256": "ab1ab326488dff778b072ad1ce6f434e2f975cd7fa5b874c71def8896dedef12"
+      }
+    ]
+  },
+  "final_native_cases": [
+    {
+      "test": "mineworks143",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 43,
+      "seconds": 114.28
+    }
+  ],
+  "pck_integrity_entries": 3905,
+  "final_exported_checks": {
+    "schema": 1,
+    "source_sha": "9b86257da64aced45f9808d1595e41f7ef59c3c2",
+    "pack_sha256": "469269255d15ccc7355f8390896ec631ae8be7abb8ff2fd521aa8cf9f26816b4",
+    "shard_index": 0,
+    "shard_count": 1,
+    "focused": true,
+    "expected_cases": [
+      "ambient",
+      "mineworks143",
+      "collections141",
+      "restoration139",
+      "campaign138",
+      "ledger137",
+      "polish135",
+      "troll133",
+      "work132",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "assigned_cases": [
+      "mineworks143"
+    ],
+    "results": [
+      {
+        "test": "mineworks143",
+        "passed": true,
+        "checks": 43,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 80.07
+      }
+    ],
+    "complete": true
+  }
+}

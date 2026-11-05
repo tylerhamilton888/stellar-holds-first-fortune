@@ -1,3 +1,15 @@
+# Source 0.102.0 — Mineworks districts
+
+This source feature is not in the published Windows 0.101.1 download yet. When testing 0.102.0, enter the marked adit near the original mine landing with **E**. Stonewright Delve, Blackvein Reach and Farbank Works are separate persistent zones; the original five depths remain available.
+
+In Stonewright, open **O → Districts**, name a Craft, Store or Hearth district and mark two corners. Plans can cover unexcavated rock. Carve the passages and rooms you want, then furnish or equip them through the existing construction controls. Check whether the map gives you enough room for distinct neighborhoods without making excavation feel tedious.
+
+Research **Tempered steel**, then mine the basalt face at Stonewright's eastern heading to reach Blackvein. Research **Stoneworking** and bring **12 timber, 4 iron and 8 stone** to its broken bridge. Rebuild it, walk across and enter Farbank. Try a loaded cart, return through the same links, then save and reload. Districts, furnishings, excavations, gate repairs and cargo should remain where you left them.
+
+Report unclear entrances, awkward district placement, excessive digging or gates that feel too cheap or expensive. District purposes organize plans; functional rooms, equipment and workers provide the benefits. These optional mineworks do not add a requirement to the Thane campaign.
+
+---
+
 # 0.101.1 — A place in the hold
 
 Choose **New Game**, then an empty fortune slot, for a fresh pacing test. Existing frontier fortunes keep their progress, while older non-frontier fortunes retain their earlier route. Extract the complete Windows ZIP into a new folder and keep the previous build and saves.
