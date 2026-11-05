@@ -1,3 +1,7 @@
+# Source 0.102.0 — Mineworks districts
+
+Three persistent lateral worksites; player-named district plans with live excavation/room/equipment summaries; physical tempered-steel seal and Stoneworking bridge gate; connected cart/crew travel; preserved original mines and saved property. Current Windows download remains 0.101.1. See [scope](MINEWORKS143.md).
+
 # 0.101.1 — New Game and Load Game
 
 Published the standard title-menu labels and matching new-game slot banner. Existing saves, opening flow and gameplay are unchanged. All 74 source and 65 package scenarios passed, with 14,000 exported assertions. Published ZIP identity verified against the build report. See [acceptance](testing/title-labels142/acceptance.json).

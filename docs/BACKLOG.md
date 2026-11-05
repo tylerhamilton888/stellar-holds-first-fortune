@@ -1,3 +1,7 @@
+# Mineworks143
+
+Dedicated mineworks, player district plans and two practical access gates implemented; acceptance in progress. Next: human feedback on excavation scale, district layout and bridge/tool pacing. Further mine biomes and engineering gates are future extensions, not part of this batch.
+
 # Title labels142 — delivered in Windows 0.101.1
 
 New Game / Load Game wording is merged and published with complete release verification. Next priority remains fresh-player pacing feedback through the Thane homecoming; no additional feature work is part of this patch.

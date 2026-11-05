@@ -1,3 +1,9 @@
+# Mineworks143 — source 0.102.0 in validation
+
+Three dedicated lateral mineworks now extend each original mine: Stonewright Delve, Blackvein Reach and Farbank Works. Players reserve named districts, excavate/furnish them, mine a tempered-steel seal and rebuild a real fault bridge. Carts and hired workers follow open connections. Original five-depth excavations and property are preserved. [Design and ownership](MINEWORKS143.md).
+
+The focused route, construction and save checks pass locally; affected regressions and full hosted validation are in progress. Native visuals are being reviewed. Do not describe this as published: Windows 0.101.1 remains the public build. Complete acceptance before merging; no release was requested in this work item.
+
 # 0.101.1 — New Game / Load Game · published
 
 [Download Windows 0.101.1](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.101.1). The title menu now says **New Game** and **Load Game**, and the new-game slot banner matches. New Game starts the standard bunkhouse opening in an empty fortune slot; Load Game resumes existing progress. This patch contains only the three wording changes and version metadata; gameplay and saves are unchanged.

@@ -11,6 +11,7 @@ var pending:Dictionary={}
 var ready=false
 var selected_room=""
 var page="Rooms"
+var district_name="New district"
 var sparkle=0.0
 var masonry:HoldMasonry
 func _init(game,world:Deepworks):g=game;w=world;model=LivingWorks.new(g.state,w);masonry=HoldMasonry.new(g,w,model)
@@ -19,7 +20,7 @@ func cancel():
  mode="";pending={};corner=Vector2i(-1,-1);ready=false
 func choose(action:String,id:String):
  cancel();mode=action;selected=id;g.close_panel();g.tool=3;g.mining_gun.selected=false
- g.notify("Click two corners of clear floor." if action=="room" else "Aim nearby and hold LMB to work. Right mouse cancels. O reopens the works board.")
+ g.notify("Click two corners of clear floor." if action in ["room","district"] else "Aim nearby and hold LMB to work. Right mouse cancels. O reopens the works board.")
 func input(e:InputEvent)->bool:
  if mode=="":return false
  if e is InputEventKey and e.pressed and e.keycode==KEY_ESCAPE:cancel();return true
@@ -27,18 +28,21 @@ func input(e:InputEvent)->bool:
   if e.button_index==MOUSE_BUTTON_RIGHT and e.pressed:cancel();return true
   if e.button_index==MOUSE_BUTTON_LEFT:
    if not e.pressed:ready=true;return true
-   if mode=="room" and ready:
+   if mode in ["room","district"] and ready:
     var c=Deepworks.cell(g.world_mouse())
     if Deepworks.center(c).distance_to(g.player)>280:g.notify("Move closer to the room's corners.");return true
-    if corner.x<0:corner=c;g.notify("First corner set. Click the opposite corner.")
+    if mode=="district" and w.depth()<5:g.notify("Enter the dedicated mineworks first.");return true
+    if corner.x<0:corner=c;g.notify("First corner set. Walk closer to the opposite corner and click it.")
     else:
-     var before=model.data.rooms.size();g.notify(model.designate(corner,c,selected));corner=Vector2i(-1,-1)
-     if model.data.rooms.size()>before:g.sound.effect("build");g.save_game();cancel()
+     var records=HoldMineworks143.data(w).districts if mode=="district" else model.data.rooms
+     var before=records.size()
+     g.notify(HoldMineworks143.designate(w,corner,c,district_name,selected) if mode=="district" else model.designate(corner,c,selected));corner=Vector2i(-1,-1)
+     if records.size()>before:g.sound.effect("build");g.save_game();cancel()
    return true
  return false
 func begin():
  if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):ready=true;return
- if not ready or mode=="room" or not pending.is_empty():return
+ if not ready or mode in ["room","district"] or not pending.is_empty():return
  var c=Deepworks.cell(g.world_mouse())
  var p=Deepworks.center(c)
  if mode=="quarry" and w.at(c)==0:return
@@ -101,10 +105,11 @@ func interact()->bool:
 func panel():
  model.refresh()
  var tabs=g.row(g.menu_scroll.get_parent());g.menu_scroll.get_parent().move_child(tabs,g.menu_scroll.get_index())
- for name in ["Rooms","Furnish","Finishes","Folk","Masonry"]:
+ for name in ["Rooms","Furnish","Finishes","Folk","Masonry","Districts"]:
   var tab=g.small_button(tabs,name+(" •" if name=="Folk" and model.data.opportunity=="offered" else ""),func():page=name;g.open_panel("living",false))
   tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=page==name
  match page:
+  "Districts":HoldMineworks143.panel(g)
   "Masonry":masonry.panel()
   "Rooms":rooms_panel()
   "Furnish":catalog(false)
@@ -175,7 +180,8 @@ func hud():
  if mode!="":
   g.draw_style_box(chip(),Rect2(230,392,500,37))
   var title=LivingWorks.FUNCTIONS.get(selected,{}).get("name",selected) if mode=="room" else (LivingWorks.FURNITURE if mode=="furniture" else LivingWorks.FINISHES).get(selected,{}).get("name","Dismantle")
-  if mode=="quarry":title="Chisel a sound block"
+  if mode=="district":title=district_name+" · choose two corners"
+  elif mode=="quarry":title="Chisel a sound block"
   elif mode=="dress":title="Dress at mason’s bench"
   A.text(g,Vector2(244,416),str(title)+" · LMB work · Right mouse cancel",13,Color("edc489"))
 func chip()->StyleBoxFlat:
@@ -238,24 +244,25 @@ func draw():
   else:draw_furniture(f.kind,Deepworks.center(Vector2i(f.x,f.y)))
  if mode!="":
   var c=Deepworks.cell(g.world_mouse());var p=Vector2(c)*40
-  if mode=="room" and corner.x>=0:
+  if mode in ["room","district"] and corner.x>=0:
    var left=Vector2(mini(c.x,corner.x),mini(c.y,corner.y))*40
    var size=Vector2(absi(c.x-corner.x)+1,absi(c.y-corner.y)+1)*40
    g.draw_rect(Rect2(left,size),Color(.8,.7,.4,.16));g.draw_rect(Rect2(left,size),Color("e7c583"),false,2)
   else:
    g.draw_rect(Rect2(p,Vector2(40,40)),Color(.9,.75,.4,.25));g.draw_rect(Rect2(p,Vector2(40,40)),Color("e7c583"),false,2)
 func draw_furniture(kind:String,p:Vector2):
+ # Existing painted household artwork, scaled to the one-cell mine furniture base.
+ var painted={"bench":[2,Vector2(42,35),12],"table":[2,Vector2(40,33),12],"shelf":[6,Vector2(40,35),16],"bed":[8,Vector2(29,46),19],"chair":[3,Vector2(25,35),12]}
+ if painted.has(kind):
+  var spec=painted[kind];var size:Vector2=spec[1]
+  g.draw_texture_rect_region(HoldFurnishings.ATLAS,Rect2(p+Vector2(-size.x/2,float(spec[2])-size.y),size),HoldFurnishings.CROPS[int(spec[0])]);return
+ if kind=="anvil":
+  g.draw_texture_rect_region(HoldFurnishings.ATLAS,Rect2(p-Vector2(20,33),Vector2(40,42)),HoldFurnishings.CROPS[7])
+  HoldFurnishings.draw_anvil(g,Rect2(p+Vector2(-14,-8),Vector2(28,27)),Color.WHITE);return
  var wood=Color("896440");var rim=Color("c7a16c");var iron=Color("536a70")
  g.draw_circle(p+Vector2(0,7),18,Color(0,0,0,.26))
  match kind:
   "lamp":g.deep.lamp(p);return
-  "bed":
-   g.draw_rect(Rect2(p-Vector2(14,18),Vector2(28,36)),wood)
-   g.draw_rect(Rect2(p-Vector2(11,12),Vector2(22,27)),Color("457d79"))
-   g.draw_rect(Rect2(p-Vector2(10,15),Vector2(20,9)),Color("dbcf9e"))
-   g.draw_line(p+Vector2(-11,2),p+Vector2(11,2),Color("d7bb80"),2)
-   for j in 4:g.draw_line(p+Vector2(-9+j*6,1),p+Vector2(-9+j*6,13),Color("689c91"),1)
-   for x in [-14,14]:g.draw_line(p+Vector2(x,-20),p+Vector2(x,19),rim,3)
   "mason":
    var bench_id=model.id_at(Deepworks.cell(p))
    p+=Vector2(0,25)
@@ -271,32 +278,7 @@ func draw_furniture(kind:String,p:Vector2):
    HoldMasonry.block(g,p+Vector2(0,-8),masonry.data.bench_work.get(bench_id,{}).get("hits",0)>1,.65)
    g.draw_line(p+Vector2(14,-1),p+Vector2(18,-10),Color("243b44"),4)
    g.draw_line(p+Vector2(14,-1),p+Vector2(18,-10),Color("e1ce99"),2)
-  "bench","table":
-   for x in [-13,13]:g.draw_line(p+Vector2(x,-9),p+Vector2(x,14),wood.darkened(.25),4)
-   g.draw_rect(Rect2(p-Vector2(17,13),Vector2(34,22)),wood);g.draw_rect(Rect2(p-Vector2(17,13),Vector2(34,4)),rim)
-   for y in [-5,3]:g.draw_line(p+Vector2(-15,y),p+Vector2(15,y),wood.darkened(.3),1)
-   for x in [-14,14]:
-    for y in [-10,6]:g.draw_circle(p+Vector2(x,y),1,Color("dec79a"))
-   if kind=="table":
-    g.draw_circle(p+Vector2(8,-3),4,Color("bea76f"));g.draw_circle(p+Vector2(8,-3),2,Color("3c3430"))
-   if kind=="bench":
-    g.draw_line(p+Vector2(-9,-8),p+Vector2(5,3),rim,3);g.draw_rect(Rect2(p+Vector2(1,-1),Vector2(10,4)),iron.lightened(.25))
-    g.draw_rect(Rect2(p+Vector2(8,-12),Vector2(7,9)),iron)
-  "anvil":
-   g.draw_rect(Rect2(p-Vector2(15,16),Vector2(30,29)),Color("596a6b"))
-   for j in 3:g.draw_line(p+Vector2(-15,-10+j*9),p+Vector2(15,-10+j*9),Color("34464b"),2)
-   g.draw_rect(Rect2(p-Vector2(9,11),Vector2(18,12)),Color("2c3338"))
-   for j in 5:g.draw_circle(p+Vector2(j*3-6,-4),3+sin(g.clock*4+j),Color("e49a50"))
-   g.draw_colored_polygon(PackedVector2Array([p+Vector2(-17,0),p+Vector2(16,0),p+Vector2(8,5),p+Vector2(7,11),p+Vector2(-8,11),p+Vector2(-7,5)]),iron.lightened(.25))
-   g.draw_line(p+Vector2(-16,0),p+Vector2(14,0),Color("d3d5bf"),2)
-  "shelf":
-   g.draw_rect(Rect2(p-Vector2(17,15),Vector2(34,30)),wood.darkened(.3))
-   for y in [-14,0,14]:g.draw_line(p+Vector2(-17,y),p+Vector2(17,y),rim,3)
-   for j in 6:g.draw_rect(Rect2(p+Vector2(-13+j%3*10,-12+j/3*14),Vector2(6,9)),Color("839893") if j%2 else Color("b18d57"))
   "pillar","rune":
    HoldMasonryArt.pillar(g,p+Vector2(0,16),70)
    if kind=="rune":
     g.draw_polyline(PackedVector2Array([p+Vector2(0,-34),p+Vector2(4,-26),p+Vector2(-4,-19),p+Vector2(0,-12)]),Color("bde5d6"),1.3,true)
-  "chair":
-   g.draw_rect(Rect2(p-Vector2(9,6),Vector2(18,18)),wood);g.draw_rect(Rect2(p-Vector2(11,17),Vector2(22,13)),rim)
-   g.draw_line(p+Vector2(-7,-14),p+Vector2(7,-14),Color("445e66"),2)

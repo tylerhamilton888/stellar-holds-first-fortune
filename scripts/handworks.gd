@@ -135,6 +135,7 @@ func can_place(p:Vector2)->bool:
   for offset in [Vector2.ZERO,Vector2(24,0),Vector2(-24,0),Vector2(0,20),Vector2(0,-20)]:
    if g.deep.world.solid(p+offset):return false
   var c=Deepworks.cell(p)
+  if HoldMineworks143.reserved(g.deep.world,c,g.deep.world.depth()):return false
   if g.deep.world.can_descend(c,g.deep.world.depth()) or g.deep.world.data.links.has(g.deep.world.link_key(c,g.deep.world.depth()-1)):return false
   for f in g.deep.works.model.data.furniture.values():
    if int(f.depth)==g.deep.world.depth() and Deepworks.center(Vector2i(f.x,f.y)).distance_to(p)<65:return false
@@ -475,6 +476,8 @@ func overlay():
   g.draw_rect(Rect2(18,82,width,27),Color(.03,.08,.10,.9));HoldArt.text(g,Vector2(28,101),text,13,Color("ead6a4"))
 
 func prompt()->String:
+ var mineworks_hint=HoldMineworks143.prompt(g)
+ if mineworks_hint!="":return mineworks_hint
  var workplace_hint=HoldWorkplace98.prompt(g)
  if workplace_hint!="":return workplace_hint
  var f=facility();var raw=closest(data().loose,65);var text=""

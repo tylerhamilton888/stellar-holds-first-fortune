@@ -30,7 +30,8 @@
       "ledger137",
       "campaign138",
       "restoration139",
-      "collections141"
+      "collections141",
+      "mineworks143"
     ],
     "gameplay": [
       "loading",
@@ -106,7 +107,8 @@
       "ledger137",
       "campaign138",
       "restoration139",
-      "collections141"
+      "collections141",
+      "mineworks143"
     ],
     "modular": [
       "modular",
@@ -391,7 +393,8 @@
       "ledger137",
       "campaign138",
       "restoration139",
-      "collections141"
+      "collections141",
+      "mineworks143"
     ],
     "gameplay-3": [
       "orientation",
@@ -980,6 +983,9 @@
       "restoration139",
       "equipment93",
       "menu92"
+    ],
+    "mineworks143-focus": [
+      "mineworks143"
     ]
   },
   "cases": {
@@ -1282,6 +1288,10 @@
     "collections141": {
       "script": "tests/collections141.gd",
       "marker": "COLLECTIONS141"
+    },
+    "mineworks143": {
+      "script": "tests/mineworks143.gd",
+      "marker": "MINEWORKS143"
     }
   }
 }
