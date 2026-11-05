@@ -1,6 +1,6 @@
 # Mineworks143
 
-Dedicated mineworks, player district plans and two practical access gates implemented; acceptance in progress. Next: human feedback on excavation scale, district layout and bridge/tool pacing. Further mine biomes and engineering gates are future extensions, not part of this batch.
+Dedicated mineworks, player district plans and two practical access gates implemented in PR #132. Local/package acceptance passes; merge awaits one overdue hosted validation job. Retain the three successful hosted groups and retry only the remaining job when GitHub permits it. Next: human feedback on excavation scale, district layout and bridge/tool pacing. Further mine biomes and engineering gates are future extensions, not part of this batch.
 
 # Title labels142 — delivered in Windows 0.101.1
 

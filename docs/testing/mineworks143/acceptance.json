@@ -2,7 +2,7 @@
   "version": "0.102.0",
   "source_sha": "77547ef4c0775cb6ae514ef22cffa6b127de9fb9",
   "tree_sha": "a7c737fde385f78feba0f1d14fe234bfc812696a",
-  "status": "validation in progress",
+  "status": "implemented; merge blocked by overdue hosted job",
   "pull_request": 132,
   "source_run_id": 42060576334,
   "tooling_tests": 24,
@@ -150,7 +150,9 @@
       "native district board and workshop",
       "native perspective adit",
       "exported restored bridge and workshop",
-      "final wide-name HUD capture: elides inside the left quick-bar margin"
+      "final wide-name HUD capture: elides inside the left quick-bar margin",
+      "corrected entrance clear of workstations, native perspective",
+      "corrected exported entrance perspective"
     ],
     "pending": [],
     "captures": [
@@ -177,6 +179,14 @@
       {
         "name": "08-long-district-name.png",
         "sha256": "ab1ab326488dff778b072ad1ce6f434e2f975cd7fa5b874c71def8896dedef12"
+      },
+      {
+        "name": "corrected-export/07-adit-perspective.png",
+        "sha256": "00e74ad46dac3759ef86ad08c26c5033c558dd8b9dfa7bd78e28ccbed3c34282"
+      },
+      {
+        "name": "corrected-export/08-long-district-name.png",
+        "sha256": "c7b46680652b4aa5b6554f40946c1ccc9b6854a5afe7c24a60d56220e3449728"
       }
     ]
   },
@@ -298,5 +308,233 @@
     "exit_code": -9,
     "errors": [],
     "context": "Concurrent export; repeating sequentially after moving temporary PCKs off tmpfs."
-  }
+  },
+  "corrected_native_cases": [
+    {
+      "test": "firstshift",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 97.88
+    },
+    {
+      "test": "mineworks143",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 43,
+      "seconds": 77.78
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 119.21
+    },
+    {
+      "test": "lodge100",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 47,
+      "seconds": 109.91
+    },
+    {
+      "test": "polish135",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 68,
+      "seconds": 71.17
+    }
+  ],
+  "corrected_native_assertions": 210,
+  "corrected_pck_integrity_entries": 3905,
+  "corrected_exported_checks": {
+    "schema": 1,
+    "source_sha": "77547ef4c0775cb6ae514ef22cffa6b127de9fb9",
+    "pack_sha256": "857b7502d99513e8ae877795536221efcf88877160d134eebfb2b376ec1b554e",
+    "shard_index": 0,
+    "shard_count": 1,
+    "focused": true,
+    "expected_cases": [
+      "ambient",
+      "mineworks143",
+      "collections141",
+      "restoration139",
+      "campaign138",
+      "ledger137",
+      "polish135",
+      "troll133",
+      "work132",
+      "invasion131",
+      "friendship130",
+      "story_art105",
+      "story_world105",
+      "story_world108",
+      "story_world111",
+      "story_world112",
+      "story_world113",
+      "story_world116",
+      "story_world117",
+      "story_world118",
+      "story_world119",
+      "story_world120",
+      "story_batch121",
+      "story_batch122",
+      "story_batch123",
+      "continuity",
+      "living",
+      "civic",
+      "firstshift",
+      "ancestral",
+      "disciplines",
+      "polish",
+      "firsthour",
+      "appearance",
+      "roads",
+      "work",
+      "keldrath",
+      "homestead",
+      "royal",
+      "people",
+      "combat",
+      "enemies",
+      "dev_testing",
+      "hearthknot128",
+      "architecture",
+      "architecture_style",
+      "combat_art",
+      "energy",
+      "traditions126",
+      "calendar",
+      "menu92",
+      "menu_quality100",
+      "equipment93",
+      "navigation94",
+      "mouselook95",
+      "bench96",
+      "expedition97",
+      "workplace98",
+      "firstvisit99",
+      "lodge100",
+      "mountain104",
+      "frontier103",
+      "greatclaim102",
+      "ridge124",
+      "courtship101",
+      "claim127"
+    ],
+    "assigned_cases": [
+      "mineworks143",
+      "polish135"
+    ],
+    "results": [
+      {
+        "test": "mineworks143",
+        "passed": true,
+        "checks": 43,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 82.89
+      },
+      {
+        "test": "polish135",
+        "passed": true,
+        "checks": 68,
+        "errors": [],
+        "exit_code": 0,
+        "seconds": 68.93
+      }
+    ],
+    "complete": true
+  },
+  "hosted_passed_groups": [
+    {
+      "job_id": 127360927202,
+      "passed_cases": [
+        "ancestral",
+        "bench96",
+        "claim127",
+        "continuity",
+        "enemies",
+        "expedition97",
+        "friendship130",
+        "hearthknot128",
+        "keldrath",
+        "lodge100",
+        "mineworks143",
+        "mouselook95",
+        "polish",
+        "ridge124",
+        "story_batch121",
+        "story_world111",
+        "story_world117",
+        "traditions126",
+        "workplace98"
+      ]
+    },
+    {
+      "job_id": 127360927473,
+      "passed_cases": [
+        "ambient",
+        "architecture_style",
+        "civic",
+        "combat_art",
+        "disciplines",
+        "equipment93",
+        "firstvisit99",
+        "handworks",
+        "invasion131",
+        "loading",
+        "menus",
+        "mountain104",
+        "people",
+        "restoration139",
+        "story_art105",
+        "story_world108",
+        "story_world116",
+        "story_world120",
+        "work132"
+      ]
+    },
+    {
+      "job_id": 127360927553,
+      "passed_cases": [
+        "appearance",
+        "calendar",
+        "collections141",
+        "courtship101",
+        "energy",
+        "firsthour",
+        "frontier103",
+        "hold",
+        "ledger137",
+        "menu92",
+        "mining",
+        "navigation94",
+        "polish135",
+        "roads",
+        "story_batch122",
+        "story_world112",
+        "story_world118",
+        "troll133",
+        "world"
+      ]
+    }
+  ],
+  "hosted_passed_cases": 57,
+  "hosted_remaining_cases": 18,
+  "hosted_blocker": {
+    "job_id": 127360927218,
+    "started_at": "2026-11-05T16:00:00Z",
+    "observed_still_running_after_minutes": 51,
+    "configured_timeout_minutes": 45,
+    "retry_response": "403: The workflow run containing this job is already running",
+    "cancellation": "No cancellation action in connected GitHub tools; browser is signed out."
+  },
+  "merged": false
 }

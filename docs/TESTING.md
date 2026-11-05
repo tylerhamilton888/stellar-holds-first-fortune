@@ -1,6 +1,6 @@
 # Mineworks143
 
-`mineworks143-focus` checks original-map preservation, separate-map traversal, tool/bridge prerequisites, stale construction callbacks, real movement and cargo, district planning/construction/removal, hired worker routing and JSON reload. Included in gameplay-2 and the exact-package catalogue. Review its worksite/bridge/board/room/perspective captures. Affected existing cases: mining, navigation94 and workplace98.
+`mineworks143-focus` checks original-map preservation, separate-map traversal, tool/bridge prerequisites, stale construction callbacks, real movement and cargo, district planning/construction/removal, hired worker routing and JSON reload. Included in gameplay-2 and the exact-package catalogue. Review its worksite/bridge/board/room/perspective captures. Affected existing cases: mining, navigation94, workplace98, firstshift, firstvisit99, lodge100 and polish135. The opening-flow cases protect the loan rack, bench work, first wage and room handoff from adit interaction conflicts.
 
 # Collections141
 
