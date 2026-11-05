@@ -576,7 +576,12 @@ func draw():
  g.draw_rect(Rect2(0,0,960,74),Color("0e202c"));g.draw_line(Vector2(24,73),Vector2(936,73),Color("63756c"))
  g.draw_rect(Rect2(0,462,960,36),Color(.04,.09,.12,.9));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"))
  var district=HoldMineworks143.district_at(world,Deepworks.cell(g.player))
- A.text(g,Vector2(24,485),(district.name+" · " if not district.is_empty() else "")+HoldMineworks143.label(z),13,Color("eac98b"))
+ var place=HoldMineworks143.label(z) if district.is_empty() else str(district.name)
+ # The quick bar starts at x=250; keep even wide custom names in this margin.
+ var short_place=place
+ while ThemeDB.fallback_font.get_string_size(short_place,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x>218:
+  place=place.left(place.length()-1);short_place=place+"…"
+ A.text(g,Vector2(24,485),short_place,13,Color("eac98b"))
  var tool_name="Slagcaster" if g.mining_gun.selected else ["Pick","Shovel","Axe","Hammer"][clampi(g.tool,0,3)]
  if aim.x>=0 and g.panel_id=="" and not g.combat.armed:
   var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=world.grade_label(aim)+" "+HoldData.TILES[k].name

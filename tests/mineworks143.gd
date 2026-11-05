@@ -92,6 +92,8 @@ func run():
  check(not g.deep.works.model.place(Vector2i(8,10),"lamp").ends_with("installed."),"Furniture cannot obstruct a portal landing")
  stand(Vector2i(17,23));g.deep.works.page="Districts";g.open_panel("living")
  await snap("05-district-board");g.close_panel();await snap("06-workshop-district")
+ var original_name=district.name;district.name="WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+ await snap("08-long-district-name");district.name=original_name
  # The district board's real button enters the existing two-corner placement mode.
  g.deep.works.page="Districts";g.open_panel("living");button("Store district")
  check(g.panel_id=="" and g.deep.works.mode=="district" and g.deep.works.selected=="stores","District button enters the player placement workflow")
