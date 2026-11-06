@@ -43,6 +43,7 @@ func enter(resume:bool=false):
  HoldFirstShift.enter(g)
  HoldAncestralClaim.enter(g)
  HoldWorkplace98.enter(g)
+ HoldMineworks143.entrance(world)
 func remember():
  ensure()
  if g.zone=="mine":world.data.position=[g.player.x,g.player.y]
@@ -56,7 +57,7 @@ func input(e:InputEvent)->bool:
    g.open_panel("deepworks");return true
   KEY_X,KEY_TAB,KEY_K:
    survey_open=not survey_open
-   if survey_open and world.depth()<world.data.layers.size()-1 and not world.data.get("survey_recorded",false):
+   if survey_open and world.depth()<Deepworks.DEPTHS-1 and not world.data.get("survey_recorded",false):
     world.data.survey_recorded=true;HoldOnboarding.fact(g.state,"sample");g.save_game()
    return true
   KEY_O:
@@ -82,6 +83,7 @@ func input(e:InputEvent)->bool:
    g.open_panel("rescue");return true
  return false
 func use_stairs(up:bool):
+ if not up and HoldMineworks143.interact(g):return
  if not up and HoldAncestralClaim.interact(g):return
  ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
  if not up and not world.can_descend(c,world.depth()) and works.interact():return
@@ -101,7 +103,8 @@ func use_stairs(up:bool):
   else:g.change_zone("claim")
  else:g.notify("Stand on stairs: E down / Shift+E up. V carves stairs beneath your feet.")
 func panel():
- ensure();g.label(g.panel_body,"THE DEEPWORKS · DEPTH %d / %s" % [world.depth()+1,Deepworks.NAMES[world.depth()]],20)
+ ensure();g.label(g.panel_body,HoldMineworks143.label(world.depth()).to_upper(),20)
+ g.button(g.panel_body,"Mineworks & districts · adits, bridge and district plans",func():works.page="Districts";g.open_panel("living"))
  g.label(g.panel_body,"Hold LMB at an exposed face: four planted pick contacts free ordinary rock. Opening a second face improves leverage. Pick [1] scores the joints; hammer [4] splits a face once it is 40% fractured. Moving cancels the stroke immediately.",16)
  g.label(g.panel_body,"Rock and minerals become substantial physical loads. E lifts; Q sets down. Hold Shift+E away from equipment to dress a small batch in the field. Shift+B crafts stockpiles, carts and stonebreakers for larger operations.",16)
  g.label(g.panel_body,"A lamp within 180 units improves clean contacts and careful recovery [Shift+LMB]. Existing masonry pillars [O] brace work within 160 units: stronger joint fractures, and a tempered pick or master Miner can split a second exposed, weakened face with the hammer. No cave-ins or upkeep chores.",15)
@@ -300,14 +303,17 @@ func agents(dt:float):
   if int(saved.assigned)!=z:
    if a.cool>0 or budget<=0:continue
    budget-=1;a.cool=.4
-   var down=int(saved.assigned)>z;var upper=z if down else z-1;var best={}
-   for link in world.data.links.values():
-    if int(link.upper)!=upper or (a.type=="bot" and link.get("kind","stair")=="ladder"):continue
-    var dest=Vector2i(link.x,link.y);var route=world.route(c,z,"",dest)
+   var best={};var distance=world.zone_distance(z,int(saved.assigned),a.type!="bot")
+   for link in world.connections(z):
+    if a.type=="bot" and link.kind=="ladder":continue
+    if world.zone_distance(int(link.to),int(saved.assigned),a.type!="bot")>=distance:continue
+    if not world.walkable(link.target,int(link.to)):continue
+    var route=world.route(c,z,"",link.c)
     if route.is_empty():continue
-    if best.is_empty() or route.path.size()<best.path.size():best=route;best.dest=dest
-   if best.is_empty():a.status="No stair route to assigned depth";continue
-   if best.path.is_empty():saved.depth=z+1 if down else z-1;a.target=Vector2i(-1,-1)
+    if best.is_empty() or route.path.size()<best.path.size():best=route;best.link=link
+   if best.is_empty():a.status="No open route to assigned worksite";continue
+   if best.path.is_empty():
+    saved.depth=int(best.link.to);var arrival=Deepworks.center(best.link.target);saved.x=arrival.x;saved.y=arrival.y;a.p=arrival;a.target=Vector2i(-1,-1)
    else:a.path=best.path
    continue
   if a.type=="worker" and works.masonry.worker(a,dt):continue
@@ -479,6 +485,8 @@ func draw():
   var p=Vector2(c)*40
   g.surface.world.detail(5,p+Vector2(20,39),40,38)
   # Passage names and keys are shown in the contextual HUD, never over actors.
+ HoldMineworks143.draw_floor(g)
+ for prop in HoldMineworks143.props(world):HoldMineworks143.draw_prop(g,prop)
  for id in l.fixtures:
   var xy=id.split(",");lamp(Deepworks.center(Vector2i(int(xy[0]),int(xy[1]))))
  if z==0:
@@ -567,14 +575,20 @@ func draw():
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
  g.draw_rect(Rect2(0,0,960,74),Color("0e202c"));g.draw_line(Vector2(24,73),Vector2(936,73),Color("63756c"))
  g.draw_rect(Rect2(0,462,960,36),Color(.04,.09,.12,.9));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"))
- A.text(g,Vector2(24,485),"Depth %d / %d" % [z+1,world.data.layers.size()],14,Color("eac98b"))
+ var district=HoldMineworks143.district_at(world,Deepworks.cell(g.player))
+ var place=HoldMineworks143.label(z) if district.is_empty() else str(district.name)
+ # The quick bar starts at x=250; keep even wide custom names in this margin.
+ var short_place=place
+ while ThemeDB.fallback_font.get_string_size(short_place,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x>218:
+  place=place.left(place.length()-1);short_place=place+"…"
+ A.text(g,Vector2(24,485),short_place,13,Color("eac98b"))
  var tool_name="Slagcaster" if g.mining_gun.selected else ["Pick","Shovel","Axe","Hammer"][clampi(g.tool,0,3)]
  if aim.x>=0 and g.panel_id=="" and not g.combat.armed:
   var k=world.at(aim);var d=float(l.damage.get(Deepworks.key(aim),0));var name=world.grade_label(aim)+" "+HoldData.TILES[k].name
   var stage="solid" if d<=0 else "scored" if d/world.resistance(k)<.4 else "split-ready" if d/world.resistance(k)<.65 else "deeply fractured"
   A.text(g,Vector2(720,480),(name.left(20)+"…" if name.length()>21 else name),11,ore_color(k))
 
- if g.panel_id=="" and g.handworks.facility().is_empty() and g.handworks.closest(g.handworks.data().loose,65).is_empty() and g.handworks.data().carry.is_empty() and g.handworks.placing=="":
+ if g.panel_id=="" and HoldMineworks143.prompt(g)=="" and g.handworks.facility().is_empty() and g.handworks.closest(g.handworks.data().loose,65).is_empty() and g.handworks.data().carry.is_empty() and g.handworks.placing=="":
   g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
   A.text(g,Vector2(30,99),"H · Cargo %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
@@ -594,7 +608,7 @@ func draw_survey(canvas:Node2D=null):
  var z=world.depth();var c=Deepworks.cell(g.player)
  canvas.draw_rect(Rect2(708,112,228,270),Color("142934"));canvas.draw_rect(Rect2(708,112,228,270),Color("a58c5e"),false,1)
  A.text(canvas,Vector2(720,135),"SURVEY · LAYER BELOW",13,Color("edcc8c"))
- if z>=world.data.layers.size()-1:A.text(canvas,Vector2(720,162),"UNSURVEYED FRONTIER",12);return
+ if z>=Deepworks.DEPTHS-1:A.text(canvas,Vector2(720,162),"FOLLOW THE MINEWORKS ADITS" if z>=5 else "UNSURVEYED FRONTIER",11);return
  for y in range(-5,6):
   for x in range(-6,7):
    var k=world.at(c+Vector2i(x,y),z+1)

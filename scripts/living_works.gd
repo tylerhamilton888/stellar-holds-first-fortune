@@ -48,7 +48,10 @@ func designate(a:Vector2i,b:Vector2i,kind:String)->String:
  if not FUNCTIONS.has(kind):return "Unknown room function."
  var pos=Vector2i(mini(a.x,b.x),mini(a.y,b.y));var size=Vector2i(absi(a.x-b.x)+1,absi(a.y-b.y)+1)
  if size.x<4 or size.y<4 or size.x>9 or size.y>9:return "Choose an excavated rectangle from 4 x 4 to 9 x 9 tiles."
- if data.rooms.size()>=16:return "This worksite already has sixteen designated rooms."
+ var local_count=0
+ for existing in data.rooms.values():
+  if int(existing.depth)==w.depth():local_count+=1
+ if local_count>=16:return "This worksite already has sixteen designated rooms."
  var r={"id":str(int(data.next_id)),"kind":kind,"depth":w.depth(),"x":pos.x,"y":pos.y,"w":size.x,"h":size.y,"name":FUNCTIONS[kind].name+" "+str(int(data.next_id)),"metrics":{}}
  for c in room_cells(r):
   if w.at(c)!=0:return "Excavate every tile inside the proposed room first."
@@ -71,6 +74,7 @@ func place(c:Vector2i,kind:String,occupied:Array=[])->String:
  if not FURNITURE.has(kind):return "Unknown furnishing."
  var def=FURNITURE[kind];var r=at(c);var key=id_at(c)
  if r.is_empty() or w.at(c)!=0:return "Place furnishings on floor inside a designated room."
+ if HoldMineworks143.reserved(w,c,w.depth()):return "Keep the mineworks adits and freight landings clear."
  if w.landmark_solid(Deepworks.center(c),-1,Vector2(20,20)):return "Keep the landmark base clear."
  if not unlocked(def):return "Research "+HoldData.RESEARCH[def.tech].name+" first."
  if data.furniture.has(key) or w.layer().fixtures.has(Deepworks.key(c)):return "There is already a furnishing or work lamp here."

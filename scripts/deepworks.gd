@@ -7,7 +7,7 @@ const TILE=40
 const DEPTHS=5
 const ENTRY=Vector2i(8,8)
 const DIRS=[Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]
-const NAMES=["Lamplight Galleries","Copperfold","The Rootless Sea","King's Forgotten Works","The Aether Heart"]
+const NAMES=["Lamplight Galleries","Copperfold","The Rootless Sea","King's Forgotten Works","The Aether Heart","Stonewright Delve","Blackvein Reach","Farbank Works"]
 var data:Dictionary
 var state
 var landmark_cache:Array=[]
@@ -240,6 +240,7 @@ func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:Stri
  if l.damage[id]<resistance(k):return {"kind":k,"broken":false}
  var count=yield_count(c,z)+(1+int(work.get("recovery",0)) if method=="careful" and k in [3,4,5,6] else 0)
  set_cell(c,0,z);l.damage.erase(id)
+ HoldMineworks143.release_seal(self,c,depth() if z<0 else z)
  # Joint stress is persistent. Only a later, exposed contact can release a section.
  for d in DIRS:
   var n=c+d;var nk=at(n,z)
@@ -274,7 +275,8 @@ func can_descend(c:Vector2i,z:int)->bool:return data.links.has(link_key(c,z))
 func carve_stairs(c:Vector2i,kind:String="stair")->String:
  var z=depth()
  if kind not in ["stair","ladder"]:return "Choose stairs or a timber ladder."
- if z>=data.layers.size()-1:return "The surveyed frontier ends here. Future delvings will extend this depth."
+ if z>=DEPTHS-1:return "The surveyed frontier ends here. Lateral mineworks connect through their marked adits."
+ if HoldMineworks143.reserved(self,c,z):return "Keep the mineworks freight landing clear."
  if not walkable(c):return "Stand on clear excavated ground."
  if at(c,z+1)==8:return "The lower landing lies beyond the surveyed boundary."
  if at(c,z+1)==0 and not walkable(c,z+1):return "A landmark or furnishing blocks the landing below. Choose clear ground."
@@ -293,7 +295,7 @@ func carve_stairs(c:Vector2i,kind:String="stair")->String:
  return ("Timber ladder fitted" if kind=="ladder" else "Stair carved")+" to "+NAMES[z+1]+". E down; Shift+E up."
 func traverse(c:Vector2i,up:bool)->bool:
  var z=depth();var upper=z-1 if up else z
- if upper<0 or upper>=data.layers.size()-1 or not can_descend(c,upper):return false
+ if upper<0 or upper>=DEPTHS-1 or not can_descend(c,upper):return false
  var link=data.links[link_key(c,upper)]
  if not walkable(c,z-1 if up else z+1):return false
  if not up:link.descended=true
@@ -320,3 +322,25 @@ func route(start:Vector2i,z:int,priority:String,destination:Vector2i=Vector2i(-1
  var path:Array=[];var c:Vector2i=chosen.stand
  while c!=start:path.push_front(center(c));c=prev[key(c)]
  chosen.path=path;return chosen
+
+# Shared physical links for crew and player map navigation.
+func connections(z:int)->Array:
+ var result=[]
+ for link in data.links.values():
+  if z not in [int(link.upper),int(link.lower)]:continue
+  var c=Vector2i(link.x,link.y)
+  result.append({"c":c,"target":c,"to":int(link.lower) if z==int(link.upper) else int(link.upper),"kind":str(link.get("kind","stair"))})
+ if data.layers.size()>HoldMineworks143.FIRST:
+  for p in HoldMineworks143.portals(self,z):
+   if p.open:result.append({"c":p.c,"target":p.target,"to":p.to,"kind":"adit"})
+ return result
+func zone_distance(start:int,finish:int,allow_ladders:bool=true)->int:
+ var queue=[start];var distance={start:0};var head=0
+ while head<queue.size():
+  var z=int(queue[head]);head+=1
+  if z==finish:return int(distance[z])
+  for link in connections(z):
+   var next=int(link.to)
+   if (not allow_ladders and link.kind=="ladder") or distance.has(next):continue
+   distance[next]=int(distance[z])+1;queue.append(next)
+ return 999

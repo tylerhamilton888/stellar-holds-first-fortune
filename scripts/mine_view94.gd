@@ -156,6 +156,12 @@ func rebuild():
  for y in range(maxi(0,c.y-extent),mini(Deepworks.H,c.y+extent+1)):
   for x in range(maxi(0,c.x-extent),mini(Deepworks.W,c.x+extent+1)):
    var tile=Vector2i(x,y);var seen=w.layer().seen.has(Deepworks.key(tile));var k=w.at(tile) if seen else 8
+   if seen and w.depth()==6 and x>=24 and x<=30:
+    if k==8:box(terrain,Vector3(x+.5,-.45,y+.5),Vector3(1,.1,1),Color("101b24"))
+    else:
+     box(terrain,Vector3(x+.5,-.035,y+.5),Vector3(1,.08,1),Color("746953"))
+     for plank in 4:box(terrain,Vector3(x+.13+plank*.25,.025,y+.5),Vector3(.23,.04,1),Color("b1a17f"))
+    continue
    # Unexplored space remains opaque; previewing cannot reveal caverns or ore.
    var height=tile_height(tile,k)
    var transform=Transform3D(Basis.from_scale(Vector3(1,height,1)),Vector3(x+.5,height*.5-.06,y+.5))
@@ -246,6 +252,8 @@ func nearby(p:Vector2)->bool:return p.distance_to(g.player)<480 and g.depth_nav.
 func rebuild_props():
  for entry in prop_pool.values():entry.used=false
  # Static original props are rendered to small transparent cards; their physical bases remain authoritative.
+ for object in HoldMineworks143.props(g.deep.world):
+  if nearby(object.p):capture(object,"mineworks143")
  for object in HoldWorkplace98.props(g):
   if nearby(object.p):capture(object,"workplace98")
  for object in g.handworks.objects():
@@ -308,6 +316,8 @@ class PropCanvas extends Node2D:
   var at=Vector2(128,220)
   if hand_painter==null:hand_painter=HoldHandworks.new(self);hand_painter.textures=game.handworks.textures
   if kind=="lamp":HoldArt.lamp(self,at-Vector2(0,25),0)
+  elif kind=="mineworks143":
+   var prop=object.duplicate();prop.p=at;HoldMineworks143.draw_prop(self,prop)
   elif kind=="workplace98":
    var prop=object.duplicate();prop.p=at;HoldWorkplace98.draw_prop(self,prop)
   elif kind=="handwork":
@@ -336,7 +346,7 @@ class ViewHUD extends Node2D:
  func _draw():
   var game=view.g;var w=game.deep.world
   draw_rect(Rect2(0,0,960,77),Color("0e202c"));draw_rect(Rect2(0,462,960,78),Color("0e202c"))
-  HoldArt.text(self,Vector2(24,483),"D%d · %s · 3D EXPLORATION" % [w.depth()+1,Deepworks.NAMES[w.depth()]],14,Color("edca8c"))
+  HoldArt.text(self,Vector2(24,483),HoldMineworks143.label(w.depth())+" · 3D",14,Color("edca8c"))
   HoldArt.text(self,Vector2(24,100),game.depth_nav.hint(),14,Color("ffe0a0"))
   HoldArt.text(self,Vector2(490,483),"Alt: cursor · Wheel: zoom · F7: camera" if view.mouse_look else "[ / ] camera · F7: controls",14,Color("b9d5d3"))
   if view.mouse_look and game.panel_id=="" and not game.deep.survey_open:

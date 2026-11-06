@@ -135,6 +135,7 @@ func can_place(p:Vector2)->bool:
   for offset in [Vector2.ZERO,Vector2(24,0),Vector2(-24,0),Vector2(0,20),Vector2(0,-20)]:
    if g.deep.world.solid(p+offset):return false
   var c=Deepworks.cell(p)
+  if HoldMineworks143.reserved(g.deep.world,c,g.deep.world.depth()):return false
   if g.deep.world.can_descend(c,g.deep.world.depth()) or g.deep.world.data.links.has(g.deep.world.link_key(c,g.deep.world.depth()-1)):return false
   for f in g.deep.works.model.data.furniture.values():
    if int(f.depth)==g.deep.world.depth() and Deepworks.center(Vector2i(f.x,f.y)).distance_to(p)<65:return false
@@ -477,6 +478,8 @@ func overlay():
 func prompt()->String:
  var workplace_hint=HoldWorkplace98.prompt(g)
  if workplace_hint!="":return workplace_hint
+ var mineworks_hint=HoldMineworks143.prompt(g)
+ if mineworks_hint!="":return mineworks_hint
  var f=facility();var raw=closest(data().loose,65);var text=""
  if not f.is_empty():text=SPECS[f.kind].name+" · %d / %d raw · %d output · %s" % [f.raw.size(),load_capacity(f),DeepHaul.amount(f.cargo),"C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · output to pack" if f.kind in ["breaker","saw"] else "E deposit · Shift+E take" ]
  if not f.is_empty() and f.kind=="store":text="Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)

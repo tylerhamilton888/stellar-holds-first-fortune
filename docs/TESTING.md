@@ -1,3 +1,7 @@
+# Mineworks143
+
+`mineworks143-focus` checks original-map preservation, separate-map traversal, tool/bridge prerequisites, stale construction callbacks, real movement and cargo, district planning/construction/removal, hired worker routing and JSON reload. Included in gameplay-2 and the exact-package catalogue. Review its worksite/bridge/board/room/perspective captures. Affected existing cases: mining, navigation94 and workplace98.
+
 # Collections141
 
 `collections141-focus` verifies saved partial deliveries, shared production credit, local/invalid input guards, once-only rewards, real recipe/tool/equipment transactions, both Hearthkeeper alternatives, table placement and meals, and optional access after authentication. `collections141` adds affected ledger/work/campaign/restoration/equipment/menu coverage. The new case is registered in gameplay-2 and the full exported catalogue (65 cases). Review the collection tabs, delivery controls, route choice, completion notes and placed table. Normal-speed pacing remains a human check.
