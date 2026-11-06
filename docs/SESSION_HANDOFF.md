@@ -1,3 +1,9 @@
+# Windows 0.102.0 — requested release in progress
+
+The owner requested the Windows build on November 6. [Verified release run 42245441301](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42245441301) is building and validating `release/0.102.0` at `f1fc5b41a60130ab90b087dccd36ad4a1c7a1f38`, tree `b5d2b8af5f695c020a39e97d7e8ce807d8565b9c`. Its only difference from merged source is the 0.102.0 release notes; gameplay and assets are unchanged.
+
+The workflow builds one immutable candidate, runs four complete native groups and four disjoint exported-package groups, verifies shared source/package/archive identity, then publishes only if all gates pass. Do not start a duplicate workflow or change the release branch while it runs. Retry only failed jobs while the candidate remains available. Windows 0.101.1 remains the public download until publication succeeds. On completion, verify the published tag and ZIP digest against build.json and release-summary.json, then finalize and merge `docs/release102-delivery`.
+
 # Mineworks143 — source 0.102.0 merged
 
 Source **0.102.0** adds three permanent 80 × 64 lateral mineworks: Stonewright Delve, Blackvein Reach and Farbank Works. Players reserve named districts and develop them with existing rooms and equipment. A physically mined tempered-steel seal and a Stoneworking bridge project gate expansion. Carts and hired workers follow open connections; original five-depth terrain and property remain intact. [Design and ownership](MINEWORKS143.md).

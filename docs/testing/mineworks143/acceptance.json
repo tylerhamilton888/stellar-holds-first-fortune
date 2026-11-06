@@ -143,7 +143,7 @@
   "previous_tree": "7de3c20ded34d56a4a1969b79679851a73f03970",
   "final_change": "Elide district HUD names to 218 pixels; add a wide-name visual capture. No simulation change.",
   "public_windows_version": "0.101.1",
-  "publication_requested": false,
+  "publication_requested": true,
   "visual_review": {
     "reviewed": [
       "native broken/restored bridge",
@@ -593,5 +593,13 @@
   "final_validation": {
     "job_id": 127979505704,
     "conclusion": "success"
+  },
+  "windows_release": {
+    "status": "in_progress",
+    "run_id": 42245441301,
+    "source_sha": "f1fc5b41a60130ab90b087dccd36ad4a1c7a1f38",
+    "tree_sha": "b5d2b8af5f695c020a39e97d7e8ce807d8565b9c",
+    "branch": "release/0.102.0",
+    "requested_date": "2026-11-06"
   }
 }
