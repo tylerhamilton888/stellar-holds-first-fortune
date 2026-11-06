@@ -1,8 +1,12 @@
-# Mineworks143 — source 0.102.0 in validation
+# Mineworks143 — source 0.102.0 merged
 
-Three dedicated lateral mineworks now extend each original mine: Stonewright Delve, Blackvein Reach and Farbank Works. Players reserve named districts, excavate/furnish them, mine a tempered-steel seal and rebuild a real fault bridge. Carts and hired workers follow open connections. Original five-depth excavations and property are preserved. [Design and ownership](MINEWORKS143.md).
+Source **0.102.0** adds three permanent 80 × 64 lateral mineworks: Stonewright Delve, Blackvein Reach and Farbank Works. Players reserve named districts and develop them with existing rooms and equipment. A physically mined tempered-steel seal and a Stoneworking bridge project gate expansion. Carts and hired workers follow open connections; original five-depth terrain and property remain intact. [Design and ownership](MINEWORKS143.md).
 
-The focused route, construction and save checks pass locally; affected regressions and full hosted validation are in progress. Native visuals are being reviewed. Do not describe this as published: Windows 0.101.1 remains the public build. Complete acceptance before merging; no release was requested in this work item.
+[PR #132](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/132) merged as `f74fbe39ce1a95e624155d371a8fce1093305341`. Its tree `a7c737fde385f78feba0f1d14fe234bfc812696a` exactly matches tested source `77547ef4c0775cb6ae514ef22cffa6b127de9fb9` and the tested PR merge. [Source validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42060576334) passed **all 75 scenarios and the final gate**. On November 6, cancelled group 3 was retried alone as job `127964865871`; all 18 cases passed, retaining the other 57. No runtime changes or full-suite restart were needed during recovery.
+
+Corrected local opening/mineworks checks passed **210 assertions**; focused exported mineworks and wage/polish checks passed **111 assertions**. All **3,905** PCK entries and all **24** tooling checks passed. Native/exported bridge, district board, workshop, long-name HUD and entrance visuals were reviewed; hosted captures were rechecked during recovery. [Acceptance receipt](testing/mineworks143/acceptance.json). Do not rerun completed acceptance after chat recovery.
+
+Windows **0.101.1 remains the published download**; no new release was requested or published. Continue from GitHub master. Next: build 0.102.0 when requested, then follow the source-version route in the [playtest guide](PLAYTEST_GUIDE.md) for excavation scale, district layout and bridge/tool pacing. Further biomes and engineering gates remain future work.
 
 # 0.101.1 — New Game / Load Game · published
 

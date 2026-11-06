@@ -1,6 +1,6 @@
-# Mineworks143
+# Mineworks143 — merged source 0.102.0
 
-Dedicated mineworks, player district plans and two practical access gates implemented; acceptance in progress. Next: human feedback on excavation scale, district layout and bridge/tool pacing. Further mine biomes and engineering gates are future extensions, not part of this batch.
+Dedicated mineworks, player district plans and both practical access gates are merged in PR #132. All 75 source scenarios, focused package checks and visual review passed. Windows remains 0.101.1. Next: a requested build and human feedback on excavation scale, district layout and bridge/tool pacing. Further mine biomes and engineering gates are future extensions.
 
 # Title labels142 — delivered in Windows 0.101.1
 
