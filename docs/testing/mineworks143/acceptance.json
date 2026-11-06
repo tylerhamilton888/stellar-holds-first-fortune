@@ -2,7 +2,7 @@
   "version": "0.102.0",
   "source_sha": "77547ef4c0775cb6ae514ef22cffa6b127de9fb9",
   "tree_sha": "a7c737fde385f78feba0f1d14fe234bfc812696a",
-  "status": "implemented; merge blocked by overdue hosted job",
+  "status": "implemented; targeted hosted retry running",
   "pull_request": 132,
   "source_run_id": 42060576334,
   "tooling_tests": 24,
@@ -13,7 +13,7 @@
       "exit_code": 0,
       "errors": [],
       "checks": 43,
-      "seconds": 91.0
+      "seconds": 91
     },
     {
       "test": "mining",
@@ -534,7 +534,19 @@
     "observed_still_running_after_minutes": 51,
     "configured_timeout_minutes": 45,
     "retry_response": "403: The workflow run containing this job is already running",
-    "cancellation": "No cancellation action in connected GitHub tools; browser is signed out."
+    "cancellation": "No cancellation action in connected GitHub tools; browser is signed out.",
+    "final_conclusion": "cancelled"
   },
-  "merged": false
+  "merged": false,
+  "hosted_retry": {
+    "date": "2026-11-06",
+    "original_job_id": 127360927218,
+    "job_id": 127964865871,
+    "retry_accepted": true,
+    "observed_status": "in_progress",
+    "observed_step": "Native affected-system and save checks",
+    "original_log_response": "404 BlobNotFound",
+    "runtime_changed": false,
+    "local_tooling_tests": 24
+  }
 }

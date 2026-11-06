@@ -1,6 +1,6 @@
 # Source 0.102.0 — Mineworks districts
 
-Three persistent lateral worksites; player-named district plans with live excavation/room/equipment summaries; physical tempered-steel seal and Stoneworking bridge gate; connected cart/crew travel; preserved original mines and saved property. Local and exported checks pass; PR #132 awaits one stalled hosted validation group before merge. Current Windows download remains 0.101.1. See [scope](MINEWORKS143.md) and [acceptance checkpoint](testing/mineworks143/acceptance.json).
+Three persistent lateral worksites; player-named district plans with live excavation/room/equipment summaries; physical tempered-steel seal and Stoneworking bridge gate; connected cart/crew travel; preserved original mines and saved property. Local and exported checks pass; PR #132 awaits the targeted retry of its cancelled hosted validation group before merge. Current Windows download remains 0.101.1. See [scope](MINEWORKS143.md) and [acceptance checkpoint](testing/mineworks143/acceptance.json).
 
 # 0.101.1 — New Game and Load Game
 
