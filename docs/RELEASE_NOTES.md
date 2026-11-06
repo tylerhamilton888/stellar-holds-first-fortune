@@ -1,3 +1,15 @@
+# 0.102.0 — Mineworks and player districts
+
+Expand beneath the hold through three permanent mineworks: **Stonewright Delve**, **Blackvein Reach**, and **Farbank Works**. Enter the marked adit near the original mine landing with **E**; the original five depths and your existing excavations remain available.
+
+Open **O → Districts** to name a Craft, Store, or Hearth district and mark its corners, including untouched rock. Carve your own passages and chambers, furnish rooms, and add worksite equipment. District summaries track actual excavation, rooms and fixtures. Removing a plan leaves your work and belongings intact.
+
+Research **Tempered steel** and mine Stonewright’s basalt seal to open Blackvein. Research **Stoneworking**, then rebuild its fault bridge with **12 timber, 4 iron and 8 stone** to reach Farbank. Loaded carts and hired workers can use the opened connections. Zones, district plans, repairs and player work persist through saves.
+
+These optional worksites add no new requirement to the Thane campaign. Existing homes, relationships, story progress and original mine property are preserved.
+
+Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. Choose **New Game** in an empty slot for a fresh opening, or **Load Game** to continue. For feedback, focus on entrance clarity, district placement, excavation time and gate costs. Windows performance, audio and normal-speed pacing need human playtesting.
+
 # 0.101.1 — New Game and Load Game
 
 The title menu now uses **New Game** and **Load Game**. Choose **New Game** and an empty fortune slot to begin the standard opening in the miners’ bunkhouse; choose **Load Game** to resume a saved fortune. The new-game slot banner uses the same wording.

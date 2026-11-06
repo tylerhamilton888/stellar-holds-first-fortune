@@ -2,7 +2,7 @@
   "version": "0.102.0",
   "source_sha": "77547ef4c0775cb6ae514ef22cffa6b127de9fb9",
   "tree_sha": "a7c737fde385f78feba0f1d14fe234bfc812696a",
-  "status": "merged source; full native validation passed; Windows remains 0.101.1",
+  "status": "published",
   "pull_request": 132,
   "source_run_id": 42060576334,
   "tooling_tests": 24,
@@ -142,8 +142,8 @@
   },
   "previous_tree": "7de3c20ded34d56a4a1969b79679851a73f03970",
   "final_change": "Elide district HUD names to 218 pixels; add a wide-name visual capture. No simulation change.",
-  "public_windows_version": "0.101.1",
-  "publication_requested": false,
+  "public_windows_version": "0.102.0",
+  "publication_requested": true,
   "visual_review": {
     "reviewed": [
       "native broken/restored bridge",
@@ -593,5 +593,169 @@
   "final_validation": {
     "job_id": 127979505704,
     "conclusion": "success"
+  },
+  "windows_release": {
+    "status": "published",
+    "run_id": 42245441301,
+    "branch": "release/0.102.0",
+    "source_sha": "f1fc5b41a60130ab90b087dccd36ad4a1c7a1f38",
+    "tree_sha": "b5d2b8af5f695c020a39e97d7e8ce807d8565b9c",
+    "native_groups": [
+      {
+        "suite": "gameplay-1",
+        "job_id": 127986325803,
+        "passed_cases": [
+          "loading",
+          "story_art105",
+          "ambient",
+          "handworks",
+          "hold",
+          "civic",
+          "disciplines",
+          "appearance",
+          "keldrath",
+          "quest_ui",
+          "enemies",
+          "architecture_style",
+          "invasion131"
+        ],
+        "conclusion": "success"
+      },
+      {
+        "suite": "gameplay-2",
+        "job_id": 127986325971,
+        "conclusion": "success",
+        "passed_cases": [
+          "menus",
+          "equipment",
+          "world",
+          "continuity",
+          "firstshift",
+          "polish",
+          "roads",
+          "homestead",
+          "people",
+          "dev_testing",
+          "combat_art",
+          "menu92",
+          "friendship130",
+          "work132",
+          "polish135",
+          "ledger137",
+          "campaign138",
+          "restoration139",
+          "collections141",
+          "mineworks143"
+        ]
+      },
+      {
+        "suite": "gameplay-3",
+        "job_id": 127986325709,
+        "conclusion": "success",
+        "passed_cases": [
+          "orientation",
+          "mining",
+          "modular",
+          "living",
+          "ancestral",
+          "firsthour",
+          "work",
+          "royal",
+          "combat",
+          "architecture",
+          "energy",
+          "calendar",
+          "equipment93",
+          "navigation94",
+          "mouselook95",
+          "bench96",
+          "expedition97",
+          "workplace98",
+          "firstvisit99",
+          "troll133"
+        ]
+      },
+      {
+        "suite": "gameplay-4",
+        "job_id": 127986325970,
+        "conclusion": "success",
+        "passed_cases": [
+          "menu_quality100",
+          "lodge100",
+          "courtship101",
+          "greatclaim102",
+          "frontier103",
+          "mountain104",
+          "story_world108",
+          "story_world111",
+          "story_world112",
+          "story_world113",
+          "story_world116",
+          "story_world117",
+          "story_world118",
+          "story_world119",
+          "story_world120",
+          "story_batch121",
+          "story_batch122",
+          "story_batch123",
+          "ridge124",
+          "traditions126",
+          "claim127",
+          "hearthknot128"
+        ]
+      }
+    ],
+    "native_cases": 75,
+    "pck_integrity_entries": 3905,
+    "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.102.0",
+    "download_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.102.0/Stellar-Holds-First-Fortune-0.102.0-Windows.zip",
+    "published_at": "2026-11-06T16:16:07Z",
+    "zip_bytes": 961221648,
+    "zip_sha256": "18f3d0dc6803e2aa2386e1765ecd5f79993620ab10d2ab0301ba7f28bd8249e1",
+    "published_zip_digest_matches": true,
+    "tag_verified": true,
+    "build": {
+      "version": "0.102.0",
+      "commit": "f1fc5b41a60130ab90b087dccd36ad4a1c7a1f38",
+      "dirty": false,
+      "engine": "4.4.1.stable.official.49a5bc7b6",
+      "files": {
+        "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+        "FirstFortune.pck": "42c749b653d22818ecb5219ef4dedcd62d245854a85f7fa77798950e494db1ed",
+        "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+        "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+        "version.txt": "f5e79514bd5abe8a7d1402b4080c00347cc071ae7cecfe9889994900fc3b4c00",
+        "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+      },
+      "zip_sha256": "18f3d0dc6803e2aa2386e1765ecd5f79993620ab10d2ab0301ba7f28bd8249e1",
+      "zip_bytes": 961221648
+    },
+    "summary": {
+      "version": "0.102.0",
+      "source_sha": "f1fc5b41a60130ab90b087dccd36ad4a1c7a1f38",
+      "pack_sha256": "42c749b653d22818ecb5219ef4dedcd62d245854a85f7fa77798950e494db1ed",
+      "zip_sha256": "18f3d0dc6803e2aa2386e1765ecd5f79993620ab10d2ab0301ba7f28bd8249e1",
+      "cases": 66,
+      "assertions": 14043,
+      "shards": 4,
+      "shard_seconds": [
+        1009.91,
+        891.35,
+        1146.67,
+        979.67
+      ],
+      "passed": true
+    },
+    "visual_review": {
+      "artifact_id": 13518284070,
+      "source_sha": "f1fc5b41a60130ab90b087dccd36ad4a1c7a1f38",
+      "pack_sha256": "42c749b653d22818ecb5219ef4dedcd62d245854a85f7fa77798950e494db1ed",
+      "captures": [
+        "04-restored-bridge.png",
+        "05-district-board.png",
+        "08-long-district-name.png"
+      ],
+      "result": "Reviewed release-package bridge, district controls and long-name HUD; no new visual blocker found."
+    }
   }
 }

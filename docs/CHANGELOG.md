@@ -1,6 +1,6 @@
-# Source 0.102.0 — Mineworks districts
+# 0.102.0 — Mineworks districts
 
-Three persistent lateral worksites; player-named district plans with live excavation/room/equipment summaries; physical tempered-steel seal and Stoneworking bridge gate; connected cart/crew travel; preserved original mines and saved property. Merged in PR #132 after all 75 native source scenarios, focused exported checks and visual review passed. Current Windows download remains 0.101.1. See [scope](MINEWORKS143.md) and [acceptance checkpoint](testing/mineworks143/acceptance.json).
+Three persistent lateral worksites; player-named district plans with live excavation/room/equipment summaries; physical tempered-steel seal and Stoneworking bridge gate; connected cart/crew travel; preserved original mines and saved property. Merged in PR #132 after all 75 native source scenarios, focused exported checks and visual review passed. [Windows 0.102.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.102.0) after all 75 release-source and 66 exact-package scenarios passed; published ZIP identity and tag target verified. See [scope](MINEWORKS143.md) and [acceptance checkpoint](testing/mineworks143/acceptance.json).
 
 # 0.101.1 — New Game and Load Game
 
