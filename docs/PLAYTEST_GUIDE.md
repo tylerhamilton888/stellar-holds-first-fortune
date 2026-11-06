@@ -1,6 +1,6 @@
-# Source 0.102.0 — Mineworks districts
+# 0.102.0 — Mineworks districts
 
-This source feature is not in the published Windows 0.101.1 download yet. When testing 0.102.0, enter the marked adit near the original mine landing with **E**. Stonewright Delve, Blackvein Reach and Farbank Works are separate persistent zones; the original five depths remain available.
+[Windows 0.102.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.102.0). Enter the marked adit near the original mine landing with **E**. Stonewright Delve, Blackvein Reach and Farbank Works are separate persistent zones; the original five depths remain available.
 
 In Stonewright, open **O → Districts**, name a Craft, Store or Hearth district and mark two corners. Plans can cover unexcavated rock. Carve the passages and rooms you want, then furnish or equip them through the existing construction controls. Check whether the map gives you enough room for distinct neighborhoods without making excavation feel tedious.
 

@@ -1,4 +1,4 @@
-# Mineworks districts — source 0.102.0
+# Mineworks districts — Windows 0.102.0
 
 The original five Deepworks levels remain unchanged. A marked passage near each site's entrance leads to three lateral mineworks, each an independent 80 × 64 map with a small arrival bay and mostly unexcavated rock. Existing terrain, stairs, rooms, furnishings, raw loads and cargo keep their owners and coordinates.
 
@@ -28,4 +28,4 @@ Existing depth-scoped LivingWorks, Handworks, DeepHaul, combat and save owners s
 
 The focused `mineworks143` case covers original-layer preservation, lazy map creation, real E entry, tool and construction gates, stale/remote callbacks, real bridge movement, cart ownership, district/room construction, worker travel, removal and JSON save/reload. It is registered in full source validation and the exact-package catalogue. Mining, navigation94 and workplace98 provide affected regressions; firstshift, firstvisit99, lodge100 and polish135 protect the established work, wage and room-handoff interactions. Review native bridge/room/board views and the optional perspective view; human pacing and layout enjoyment remain playtest questions.
 
-Windows 0.101.1 remains the published download until a later build is requested. This feature does not add a new campaign requirement or expand the Thane storyline.
+[Windows 0.102.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.102.0) after all 75 native and 66 exported scenarios passed. This feature does not add a new campaign requirement or expand the Thane storyline.
