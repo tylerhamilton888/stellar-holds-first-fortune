@@ -2,7 +2,7 @@
   "version": "0.102.0",
   "source_sha": "77547ef4c0775cb6ae514ef22cffa6b127de9fb9",
   "tree_sha": "a7c737fde385f78feba0f1d14fe234bfc812696a",
-  "status": "implemented; targeted hosted retry running",
+  "status": "merged source; full native validation passed; Windows remains 0.101.1",
   "pull_request": 132,
   "source_run_id": 42060576334,
   "tooling_tests": 24,
@@ -188,7 +188,20 @@
         "name": "corrected-export/08-long-district-name.png",
         "sha256": "c7b46680652b4aa5b6554f40946c1ccc9b6854a5afe7c24a60d56220e3449728"
       }
-    ]
+    ],
+    "recovery_review": {
+      "date": "2026-11-06",
+      "artifact_id": 13430559643,
+      "captures": [
+        "03-broken-bridge.png",
+        "04-restored-bridge.png",
+        "05-district-board.png",
+        "06-workshop-district.png",
+        "07-adit-perspective.png",
+        "08-long-district-name.png"
+      ],
+      "result": "No new visual blocker found."
+    }
   },
   "pck_integrity_entries": 3905,
   "previous_validation_source_sha": "9b86257da64aced45f9808d1595e41f7ef59c3c2",
@@ -524,11 +537,51 @@
         "troll133",
         "world"
       ]
+    },
+    {
+      "job_id": 127964865871,
+      "passed_cases": [
+        "architecture",
+        "campaign138",
+        "combat",
+        "dev_testing",
+        "equipment",
+        "firstshift",
+        "greatclaim102",
+        "homestead",
+        "living",
+        "menu_quality100",
+        "modular",
+        "orientation",
+        "quest_ui",
+        "royal",
+        "story_batch123",
+        "story_world113",
+        "story_world119",
+        "work"
+      ]
     }
   ],
-  "hosted_passed_cases": 57,
-  "hosted_remaining_cases": 18,
-  "hosted_blocker": {
+  "hosted_passed_cases": 75,
+  "hosted_remaining_cases": 0,
+  "merged": true,
+  "hosted_retry": {
+    "date": "2026-11-06",
+    "original_job_id": 127360927218,
+    "job_id": 127964865871,
+    "retry_accepted": true,
+    "observed_status": "completed",
+    "original_log_response": "404 BlobNotFound",
+    "runtime_changed": false,
+    "local_tooling_tests": 24,
+    "conclusion": "success",
+    "artifact_id": 13517012733,
+    "artifact_sha256": "ed5fc5ec38ce99fa4fe8fe95d46f8e6b49943b72848f3e2afba85f8981c72615"
+  },
+  "merge_sha": "f74fbe39ce1a95e624155d371a8fce1093305341",
+  "merge_tree_verified": true,
+  "tested_pr_merge_sha": "ef5a12ec9377f7d2f73dca8ebeaac7e67dde5fa4",
+  "hosted_previous_blocker": {
     "job_id": 127360927218,
     "started_at": "2026-11-05T16:00:00Z",
     "observed_still_running_after_minutes": 51,
@@ -537,16 +590,8 @@
     "cancellation": "No cancellation action in connected GitHub tools; browser is signed out.",
     "final_conclusion": "cancelled"
   },
-  "merged": false,
-  "hosted_retry": {
-    "date": "2026-11-06",
-    "original_job_id": 127360927218,
-    "job_id": 127964865871,
-    "retry_accepted": true,
-    "observed_status": "in_progress",
-    "observed_step": "Native affected-system and save checks",
-    "original_log_response": "404 BlobNotFound",
-    "runtime_changed": false,
-    "local_tooling_tests": 24
+  "final_validation": {
+    "job_id": 127979505704,
+    "conclusion": "success"
   }
 }
