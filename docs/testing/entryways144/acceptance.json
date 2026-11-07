@@ -1,0 +1,70 @@
+{
+  "version": "0.102.1",
+  "status": "source_merged",
+  "source_sha": "79aa40ca35a345588665c858df3e2bf7d30265a7",
+  "tree_sha": "52d4c0c1a457222a18b64353d20182b5c40cdae2",
+  "pull_request": 135,
+  "source_run_id": 42403208851,
+  "public_windows_version": "0.102.0",
+  "publication_requested": false,
+  "native_entryway_checks": 20,
+  "native_mineworks_checks": 43,
+  "tooling_tests": 24,
+  "visual_review": {
+    "overhead": "North-wall masonry doorway, paved approach, fixed lintel label and no central floor hatch.",
+    "perspective": "Doorway cards remain upright at the wall; the rock wall no longer slices across the doorway.",
+    "captures": [
+      "01-north-wall-entryway.png",
+      "02-mineworks-wall-return.png",
+      "03-entryway-perspective.png"
+    ],
+    "scope": "Native and focused exported surface/return/side-heading and optional perspective captures at gameplay size."
+  },
+  "initial_failures": [
+    {
+      "kind": "environment",
+      "detail": "Initial X display setup was corrected before gameplay testing."
+    },
+    {
+      "kind": "fixture",
+      "detail": "The new fixture assumed stone existed in an empty pack; corrected to a zero default."
+    },
+    {
+      "kind": "runtime",
+      "detail": "First annex creation after a JSON load exposed a numeric seed modulo error; corrected by int normalization."
+    },
+    {
+      "kind": "environment",
+      "detail": "One local roads run exited -9 while native renders overlapped; affected cases restarted sequentially."
+    },
+    {
+      "kind": "fixture",
+      "detail": "First-shift rack was located in the new reserved doorway; moved to clear floor away from the working crew route. All 30 first-shift assertions pass in source and exported data."
+    }
+  ],
+  "native_focused_checks": {
+    "entryways144": 20,
+    "mineworks143": 43,
+    "roads": 85,
+    "firstshift": 30,
+    "navigation94": 31
+  },
+  "native_focused_total": 209,
+  "exported_focused_checks": {
+    "entryways144": 20,
+    "mineworks143": 43,
+    "firstshift": 30,
+    "navigation94": 31
+  },
+  "exported_focused_total": 124,
+  "exported_complete_release_acceptance": false,
+  "pck_entries_audited": 3905,
+  "pck_sha256": "926c102c49d9cf05c27588c29b798bebc1136d2112033d75e63d4b8ac74cb805",
+  "merge_sha": "7d095b884d99edf846116bb2694b9d4fb62e8869",
+  "source_native_cases": 76,
+  "source_run_conclusion": "success",
+  "source_gate": "success",
+  "source_tree_matches_merge": true,
+  "release_published": false,
+  "next_step": "Address next owner-reported playtest issue; build only when requested."
+}

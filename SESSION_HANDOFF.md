@@ -1,4 +1,4 @@
-Current handoff: docs/SESSION_HANDOFF.md. Windows 0.101.0 is published, verified and merged; the records below are historical.
+Current handoff: docs/SESSION_HANDOFF.md. Source 0.102.1 entryway fixes are merged; Windows 0.102.0 remains published. The records below are historical.
 
 # 0.64.0 — The Hold of Three Hearths (source verified)
 
