@@ -478,6 +478,7 @@ func overlay():
 func prompt()->String:
  var workplace_hint=HoldWorkplace98.prompt(g)
  if workplace_hint!="":return workplace_hint
+ if g.zone=="mine" and g.deep.world!=null and HoldMineEntrance.inside_near(g.deep.world,g.player):return "E · Leave through the surface entryway"
  var mineworks_hint=HoldMineworks143.prompt(g)
  if mineworks_hint!="":return mineworks_hint
  var f=facility();var raw=closest(data().loose,65);var text=""

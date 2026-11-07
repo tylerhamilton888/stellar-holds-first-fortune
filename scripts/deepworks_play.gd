@@ -33,7 +33,8 @@ func ensure():
 func enter(resume:bool=false):
  ensure()
  arrival_up_held=not resume and Input.is_action_pressed("up")
- if not resume:haul.park();world.data.depth=0;world.data.position=[Deepworks.center(Deepworks.ENTRY).x,Deepworks.center(Deepworks.ENTRY).y]
+ if not resume:
+  haul.park();world.data.depth=0;var arrival=HoldMineEntrance.inside_arrival(world);world.data.position=[arrival.x,arrival.y]
  works.cancel()
  g.player=Vector2(world.data.position[0],world.data.position[1]);g.grounded=true
  g.player=world.safe_position(g.player)
@@ -97,7 +98,7 @@ func use_stairs(up:bool):
   g.player=Deepworks.center(c);g.handworks.arrive(travelling_cart);g.velocity=Vector2.ZERO;strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear();pulse=0
   g.begin_transition("DEPTH %d · %s" % [world.depth()+1,Deepworks.NAMES[world.depth()].to_upper()]);g.sound.effect("door",-16)
   world.survey(g.player);g.save_game();return
- if world.entrance(g.player):
+ if HoldMineEntrance.inside_near(world,g.player):
   unload();haul.park()
   if g.state.active_site=="hold":g.surface.enter("trail",Vector2(950,345))
   else:g.change_zone("claim")
@@ -147,7 +148,7 @@ func poll_arrival_input():
 func move(dt:float):
  if g.handworks.approaching:return
  ensure();var axis=g.depth_nav.explore.movement(Input.get_vector("left","right","up","down"))
- if not Input.is_action_pressed("up") or g.player.distance_to(Deepworks.center(Deepworks.ENTRY))>90:arrival_up_held=false
+ if not Input.is_action_pressed("up") or g.player.distance_to(HoldMineEntrance.inside_position(world))>140:arrival_up_held=false
  if axis!=Vector2.ZERO and strike_left>0 and works.pending.is_empty():strike_left=0;contact_hold=0
  if axis!=Vector2.ZERO and not g.combat.armed:g.surface.direction=axis
  g.velocity=Vector2.ZERO if strike_left>0 and not g.combat.armed else g.fight.movement(axis);var old=g.player
@@ -159,12 +160,12 @@ func move(dt:float):
   if not world.solid(next):g.player=next
  # The cave's north exit faces the same input as its outdoor arch. Continuing
  # that entry key must not immediately undo the crossing; release to return.
- if arrival_up_held and world.depth()==0 and absf(g.player.x-Deepworks.center(Deepworks.ENTRY).x)<35:g.player.y=maxf(300,g.player.y)
+ if arrival_up_held and world.depth()==0 and absf(g.player.x-HoldMineEntrance.inside_position(world).x)<34:g.player.y=maxf(HoldMineEntrance.inside_position(world).y+40,g.player.y)
  g.grounded=true;g.walking_pose=g.player.distance_to(old)>.01
  if absf(axis.x)>.05:g.face=1 if axis.x>0 else -1
  if g.walking_pose:
   HoldDrawnLocomotion.advance(g,g.player.distance_to(old),"stone")
- if world.depth()==0 and old.y>=300 and g.player.y<300 and absf(g.player.x-Deepworks.center(Deepworks.ENTRY).x)<35:
+ if HoldMineEntrance.inside_crossed(world,old,g.player):
   unload();haul.park()
   if g.state.active_site=="hold":g.surface.enter("trail",Vector2(950,355))
   else:g.surface.enter("claim",Vector2(1280,400))
@@ -489,16 +490,7 @@ func draw():
  for prop in HoldMineworks143.props(world):HoldMineworks143.draw_prop(g,prop)
  for id in l.fixtures:
   var xy=id.split(",");lamp(Deepworks.center(Vector2i(int(xy[0]),int(xy[1]))))
- if z==0:
-  var entry=Deepworks.center(Deepworks.ENTRY)
-  g.draw_rect(Rect2(entry-Vector2(46,32),Vector2(92,64)),Color("1d292e"))
-  for j in 5:
-   var tread=Rect2(entry+Vector2(-42,-29+j*12),Vector2(84,9))
-   g.surface.house.material(0,tread,Color(.72+j*.04,.74+j*.04,.72+j*.04))
-   g.draw_line(tread.position+Vector2(0,9),tread.end,Color("b2b5a6"),1)
-  lamp(entry+Vector2(-58,0));lamp(entry+Vector2(58,0))
-  draw_worksite(entry)
-  # The entry stairs remain visible without a floating sentence.
+ if z==0:HoldMineEntrance.draw_inside(g,HoldMineEntrance.inside_prop(world))
  works.draw()
  for prop in HoldWorkplace98.props(g):HoldWorkplace98.draw_prop(g,prop)
  draw_haulage()
@@ -617,29 +609,9 @@ func draw_survey(canvas:Node2D=null):
  A.text(canvas,Vector2(720,347),"WHITE: YOUR X / Y",11,Color("c3d5c9"))
  A.text(canvas,Vector2(720,365),"V: CARVE   X: CLOSE",11,Color("c3d5c9"))
 
-func draw_worksite(entry:Vector2):
- # Original construction details: timber portal, freight track, crates and tools.
- for side in [-1,1]:
-  var p=entry+Vector2(side*76,-65)
-  g.draw_rect(Rect2(p,Vector2(12,55)),Color("3c3027"))
-  g.surface.house.material(1,Rect2(p+Vector2(1,1),Vector2(10,53)))
-  for yy in [4,41]:
-   g.draw_rect(Rect2(p+Vector2(0,yy),Vector2(12,7)),Color("495252"));g.draw_circle(p+Vector2(6,yy+3),1.5,Color("d4b779"))
-  for j in 3:g.draw_line(p+Vector2(4,6+j*15),p+Vector2(8,16+j*15),Color("5a4836"),1)
-  g.draw_circle(p+Vector2(6,7),2,Color("b8aba0"))
- g.draw_rect(Rect2(entry+Vector2(-78,-78),Vector2(166,15)),Color("45382c"))
- g.surface.house.material(1,Rect2(entry+Vector2(-76,-76),Vector2(162,11)))
- for xx in [-70,70]:
-  g.draw_rect(Rect2(entry+Vector2(xx,-77),Vector2(8,14)),Color("495252"));g.draw_circle(entry+Vector2(xx+4,-70),2,Color("d4b779"))
- for j in 8:
-  var y=entry.y+75+j*12
-  var c=Deepworks.cell(Vector2(entry.x,y))
-  if world.at(c)==0:
-   g.draw_line(Vector2(entry.x-19,y),Vector2(entry.x+19,y),Color("736348"),4)
-   for side in [-1,1]:g.draw_line(Vector2(entry.x+side*13,y-6),Vector2(entry.x+side*13,y+6),Color("9ca9a6"),2)
-
-
-func camera_target()->Vector2:return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-(355 if g.fight.giant_near() else 290),0,Deepworks.H*40-540))
+func camera_target()->Vector2:
+ var near_wall=world!=null and world.depth()==0 and g.player.y<320
+ return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-(355 if near_wall or g.fight.giant_near() else 290),-200 if near_wall else 0,Deepworks.H*40-540))
 
 func unload():
  if g.zone!="mine":g.notify("Deliver cargo at the mine entrance.");return

@@ -1,3 +1,11 @@
+# Entryways144 — source 0.102.1 in validation
+
+The mine's interior surface exit is now a masonry doorway at the north wall of its arrival bay, with lamps, a paved threshold and physical jambs. Walking or pressing E in the former central freight landing no longer leaves the area. Deliberate crossing of the wall throat or E at its approach still exits; held entry movement cannot bounce back outside. The old freight-delivery location remains usable.
+
+Mineworks return adits sit against their arrival-bay walls and use framed, upright passage artwork; arrivals stand clear of return interactions. Saved doorway placement avoids existing furniture without changing terrain or belongings. Both overhead and optional perspective views share the doorway painter. Corrected first annex creation after JSON loading by normalizing its saved numeric seed.
+
+Focused native and full hosted source validation are pending. The last published Windows build remains 0.102.0; this source fix has not been packaged. Continue this branch's checks, then merge after visual review and required validation. See [entryway notes](ENTRYWAYS144.md).
+
 # Windows 0.102.0 — published
 
 [Download the complete Windows ZIP](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/download/v0.102.0/Stellar-Holds-First-Fortune-0.102.0-Windows.zip). Extract all files into a new folder and run `FirstFortune.exe`. **New Game** starts the standard opening; **Load Game** continues existing progress.

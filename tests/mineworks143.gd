@@ -78,7 +78,7 @@ func run():
  stand(Vector2i(33,12));await snap("04-restored-bridge");key(KEY_E);settle()
  check(w.depth()==7,"Farbank is a separate map reached through the rebuilt crossing")
  var linked=w.connections(7);check(linked.size()==1 and int(linked[0].to)==6,"Farbank retains a permanent return adit")
- key(KEY_E);settle();stand(Vector2i(8,10));key(KEY_E);settle()
+ stand(HoldMineworks143.return_landing(w,7));key(KEY_E);settle();stand(HoldMineworks143.return_landing(w,6));key(KEY_E);settle()
  check(w.depth()==5,"Player can return through the connected mineworks")
  # Build a real workshop in the planned district; excavation counters follow terrain.
  for y in range(19,25):
@@ -89,7 +89,7 @@ func run():
  g.deep.works.model.place(Vector2i(18,20),"anvil");g.deep.works.model.place(Vector2i(19,22),"lamp")
  var district=HoldMineworks143.district_at(w,Vector2i(16,20))
  check(HoldMineworks143.progress(w,district).contains("1 rooms"),"District summary counts real excavations and rooms")
- check(not g.deep.works.model.place(Vector2i(8,10),"lamp").ends_with("installed."),"Furniture cannot obstruct a portal landing")
+ check(not g.deep.works.model.place(HoldMineworks143.return_landing(w,5),"lamp").ends_with("installed."),"Furniture cannot obstruct a portal landing")
  stand(Vector2i(17,23));g.deep.works.page="Districts";g.open_panel("living")
  await snap("05-district-board");g.close_panel();await snap("06-workshop-district")
  var original_name=district.name;district.name="WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
@@ -103,7 +103,7 @@ func run():
  var actor={"id":"mineworks-worker","type":"worker","p":Deepworks.center(entry),"path":[],"target":Vector2i(-1,-1),"cool":0.0,"fuel":100.0,"work":false,"status":""}
  g.agents=[actor];w.data.crew[actor.id]={"depth":0,"assigned":5,"x":Deepworks.center(entry).x,"y":Deepworks.center(entry).y}
  g.deep.agents(.1)
- check(int(g.deep.crew_entry(actor).depth)==5 and actor.p.distance_to(Deepworks.center(Vector2i(8,10)))<1,"A hired worker crosses the physical adit to its assigned zone")
+ check(int(g.deep.crew_entry(actor).depth)==5 and actor.p.distance_to(Deepworks.center(HoldMineworks143.return_landing(w,5)+Vector2i.DOWN*2))<1,"A hired worker crosses the physical adit to its assigned zone")
  g.agents=[];w.data.crew.erase(actor.id);g.state.claim_id=original_claim
  var saved=w.data.duplicate(true);var expected_position=g.player;g.save_game();g.start_game(true);settle();w=g.deep.world
  check(w.depth()==5 and g.player.distance_to(expected_position)<1 and same(w.data.mineworks143,saved.mineworks143),"Reload retains zone, district names and both opened gates")
@@ -111,7 +111,7 @@ func run():
  g.deep.works.page="Districts";g.open_panel("living");button("Remove plan: Hammer Row");g.close_panel()
  check(w.data.mineworks143.districts.is_empty() and same(w.data.living,saved.living) and same(w.data.layers,saved.layers),"Removing a district plan preserves all player work")
  # Original depth access, original rooms and site ownership remain independent.
- stand(Vector2i(8,10));key(KEY_E);settle();check(w.depth()==0,"Old Workings remains the entrance and return location")
+ stand(HoldMineworks143.return_landing(w,5));key(KEY_E);settle();check(w.depth()==0,"Old Workings remains the entrance and return location")
  check(same(w.data.layers[1],old_layers[1]) and same(w.data.layers[4],old_layers[4]),"Original untouched depths survive annex travel and saves")
  g.depth_nav.explore.enabled=true;g.depth_nav.explore.mouse_look=false;g.depth_nav.update(0)
  await snap("07-adit-perspective")

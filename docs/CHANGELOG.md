@@ -1,3 +1,7 @@
+# Source 0.102.1 — Wall entryways
+
+Replaced the central mine floor exit with a framed north-wall doorway and deliberate approach. Mineworks return doors now sit at bay edges; painted masonry is shared across both views, jamb collision follows the art, and old freight handling remains intact. Preserve existing property during doorway migration. Fix first mineworks entry after loading a save. Validation is in progress; Windows remains 0.102.0.
+
 # 0.102.0 — Mineworks districts
 
 Three persistent lateral worksites; player-named district plans with live excavation/room/equipment summaries; physical tempered-steel seal and Stoneworking bridge gate; connected cart/crew travel; preserved original mines and saved property. Merged in PR #132 after all 75 native source scenarios, focused exported checks and visual review passed. [Windows 0.102.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.102.0) after all 75 release-source and 66 exact-package scenarios passed; published ZIP identity and tag target verified. See [scope](MINEWORKS143.md) and [acceptance checkpoint](testing/mineworks143/acceptance.json).

@@ -31,7 +31,8 @@
       "campaign138",
       "restoration139",
       "collections141",
-      "mineworks143"
+      "mineworks143",
+      "entryways144"
     ],
     "gameplay": [
       "loading",
@@ -108,7 +109,8 @@
       "campaign138",
       "restoration139",
       "collections141",
-      "mineworks143"
+      "mineworks143",
+      "entryways144"
     ],
     "modular": [
       "modular",
@@ -394,7 +396,8 @@
       "campaign138",
       "restoration139",
       "collections141",
-      "mineworks143"
+      "mineworks143",
+      "entryways144"
     ],
     "gameplay-3": [
       "orientation",
@@ -986,6 +989,9 @@
     ],
     "mineworks143-focus": [
       "mineworks143"
+    ],
+    "entryways144-focus": [
+      "entryways144"
     ]
   },
   "cases": {
@@ -1292,6 +1298,10 @@
     "mineworks143": {
       "script": "tests/mineworks143.gd",
       "marker": "MINEWORKS143"
+    },
+    "entryways144": {
+      "script": "tests/entryways144.gd",
+      "marker": "ENTRYWAYS144"
     }
   }
 }
