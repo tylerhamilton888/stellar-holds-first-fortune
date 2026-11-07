@@ -1,6 +1,6 @@
 # Entryways144 — source 0.102.1
 
-Owner playtest fix: proper mine doorways at area edges, without accidental floor crossings. Validate old-save placement, freight, deliberate travel and both camera views before merging. Further reported playtest issues remain the next priority.
+Merged owner playtest fix: proper mine doorways at area edges, without accidental floor crossings. Old-save placement, freight, deliberate travel and both camera views passed validation. Further reported playtest issues are next; bundle the merged fixes into the next requested build. Public Windows remains 0.102.0.
 
 # Mineworks143 — delivered in Windows 0.102.0
 

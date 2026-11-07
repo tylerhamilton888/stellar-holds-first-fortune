@@ -1,10 +1,10 @@
-# Entryways144 — source 0.102.1 in validation
+# Entryways144 — source 0.102.1 merged
 
-The mine's interior surface exit is now a masonry doorway at the north wall of its arrival bay, with lamps, a paved threshold and physical jambs. Walking or pressing E in the former central freight landing no longer leaves the area. Deliberate crossing of the wall throat or E at its approach still exits; held entry movement cannot bounce back outside. The old freight-delivery location remains usable.
+The mine's surface exit is a stone-framed doorway at the north wall, with lamps, a paved approach and solid jambs. The old freight-floor crossing no longer exits. Mineworks return doors also sit at their arrival-bay walls. Deliberate walking or E at the surface doorway works; held entry input cannot bounce back outside. Saved placement preserves terrain, furniture and freight handling. First annex creation after JSON loading now normalizes the saved numeric seed.
 
-Mineworks return adits sit against their arrival-bay walls and use framed, upright passage artwork; arrivals stand clear of return interactions. Saved doorway placement avoids existing furniture without changing terrain or belongings. Both overhead and optional perspective views share the doorway painter. Corrected first annex creation after JSON loading by normalizing its saved numeric seed.
+[PR #135](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/135) merged as `7d095b884d99edf846116bb2694b9d4fb62e8869`. Its tree `52d4c0c1a457222a18b64353d20182b5c40cdae2` matches tested source `79aa40ca35a345588665c858df3e2bf7d30265a7`. [Source run 42403208851](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42403208851) passed all **76 native scenarios** and the final gate. Five focused native cases passed **209 assertions**, four focused exported cases passed **124**, all **3,905** package entries passed audit and all **24** tooling tests passed. Overhead, return, side-heading and optional perspective visuals were reviewed. [Acceptance receipt](testing/entryways144/acceptance.json); [entryway ownership](ENTRYWAYS144.md).
 
-Focused native and full hosted source validation are pending. The last published Windows build remains 0.102.0; this source fix has not been packaged. Continue this branch's checks, then merge after visual review and required validation. See [entryway notes](ENTRYWAYS144.md).
+The public Windows download remains **0.102.0**. This is merged source for the next requested build; focused exported checks are not full Windows release acceptance. Next: address the owner's next reported playtest issue, then bundle fixes when a build is requested. Do not repeat completed checks after chat recovery.
 
 # Windows 0.102.0 — published
 
