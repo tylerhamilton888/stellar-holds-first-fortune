@@ -140,7 +140,7 @@ func terrain_walkable(c:Vector2i,z:int=-1)->bool:
  var f=data.get("living",{}).get("furniture",{}).get(link_key(c,depth() if z<0 else z),{})
  return not f.get("solid",false)
 func walkable(c:Vector2i,z:int=-1)->bool:
- return terrain_walkable(c,z) and not landmark_solid(center(c),z) and not equipment_solid(center(c),z)
+ return terrain_walkable(c,z) and not landmark_solid(center(c),z) and not equipment_solid(center(c),z) and not HoldMineEntrance.blocks(self,center(c),depth() if z<0 else z)
 func terrain_solid(p:Vector2,z:int=-1)->bool:
  for d in [Vector2(-10,-8),Vector2(10,-8),Vector2(-10,8),Vector2(10,8)]:
   if not terrain_walkable(cell(p+d),z):return true
@@ -151,7 +151,7 @@ func equipment_solid(p:Vector2,z:int=-1)->bool:
   if f.get("area","")!=context or f.get("hitched",false):continue
   if HoldHandworks.footprint(f).grow(10).has_point(p):return true
  return false
-func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or landmark_solid(p,z) or equipment_solid(p,z)
+func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or landmark_solid(p,z) or equipment_solid(p,z) or HoldMineEntrance.blocks(self,p,depth() if z<0 else z)
 func clear_step(a:Vector2,b:Vector2,z:int=-1)->bool:
  for i in range(1,9):
   if solid(a.lerp(b,i/8.0),z):return false
@@ -302,7 +302,7 @@ func traverse(c:Vector2i,up:bool)->bool:
  elif link.get("descended",false) and not link.get("return_tested",false):
   link.return_tested=true;HoldOnboarding.fact(state,"route_tested")
  data.depth=z-1 if up else z+1;data.position=[center(c).x,center(c).y];return true
-func entrance(p:Vector2)->bool:return depth()==0 and cell(p).distance_to(ENTRY)<2.2
+func entrance(p:Vector2)->bool:return depth()==0 and (cell(p).distance_to(ENTRY)<2.2 or HoldMineEntrance.inside_near(self,p))
 # Flood-fill only excavated ground. Returns a physically walkable route to a face or stair.
 func route(start:Vector2i,z:int,priority:String,destination:Vector2i=Vector2i(-1,-1))->Dictionary:
  var queue:Array[Vector2i]=[start];var prev={key(start):start};var head=0;var fallback={};var chosen={}

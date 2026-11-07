@@ -112,7 +112,7 @@ func sync(dt:float):
  if context!=key or timer<=0:
   context=key;timer=.25;rebuild();rebuild_props()
  update_cutaway();update_actors()
- for entry in prop_pool.values():apply_sprite(entry.card,entry.vp.get_texture(),Rect2(-128,-220,256,256),entry.canvas.object.p)
+ for entry in prop_pool.values():place_prop(entry)
  update_effects();hud.queue_redraw()
 func update_camera():
  if not is_instance_valid(camera):return
@@ -252,6 +252,9 @@ func nearby(p:Vector2)->bool:return p.distance_to(g.player)<480 and g.depth_nav.
 func rebuild_props():
  for entry in prop_pool.values():entry.used=false
  # Static original props are rendered to small transparent cards; their physical bases remain authoritative.
+ if g.deep.world.depth()==0:
+  var door=HoldMineEntrance.inside_prop(g.deep.world)
+  if nearby(door.p):capture(door,"entryway144")
  for object in HoldMineworks143.props(g.deep.world):
   if nearby(object.p):capture(object,"mineworks143")
  for object in HoldWorkplace98.props(g):
@@ -284,7 +287,15 @@ func capture(object:Dictionary,kind:String):
   var card=Sprite3D.new();props.add_child(card)
   prop_pool[key]={"vp":vp,"canvas":canvas,"card":card,"used":true}
  var entry=prop_pool[key];entry.used=true;entry.canvas.object=object;entry.canvas.queue_redraw();entry.vp.render_target_update_mode=SubViewport.UPDATE_ONCE
- apply_sprite(entry.card,entry.vp.get_texture(),Rect2(-128,-220,256,256),object.p)
+ place_prop(entry)
+func place_prop(entry:Dictionary):
+ var object=entry.canvas.object;var card:Sprite3D=entry.card
+ apply_sprite(card,entry.vp.get_texture(),Rect2(-128,-220,256,256),object.p)
+ if entry.canvas.kind in ["entryway144","mineworks143"]:
+  # Architecture stays vertical against its wall, rather than tilting through rock with the camera.
+  card.billboard=BaseMaterial3D.BILLBOARD_DISABLED
+  card.rotation.y=-PI/2 if object.get("side",false) else 0.0
+  card.position=point(object.p)+Vector3.UP*2.3
 func update_effects():
  clear_children(effects)
  for e in g.fight.enemies:
@@ -316,8 +327,10 @@ class PropCanvas extends Node2D:
   var at=Vector2(128,220)
   if hand_painter==null:hand_painter=HoldHandworks.new(self);hand_painter.textures=game.handworks.textures
   if kind=="lamp":HoldArt.lamp(self,at-Vector2(0,25),0)
+  elif kind=="entryway144":
+   var prop=object.duplicate();prop.p=at;prop.side=false;prop.floor=false;HoldMineEntrance.draw_inside(self,prop)
   elif kind=="mineworks143":
-   var prop=object.duplicate();prop.p=at;HoldMineworks143.draw_prop(self,prop)
+   var prop=object.duplicate();prop.p=at;prop.side=false;prop.floor=false;HoldMineworks143.draw_prop(self,prop)
   elif kind=="workplace98":
    var prop=object.duplicate();prop.p=at;HoldWorkplace98.draw_prop(self,prop)
   elif kind=="handwork":

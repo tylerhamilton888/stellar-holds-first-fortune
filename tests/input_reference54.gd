@@ -47,7 +47,7 @@ func run():
  g.player=Deepworks.center(Deepworks.ENTRY)
 
  g.deep.use_stairs(false);settle()
- if g.zone=="mine":g.player=Deepworks.center(Deepworks.ENTRY);g.deep.world.data.depth=0;g.deep.use_stairs(false);settle()
+ if g.zone=="mine":g.deep.world.data.depth=0;g.player=HoldMineEntrance.inside_position(g.deep.world)+Vector2(0,25);g.deep.use_stairs(false);settle()
  check(g.surface.area=="trail" and g.zone=="approach","Mine exit returns to the same trail entrance and delivers cargo")
  g.surface.enter("pinewood",Vector2(370,460));settle();g.tool=2
  await snap("06-pinewood")

@@ -36,7 +36,7 @@ static func prepare(w):
   for y in Deepworks.H:
    for x in Deepworks.W:
     var k=2 if z!=6 else 7
-    if absf(x-(18+sin(y*.12+float(w.data.seed%31))*3))<1.5:k=5 if z==5 else 3
+    if absf(x-(18+sin(y*.12+float(int(w.data.seed)%31))*3))<1.5:k=5 if z==5 else 3
     if absf(x-(49+sin(y*.16)*4))<2:k=4 if z==5 else 6
     if x<1 or y<1 or x>=Deepworks.W-1 or y>=Deepworks.H-1:k=8
     l.strata.append(7 if z==6 else 2);l.cells.append(k)
@@ -63,16 +63,30 @@ static func prepare(w):
     for y in range(10,15):l.cells[y*Deepworks.W+x]=0
   w.data.layers.append(l)
  w.rebuild_landmarks()
+static func return_landing(w,z:int)->Vector2i:
+ if w.data.layers.size()<=z:return Vector2i(8,6)
+ var q=data(w)
+ if not q.has("returns144"):q.returns144={}
+ if q.returns144.has(str(z)):
+  var c=q.returns144[str(z)];return Vector2i(int(c[0]),int(c[1]))
+ var chosen=Vector2i(8,6)
+ for x in [8,9,10,7,6,11]:
+  var clear=true
+  for c in [Vector2i(x-1,6),Vector2i(x,6),Vector2i(x+1,6),Vector2i(x,7),Vector2i(x,8)]:
+   if not w.terrain_walkable(c,z) or w.equipment_solid(Deepworks.center(c),z) or w.layer(z).fixtures.has(Deepworks.key(c)) or w.data.links.has(w.link_key(c,z)):clear=false
+  if clear:chosen=Vector2i(x,6);break
+ q.returns144[str(z)]=[chosen.x,chosen.y];return chosen
 static func portals(w,z:int)->Array:
  var entry=entrance(w)
- if z==0:return [] if entry.x<0 else [{"id":"entry","c":entry,"to":5,"target":Vector2i(8,10),"name":"Stonewright Delve","open":true}]
- if z==5:return [{"id":"return","c":Vector2i(8,10),"to":0,"target":entry,"name":"Old Workings","open":entry.x>=0},{"id":"seal","c":Vector2i(23,10),"to":6,"target":Vector2i(8,10),"name":"Blackvein Reach","open":bool(data(w).seal)}]
- if z==6:return [{"id":"return","c":Vector2i(8,10),"to":5,"target":Vector2i(23,10),"name":"Stonewright Delve","open":true},{"id":"farbank","c":Vector2i(33,12),"to":7,"target":Vector2i(8,10),"name":"Farbank Works","open":bool(data(w).bridge)}]
- if z==7:return [{"id":"return","c":Vector2i(8,10),"to":6,"target":Vector2i(33,12),"name":"Blackvein Reach","open":bool(data(w).bridge)}]
+ if z==0:return [] if entry.x<0 else [{"id":"entry","c":entry,"to":5,"target":return_landing(w,5)+Vector2i.DOWN*2,"name":"Stonewright Delve","open":true}]
+ if z==5:return [{"id":"return","c":return_landing(w,5),"to":0,"target":entry,"name":"Old Workings","open":entry.x>=0},{"id":"seal","c":Vector2i(23,10),"to":6,"target":return_landing(w,6)+Vector2i.DOWN*2,"name":"Blackvein Reach","open":bool(data(w).seal)}]
+ if z==6:return [{"id":"return","c":return_landing(w,6),"to":5,"target":Vector2i(23,10),"name":"Stonewright Delve","open":true},{"id":"farbank","c":Vector2i(33,12),"to":7,"target":return_landing(w,7)+Vector2i.DOWN*2,"name":"Farbank Works","open":bool(data(w).bridge)}]
+ if z==7:return [{"id":"return","c":return_landing(w,7),"to":6,"target":Vector2i(33,12),"name":"Blackvein Reach","open":bool(data(w).bridge)}]
  return []
 static func reserved(w,c:Vector2i,z:int)->bool:
+ if HoldMineEntrance.reserved(w,c,z):return true
  for p in portals(w,z):
-  if c.distance_to(p.c)<2:return true
+  if c.distance_to(p.c)<2 or (p.id=="return" and c==p.c+Vector2i.DOWN*2):return true
  return (z==5 and c==SEAL) or (z==6 and Rect2i(22,10,14,5).has_point(c))
 static func release_seal(w,c:Vector2i,z:int):
  if z==5 and c==SEAL:data(w).seal=true
@@ -179,11 +193,10 @@ static func panel(g):
 static func props(w)->Array:
  var out=[]
  for p in portals(w,w.depth()):
-  if w.layer().seen.has(Deepworks.key(p.c)):out.append({"p":Deepworks.center(p.c),"kind":"adit","open":p.open})
+  if w.layer().seen.has(Deepworks.key(p.c)):out.append({"p":Deepworks.center(p.c),"kind":"adit","open":p.open,"name":"OLD WORKINGS" if p.to==0 else "PASSAGE","side":p.id in ["seal","farbank"]})
  return out
 static func draw_prop(n,o:Dictionary):
- # Reuse the authored three-quarter stair/adit stonework, at character scale.
- n.draw_texture_rect_region(HoldWorldZones.DETAILS,Rect2(o.p-Vector2(37,30),Vector2(74,47)),HoldWorldZones.DETAIL_RECTS[5],Color.WHITE if o.open else Color(.64,.70,.75))
+ HoldMineEntrance.draw_inside(n,o)
 static func draw_floor(g):
  var w=g.deep.world
  if w.depth()==6:

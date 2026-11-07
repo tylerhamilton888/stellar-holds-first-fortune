@@ -56,7 +56,7 @@ func designate(a:Vector2i,b:Vector2i,kind:String)->String:
  for c in room_cells(r):
   if w.at(c)!=0:return "Excavate every tile inside the proposed room first."
   if not at(c).is_empty():return "Rooms cannot overlap."
-  if w.depth()==0 and c.distance_to(Deepworks.ENTRY)<2:return "Leave the entrance and freight landing clear."
+  if HoldMineEntrance.reserved(w,c,w.depth()) or (w.depth()==0 and c.distance_to(Deepworks.ENTRY)<2):return "Leave the entrance and freight landing clear."
  data.rooms[r.id]=r;data.next_id+=1;refresh();return "Designated "+r.name+". Furnish it, finish its surfaces, then assign a Dwarf."
 func connected(r:Dictionary,blocked:Vector2i=Vector2i(-1,-1))->bool:
  var floor=[]

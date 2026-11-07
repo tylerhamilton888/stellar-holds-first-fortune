@@ -1,3 +1,7 @@
+# Entryways144 — source 0.102.1
+
+Owner playtest fix: proper mine doorways at area edges, without accidental floor crossings. Validate old-save placement, freight, deliberate travel and both camera views before merging. Further reported playtest issues remain the next priority.
+
 # Mineworks143 — delivered in Windows 0.102.0
 
 Dedicated mineworks, player district plans and both practical access gates are merged in PR #132. All 75 source scenarios, all 66 exported-package scenarios and visual review passed. Windows 0.102.0 is published. Next: human feedback on excavation scale, district layout and bridge/tool pacing. Further mine biomes and engineering gates are future extensions.
