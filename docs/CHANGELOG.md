@@ -1,3 +1,9 @@
+# 0.102.2 — The great town ledger
+
+- Added a monumental gilded book and stone lectern, braziers and paved forecourt east of the bunkhouse.
+- Press E at the book to contribute to the existing ledger; updated delivery directions. Indoor records and remote M review remain available.
+- Preserved contribution escrow, production evidence, inventory and existing homes/furniture. No campaign progression or save schema change.
+
 # Source 0.102.1 — Wall entryways
 
 Replaced the central mine floor exit with a framed north-wall doorway and deliberate approach. Mineworks return doors now sit at bay edges; painted masonry is shared across both views, jamb collision follows the art, and old freight handling remains intact. Preserve existing property during doorway migration. Fix first mineworks entry after loading a save. Merged in PR #135 after all 76 source scenarios, 209 focused native assertions, 124 focused exported assertions and visual review passed. Windows remains 0.102.0; no new release was published.

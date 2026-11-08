@@ -2,12 +2,14 @@ class_name HoldFurnishings
 extends RefCounted
 # One catalogue for town props, player construction, previews and physical bases.
 # Source crops are measured, with no painted room/floor baked into them.
+const CIVIC_LEDGER=preload("res://assets/ledger145/civic-ledger.png")
 const ANVIL=preload("res://assets/anniversary-v31/anvil.png")
 const DOUBLE_BED=preload("res://assets/hold77/double-bed.png")
 const ATLAS=preload("res://assets/furnishings-v56/interior.png")
 const CROPS=[Rect2(40,83,316,237),Rect2(424,22,308,300),Rect2(805,57,326,271),Rect2(1250,36,210,289),Rect2(15,429,407,224),Rect2(442,397,320,258),Rect2(805,376,325,282),Rect2(1180,328,323,340),Rect2(54,661,288,342),Rect2(491,668,188,334),Rect2(853,751,257,226),Rect2(1204,698,280,291)]
 # size is the visible silhouette; base is its ground-plane occupied rectangle.
 const ITEMS={
+ "civic_ledger":{"title":"Hold’s Ledger","size":Vector2(180,180),"base":Rect2(-76,-43,152,43),"cost":{}},
  "hearthkeeper_table":{"title":"Hearthkeeper’s supper table","base_kind":"table","cost":{"wood":6,"stone":2},"dressing":[["kettle",Vector2(0,-30)],["mug",Vector2(-17,-29)],["mug",Vector2(17,-29)],["mug",Vector2(0,-17)]]},
  "ancestral_shrine":{"title":"Ancestral hearthstone","base_kind":"plinth","cost":{"dressed_stone":4,"wood":2}},
  "runestone":{"title":"Roadside rune-stone","size":Vector2(54,70.53),"base":Rect2(-23,-16,46,16),"cost":{"dressed_stone":6,"crystal":1}},
@@ -58,7 +60,8 @@ static func silhouette(kind:String,p:Vector2)->Rect2:
  return Rect2(p-Vector2(size.x*float(item.get("anchor_x",.5)),size.y),size)
 static func draw(n:CanvasItem,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
- if kind=="ancestral_shrine":HoldLooseProps.draw(n,silhouette(kind,p),"plinth",tint)
+ if kind=="civic_ledger":n.draw_texture_rect(CIVIC_LEDGER,silhouette(kind,p),false,tint)
+ elif kind=="ancestral_shrine":HoldLooseProps.draw(n,silhouette(kind,p),"plinth",tint)
  elif kind.begins_with("royal_"):
   var index=["royal_throne","royal_pillar","royal_arch","royal_brazier"].find(kind)
   HoldRoyalStage.draw_prop(n,{"p":p,"art":index,"width":item.size.x},float(n.get("clock")),tint)

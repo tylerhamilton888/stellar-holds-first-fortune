@@ -1,3 +1,13 @@
+# 0.102.2 — The great town ledger and proper mine doorways
+
+Find the Hold’s Ledger immediately outside, east of the miners’ bunkhouse: a monumental gilded book on a carved stone lectern, framed by two braziers and a slate forecourt. Approach its south side and press **E** to contribute supplies, review town projects and work on collections. **M** still reviews the ledger from anywhere; the original indoor desk shares the same progress.
+
+The mine’s surface exit is now a framed doorway in the north wall, with lamps and a paved approach. Walking across the old freight landing no longer sends you outside. Return passages in the mineworks also sit against their arrival-bay walls. A saved-game issue on first entry into an annex is fixed.
+
+Existing inventories, furniture, contributions and earned progress are preserved. Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. Choose **New Game** for a fresh opening or **Load Game** to continue.
+
+For this playtest, check how easily you find the book from the bunkhouse, make a partial contribution, and try the mine entrance and return doorway. Windows performance, audio and normal-speed pacing still need human playtesting.
+
 # 0.102.0 — Mineworks and player districts
 
 Expand beneath the hold through three permanent mineworks: **Stonewright Delve**, **Blackvein Reach**, and **Farbank Works**. Enter the marked adit near the original mine landing with **E**; the original five depths and your existing excavations remain available.

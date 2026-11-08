@@ -100,4 +100,4 @@ static func panel(g):
   var label=g.label(line,"%s · %d / %d\nPack %d · own work available %d" % [HoldData.ITEMS[item].name,paid(s,id,item),costs(s,id)[item],s.count(item),credit],14);label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
   var b=g.small_button(line,"Delivered" if left==0 else ("Gather supplies" if amount==0 else "Contribute %d" % amount),func():contribute(g,id,key,amount);g.refresh_panel());b.disabled=amount<=0 or not HoldGreatClaim102.near(g)
  var b=g.button(card,"Collect reward",func():claim(g,id);g.refresh_panel());b.disabled=not ready(s,id) or not HoldGreatClaim102.near(g)
- g.label(card,"Deliver your own supplies at the bunkhouse Ledger. Goods already committed to seals or bridge orders cannot count twice. Town projects remain in the main Ledger.",14)
+ g.label(card,"Deliver your own supplies at the great book outside, east of the bunkhouse. Goods already committed to seals or bridge orders cannot count twice. Town projects remain in the main Ledger.",14)

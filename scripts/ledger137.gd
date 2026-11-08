@@ -89,7 +89,7 @@ static func forge_panel(g):
  g.button(g.panel_body,"Review the Hold’s Ledger",func():g.open_panel("great_claim102"))
 static func panel(g):
  var s=g.state
- HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Build a place in Stonebridge. Contributions stay recorded; there are no deadlines. M reviews this ledger anywhere. Deliver carried supplies at the bunkhouse ledger.")
+ HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Build a place in Stonebridge. Contributions stay recorded; there are no deadlines. M reviews this ledger anywhere. Deliver carried supplies at the great book outside, east of the bunkhouse.")
  g.label(g.panel_body,DEEDS,13)
  HoldCampaign138.summary(g)
  var home=HoldMenuView.disclosure(g,g.panel_body,"Personal ambition · A place of your own","ledger137_home")

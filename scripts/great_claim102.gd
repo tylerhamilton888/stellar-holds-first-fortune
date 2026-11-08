@@ -2,6 +2,8 @@ class_name HoldGreatClaim102
 extends RefCounted
 # Additive foundation. Only newly begun fortunes join the civic ledger.
 const DESK=Vector2(670,400)
+const TOWN_LEDGER=Vector2(365,650)
+const TOWN_ACCESS=TOWN_LEDGER+Vector2(0,26)
 const PROJECTS={
  "watch":{"title":"Lights for the night watch","cost":{"wood":6,"iron":2},"points":40,"detail":"Hakon can see the bridge approaches after dusk. Two lamps are erected on the High Trail."},
  "rest":{"title":"A table for the work crews","cost":{"wood":8,"stone":4},"points":45,"detail":"A shared table and seats give the crews a place to eat beside the eastern road."},
@@ -16,7 +18,13 @@ static func credit(s,path:String,amount:int):
  var d=data(s);var old=int(d.work.get(path,0));var earned=mini(amount,maxi(0,8-old))
  d.work[path]=old+earned;d.points=int(d.points)+earned
 static func near(g)->bool:
- return active(g.state) and g.zone!="mine" and g.surface.area==HoldFrontier103.lodge(g.state) and g.player.distance_to(DESK)<85 and g.surface.clear_interaction(g.player,DESK)
+ if not active(g.state) or g.zone=="mine":return false
+ if HoldFrontier103.active(g.state) and g.surface.area=="trail":
+  return g.player.distance_to(TOWN_ACCESS)<85 and g.surface.clear_interaction(g.player,TOWN_ACCESS)
+ # Retain the original indoor records desk for existing fortunes and visits.
+ return g.surface.area==HoldFrontier103.lodge(g.state) and g.player.distance_to(DESK)<85 and g.surface.clear_interaction(g.player,DESK)
+static func directions(s)->String:
+ return "the great book outside, east of the bunkhouse" if HoldFrontier103.active(s) else "the ledger in the miners’ lodge"
 static func complete(s,id:String)->bool:return active(s) and bool(data(s).projects.get(id,false))
 static func contribute(g,id:String)->bool:
  if not near(g) or not PROJECTS.has(id) or complete(g.state,id):return false
@@ -34,6 +42,9 @@ static func furnishings(w,area:String)->Array:
  if not active(s):return result
  if area==HoldWorkerLodge100.ROOM and not HoldFrontier103.active(s):result.append(w.furn("desk",DESK.x,DESK.y))
  if area=="trail":
+  if HoldFrontier103.active(s):
+   result.append(w.furn("civic_ledger",TOWN_LEDGER.x,TOWN_LEDGER.y))
+   for x in [TOWN_LEDGER.x-110,TOWN_LEDGER.x+110]:result.append(w.furn("royal_brazier",x,TOWN_LEDGER.y))
   if complete(s,"watch"):
    result.append(w.furn("road_lantern",1110,610));result.append(w.furn("road_lantern",1370,610))
   if complete(s,"rest"):
@@ -55,7 +66,7 @@ static func panel(g):
  g.label(g.panel_body,"Charter law: authenticated ancestral rights carry a separate hereditary allowance. Until authenticated, no claimant receives that allowance. A tie must be settled by a public test of skill.",15)
  var list=standings(g.state);list.sort_custom(func(a,b):return a[1]>b[1])
  for entry in list:g.label(g.panel_body,"%s · %d marks — %s" % [entry[0],entry[1],entry[2]],16)
- g.label(g.panel_body,"Deliver materials at the ledger in the miners' lodge." if not near(g) else "Materials come from your pack. Each completed project remains in the settlement.",14)
+ g.label(g.panel_body,"Deliver materials at "+directions(g.state)+"." if not near(g) else "Materials come from your pack. Each completed project remains in the settlement.",14)
  for id in PROJECTS:
   var p=PROJECTS[id];var box=HoldMenuView.section(g.panel_body,("✓ " if complete(g.state,id) else "○ ")+p.title)
   g.label(box,p.detail,15)

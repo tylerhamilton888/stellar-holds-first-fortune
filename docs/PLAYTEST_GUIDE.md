@@ -1,3 +1,7 @@
+# Finding the Hold’s Ledger — source 0.102.2
+
+Leave the bunkhouse and head east to the enormous open book on its gilded stone lectern between two braziers. Stand at its front and press **E** to contribute. **M** reviews the same ledger anywhere; deliveries require being at the book or the original indoor records desk. This change is not in the older Windows 0.102.0 download.
+
 # 0.102.0 — Mineworks districts
 
 [Windows 0.102.0 is published](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.102.0). Enter the marked adit near the original mine landing with **E**. Stonewright Delve, Blackvein Reach and Farbank Works are separate persistent zones; the original five depths remain available.

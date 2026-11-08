@@ -1,0 +1,111 @@
+{
+  "version": "0.102.2",
+  "base": "62895cc94f7acfd1a51b837892b071ff3ba8bd24",
+  "native": [
+    {
+      "test": "civic145",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 15,
+      "seconds": 49.0
+    },
+    {
+      "test": "ledger137",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 29,
+      "seconds": 49.0
+    },
+    {
+      "test": "collections141",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 83,
+      "seconds": 46.41
+    },
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 231,
+      "seconds": 53.36
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 57.45
+    }
+  ],
+  "tooling_checks": 24,
+  "pck_entries": 3945,
+  "visual_review": [
+    "town-ledger",
+    "bunkhouse-exit",
+    "contribution-panel",
+    "exported-town-ledger"
+  ],
+  "hosted": "Not started: public GitHub push rejected by automatic approval review; fresh in-chat payload/destination approval required",
+  "release": "Windows 0.102.0 still published",
+  "exported": [
+    {
+      "test": "civic145",
+      "passed": true,
+      "checks": 15,
+      "errors": [],
+      "exit_code": 0,
+      "seconds": 50.8
+    },
+    {
+      "test": "entryways144",
+      "passed": true,
+      "checks": 20,
+      "errors": [],
+      "exit_code": 0,
+      "seconds": 47.05
+    }
+  ],
+  "source_commit": "39398608d0627d9731d6b6c632fc971055168e88",
+  "windows_candidate": {
+    "version": "0.102.2",
+    "commit": "3152e8c491a8becdb35bea0d6dc9a6a2cff6fa6f",
+    "dirty": false,
+    "engine": "4.4.1.stable.official.49a5bc7b6",
+    "files": {
+      "FirstFortune.exe": "b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b",
+      "FirstFortune.pck": "3b85f94c0371eca6087cac1b33b3675d01e9fdec6d9a39be83eb98b26f07eb91",
+      "GODOT-LICENSE.txt": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+      "GODOT-COPYRIGHT.txt": "54345b2362747231e34b138b191914b852d44f15443acff17f04a76d86a5c584",
+      "version.txt": "36ada7b61cb2f0ffa70562f8e1479102f2688dca56a51a1556f11dfc26894db4",
+      "START-HERE.txt": "914ee6e2cbfa8e245d5c6629c9108824a1e2605156db81ca1b92ef3cf3a0465f"
+    },
+    "zip_sha256": "8cf337af14108a81c0fc8f2f9f6e727fb1447719c60bde87cdea8934e48b00bd",
+    "zip_bytes": 963191585
+  },
+  "clean_candidate_pck_entries": 3907,
+  "pack_hygiene": "Excluded local build/test-results directories with .gdignore before clean candidate export; initial focused PCK had 38 developer-capture entries; runtime content was unchanged except UID cache.",
+  "candidate_exported": [
+    {
+      "test": "civic145",
+      "passed": true,
+      "checks": 15,
+      "errors": [],
+      "exit_code": 0,
+      "seconds": 52.59
+    },
+    {
+      "test": "entryways144",
+      "passed": true,
+      "checks": 20,
+      "errors": [],
+      "exit_code": 0,
+      "seconds": 48.51
+    }
+  ]
+}
