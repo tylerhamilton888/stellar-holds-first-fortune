@@ -1,3 +1,9 @@
+# Forge147 — workshop update (0.104.0, in validation)
+
+Stonebridge's communal forge now has a visible hearth, stocked workshop fittings, Borin at the anvil, and usable hearth, anvil and benches. The hearth's state follows the existing Cold Forge project; existing furnishings and chest contents remain authoritative. The hall shell is unchanged to protect established saves. Focused native and visual checks are in progress; hosted source and release gates remain required before delivery.
+
+Windows 0.103.0 was published successfully in [release run 42633939330](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42633939330). This supersedes the older in-progress opening and ledger notes below.
+
 # Opening146 — source work in progress (0.103.0)
 
 A new skippable, resumable Stonebridge arrival leads into the bunkhouse and first shift. Ivar, Rurik, Sigrid and Skarrin have revised dialogue; early journal, shift book and Ledger explain their purpose gradually while retaining access to the complete books. Existing saves do not replay the introduction. The opening146 suite and hosted validation must pass before integration. Windows 0.102.2 remains published; normal-speed pacing, writing and Windows audio/performance need human playtesting.

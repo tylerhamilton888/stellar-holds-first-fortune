@@ -1,3 +1,7 @@
+# Forge147 — playtest next
+
+Have a new and an existing player find the hearth, talk to Borin, restore the forge and use each work area. Check whether the room now feels active and its purpose is clear; listen for workshop audio in the Windows build.
+
 # Opening146 — playtest next
 
 Test the new Stonebridge introduction and first shift with a new player. Note confusing directions, excessive text, rushed reveals, character voice and whether the Cold Forge and other projects emerge naturally. Continue later-character dialogue polish only in response to review; the first-act pass is not a complete rewrite of every character.

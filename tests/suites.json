@@ -34,7 +34,8 @@
       "mineworks143",
       "entryways144",
       "civic145",
-      "opening146"
+      "opening146",
+      "forge147"
     ],
     "gameplay": [
       "loading",
@@ -114,7 +115,8 @@
       "mineworks143",
       "entryways144",
       "civic145",
-      "opening146"
+      "opening146",
+      "forge147"
     ],
     "modular": [
       "modular",
@@ -403,7 +405,8 @@
       "mineworks143",
       "entryways144",
       "civic145",
-      "opening146"
+      "opening146",
+      "forge147"
     ],
     "gameplay-3": [
       "orientation",
@@ -1018,6 +1021,13 @@
       "civic145",
       "mountain104",
       "greatclaim102"
+    ],
+    "forge147": [
+      "forge147",
+      "frontier103",
+      "ledger137",
+      "opening146",
+      "equipment93"
     ]
   },
   "cases": {
@@ -1336,6 +1346,10 @@
     "opening146": {
       "script": "tests/opening146.gd",
       "marker": "OPENING146"
+    },
+    "forge147": {
+      "script": "tests/forge147.gd",
+      "marker": "FORGE147"
     }
   }
 }

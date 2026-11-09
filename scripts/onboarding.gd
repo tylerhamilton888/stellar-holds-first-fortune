@@ -44,6 +44,7 @@ static func after_commission(s):
  if s.opening==2:q.stage=4;s.tracked_npc="eirik"
  elif s.opening>=4:q.stage=7
 static func local(g,id:String)->bool:
+ if id=="borin" and HoldForge147.active(g):return HoldForge147.talking(g)
  if g.state.active_site!="hold" or g.zone!="hub":return false
  return HoldNpcPresence.inside(g.state,id,g.room_id)
 static func introduce(s,id:String)->bool:

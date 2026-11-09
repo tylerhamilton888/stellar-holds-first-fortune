@@ -330,6 +330,8 @@ func action(id:String):
  if id=="frontier_archive103":g.open_panel(id);return
  if id=="restoration139":g.open_panel(id);return
  if id=="campaign138":g.open_panel(id);return
+ if id.begins_with("forge147:"):
+  g.set_meta("forge147_station",id.trim_prefix("forge147:"));g.open_panel("frontier103");return
  if id=="frontier103":g.open_panel(id);return
  if id=="great_claim102":g.open_panel(id);return
  if id=="architecture_leave":architecture.leave();return
@@ -394,6 +396,7 @@ func obstacles(ignore:Dictionary={})->Array:
   if house.level()==0:list.append_array(architecture.obstacles(area))
  if area in ["claim","pinewood"] and house.level()==0:list.append(HoldFurnishings.footprint("desk",Vector2(740,780) if area=="claim" else Vector2(300,790)))
  list.append_array(house.obstacles())
+ list.append_array(HoldForge147.obstacles(g))
  if g.handworks:list.append_array(g.handworks.surface_obstacles())
  if g.fieldwork:list.append_array(g.fieldwork.obstacles())
  for c in g.state.surface.chests.values():
@@ -729,7 +732,12 @@ func draw():
  for c in g.state.surface.chests.values():
   if house.local(c):objects.append({"p":Vector2(c.x,c.y),"kind":"chest_open" if g.panel_id=="storage" and c==g.state.surface.chests.get(selected_chest,{}) else "chest"})
  for d in g.state.surface.decor:
-  if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind,"sort_y":float(d.y)+float(HoldFurnishings.ITEMS.get(d.kind,{}).get("sort_offset",0))})
+  if house.local(d):
+   if HoldForge147.active(g) and d.kind=="anvil" and Vector2(d.x,d.y).distance_to(HoldForge147.ANVIL)<2 and HoldForge147.has_anvil(g):continue
+   objects.append({"p":Vector2(d.x,d.y),"kind":d.kind,"sort_y":float(d.y)+float(HoldFurnishings.ITEMS.get(d.kind,{}).get("sort_offset",0))})
+ if HoldForge147.active(g):
+  objects.append_array(HoldForge147.props(g))
+  if HoldForge147.has_anvil(g):objects.append({"p":HoldForge147.BORIN,"kind":"npc","id":"borin"})
  if room() and not area.begins_with("home:") and area!="room:training":
   if area==HoldFrontier103.lodge(g.state):objects.append_array(HoldWorkerLodge100.people(g))
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
@@ -775,7 +783,8 @@ func draw():
   elif o.kind=="mine_entrance":HoldMineEntrance.draw(g,o.p)
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":
-   world.draw_furnishing(o);HoldCalendar.decorate(g,o)
+   world.draw_furnishing(o);HoldCalendar.decorate(g,o);HoldForge147.draw_stock(g,o)
+  elif o.kind=="forge147_furnace":HoldForge147.draw_furnace(g,o.p)
   elif o.kind=="royal_prop":HoldRoyalStage.draw_prop(g,o,g.clock)
   elif o.kind=="royal_guide":
    HoldDrawnAnimation.paint(g,o.p-cam,g.state.npc("ivar"),Vector2.UP,false,0,.85,-cam)
@@ -793,7 +802,7 @@ func draw():
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
   elif o.kind=="npc":
    if o.id=="eirik":HoldRoyalStage.draw_actor(g,HoldRoyalStage.current(g))
-   elif o.id=="borin" and g.room_id=="forge":
+   elif o.id=="borin" and (g.room_id=="forge" or HoldForge147.active(g)):
     A.draw_offset=-cam;HoldNpcActivity.smith(g,o.p,g.clock,g.state.opening>=2);A.draw_offset=Vector2.ZERO
    elif g.room_id=="tavern":
     A.draw_offset=-cam;HoldNpcActivity.social(g,o.p,g.clock+(0 if o.id=="hedrik" else posmod(hash(o.id),11)),-1,g.state.npc(o.id),true);A.draw_offset=Vector2.ZERO
@@ -801,7 +810,12 @@ func draw():
    g.draw_set_transform(-cam);
   elif o.kind=="wall":house.wall_draw(o.c)
   elif o.kind=="tree":draw_fir(o.p,int(o.i))
-  else:furniture(o.p,o.kind)
+  elif o.kind=="hearth" and HoldForge147.active(g) and g.state.opening<2:
+   var spec=HoldFurnishings.geometry("hearth")
+   g.draw_texture_rect_region(HoldFurnishings.ATLAS,HoldFurnishings.silhouette("hearth",o.p),HoldFurnishings.CROPS[spec.art],Color(.22,.25,.28))
+  else:
+   furniture(o.p,o.kind)
+   if o.kind=="worktable":HoldForge147.draw_stock(g,{"p":o.p,"furnishing":"worktable"})
  if g.handworks.working:
   var station=g.handworks.facility()
   if not station.is_empty() and not station.job.is_empty():

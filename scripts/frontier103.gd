@@ -32,6 +32,7 @@ static func begin(g):
  # Move the starter chest; no inventory replacement or second private stash.
  s.surface.chests["keldrath:quarters"].area=quarters(s)
 static func near(g,key:String)->bool:
+ if key=="forge":return HoldForge147.near(g)
  return active(g.state) and g.zone!="mine" and g.surface.area==room(g.state,key) and g.player.distance_to(Vector2(480,500))<110
 static func points(g)->Array:
  if not active(g.state):return []
@@ -47,7 +48,9 @@ static func points(g)->Array:
  elif g.surface.area==quarters(s):
   out.append({"p":HoldFurnishings.bedside(Vector2(290,420)),"name":"Your bed · rest and save","action":"rest","bed":Vector2(290,420)})
  for key in (["forge","survey","watch","stores"] if data(s).get("storehouse",false) else ["forge","survey","watch"]):
-  if g.surface.area==room(s,key):out.append(g.surface.spot(480,500,{"forge":"Communal forge · smelt and craft","survey":"Survey desk · research and town plan","watch":"Watch stores · buy and sell","stores":"Community stores · buy and sell"}[key],"frontier103"))
+  if g.surface.area!=room(s,key):continue
+  if key=="forge":out.append_array(HoldForge147.points(g))
+  else:out.append(g.surface.spot(480,500,{"survey":"Survey desk · research and town plan","watch":"Watch stores · buy and sell","stores":"Community stores · buy and sell"}[key],"frontier103"))
  return out
 static func permit(g)->bool:
  var s=g.state
@@ -112,6 +115,8 @@ static func panel(g):
  var s=g.state
  if near(g,"forge") and s.opening<2:
   HoldLedger137.forge_panel(g);return
+ if near(g,"forge"):
+  HoldForge147.panel(g);return
  if near(g,"lodge") and HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_shift_book_open",false)):
   HoldMenuView.illustrated_text(g.panel_body,"stone","Ivar’s shift book","A worn page records the crews working at Old Workings. Ivar has set aside the western rack and stonebreaker for your first load.")
   g.label(g.panel_body,"Speak with Ivar by the hearth, then follow the northern path to the mine. Your journal (J) will help when you get there.",16)
@@ -149,19 +154,6 @@ static func panel(g):
    HoldMenuView.illustrated_text(g.panel_body,"wood","Your household plot","Follow the east road. O opens building plans. Build a home with a bed and a nearby lamp or hearth, then register it here.")
    var b=g.button(g.panel_body,"Register my finished home · 60 marks",func():finish_home(g);g.refresh_panel())
    b.disabled=data(s).home_reward or not home_ready(g)
- elif near(g,"forge"):
-  g.label(g.panel_body,"Bring ore and coal. Ivar's first coal commission relights this communal hearth. The toolwright's methods and fittings are shared with the whole town.",16)
-  var tool=g.button(g.panel_body,"Forge steel pick · 5 iron + 2 timber",func():
-   if transact(g,"tool","steel"):g.save_game();g.notify("Steel pick forged · stronger contacts and basalt access.");g.refresh_panel())
-  tool.disabled=s.opening<2 or s.steel or not s.tech.has("extraction") or not s.afford({"iron":5,"wood":2})
-  if not s.steel:g.label(g.panel_body,"First research Tempered steel at Stonebridge's survey desk.",14)
-  g.button(g.panel_body,"Forge weapons and armor",func():g.gear_tab="forge";g.open_panel("equipment"))
-  for id in HoldData.RECIPES:
-   var r=HoldData.RECIPES[id]
-   var b=g.button(g.panel_body,r.name+" · "+HoldData.cost_text(r.cost),func():
-    if transact(g,"craft",id):g.save_game();g.refresh_panel())
-   b.disabled=s.opening<2 or not s.afford(r.cost) or HoldCollections141.recipe_reason(s,id)!="" or s.queue.size()>=12
-   if HoldCollections141.recipe_reason(s,id)!="":b.tooltip_text=HoldCollections141.recipe_reason(s,id)
  elif near(g,"survey"):
   g.label(g.panel_body,"Edda keeps the surveys here. The upper archive is reached by the hall's stairs; its floor and rooms use the same construction plans available to you. Ancestral privileges require authenticated evidence, not a surname.",16)
   for id in HoldData.RESEARCH:

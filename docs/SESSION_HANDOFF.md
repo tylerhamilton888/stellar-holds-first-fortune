@@ -1,3 +1,9 @@
+# Forge147 — workshop update (0.104.0, in validation)
+
+The public forge uses an illustrated cold/restored hearth, visible workstation interactions, Borin's existing smith animation and locally rendered stock. Existing room geometry, saved furnishings and chests are retained. Check the forge147, frontier103, ledger137, opening146 and equipment93 cases, review gameplay-scale views, then complete hosted validation and the verified release workflow. Do not claim a Windows build until publication succeeds.
+
+Windows 0.103.0 is published ([release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42633939330)); the older notes below are historical.
+
 # Opening146 — source work in progress (0.103.0)
 
 New Game now opens with a skippable Stonebridge arrival using the existing road painting and the actual bunkhouse. The current beat is saved; new games resume it after loading, while saves predating the change never receive it. Ivar, Rurik, Sigrid and Skarrin have a quieter first-act dialogue pass. Before the first wage the journal, shift book and Ledger introduce one thing at a time; players can still browse the full books. Until the Cold Forge is restored, other town projects are available in a disclosure. Existing progression and contributions remain in their existing owners.

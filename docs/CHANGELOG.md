@@ -1,3 +1,7 @@
+# 0.104.0 — A working communal forge (in validation)
+
+Added a visible hearth that changes with the Cold Forge project, a working smith, workshop stock, and distinct smelting and metalwork interaction points. Existing furniture, stored goods and room geometry remain intact.
+
 # 0.103.0 — A first morning in Stonebridge (in progress)
 
 New fortunes begin with a skippable, resumable arrival on the road and in the bunkhouse. Ivar, Rurik, Sigrid and Skarrin speak with more individual voices. The first journal, shift book and Hold's Ledger introduce the first shift and Cold Forge before presenting the wider town projects; curious players may still browse them. Existing fortunes and progress are preserved.
