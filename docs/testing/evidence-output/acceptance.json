@@ -1,0 +1,46 @@
+{
+  "scope": "Image-evidence output safety; no game runtime, artwork or save changes",
+  "tested_source_tree": "eb62c144bb6c5b1b2e89c73772bae331b10a0bc6",
+  "python_tests": {
+    "passed": 28,
+    "command": "python3 -m unittest discover -s tools -p 'test_*.py' -q"
+  },
+  "native_cases": [
+    {
+      "test": "loading",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 19,
+      "seconds": 67.5
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "checks": 23,
+      "seconds": 60.49
+    }
+  ],
+  "native_assertions": 42,
+  "image_inspection": {
+    "png_count": 2,
+    "dimensions": [
+      1920,
+      1050
+    ],
+    "png_bytes": 3953476,
+    "frame_records": 224,
+    "stdout_bytes": 81
+  },
+  "hosted_validation": {
+    "passed": false,
+    "observed_error": "Internal server error",
+    "observed_error_run": 42672964773,
+    "correlation_id": "fa9e0c33-c5b7-48fa-98be-548dad45c28c",
+    "latest_failed_run": 42673911262,
+    "note": "Hosted failure is not a test pass. Merge requested by owner; complete selected checks were run locally. No gate or branch rule was disabled."
+  },
+  "recovery_note": "This removes encoded-image log dumps, but does not repair rejected ChatGPT conversations or establish every rejection cause."
+}
