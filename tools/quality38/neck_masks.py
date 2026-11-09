@@ -2,6 +2,10 @@
 Portrait contours use the 512-pixel painting's coordinates. Sprite contours use
 per-pose eye landmarks. Warm neck shadows cannot inherit a hair material label.
 """
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from output_safety import emit
 from pathlib import Path
 import json
 import numpy as np
@@ -70,14 +74,14 @@ def run():
   Image.fromarray((guard*255).round().astype('uint8')).save(backup/f'{id}-protected.png')
   labels=np.array([1,3,4,5],np.uint8)[corrected.argmax(2)];labels[corrected.max(2)==0]=0
   (portraits/f'{id}.mask').write_bytes(labels.tobytes())
-  print(id,'portrait hair pixels restored:',int(((w[:,:,0]-corrected[:,:,0])>.01).sum()))
+  emit(id,'portrait hair pixels restored:',int(((w[:,:,0]-corrected[:,:,0])>.01).sum()))
  for key,info in meta.items():
   if key.endswith('portrait'):continue
   p=masks/f'{key}.mask';saved=backup/p.name
   if not saved.exists():saved.write_bytes(p.read_bytes())
   im=Image.open(actors/f'{key}.png').convert('RGBA');m=np.frombuffer(saved.read_bytes(),np.uint8).reshape(im.height,im.width).copy()
   guard=sprite_guard(key,im,info);sel=guard&(m==1);count+=int(sel.sum());m[sel]=3;p.write_bytes(m.tobytes())
- print('Sprite neck pixels restored:',count)
+ emit('Sprite neck pixels restored:',count)
  # Walking geometry stays byte-for-byte unchanged. Transfer the protected neck
  # from the canonical head into the already baked frame's material map only.
  from scipy.ndimage import map_coordinates
@@ -91,5 +95,5 @@ def run():
   path=ROOT/'assets/walk-v37'/f'{name}.mask';saved=backup/f'walk-{name}.mask'
   if not saved.exists():saved.write_bytes(path.read_bytes())
   mask=np.frombuffer(saved.read_bytes(),np.uint8).reshape(336,336).copy();sel=placed&(mask==1);walk_count+=int(sel.sum());mask[sel]=3;path.write_bytes(mask.tobytes())
- print('Baked walk neck pixels restored:',walk_count)
+ emit('Baked walk neck pixels restored:',walk_count)
 if __name__=='__main__':run()

@@ -92,6 +92,12 @@ class PipelineTests(unittest.TestCase):
             reports = copy.deepcopy(self.reports); mutate(reports[0]['results'])
             with self.subTest(), self.assertRaises(ValueError): self.gate(reports)
 
+    def test_error_count_blocks_publication_even_without_samples(self):
+        reports = copy.deepcopy(self.reports)
+        reports[0]['results'][0]['error_count'] = 100000
+        with self.assertRaises(ValueError):
+            self.gate(reports)
+
     def test_dirty_or_different_source_fail(self):
         with self.assertRaises(ValueError): verify_build(self.root, 'wrong')
         self.build['dirty'] = True

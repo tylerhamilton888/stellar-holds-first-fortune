@@ -11,6 +11,6 @@ Read this file and CURRENT_STATUS.md only at recovery. Follow AGENTS.md. Update 
 
 ## Next action
 
-Finish the bounded-output tooling fix, then resume the forge from PR #140 only when directed. Preserve its artwork, save compatibility and existing work. Do not repeat completed checks merely because a chat failed. No gameplay or release changes belong in the output-tooling patch.
+PR #141 is merged. Complete and validate the follow-up output-safety sweep, then incorporate these safeguards into the older forge branch before resuming PR #140 when directed. Preserve its artwork, save compatibility and existing work. Do not repeat completed checks merely because a chat failed. No gameplay or release changes belong in the output-tooling patch.
 
 Use `tools/capture_command.py` for import, tests, export and other potentially noisy commands. Keep full evidence in files, inspect narrow excerpts, and transfer source/assets with local Git. Never send image/archive bytes or large whole source files through conversational tool arguments.

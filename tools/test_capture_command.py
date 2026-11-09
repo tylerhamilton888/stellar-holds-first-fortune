@@ -57,6 +57,14 @@ class CaptureCommandTests(unittest.TestCase):
             self.assertEqual(result.returncode, 127)
             self.assertTrue(json.loads(result.stdout)['launch_failed'])
 
+    def test_nonfinite_timeout_is_rejected_before_starting_child(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            log = Path(tmp) / 'invalid.log'
+            for value in ('nan', 'inf', '-inf', '0'):
+                result = self.run_capture(log, "print('must not run')", '--timeout='+value)
+                self.assertEqual(result.returncode, 2)
+                self.assertFalse(log.exists())
+
 
 if __name__ == '__main__':
     unittest.main()

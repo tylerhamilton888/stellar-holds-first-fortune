@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Conservative PR test selection. Unmapped runtime changes require full coverage."""
+from output_safety import emit
 import argparse
 import json
 import math
@@ -43,7 +44,7 @@ def plan(paths, manifest, force_full=False):
             if domains[path] == 'work132':
                 selected.update(manifest['suites']['restoration139'])
             reasons.append(f'{path}: {domains[path]} integration group')
-        elif path == 'tools/check.py' or path == 'tools/plan_validation.py':
+        elif path in ('tools/check.py', 'tools/plan_validation.py', 'tools/output_safety.py'):
             selected.update(SMOKE)
             reasons.append(f'{path}: runner/planner startup and save checks')
         elif path.startswith(('tools/', '.github/workflows/')):
@@ -78,6 +79,7 @@ def main():
     parser.add_argument('--base')
     parser.add_argument('--head', default='HEAD')
     parser.add_argument('--full', action='store_true')
+    parser.add_argument('--output', type=Path, default=Path('test-results/validation-plan.json'))
     args = parser.parse_args()
     manifest = json.loads((ROOT / 'tests/suites.json').read_text())
     try:
@@ -86,7 +88,11 @@ def main():
     except (subprocess.CalledProcessError, UnicodeError):
         result = plan([], manifest, True)
         result['reasons'].append('Diff unavailable; full source coverage')
-    print(json.dumps(result, indent=2))
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    (args.output.parent / '.gdignore').touch()
+    args.output.write_text(json.dumps(result, indent=2) + '\n')
+    emit(json.dumps(dict(mode=result['mode'], case_count=len(result['cases']),
+                         run_gameplay=result['run_gameplay'])))
     if os.environ.get('GITHUB_OUTPUT'):
         with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
             out.write('matrix=' + json.dumps(result['matrix']) + '\n')
@@ -94,7 +100,7 @@ def main():
     if os.environ.get('GITHUB_STEP_SUMMARY'):
         with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
             out.write(f"Validation: **{result['mode']}**, {len(result['cases'])} source cases.\n\n")
-            out.write('\n'.join('- ' + reason for reason in result['reasons']) + '\n')
+            out.write('Detailed selection and reasons are in the validation-plan artifact.\n')
 
 
 if __name__ == '__main__':

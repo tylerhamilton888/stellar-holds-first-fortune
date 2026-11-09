@@ -2,6 +2,10 @@
 No color classification is run during gameplay. Face-edge dark gold and braid
 ends are explicitly included; the former pipeline confused both with skin.
 """
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from output_safety import emit
 from pathlib import Path
 import numpy as np,json
 from scipy.ndimage import binary_propagation, binary_fill_holes, label, maximum_filter
@@ -111,4 +115,4 @@ for path in RAW.glob('*.png'):
  # Actual neutral-render diagnostic, preserving source luminance and alpha.
  z=a.copy();sel=m==1;shade=np.clip(v/.82,0,1.22);z[sel,:3]=np.clip(shade[sel,None]*np.array([40,41,54]),0,255).astype('uint8')
  Image.fromarray(z).save(RAW/f'{path.stem}.review.png')
-print('Compiled',len(list(MASK.glob('*.mask'))),'high-detail material maps')
+emit('Compiled',len(list(MASK.glob('*.mask'))),'high-detail material maps')

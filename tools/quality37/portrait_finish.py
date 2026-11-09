@@ -1,4 +1,8 @@
 """Final garment silhouette and exposed scalp coverage for the portrait painter."""
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from output_safety import emit
 import numpy as np
 from PIL import Image,ImageDraw,ImageFilter
 OUTLINES={
@@ -33,4 +37,4 @@ if __name__=='__main__':
  for p in root.glob('*.coverage'):
   im=Image.open(p.with_suffix('.png')).convert('RGBA');w=np.fromfile(p,np.uint8).reshape((512,512,4)).astype(float)/255
   w=refine(p.stem,im,w);p.write_bytes((w*255).round().astype('uint8').tobytes())
- print('Finished ten portrait garment silhouettes and scalp coverage')
+ emit('Finished ten portrait garment silhouettes and scalp coverage')

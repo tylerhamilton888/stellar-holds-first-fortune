@@ -1,6 +1,6 @@
 # Bounded command capture
 
-Use `python3 tools/capture_command.py --log test-results/<unique-task>/runner.log --timeout 1800 -- <test command>` during conversational work. The original command's nonzero status remains a failure; read selected diagnostics from the log. The tooling suite includes multi-megabyte output preservation, failure, timeout, launch-error and no-overwrite coverage. No native or release acceptance gate is relaxed.
+Use `python3 tools/capture_command.py --log test-results/<unique-task>/runner.log --timeout 1800 -- <test command>` during conversational work. The original command's nonzero status remains a failure; read selected diagnostics from the log. The tooling suite includes multi-megabyte output preservation, failure, timeout, launch-error and no-overwrite coverage. No native or release acceptance gate is relaxed. The output-safety tests enforce console budgets, compact error reports, persisted complete plans, CI capture and document budgets. Read diagnostic artifacts through `tools/read_diagnostics.py`; do not dump whole results/logs on failure.
 
 # Image-evidence output regression checks
 

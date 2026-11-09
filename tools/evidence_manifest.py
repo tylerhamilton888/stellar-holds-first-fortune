@@ -1,4 +1,5 @@
 """Keep visual evidence in files and command output independent of image size."""
+from output_safety import emit
 import json
 from pathlib import Path
 
@@ -10,5 +11,5 @@ def write_manifest(paths, destination):
     entries = [{'path': str(path), 'bytes': path.stat().st_size}
                for path in paths if path.is_file()]
     destination.write_text(json.dumps({'files': entries}, indent=2) + '\n')
-    print(f'Visual evidence: {len(entries)} files; manifest: {destination}')
+    emit(f'Visual evidence: {len(entries)} files; manifest: {destination}')
     return entries

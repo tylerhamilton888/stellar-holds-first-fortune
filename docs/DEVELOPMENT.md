@@ -1,6 +1,6 @@
 ## Bound all conversational payloads
 
-Follow [CONVERSATION_OUTPUT.md](CONVERSATION_OUTPUT.md). Use `tools/capture_command.py` for potentially noisy commands; inspect short diagnostics from its saved log. Keep large inputs local too: source/assets use Git or file uploads, not encoded tool-call arguments. Filter API responses inside code before emitting metadata. Current status/handoff are replaced in place and kept below 4,000 bytes each; historical documents are not startup reading.
+Follow [CONVERSATION_OUTPUT.md](CONVERSATION_OUTPUT.md). Use `tools/capture_command.py` for potentially noisy commands and `tools/read_diagnostics.py` for saved-log excerpts. Production tools use `output_safety.emit`; the standard tooling suite enforces known output patterns and current-document size limits. Keep large inputs local too: source/assets use Git or file uploads, not encoded tool-call arguments. Filter API responses inside code before emitting metadata. Current status/handoff are replaced in place and kept below 4,000 bytes each; historical documents are not startup reading.
 
 ## Keep image data out of conversation and job logs
 

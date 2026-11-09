@@ -1,7 +1,7 @@
 # Development validation and release gates
 
 Routine PRs run tooling safety tests and a reviewed selection of native cases.
-`tools/plan_validation.py` prints the selection and reason for each changed path
+`tools/plan_validation.py` saves the selection and reasons to `test-results/validation-plan.json` and prints only mode/count metadata
 into the Actions summary. Every selected case runs once in up to four workers.
 The stable `validation` job fails if planning or any required worker fails.
 There is no duplicate people-preview job and no second automatic run on merge.

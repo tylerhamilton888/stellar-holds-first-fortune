@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Test release orchestration
-        run: python3 -m unittest discover -s tools -p 'test_*.py' -v
+        run: python3 tools/capture_command.py --log test-results/console-1.log --timeout 3600 -- python3 -m unittest discover -s tools -p 'test_*.py' -v
       - name: Check version and preserve existing releases
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')
         env:
@@ -32,10 +32,19 @@ jobs:
           fi
       - name: Install verified engine and Windows runtime
         run: |
-          python3 tools/install_engine.py "$RUNNER_TEMP/godot"
-          python3 tools/install_windows_runtime.py "$RUNNER_TEMP/windows_release_x86_64.exe"
+          python3 tools/capture_command.py --log test-results/console-2.log --timeout 3600 -- python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+          python3 tools/capture_command.py --log test-results/console-3.log --timeout 3600 -- python3 tools/install_windows_runtime.py "$RUNNER_TEMP/windows_release_x86_64.exe"
       - name: Build one complete Windows ZIP
-        run: python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
+        run: python3 tools/capture_command.py --log test-results/console-4.log --timeout 3600 -- python3 tools/build.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --windows-runtime "$RUNNER_TEMP/windows_release_x86_64.exe" --output "$RUNNER_TEMP/windows-build"
+      - name: Retain build diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: build-diagnostics-${{ github.run_id }}
+          path: |
+            test-results/
+            ${{ runner.temp }}/windows-build/*.log
+          retention-days: 7
       - name: Share immutable candidate with all test runners
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -58,16 +67,16 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Install pinned official engine
-        run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+        run: python3 tools/capture_command.py --log test-results/console-5.log --timeout 3600 -- python3 tools/install_engine.py "$RUNNER_TEMP/godot"
       - name: Full native coverage of this exact release source
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
-        run: xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite ${{ matrix.suite }} --output test-results/source
+        run: python3 tools/capture_command.py --log test-results/console-6.log --timeout 3600 -- xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite ${{ matrix.suite }} --output test-results/source
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: source-proof-${{ github.run_id }}-${{ matrix.suite }}
-          path: test-results/source
+          path: test-results/
           if-no-files-found: error
           retention-days: 7
 
@@ -91,14 +100,14 @@ jobs:
           name: windows-candidate-${{ github.run_id }}
           path: candidate
       - name: Verify candidate bytes and extract the tested PCK
-        run: python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --extract-pack
+        run: python3 tools/capture_command.py --log test-results/console-7.log --timeout 3600 -- python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --extract-pack
       - name: Install verified engine
-        run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+        run: python3 tools/capture_command.py --log test-results/console-8.log --timeout 3600 -- python3 tools/install_engine.py "$RUNNER_TEMP/godot"
       - name: Run disjoint exact-package tests
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
           SHARD: ${{ matrix.shard }}
-        run: xvfb-run -a python3 tools/check_pack.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --pack candidate/FirstFortune.pck --output "test-results/pack-$SHARD" --shard-count 4 --shard-index "$SHARD" --source-sha "$GITHUB_SHA"
+        run: python3 tools/capture_command.py --log test-results/console-9.log --timeout 3600 -- xvfb-run -a python3 tools/check_pack.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --pack candidate/FirstFortune.pck --output "test-results/pack-$SHARD" --shard-count 4 --shard-index "$SHARD" --source-sha "$GITHUB_SHA"
       - name: Retain complete shard proof and visual evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -131,11 +140,11 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
           pattern: source-proof-${{ github.run_id }}-*
-          path: test-results/source
+          path: test-results/
       - name: Require every case exactly once against identical bytes
         run: |
-          python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --reports test-results/shards --shard-count 4 --output test-results/release-summary.json
-          cat test-results/release-summary.json >> "$GITHUB_STEP_SUMMARY"
+          python3 tools/capture_command.py --log test-results/console-10.log --timeout 3600 -- python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --reports test-results/shards --shard-count 4 --output test-results/release-summary.json
+          echo "Complete verification receipt is in the release evidence artifact." >> "$GITHUB_STEP_SUMMARY"
           tar -czf verification-evidence.tar.gz test-results
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -147,6 +156,13 @@ jobs:
           compression-level: 0
           retention-days: 7
           overwrite: true
+      - name: Retain verify diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: verify-diagnostics-${{ github.run_id }}
+          path: test-results/console-*.log
+          retention-days: 7
 
   publish:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')
@@ -176,9 +192,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --summary evidence/test-results/release-summary.json
+          python3 tools/capture_command.py --log test-results/console-11.log --timeout 3600 -- python3 tools/verify_release.py --candidate candidate --source-sha "$GITHUB_SHA" --summary evidence/test-results/release-summary.json
           VERSION=$(python3 -c 'import json; print(json.load(open("candidate/build.json"))["version"])')
           test "$GITHUB_REF_NAME" = "release/$VERSION"
           gh release create "v$VERSION" "candidate/Stellar-Holds-First-Fortune-$VERSION-Windows.zip" candidate/build.json \
             evidence/verification-evidence.tar.gz evidence/test-results/release-summary.json \
             --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "The Stellar Holds — $VERSION" --notes-file docs/RELEASE_NOTES.md
+      - name: Retain publish diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: publish-diagnostics-${{ github.run_id }}
+          path: test-results/console-*.log
+          retention-days: 7

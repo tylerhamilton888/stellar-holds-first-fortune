@@ -10,6 +10,6 @@ The Living Forge implementation is saved in draft PR #140 on `feature/living-for
 
 The earlier screenshots establish HTTP 413 with `conversation_too_large`. The user reports the same failure again. We have no complete failed-thread tool transcript or rejected request body, so a particular triggering message and the platform's size threshold remain unknown.
 
-The follow-up tooling change captures arbitrary command output to files without echoing failure logs, limits current recovery documents, and covers large tool inputs/API responses as well as stdout. Measurements and limitations: [CONVERSATION_OUTPUT.md](CONVERSATION_OUTPUT.md).
+PR #141 is merged. The follow-up sweep adds bounded console sinks, error-count summaries, file-based validation plans, safe diagnostic excerpts, CI capture/artifacts, and an output-policy test that rejects known regressions. Root cause of the platform rejection is still unproven. Measurements and limitations: [CONVERSATION_OUTPUT.md](CONVERSATION_OUTPUT.md).
 
 Update this file in place and keep it below 4,000 UTF-8 bytes. [Prior status and acceptance records](history/CURRENT_STATUS-2026-11-09.md) are preserved as history, not current instructions. Use live GitHub metadata and acceptance receipts to resolve stale history.
