@@ -6,6 +6,7 @@ into the Actions summary. Every selected case runs once in up to four workers.
 The stable `validation` job fails if planning or any required worker fails.
 There is no duplicate people-preview job and no second automatic run on merge.
 
+- Agent instructions (AGENTS.md) are documentation; they do not suppress tests for accompanying runtime changes.
 - Documentation and release-tooling changes run Python safety tests, without a game export.
 - Registered test changes run those cases plus startup and first-visit save/load.
 - Ledger/campaign/restoration changes use the restoration integration group plus startup/save checks. Work/production changes include both the work and restoration groups.

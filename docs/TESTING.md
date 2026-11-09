@@ -1,3 +1,7 @@
+# Image-evidence output regression checks
+
+Run the Python tooling suite. Evidence tests cover multi-megabyte files, 300 screenshots, missing evidence, unchanged source bytes, and output below 512 bytes. For the real renderer, run tools/inspect_folk82.py with stdout redirected to a file, verify both PNGs and the 224 frame-selection records, and report only their paths/counts/sizes. Never paste encoded images or complete historical job logs into a chat.
+
 # Opening146
 
 The opening146 case covers an actual New Game, saved scene beat/resume, skipping, old saves without the new field, first journal, early books and optional access to wider projects. The opening146 suite includes firstvisit99, lodge100, polish135, ledger137, civic145, greatclaim102 and mountain104 for contribution and established-save rescue visibility. Review road, Ivar, first-journal and ledger captures at gameplay scale; human pacing and Windows audio/performance remain separate.

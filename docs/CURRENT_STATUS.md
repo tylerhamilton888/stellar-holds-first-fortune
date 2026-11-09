@@ -1,3 +1,7 @@
+# Image-evidence workflow safety
+
+Removed image-to-base64 log output from all three legacy evidence scripts. Evidence remains in PNG files and JSON manifests; the character inspection workflow uploads an artifact. Local tooling checks pass (28 tests), including multi-megabyte evidence and 300-image collections with bounded stdout and unchanged source bytes. Selected native startup and save/load checks pass all 42 assertions. AGENTS.md and development/testing guides require bounded output and file-based image transfer. Hosted validation encountered a GitHub internal server error; local acceptance is recorded in docs/testing/evidence-output/acceptance.json. The real character inspection saved two valid 1920x1050 PNGs (3,953,476 bytes total) and 224 frame records with only 81 bytes of stdout. No game runtime or release change. ChatGPT's observed conversation_too_large rejection is confirmed externally; a causal link to a particular script is not established.
+
 # Opening146 — source work in progress (0.103.0)
 
 A new skippable, resumable Stonebridge arrival leads into the bunkhouse and first shift. Ivar, Rurik, Sigrid and Skarrin have revised dialogue; early journal, shift book and Ledger explain their purpose gradually while retaining access to the complete books. Existing saves do not replay the introduction. The opening146 suite and hosted validation must pass before integration. Windows 0.102.2 remains published; normal-speed pacing, writing and Windows audio/performance need human playtesting.

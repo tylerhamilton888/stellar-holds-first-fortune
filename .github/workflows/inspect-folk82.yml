@@ -1,5 +1,6 @@
 name: Character source inspection
 on:
+  workflow_dispatch:
   push:
     branches: [feature/folk82]
     paths: [tools/inspect_folk82.py]
@@ -13,3 +14,10 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - run: python3 -m pip install Pillow
       - run: python3 tools/inspect_folk82.py
+      - name: Save visual evidence as files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: folk82-inspection-${{ github.run_id }}
+          path: test-results/folk82-inspection/
+          if-no-files-found: error
+          retention-days: 7

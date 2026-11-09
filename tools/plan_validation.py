@@ -33,7 +33,7 @@ def plan(paths, manifest, force_full=False):
     test_paths = {v['script']: k for k, v in known.items()}
     domains = {path: suite for suite, files in DOMAINS.items() for path in files}
     for path in sorted(set(paths)):
-        if path.startswith('docs/') or path in ('SESSION_HANDOFF.md', 'README.md'):
+        if path.startswith('docs/') or path in ('AGENTS.md', 'SESSION_HANDOFF.md', 'README.md'):
             continue
         if path in test_paths:
             selected.add(test_paths[path])

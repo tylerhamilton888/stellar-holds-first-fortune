@@ -1,3 +1,7 @@
+# Image-evidence hazard — addressed
+
+Legacy image tools no longer print encoded image payloads. Preserve the file/artifact workflow and bounded-output guidance in docs/DEVELOPMENT.md. Further chat-size failures require platform diagnostics; do not assume this change repairs rejected threads or proves the original trigger.
+
 # Opening146 — playtest next
 
 Test the new Stonebridge introduction and first shift with a new player. Note confusing directions, excessive text, rushed reveals, character voice and whether the Cold Forge and other projects emerge naturally. Continue later-character dialogue polish only in response to review; the first-act pass is not a complete rewrite of every character.
