@@ -1,3 +1,7 @@
+# Development tooling — bounded image evidence (2026-11-09)
+
+Replaced base64 image log dumps with PNG files and path/size manifests. Character inspection retains its rendered sheets and frame metadata as a downloadable Actions artifact. Added regression checks for bounded output and original-byte preservation, and documented safe image transfer after a reported conversation-size rejection. No game version or save changes.
+
 # 0.103.0 — A first morning in Stonebridge (in progress)
 
 New fortunes begin with a skippable, resumable arrival on the road and in the bunkhouse. Ivar, Rurik, Sigrid and Skarrin speak with more individual voices. The first journal, shift book and Hold's Ledger introduce the first shift and Cold Forge before presenting the wider town projects; curious players may still browse them. Existing fortunes and progress are preserved.

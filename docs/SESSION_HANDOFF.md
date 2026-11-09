@@ -1,3 +1,7 @@
+# Workflow safety — image evidence
+
+Before visual review or GitHub upload, follow the bounded-output rule at the top of docs/DEVELOPMENT.md. Never print encoded images or archives into chat/tool logs. The three legacy image-evidence scripts now keep image bytes in files; the inspection workflow uploads PNG/JSON artifacts. Read manifests and short summaries instead of historical base64 log chunks. This tooling change is independent of the forge work and does not change the game release.
+
 # Opening146 — source work in progress (0.103.0)
 
 New Game now opens with a skippable Stonebridge arrival using the existing road painting and the actual bunkhouse. The current beat is saved; new games resume it after loading, while saves predating the change never receive it. Ivar, Rurik, Sigrid and Skarrin have a quieter first-act dialogue pass. Before the first wage the journal, shift book and Ledger introduce one thing at a time; players can still browse the full books. Until the Cold Forge is restored, other town projects are available in a disclosure. Existing progression and contributions remain in their existing owners.
