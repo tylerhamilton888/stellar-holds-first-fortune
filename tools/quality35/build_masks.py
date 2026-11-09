@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from output_safety import emit
 from pathlib import Path
 from PIL import Image,ImageFilter
 import numpy as np
@@ -17,7 +21,7 @@ for p in src.glob('*.mask'):
   take=near&(gold|pale)&(m!=1)&(m!=4)&(m!=5)&(a[:,:,3]>114)
   m[take]=1;added|=take
  (out/p.name).write_bytes(m.tobytes());counts[p.stem]=int(added.sum())
-print('Expanded edge coverage in',sum(v>0 for v in counts.values()),'of',len(counts),'masks;',sum(counts.values()),'pixels')
+emit('Expanded edge coverage in',sum(v>0 for v in counts.values()),'of',len(counts),'masks;',sum(counts.values()),'pixels')
 # Diagnostic exact source overlays: green existing hair, red newly included fringe.
 canvas=Image.new('RGB',(192*5,212*2),'#172833')
 for idx,id in enumerate([f'{g}{i}' for g in ['male','female'] for i in range(5)]):

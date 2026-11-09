@@ -1,5 +1,9 @@
 """Offline full-frame walk baker. Continuous textured leg meshes, planted-foot
 trajectory, and an invariant foot root. Gameplay only draws complete frames."""
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from output_safety import emit
 from pathlib import Path
 import numpy as np,math,json
 from scipy.ndimage import map_coordinates,maximum_filter,label
@@ -131,6 +135,6 @@ for gender in range(2):
     eye_world=eye-root+shift;palm_world=hand-root+shift;elbow=np.array(info['elbow'])*.5-root+shift
     anchors[name]={'head':(eye_world+[-7,-8]).tolist(),'neck':(eye_world+[-8,13]).tolist(),'chest':(eye_world+[-14,24]).tolist(),'shoulder':(elbow+[-2,-8]).tolist(),'hand':palm_world.tolist(),'boots':[0,0]}
     gait[name]={'near':near_marks,'far':far_marks,'old':old}
-  print(ident,flush=True)
+  emit(ident,flush=True)
 (OUT/'sockets.json').write_text(json.dumps(anchors));(OUT/'gait.json').write_text(json.dumps(gait))
-print('Baked 320 whole-frame poses at 3x resolution',flush=True)
+emit('Baked 320 whole-frame poses at 3x resolution',flush=True)

@@ -2,6 +2,10 @@
 Coordinates are in a 384px design space; source painting and coverage are sampled
 at 512px together. Keep anatomy and straps outside each hair silhouette.
 """
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from output_safety import emit
 from portrait_finish import refine
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFilter
@@ -148,4 +152,4 @@ for gender in range(2):
   z=a.copy();target=np.array([40,41,54])/255;shade=np.clip(a[:,:,:3].max(2)/.82,0,1.22)
   z[:,:,:3]=a[:,:,:3]*(1-hair[:,:,None])+target*shade[:,:,None]*hair[:,:,None]
   Image.fromarray(np.clip(z*255,0,255).astype('uint8')).save(OUT/f'{ident}-review.png')
-print('Compiled ten anatomically bounded portrait coverages')
+emit('Compiled ten anatomically bounded portrait coverages')

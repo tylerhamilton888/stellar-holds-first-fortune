@@ -3,6 +3,7 @@
 import ast
 from pathlib import Path
 import re
+import subprocess
 from output_safety import emit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,6 +15,12 @@ OUTPUT_OWNERS = {'output_safety.py', 'capture_command.py'}
 
 def violations(root=ROOT):
     failures = []
+    if (root / '.git').exists():
+        tracked = subprocess.check_output(['git', 'ls-files', '-z', '--', 'tools/*.py',
+            '.github/workflows/*.yml', '.github/workflows/*.yaml'], cwd=root, stderr=subprocess.PIPE)
+        for name in tracked.decode().split('\0'):
+            if name and not (root / name).is_file():
+                failures.append(f'tracked policy input missing from checkout: {name}')
     for name, limit in BUDGETS.items():
         path = root / name
         if not path.is_file():

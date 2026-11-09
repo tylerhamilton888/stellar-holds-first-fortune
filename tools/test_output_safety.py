@@ -1,5 +1,6 @@
 """Behavioral flood tests and CI policy tests for known payload regressions."""
 import contextlib
+import ast
 import io
 import json
 from pathlib import Path
@@ -17,6 +18,18 @@ import read_diagnostics
 
 
 class OutputSafetyTests(unittest.TestCase):
+    def test_nested_art_tools_load_output_helper_without_running_artwork(self):
+        for path in (check_output_policy.ROOT / 'tools').glob('*/*.py'):
+            tree = ast.parse(path.read_text())
+            bootstrap = []
+            for node in tree.body:
+                bootstrap.append(node)
+                if isinstance(node, ast.ImportFrom) and node.module == 'output_safety':
+                    namespace = {'__file__': str(path)}
+                    exec(compile(ast.Module(body=bootstrap, type_ignores=[]), str(path), 'exec'), namespace)
+                    self.assertIs(namespace['emit'], output_safety.emit)
+                    break
+
     def test_reader_skips_giant_encoded_line_and_preserves_file(self):
         with tempfile.TemporaryDirectory() as tmp, contextlib.redirect_stdout(io.StringIO()) as stream:
             log = Path(tmp) / 'diagnostics.log'
