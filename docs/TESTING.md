@@ -1,6 +1,6 @@
 # Opening146
 
-The opening146 case covers an actual New Game, saved scene beat/resume, skipping, old saves without the new field, first journal, early books and optional access to wider projects. The opening146 suite includes firstvisit99, lodge100, polish135, ledger137 and civic145. Review road, Ivar, first-journal and ledger captures at gameplay scale; human pacing and Windows audio/performance remain separate.
+The opening146 case covers an actual New Game, saved scene beat/resume, skipping, old saves without the new field, first journal, early books and optional access to wider projects. The opening146 suite includes firstvisit99, lodge100, polish135, ledger137, civic145, greatclaim102 and mountain104 for contribution and established-save rescue visibility. Review road, Ivar, first-journal and ledger captures at gameplay scale; human pacing and Windows audio/performance remain separate.
 
 # Civic145
 

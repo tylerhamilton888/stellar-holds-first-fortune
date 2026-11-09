@@ -112,7 +112,7 @@ static func panel(g):
  var s=g.state
  if near(g,"forge") and s.opening<2:
   HoldLedger137.forge_panel(g);return
- if near(g,"lodge") and HoldFirstVisit99.lodge_intro(s) and not HoldFirstVisit99.data(s).get("rewarded",false) and not bool(g.get_meta("early_shift_book_open",false)):
+ if near(g,"lodge") and HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_shift_book_open",false)):
   HoldMenuView.illustrated_text(g.panel_body,"stone","Ivar’s shift book","A worn page records the crews working at Old Workings. Ivar has set aside the western rack and stonebreaker for your first load.")
   g.label(g.panel_body,"Speak with Ivar by the hearth, then follow the northern path to the mine. Your journal (J) will help when you get there.",16)
   g.small_button(g.panel_body,"Look through the rest of the book",func():g.set_meta("early_shift_book_open",true);g.refresh_panel())

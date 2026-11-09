@@ -11,6 +11,13 @@ const TASKS=[
 static func active(s)->bool:return s.surface.has("first_visit99")
 static func data(s)->Dictionary:return s.surface.get("first_visit99",{})
 static func lodge_intro(s)->bool:return active(s) and bool(data(s).get("lodge_intro",false))
+static func first_morning(s)->bool:
+ if not lodge_intro(s) or data(s).get("rewarded",false) or s.opening>1:return false
+ if int(HoldAncestralClaim.data(s).get("stage",0))>0:return false
+ if HoldFrontier103.active(s):
+  var town=HoldFrontier103.data(s)
+  if town.get("permit",false) or town.get("home_reward",false):return false
+ return true
 static func begin(g):
  var s=g.state
  s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"intro_pending":not g.skip_arrival and g.capture_mode=="","intro_beat":0,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
@@ -190,7 +197,7 @@ static func journal(g):
 
 static func frontier_journal(g):
  var q=data(g.state)
- if not q.get("rewarded",false):
+ if first_morning(g.state):
   HoldWorkView132.summary(g)
   var nav=g.row(g.panel_body)
   g.small_button(nav,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())

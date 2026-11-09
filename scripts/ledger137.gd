@@ -89,7 +89,7 @@ static func forge_panel(g):
  g.button(g.panel_body,"Review the Hold’s Ledger",func():g.open_panel("great_claim102"))
 static func panel(g):
  var s=g.state
- if HoldFirstVisit99.lodge_intro(s) and not HoldFirstVisit99.data(s).get("rewarded",false) and not bool(g.get_meta("early_ledger_open",false)):
+ if HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_ledger_open",false)):
   HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Names and careful columns fill the pages: stone for a wall, lamps for the road, meals for the crews. This is where Stonebridge records work done for the town.")
   g.label(g.panel_body,"Ivar can tell you more after your first shift. Contributions are made here at the great book outside or at the records desk in the bunkhouse. Press M to read it from anywhere.",16)
   g.small_button(g.panel_body,"Browse the projects",func():g.set_meta("early_ledger_open",true);g.refresh_panel())

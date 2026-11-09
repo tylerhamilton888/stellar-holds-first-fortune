@@ -38,4 +38,6 @@ func run():
  check(not is_instance_valid(g.opening_scene),"A completed introduction does not replay on reload")
  var s=g.state;HoldFirstVisit99.data(s).erase("intro_pending");g.save_game();g.start_game(true);settle()
  check(not is_instance_valid(g.opening_scene),"Older saves without intro state do not replay the scene")
+ HoldAncestralClaim.data(g.state).stage=1;g.open_panel("commission")
+ check(has_label("THE MOUNTAIN REMEMBERS") and not has_label("A word with Ivar"),"An established rescue remains visible without a stale first-morning prompt")
  print("OPENING146: %d passed / %d failed" % [passed,failed]);g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)

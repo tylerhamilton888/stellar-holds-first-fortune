@@ -1678,7 +1678,7 @@ func commission_panel(details:bool=false):
   HoldInvasion131.panel(self);button(panel_body,"Useful hands · optional lessons",func():HoldWorkView132.open(self));HoldFriendship130.journal(self);HoldTraditions126.journal(self);return
  if HoldFirstVisit99.active(state) and not details:
   HoldFirstVisit99.journal(self)
-  if HoldFirstVisit99.data(state).get("rewarded",false):HoldTraditions126.journal(self);HoldFriendship130.journal(self);HoldInvasion131.panel(self)
+  if not HoldFirstVisit99.first_morning(state):HoldTraditions126.journal(self);HoldFriendship130.journal(self);HoldInvasion131.panel(self)
   return
  var current=HoldOnboarding.primary(state)
  if current!="":

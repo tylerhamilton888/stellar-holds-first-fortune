@@ -10,7 +10,7 @@ static func summary(g):
  var s=g.state
  if not W.active(s):return
  var q=HoldFirstVisit99.data(s)
- if not q.get("rewarded",false):
+ if HoldFirstVisit99.first_morning(s):
   var box=HoldMenuView.section(g.panel_body,"Your next step")
   var title="A word with Ivar";var hint="Speak with Ivar by the bunkhouse hearth. E talks.";var art="wood"
   if q.get("work_started",false) and g.zone=="mine":
