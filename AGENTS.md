@@ -1,7 +1,11 @@
 # Development instructions
-Read docs/SESSION_HANDOFF.md and docs/CURRENT_STATUS.md first. They point to the current checkpoint. Read only task-relevant files next. Code/assets/test results override historical documentation.
+Read only the current docs/SESSION_HANDOFF.md and docs/CURRENT_STATUS.md first; do not read their history archives by default. They point to the current checkpoint. Read only task-relevant files next. Code/assets/test results override historical documentation.
 
 ## Conversation and evidence size
+
+For import, tests, export and other potentially noisy commands, use `python3 tools/capture_command.py --log test-results/<unique-task>/runner.log --timeout 1800 -- <command>`. It writes full output to a new file and prints metadata only, including on failure. Inspect selected short diagnostic lines afterward. Do not dump logs/results JSON merely because a check failed.
+
+The size rule covers tool INPUTS as well as OUTPUTS: transfer source/assets through local Git or file uploads, never large encoded-content tool arguments. Inspect API responses inside code and return selected metadata; avoid printing full diffs/trees or both text and structured copies. Edit current status/handoff in place; keep each below 4,000 UTF-8 bytes and archive superseded history. See docs/CONVERSATION_OUTPUT.md for measured hazards and limits of this mitigation.
 
 Never print encoded images, base64/data URLs, binary payloads or archives into command logs or chat/tool output. Use image viewers for inspection and file/artifact uploads for transfer. If an API needs base64, encode and pass it inside the execution environment without echoing the request or response body. Artifact quota or upload failure is not permission to dump bytes into logs.
 
