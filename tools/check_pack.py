@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Native checks against the exported pack, from empty working and save directories."""
+from output_safety import emit, error_summary
 import argparse, hashlib, json, os, re, subprocess, tempfile, time
 from pathlib import Path
 
@@ -175,6 +176,7 @@ def main():
     p.add_argument('--shard-count', type=int, default=1)
     p.add_argument('--source-sha', default=os.environ.get('GITHUB_SHA', 'local'))
     p.add_argument('--list-cases', action='store_true')
+    p.add_argument('--list-output', type=Path, help='Write the full case list to this new file')
     a = p.parse_args()
     all_cases = load_cases()
     try:
@@ -182,7 +184,14 @@ def main():
     except ValueError as exc:
         p.error(str(exc))
     if a.list_cases:
-        print(json.dumps([name for name, _, _ in cases])); return
+        listing=json.dumps([name for name, _, _ in cases])
+        if a.list_output:
+            with a.list_output.open('x') as stream: stream.write(listing+'\n')
+            emit('Case list saved; count:',len(cases))
+        elif len(listing.encode()) > 2000:
+            p.error('Case list exceeds console budget; provide --list-output')
+        else: emit(listing)
+        return
     if not all((a.godot, a.pack, a.output)):
         p.error('--godot, --pack and --output are required for execution')
     output = a.output.resolve(); output.mkdir(parents=True, exist_ok=False)
@@ -215,15 +224,14 @@ def main():
                 code = -1
         (output/(name+'.log')).write_text(log)
         match = re.search(re.escape(marker)+r': (\d+) passed / 0 failed', log)
-        errors = [line for line in log.splitlines() if ('SCRIPT ERROR:' in line or line.startswith('ERROR:'))
-                  and not re.search(r'ERROR: \d+ resources still in use at exit', line)]
+        errors, error_count = error_summary(log)
         ok = code == 0 and bool(match) and not errors
-        results.append(dict(test=name, passed=ok, checks=int(match[1]) if match else 0, errors=errors,
+        results.append(dict(test=name, passed=ok, checks=int(match[1]) if match else 0, errors=errors, error_count=error_count,
                             exit_code=code, seconds=round(time.monotonic()-started, 2)))
         record()
-        print(name, 'PASS' if ok else 'FAIL', flush=True)
+        emit(name, 'PASS' if ok else 'FAIL', flush=True)
         if not ok:
-            print(log[-5000:]); raise SystemExit(1)
+            emit('Failure details saved in per-case log; errors:', error_count); raise SystemExit(1)
     report['complete'] = True
     record()
 

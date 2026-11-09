@@ -3,6 +3,7 @@
 Writes frame registration metadata; never edits the generated paintings.
 The source's head/body/boots stay together. No limb or head extraction.
 """
+from output_safety import emit
 from pathlib import Path
 from PIL import Image
 from scipy import ndimage
@@ -46,4 +47,4 @@ for gender in ('male', 'female'):
         })
     result[gender+'-core'] = frames
 (OUTPUT / 'frames.json').write_text(json.dumps(result, indent=2)+'\n')
-print('Measured 48 complete figures; source pixels unchanged.')
+emit('Measured 48 complete figures; source pixels unchanged.')

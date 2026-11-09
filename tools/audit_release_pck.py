@@ -1,3 +1,4 @@
+from output_safety import emit
 from pathlib import Path,PurePosixPath
 import struct,hashlib,json,collections
 import argparse
@@ -23,4 +24,4 @@ with p.open('rb') as f:
 counts=collections.Counter(Path(r['path']).suffix for r in rows)
 for row in rows:assert Path(row['path']).suffix not in ['.exe','.dll','.so','.bat','.cmd','.ps1','.py','.js','.vbs','.gdextension']
 args.inventory.write_text(json.dumps({'count':count,'extensions':dict(counts),'files':rows},indent=2))
-print('All PCK file hashes, bounds and relative paths verified',count);print(counts)
+emit('All PCK file hashes, bounds and relative paths verified',count);emit(counts)

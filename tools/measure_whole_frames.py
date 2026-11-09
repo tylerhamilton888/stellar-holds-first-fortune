@@ -1,4 +1,5 @@
 """Register full-character paintings; source PNGs remain unchanged."""
+from output_safety import emit
 from pathlib import Path
 from PIL import Image
 from scipy import ndimage
@@ -99,7 +100,7 @@ for path in sorted(OUT.glob('*.png')):
  for i,frame in enumerate(frames):
   frame['height']=frames[(i//cols)*cols]['height'] if layout in ('backwalk','axes','repair') or spec.get('row_scale') else standard
  result[path.stem]=frames
- print(path.stem,len(frames),'segmented' if segmented else 'isolated',flush=True)
+ emit(path.stem,len(frames),'segmented' if segmented else 'isolated',flush=True)
 
 if 'female0-corrected' in result:
  for i in list(range(12,16))+list(range(24,28)):

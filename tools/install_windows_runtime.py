@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Fetch only the official 4.4.1 Windows release template; verify before saving."""
+from output_safety import emit
 import hashlib, io, sys, urllib.request, zipfile
 from pathlib import Path
 
@@ -37,6 +38,6 @@ def main():
     if hashlib.sha256(data).hexdigest() != SHA256: raise RuntimeError('Official Windows runtime checksum mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
     if not output.exists(): output.write_bytes(data)
-    print(output)
+    emit(output)
 
 if __name__ == '__main__': main()

@@ -5,6 +5,7 @@ Usage: import_story_world105.py SOURCE ID [core|work]
 Pillow reads alpha bounds only. ImageMagick exports the untouched atlas losslessly.
 Generated sheets require visual review before adding an ID to the runtime cast.
 """
+from output_safety import emit
 import argparse
 import json
 import os
@@ -108,7 +109,7 @@ def main():
         metadata.write_text(json.dumps(frames, separators=(',', ':'))+'\n')
         os.replace(temporary, output/f'{name}.webp')
         os.replace(metadata, output/f'{name}.json')
-    print(f'{name}: {len(frames)} whole frames; activation requires review')
+    emit(f'{name}: {len(frames)} whole frames; activation requires review')
 
 
 if __name__ == '__main__':

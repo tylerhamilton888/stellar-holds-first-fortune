@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """Build one complete Windows ZIP using the pinned engine and unchanged official runtime."""
+if __package__:
+    from .output_safety import emit
+else:
+    from output_safety import emit
 import argparse, hashlib, json, os, re, shutil, subprocess, sys, tempfile, zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -11,7 +15,12 @@ def metadata():
     return dict(re.findall(r'^const (\w+)="([^"]+)"', (ROOT/'scripts/build_info.gd').read_text(),re.M))
 
 def command(engine,args,log):
-    p=subprocess.run([engine,'--headless','--path',str(ROOT),*args],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=900)
+    try:
+        p=subprocess.run([engine,'--headless','--path',str(ROOT),*args],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=900)
+    except subprocess.TimeoutExpired as exc:
+        raw=exc.stdout or b''
+        log.write_bytes(raw if isinstance(raw,bytes) else raw.encode())
+        raise RuntimeError('Godot timed out; partial output saved in build log') from None
     log.write_text(p.stdout)
     errors=[line for line in p.stdout.splitlines() if ('SCRIPT ERROR:' in line or line.startswith('ERROR:'))
             and not re.search(r'ERROR: \d+ resources still in use at exit',line)]
@@ -25,7 +34,7 @@ def main():
     args=parser.parse_args(); info=metadata(); out=args.output.resolve()
     engine=str(Path(args.godot).resolve()) if Path(args.godot).exists() else args.godot
     actual=subprocess.check_output([engine,'--version'],text=True).strip()
-    if not actual.startswith(info['ENGINE']+'.stable.'):raise RuntimeError('Wrong engine: '+actual)
+    if not actual.startswith(info['ENGINE']+'.stable.'):raise RuntimeError('Wrong engine; expected pinned stable version')
     expected='b493c1d53fb915f7805f360cfe42d1c3126e720dfc234a4b0f2feb99200f9a4b'
     if sha(args.windows_runtime)!=expected:raise RuntimeError('Windows runtime does not match verified official 4.4.1 template')
     out.mkdir(parents=True,exist_ok=False)
@@ -50,5 +59,5 @@ def main():
     with zipfile.ZipFile(archive) as z:
         if z.testzip() is not None:raise RuntimeError('ZIP integrity failure')
     report=dict(version=info['VERSION'],commit=commit,dirty=dirty,engine=actual,files=hashes,zip_sha256=sha(archive),zip_bytes=archive.stat().st_size)
-    (out/'build.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))
+    (out/'build.json').write_text(json.dumps(report,indent=2));emit('Build report saved:',out/'build.json','ZIP bytes:',report['zip_bytes'])
 if __name__=='__main__':main()

@@ -1,4 +1,5 @@
 """Register complete four-key locomotion paintings, preserving saved identity."""
+from output_safety import emit
 from pathlib import Path
 import json
 
@@ -31,4 +32,4 @@ for gender in ['male','female']:
    m['source']='res://assets/whole-motion59/'+source+'.png';frames[int(key)]=m
   runtime[identity+'-motion']=frames
 (root/'runtime.json').write_text(json.dumps(runtime,separators=(',',':'))+'\n')
-print('MOTION59 registered:',', '.join(runtime),';',sum(map(len,runtime.values())),'complete keys')
+emit('MOTION59 registered:',', '.join(runtime),';',sum(map(len,runtime.values())),'complete keys')

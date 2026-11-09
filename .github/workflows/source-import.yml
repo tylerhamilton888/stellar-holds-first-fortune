@@ -18,6 +18,10 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 0
+      - name: Preserve output capture across the historical checkout
+        run: |
+          mkdir -p "$RUNNER_TEMP/output-safety"
+          cp tools/capture_command.py "$RUNNER_TEMP/output-safety/"
       - name: Download and verify complete recovery
         env:
           GH_TOKEN: ${{ github.token }}
@@ -52,12 +56,12 @@ jobs:
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: |
-          python3 tools/install_engine.py "$RUNNER_TEMP/godot"
-          xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/import
+          python3 "$RUNNER_TEMP/output-safety/capture_command.py" --log test-results/console-1.log --timeout 3600 -- python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+          python3 "$RUNNER_TEMP/output-safety/capture_command.py" --log test-results/console-2.log --timeout 3600 -- xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" --suite gameplay --output test-results/import
       - name: Retain verification evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: source-import-evidence
-          path: test-results/import
+          path: test-results/
           retention-days: 7

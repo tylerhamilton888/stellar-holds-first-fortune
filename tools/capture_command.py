@@ -2,6 +2,7 @@
 """Keep command output in a new log; print metadata only, even on failure."""
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import signal
@@ -45,7 +46,7 @@ def main():
     parser.add_argument('command', nargs=argparse.REMAINDER)
     args = parser.parse_args()
     command = args.command[1:] if args.command[:1] == ['--'] else args.command
-    if not command or args.timeout <= 0:
+    if not command or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error('a command and positive timeout are required')
     try:
         result = capture(command, args.log, args.timeout)

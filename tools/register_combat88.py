@@ -1,4 +1,5 @@
 """Measure complete combat drawings and independent props; never repaint PNGs."""
+from output_safety import emit
 from pathlib import Path
 import json
 import numpy as np
@@ -74,7 +75,7 @@ for kind,b in zip(['runestone','signpost','road_lantern','barrel','crate','plint
 (ART/'palette.json').write_text(json.dumps(palette,separators=(',',':'))+'\n')
 (ART/'decor.json').write_text(json.dumps(decor,indent=2)+'\n')
 (ART/'registration.json').write_text(json.dumps(report,indent=2)+'\n')
-print('Registered',len(frames),'identities,',sum(map(len,frames.values())),'whole combat frames and',len(decor),'independent props')
+emit('Registered',len(frames),'identities,',sum(map(len,frames.values())),'whole combat frames and',len(decor),'independent props')
 
 # Eight historical hammer crops stopped at a column boundary, cutting away
 # part of the connected hammer head. Measure the complete original figure;
@@ -103,4 +104,4 @@ for identity in ['male2','male3','female3','female6']:
         frame.update(rect=[x,y,xx-x,yy-y],omit=omit,source='res://'+str(path.relative_to(ROOT)),right_tip=[sx.stop-1,round(y+float(np.median(tip_y)),2)])
         corrections[sheet+':'+str(index)]=frame
 (ART/'corrections.json').write_text(json.dumps(corrections,separators=(',',':'))+'\n')
-print('Restored',len(corrections),'complete original hammer silhouettes')
+emit('Restored',len(corrections),'complete original hammer silhouettes')

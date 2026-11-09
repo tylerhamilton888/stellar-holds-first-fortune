@@ -75,7 +75,7 @@ class ValidationPlanTests(unittest.TestCase):
                 self.assertTrue((planner.ROOT / path).is_file(), path)
 
     def test_bad_diff_falls_back_to_full(self):
-        with patch('sys.argv', ['plan_validation.py', '--base', 'bad']), \
+        with tempfile.TemporaryDirectory() as tmp, patch('sys.argv', ['plan_validation.py', '--base', 'bad', '--output', str(Path(tmp)/'plan.json')]), \
              patch.object(planner, 'changed_paths', side_effect=subprocess.CalledProcessError(1, 'git')), \
              contextlib.redirect_stdout(io.StringIO()) as output:
             planner.main()
