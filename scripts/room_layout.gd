@@ -21,7 +21,7 @@ static func objects(w,area:String)->Array:
  if area=="room:research":return [w.furn("orrery",350,490),w.furn("bookcase",420,345),w.furn("bookcase",495,345),w.furn("bookcase",735,345),w.furn("desk",690,540),w.furn("lamp",735,510)]
  if area=="room:commission":return [w.furn("bookcase",420,345),w.furn("bookcase",735,345),w.furn("tea_table",310,520),w.furn("chair",263,540),w.furn("chair",357,540),w.furn("lamp",735,510),w.furn("bookcase",735,575)]
  if area!="room:forge":return []
- return [w.furn("hearth",1010,355),w.furn("worktable",970,550),w.furn("worktable",970,755),w.furn("worktable",680,755),w.furn("chest",1080,485),w.furn("chest",1080,735),w.furn("lamp",1140,320),w.furn("lamp",1140,850),w.furn("bookcase",780,335)]
+ return [w.furn("barrel",250,470),w.furn("barrel",430,470),w.furn("crate",245,590),w.furn("crate",310,590),w.furn("training_rack",1070,620),w.furn("training_rack",1010,835),w.furn("hearth",1010,355),w.furn("worktable",970,550),w.furn("worktable",970,755),w.furn("worktable",680,755),w.furn("chest",1080,485),w.furn("chest",1080,735),w.furn("lamp",1140,320),w.furn("lamp",1140,850),w.furn("bookcase",780,335)]
 static func obstacles(area:String)->Array:
  if area=="room:throne":return HoldRoyalStage.obstacles()
  if area!="room:forge":return []

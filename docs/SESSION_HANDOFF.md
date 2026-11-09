@@ -1,3 +1,7 @@
+# Living forges148 — implementation under validation (0.104.0)
+
+Recovered forge147 and extended it with distinct new communal/player layouts, physical production stations and single-owner anvil rendering. Saved rooms/storage are preserved. Bellows and smith effects respect the Cold Forge state. Implementation notes and maintenance rules: [Living forges](LIVING_FORGES148.md). Native validation and visual review are in progress; this is not yet release acceptance.
+
 # Workflow safety — image evidence
 
 Before visual review or GitHub upload, follow the bounded-output rule at the top of docs/DEVELOPMENT.md. Never print encoded images or archives into chat/tool logs. The three legacy image-evidence scripts now keep image bytes in files; the inspection workflow uploads PNG/JSON artifacts. Read manifests and short summaries instead of historical base64 log chunks. This tooling change is independent of the forge work and does not change the game release.

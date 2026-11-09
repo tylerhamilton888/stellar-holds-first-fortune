@@ -1,3 +1,7 @@
+# Living forges148 — implementation under validation (0.104.0)
+
+Recovered forge147 and extended it with distinct new communal/player layouts, physical production stations and single-owner anvil rendering. Saved rooms/storage are preserved. Bellows and smith effects respect the Cold Forge state. Implementation notes and maintenance rules: [Living forges](LIVING_FORGES148.md). Native validation and visual review are in progress; this is not yet release acceptance.
+
 # Image-evidence hazard — addressed
 
 Legacy image tools no longer print encoded image payloads. Preserve the file/artifact workflow and bounded-output guidance in docs/DEVELOPMENT.md. Further chat-size failures require platform diagnostics; do not assume this change repairs rejected threads or proves the original trigger.

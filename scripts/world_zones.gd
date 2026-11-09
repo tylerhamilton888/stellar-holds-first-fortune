@@ -269,8 +269,7 @@ func room_obstacles(area_id:String="")->Array:
  return result
 func furn_footprint(o:Dictionary)->Rect2:return HoldFurnishings.footprint(o.furnishing,o.p)
 func draw_furnishing(o:Dictionary):
- # Borin draws the shared anvil immediately after his hammer pose.
- if s.area=="room:forge" and o.furnishing=="anvil":return
+ # Every physical anvil is drawn here; the surface smith only draws his pose.
  # Active public lockboxes are rendered by the persistent storage system once.
  if o.furnishing=="chest" and ward(current_area()) and current_area()==s.area and HoldWardDesign.STORES.get(s.area,[]).has(o.p):return
  if o.furnishing=="hearth" and HoldFrontier103.active(g.state) and s.area==HoldFrontier103.room(g.state,"forge") and g.state.opening<2:

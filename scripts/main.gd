@@ -357,7 +357,7 @@ func _process(dt):
   update_hud();queue_redraw();return
  var previous_clock=clock
  clock+=dt
- if playing and state.opening>=2 and state.active_site=="hold" and zone=="hub" and room_id=="forge":
+ if playing and state.opening>=2 and state.active_site=="hold" and zone=="hub" and (room_id=="forge" or (HoldForge147.active(self) and HoldForge147.has_anvil(self))):
   if HoldNpcActivity.struck_between(previous_clock,clock):sound.effect("metal_0",-25 if room_id=="forge" else -30)
  mining_gun.cool=maxf(0,mining_gun.cool-dt);mining_gun.flash=maxf(0,mining_gun.flash-dt);mining_gun.braced=maxf(0,mining_gun.braced-dt)
  if transition_left>0:

@@ -1,3 +1,7 @@
+# Living forges148 — implementation under validation (0.104.0)
+
+Recovered forge147 and extended it with distinct new communal/player layouts, physical production stations and single-owner anvil rendering. Saved rooms/storage are preserved. Bellows and smith effects respect the Cold Forge state. Implementation notes and maintenance rules: [Living forges](LIVING_FORGES148.md). Native validation and visual review are in progress; this is not yet release acceptance.
+
 # Image-evidence workflow safety
 
 Removed image-to-base64 log output from all three legacy evidence scripts. Evidence remains in PNG files and JSON manifests; the character inspection workflow uploads an artifact. Local tooling checks pass (28 tests), including multi-megabyte evidence and 300-image collections with bounded stdout and unchanged source bytes. Selected native startup and save/load checks pass all 42 assertions. AGENTS.md and development/testing guides require bounded output and file-based image transfer. Hosted validation encountered a GitHub internal server error; local acceptance is recorded in docs/testing/evidence-output/acceptance.json. The real character inspection saved two valid 1920x1050 PNGs (3,953,476 bytes total) and 224 frame records with only 81 bytes of stdout. No game runtime or release change. ChatGPT's observed conversation_too_large rejection is confirmed externally; a causal link to a particular script is not established.

@@ -23,6 +23,9 @@ static func catalogue()->Dictionary:
  out.frontier_office={"name":"Survey hall and archive","category":"Civic","rooms":["room:research","room:research"],"stair":[550,550],"ward":false,"art":2,"id":-3,"width":260.0}
  out.frontier_watch={"name":"Watch house and stores","category":"Civic","rooms":["room:market"],"ward":false,"art":0,"id":-3,"width":240.0}
  for id in out:out[id].key=id
+ out.workshop.rooms=["room:workshop148"]
+ out.frontier_forge=out.workshop.duplicate(true)
+ out.frontier_forge.name="Stonebridge communal forge";out.frontier_forge.rooms=["room:communal148"];out.frontier_forge.key="frontier_forge"
  catalogue_cache=out;return out
 static func plan(id:String)->Dictionary:return catalogue().get(id,{})
 static func identify(b:Dictionary,area:String)->String:
@@ -49,12 +52,14 @@ static func template(area:String)->String:
  if owner==null:return "room:home"
  var parts=room_parts(area);var b=owner.record(parts[0])
  if b.is_empty():return "room:home"
- var rooms=b.get("rooms",plan(b.plan).rooms)
+ # Pre-layout saves without explicit rooms retain the old workshop footprint.
+ var rooms=b.get("rooms",["room:forge"] if b.plan=="workshop" else plan(b.plan).rooms)
  return rooms[clampi(int(parts[1]),0,rooms.size()-1)]
 static func geometry(area:String)->Dictionary:
  var source=template(area)
  var floor_area=HoldRoyalStage.FLOOR if source=="room:throne" else Rect2(160,260,1020,650) if source=="room:forge" else Rect2(160,260,640,385)
  var size=Vector2(1300,1180) if source=="room:throne" else Vector2(1340,1010) if source=="room:forge" else Vector2(960,720)
+ if source=="room:communal148":floor_area=Rect2(160,260,820,520);size=Vector2(1140,880)
  if owned_room(area):
   var owner=HoldArchitecture.current();var b=owner.record(room_parts(area)[0]) if owner!=null else {}
   var extra=Vector2(float(b.get("extend_x",0))*80,float(b.get("extend_y",0))*80)
@@ -84,6 +89,7 @@ static func add_cost(total:Dictionary,cost:Dictionary):
 static func contents(w,area:String)->Array:
  # Authored placement data is compiled once through the same furnishing catalogue.
  var source=template(area);var list=w.definition_objects(source)
+ if source in ["room:communal148","room:workshop148"]:return HoldLivingForges148.contents(w,source)
  if source in ["room:home","home:blueprint","room:wayfarer","room:greenhearth"] or source.begins_with("home:"):
   var storage=Vector2(700,550) if source in ["room:wayfarer","room:greenhearth"] else Vector2(650,420 if source=="room:home" else 380)
   list.append(w.furn("chest",storage.x,storage.y))

@@ -215,6 +215,7 @@ static func prepare(g:Node):
  elif g.surface.room():
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
   if host!="":people.append({"profile":g.state.npc(host),"player":false})
+  if HoldForge147.active(g) and HoldForge147.has_anvil(g):people.append({"profile":g.state.npc("borin"),"player":false})
   if g.room_id=="tavern":
    for id in HoldNpcPresence.tavern_guests(g.state):people.append({"profile":g.state.npc(id),"player":false})
  if g.surface.active() and (HoldWorldZones.ward(g.surface.area) or g.surface.room()):
