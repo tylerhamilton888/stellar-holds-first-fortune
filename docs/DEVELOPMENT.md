@@ -1,5 +1,7 @@
 ## Keep image data out of conversation and job logs
 
+The mandatory agent-facing rules are also in AGENTS.md. Keep routine tool summaries under 8,000 characters, use targeted reads of historical documents, and keep a concise checkpoint before long operations. This is an output budget for our workflow, not a claim about ChatGPT platform limits.
+
 Never print base64, data URLs, binary bodies, full API responses containing image data, or encoded archives to stdout/stderr or conversational tool output. Do not use shell base64 output as a bridge between tools. Keep bytes in local files, transfer files through supported upload/artifact tools, and return only paths, sizes, hashes or brief status. When an API requires encoded content, encode and pass it inside the execution environment without printing the payload or echoing a large request. Inspect local images with the image viewer; read only relevant log excerpts. Do not reconstruct historical FOLK82_IMAGE/WORKSITE81_IMAGE payloads into a chat.
 
 The legacy print_*_evidence.py entry points now write JSON path/size manifests and one summary line. inspect_folk82.py saves PNG contact sheets and frame-selection JSON under test-results/folk82-inspection; its GitHub workflow uploads these as an artifact. Artifact storage failure must be reported, never worked around by dumping image bytes into logs. These controls remove a known output hazard; they do not establish ChatGPT's conversation-size limit or repair rejected conversations.

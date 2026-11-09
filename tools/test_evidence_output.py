@@ -40,6 +40,18 @@ class EvidenceOutputTests(unittest.TestCase):
             manifest = Path(tmp) / 'test-results/ci/firstshift/evidence.json'
             self.assertEqual(json.loads(manifest.read_text()), {'files': []})
 
+    def test_many_images_do_not_expand_console_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'test-results/ci/people'
+            root.mkdir(parents=True)
+            for index in range(300):
+                (root / f'{index:04}.png').write_bytes(b'fixture')
+            result = subprocess.run([sys.executable, str(TOOLS / 'print_folk82_evidence.py')],
+                                    cwd=tmp, capture_output=True, check=True)
+            self.assertLess(len(result.stdout) + len(result.stderr), 512)
+            manifest = json.loads((root / 'evidence.json').read_text())
+            self.assertEqual(len(manifest['files']), 300)
+
 
 if __name__ == '__main__':
     unittest.main()

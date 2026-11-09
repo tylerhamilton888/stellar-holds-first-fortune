@@ -33,6 +33,10 @@ class ValidationPlanTests(unittest.TestCase):
                          'troll133', 'firstvisit99', 'loading'} <= set(p['cases']))
         self.assertLess(len(p['cases']), len(planner.full_cases(self.manifest)))
 
+    def test_agent_guidance_is_docs_but_cannot_hide_runtime_changes(self):
+        self.assertFalse(self.select('AGENTS.md')['run_gameplay'])
+        self.assertEqual(self.select('AGENTS.md', 'scripts/unknown.gd')['mode'], 'full')
+
     def test_changed_character_case_does_not_run_every_character(self):
         p = self.select('tests/story_world117.gd')
         self.assertEqual(set(p['cases']), {'story_world117', *planner.SMOKE})

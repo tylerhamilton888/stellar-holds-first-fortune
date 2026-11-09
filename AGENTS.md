@@ -1,6 +1,14 @@
 # Development instructions
 Read docs/SESSION_HANDOFF.md and docs/CURRENT_STATUS.md first. They point to the current checkpoint. Read only task-relevant files next. Code/assets/test results override historical documentation.
 
+## Conversation and evidence size
+
+Never print encoded images, base64/data URLs, binary payloads or archives into command logs or chat/tool output. Use image viewers for inspection and file/artifact uploads for transfer. If an API needs base64, encode and pass it inside the execution environment without echoing the request or response body. Artifact quota or upload failure is not permission to dump bytes into logs.
+
+Keep routine tool summaries under 8,000 characters; save full logs in files and return only selected errors, counts, paths and hashes. Inspect response structure before printing API results. Read the latest status sections and task-relevant excerpts instead of whole historical documents. Keep a concise checkpoint with commit/branch, completed checks, pending work and run/PR links; do not copy old transcripts or base64 log chunks into recovery chats. Preserve original image files and full local evidence.
+
+If output is unexpectedly large, stop repeating that operation, report the observed problem, and switch to file-based transfer or narrower reads. Report actual tool failures and stalled jobs with the step and error; do not claim a known ChatGPT size threshold, predict an unseen platform failure, or promise this prevents every conversation_too_large rejection. See docs/DEVELOPMENT.md for the image-evidence workflow.
+
 No unrelated gameplay changes, file moves or refactoring. Preserve resource paths, UIDs, original assets and save compatibility. Use docs/TESTING.md and isolated test data. Verify affected visuals for graphic/UI/animation edits. Update status/changelog/backlog after meaningful work; keep documents concise. Maintain a recoverable local checkpoint and confirmed persistent backup. Never push/change remotes or delete backups without explicit authorization. Do not spawn sub-agents unless the user requests delegation.
 
 For in-world art and animation, follow docs/ART_DIRECTION.md: the existing in-world Dwarf models are the gold standard. Portrait/cutscene treatment may vary. Judge props and environments beside the character at gameplay scale.
