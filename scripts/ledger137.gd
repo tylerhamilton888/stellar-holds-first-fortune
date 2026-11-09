@@ -66,10 +66,10 @@ static func phase(s)->int:
  if HoldFrontier103.data(s).get("home_reward",false):return 2
  return 1 if HoldWork132.contributions(s)>=1 else 0
 static func skarrin(s)->String:
- var lines=["A new pair of hands! Welcome to Stonebridge. The west rack is yours to use. Come to me if you need timber for that room; everyone needs a start.","A neat little contribution. I knew you would find your feet with the right example. Keep working beside us and you will do well.","They made quite a fuss over your house. A roof matters, certainly. So do the drainage cuts keeping every roof here above water.","Now every supper is a toast to your courage. My crews have kept this place standing for years. Apparently that is less interesting.","So an old seal weighs as much as living hands. You can see why some of us question whose fairness this contest serves."]
+ var lines=["A new face! Skarrin. Welcome to Stonebridge. I've some spare timber if that room of yours needs a chair.","I saw your name in the ledger. Not bad for a first entry. My crew brought in a load this morning too; the ink was barely dry when Ivar found more work for us.","I hear the house is finished. Good. You'll want a drainage trench before the spring thaw; ask my crew how they learned that one.","They're still talking about the rescue at supper. Quite right, too. My crew had the supports ready by dawn; I don't suppose anyone mentioned that part.","Ivar showed me the seal. If it proves what they say, the old families may yet have their say in all this. I wonder what the crews will make of it."]
  var line=lines[phase(s)]
  if HoldRestoration139.complete(s) and phase(s)<4:line="An excellent crossing. I am pleased my old abutments could give your achievement somewhere to stand. Ivar seems determined to read your name at every gathering."
- if data(s).get("gift",false) and phase(s)>=1:line+=" Remember who put timber in your hands before anybody knew your name."
+ if data(s).get("gift",false) and phase(s)>=1:line+=" How did that timber work out, by the way?"
  return line
 static func gift(g)->bool:
  if not active(g.state) or not HoldConversation.local(g,"road_folk:8") or phase(g.state)>0 or data(g.state).gift:return false
@@ -89,19 +89,33 @@ static func forge_panel(g):
  g.button(g.panel_body,"Review the Hold’s Ledger",func():g.open_panel("great_claim102"))
 static func panel(g):
  var s=g.state
+ if HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_ledger_open",false)):
+  HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Names and careful columns fill the pages: stone for a wall, lamps for the road, meals for the crews. This is where Stonebridge records work done for the town.")
+  g.label(g.panel_body,"Ivar can tell you more after your first shift. Contributions are made here at the great book outside or at the records desk in the bunkhouse. Press M to read it from anywhere.",16)
+  g.small_button(g.panel_body,"Browse the projects",func():g.set_meta("early_ledger_open",true);g.refresh_panel())
+  return
  HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Build a place in Stonebridge. Contributions stay recorded; there are no deadlines. M reviews this ledger anywhere. Deliver carried supplies at the great book outside, east of the bunkhouse.")
- g.label(g.panel_body,DEEDS,13)
- HoldCampaign138.summary(g)
+ var first_project=not complete(s,"forge")
+ if first_project:g.label(g.panel_body,"Borin's cold forge is a good place to begin. Visit him at the communal forge north of town, then return here with the coal he needs.",16)
+ else:
+  g.label(g.panel_body,DEEDS,13)
+  HoldCampaign138.summary(g)
  var home=HoldMenuView.disclosure(g,g.panel_body,"Personal ambition · A place of your own","ledger137_home")
  if home!=null:
   for entry in [[HoldFirstVisit99.data(s).get("rewarded",false),"Learn the first shift and earn your wages"],[HoldFirstVisit99.data(s).get("home_made",false),"Furnish your upstairs room · O opens plans"],[HoldFrontier103.data(s).permit,"Complete two civic projects or trade seals; collect your plot at Ivar’s shift book"],[HoldFrontier103.data(s).home_reward,"Build a home on the eastern rise, with bed and light; register it with Ivar · 60 marks"]]:
    g.label(home,("✓ " if entry[0] else "○ ")+entry[1],15)
   g.button(home,"Town services and household plot",func():g.open_panel("frontier103"))
+ var other_projects=null
  for id in ["forge","watch","rest","stores","storehouse","winter","north_bridge"]:
+  var parent=g.panel_body
+  if first_project and id!="forge":
+   if id=="watch":other_projects=HoldMenuView.disclosure(g,g.panel_body,"Other town projects","ledger146_more_projects")
+   if other_projects==null:continue
+   parent=other_projects
   var p=PROJECTS[id];var done=complete(s,id)
   var status="Complete" if done else ("Locked · raise the storehouse" if id=="winter" else "Locked · finish your first shift") if not unlocked(s,id) else "In progress" if not data(s).paid.get(id,{}).is_empty() else "Available"
   if id=="north_bridge" and not unlocked(s,id):status="Locked · rescue, Winter Stores and site inspection"
-  var box=HoldMenuView.section(g.panel_body,p.title+" · "+status)
+  var box=HoldMenuView.section(parent,p.title+" · "+status)
   g.label(box,p.deeds+" — "+p.reward,14,Color("a7dfcb"));g.label(box,p.hint,15)
   if done:continue
   for item in p.cost:

@@ -1,3 +1,11 @@
+# 0.103.0 — A first morning in Stonebridge
+
+A new opening follows the road to Stonebridge, a note from home and your first morning in the miners' bunkhouse. Meet Ivar before setting out for your first paid shift. The scene can be skipped and resumes if you leave partway through.
+
+Ivar, Rurik, Sigrid and Skarrin have revised dialogue. The first journal and town books introduce their purpose in smaller steps, leading from the first shift to the Cold Forge. You can still look through the other projects whenever you like. Existing saves and progress remain yours; the introduction is for newly started fortunes.
+
+Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. Choose **New Game** for the new opening or **Load Game** to continue. Please note unclear directions, character writing and pacing; Windows performance and audio need playtesting.
+
 # 0.102.2 — The great town ledger and proper mine doorways
 
 Find the Hold’s Ledger immediately outside, east of the miners’ bunkhouse: a monumental gilded book on a carved stone lectern, framed by two braziers and a slate forecourt. Approach its south side and press **E** to contribute supplies, review town projects and work on collections. **M** still reviews the ledger from anywhere; the original indoor desk shares the same progress.

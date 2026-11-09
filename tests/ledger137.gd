@@ -60,9 +60,9 @@ func run():
   check(L.gift(g) and s.count("wood")==before+4 and not L.gift(g),"Welcome timber awarded once")
   g.talk_id="road_folk:8";g.talk_topic="";g.talk_line="";g.open_panel("conversation");await snap("skarrin-welcome");g.close_panel()
  HoldGreatClaim102.data(s).projects.watch=true
- check(L.phase(s)==1 and L.skarrin(s).contains("Remember who"),"Public recognition changes tone and recalls actual favor")
+ check(L.phase(s)==1 and L.skarrin(s).contains("that timber"),"Public recognition changes tone and recalls actual favor")
  var saved=s.inventory.duplicate(true);g.save_game();g.start_game(true);settle();s=g.state
  check(s.inventory==saved and L.data(s).gift,"Gift and supplies persist")
- check(L.skarrin(s).contains("Remember who"),"Milestone dialogue survives reload")
+ check(L.skarrin(s).contains("that timber"),"Milestone dialogue survives reload")
  print("LEDGER137: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)

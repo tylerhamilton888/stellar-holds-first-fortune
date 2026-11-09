@@ -11,9 +11,16 @@ const TASKS=[
 static func active(s)->bool:return s.surface.has("first_visit99")
 static func data(s)->Dictionary:return s.surface.get("first_visit99",{})
 static func lodge_intro(s)->bool:return active(s) and bool(data(s).get("lodge_intro",false))
+static func first_morning(s)->bool:
+ if not lodge_intro(s) or data(s).get("rewarded",false) or s.opening>1:return false
+ if int(HoldAncestralClaim.data(s).get("stage",0))>0:return false
+ if HoldFrontier103.active(s):
+  var town=HoldFrontier103.data(s)
+  if town.get("permit",false) or town.get("home_reward",false):return false
+ return true
 static func begin(g):
  var s=g.state
- s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
+ s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"intro_pending":not g.skip_arrival and g.capture_mode=="","intro_beat":0,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
  HoldGreatClaim102.begin(s)
  HoldFrontier103.begin(g)
  HoldCampaign138.begin(s)
@@ -24,7 +31,7 @@ static func begin(g):
  s.add("wood",6)
  HoldFirstShift.data(g).accepted=true;HoldFirstShift.data(g).kit=true;HoldFirstShift.data(g).guided=true
  g.surface.enter(HoldFrontier103.lodge(s),Vector2(480,555))
- g.notify("Welcome to the miners' lodge · E speaks with Ivar · J keeps your first steps.")
+ g.notify("The miners' lodge · E speaks with Ivar · J opens your journal.")
  g.save_game()
 static func meet_ivar(g):
  if not lodge_intro(g.state):return
@@ -189,10 +196,17 @@ static func journal(g):
  g.small_button(g.panel_body,"Just let me explore",func():focus(g,"free"))
 
 static func frontier_journal(g):
+ var q=data(g.state)
+ if first_morning(g.state):
+  HoldWorkView132.summary(g)
+  var nav=g.row(g.panel_body)
+  g.small_button(nav,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())
+  g.small_button(nav,"Close journal",g.close_panel)
+  return
  HoldClaim127.panel(g)
  if HoldMountain104.eligible(g.state) or int(HoldAncestralClaim.data(g.state).stage)>0:HoldMountain104.panel(g)
  HoldWorkView132.summary(g)
- var s=g.state;var q=data(s)
+ var s=g.state
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Town services",func():g.open_panel("frontier103"))
  g.small_button(nav,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())

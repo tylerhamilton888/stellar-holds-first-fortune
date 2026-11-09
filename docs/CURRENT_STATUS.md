@@ -1,3 +1,7 @@
+# Opening146 — source work in progress (0.103.0)
+
+A new skippable, resumable Stonebridge arrival leads into the bunkhouse and first shift. Ivar, Rurik, Sigrid and Skarrin have revised dialogue; early journal, shift book and Ledger explain their purpose gradually while retaining access to the complete books. Existing saves do not replay the introduction. The opening146 suite and hosted validation must pass before integration. Windows 0.102.2 remains published; normal-speed pacing, writing and Windows audio/performance need human playtesting.
+
 # Civic145 — authorized delivery in progress (0.102.2)
 
 The monumental town ledger is implemented and visually reviewed, including the exported game. Five affected native cases passed **381 assertions**; the exported ledger and mine-entryway cases passed **35 assertions**. All 24 tooling tests and all 3,945 PCK entries passed. Tested runtime commit: `39398608d0627d9731d6b6c632fc971055168e88`; later delivery commits only update evidence/docs. The asset is the original approved painting, with no image alteration.

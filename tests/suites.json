@@ -33,7 +33,8 @@
       "collections141",
       "mineworks143",
       "entryways144",
-      "civic145"
+      "civic145",
+      "opening146"
     ],
     "gameplay": [
       "loading",
@@ -112,7 +113,8 @@
       "collections141",
       "mineworks143",
       "entryways144",
-      "civic145"
+      "civic145",
+      "opening146"
     ],
     "modular": [
       "modular",
@@ -400,7 +402,8 @@
       "collections141",
       "mineworks143",
       "entryways144",
-      "civic145"
+      "civic145",
+      "opening146"
     ],
     "gameplay-3": [
       "orientation",
@@ -1005,6 +1008,16 @@
       "collections141",
       "frontier103",
       "firstvisit99"
+    ],
+    "opening146": [
+      "opening146",
+      "firstvisit99",
+      "lodge100",
+      "polish135",
+      "ledger137",
+      "civic145",
+      "mountain104",
+      "greatclaim102"
     ]
   },
   "cases": {
@@ -1319,6 +1332,10 @@
     "civic145": {
       "script": "tests/civic145.gd",
       "marker": "CIVIC145"
+    },
+    "opening146": {
+      "script": "tests/opening146.gd",
+      "marker": "OPENING146"
     }
   }
 }

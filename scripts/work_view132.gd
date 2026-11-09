@@ -10,7 +10,7 @@ static func summary(g):
  var s=g.state
  if not W.active(s):return
  var q=HoldFirstVisit99.data(s)
- if not q.get("rewarded",false):
+ if HoldFirstVisit99.first_morning(s):
   var box=HoldMenuView.section(g.panel_body,"Your next step")
   var title="A word with Ivar";var hint="Speak with Ivar by the bunkhouse hearth. E talks.";var art="wood"
   if q.get("work_started",false) and g.zone=="mine":
@@ -18,8 +18,10 @@ static func summary(g):
    g.label(box,"FIRST SHIFT · %d OF 5" % (n+1),14,Color("a7dfcb"))
   elif not q.get("room_seen",false) and q.get("ivar_spoken",false):title="A room upstairs";hint="Take the bunkhouse stairs. Your bed, chest and desk are ready."
   elif q.get("room_seen",false) and q.get("ivar_spoken",false):title="The path to Old Workings";hint="Leave the bunkhouse and follow Stonebridge’s northern path. The western rack and stonebreaker are on loan.";art="stone"
-  HoldMenuView.illustrated_text(box,art,title,hint)
-  g.label(box,"First load: 20 crowns + supplies to furnish your room.",15,Color("a7dfcb"))
+  if title=="A word with Ivar":
+   g.label(box,title,19,Color("edc98a"));g.label(box,hint,16)
+  else:HoldMenuView.illustrated_text(box,art,title,hint)
+  if q.get("ivar_spoken",false):g.label(box,"Ivar will pay for your first completed load.",15,Color("a7dfcb"))
   return
  elif not q.get("home_made",false) and q.focus=="home":
   var card=HoldMenuView.section(g.panel_body,"Your first wages")

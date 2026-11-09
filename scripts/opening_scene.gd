@@ -53,6 +53,17 @@ func _ready():
    ["BENEATH THE OLD KINGS","Stone kings watch the road. Freight cables whisper overhead. Behind the gates, a thousand hearths share the heat of machines older than your grandparents."],
    ["YOUR FIRST MORNING","No one here knows "+name+" "+game.state.appearance.family_name+" yet. You have forty-five crowns, a borrowed room, and a place to ask for work."],
    ["THE GATE STEWARD","'New for the lower shift? Ivar is waiting inside the gate. He'll show you to your room before you start. Welcome to Keldrath.'"]]
+ elif mode=="frontier_arrival":
+  # The frontier opening happens in the actual lodge, with the player's chosen dwarf.
+  lines=[
+   ["THE ROAD EAST", "The lamps of home faded behind you days ago. At the end of the road lies Stonebridge, where there's work to be had and room to begin again."],
+   ["A LETTER FROM HOME", "Your father's note is creased from the journey. 'Write when you arrive. Your mother says that means more than putting your name on an envelope.'"],
+   ["STONEBRIDGE · THE NEXT MORNING", "You arrived after dark. Now the bunkhouse hearth is lit, and the first shift is already stirring."],
+   ["IVAR DEEPMEASURE", "'You're awake. Good. There's a room upstairs if you'd like a moment to yourself.'"],
+   ["IVAR DEEPMEASURE", "'I'm Ivar. Come and find me when you're ready; we'll see about your first shift.'"]]
+  step=clampi(int(HoldFirstVisit99.data(game.state).get("intro_beat",0)),0,lines.size()-1)
+  game.transition_left=0;game.transition_shade.visible=false
+  game.camera=game.surface.camera_target();game.surface.direction=Vector2.UP
  else:
   lines=[
    ["IVAR DEEPMEASURE",HoldCulture.render(game.state,"'{player:Subject} brought back sound coal and kept the route clear, my lord. I have counted {player:object} home.'")],
@@ -72,20 +83,33 @@ func _ready():
   royal_portrait=HoldRoyalHall.portrait();royal_portrait.position=Vector2(20,429);royal_portrait.size=Vector2(85,92);ui.add_child(royal_portrait)
   foreman_portrait=HoldPortrait.new();foreman_portrait.profile=game.state.npc("ivar");foreman_portrait.position=Vector2(20,429);foreman_portrait.size=Vector2(85,85);ui.add_child(foreman_portrait)
   speaker.position.x=125;caption.position.x=125;caption.size.x=635
+ elif mode=="frontier_arrival":
+  foreman_portrait=HoldPortrait.new();foreman_portrait.profile=game.state.npc("ivar");foreman_portrait.position=Vector2(20,429);foreman_portrait.size=Vector2(85,85);ui.add_child(foreman_portrait)
  show_line()
 func show_line():
- game.sound.set_context("road" if mode=="arrival" and step<2 else "throne" if mode=="audience" else "hub")
+ game.sound.set_context("road" if mode in ["arrival","frontier_arrival"] and step<2 else "throne" if mode=="audience" else "hub")
  if mode=="arrival" and step in [2,3]:shot_age=0
  age=0;speaker.text=lines[step][0];caption.text=lines[step][1]
  if mode=="audience":royal_portrait.visible=step not in [0,6];foreman_portrait.visible=step in [0,6]
- next_button.text="Enter the hold" if mode=="arrival" and step==lines.size()-1 else "Return to work" if step==lines.size()-1 else "Continue"
+ if mode=="frontier_arrival":
+  foreman_portrait.visible=step>=3
+  speaker.position.x=125 if step>=3 else 28
+  caption.position.x=125 if step>=3 else 28;caption.size.x=635 if step>=3 else 735
+ next_button.text=("Begin" if mode=="frontier_arrival" else "Enter the hold" if mode=="arrival" else "Return to work") if step==lines.size()-1 else "Continue"
 func advance():
  if age<.25 or (mode=="audience" and not staging_ready()):return
  if step==lines.size()-1:finish();return
- step+=1;show_line()
+ step+=1
+ if mode=="frontier_arrival":HoldFirstVisit99.data(game.state).intro_beat=step;game.save_game()
+ show_line()
 func finish():
  if finished:return
  finished=true
+ if mode=="frontier_arrival":
+  HoldFirstVisit99.data(game.state).intro_pending=false
+  game.velocity=Vector2.ZERO;game.walking_pose=false;game.opening_scene=null
+  game.notify("Speak with Ivar by the hearth · E")
+  game.save_game();layer.queue_free();return
  game.state.resident_visits.erase("ivar")
  if mode=="arrival":
   HoldOnboarding.arrived(game.state);game.zone="hub";game.room_id="";game.player=Vector2(1840,410);game.camera=Vector2(1360,0)
@@ -113,6 +137,14 @@ func _process(dt):
 func update_staging(dt:float):
  if mode=="arrival":
   player_x=610.0;walking=false;ivar_walking=false;return
+ if mode=="frontier_arrival":
+  # A short arrival within the playable room; no teleport or invented cast.
+  var old=game.player
+  if step==2:game.player=game.player.move_toward(Vector2(480,525),dt*20)
+  game.walking_pose=old.distance_to(game.player)>.01
+  if game.walking_pose:game.gait_clock+=old.distance_to(game.player)/150.0
+  game.surface.direction=Vector2.UP;game.camera=game.surface.camera_target();game.queue_redraw()
+  return
  var p=Vector2(650,570)
  if step==1:p=p.move_toward(Vector2(650,540),minf(age,2)*25)
  elif step>1:p=Vector2(650,540)
@@ -136,7 +168,10 @@ func update_staging(dt:float):
 func staging_ready()->bool:return age>=3.3 if step in [1,6] else age>=.25
 func _draw():
  A.draw_offset=Vector2.ZERO
- if mode=="audience":
+ if mode=="frontier_arrival" and step<2:
+  var height=ARRIVAL.get_height()/3.0
+  draw_texture_rect_region(ARRIVAL,Rect2(0,74,960,340),Rect2(0,2,ARRIVAL.get_width(),height-4))
+ elif mode in ["audience","frontier_arrival"]:
   # The world underneath is the actual top-down hall, not a painted story plate.
   pass
  else:
@@ -145,7 +180,7 @@ func _draw():
   draw_texture_rect_region(ARRIVAL,Rect2(0,74,960,340),Rect2(0,panel*height+2,ARRIVAL.get_width(),height-4))
  if mode=="arrival" and shot_age<.75:A.rect(self,0,74,960,340,Color(.03,.06,.08,1-smoothstep(0.0,.75,shot_age)))
  A.rect(self,0,0,960,74,Color("101f2b"))
- A.text(self,Vector2(28,33),"THE FIRST FORTUNE" if mode=="arrival" else "AN AUDIENCE EARNED",23)
+ A.text(self,Vector2(28,33),"STONEBRIDGE · FIRST MORNING" if mode=="frontier_arrival" and step>=2 else "THE FIRST FORTUNE" if mode in ["arrival","frontier_arrival"] else "AN AUDIENCE EARNED",23)
  A.text(self,Vector2(28,59),"Space / Enter: continue   Esc: skip",14,Color("b2d1c4"))
  HoldCinematic.progress(self,step,lines.size())
 func character_scale()->float:return 1.5

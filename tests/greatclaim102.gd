@@ -25,6 +25,9 @@ func run():
   var inventory=g.state.inventory.duplicate(true);at(Vector2(240,550))
   check(not HoldGreatClaim102.contribute(g,id) and inventory==g.state.inventory,"Remote contribution cannot consume pack")
   at(Vector2(670,440));g.surface.action("great_claim102")
+  # The broader projects are folded until the first forge is restored.
+  for b in g.panel.find_children("*","Button",true,false):
+   if b.text.begins_with("+ Other town projects"):b.pressed.emit();break
   var header=g.panel.find_children("*","Label",true,false).filter(func(label):return label.text.begins_with(p.title+" ·"))
   check(header.size()==1,"Project has one visible Ledger card")
   if header.size()==1:
