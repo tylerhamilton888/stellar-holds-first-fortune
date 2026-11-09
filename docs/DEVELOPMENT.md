@@ -1,3 +1,7 @@
+## Bound all conversational payloads
+
+Follow [CONVERSATION_OUTPUT.md](CONVERSATION_OUTPUT.md). Use `tools/capture_command.py` for potentially noisy commands; inspect short diagnostics from its saved log. Keep large inputs local too: source/assets use Git or file uploads, not encoded tool-call arguments. Filter API responses inside code before emitting metadata. Current status/handoff are replaced in place and kept below 4,000 bytes each; historical documents are not startup reading.
+
 ## Keep image data out of conversation and job logs
 
 The mandatory agent-facing rules are also in AGENTS.md. Keep routine tool summaries under 8,000 characters, use targeted reads of historical documents, and keep a concise checkpoint before long operations. This is an output budget for our workflow, not a claim about ChatGPT platform limits.

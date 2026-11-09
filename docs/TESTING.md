@@ -1,3 +1,7 @@
+# Bounded command capture
+
+Use `python3 tools/capture_command.py --log test-results/<unique-task>/runner.log --timeout 1800 -- <test command>` during conversational work. The original command's nonzero status remains a failure; read selected diagnostics from the log. The tooling suite includes multi-megabyte output preservation, failure, timeout, launch-error and no-overwrite coverage. No native or release acceptance gate is relaxed.
+
 # Image-evidence output regression checks
 
 Run the Python tooling suite. Evidence tests cover multi-megabyte files, 300 screenshots, missing evidence, unchanged source bytes, and output below 512 bytes. For the real renderer, run tools/inspect_folk82.py with stdout redirected to a file, verify both PNGs and the 224 frame-selection records, and report only their paths/counts/sizes. Never paste encoded images or complete historical job logs into a chat.
