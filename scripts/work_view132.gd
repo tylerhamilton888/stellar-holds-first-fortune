@@ -102,7 +102,7 @@ static func contributions(g):
   var target=str(id);var b=g.small_button(row,{"quarry":"Mining","timber":"Timber","metal":"Metalwork","table":"Food"}[id],func():g.set_meta("work132_trade",target);g.refresh_panel());b.disabled=trade==id
  var spec=W.TRADES[trade];var card=HoldMenuView.section(g.panel_body,spec.title+" · 40 marks")
  g.label(card,spec.hint,15)
- g.label(card,"Choose ONE option for this seal. Deliver at the Hold’s Ledger beside Ivar in the lodge.",15)
+ g.label(card,"Choose ONE option for this seal. Deliver at the great Hold’s Ledger outside, east of the bunkhouse.",15)
  for item in spec.items:
   var key=str(item);var amount=int(spec.items[item]);var credit=W.available(s,item)
   var b=g.button(card,"Deliver %d %s · made/gathered %d/%d · pack %d/%d" % [amount,HoldData.ITEMS[item].name,mini(credit,amount),amount,mini(s.count(item),amount),amount],func():W.deliver(g,trade,key);g.refresh_panel())

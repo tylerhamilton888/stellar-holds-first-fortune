@@ -1,3 +1,7 @@
+# Civic145
+
+`civic145` covers the monumental ledger plus existing ledger, collections, frontier and opening flows. `civic145-focus` checks the physical E interaction, collision, clear road approach, shared indoor/outdoor delivery state, remote-delivery rejection, payment, JSON reload and preservation of furniture and a stocked personal chest. It is registered in gameplay-2 and the exact-package catalogue. Review the town book beside a Dwarf, the bunkhouse exit and the open contribution panel. JSON comparisons normalize numeric types before saving; int-to-float spelling alone is not a possession change.
+
 # Mineworks143
 
 `mineworks143-focus` checks original-map preservation, separate-map traversal, tool/bridge prerequisites, stale construction callbacks, real movement and cargo, district planning/construction/removal, hired worker routing and JSON reload. Included in gameplay-2 and the exact-package catalogue. Review its worksite/bridge/board/room/perspective captures. Affected existing cases: mining, navigation94, workplace98, firstshift, firstvisit99, lodge100 and polish135. The opening-flow cases protect the loan rack, bench work, first wage and room handoff from adit interaction conflicts.

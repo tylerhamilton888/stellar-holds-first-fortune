@@ -815,7 +815,7 @@ func draw():
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area not in ["hearthward","crownward","forgeward"] and not room():
   for point in points():
-   if roads.is_link(point.action) or point.action.begins_with("road_folk:") or point.action=="road_order":continue
+   if roads.is_link(point.action) or point.action.begins_with("road_folk:") or point.action in ["road_order","great_claim102"]:continue
    if point.action.begins_with("chest:") or point.action.begins_with("talk:") or point.action.begins_with("house:") or point.action in ["house_rest","house_up","house_down"]:continue
    signpost(point.p,point.name)
  if g.panel_id=="" and not near.is_empty() and not roads.is_link(near.action) and not near.action.begins_with("road_folk:") and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not str(near.action).begins_with("terrace:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():

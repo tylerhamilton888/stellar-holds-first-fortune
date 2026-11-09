@@ -9,6 +9,8 @@ def load_cases():
     cases = [('ambient', (ROOT/'tests/pack_ambient61.gd').read_text(), 'PACK AMBIENT61')]
     # Inline only the test fixture. Game scripts/assets must resolve inside the pack.
     fixture = (ROOT/'tests/support/game_fixture.gd').read_text()
+    body = (ROOT/'tests/civic145.gd').read_text().split('\n', 1)[1]
+    cases.append(('civic145', fixture+'\n'+body, 'CIVIC145'))
     body = (ROOT/'tests/entryways144.gd').read_text().split('\n', 1)[1]
     cases.append(('entryways144', fixture+'\n'+body, 'ENTRYWAYS144'))
     body = (ROOT/'tests/mineworks143.gd').read_text().split('\n', 1)[1]

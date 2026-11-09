@@ -1,3 +1,7 @@
+# Civic145 — delivery in progress
+
+Native/package review is complete. Public upload is blocked by automatic approval review pending fresh in-chat approval. After approval, upload the completed ledger, merge after hosted checks, and publish verified Windows 0.102.2 including the already-merged mine entryways. Next product work is the owner's playtest feedback, especially whether a new player notices the book on leaving the bunkhouse.
+
 # Entryways144 — source 0.102.1
 
 Merged owner playtest fix: proper mine doorways at area edges, without accidental floor crossings. Old-save placement, freight, deliberate travel and both camera views passed validation. Further reported playtest issues are next; bundle the merged fixes into the next requested build. Public Windows remains 0.102.0.

@@ -36,6 +36,9 @@ static func near(g,key:String)->bool:
 static func points(g)->Array:
  if not active(g.state):return []
  var s=g.state;var out=[]
+ if g.surface.area=="trail" and HoldGreatClaim102.active(s):
+  var p=HoldGreatClaim102.TOWN_ACCESS
+  out.append(g.surface.spot(p.x,p.y,"Hold’s Ledger · contributions and town projects","great_claim102"))
  if g.surface.area==room(s,"survey",1):out.append(g.surface.spot(690,575,"Archive · charter law and town records","frontier_archive103"))
  if g.surface.area==lodge(s):
   out.append(g.surface.spot(670,425,"Hold’s Ledger","great_claim102"))
@@ -191,7 +194,12 @@ static func works(g,area:String)->Array:
  return [w.furn("worktable",1020,850),w.furn("crate",940,850),w.furn("signpost",1100,850)]
 
 static func draw_ground(g):
- if not active(g.state) or g.surface.area!="trail" or data(g.state).get("storehouse",false):return
+ if not active(g.state) or g.surface.area!="trail":return
+ if HoldGreatClaim102.active(g.state):
+  var p=HoldGreatClaim102.TOWN_LEDGER
+  for y in range(int(p.y)-60,int(p.y)+60,30):
+   for x in range(int(p.x)-135,int(p.x)+135,30):HoldArchitectureStyles.floor_draw(g,Rect2(x,y,30,30),"slate")
+ if data(g.state).get("storehouse",false):return
  for y in range(750,870,40):
   for x in range(920,1120,40):HoldArchitectureStyles.floor_draw(g,Rect2(x,y,40,40),"slate")
 
