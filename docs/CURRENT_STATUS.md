@@ -1,6 +1,6 @@
 # Image-evidence workflow safety
 
-Removed image-to-base64 log output from all three legacy evidence scripts. Evidence remains in PNG files and JSON manifests; the character inspection workflow uploads an artifact. Local tooling checks pass (26 tests), including multi-megabyte evidence with bounded stdout and unchanged source bytes. No game runtime or release change. ChatGPT's observed conversation_too_large rejection is confirmed externally; a causal link to a particular script is not established.
+Removed image-to-base64 log output from all three legacy evidence scripts. Evidence remains in PNG files and JSON manifests; the character inspection workflow uploads an artifact. Local tooling checks pass (26 tests), including multi-megabyte evidence with bounded stdout and unchanged source bytes. The real character inspection saved two valid 1920x1050 PNGs (3,953,476 bytes total) and 224 frame records with only 81 bytes of stdout. No game runtime or release change. ChatGPT's observed conversation_too_large rejection is confirmed externally; a causal link to a particular script is not established.
 
 # Opening146 — source work in progress (0.103.0)
 
