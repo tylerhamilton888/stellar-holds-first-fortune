@@ -50,17 +50,18 @@ static func panel(g):
  var text=""
  match index:
   0:
-   text="Welcome to the shift. The bunks and hearth are shared; the room through that door is yours to use. Take a look, then come to Old Workings by the High Trail. The western rack and stonebreaker are on loan to you. Work a load and I'll see you paid."
+   text="Ivar sets down his cup. 'Sleep well enough? The room upstairs is yours. Have a look around, then meet us at Old Workings, north of town. There's a rack and stonebreaker on the west side you can borrow. Work a load and I'll see you paid.'"
   1:
-   text="Rurik rolls a sore shoulder. 'A fresh face! The bunks are for whoever needs them, and the hearth's for everyone. Keep the west rack stocked and you'll have useful stone before you know it.'"
+   text="Rurik rolls a sore shoulder. 'You're the new hand, then? Don't mind the snoring. Sigrid says it's the roof timbers settling, but she only says that when I'm listening.'"
   2:
-   text="Sigrid lifts her mug. 'There's a room through the north door if you want a little quiet. A chair and a lamp can make even a borrowed room feel like your own. The trail out to work starts at King's Gate.'"
+   text="Sigrid lifts her mug. 'Rurik's already blamed the roof for the noise, hasn't he? There's a room through the north door if you want some quiet.'"
  if HoldFrontier103.active(g.state):
   text=text.replace("room through that door","room upstairs").replace("north door","stairs").replace("The trail out to work starts at King's Gate.","Old Workings lies north of the town square.")
+  if index==2:text="Sigrid lifts her mug. 'Rurik's already blamed the roof for the noise, hasn't he? There's an upstairs room if you want some quiet.'"
  if index==0 and HoldFirstVisit99.data(g.state).get("rewarded",false):
-  text="Good stone, sound work. Your first twenty crowns are earned. Take those supplies upstairs and make that room your own. When you’re ready, the shift book has more work." if not HoldFirstVisit99.data(g.state).get("home_made",false) else "You have a place by the hearth now. Keep making it yours. The shift book has work when you want it, and Stonebridge always has a use for good hands."
+  text="'Good work. Your first twenty crowns are counted, and there's a little timber for your room. When you're settled, take a look at the great book outside. It keeps track of the work the town needs doing.'" if not HoldFirstVisit99.data(g.state).get("home_made",false) else "'That room's looking more lived in. There's more work in the great book outside whenever you're ready. Borin's forge could use a hand, for one.'"
  g.label(body,text,16)
- if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Shift book and household plot",func():g.open_panel("frontier103"))
+ if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Ask about the shift book",func():g.open_panel("frontier103"))
  if index in [1,2]:
   g.button(g.panel_body,"Whose names are on that stone?",func():
    g.label(g.panel_body,"Rurik rubs his shoulder. 'The old shift. Keldran gets a nod before I go below, but I still check the props. My grandfather would haunt me for skipping that.'" if index==1 else "Sigrid sets down her mug. 'Our departed. Nyrda keeps them; we keep their names. I read them on Namesday. Come if you like. Grandmother preferred a useful deed to a long speech.'",16))

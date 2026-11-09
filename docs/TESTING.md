@@ -1,3 +1,7 @@
+# Opening146
+
+The opening146 case covers an actual New Game, saved scene beat/resume, skipping, old saves without the new field, first journal, early books and optional access to wider projects. The opening146 suite includes firstvisit99, lodge100, polish135, ledger137 and civic145. Review road, Ivar, first-journal and ledger captures at gameplay scale; human pacing and Windows audio/performance remain separate.
+
 # Civic145
 
 `civic145` covers the monumental ledger plus existing ledger, collections, frontier and opening flows. `civic145-focus` checks the physical E interaction, collision, clear road approach, shared indoor/outdoor delivery state, remote-delivery rejection, payment, JSON reload and preservation of furniture and a stocked personal chest. It is registered in gameplay-2 and the exact-package catalogue. Review the town book beside a Dwarf, the bunkhouse exit and the open contribution panel. JSON comparisons normalize numeric types before saving; int-to-float spelling alone is not a possession change.

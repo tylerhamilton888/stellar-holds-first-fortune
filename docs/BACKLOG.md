@@ -1,3 +1,7 @@
+# Opening146 — playtest next
+
+Test the new Stonebridge introduction and first shift with a new player. Note confusing directions, excessive text, rushed reveals, character voice and whether the Cold Forge and other projects emerge naturally. Continue later-character dialogue polish only in response to review; the first-act pass is not a complete rewrite of every character.
+
 # Civic145 — delivery in progress
 
 Native/package review is complete. Public upload is blocked by automatic approval review pending fresh in-chat approval. After approval, upload the completed ledger, merge after hosted checks, and publish verified Windows 0.102.2 including the already-merged mine entryways. Next product work is the owner's playtest feedback, especially whether a new player notices the book on leaving the bunkhouse.

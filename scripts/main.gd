@@ -223,7 +223,7 @@ var first_visit_pending=false
 
 func show_title():
  ui.visible=true
- if opening_scene is HoldClaimScene127 or opening_scene is HoldFriendScene130 or opening_scene is HoldThaneScene131:opening_scene.layer.queue_free();opening_scene=null
+ if is_instance_valid(opening_scene):opening_scene.layer.queue_free();opening_scene=null
  HoldClaim127.cancel(self)
  first_visit_pending=false
  if depth_nav!=null:depth_nav.explore.release_pointer()
@@ -253,7 +253,8 @@ func show_title():
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
  ui.visible=true;invasion_work131=false;invasion_time131=0;guard_clock131=0
- if opening_scene is HoldClaimScene127 or opening_scene is HoldFriendScene130 or opening_scene is HoldThaneScene131:opening_scene.layer.queue_free();opening_scene=null
+ set_meta("early_shift_book_open",false);set_meta("early_ledger_open",false);set_meta("ledger146_more_projects",false)
+ if is_instance_valid(opening_scene):opening_scene.layer.queue_free();opening_scene=null
  HoldClaim127.cancel(self)
  var first_visit=first_visit_pending and not load_saved and not testing
  first_visit_pending=false
@@ -297,7 +298,9 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  HoldFolk.prepare(self)
  if not load_saved:
   if first_visit:
-   HoldFirstVisit99.begin(self);return
+   HoldFirstVisit99.begin(self)
+   if HoldFirstVisit99.data(state).get("intro_pending",false):opening_scene=HoldOpeningScene.begin(self,"frontier_arrival")
+   return
   save_game()
   if capture_mode=="" and not skip_arrival:opening_scene=HoldOpeningScene.begin(self,"arrival")
   else:
@@ -306,6 +309,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  elif not HoldOnboarding.ensure(state).arrival_seen:
   opening_scene=HoldOpeningScene.begin(self,"arrival")
  elif HoldOnboarding.ensure(state).get("escort_pending",false):opening_scene=HoldArrivalEscort.start(self)
+ if load_saved and HoldFirstVisit99.data(state).get("intro_pending",false):opening_scene=HoldOpeningScene.begin(self,"frontier_arrival")
  if load_saved:HoldBridgeScene139.start_bridge(self)
  if load_saved:HoldThaneScene131.start_scene(self)
  if load_saved:HoldFriendScene130.start_scene(self)
@@ -1673,7 +1677,9 @@ func commission_panel(details:bool=false):
  if HoldInvasion131.eligible(state) and not details:
   HoldInvasion131.panel(self);button(panel_body,"Useful hands · optional lessons",func():HoldWorkView132.open(self));HoldFriendship130.journal(self);HoldTraditions126.journal(self);return
  if HoldFirstVisit99.active(state) and not details:
-  HoldFirstVisit99.journal(self);HoldTraditions126.journal(self);HoldFriendship130.journal(self);HoldInvasion131.panel(self);return
+  HoldFirstVisit99.journal(self)
+  if HoldFirstVisit99.data(state).get("rewarded",false):HoldTraditions126.journal(self);HoldFriendship130.journal(self);HoldInvasion131.panel(self)
+  return
  var current=HoldOnboarding.primary(state)
  if current!="":
   var objective=HoldMenuView.section(panel_body,"Current objective")

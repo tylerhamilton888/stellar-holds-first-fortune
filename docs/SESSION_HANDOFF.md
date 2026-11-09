@@ -1,3 +1,9 @@
+# Opening146 — source work in progress (0.103.0)
+
+New Game now opens with a skippable Stonebridge arrival using the existing road painting and the actual bunkhouse. The current beat is saved; new games resume it after loading, while saves predating the change never receive it. Ivar, Rurik, Sigrid and Skarrin have a quieter first-act dialogue pass. Before the first wage the journal, shift book and Ledger introduce one thing at a time; players can still browse the full books. Until the Cold Forge is restored, other town projects are available in a disclosure. Existing progression and contributions remain in their existing owners.
+
+This is an in-progress source checkpoint. Review the opening and interface screenshots and complete the opening146 integration suite and hosted validation before merging. Windows 0.102.2 remains the published build until a subsequent verified release succeeds. Human playtesting is still needed for pacing, clarity, writing and Windows performance/audio.
+
 # Civic145 — authorized delivery in progress (0.102.2)
 
 The monumental town ledger is implemented and visually reviewed, including the exported game. Five affected native cases passed **381 assertions**; the exported ledger and mine-entryway cases passed **35 assertions**. All 24 tooling tests and all 3,945 PCK entries passed. Tested runtime commit: `39398608d0627d9731d6b6c632fc971055168e88`; later delivery commits only update evidence/docs. The asset is the original approved painting, with no image alteration.

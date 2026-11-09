@@ -811,7 +811,7 @@ func draw():
  HoldCalendar.lighting(g,objects)
  HoldWardDesign.motion(g)
  HoldInvasion131.draw_ground(g)
- if g.opening_scene is HoldArrivalEscort or g.opening_scene is HoldClaimScene127 or g.opening_scene is HoldFriendScene130:
+ if g.opening_scene is HoldArrivalEscort or g.opening_scene is HoldClaimScene127 or g.opening_scene is HoldFriendScene130 or (g.opening_scene is HoldOpeningScene and g.opening_scene.mode=="frontier_arrival"):
   g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO;return
  if area not in ["hearthward","crownward","forgeward"] and not room():
   for point in points():
