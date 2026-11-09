@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Run the current acceptance manifest with isolated saves and explicit completion gates."""
+from output_safety import emit, error_summary
 import argparse, json, os, re, subprocess, tempfile, time
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,17 +36,16 @@ def run(godot, suite, output, skip_import=False, selected=None):
                 log += '\nTIMEOUT\n'
                 code = -1
         (output / (name + '.log')).write_text(log)
-        errors = [line for line in log.splitlines() if ('SCRIPT ERROR:' in line or line.startswith('ERROR:'))
-                  and not re.search(r'ERROR: \d+ resources still in use at exit', line)]
+        errors, error_count = error_summary(log)
         match = re.search(re.escape(marker) + r': (\d+) passed / 0 failed', log) if marker else True
         passed = code == 0 and not errors and bool(match)
-        results.append(dict(test=name, passed=passed, exit_code=code, errors=errors,
+        results.append(dict(test=name, passed=passed, exit_code=code, errors=errors, error_count=error_count,
                             checks=int(match[1]) if marker and match else 0,
                             seconds=round(time.monotonic()-started, 2)))
         (output/'results.json').write_text(json.dumps(results, indent=2))
-        print(name, 'PASS' if passed else 'FAIL', flush=True)
+        emit(name, 'PASS' if passed else 'FAIL', flush=True)
         if not passed:
-            print(log[-5000:])
+            emit('Failure details saved in per-case log; errors:', error_count)
             return False
     return True
 

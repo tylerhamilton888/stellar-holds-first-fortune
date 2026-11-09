@@ -1,4 +1,5 @@
 """Measure reserved source-hair pigment; never repaint or assemble character art."""
+from output_safety import emit
 import json
 from pathlib import Path
 import numpy as np
@@ -49,4 +50,4 @@ for identity in refs:
   # a bounded compromise that preserves both skull size and footfall height.
   scales[f'{identity}-town:{i}']=round((contact+meta[identity+'-town'][i]['height'])/2,3) if identity=='male5' else contact
 (ROOT/'assets/appearance74/scale.json').write_text(json.dumps(scales,indent=2)+'\n')
-print('Measured',sum(map(len,result.values())),'frame slots; calibrated',len(scales),'passing poses')
+emit('Measured',sum(map(len,result.values())),'frame slots; calibrated',len(scales),'passing poses')

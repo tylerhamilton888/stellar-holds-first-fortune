@@ -12,12 +12,13 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - run: python3 -m pip install Pillow
-      - run: python3 tools/inspect_folk82.py
+      - run: python3 tools/capture_command.py --log test-results/console-1.log --timeout 3600 -- python3 -m pip install Pillow
+      - run: python3 tools/capture_command.py --log test-results/console-2.log --timeout 3600 -- python3 tools/inspect_folk82.py
       - name: Save visual evidence as files
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: folk82-inspection-${{ github.run_id }}
-          path: test-results/folk82-inspection/
+          path: test-results/
           if-no-files-found: error
           retention-days: 7

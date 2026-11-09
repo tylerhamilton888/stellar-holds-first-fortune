@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Fetch the pinned official Linux editor for CI; verify before extraction/execution."""
+from output_safety import emit
 import hashlib,sys,urllib.request,zipfile
 from pathlib import Path
 out=Path(sys.argv[1]).resolve();out.mkdir(parents=True,exist_ok=True)
@@ -12,4 +13,4 @@ if actual!=expected:raise SystemExit('Official engine checksum mismatch')
 with zipfile.ZipFile(archive) as z:
     (out/name).write_bytes(z.read(name))
 (out/name).chmod(0o755)
-print(out/name)
+emit(out/name)

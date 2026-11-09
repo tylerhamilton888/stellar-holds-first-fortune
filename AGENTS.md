@@ -1,7 +1,15 @@
 # Development instructions
-Read docs/SESSION_HANDOFF.md and docs/CURRENT_STATUS.md first. They point to the current checkpoint. Read only task-relevant files next. Code/assets/test results override historical documentation.
+Read only the current docs/SESSION_HANDOFF.md and docs/CURRENT_STATUS.md first; do not read their history archives by default. They point to the current checkpoint. Read only task-relevant files next. Code/assets/test results override historical documentation.
 
 ## Conversation and evidence size
+
+Enforcement: all production Python tools use `output_safety.emit` for human-facing output (2,048 bytes/message, 8,000 bytes/process); detailed data belongs in files. `tools/check_output_policy.py` runs in the normal Python test suite and blocks direct console/encoding regressions, uncaptured CI tool commands, and oversized current documents. Keep the capture and output helpers as the only reviewed low-level console owners. New tools must pass the policy and relevant flood tests. Static checks catch known patterns, not arbitrary external tool behavior.
+
+Before resuming an older feature branch, incorporate the current master safety tooling and instructions; confirm the capture helper and policy tests are present. Do not assume a fix on master exists in an older branch. Preserve the feature changes and rerun only checks required by actual changes.
+
+For import, tests, export and other potentially noisy commands, use `python3 tools/capture_command.py --log test-results/<unique-task>/runner.log --timeout 1800 -- <command>`. It writes full output to a new file and prints metadata only, including on failure. Inspect saved logs with `python3 tools/read_diagnostics.py <log> --contains ERROR`; do not use unrestricted cat/tail on unknown output. Do not dump logs/results JSON merely because a check failed.
+
+The size rule covers tool INPUTS as well as OUTPUTS: transfer source/assets through local Git or file uploads, never large encoded-content tool arguments. Inspect API responses inside code and return selected metadata; avoid printing full diffs/trees or both text and structured copies. Edit current status/handoff in place; keep each below 4,000 UTF-8 bytes and archive superseded history. See docs/CONVERSATION_OUTPUT.md for measured hazards and limits of this mitigation.
 
 Never print encoded images, base64/data URLs, binary payloads or archives into command logs or chat/tool output. Use image viewers for inspection and file/artifact uploads for transfer. If an API needs base64, encode and pass it inside the execution environment without echoing the request or response body. Artifact quota or upload failure is not permission to dump bytes into logs.
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Fail-closed verification of a Windows candidate and the complete exported suite."""
+from output_safety import emit
 import argparse
 import hashlib
 import json
@@ -75,7 +76,7 @@ def verify_reports(paths, build, source_sha, shard_count, cases=None):
         if r['assigned_cases'] != assigned or [x['test'] for x in results] != assigned:
             raise ValueError('Missing, extra or duplicate test results')
         for result in results:
-            if (result['passed'] is not True or result['exit_code'] != 0 or result['errors'] or
+            if (result['passed'] is not True or result['exit_code'] != 0 or result['errors'] or result.get('error_count', 0) != 0 or
                     type(result['checks']) is not int or result['checks'] < 1):
                 raise ValueError('A packaged-game test did not pass')
             total_checks += result['checks']
@@ -111,9 +112,9 @@ def main():
         if a.output:
             a.output.parent.mkdir(parents=True, exist_ok=True)
             a.output.write_text(json.dumps(summary, indent=2)+'\n')
-        print(json.dumps(summary, indent=2))
+        emit('Release verified; cases:',summary['cases'],'assertions:',summary['assertions'])
     else:
-        print('Verified candidate', build['version'], build['zip_sha256'])
+        emit('Verified candidate', build['version'], build['zip_sha256'])
 
 
 if __name__ == '__main__':

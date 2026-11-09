@@ -17,12 +17,16 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 1
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            tools
-            tests
-            scripts
+            /AGENTS.md
+            /tools/
+            /tests/
+            /scripts/
+            /docs/*.md
+            /.github/workflows/
       - name: Verify selection and release safety
-        run: python3 -m unittest discover -s tools -p 'test_*.py' -v
+        run: python3 tools/capture_command.py --log test-results/console-1.log --timeout 3600 -- python3 -m unittest discover -s tools -p 'test_*.py' -v
       - name: Select affected cases
         id: select
         env:
@@ -33,7 +37,14 @@ jobs:
             git fetch --no-tags --depth=1 origin "$BASE_SHA" || true
             args+=(--base "$BASE_SHA")
           fi
-          python3 tools/plan_validation.py "${args[@]}"
+          python3 tools/capture_command.py --log test-results/console-2.log --timeout 3600 -- python3 tools/plan_validation.py "${args[@]}"
+      - name: Retain tooling and selection evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: validation-plan-${{ github.sha }}
+          path: test-results/
+          retention-days: 7
   gameplay:
     needs: plan
     if: needs.plan.outputs.run_gameplay == 'true'
@@ -45,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Install pinned official engine
-        run: python3 tools/install_engine.py "$RUNNER_TEMP/godot"
+        run: python3 tools/capture_command.py --log test-results/console-3.log --timeout 3600 -- python3 tools/install_engine.py "$RUNNER_TEMP/godot"
       - name: Native affected-system and save checks
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
@@ -54,13 +65,13 @@ jobs:
           mapfile -t cases < <(python3 -c 'import json,os; print("\n".join(json.loads(os.environ["CASES"])))')
           args=()
           for case in "${cases[@]}"; do args+=(--case "$case"); done
-          xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" "${args[@]}" --output test-results/ci
+          python3 tools/capture_command.py --log test-results/console-4.log --timeout 3600 -- xvfb-run -a python3 tools/check.py --godot "$RUNNER_TEMP/godot/Godot_v4.4.1-stable_linux.x86_64" "${args[@]}" --output test-results/ci
       - name: Retain test and visual evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: gameplay-evidence-${{ matrix.shard }}-${{ github.sha }}
-          path: test-results/ci
+          path: test-results/
           retention-days: 7
   validation:
     if: always()

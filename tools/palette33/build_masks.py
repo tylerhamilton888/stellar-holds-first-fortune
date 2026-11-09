@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from output_safety import emit
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFilter
 import numpy as np, json, colorsys
@@ -153,4 +157,4 @@ for path in sorted(RAW.glob('*.png')):
  out=a.copy();sel=mask==1;v=np.max(a[:,:,:3],axis=2).astype(float)/255
  out[sel,:3]=np.stack([v[sel]*150,v[sel]*155,v[sel]*160],axis=1).astype(np.uint8)
  Image.fromarray(out).save(RAW/(key+'.review.png'))
-print('Wrote',len(list(OUT.glob('*.mask'))),'explicit masks')
+emit('Wrote',len(list(OUT.glob('*.mask'))),'explicit masks')
