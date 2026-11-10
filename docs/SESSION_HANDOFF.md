@@ -4,18 +4,14 @@ Read this and CURRENT_STATUS.md first; follow AGENTS.md. Keep current files unde
 
 ## Completed delivery
 
-The NPC conversation presentation and writing pass is merged in PR #144 (`de4ad55f7ef4beab6085bc5f8246c5494e916569`). Feature head `9e480bd5666f76b3fc6f485cf0623ad693ca86ad` passed all 80 native source scenarios in run 42755885469.
+Windows 0.105.1 is published: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.105.1
 
-Windows 0.105.0 is published: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.105.0
+PR #146's dialogue-state corrections are delivered, including completed favors/projects, restored-forge and learned-research hints, legacy lodge directions, response scrolling and accurate waiting/trust wording. NPC presentation from 0.105.0 remains included. Gameplay costs, rewards, timing and saves are unchanged.
 
-Release run 42755883367 succeeded on that exact source: 80 native scenarios, 70 exported-package scenarios / 14,154 assertions, integrity verification and publication. Published build metadata and receipt agree on source, PCK and ZIP hashes. The ZIP is 964,649,141 bytes. Local focused checks covered 9 scenarios / 2,845 assertions plus 42 tooling tests; normal and scrolled conversations, favors, gifts, courtship and Maren's errand were visually reviewed. See testing/npc-conversation-acceptance.json and the permanent release evidence.
+Release source: dc9a569e864b850b89b95ddabaeba034bf6e32bb. Version/notes PR #147 passed all hosted source checks and merged as 7bcbb33ad2d4c70078d0c48f67b401858a52907c. Release run 42902069734 succeeded: all 80 native scenarios, 70 exact-package scenarios / 14,170 assertions, integrity verification and publication. Published metadata and receipt agree on source, PCK and ZIP hashes; the ZIP is 964,648,066 bytes. Release assets retain the complete verification evidence. No release is pending for these corrections.
 
-Conversation and friendship-errand panels keep the speaker visible while choices scroll. Relationship bookkeeping is in the People book/journal; costs and commitments remain clear. Existing state, progress, choices and rewards are preserved. Next: Windows playtesting of readability, character voice, quest discoverability and accessibility. Do not rebuild without a new change or concrete failure. Preserve older releases and backups.
+Next: Windows playtesting of readability, character voice, completed/revisited tasks, forge directions and relationship responses. Do not rebuild without a new change or concrete failure. Preserve older releases and saves. Original local/visual acceptance for the corrections is recorded in PR #146 and docs/DIALOGUE_AUDIT.md.
 
 ## Output discipline
 
 Use file-only capture and bounded diagnostics. Never dump image bytes, encoded binaries, full API results or old logs into conversations. Keep current status, handoff and backlog below 4,000 bytes; release notes and changelog below 8,000. History is preserved separately. These safeguards reduce known repository hazards; they cannot guarantee ChatGPT backend reliability.
-
-## Dialogue state follow-up
-
-PR #146 (`fix/dialogue-state-truth`) corrects completed favors/projects, forge hints, reply visibility and courtship requirements. See DIALOGUE_AUDIT.md and the live PR checks for acceptance and merge state. Windows 0.105.0 remains the published build; these follow-up corrections require a later release.

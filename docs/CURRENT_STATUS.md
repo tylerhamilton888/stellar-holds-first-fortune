@@ -1,19 +1,15 @@
 # Current status — 2026-11-10
 
-## Windows 0.105.0 delivered
+## Windows 0.105.1 delivered
 
-[Download and release notes](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.105.0).
+[Download and release notes](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.105.1).
 
-NPC conversation work merged in PR #144. A lower-screen dialogue panel keeps the speaker visible while conversation and friendship-errand choices scroll. Introductions, preferences and favors read more naturally. Relationship progress and reward details remain in the People book/journal, and consequential costs and commitments stay explicit. Existing saves, quests, relationship progression, choices and rewards are preserved.
+Dialogue corrections from PR #146 are now in the published Windows build. Completed favors and civic projects stop requesting deliveries; restored forges and learned steel research receive accurate hints. Legacy lodge directions stay local. Gift/favor refusals reflect play-time waiting, betrothal distinguishes delay from trust, and replies return to the top. Includes the NPC conversation presentation from 0.105.0. Saves, costs, rewards, progression and timing rules are unchanged.
 
-Validation is complete: 80 source scenarios passed before merge; the exact release then passed 80 native and 70 exported-package scenarios (14,154 package assertions), integrity verification and publication. Run 42755883367 succeeded on source `9e480bd5666f76b3fc6f485cf0623ad693ca86ad`. Published build metadata and the verification receipt agree on source, PCK and ZIP hashes.
+Version/notes PR #147 passed all hosted source checks and merged as 7bcbb33ad2d4c70078d0c48f67b401858a52907c. The exact release source is dc9a569e864b850b89b95ddabaeba034bf6e32bb. [Release run 42902069734](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42902069734) passed all 80 native source scenarios, 70 exported-package scenarios / 14,170 assertions, integrity verification and publication. Published build.json and release-summary.json agree on version, source, PCK and ZIP hashes. ZIP size: 964,648,066 bytes. Permanent verification evidence is attached to the release.
 
-Nine focused local scenarios / 2,845 assertions and 42 tooling tests passed. Reviewed native captures include ordinary and scrolled dialogue, gifts, favors, accepted courtship and a friendship errand. Windows rendering, keyboard/mouse feel, character voice and discoverability remain human playtest feedback.
+Next: Windows playtesting of dialogue readability, completed/revisited tasks, forge guidance and relationship responses. Player-device rendering/input remain human playtest feedback. Preserve previous builds and saves; no rebuild without a new change or concrete failure.
 
 ## Conversation-size safeguards
 
 PR #141–143 enforce bounded production output, file-only capture, safe diagnostic excerpts, CI evidence artifacts and active-document budgets. History is archived. The reported HTTP 413 / conversation_too_large is established, but its precise trigger and platform threshold remain unknown. These controls block known repository regressions; they cannot guarantee ChatGPT backend reliability. See CONVERSATION_OUTPUT.md.
-
-## Dialogue state follow-up
-
-PR #146 (`fix/dialogue-state-truth`) corrects completed favors/projects, forge hints, reply visibility and courtship requirements. See DIALOGUE_AUDIT.md and the live PR checks for acceptance and merge state. Windows 0.105.0 remains the published build; these follow-up corrections require a later release.
