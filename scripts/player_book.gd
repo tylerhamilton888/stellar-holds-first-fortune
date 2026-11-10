@@ -77,7 +77,9 @@ static func people(g):
   if records.has(id):
    var d=records[id];var progress=ProgressBar.new();progress.max_value=20;progress.value=d.bond;progress.show_percentage=false;progress.custom_minimum_size=Vector2(160,9);progress.tooltip_text=HoldPeople.level(d);body.add_child(progress)
    g.label(body,HoldPeople.level(d)+" · "+d.last,14)
-   if HoldCourtship101.ARCS.has(id):g.label(body,HoldCourtship101.status(g.state,id),14)
+   if HoldCourtship101.ARCS.has(id):
+    g.label(body,HoldCourtship101.status(g.state,id),14)
+    if int(g.state.surface.get("courtship101",{}).get(id,{}).get("stage",0))==1:g.label(body,"More time together becomes available on later days; there is no penalty for waiting.",14)
    if d.known:g.label(body,"Likes "+HoldData.ITEMS[d.persona.like].name.to_lower()+" · Dislikes "+HoldData.ITEMS[d.persona.dislike].name.to_lower(),14)
   else:g.label(body,"Not yet acquainted",14)
   HoldFriendship130.notebook(g,id,body)

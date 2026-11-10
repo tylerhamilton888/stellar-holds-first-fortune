@@ -53,6 +53,7 @@ func run():
  g.surface.enter("room:commission",Vector2(620,465));settle()
  HoldConversation.start(g,"ivar");check(g.panel_id=="conversation","Ivar's existing conversation remains accessible")
  button("How have you been?");await snap("ivar-personality")
+ check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("Dry-witted, protective, exacting")),"Conversation lets Ivar's words convey his personality")
  var d=HoldPeople.records(g.state).ivar
  check(d.persona.trait==HoldPeople.PRINCIPALS.ivar.trait and d.bond==1,"Ivar receives authored personality and one conversation credit")
  HoldPeople.chat(g,"ivar");check(d.bond==1,"Repeated talk does not farm familiarity")
@@ -63,6 +64,7 @@ func run():
  HoldPeople.gift(g,"ivar",liked);check(g.state.count(liked)==before-1 and d.bond==4,"Daily gift limit rejects another transfer")
  var material=d.persona.work;g.state.add(material,2);before=g.state.count(material);var money=g.state.money
  button("Any small jobs need doing?");await snap("favor-details")
+ check(g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("two lengths of timber") and l.text.contains("8 crowns")),"Favor dialogue clearly communicates both materials and payment")
  button("Deliver 2")
  check(HoldPeople.records(g.state).ivar.work_day==int(g.state.elapsed/600.0),"Local work favor completes through its delivery button")
  check(g.state.count(material)==before-2 and g.state.money==money+2*int(HoldData.ITEMS[material].price) and d.bond==6,"Favor consumes materials, pays stated amount, and records familiarity")

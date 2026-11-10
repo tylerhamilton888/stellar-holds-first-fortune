@@ -98,8 +98,31 @@ static func cycle_tab(g,direction:int):
  var ids=[]
  for entry in TABS:ids.append(entry[0])
  var index=ids.find(tab_id(g.panel_id));g.menu_history.clear();g.open_panel(ids[posmod(index+direction,ids.size())],false)
+static func conversation_shell(g):
+ # The speaker stays in view while speech and choices scroll independently.
+ if g.panel.has_meta("folio"):g.panel.remove_meta("folio")
+ g.panel.theme=make_theme()
+ var frame=paper_style("12232c","a68a58",2);frame.set_corner_radius_all(6);frame.set_content_margin_all(13)
+ frame.shadow_color=Color(0,0,0,.42);frame.shadow_size=10;g.panel.add_theme_stylebox_override("panel",frame)
+ g.panel.position=Vector2(40,220);g.panel.custom_minimum_size=Vector2.ZERO;g.panel.size=Vector2(880,300)
+ var outer=HBoxContainer.new();outer.add_theme_constant_override("separation",18);g.panel.add_child(outer)
+ var identity=VBoxContainer.new();identity.name="ConversationIdentity";identity.custom_minimum_size.x=142;identity.add_theme_constant_override("separation",6);outer.add_child(identity)
+ var content=VBoxContainer.new();content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_theme_constant_override("separation",4);outer.add_child(content)
+ var scroll=ScrollContainer.new();scroll.follow_focus=true;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;content.add_child(scroll);g.menu_scroll=scroll
+ g.panel_body=VBoxContainer.new();g.panel_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;g.panel_body.add_theme_constant_override("separation",8);scroll.add_child(g.panel_body)
+ var hint=label(content,"Esc · end conversation",14,Color("a7c8bf"))
+ var bar=scroll.get_v_scroll_bar()
+ var update_hint=func():
+  if not is_instance_valid(hint):return
+  var remaining=bar.max_value-bar.page
+  hint.text=("Scroll for more · " if bar.value<remaining-1 else "Scroll up · " if remaining>1 else "")+"Esc · end conversation"
+ bar.changed.connect(update_hint);bar.value_changed.connect(func(_value):update_hint.call());update_hint.call_deferred()
 static func build_shell(g,id:String):
  var dialogue=id=="conversation"
+ if dialogue:
+  for child in g.panel.get_children():g.panel.remove_child(child);child.queue_free()
+  conversation_shell(g);return
+ g.panel.remove_theme_stylebox_override("panel")
  g.panel.set_meta("folio",true);g.panel.theme=book_theme()
  g.panel.position=Vector2(60,174) if dialogue else Vector2(40,24)
  g.panel.custom_minimum_size=Vector2.ZERO

@@ -1,3 +1,7 @@
+# 0.105.0 — NPC conversation presentation (candidate)
+
+Conversation uses a compact lower-screen dialogue panel with a fixed speaker portrait/name and independently scrolling choices. New topic changes return to the start. Relationship counters and trait labels move out of conversation; the People book and journal preserve optional progress and reward details. Favor costs/payments and consequential gifts and courtship remain explicit. Introductions and character preference dialogue are less mechanical. Existing relationship state, quests, thresholds, choices, rewards and saves are unchanged. Source and release verification are pending.
+
 # 0.104.0 — Living Forges released
 
 Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Nine local native scenarios / 858 assertions, visual review and all 80 hosted source scenarios passed. PR #140 is merged; Windows 0.104.0 is published after all 80 native and 70 exact-package scenarios (14,145 package assertions), integrity verification and publication succeeded. The active backlog and release notes now have automated size budgets, with prior text preserved in history.

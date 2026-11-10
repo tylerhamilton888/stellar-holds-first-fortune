@@ -111,10 +111,21 @@ static func panel(g,id:String):
  if d.is_empty():return
  var p=d.persona
  HoldConversation.header(g,g.panel_body,id,g.talk_line if g.talk_line!="" else HoldLedger137.skarrin(g.state) if id=="road_folk:8" and HoldLedger137.active(g.state) else p.want,true)
- g.label(g.panel_body,("Welcoming, capable, self-assured" if id=="road_folk:8" and HoldLedger137.active(g.state) and HoldLedger137.phase(g.state)==0 else d.persona.trait)+" · "+level(d),15,Color("a7c7c6"))
- g.label(g.panel_body,d.last,14)
- if d.known:g.label(g.panel_body,"Enjoys "+HoldData.ITEMS[p.like].name.to_lower()+" · Not fond of "+HoldData.ITEMS[p.dislike].name.to_lower(),15)
- HoldConversation.choose(g,"What do you enjoy?",func():d.known=true;g.save_game();g.talk_line="I am always glad of "+HoldData.ITEMS[p.like].name.to_lower()+". "+HoldData.ITEMS[p.dislike].name+" isn't for me, though. A visit is welcome either way.";g.refresh_panel())
+ HoldConversation.choose(g,"What do you enjoy?",func():
+  d.known=true;g.save_game()
+  var liked=HoldData.ITEMS[p.like].name.to_lower();var disliked=HoldData.ITEMS[p.dislike].name.to_lower()
+  var replies={
+   "ivar":"A little "+liked+" and a quiet table. Keep the "+disliked+", though; I'd only misplace it.",
+   "orla":"Bring me "+liked+" and I'll make room for you at the table. The "+disliked+" can stay on the shelf.",
+   "hedrik":"I'd gladly find room for "+liked+" in my kitchen. "+disliked.capitalize()+"? I think we can do better than that.",
+   "borin":"Good "+liked+" is worth keeping. As for "+disliked+", leave that for someone with different tastes.",
+   "eldric":"I've a particular fondness for "+liked+". "+disliked.capitalize()+" has rather less to recommend it.",
+   "eirik":"I'd be pleased with "+liked+". I confess I've never cared much for "+disliked+".",
+   "road_folk:1":"A little "+liked+" and someone to share it with—that's a good evening. You can leave the "+disliked+" for someone else.",
+   "road_folk:8":"I'm never one to turn down good "+liked+". As for "+disliked+", I'm afraid it's wasted on me.",
+   "road_folk:10":"Give me "+liked+" and an open trail and I'm content. I've never much cared for "+disliked+".",
+   "road_folk:11":"I'd happily share "+liked+" with you. The "+disliked+" can go to someone who appreciates it more than I do."}
+  g.talk_line=replies.get(id,"I have a soft spot for "+liked+". I've never quite taken to "+disliked+", though.");g.refresh_panel())
  HoldConversation.choose(g,"Give a gift from my pack",func():g.talk_topic="gift";g.refresh_panel())
  HoldConversation.choose(g,"Any small jobs need doing?",func():g.talk_topic="favor";g.refresh_panel())
  if HoldRoadCharacters.CAST.has(id):HoldConversation.choose(g,"Tell me about life here",func():g.talk_line="";g.talk_topic="road_story";g.refresh_panel())
@@ -126,25 +137,29 @@ static func favor(g,id:String):
  var d=records(g.state).get(id,{})
  if d.is_empty():return
  var p=d.persona;var day=int(g.state.elapsed/600.0)
- HoldConversation.header(g,g.panel_body,id,p.reason+". There is no hurry.",true)
+ var material=HoldData.ITEMS[p.work].name.to_lower();var pay=2*int(HoldData.ITEMS[p.work].price)
+ var amount={"wood":"two lengths of timber","stone":"two pieces of stone","coal":"two pieces of coal","turnip":"two turnips","dressed_stone":"two dressed stones"}.get(p.work,"two "+material)
+ var request={"ivar":"The lamp rack needs dry pegs.","orla":"I need dividers for the exchange's return crates.","hedrik":"The late shift could use a proper supper.","borin":"The apprentice's practice forge needs fuel.","eldric":"The survey students need reference pieces.","eirik":"The public stair needs replacement stones."}.get(id,p.reason+".")
+ var thanks="That will make a difference. Thank you for following through."
+ var words=thanks if d.work_day==day and g.talk_line==thanks else request+" Could you bring me "+amount+"? I can pay "+str(pay)+" crowns."
+ HoldConversation.header(g,g.panel_body,id,words,true)
  if d.work_day==day:
   g.label(g.panel_body,"You have helped today. Thank you. Nothing more is needed right now.",17)
  else:
-  g.label(g.panel_body,"Bring 2 "+HoldData.ITEMS[p.work].name.to_lower()+" from your pack · You carry "+str(g.state.count(p.work)),17)
-  g.label(g.panel_body,"Payment: "+str(2*int(HoldData.ITEMS[p.work].price))+" crowns. Helping also builds familiarity.",16)
-  g.label(g.panel_body,"No deadline. One small job per workday (10 minutes of play). Stored and communal materials stay where they are.",14,Color("a7b4b0"))
+  g.label(g.panel_body,"In your pack: "+str(g.state.count(p.work))+" "+material,15,Color("a7c8bf"))
   var b=HoldConversation.choose(g,"Deliver 2 "+HoldData.ITEMS[p.work].name.to_lower(),func():
    if help(g,id):g.talk_line="That will make a difference. Thank you for following through."
    g.refresh_panel())
   b.disabled=g.state.count(p.work)<2
+  b.tooltip_text="Give two from your pack for "+str(pay)+" crowns."
  HoldConversation.choose(g,"Back to our conversation",func():g.talk_topic="person";g.refresh_panel())
 static func gifts(g,id:String):
  var d=records(g.state).get(id,{})
  if d.is_empty():return
- HoldConversation.header(g,g.panel_body,id,"A small kindness",true)
+ HoldConversation.header(g,g.panel_body,id,"What have you brought?",true)
  if int(d.gift_day)==int(g.state.elapsed/600.0):g.label(g.panel_body,"Already given a gift this workday. Another visit is enough.",16)
  else:
-  g.label(g.panel_body,"Choose one item. Giving it removes one from your pack.",15)
+  g.label(g.panel_body,"Choose an item to give · one will leave your pack.",15)
   var count=0
   for item in g.state.inventory:
    if item=="hearthknot" or g.state.count(item)<=0 or not HoldData.ITEMS.has(item):continue

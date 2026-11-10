@@ -27,6 +27,17 @@ static func start(g,id:String):
  HoldPeople.meet(g,id)
  g.talk_id=id;g.talk_topic="";g.talk_line="";g.menu_history.clear();g.open_panel("conversation",false)
 static func header(g,parent:Node,id:String,text:String,compact:bool=false):
+ if g.panel_id=="conversation":
+  var identity=g.panel.find_child("ConversationIdentity",true,false)
+  if identity!=null and identity.get_child_count()==0:
+   var portrait=HoldRoyalHall.portrait() if id=="eirik" else HoldPortrait.new()
+   if id!="eirik":portrait.profile=g.state.npc(id)
+   portrait.custom_minimum_size=Vector2(96,96);identity.add_child(portrait)
+   g.label(identity,g.state.npc(id).name,16,Color("edc98a"))
+   var close=g.small_button(identity,"End · Esc",g.close_panel);close.tooltip_text="End conversation · Esc"
+  var spoken=g.label(parent,HoldCulture.render(g.state,text),19,Color("f2e7d2"))
+  spoken.add_theme_constant_override("line_spacing",5)
+  return
  var line=g.row(parent);line.add_theme_constant_override("separation",20)
  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",8);line.add_child(body)
  var title=g.row(body);g.label(title,g.state.npc(id).name,22,Color("edc98a"))
@@ -50,13 +61,22 @@ static func return_choice(g,id:String):
 static func choose(g,text:String,fn:Callable,quest:bool=false)->Button:
  responses(g)
  var parent=g.panel.find_child("Responses",true,false)
- var b=g.button(parent,("◆  " if quest else "›  ")+text,fn)
+ var b=g.button(parent,("◆  " if quest else "›  ")+text,func():
+  var previous_topic=g.talk_topic
+  fn.call()
+  if g.panel_id=="conversation" and g.talk_topic!=previous_topic:g.restore_menu.call_deferred(0,""))
  b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  b.custom_minimum_size.y=36
  for style_name in ["normal","hover","pressed","disabled","focus"]:
   var style=b.get_theme_stylebox(style_name).duplicate();style.set_content_margin_all(9);b.add_theme_stylebox_override(style_name,style)
  b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
- b.add_theme_color_override("font_color",Color("79501f") if quest else Color("382d24"))
+ if g.panel_id=="conversation":
+  for style_name in ["normal","hover","pressed","disabled"]:
+   var style=StyleBoxFlat.new();style.bg_color=Color("1b333b") if style_name=="normal" else Color("34565b") if style_name=="hover" else Color("294b48") if style_name=="pressed" else Color("202d36")
+   style.border_color=Color("526963") if style_name=="normal" else Color("d5b77b") if style_name=="hover" else Color("567267")
+   style.set_border_width_all(1);style.set_corner_radius_all(3);style.set_content_margin_all(8);b.add_theme_stylebox_override(style_name,style)
+  b.add_theme_color_override("font_color",Color("e9c88a") if quest else Color("e6e8e2"))
+ else:b.add_theme_color_override("font_color",Color("79501f") if quest else Color("382d24"))
  return b
 static func greeting(g,id:String)->String:
  if g.talk_line!="":return g.talk_line
@@ -106,7 +126,8 @@ static func panel(g):
   if q.fresh and q.stage==2 and id in ["borin","orla","hedrik"] and not q.met.has(id):
    choose(g,"Introduce myself. Ivar sent me.",func():g.talk_topic="intro";g.refresh_panel(),true)
   if id in ["ivar","eldric","eirik"] and (HoldAncestralClaim.data(s).stage>0 or (id=="ivar" and HoldAncestralClaim.eligible(s))):
-   choose(g,"The Stone Remembers · rescue and ancestral claim",func():g.talk_topic="ancestral";g.refresh_panel(),true)
+   var subject="Is there news of the missing crew?" if id=="ivar" and HoldAncestralClaim.data(s).stage==0 else {"ivar":"About those old records...","eldric":"About the old stone and its markings...","eirik":"About the old charter..."}[id]
+   choose(g,subject,func():g.talk_topic="ancestral";g.refresh_panel(),true)
   if id=="ivar":ivar_options(g)
   if id=="eirik" and q.fresh and q.stage==4:
    choose(g,"Step forward for my audience",func():g.opening_scene=HoldOpeningScene.begin(g,"audience"),true)
@@ -145,12 +166,12 @@ static func ivar_options(g):
   choose(g,"Remind me what to do",func():g.open_panel("guidance"),true)
  elif q.fresh and q.stage in [0,1]:
   choose(g,"I am "+s.appearance.first_name+" "+s.appearance.family_name+". I am ready to work.",func():
-   q.stage=2;s.tracked_npc="borin";g.save_game();g.talk_line="Welcome to the shift, "+("sister" if s.appearance.gender else "brother")+". Borin checks the tools. Orla knows the routes. Hedrik will feed you. Meet all three, then bring eight coal from Old Workings. Sixty-five crowns when you return. The surplus is yours.";g.refresh_panel(),true)
+   q.stage=2;s.tracked_npc="borin";g.save_game();g.talk_line="Welcome to the shift, "+("sister" if s.appearance.gender else "brother")+". Meet Borin, Orla and Hedrik first. Then bring eight coal from Old Workings. Sixty-five crowns for the load; anything extra is yours.";g.refresh_panel(),true)
  elif q.fresh and q.stage==4:
   choose(g,"Show me the way to the King's hall",func():g.state.tracked_npc="eirik";g.save_game();g.close_panel();g.notify("Leave the office and take the Royal stairs on the western terrace of Hearthward. E enters the King's hall in Crownward."),true)
  elif q.fresh and q.stage==5:
   choose(g,"What needs doing next?",func():
-   q.stage=6;s.tracked_npc="ivar";g.save_game();g.talk_line="Sixteen stone and eight timber for the lift footings. Pinewood has straight firs. Follow the High Trail south from the King’s Gate. Borin and Eldric have useful lessons when you have a moment; listen for other work as you visit the hold.";g.refresh_panel(),true)
+   q.stage=6;s.tracked_npc="ivar";g.save_game();g.talk_line="The lift needs sixteen stone and eight timber. Pinewood's firs are south along the High Trail. Borin and Eldric can help you find your feet.";g.refresh_panel(),true)
  elif HoldLedger137.active(s) and s.opening==1:
   choose(g,"The Cold Forge · Hold’s Ledger",func():g.open_panel("great_claim102"),true)
  elif HoldOnboarding.commission_allowed(s) and s.opening in [1,2,3]:

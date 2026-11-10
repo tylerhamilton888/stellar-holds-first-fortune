@@ -81,19 +81,18 @@ static func option(g,id:String):
  if not STORIES.has(id):return
  var e=episode(g.state,id);var d=record(g.state,id)
  if e.is_empty() or d.accepted or ready(g.state,id):
-  HoldConversation.choose(g,"Friendship stories"+(" · "+e.title if not e.is_empty() else " · memories"),func():g.talk_topic="friend130";g.refresh_panel(),true)
+  HoldConversation.choose(g,"Have you got a moment?" if not e.is_empty() else "Remember our time together?",func():g.talk_topic="friend130";g.refresh_panel(),true)
 static func rewards(e:Dictionary)->String:
  return HoldData.cost_text(e.reward)+( " · "+str(e.xp)+" "+HoldDisciplines.PATHS[e.path][0]+" experience" if e.xp>0 else "")+" · a saved friendship memory"
 static func panel(g,id:String,task:bool=false):
  if not STORIES.has(id):return
  var d=record(g.state,id);var e=episode(g.state,id)
- HoldConversation.header(g,g.panel_body,id,"Time shared, work remembered",true)
- g.label(g.panel_body,"Friendship "+str(bond(g.state,id))+" / 20 · Stories at 5, 12 and 18. Friendship does not require romance.",15)
+ var words="We've shared a good few moments, haven't we?" if e.is_empty() else "There you are. Shall we spend a little time together?" if d.worked else e.offer
+ HoldConversation.header(g,g.panel_body,id,words,true)
  if not e.is_empty():
-  g.label(g.panel_body,e.title,22,Color("edc98a"));g.label(g.panel_body,e.offer,17)
   if d.worked:
-   g.label(g.panel_body,"The errand is ready. Visit "+g.state.npc(id).first_name+" to share the moment.",16)
    if HoldConversation.local(g,id):HoldConversation.choose(g,"Spend time together",func():begin_scene(g,id),true)
+   else:g.label(g.panel_body,"Return to "+g.state.npc(id).first_name+" when you're ready.",16)
   elif d.accepted:
    g.label(g.panel_body,"Visit the marked friendship errand in "+d.place+". "+("Bring "+HoldData.cost_text(e.cost)+" from your pack." if not e.cost.is_empty() else "No materials needed."),16)
    if at_task(g,id):
@@ -105,11 +104,7 @@ static func panel(g,id:String,task:bool=false):
   elif ready(g.state,id):
    HoldConversation.choose(g,"I'd be glad to help",func():
     if accept(g,id):g.refresh_panel(),true)
-  else:g.label(g.panel_body,"Next story at "+str(e.bond)+" friendship. Visits, gifts and favors help you get to know one another.",16)
-  g.label(g.panel_body,"Reward: "+rewards(e),15)
-  g.label(g.panel_body,"No deadline. Accepted stories remain available if friendship changes. One reward per story.",14)
- for m in d.memories:
-  g.label(g.panel_body,"Remembered · "+m.title+" — "+m.keepsake,15)
+  else:g.label(g.panel_body,"Perhaps another time, when we know each other better.",16)
  if task:HoldConversation.choose(g,"Back to the world",g.close_panel)
  else:HoldConversation.return_choice(g,id)
 static func journal(g):
@@ -121,6 +116,7 @@ static func journal(g):
   if not shown:g.label(g.panel_body,"Friendship stories",22,Color("edc98a"));shown=true
   g.label(g.panel_body,g.state.npc(id).first_name+" · "+e.title,17)
   g.label(g.panel_body,("Return to your friend for the scene." if d.worked else "Marked errand: "+d.place+" · "+HoldData.cost_text(e.cost) if d.accepted else "A new story is available. Visit them when you like."),15)
+  g.label(g.panel_body,"Reward: "+rewards(e)+" · no deadline",14)
   g.label(g.panel_body,HoldRoadCharacters.whereabouts(id,g.state) if id.begins_with("road_folk:") else g.npc_where(id).label,14)
 static func notebook(g,id:String,parent=null):
  if not STORIES.has(id):return

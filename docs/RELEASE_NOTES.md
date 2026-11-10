@@ -1,13 +1,11 @@
-# 0.104.0 — The Living Forge
+# 0.105.0 — A word with the Folk
 
-Stonebridge's communal forge and newly built player workshops now have their own practical layouts. The communal forge groups its coal hearth, bellows, anvil, workbenches and stores; your first workshop starts smaller, with room to grow. Keldrath retains its established grand forge and resident work areas.
+Conversations now use a quieter dialogue panel with the speaker's portrait and name held in view as you scroll through your choices. The world remains visible above the conversation, and keyboard and mouse navigation are still available.
 
-Approach the furnace to smelt, the anvil to make tools and equipment, or a workbench to craft fittings and parts. These stations use the existing recipes, materials and research. Industry controls appear with the appropriate research.
+Ivar, Borin, Orla and the other Folk explain their needs more naturally. Relationship progress and story bookkeeping belong in your People book and journal; important costs, payments and courtship decisions remain clear when they matter. A new courtship begins with a character's answer rather than a progress counter.
 
-The Cold Forge stays quiet and unlit until restored. Once working, its coals glow, the bellows move, and Borin works at a single physical anvil. Supplies and workpieces make each area easier to recognize. The new communal building's collision footprint preserves Sten's road patrol.
+Existing saves, friendships, stories, gifts, quests and relationship choices carry forward. No progress thresholds or rewards have changed.
 
-Existing workshop dimensions, placed furniture, stored items and progress are preserved. Smaller layouts apply to newly created rooms; old workshops are not forcibly rearranged.
+Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. Please play through a first introduction, a conversation, a small favor and, if available, a friendship or courtship moment; tell us what still feels awkward or confusing.
 
-Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. Choose **New Game** to see the Stonebridge opening and new communal layout, or **Load Game** to continue your existing fortune. Please check workstation clarity, movement around furniture, sound levels and the restored forge during normal play.
-
-This update includes the opening and dialogue improvements from 0.103.0. Previous release notes are preserved in the repository's history archive.
+Previous release notes are preserved in the repository's history archive.

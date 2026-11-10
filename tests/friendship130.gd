@@ -37,7 +37,7 @@ func run():
    g.player+=Vector2(500,0)
    # Principal conversations use their existing room-local boundary.
    if id.begins_with("road_folk:"):check(not HoldFriendship130.accept(g,id),"Remote story callback rejected")
-   visit(id);button("Friendship stories");button("I'd be glad to help")
+   visit(id);button("Have you got a moment?");button("I'd be glad to help")
    check(d.accepted and not d.worked,"Local offer accepts optional story")
    check(not HoldFriendship130.accept(g,id),"Repeated acceptance is inert")
    check(not HoldFriendship130.begin_scene(g,id),"Scene cannot bypass its task")
@@ -59,7 +59,7 @@ func run():
    check(not HoldFriendship130.begin_scene(g,id),"Carried load prevents scene without losing task")
    g.handworks.data().carry=[]
    var xp=HoldDisciplines.xp(g.state,e.path);var inventory=g.state.inventory.duplicate(true)
-   button("Friendship stories");button("Spend time together");settle()
+   button("Have you got a moment?");button("Spend time together");settle()
    check(g.opening_scene is HoldFriendScene130,"Friendship scene starts: "+e.title)
    if not g.opening_scene is HoldFriendScene130:continue
    g.opening_scene.set_process(false)
