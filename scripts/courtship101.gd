@@ -436,7 +436,7 @@ static func status(s,id:String)->String:
  return "Personal story complete" if int(d.get("quest",0))==3 else "Personal story: "+ARCS[id].title
 static func open(g):g.talk_topic="courtship101";g.talk_line="";g.refresh_panel()
 static func option(g,id:String):
- if ARCS.has(id):HoldConversation.choose(g,"A personal word · "+ARCS[id].title,func():open(g),true)
+ if ARCS.has(id):HoldConversation.choose(g,"A personal word",func():open(g),true)
 static func panel(g,id:String):
  if not local(g,id):return
  var d=record(g.state,id);var arc=ARCS[id]
@@ -447,8 +447,9 @@ static func panel(g,id:String):
   text=HoldRoadCharacters.CAST[id].close
   if id in HoldRidgePair124.IDS and HoldRidgePair124.paired(g.state):text=HoldRidgePair124.greeting(g.state,id)
  if date_ready(g.state,id):text=arc.dates[d.dates.size()][1]
- HoldConversation.header(g,g.panel_body,id,g.talk_line if g.talk_line!="" else text,true)
- g.label(g.panel_body,status(g.state,id),17)
+ var spoken=g.talk_line if g.talk_line!="" else text
+ spoken=spoken.trim_prefix(g.state.npc(id).first_name+" accepts your Hearthknot.\n\n")
+ HoldConversation.header(g,g.panel_body,id,spoken,true)
  HoldRidgePair124.options(g,id)
  if d.quest==0:
   HoldConversation.choose(g,"Offer to help",func():
@@ -467,7 +468,6 @@ static func panel(g,id:String):
     if resolve(g,id,choice):g.talk_line=arc.answers[choice]
     g.refresh_panel())
  else:
-  g.label(g.panel_body,"Keepsake: "+d.keepsake,14)
   if d.stage==0:
    if eligible(g.state,id):
     if partner(g.state)!="":g.label(g.panel_body,"You have made a commitment to someone else. This friendship can still grow.",15)
@@ -491,12 +491,13 @@ static func panel(g,id:String):
      HoldConversation.choose(g,scene[2][i],func():
       if share_date(g,id,index,choice):g.talk_line=scene[3][choice]
       g.refresh_panel())
-   elif d.dates.size()<3:g.label(g.panel_body,"Come back another day for time together. There is no missed-visit penalty.",15)
+   elif d.dates.size()<3 and g.talk_line=="":g.label(g.panel_body,"Come back another day for time together.",15)
    if can_promise(g.state,id):HoldConversation.choose(g,"Ask to become betrothed",func():
     if promise(g,id):g.talk_line=arc.promise
     g.refresh_panel())
    elif d.dates.size()==3:g.label(g.panel_body,"Let these memories settle. Return another day as trusted friends to discuss a shared future.",15)
-  if d.stage in [1,2]:HoldConversation.choose(g,"Discuss ending our courtship",func():g.talk_topic="courtship_end101";g.refresh_panel())
+  if d.stage in [1,2] and not g.talk_line.begins_with(g.state.npc(id).first_name+" accepts your Hearthknot.\n\n"):
+   HoldConversation.choose(g,"Discuss ending our courtship",func():g.talk_topic="courtship_end101";g.refresh_panel())
  HoldConversation.return_choice(g,id)
 static func end_panel(g,id:String):
  if not local(g,id):return

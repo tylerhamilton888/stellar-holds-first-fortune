@@ -66,11 +66,10 @@ static func greeting(s,id:String)->String:
  return "Maren smiles towards Alden. 'A good heart, a clean shirt, and he is learning to listen. I call that a promising beginning.'"
 static func options(g,id:String):
  if id not in IDS:return
- var s=g.state;var d=data(s);var line=summary(s,id)
- if line!="":g.label(g.panel_body,line,15)
+ var s=g.state;var d=data(s)
  if paired(s) or HoldCourtship101.partner(s)!="" or not HoldRoadCharacters.future_candidate(id,int(s.appearance.gender)):return
  if str(d.interest)==id:
-  g.label(g.panel_body,"You have asked for time to explore a courtship. They will wait for your decision.",15)
+  g.label(g.panel_body,"No hurry. Tell me what you decide when you're ready.",15)
   HoldConversation.choose(g,"Tell them you would prefer friendship",func():
    if release_interest(g,id):g.talk_line="Thank you for telling me. We can still be glad of each other's company."
    g.refresh_panel())

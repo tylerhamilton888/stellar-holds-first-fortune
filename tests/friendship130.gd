@@ -37,7 +37,7 @@ func run():
    g.player+=Vector2(500,0)
    # Principal conversations use their existing room-local boundary.
    if id.begins_with("road_folk:"):check(not HoldFriendship130.accept(g,id),"Remote story callback rejected")
-   visit(id);button("Friendship stories");button("I'd be glad to help")
+   visit(id);button("Have you got a moment?");button("I'd be glad to help")
    check(d.accepted and not d.worked,"Local offer accepts optional story")
    check(not HoldFriendship130.accept(g,id),"Repeated acceptance is inert")
    check(not HoldFriendship130.begin_scene(g,id),"Scene cannot bypass its task")
@@ -45,7 +45,11 @@ func run():
    at(p+Vector2(250,0));check(not HoldFriendship130.work(g,id,e.answer),"Work cannot be performed remotely")
    at(p);g.close_panel();key(KEY_E)
    check(g.panel_id=="friend130","Physical errand opens its own task panel")
-   if id=="road_folk:11" and index==1:await shot("maren-errand")
+   if id=="road_folk:11" and index==1:
+    await process_frame;await process_frame;await shot("maren-errand")
+    var identity=g.panel.find_child("ConversationIdentity",true,false)
+    check(identity!=null and not g.menu_scroll.is_ancestor_of(identity) and g.panel.get_global_rect().end.y<=540,"Friendship task keeps its speaker visible within the viewport")
+    check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("Visit the marked friendship errand")),"An arrived player sees the task instead of directions to the task")
    for item in e.cost:g.state.inventory[item]=0
    if not e.cost.is_empty():check(not HoldFriendship130.work(g,id,e.answer),"Missing supplies block work without granting story")
    for item in e.cost:g.state.add(item,int(e.cost[item]))
@@ -59,7 +63,7 @@ func run():
    check(not HoldFriendship130.begin_scene(g,id),"Carried load prevents scene without losing task")
    g.handworks.data().carry=[]
    var xp=HoldDisciplines.xp(g.state,e.path);var inventory=g.state.inventory.duplicate(true)
-   button("Friendship stories");button("Spend time together");settle()
+   button("Have you got a moment?");button("Spend time together");settle()
    check(g.opening_scene is HoldFriendScene130,"Friendship scene starts: "+e.title)
    if not g.opening_scene is HoldFriendScene130:continue
    g.opening_scene.set_process(false)

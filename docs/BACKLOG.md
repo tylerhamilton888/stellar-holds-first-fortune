@@ -1,5 +1,9 @@
 # Current backlog — 2026-11-10
 
+## Finish and playtest NPC conversation update 0.105.0
+
+Source work is on `feature/npc-conversation-polish`. Finish native and package verification, visual review, merge and requested Windows delivery. Review first introductions, personal conversations, gifts, favors, friendship and courtship; retain clear costs, progress, controls and existing saves.
+
 ## Playtest Windows 0.104.0
 
 Living Forges is delivered. PR #140 is merged, and verified Windows 0.104.0 is published after all native/package gates. New communal/player layouts and physical production stations preserve existing saved rooms, furniture and storage. See [implementation notes](LIVING_FORGES148.md) and [the release](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.104.0).
