@@ -27,22 +27,20 @@ static func start(g,id:String):
  HoldPeople.meet(g,id)
  g.talk_id=id;g.talk_topic="";g.talk_line="";g.menu_history.clear();g.open_panel("conversation",false)
 static func header(g,parent:Node,id:String,text:String,compact:bool=false):
- if g.panel_id=="conversation":
+ if g.panel_id in ["conversation","friend130"]:
   var identity=g.panel.find_child("ConversationIdentity",true,false)
   if identity!=null and identity.get_child_count()==0:
    var portrait=HoldRoyalHall.portrait() if id=="eirik" else HoldPortrait.new()
    if id!="eirik":portrait.profile=g.state.npc(id)
    portrait.custom_minimum_size=Vector2(96,96);identity.add_child(portrait)
    g.label(identity,g.state.npc(id).name,16,Color("edc98a"))
-   var close=g.small_button(identity,"End · Esc",g.close_panel);close.tooltip_text="End conversation · Esc"
+   var close=g.small_button(identity,"End · Esc" if g.panel_id=="conversation" else "Close · Esc",g.close_panel);close.tooltip_text="Close · Esc"
   var spoken=g.label(parent,HoldCulture.render(g.state,text),19,Color("f2e7d2"))
   spoken.add_theme_constant_override("line_spacing",5)
   return
  var line=g.row(parent);line.add_theme_constant_override("separation",20)
  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;body.add_theme_constant_override("separation",8);line.add_child(body)
  var title=g.row(body);g.label(title,g.state.npc(id).name,22,Color("edc98a"))
- if g.panel_id=="conversation":
-  var close=g.small_button(title,"×",g.close_panel);close.tooltip_text="End conversation · Esc"
  g.label(body,HoldCulture.render(g.state,text),18)
  var portrait=HoldRoyalHall.portrait() if id=="eirik" else HoldPortrait.new()
  if id!="eirik":portrait.profile=g.state.npc(id)
@@ -70,7 +68,7 @@ static func choose(g,text:String,fn:Callable,quest:bool=false)->Button:
  for style_name in ["normal","hover","pressed","disabled","focus"]:
   var style=b.get_theme_stylebox(style_name).duplicate();style.set_content_margin_all(9);b.add_theme_stylebox_override(style_name,style)
  b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
- if g.panel_id=="conversation":
+ if g.panel_id in ["conversation","friend130"]:
   for style_name in ["normal","hover","pressed","disabled"]:
    var style=StyleBoxFlat.new();style.bg_color=Color("1b333b") if style_name=="normal" else Color("34565b") if style_name=="hover" else Color("294b48") if style_name=="pressed" else Color("202d36")
    style.border_color=Color("526963") if style_name=="normal" else Color("d5b77b") if style_name=="hover" else Color("567267")

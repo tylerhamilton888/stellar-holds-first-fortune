@@ -94,13 +94,14 @@ static func panel(g,id:String,task:bool=false):
    if HoldConversation.local(g,id):HoldConversation.choose(g,"Spend time together",func():begin_scene(g,id),true)
    else:g.label(g.panel_body,"Return to "+g.state.npc(id).first_name+" when you're ready.",16)
   elif d.accepted:
-   g.label(g.panel_body,"Visit the marked friendship errand in "+d.place+". "+("Bring "+HoldData.cost_text(e.cost)+" from your pack." if not e.cost.is_empty() else "No materials needed."),16)
    if at_task(g,id):
+    if not e.cost.is_empty():g.label(g.panel_body,"You'll need "+HoldData.cost_text(e.cost)+" from your pack.",16)
     g.label(g.panel_body,e.prompt,17)
     for i in e.choices.size():
      var b=HoldConversation.choose(g,e.choices[i],func():
       if work(g,id,i):g.refresh_panel(),true)
      b.disabled=not g.state.afford(e.cost) or g.handworks.busy_hands()
+   else:g.label(g.panel_body,"Meet me at "+d.place+"."+(" Bring "+HoldData.cost_text(e.cost)+" from your pack." if not e.cost.is_empty() else ""),16)
   elif ready(g.state,id):
    HoldConversation.choose(g,"I'd be glad to help",func():
     if accept(g,id):g.refresh_panel(),true)

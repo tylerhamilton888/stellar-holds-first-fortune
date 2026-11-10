@@ -45,7 +45,11 @@ func run():
    at(p+Vector2(250,0));check(not HoldFriendship130.work(g,id,e.answer),"Work cannot be performed remotely")
    at(p);g.close_panel();key(KEY_E)
    check(g.panel_id=="friend130","Physical errand opens its own task panel")
-   if id=="road_folk:11" and index==1:await shot("maren-errand")
+   if id=="road_folk:11" and index==1:
+    await process_frame;await process_frame;await shot("maren-errand")
+    var identity=g.panel.find_child("ConversationIdentity",true,false)
+    check(identity!=null and not g.menu_scroll.is_ancestor_of(identity) and g.panel.get_global_rect().end.y<=540,"Friendship task keeps its speaker visible within the viewport")
+    check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("Visit the marked friendship errand")),"An arrived player sees the task instead of directions to the task")
    for item in e.cost:g.state.inventory[item]=0
    if not e.cost.is_empty():check(not HoldFriendship130.work(g,id,e.answer),"Missing supplies block work without granting story")
    for item in e.cost:g.state.add(item,int(e.cost[item]))

@@ -1,0 +1,26 @@
+name: Apply bounded friendship task source change
+on:
+  push:
+    branches: ['automation/npc-errand-transfer']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.repository == 'tylerhamilton888/stellar-holds-first-fortune'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Apply and verify the one-line layout change
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git hash-object scripts/main.gd)" = "73c1ad91e77a4d055d41eb4faa39d1fdd6f47084"
+          python3 tools/capture_command.py --log test-results/source-transfer.log --timeout 30 -- python3 -c 'from pathlib import Path; p=Path("scripts/main.gd"); s=p.read_text(); a="panel.set_deferred(\"size\",Vector2(880,300) if id==\"conversation\" else Vector2(880,492))"; b="panel.set_deferred(\"size\",Vector2(880,300) if id in [\"conversation\",\"friend130\"] else Vector2(880,492))"; assert s.count(a)==1; p.write_text(s.replace(a,b))'
+          test "$(git hash-object scripts/main.gd)" = "f2b07e936f44c4604a997ee4d0afd9c3bcd1a24f"
+          git config user.name "Stellar Holds build"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/main.gd
+          git rm .github/workflows/npc-errand-source-transfer.yml
+          git commit -m "Complete bounded friendship task source transfer"
+          git push origin HEAD:refs/heads/automation/npc-errand-transfer

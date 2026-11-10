@@ -110,15 +110,16 @@ static func conversation_shell(g):
  var content=VBoxContainer.new();content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_theme_constant_override("separation",4);outer.add_child(content)
  var scroll=ScrollContainer.new();scroll.follow_focus=true;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;content.add_child(scroll);g.menu_scroll=scroll
  g.panel_body=VBoxContainer.new();g.panel_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;g.panel_body.add_theme_constant_override("separation",8);scroll.add_child(g.panel_body)
- var hint=label(content,"Esc · end conversation",14,Color("a7c8bf"))
+ var exit_hint="Esc · end conversation" if g.panel_id=="conversation" else "Esc · close"
+ var hint=label(content,exit_hint,14,Color("a7c8bf"))
  var bar=scroll.get_v_scroll_bar()
  var update_hint=func():
   if not is_instance_valid(hint):return
   var remaining=bar.max_value-bar.page
-  hint.text=("Scroll for more · " if bar.value<remaining-1 else "Scroll up · " if remaining>1 else "")+"Esc · end conversation"
+  hint.text=("Scroll for more · " if bar.value<remaining-1 else "Scroll up · " if remaining>1 else "")+exit_hint
  bar.changed.connect(update_hint);bar.value_changed.connect(func(_value):update_hint.call());update_hint.call_deferred()
 static func build_shell(g,id:String):
- var dialogue=id=="conversation"
+ var dialogue=id in ["conversation","friend130"]
  if dialogue:
   for child in g.panel.get_children():g.panel.remove_child(child);child.queue_free()
   conversation_shell(g);return

@@ -2,7 +2,7 @@
 
 ## NPC conversation work
 
-0.105.0 is a source candidate on `feature/npc-conversation-polish`. A compact dialogue panel keeps the speaker visible while choices scroll. Character-led introductions, favors, gifts, friendship and courtship replace several intrusive system readouts; useful details remain available in the People book and journal, with clear costs and commitments. Existing saves, quests, relationship progression, rewards and choices are preserved.
+0.105.0 is a source candidate on `feature/npc-conversation-polish`. A compact dialogue panel keeps the speaker visible while conversation and friendship-errand choices scroll. Character-led introductions, favors, gifts, friendship and courtship replace several intrusive system readouts; useful details remain available in the People book and journal, with clear costs and commitments. Existing saves, quests, relationship progression, rewards and choices are preserved.
 
 Local native integration, visual review and hosted validation are in progress. The candidate is not merged or published; required source and exact-package release gates have not yet completed. See the current handoff and live GitHub status.
 

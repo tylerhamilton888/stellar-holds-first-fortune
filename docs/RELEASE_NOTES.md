@@ -1,6 +1,6 @@
 # 0.105.0 — A word with the Folk
 
-Conversations now use a quieter dialogue panel with the speaker's portrait and name held in view as you scroll through your choices. The world remains visible above the conversation, and keyboard and mouse navigation are still available.
+Conversations and friendship errands now use a quieter dialogue panel with the speaker's portrait and name held in view as you scroll through your choices. The world remains visible above the conversation, and keyboard and mouse navigation are still available.
 
 Ivar, Borin, Orla and the other Folk explain their needs more naturally. Relationship progress and story bookkeeping belong in your People book and journal; important costs, payments and courtship decisions remain clear when they matter. A new courtship begins with a character's answer rather than a progress counter.
 
