@@ -1,3 +1,7 @@
+# Pending — dialogue state corrections
+
+Completed jobs no longer issue obsolete requests; known research and restored forges use current-state hints. Replies reset scrolling, and betrothal messages distinguish time from trust. Existing costs, rewards and saves are unchanged.
+
 # 0.105.0 — NPC conversation presentation released
 
 Conversation and friendship errands use a compact lower-screen dialogue panel with a fixed speaker portrait/name and independently scrolling choices. New topic changes return to the start. Relationship counters and trait labels move out of conversation; the People book and journal preserve optional progress and reward details. Favor costs/payments and consequential gifts and courtship remain explicit. Introductions and character preference dialogue are less mechanical. Existing relationship state, quests, thresholds, choices, rewards and saves are unchanged. All 80 native source and 70 exported-package scenarios passed; verified Windows 0.105.0 is published.

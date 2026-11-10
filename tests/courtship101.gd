@@ -61,7 +61,11 @@ func run():
    check(not HoldCourtship101.share_date(g,id,n,n%2),"Stale choice cannot duplicate date")
    check(not HoldCourtship101.share_date(g,id,n+1,0),"Cannot chain several dates in one calendar day")
   check(not HoldCourtship101.promise(g,id),"Betrothal requires time after the final date")
-  HoldCalendar.advance(g.state,1440);g.refresh_panel();button("Ask to become betrothed")
+  HoldCalendar.advance(g.state,1440)
+  var old_bond=HoldPeople.records(g.state)[id].bond
+  HoldPeople.records(g.state)[id].bond=5;g.talk_line="";g.refresh_panel()
+  check(g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("know each other better before")),"Insufficient trust explains why another day alone cannot unlock betrothal")
+  HoldPeople.records(g.state)[id].bond=old_bond;g.refresh_panel();button("Ask to become betrothed")
   check(HoldCourtship101.record(g.state,id).stage==2,"Reciprocal betrothal reached through UI")
   var saved=HoldCourtship101.record(g.state,id).duplicate(true)
   g.save_game();g.start_game(true);settle();visit(id)

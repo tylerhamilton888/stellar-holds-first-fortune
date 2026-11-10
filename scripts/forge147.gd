@@ -107,6 +107,7 @@ static func panel(g):
  var header="Smelting hearth" if station=="smelt" else "Anvil & metalwork" if station in ["anvil","bench"] else "The communal forge"
  g.label(g.panel_body,header,21,Color("edc98a"))
  g.label(g.panel_body,"Use ore and coal here to make ingots." if station=="smelt" else "Shape metal into tools, equipment and useful fittings." if station in ["anvil","bench"] else "Smelt ore at the hearth, then use the anvil or workbenches for tools and fittings.",16)
+ if s.opening<2:g.label(g.panel_body,"The hearth is cold. The great book records what is needed to relight it.",16)
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Smelting",func():g.set_meta("forge147_station","smelt");g.refresh_panel())
  g.small_button(nav,"Metalwork",func():g.set_meta("forge147_station","anvil");g.refresh_panel())
@@ -118,7 +119,7 @@ static func panel(g):
   var tool=g.button(g.panel_body,"Forge steel pick · 5 iron + 2 timber",func():
    if HoldFrontier103.transact(g,"tool","steel"):g.save_game();g.notify("Steel pick forged · stronger contacts and basalt access.");g.refresh_panel())
   tool.disabled=s.opening<2 or s.steel or not s.tech.has("extraction") or not s.afford({"iron":5,"wood":2})
-  if not s.steel:g.label(g.panel_body,"First research Tempered steel at Stonebridge's survey desk.",14)
+  if not s.steel and not s.tech.has("extraction"):g.label(g.panel_body,"First research Tempered steel at Stonebridge's survey desk.",14)
   g.button(g.panel_body,"Forge weapons and armor",func():g.gear_tab="forge";g.open_panel("equipment"))
  for id in HoldData.RECIPES:
   if station=="smelt" and id not in SMELTING:continue

@@ -60,9 +60,9 @@ static func choose(g,text:String,fn:Callable,quest:bool=false)->Button:
  responses(g)
  var parent=g.panel.find_child("Responses",true,false)
  var b=g.button(parent,("◆  " if quest else "›  ")+text,func():
-  var previous_topic=g.talk_topic
   fn.call()
-  if g.panel_id=="conversation" and g.talk_topic!=previous_topic:g.restore_menu.call_deferred(0,""))
+  # Each response can replace speech without changing the topic.
+  if g.panel_id in ["conversation","friend130"]:g.restore_menu.call_deferred(0,""))
  b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  b.custom_minimum_size.y=36
  for style_name in ["normal","hover","pressed","disabled","focus"]:

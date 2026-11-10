@@ -15,3 +15,7 @@ Conversation and friendship-errand panels keep the speaker visible while choices
 ## Output discipline
 
 Use file-only capture and bounded diagnostics. Never dump image bytes, encoded binaries, full API results or old logs into conversations. Keep current status, handoff and backlog below 4,000 bytes; release notes and changelog below 8,000. History is preserved separately. These safeguards reduce known repository hazards; they cannot guarantee ChatGPT backend reliability.
+
+## Dialogue state follow-up
+
+PR #146 (`fix/dialogue-state-truth`) corrects completed favors/projects, forge hints, reply visibility and courtship requirements. See DIALOGUE_AUDIT.md and the live PR checks for acceptance and merge state. Windows 0.105.0 remains the published build; these follow-up corrections require a later release.

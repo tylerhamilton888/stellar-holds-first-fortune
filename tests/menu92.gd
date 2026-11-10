@@ -37,6 +37,9 @@ func run():
  button("How have you been?");await snap("friendship")
  check(g.talk_topic=="person","Personal dialogue action still reaches relationship screen")
  check(g.menu_scroll.scroll_vertical==0,"Changing topic returns the new response to the top")
+ g.menu_scroll.scroll_vertical=int(g.menu_scroll.get_v_scroll_bar().max_value)
+ button("What do you enjoy?");await snap("same-topic-reply")
+ check(g.talk_topic=="person" and g.menu_scroll.scroll_vertical==0,"A reply within the same topic is visible from its beginning")
  g.open_panel("roster");await snap("people");fits("People")
  for id in ["commission","calendar","settings","equipment","help","pause","recipes"]:
   g.open_panel(id,false);await snap(id);fits(id)

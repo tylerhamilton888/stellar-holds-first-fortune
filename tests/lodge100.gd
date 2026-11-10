@@ -56,6 +56,10 @@ func run():
  var before=g.state.count("wood");g.player=Vector2(535,520);g.surface.placing="chair"
  check(g.surface.furniture_valid(Vector2(600,520),"chair") and g.surface.place(Vector2(600,520)),"A player can build a real chair in the private room")
  check(q.home_made and q.focus=="bay" and g.state.count("wood")==before-2,"The room project consumes real materials and offers the old bay next")
+ var old_opening=g.state.opening;g.state.opening=2
+ HoldWorkerLodge100.speak(g,0)
+ check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("forge could use a hand")),"Ivar stops recommending the cold-forge job once it is complete")
+ g.close_panel();g.state.opening=old_opening
  await snap("04-furnished-room");g.save_game();g.start_game(true);settle();q=HoldFirstVisit99.data(g.state)
  check(q.home_made and g.state.surface.decor.any(func(d):return d.area==HoldFrontier103.quarters(g.state) and d.kind=="chair"),"The completed room and placed furnishing survive save and reload")
  var paid=g.state.money;HoldFirstVisit99.tick(g);check(g.state.money==paid,"Reload does not repeat the wage")
@@ -69,5 +73,9 @@ func run():
  check(g.state.surface.decor.any(func(d):return d.area=="room:home" and d.kind=="chair"),"Existing player furnishings survive loading without a lodge migration")
  g.state.surface.first_visit99={"done":{},"guided":true,"focus":"basics","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"origin":[0.0,0.0]}
  check(not HoldFirstVisit99.lodge_intro(g.state) and g.surface.world.room_objects().any(func(o):return o.furnishing=="tea_table"),"Older first-visit saves also retain their original room")
+ g.state.surface.erase("frontier103");HoldWorkerLodge100.speak(g,0)
+ check(g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("north door") and l.text.contains("High Trail")),"Legacy lodge directions use its actual door and route, not Stonebridge stairs")
+ HoldFirstVisit99.data(g.state).rewarded=true;g.refresh_panel()
+ check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("great book outside")),"Legacy lodge does not direct players to a frontier-only ledger")
  print("LODGE100: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)
