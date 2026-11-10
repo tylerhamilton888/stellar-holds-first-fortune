@@ -10,7 +10,7 @@ The validation repair gives the new communal forge the workshop's exterior colli
 
 ## Verification and delivery
 
-Local Godot 4.4.1 checks are in progress; evidence is under `test-results/forge-integration-fixed` and `test-results/forge-visual-final`. Tooling suite: 42 passed. Full remote source validation, final visual acceptance, merge and release remain required. Do not treat this checkpoint as release acceptance.
+Local Godot 4.4.1 checks passed: 9 scenarios / 858 assertions, no engine errors. Twelve native captures were reviewed, including collision overlays. Evidence is under `test-results/forge-integration-fixed` and `test-results/forge-visual-final`. Tooling suite: 42 passed. PR #140 is ready at `831c1abda29bba9aa72a37aaa41288ccdd0a8b6f`; source validation run 42730685187 is in progress. Full remote source validation, merge and release remain required. Do not treat this checkpoint as release acceptance.
 
 Live latest release checked: v0.103.0. Source version is 0.104.0. Preserve existing releases; use the existing release workflow and its full native/exported-package gates after source acceptance.
 

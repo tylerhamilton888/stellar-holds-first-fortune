@@ -1,0 +1,170 @@
+{
+  "candidate_commit": "831c1abda29bba9aa72a37aaa41288ccdd0a8b6f",
+  "candidate_tree": "5934066fecea82d9008e1065efe30679c722fb06",
+  "engine": "4.4.1.stable.official",
+  "native_checks": 858,
+  "native_cases": [
+    {
+      "test": "frontier103",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 231,
+      "seconds": 55.89
+    },
+    {
+      "test": "greatclaim102",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 114,
+      "seconds": 50.46
+    },
+    {
+      "test": "hearthknot128",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 22,
+      "seconds": 48.89
+    },
+    {
+      "test": "architecture",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 347,
+      "seconds": 56.5
+    },
+    {
+      "test": "ledger137",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 29,
+      "seconds": 50.99
+    },
+    {
+      "test": "opening146",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 14,
+      "seconds": 21.75
+    },
+    {
+      "test": "equipment93",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 43,
+      "seconds": 44.41
+    },
+    {
+      "test": "living_forges148",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 36,
+      "seconds": 49.46
+    },
+    {
+      "test": "forge147",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 22,
+      "seconds": 45.47
+    }
+  ],
+  "tooling_tests": 42,
+  "visual_review": {
+    "result": "reviewed",
+    "notes": [
+      "Cold communal hearth has no hot ember seams; restored state shows heat and smith work.",
+      "Bellows top plane and folds read beside the existing furnace at gameplay scale.",
+      "Starter workshop and industry dressing retain visible physical stations and clear approaches.",
+      "Keldrath retains its larger established layout and resident work areas.",
+      "Collision overlays follow visible prop bases; extra placed anvil remains visible."
+    ],
+    "screenshots": [
+      {
+        "name": "communal-cold-collision.png",
+        "bytes": 1107572,
+        "sha256": "b6e251498a3123985a098f27da7b6f4110bae5c90508cfbbbff6e22b2f820be9"
+      },
+      {
+        "name": "communal-cold.png",
+        "bytes": 1104640,
+        "sha256": "875d0c121f7c0c696b7f5cca8bf4c07306c88002ed3f0aa48dcd3b4a5a2f81ce"
+      },
+      {
+        "name": "communal-restored-collision.png",
+        "bytes": 1107580,
+        "sha256": "60c959284d3f97174e6f882817047b535aba6e0c951a3830810f7efad9569924"
+      },
+      {
+        "name": "communal-restored.png",
+        "bytes": 1104679,
+        "sha256": "993a951aeed4b1ae20b6a3b6a854e56609a5a9fcef4bf5e9629e7e35568ac738"
+      },
+      {
+        "name": "keldrath-collision.png",
+        "bytes": 1122445,
+        "sha256": "809ccfd0cbe16a07e3b3f93068859753653c79df9f9612fd50ac9fc19321d69c"
+      },
+      {
+        "name": "keldrath-hearth-collision.png",
+        "bytes": 1054465,
+        "sha256": "fee998d141b1230c04e6066662cbefe981a4fdcfdb9d53baf086461c9d47405f"
+      },
+      {
+        "name": "keldrath-hearth.png",
+        "bytes": 1052641,
+        "sha256": "4987333d9486932bd2a26a55c073cde42724f568ccaafd7477abea9f556a0309"
+      },
+      {
+        "name": "keldrath.png",
+        "bytes": 1117524,
+        "sha256": "a575ca876cb0d30d5ef668f4f4707837a86670a7e046e48b3167194130761d79"
+      },
+      {
+        "name": "player-industry-collision.png",
+        "bytes": 957485,
+        "sha256": "ec2223a11f7e8fef6592b32126b3d135a26ae1c919de278c5f3618b980d72328"
+      },
+      {
+        "name": "player-industry.png",
+        "bytes": 956308,
+        "sha256": "ccbbb5bd297eb9f14e766ef7f6ed89f16db5fa91125511e575c80417ee9645d7"
+      },
+      {
+        "name": "player-starter-collision.png",
+        "bytes": 956937,
+        "sha256": "5012047d6c5d413777bc8e8d33e759d64da8d56c5733bd9a3e3a7802df5231ce"
+      },
+      {
+        "name": "player-starter.png",
+        "bytes": 955909,
+        "sha256": "b247fc31f916e089ae70a709ca3b85b03d5651e77beaf3a400a85c984a1ab4e4"
+      }
+    ]
+  },
+  "hosted_validation": {
+    "run_id": 42730685187,
+    "status": "running"
+  },
+  "release": {
+    "version": "0.104.0",
+    "status": "pending"
+  }
+}
