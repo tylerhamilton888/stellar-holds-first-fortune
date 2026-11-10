@@ -117,9 +117,9 @@ static func panel(g):
   HoldLedger137.forge_panel(g);return
  if near(g,"forge"):
   HoldForge147.panel(g);return
- if near(g,"lodge") and HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_shift_book_open",false)):
-  HoldMenuView.illustrated_text(g.panel_body,"stone","Ivar’s shift book","A worn page records the crews working at Old Workings. Ivar has set aside the western rack and stonebreaker for your first load.")
-  g.label(g.panel_body,"Speak with Ivar by the hearth, then follow the northern path to the mine. Your journal (J) will help when you get there.",16)
+ if near(g,"lodge") and HoldFirstVisit99.opening_route(g) and not bool(g.get_meta("early_shift_book_open",false)):
+  g.label(g.panel_body,"Ivar’s shift book",21,Color("edc98a"))
+  HoldFirstVisit99.opening_card(g)
   g.small_button(g.panel_body,"Look through the rest of the book",func():g.set_meta("early_shift_book_open",true);g.refresh_panel())
   return
  var welcome=HoldMenuView.section(g.panel_body,"")

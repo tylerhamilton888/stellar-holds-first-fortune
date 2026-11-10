@@ -1,11 +1,11 @@
-# 0.105.1 — Dialogue that follows your progress
+# 0.106.0 — A good first morning
 
-Completed favors and ledger projects no longer ask for another delivery. Restored forges stop receiving repair recommendations, learned steel research is recognized, and older lodges give directions appropriate to their own location.
+Ivar welcomes you to your room before explaining your first shift. Conversations with him and the bunkhouse miners now use the lower dialogue panel, keeping their portraits and the world in view.
 
-Gift and favor refusals now say “for now” to match their play-time waiting rules. Betrothal responses distinguish waiting from insufficient trust. Replies return to the top so their opening lines remain visible.
+Your journal, work book and HUD follow a clearer path from arrival through your first pay and the communal forge. Earning your first wages no longer unfolds later campaign instructions. Furnish your room, visit Borin first, or deliberately choose another trade; the wider town systems remain available.
 
-Includes the conversation presentation improvements from 0.105.0. Existing saves, costs, rewards, progression and timing rules are unchanged.
+Forge guidance follows your actual work: inspect the hearth, learn coal processing, deliver the remaining fuel, then return for the first firing. Partial contributions are remembered, and completed work is not requested again. Important costs and rewards remain visible.
 
-Extract the complete Windows ZIP into a fresh folder and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves.
+Existing saves, materials, payments, timing, progression requirements and optional activities are preserved.
 
-Previous release notes are preserved in the repository history and prior release pages.
+Download the complete Windows ZIP, extract every file into a fresh folder, and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. Use New Game and an empty slot to experience the opening, or Load Game to continue.
