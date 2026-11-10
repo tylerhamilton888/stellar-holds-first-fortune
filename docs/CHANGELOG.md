@@ -1,6 +1,6 @@
-# Living forges148 — validation repair (0.104.0 candidate)
+# 0.104.0 — Living Forges released
 
-Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Local native checks and visual acceptance are in progress; full source/release gates remain mandatory.
+Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Nine local native scenarios / 858 assertions, visual review and all 80 hosted source scenarios passed. PR #140 is merged; Windows 0.104.0 is published after all 80 native and 70 exact-package scenarios (14,145 package assertions), integrity verification and publication succeeded. The active backlog and release notes now have automated size budgets, with prior text preserved in history.
 
 # Development tooling — enforced output safety sweep (2026-11-09)
 

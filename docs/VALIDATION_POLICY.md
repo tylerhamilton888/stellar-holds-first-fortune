@@ -43,8 +43,8 @@ ref. Only a push to `release/<version>` publishes; manual runs never publish,
 even if the selected ref is a release branch.
 
 Each release/rehearsal runs all four source groups against its own exact source
-alongside the Windows build. The unchanged four package workers test all 64
-exported cases, and the verifier requires every case once against matching
+alongside the Windows build. The four package workers test every registered
+exported case, and the verifier requires every case once against matching
 source/package/archive hashes. Publication depends on both complete gates.
 It never treats a focused PR pass as full coverage and never waits for an
 unrelated PR workflow. The old `verify_source_gate.sh` now rejects use instead

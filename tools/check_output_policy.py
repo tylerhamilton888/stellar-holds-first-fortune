@@ -8,7 +8,8 @@ from output_safety import emit
 
 ROOT = Path(__file__).resolve().parents[1]
 BUDGETS = {'AGENTS.md': 8000, 'docs/SESSION_HANDOFF.md': 4000,
-           'docs/CURRENT_STATUS.md': 4000, 'docs/CHANGELOG.md': 8000}
+           'docs/CURRENT_STATUS.md': 4000, 'docs/CHANGELOG.md': 8000,
+           'docs/BACKLOG.md': 4000, 'docs/RELEASE_NOTES.md': 8000}
 # These two reviewed implementations own bounded output. All other tools use emit.
 OUTPUT_OWNERS = {'output_safety.py', 'capture_command.py'}
 
