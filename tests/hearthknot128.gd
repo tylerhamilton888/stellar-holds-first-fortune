@@ -14,7 +14,7 @@ func run():
  g.state.inventory.wood=1;g.state.inventory.copper=0
  check(not HoldFrontier103.transact(g,"craft","hearthknot") and g.state.count("wood")==1,"Missing copper leaves timber untouched")
  g.state.inventory.copper=1
- g.player+=Vector2(300,0)
+ at(HoldRoomLayout.exit_point(g.surface.area))
  check(not HoldFrontier103.transact(g,"craft","hearthknot"),"Remote crafting is rejected")
  at(Vector2(480,500));g.open_panel("frontier103");button("Craft a Hearthknot")
  check(g.state.count("wood")==0 and g.state.count("copper")==0 and g.state.count("hearthknot")==0,"Real forge queues the token and pays materials once")

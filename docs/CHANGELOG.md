@@ -1,3 +1,7 @@
+# Living forges148 — validation repair (0.104.0 candidate)
+
+Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Local native checks and visual acceptance are in progress; full source/release gates remain mandatory.
+
 # Development tooling — enforced output safety sweep (2026-11-09)
 
 Bounded production-tool summaries; removed raw failure tails; capped repeated-error samples while retaining full logs and total error counts. Large validation plans stay in files. CI captures tool output and retains diagnostics on failure. Automated policy checks reject direct console/encoding paths, uncaptured workflow commands and oversized current documents. Added safe log excerpts and finite timeout validation. Existing release and test-success gates remain intact.

@@ -19,14 +19,14 @@ static func struck_between(before:float,after:float)->bool:
    if before<contact and after>=contact:return true
  return false
 
-static func smith(n:Node2D,p:Vector2,t:float,lit:bool):
+static func smith(n:Node2D,p:Vector2,t:float,lit:bool,draw_anvil:bool=true):
  var profile=n.state.npc("borin");var zoom=n.character_scale();var offset=A.draw_offset
  var f=smith_frame(t) if lit else -1
  # Frame 4 must reach the whole-pose contact interval (starts at .52).
  var phase=(f+.2)/8.0 if f>=0 else 0.0
  var contact=p+HoldWholeFrames.tool_tip(profile,Vector2(-1,.45),"hammer",.6)*zoom
  HoldDrawnAnimation.paint(n,p+offset,profile,Vector2(-1,.45),false,t,zoom,offset,"hammer",phase)
- HoldFurnishings.draw_anvil(n,Rect2(contact.x-25*zoom,contact.y,51*zoom,50*zoom))
+ if draw_anvil:HoldFurnishings.draw_anvil(n,Rect2(contact.x-25*zoom,contact.y,51*zoom,50*zoom))
  A.rect(n,contact.x-6*zoom,contact.y-zoom,12*zoom,zoom,"e4a66b" if lit else "909b9a")
  if f==4:
   for i in 3:

@@ -150,7 +150,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.velocity=Vector2.ZERO;g.grounded=true;g.walking_pose=false;g.gait_clock=0;g.swing=0;placing="";moving_furnishing={};cut_clock=0;cut_target=-1;house.impact=0
  g.combat.armed=false;g.combat.reset_actions();g.construction.selected=""
  g.state.region_travel.active=false;g.state.hold_travel.active=false
- g.camera=camera_target();g.close_panel();g.spawn_agents();g.sound.set_context(("forge_cold" if g.state.opening<2 else "forge") if HoldFrontier103.active(g.state) and area==HoldFrontier103.room(g.state,"forge") else g.room_id if room() else g.zone)
+ g.camera=camera_target();g.close_panel();g.spawn_agents();g.sound.set_context(HoldLivingForges148.sound_context(g))
  g.handworks.arrive(travelling_cart)
  g.begin_transition(label().to_upper());g.save_game()
 func leave():
@@ -222,6 +222,7 @@ func points()->Array:
  result.append_array(HoldClaim127.points(g))
  result.append_array(architecture.points())
  result.append_array(architecture.service_points())
+ result.append_array(HoldLivingForges148.points(g))
  result.append_array(g.hearth.points())
  result.append_array(roads.points())
  result.append_array(HoldHouseholds.points(self))
@@ -330,6 +331,9 @@ func action(id:String):
  if id=="frontier_archive103":g.open_panel(id);return
  if id=="restoration139":g.open_panel(id);return
  if id=="campaign138":g.open_panel(id);return
+ if id.begins_with("forge147:"):
+  g.set_meta("forge147_station",id.trim_prefix("forge147:"));g.open_panel("frontier103");return
+ if id.begins_with("living148:"):HoldLivingForges148.use(g,id);return
  if id=="frontier103":g.open_panel(id);return
  if id=="great_claim102":g.open_panel(id);return
  if id=="architecture_leave":architecture.leave();return
@@ -394,6 +398,7 @@ func obstacles(ignore:Dictionary={})->Array:
   if house.level()==0:list.append_array(architecture.obstacles(area))
  if area in ["claim","pinewood"] and house.level()==0:list.append(HoldFurnishings.footprint("desk",Vector2(740,780) if area=="claim" else Vector2(300,790)))
  list.append_array(house.obstacles())
+ list.append_array(HoldForge147.obstacles(g))
  if g.handworks:list.append_array(g.handworks.surface_obstacles())
  if g.fieldwork:list.append_array(g.fieldwork.obstacles())
  for c in g.state.surface.chests.values():
@@ -729,7 +734,11 @@ func draw():
  for c in g.state.surface.chests.values():
   if house.local(c):objects.append({"p":Vector2(c.x,c.y),"kind":"chest_open" if g.panel_id=="storage" and c==g.state.surface.chests.get(selected_chest,{}) else "chest"})
  for d in g.state.surface.decor:
-  if house.local(d):objects.append({"p":Vector2(d.x,d.y),"kind":d.kind,"sort_y":float(d.y)+float(HoldFurnishings.ITEMS.get(d.kind,{}).get("sort_offset",0))})
+  if house.local(d):
+   objects.append({"p":Vector2(d.x,d.y),"kind":d.kind,"sort_y":float(d.y)+float(HoldFurnishings.ITEMS.get(d.kind,{}).get("sort_offset",0))})
+ if HoldForge147.active(g):
+  objects.append_array(HoldForge147.props(g))
+  if HoldForge147.has_anvil(g):objects.append({"p":HoldForge147.BORIN,"kind":"npc","id":"borin"})
  if room() and not area.begins_with("home:") and area!="room:training":
   if area==HoldFrontier103.lodge(g.state):objects.append_array(HoldWorkerLodge100.people(g))
   var host=HoldInteriors.ROOMS.get(g.room_id,{}).get("host","")
@@ -776,6 +785,10 @@ func draw():
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":
    world.draw_furnishing(o);HoldCalendar.decorate(g,o)
+   if o.has("forge_stock"):HoldForge147.draw_stock(g,o)
+   else:HoldLivingForges148.stock(g,o.p,o.furnishing)
+  elif o.kind=="forge147_furnace":HoldForge147.draw_furnace(g,o.p)
+  elif o.kind=="forge148_bellows":HoldLivingForges148.bellows(g,o.p)
   elif o.kind=="royal_prop":HoldRoyalStage.draw_prop(g,o,g.clock)
   elif o.kind=="royal_guide":
    HoldDrawnAnimation.paint(g,o.p-cam,g.state.npc("ivar"),Vector2.UP,false,0,.85,-cam)
@@ -793,15 +806,20 @@ func draw():
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
   elif o.kind=="npc":
    if o.id=="eirik":HoldRoyalStage.draw_actor(g,HoldRoyalStage.current(g))
-   elif o.id=="borin" and g.room_id=="forge":
-    A.draw_offset=-cam;HoldNpcActivity.smith(g,o.p,g.clock,g.state.opening>=2);A.draw_offset=Vector2.ZERO
+   elif o.id=="borin" and (g.room_id=="forge" or HoldForge147.active(g)):
+    A.draw_offset=-cam;HoldNpcActivity.smith(g,o.p,g.clock,g.state.opening>=2,false);A.draw_offset=Vector2.ZERO
    elif g.room_id=="tavern":
     A.draw_offset=-cam;HoldNpcActivity.social(g,o.p,g.clock+(0 if o.id=="hedrik" else posmod(hash(o.id),11)),-1,g.state.npc(o.id),true);A.draw_offset=Vector2.ZERO
    else:actor(o.p,g.state.npc(o.id),false,-1,g.clock)
    g.draw_set_transform(-cam);
   elif o.kind=="wall":house.wall_draw(o.c)
   elif o.kind=="tree":draw_fir(o.p,int(o.i))
-  else:furniture(o.p,o.kind)
+  elif o.kind=="hearth" and HoldForge147.active(g) and g.state.opening<2:
+   var spec=HoldFurnishings.geometry("hearth")
+   g.draw_texture_rect_region(HoldFurnishings.ATLAS,HoldFurnishings.silhouette("hearth",o.p),HoldFurnishings.CROPS[spec.art],Color(.22,.25,.28))
+  else:
+   furniture(o.p,o.kind)
+   HoldLivingForges148.stock(g,o.p,o.kind)
  if g.handworks.working:
   var station=g.handworks.facility()
   if not station.is_empty() and not station.job.is_empty():
@@ -889,7 +907,7 @@ func prop(p:Vector2,index:int,width:float):
  var cell=Vector2(PROPS.get_width()/3.0,PROPS.get_height()/2.0)
  g.draw_texture_rect_region(PROPS,Rect2(p-Vector2(width/2,width*.94),Vector2(width,width)),Rect2(Vector2(index%3,index/3)*cell,cell))
 func furniture(p:Vector2,kind:String):
- HoldFurnishings.draw(g,p,kind)
+ world.draw_furnishing(world.furn(kind,p.x,p.y))
 func draw_outdoors():
  world.tile(2,Rect2(Vector2.ZERO,size()),200,Color("adb99e"))
  for edge in [Rect2(0,0,1880,200),Rect2(0,200,80,880),Rect2(1800,200,80,880),Rect2(0,970,1880,110)]:

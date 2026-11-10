@@ -15,7 +15,7 @@ const WINDOWS=[Rect2(449,24,307,298),Rect2(449,357,309,299),Rect2(449,689,308,30
 const POSTS=[Rect2(879,11,110,317),Rect2(874,346,119,315),Rect2(879,680,118,326)]
 const ROOFS=[Rect2(1117,22,336,300),Rect2(1117,357,337,299),Rect2(1116,690,338,306)]
 static func family(id:String)->String:
- if id.begins_with("folk_forgeward") or id in ["workshop","hold_forge","hold_training"]:return "forge"
+ if id.begins_with("folk_forgeward") or id in ["workshop","frontier_forge","hold_forge","hold_training"]:return "forge"
  if id.begins_with("folk_crownward") or id in ["hold_throne","hold_research","archive"]:return "oath"
  return "hearth"
 static func preset(key:String)->Dictionary:

@@ -67,12 +67,13 @@ func can_forge()->bool:
  if not g.hearth.own_home():return false
  var things=g.hearth.furniture()
  for bench in things:
-  if bench.kind not in ["worktable","anvil"] or not g.hearth.accessible(bench):continue
+  if bench.kind not in ["worktable","anvil"]:continue
   for hearth in things:
-   if hearth.kind=="hearth" and hearth.p.distance_to(bench.p)<=300:return true
+   if hearth.kind=="hearth" and hearth.p.distance_to(bench.p)<=300 and (g.hearth.accessible(bench) or g.hearth.accessible(hearth)):return true
  return false
 func service_points()->Array:
  var result=[]
+ if HoldLivingForges148.workshop(g):return result # Station-specific prompts own forge rooms.
  if not g.hearth.own_home():return result
  var things=g.hearth.furniture()
  for bench in things:

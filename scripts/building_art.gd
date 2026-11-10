@@ -18,7 +18,7 @@ static func original_footprint(b:Dictionary)->Rect2:
   var body=Rect2(visual.position+Vector2(8,12),Vector2(visual.size.x-16,d.p.y-18-visual.position.y-12))
   return body.merge(Rect2(d.p-Vector2(310,230),Vector2(620,212))) if d.get("id",-1)==15 else body
  if d.get("key","")=="cottage":return Rect2(d.p+Vector2(-154,-175),Vector2(308,155))
- if d.get("key","")=="workshop":return Rect2(d.p+Vector2(-115,-130),Vector2(230,110))
+ if d.get("key","") in ["workshop","frontier_forge"]:return Rect2(d.p+Vector2(-115,-130),Vector2(230,110))
  var source=HoldWorldZones.BUILD_RECTS[d.art];var anchor=HoldWorldZones.BUILD_ANCHORS[d.art];var scale=d.width/source.size.x
  var top=d.p-(anchor-source.position)*scale
  return Rect2(top+Vector2(10,20),Vector2(d.width-20,d.p.y-18-top.y-20))

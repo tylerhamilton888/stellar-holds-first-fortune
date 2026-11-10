@@ -87,7 +87,7 @@ func set_context(place:String):
   var next=ambience_layers[ambience_slot];next.stream=loop_stream(bed);next.volume_db=-60;next.play()
   ambience_fade=create_tween().set_parallel(true)
   fade_player(ambience_fade,old,0.0,2.5)
-  fade_player(ambience_fade,next,db_to_linear(ambience_gain(bed)),2.5)
+  fade_player(ambience_fade,next,db_to_linear(-24.0 if place=="forge" else ambience_gain(bed)),2.5)
   ambience_fade.chain().tween_callback(old.stop)
 func ambience_gain(id:String)->float:
  return {"air_real":-16.0,"machine_real":-18.0,"amb_mine":7.0,"amb_hearth":8.0,"amb_hall":0.0,"amb_study":1.0}.get(id,-4.0)

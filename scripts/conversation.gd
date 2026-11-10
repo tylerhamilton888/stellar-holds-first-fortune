@@ -62,6 +62,7 @@ static func greeting(g,id:String)->String:
  if g.talk_line!="":return g.talk_line
  if id.begins_with("road_folk:"):return HoldRoadCharacters.greeting(g,id)
  if id.begins_with("resident:"):return "A moment away from the shift? Gladly. What is on your mind?"
+ if id=="borin" and HoldForge147.active(g):return "'There's good iron under that soot. Once the hearth is lit, we can put it to use.'" if g.state.opening<2 else "'The hearth's drawing well. Ore by the hearth. Tools at the anvil. Leave the little fittings on the bench; I'll look them over when they're ready.'"
  var stage=HoldOnboarding.stage(g.state)
  if id=="ivar" and HoldOnboarding.settling(g.state):return "Your room is waiting on the northwestern street. Rest your feet and check the chest. There is time enough for introductions afterwards."
  if id=="ivar":return {1:"Newly of age, are you? Give me your name. You need a shift, and I need someone who listens before swinging a pick.",2:"Meet the folk who will keep you fed, supplied and properly equipped. Then we can begin.",3:"Eight coal for Borin. Keep the surplus. How did you fare?",4:"Sound coal and a safe return. I have sent your name to the Lord. He will hear you now.",5:"A fine room, isn't it? I prefer ceilings I can inspect without a telescope. Now, about those lift footings."}.get(stage,"Good to see you back. What have you brought me?")
@@ -123,7 +124,8 @@ static func panel(g):
    choose(g,errand.name,func():g.open_panel("social"),true)
   var matter=HoldClaimStories.ensure(s).active
   if not matter.is_empty() and matter.actor==id:choose(g,HoldClaimStories.TITLES[matter.kind],func():g.open_panel("claim_stories"),true)
-  if SERVICES.has(id) and id!="ivar":choose(g,SERVICES[id][0],func():g.open_panel(SERVICES[id][1]))
+  if id=="borin" and HoldForge147.active(g):choose(g,"Use the communal forge",func():g.set_meta("forge147_station","anvil");g.open_panel("frontier103"))
+  elif SERVICES.has(id) and id!="ivar":choose(g,SERVICES[id][0],func():g.open_panel(SERVICES[id][1]))
   for i in TOPICS.get(id,[]).size():
    choose(g,TOPICS[id][i][0],func():g.talk_topic="fluff"+str(i);g.refresh_panel())
   HoldFriendship130.option(g,id)
