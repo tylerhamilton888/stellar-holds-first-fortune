@@ -15,4 +15,4 @@ Scope: current opening and first-shift instructions, NPC conversation routing, d
 
 Extend existing people, menu92, lodge100, forge147, ledger137 and courtship101 cases rather than adding a duplicate suite. Check visible text after real transactions and reopening panels. Existing source/package coverage remains mandatory for a release.
 
-Validation in progress. Tooling: 42 passing tests; pinned Godot 4.4.1 import passed. Native interaction and screenshot review are pending. This audit reduces known contradictions; it does not certify every possible story combination or replace human playtesting.
+Tooling: 42 passing tests; pinned Godot 4.4.1 import passed. Native interaction results, screenshot review and hosted checks are recorded in PR #146. Windows 0.105.0 is the published baseline and does not include this follow-up. This audit reduces known contradictions; it does not certify every possible story combination or replace human playtesting.

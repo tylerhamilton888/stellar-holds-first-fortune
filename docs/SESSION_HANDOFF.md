@@ -18,4 +18,4 @@ Use file-only capture and bounded diagnostics. Never dump image bytes, encoded b
 
 ## Dialogue state follow-up
 
-A focused correction is in progress on `review/day-quality`: completed favors/projects, forge hints, reply visibility and courtship requirements. See DIALOGUE_AUDIT.md. Native validation is pending; Windows 0.105.0 remains the published build.
+PR #146 (`fix/dialogue-state-truth`) corrects completed favors/projects, forge hints, reply visibility and courtship requirements. See DIALOGUE_AUDIT.md and the live PR checks for acceptance and merge state. Windows 0.105.0 remains the published build; these follow-up corrections require a later release.
