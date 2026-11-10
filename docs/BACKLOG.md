@@ -1,8 +1,8 @@
 # Current backlog — 2026-11-10
 
-## Finish and playtest NPC conversation update 0.105.0
+## Playtest Windows 0.105.0
 
-Source work is on `feature/npc-conversation-polish`. Finish native and package verification, visual review, merge and requested Windows delivery. Review first introductions, personal conversations, gifts, favors, friendship and courtship; retain clear costs, progress, controls and existing saves.
+The NPC conversation update is merged and published after all native/package gates. Play through first introductions, ordinary conversation, gifts, favors, friendship errands and a courtship moment. Check readability, keyboard/mouse navigation, understandable costs, character voice and whether important choices remain easy to find. Existing saves and relationship progress should continue naturally.
 
 ## Playtest Windows 0.104.0
 
