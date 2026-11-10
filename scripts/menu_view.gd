@@ -119,7 +119,7 @@ static func conversation_shell(g):
   hint.text=("Scroll for more · " if bar.value<remaining-1 else "Scroll up · " if remaining>1 else "")+exit_hint
  bar.changed.connect(update_hint);bar.value_changed.connect(func(_value):update_hint.call());update_hint.call_deferred()
 static func build_shell(g,id:String):
- var dialogue=id in ["conversation","friend130"]
+ var dialogue=id in ["conversation","friend130","lodge_talk"]
  if dialogue:
   for child in g.panel.get_children():g.panel.remove_child(child);child.queue_free()
   conversation_shell(g);return

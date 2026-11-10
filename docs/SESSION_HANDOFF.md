@@ -15,3 +15,7 @@ Next: Windows playtesting of readability, character voice, completed/revisited t
 ## Output discipline
 
 Use file-only capture and bounded diagnostics. Never dump image bytes, encoded binaries, full API results or old logs into conversations. Keep current status, handoff and backlog below 4,000 bytes; release notes and changelog below 8,000. History is preserved separately. These safeguards reduce known repository hazards; they cannot guarantee ChatGPT backend reliability.
+
+## First-hour follow-up
+
+The 0.106.0 candidate improves Ivar's welcome, lodge dialogue layout, immediate journal/HUD/shift-book leads and state-aware forge directions. See FIRST_HOUR.md for scope and acceptance. Preserve the 0.105.1 baseline until the full candidate passes and is published.

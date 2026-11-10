@@ -38,24 +38,28 @@ static func draw_private_door(w,x:float=720):
 
 static func speak(g,index:int):
  g.lodge_talker=clampi(index,0,2)
+ g.remove_meta("lodge_memorial_reply")
  if index==0:HoldFirstVisit99.meet_ivar(g)
  g.open_panel("lodge_talk")
 
 static func panel(g):
  var index=clampi(g.lodge_talker,0,2);var p=profile(g,index)
- var row=g.row(g.panel_body);row.add_theme_constant_override("separation",18)
- var portrait=HoldPortrait.new();portrait.profile=p;portrait.custom_minimum_size=Vector2(96,96);row.add_child(portrait)
- var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(body)
- g.label(body,p.name,21,Color("edc98a"))
+ var identity=g.panel.find_child("ConversationIdentity",true,false)
+ var portrait=HoldPortrait.new();portrait.profile=p;portrait.custom_minimum_size=Vector2(96,96);identity.add_child(portrait)
+ g.label(identity,p.name,16,Color("edc98a"))
+ g.small_button(identity,"End · Esc",g.close_panel)
  var text=""
  match index:
   0:
-   text="Ivar sets down his cup. 'Sleep well enough? The room upstairs is yours. Have a look around, then meet us at Old Workings, north of town. There's a rack and stonebreaker on the west side you can borrow. Work a load and I'll see you paid.'"
+   text="Ivar sets down his cup. 'Sleep well enough? The room upstairs is yours. Bed, chest, a little peace from Rurik's snoring. Go and make yourself comfortable. There'll be work when you're ready.'"
+   if HoldFirstVisit99.data(g.state).get("room_seen",false):
+    text="'Found everything? Good. Old Workings is north of town. Take the western rack and stonebreaker; they're set aside for you. Work your first load and you'll have twenty crowns, with a little timber and stone for your room.'"
   1:
    text="Rurik rolls a sore shoulder. 'You're the new hand, then? Don't mind the snoring. Sigrid says it's the roof timbers settling, but she only says that when I'm listening.'"
   2:
    text="Sigrid lifts her mug. 'Rurik's already blamed the roof for the noise, hasn't he? There's a room through the north door if you want some quiet.'"
  if index==0 and not HoldFrontier103.active(g.state):
+  text="Ivar sets down his cup. 'The room through the north door is yours. When you're ready, Old Workings is beyond King's Gate and the High Trail. The western rack and stonebreaker are on loan. Work your first load and I'll see you paid.'"
   text=text.replace("room upstairs","room through the north door").replace("Old Workings, north of town","Old Workings, beyond King's Gate and the High Trail")
  if HoldFrontier103.active(g.state):
   text=text.replace("room through that door","room upstairs").replace("north door","stairs").replace("The trail out to work starts at King's Gate.","Old Workings lies north of the town square.")
@@ -66,9 +70,13 @@ static func panel(g):
   text="'That room's looking more lived in. Good to hear Borin's hearth drawing again, too. The great book has the town's other work whenever you're ready.'"
  if index==0 and HoldFirstVisit99.data(g.state).get("rewarded",false) and not HoldFrontier103.active(g.state):
   text="'Good work. Your first twenty crowns are counted, and there's a little timber for your room. Your journal has the next leads when you're ready.'"
- g.label(body,text,16)
+ if index in [1,2] and bool(g.get_meta("lodge_memorial_reply",false)):
+  text="Rurik rubs his shoulder. 'The old shift. Keldran gets a nod before I go below, but I still check the props. My grandfather would haunt me for skipping that.'" if index==1 else "Sigrid sets down her mug. 'Our departed. Nyrda keeps them; we keep their names. I read them on Namesday. Come if you like. Grandmother preferred a useful deed to a long speech.'"
+ g.label(g.panel_body,text,19,Color("f2e7d2"))
+ if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Where should I go next?",func():g.open_panel("commission"))
  if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Ask about the shift book",func():g.open_panel("frontier103"))
  if index in [1,2]:
-  g.button(g.panel_body,"Whose names are on that stone?",func():
-   g.label(g.panel_body,"Rurik rubs his shoulder. 'The old shift. Keldran gets a nod before I go below, but I still check the props. My grandfather would haunt me for skipping that.'" if index==1 else "Sigrid sets down her mug. 'Our departed. Nyrda keeps them; we keep their names. I read them on Namesday. Come if you like. Grandmother preferred a useful deed to a long speech.'",16))
+  if not bool(g.get_meta("lodge_memorial_reply",false)):
+   g.button(g.panel_body,"Whose names are on that stone?",func():g.set_meta("lodge_memorial_reply",true);g.refresh_panel();g.restore_menu.call_deferred(0,""))
+  else:g.button(g.panel_body,"Back to our conversation",func():g.remove_meta("lodge_memorial_reply");g.refresh_panel();g.restore_menu.call_deferred(0,""))
  g.button(g.panel_body,"Thanks · back to the lodge",g.close_panel)

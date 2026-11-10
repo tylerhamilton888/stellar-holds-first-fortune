@@ -1,3 +1,7 @@
+# 0.106.0 — first-hour presentation (pending release)
+
+Stage Ivar's welcome and work instructions; bring bunkhouse conversations into the lower dialogue shell with bounded layout and replaceable replies. Keep the journal, HUD and shift book on one immediate opening lead through first pay and the forge. Preserve an explicit alternative trade route. Forge hints follow inspection, practical coal processing, remaining deposits and the first firing. Existing rewards, costs, saves and progression are unchanged.
+
 # 0.105.1 — dialogue state corrections
 
 Completed jobs no longer issue obsolete requests; known research and restored forges use current-state hints. Replies reset scrolling, and betrothal messages distinguish time from trust. Existing costs, rewards and saves are unchanged. Windows 0.105.1 is published after all 80 native source scenarios, 70 exact-package scenarios / 14,170 assertions, integrity verification and publication passed in run 42902069734.

@@ -12,6 +12,8 @@ func run():
  ledger();s.add("coal",12);s.add("wood",20);s.add("iron",10)
  check(not L.contribute(g,"forge","coal",1),"First shift required")
  HoldFirstVisit99.data(s).rewarded=true
+ HoldFirstVisit99.data(s).home_made=true
+ check(L.forge_lead(s).title=="A hearth gone cold","First forge lead begins with a local inspection")
  check(not L.contribute(g,"invalid","coal",1),"Unknown project rejected")
  check(not L.contribute(g,"forge","wood",1),"Wrong material rejected")
  check(not L.contribute(g,"forge","coal",0) and not L.contribute(g,"forge","coal",-1),"Nonpositive deliveries rejected")
@@ -20,15 +22,24 @@ func run():
  check(not L.contribute(g,"forge","coal",6),"Excess cannot overfill slot")
  desk("forge");check(not L.contribute(g,"forge","coal",1),"Delivery requires physical ledger")
  check(L.inspect(g) and not L.inspect(g),"Inspection recorded once at forge")
+ check(L.forge_lead(s).title=="Coal for Borin","Buying fuel does not hide the practical processing lesson")
+ g.open_panel("commission");await snap("forge-processing-lead");g.close_panel()
  ledger();g.save_game();g.start_game(true);settle();s=g.state
  check(L.paid(s,"forge","coal")==3 and L.data(s).inspected,"Partial delivery and investigation survive JSON reload")
+ HoldWork132.produced(s,"coal",2,"cut")
+ check(L.forge_lead(s).title=="An entry in the Ledger" and L.forge_lead(s).hint.contains("remaining 5 coal"),"Delivery guidance subtracts the saved partial payment")
+ var held_coal=s.count("coal");s.inventory.coal=0
+ check(L.forge_lead(s).title=="Fuel for the first firing" and L.forge_lead(s).hint.contains("still needs 5"),"Spent or missing pack coal changes the next action without losing deposits")
+ s.inventory.coal=held_coal;HoldWork132.data(s).facts.erase("cut:coal")
  ledger();check(L.contribute(g,"forge","coal",5),"Remaining fuel accepted")
  check(not L.ready(s,"forge"),"Inventory cannot substitute for practical coal processing")
  HoldWork132.produced(s,"coal",2,"cut")
+ check(L.forge_lead(s).title=="The first firing" and HoldFirstVisit99.goal(g).contains("relight the hearth"),"Fully paid and learned forge points back to the hearth in journal and HUD")
  check(L.ready(s,"forge") and not L.finish(g,"forge"),"Completed materials require return to hearth")
  desk("forge");g.open_panel("frontier103");await snap("forge-ready");g.close_panel()
  var money=s.money;before=s.count("coal")
  check(L.finish(g,"forge") and s.opening==2,"First firing opens authoritative forge")
+ check(not HoldFirstVisit99.opening_route(g) and L.forge_lead(s).title=="The forge is alight","Completed forge leaves opening guidance without asking for fuel again")
  check(s.money==money+65 and s.count("coal")==before,"Escrow is not charged again; wage paid once")
  check(not L.finish(g,"forge") and s.money==money+65,"Repeated firing cannot duplicate wage")
  await snap("forge-open")

@@ -99,10 +99,40 @@ static func bay_hint(g)->String:
  if not q.bay_found:return "Find the old cutters' bay · south of the entrance, through the fallen passage · J"
  if not q.bay_warm:return "Repair the old hearth · O → Furnish → Forge hearth & anvil, then E to add coal · J"
  return "Supply the old bay's rack with raw stone, then give Odrin room to work · J"
+static func opening_route(g)->bool:
+ # Presentation only: completed work and a deliberately chosen trade take precedence.
+ var s=g.state
+ if not HoldFrontier103.active(s) or not lodge_intro(s) or s.opening>=2:return false
+ var q=data(s);var town=HoldFrontier103.data(s)
+ return q.get("focus","")!="work" and not town.get("permit",false) and not town.get("home_reward",false) and HoldWork132.contributions(s)<2 and int(HoldAncestralClaim.data(s).get("stage",0))==0
+static func opening_lead(g)->Dictionary:
+ var q=data(g.state)
+ if q.get("rewarded",false):
+  if not q.get("home_made",false) and q.get("focus","")=="home":
+   return {"title":"A corner that is yours","art":"wood","hint":"Your first twenty crowns are yours, along with timber and stone for your room. Upstairs in the bunkhouse, press O and place a chair, lamp or table on a green position. Right-click cancels without spending.","goal":"Your own corner · O: place a chair, lamp or table" if HoldFrontier103.private_room(g) else "First wages earned · return to your room above the bunkhouse · J"}
+  return HoldLedger137.forge_lead(g.state)
+ if g.zone=="mine" and q.get("work_started",false):
+  var n=mini(step(g.state),4)
+  return {"title":TASKS[n][0],"art":"stone","hint":TASKS[n][1],"goal":TASKS[n][0]+" · J: help"}
+ if not q.get("ivar_spoken",false):return {"title":"A word with Ivar","art":"wood","hint":"Ivar is beside the bunkhouse hearth. Walk over and press E to introduce yourself.","goal":"Speak with Ivar by the bunkhouse hearth · E"}
+ if not q.get("room_seen",false):return {"title":"A room upstairs","art":"wood","hint":"Take the stairs inside the bunkhouse. Your bed, chest and desk are ready; you can leave your things and look around before work.","goal":"Bunkhouse stairs → your room above · J"}
+ return {"title":"The path to Old Workings","art":"stone","hint":"Leave the bunkhouse and follow the northern town path to Old Workings. At the mine entrance, press E. The borrowed rack and stonebreaker are on the west side of the entrance bay.","goal":"Northern town path → Old Workings · J"}
+static func opening_card(g):
+ var lead=opening_lead(g);var q=data(g.state)
+ var card=HoldMenuView.section(g.panel_body,"Your first wages" if q.get("rewarded",false) and not q.get("home_made",false) and q.get("focus","")=="home" else "Your next step")
+ HoldMenuView.illustrated_text(card,lead.art,lead.title,lead.hint)
+ if not q.get("rewarded",false) and q.get("ivar_spoken",false):g.label(card,"First shift pay: 20 crowns and room supplies. Take your time; there is no deadline.",15,Color("a7dfcb"))
+ if q.get("rewarded",false) and not q.get("home_made",false) and q.get("focus","")=="home":
+  g.label(card,"Furnishing can wait. Your room and supplies will still be here.",15)
+  g.small_button(card,"See what Borin needs first",func():q.focus="bay";g.save_game();g.refresh_panel())
+  g.small_button(card,"Choose a trade instead",func():q.focus="work";g.save_game();g.refresh_panel())
+ elif q.get("rewarded",false):
+  g.small_button(card,"Review the Hold’s Ledger",func():g.open_panel("great_claim102"))
 static func goal(g)->String:
  if not active(g.state):return ""
  var q=data(g.state)
  if HoldFrontier103.active(g.state) and q.guided:
+  if opening_route(g):return opening_lead(g).goal
   if g.zone=="mine" and q.get("work_started",false) and not q.get("rewarded",false):
    var n=step(g.state)
    return "First shift · %d/5 · %s · J: help" % [mini(n+1,5),TASKS[mini(n,4)][0]]
@@ -197,11 +227,18 @@ static func journal(g):
 
 static func frontier_journal(g):
  var q=data(g.state)
- if first_morning(g.state):
-  HoldWorkView132.summary(g)
+ if opening_route(g):
+  opening_card(g)
   var nav=g.row(g.panel_body)
   g.small_button(nav,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())
   g.small_button(nav,"Close journal",g.close_panel)
+  if q.get("rewarded",false):
+   g.small_button(g.panel_body,"Town services",func():g.open_panel("frontier103"))
+   var other=HoldMenuView.disclosure(g,g.panel_body,"Other plans, when you are ready","first_hour_other_plans")
+   if other!=null:
+    g.label(other,"The town has other work, and your room remains yours. Choose a trade or browse the book whenever you like.",15)
+    g.small_button(other,"Choose a trade",func():q.focus="work";g.save_game();HoldWorkView132.open(g))
+    g.small_button(other,"Browse the Hold’s Ledger",func():g.open_panel("great_claim102"))
   return
  HoldClaim127.panel(g)
  if HoldMountain104.eligible(g.state) or int(HoldAncestralClaim.data(g.state).stage)>0:HoldMountain104.panel(g)

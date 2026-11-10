@@ -13,3 +13,7 @@ Next: Windows playtesting of dialogue readability, completed/revisited tasks, fo
 ## Conversation-size safeguards
 
 PR #141–143 enforce bounded production output, file-only capture, safe diagnostic excerpts, CI evidence artifacts and active-document budgets. History is archived. The reported HTTP 413 / conversation_too_large is established, but its precise trigger and platform threshold remain unknown. These controls block known repository regressions; they cannot guarantee ChatGPT backend reliability. See CONVERSATION_OUTPUT.md.
+
+## First-hour follow-up in validation
+
+Source 0.106.0 stages the bunkhouse welcome, keeps opening guidance consistent through first wages and the forge, and uses the compact dialogue shell for lodge conversations. Furnishing and alternate trades remain optional; progression and rewards are unchanged. See FIRST_HOUR.md. Windows 0.105.1 remains the published baseline until the full release gates and publication succeed.

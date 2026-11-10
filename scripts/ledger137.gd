@@ -42,7 +42,7 @@ static func contribute(g,id:String,item:String,amount:int)->bool:
 static func inspect(g)->bool:
  if not active(g.state) or not HoldFrontier103.near(g,"forge") or complete(g.state,"forge") or data(g.state).inspected:return false
  data(g.state).inspected=true;g.save_game()
- g.notify("The hearth is sound but cold. Process coal at the loan benches; eight coal will feed its first firing.");return true
+ g.notify("The hearth is sound. Borin needs coal for the first firing · J: next step.");return true
 static func ready(s,id:String)->bool:
  if not unlocked(s,id) or complete(s,id) or not remaining(s,id).is_empty():return false
  if id=="north_bridge":return HoldRestoration139.ready(s)
@@ -80,11 +80,24 @@ static func skarrin_options(g):
   HoldConversation.choose(g,"Accept his offer of four timber for your room",func():
    if gift(g):g.talk_line="There you are. A chair, perhaps, or a proper shelf. We look after our own here."
    g.refresh_panel())
+static func forge_lead(s)->Dictionary:
+ if complete(s,"forge"):return {"title":"The forge is alight","art":"coal","hint":"Borin's hearth is working again. Smelting and crafting are available at the communal forge.","goal":"The forge is alight · visit Borin for smelting and crafting"}
+ if not data(s).inspected:return {"title":"A hearth gone cold","art":"coal","hint":"Borin's forge stands north of the town square. Visit the communal forge and inspect the cold hearth before gathering its fuel.","goal":"Visit the communal forge · inspect the cold hearth · J"}
+ if not HoldFirstVisit99.data(s).get("rewarded",false):return {"title":"A first shift to finish","art":"stone","hint":"Ivar has a place for you at the western rack and stonebreaker in Old Workings. Finish your first shift before contributing to the forge.","goal":"Finish your first shift at Old Workings · J"}
+ if HoldWork132.proof(s,"cut:coal")<1:return {"title":"Coal for Borin","art":"coal","hint":"At Old Workings, mine a coal seam and carry a freed load to the western rack. Hold E at the borrowed stonebreaker to process it. Coal already delivered stays recorded; you still need to learn this step yourself.","goal":"Old Workings · process a coal load at the western stonebreaker · J"}
+ var need=int(remaining(s,"forge").get("coal",0))
+ if need>0:
+  if s.count("coal")<need:return {"title":"Fuel for the first firing","art":"coal","hint":"The Ledger still needs %d coal; you carry %d. Process more coal at the borrowed stonebreaker in Old Workings. You can deliver what you have now and bring the rest later." % [need,s.count("coal")],"goal":"Coal for the forge · %d still needed, %d in your pack · J" % [need,s.count("coal")]}
+  return {"title":"An entry in the Ledger","art":"coal","hint":"You have the remaining %d coal. Take it to the great open book between the braziers, east of the bunkhouse. Press E and contribute to The Cold Forge. M lets you review the page, but supplies must be delivered at the book or indoor records desk." % need,"goal":"Bring %d coal to the great Ledger east of the bunkhouse · J" % need}
+ return {"title":"The first firing","art":"coal","hint":"The coal is recorded and the hearth is ready. Return to the communal forge and relight it. Borin will pay 65 crowns, and the forge will open for smelting and crafting.","goal":"Return to the communal forge · relight the hearth · J"}
 static func forge_panel(g):
  if not active(g.state) or complete(g.state,"forge"):return
- HoldMenuView.illustrated_text(g.panel_body,"coal","The Cold Forge","Inspect → process coal → contribute at the Hold’s Ledger → return for the first firing.")
+ var lead=forge_lead(g.state)
+ HoldMenuView.illustrated_text(g.panel_body,"coal","The Cold Forge","Borin brushes the ash from the hearth. 'Sound stonework. It only wants a good fire in it.'" if not data(g.state).inspected else "Borin has set the bellows in order. The hearth is ready for its first fire.")
+ g.label(g.panel_body,lead.title,18,Color("edc98a"));g.label(g.panel_body,lead.hint,16)
  var b=g.button(g.panel_body,"Inspect the cold hearth",func():inspect(g);g.refresh_panel());b.disabled=data(g.state).inspected or not HoldFrontier103.near(g,"forge")
  g.label(g.panel_body,"Coal delivered: %d / 8 · Coal processing: %s" % [paid(g.state,"forge","coal"),"learned" if HoldWork132.proof(g.state,"cut:coal")>=1 else "process one load at the stonebreaker"],15)
+ g.label(g.panel_body,"First firing: 65 crowns · opens smelting and crafting. Partial deliveries are kept.",14,Color("a7dfcb"))
  b=g.button(g.panel_body,"Relight the communal forge",func():finish(g,"forge");g.refresh_panel());b.disabled=not ready(g.state,"forge") or not HoldFrontier103.near(g,"forge")
  g.button(g.panel_body,"Review the Hold’s Ledger",func():g.open_panel("great_claim102"))
 static func panel(g):
@@ -96,7 +109,7 @@ static func panel(g):
   return
  HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Build a place in Stonebridge. Contributions stay recorded; there are no deadlines. M reviews this ledger anywhere. Deliver carried supplies at the great book outside, east of the bunkhouse.")
  var first_project=not complete(s,"forge")
- if first_project:g.label(g.panel_body,"Borin's cold forge is a good place to begin. Visit him at the communal forge north of town, then return here with the coal he needs.",16)
+ if first_project:g.label(g.panel_body,forge_lead(s).hint,16)
  else:
   g.label(g.panel_body,DEEDS,13)
   HoldCampaign138.summary(g)
