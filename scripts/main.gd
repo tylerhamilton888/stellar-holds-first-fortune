@@ -1383,7 +1383,7 @@ func open_panel(id:String,remember:bool=true):
    button(panel_body,"Create replacement for slot %d" % state.save_slot,func():open_creator(true))
    button(panel_body,"Keep my existing hold",close_panel)
 
- panel.set_deferred("size",Vector2(840,342) if id=="conversation" else Vector2(880,492))
+ panel.set_deferred("size",Vector2(880,300) if id=="conversation" else Vector2(880,492))
 
 func inventory_panel():
  HoldPlayerBook.inventory(self)
