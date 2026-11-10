@@ -93,6 +93,12 @@ static func draw_furnace(g,p:Vector2):
   var center=p+Vector2(-30+i*30,-73)
   for layer in 4:
    g.draw_texture_rect(HoldAmbientProps.glow_texture(),Rect2(center-Vector2(25,10),Vector2(50,20)),false,Color(1,.8,.55,pulse))
+ # Small ember seams stay inside the painted coal bed; cold saves draw none.
+ for i in 17:
+  var ember=p+Vector2(-49+fposmod(i*19.7,98),-78+fposmod(i*7.3,12))
+  var heat=.65+.25*sin(g.clock*2.8+i*1.7)
+  g.draw_circle(ember,1.4,Color(.85,.19,.025,heat))
+  g.draw_circle(ember+Vector2(0,-.3),.65,Color(1,.63,.13,heat))
 static func draw_stock(g,o:Dictionary):
  if o.has("forge_stock"):
   HoldItemArt.draw(g,Rect2(o.p+Vector2(-15,-43),Vector2(30,25)),HoldItemArt.item_index(o.forge_stock),HoldItemArt.tint(o.forge_stock))

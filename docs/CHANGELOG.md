@@ -1,6 +1,6 @@
-# Living forges148 — implementation under validation (0.104.0)
+# Living forges148 — validation repair (0.104.0 candidate)
 
-Distinct communal/player layouts, physical stations and cold/restored effects remain in draft PR #140. This branch now includes the output-safety fixes; game validation and visual acceptance are still incomplete. [Original forge changelog](history/CHANGELOG-forge148-2026-11-09.md) is preserved unchanged.
+Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Local native checks and visual acceptance are in progress; full source/release gates remain mandatory.
 
 # Development tooling — enforced output safety sweep (2026-11-09)
 

@@ -54,16 +54,18 @@ func run():
   g.close_panel()
  at(Vector2(480,590));HoldLivingForges148.use(g,"living148:smelt")
  check(g.panel_id=="","A remote hearth prompt cannot open production")
- at(Vector2(480,530));await capture_pair("player-starter")
+ at(Vector2(480,450));await capture_pair("player-starter")
  g.state.tech.automation=true
  check(HoldLivingForges148.points(g).any(func(p):return p.action=="living148:industry"),"Research exposes the real industry controls")
  await capture_pair("player-industry")
+ HoldFrontier103.data(g.state).keldrath_open=true # Visit the established forge through its normal story gate.
  g.surface.enter("room:forge");settle();at(Vector2(650,600));g.clock=.85
  check(HoldRoomLayout.floor_rect("room:forge").size.x>shared.size.x,"Borin retains an established grand forge")
  reachable(HoldLivingForges148.points(g))
  var extra={"area":"room:forge","kind":"anvil","x":350,"y":650,"z":0};g.state.surface.decor.append(extra)
  check(HoldLivingForges148.furniture(g).filter(func(f):return f.kind=="anvil").size()==2,"Authored and placed anvils both remain physical furnishings")
  await capture_pair("keldrath")
+ at(Vector2(600,420));await capture_pair("keldrath-hearth")
  g.save_game();g.start_game(true);settle();g.surface.enter(legacy);settle()
  check(g.state.surface.chests[id].items.iron==7 and g.state.surface.chests[id].x==1090,"Legacy storage survives actual save and reload")
  check(HoldRoomLayout.floor_rect(legacy).size==Vector2(1020,650),"Saved old dimensions survive reload")

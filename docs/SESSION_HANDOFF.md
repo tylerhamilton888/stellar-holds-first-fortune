@@ -1,16 +1,17 @@
-# Current handoff — 2026-11-09
+# Current handoff — 2026-11-10
 
-Read this file and CURRENT_STATUS.md only at recovery. Follow AGENTS.md. Update this checkpoint in place; do not prepend a growing transcript. Keep each current document below 4,000 UTF-8 bytes. Historical evidence is in [the preserved handoff](history/SESSION_HANDOFF-2026-11-09.md); read only a relevant section when necessary.
+Read this file and CURRENT_STATUS.md at recovery; follow AGENTS.md. Keep current checkpoints below 4,000 bytes. Historical files are not startup reading.
 
-## Recoverable work
+## Active task
 
-- Master includes opening/dialogue PR #138 and image-output PR #139 (merge `a5e676471cf5e0525b1e276a6237086899ab6dd5`).
-- Forge implementation is separate, unfinished work: [draft PR #140](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/140), branch `feature/living-forges148`, last verified remote commit `7d443cd997585e15ee3e29ee540fcb1e641f27b6`. Native validation and visual acceptance are incomplete. Fetch its current head before continuing. Do not claim the draft is merged or released.
-- The existing release baseline is Windows 0.102.2. Check live release metadata before a new delivery; old archived release instructions are historical.
-- The user reports another `413 / conversation_too_large` after the image-output patch. Root cause of that occurrence is not established. See [measured output hazards](CONVERSATION_OUTPUT.md).
+The owner directed completion of Living Forges, validation, visual review, merge and a verified Windows update. Draft PR #140, branch `feature/living-forges148`, contains the implementation and the merged PR #141/#142 output-safety tooling. Fetch its current head before work. Do not repeat the completed safety sweep.
 
-## Next action
+The validation repair gives the new communal forge the workshop's exterior collision footprint, clearing Sten's patrol. The catalogue test expects its additional plan. The remote-crafting test now stands at the exit, away from the new workbench. The grand-forge scenario opens Keldrath through its story gate. Bellows gain a tapered top plane and leather folds; restored coals gain visible ember seams. Saved rooms, furniture and storage stay authoritative.
 
-This forge branch incorporates the PR #141/#142 output-safety helpers, CI capture and policy checks. Continue the unfinished forge validation and visual review from draft PR #140 only when directed; do not repeat the completed tooling sweep. The original forge handoff is preserved at history/SESSION_HANDOFF-forge148-2026-11-09.md. Preserve its artwork, save compatibility and existing work. Do not repeat completed checks merely because a chat failed. No gameplay or release changes belong in the output-tooling patch.
+## Verification and delivery
 
-Use `tools/capture_command.py` for import, tests, export and other potentially noisy commands. Keep full evidence in files, inspect narrow excerpts, and transfer source/assets with local Git. Never send image/archive bytes or large whole source files through conversational tool arguments.
+Local Godot 4.4.1 checks are in progress; evidence is under `test-results/forge-integration-fixed` and `test-results/forge-visual-final`. Tooling suite: 42 passed. Full remote source validation, final visual acceptance, merge and release remain required. Do not treat this checkpoint as release acceptance.
+
+Live latest release checked: v0.103.0. Source version is 0.104.0. Preserve existing releases; use the existing release workflow and its full native/exported-package gates after source acceptance.
+
+Capture noisy commands to files; return bounded summaries only. Do not dump images, encoded binaries, full API results or historical logs. PR #141/#142 reduce observed payload hazards; they do not prove or repair ChatGPT's server-side `conversation_too_large` cause.

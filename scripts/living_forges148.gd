@@ -64,19 +64,32 @@ static func stock(g,p:Vector2,kind:String):
    HoldItemArt.draw(g,Rect2(p+Vector2(30,-36),Vector2(18,18)),HoldItemArt.item_index("copper"))
 
 static func bellows(g,p:Vector2):
- # Leather folds move only during the smith's working beats; the feet stay fixed.
+ # A tapered leather bag under a wooden paddle, viewed from above like the hearth.
+ # The nozzle and feet stay fixed while the rear of the bag compresses.
  var working=g.state.opening>=2 and fposmod(g.clock,12)<3.2
  var lift=3+3*sin(g.clock*TAU/1.6) if working else 2.0
- var top=p+Vector2(0,-24-lift)
- var outline=PackedVector2Array([p+Vector2(-24,-5),p+Vector2(24,-5),top+Vector2(21,0),top+Vector2(-21,0)])
- g.draw_colored_polygon(outline,Color("584233"))
+ var left=p+Vector2(-23,-17-lift);var tip=p+Vector2(23,-14)
+ g.draw_line(p+Vector2(21,-12),p+Vector2(42,-12),Color("302c28"),7)
+ g.draw_line(p+Vector2(22,-14),p+Vector2(42,-14),Color("b4935a"),3)
+ for x in [-19,16]:
+  g.draw_line(p+Vector2(x,-7),p+Vector2(x,0),Color("342d26"),5)
+  g.draw_line(p+Vector2(x-1,-6),p+Vector2(x-1,-1),Color("80603e"),1)
+ var bag=PackedVector2Array([left+Vector2(-2,1),left+Vector2(4,-7),tip+Vector2(1,0),tip+Vector2(0,8),p+Vector2(-19,-3),p+Vector2(-25,-9)])
+ g.draw_colored_polygon(bag,Color("30231d"));g.draw_polyline(bag+PackedVector2Array([bag[0]]),Color("201b18"),1.5,true)
  for i in 4:
-  var y=lerpf(-7,-24-lift,float(i)/4)
-  g.draw_line(p+Vector2(-22,y),p+Vector2(22,y),Color("30271f"),2)
- g.draw_line(top+Vector2(-23,0),top+Vector2(23,0),Color("a27a48"),5)
- g.draw_line(p+Vector2(-25,-3),p+Vector2(25,-3),Color("8a623b"),5)
- g.draw_line(p+Vector2(23,-12),p+Vector2(42,-12),Color("ad8b55"),5)
- for x in [-19,19]:g.draw_line(p+Vector2(x,-4),p+Vector2(x,0),Color("393632"),5)
+  var t=float(i)/4
+  var rear=left.lerp(p+Vector2(-23,-5),t)
+  var front=tip.lerp(p+Vector2(22,-7),t)
+  g.draw_polyline(PackedVector2Array([rear+Vector2(0,-2),rear+Vector2(4,2),front]),Color("795139") if i%2==0 else Color("493125"),2,true)
+ var top=PackedVector2Array([left+Vector2(-2,-2),left+Vector2(3,-11),left+Vector2(19,-13),tip+Vector2(0,-3),tip+Vector2(-2,1),left+Vector2(5,2)])
+ g.draw_colored_polygon(top,Color("765333"));g.draw_polyline(top+PackedVector2Array([top[0]]),Color("2a211a"),1.5,true)
+ g.draw_polyline(PackedVector2Array([top[0]+Vector2(1,0),top[1]+Vector2(1,1),top[2]+Vector2(0,1),top[3]]),Color("b18a54"),1,true)
+ for i in 3:
+  var start=left+Vector2(5+i*5,-8)
+  g.draw_line(start,tip+Vector2(-5,-3+i),Color("5d4028"),.7,true)
+ g.draw_line(left+Vector2(8,-2),left+Vector2(10,-10),Color("39352c"),3,true)
+ for q in [left+Vector2(8,-2),left+Vector2(10,-10),tip+Vector2(-4,-2)]:
+  g.draw_circle(q,1.5,Color("c19a58"));g.draw_circle(q+Vector2(-.3,-.4),.6,Color("e0bf7e"))
 
 static func sound_context(g)->String:
  if not workshop(g):return g.room_id if g.surface.room() else g.zone
