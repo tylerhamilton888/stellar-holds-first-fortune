@@ -1,21 +1,19 @@
 # Current handoff — 2026-11-10
 
-Read this and CURRENT_STATUS.md first; follow AGENTS.md. Keep current files under their byte budgets and preserve history.
+Read this and CURRENT_STATUS.md first; follow AGENTS.md. Current instructions are PLAYTEST_GUIDE.md and RELEASE_PIPELINE.md; historical procedures are not startup reading.
 
 ## Completed delivery
 
-Windows 0.105.1 is published: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.105.1
+Windows 0.106.0 is published: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.106.0
 
-PR #146's dialogue-state corrections are delivered, including completed favors/projects, restored-forge and learned-research hints, legacy lodge directions, response scrolling and accurate waiting/trust wording. NPC presentation from 0.105.0 remains included. Gameplay costs, rewards, timing and saves are unchanged.
+PR #150 delivers staged Ivar dialogue, the compact lodge conversation shell, consistent immediate journal/HUD/shift-book leads and state-aware forge directions. Optional furnishing, alternate trades and wider books remain available. Costs, rewards, saves and progression are unchanged. See FIRST_HOUR.md.
 
-Release source: dc9a569e864b850b89b95ddabaeba034bf6e32bb. Version/notes PR #147 passed all hosted source checks and merged as 7bcbb33ad2d4c70078d0c48f67b401858a52907c. Release run 42902069734 succeeded: all 80 native scenarios, 70 exact-package scenarios / 14,170 assertions, integrity verification and publication. Published metadata and receipt agree on source, PCK and ZIP hashes; the ZIP is 964,648,066 bytes. Release assets retain the complete verification evidence. No release is pending for these corrections.
+Exact release source: 686a2d3ce914a257168d6798d8a8f11affee787c. Merge: 7341b784b2424bf906a270c48ae8c4938ff7afeb. PR validation 42912785452 passed. Release run 42912965464 passed all 80 native scenarios, 70 exact-package scenarios / 14,184 assertions, integrity verification and publication. Published metadata and receipt agree on source, package and ZIP hashes; ZIP size: 964,651,997 bytes.
 
-Next: Windows playtesting of readability, character voice, completed/revisited tasks, forge directions and relationship responses. Do not rebuild without a new change or concrete failure. Preserve older releases and saves. Original local/visual acceptance for the corrections is recorded in PR #146 and docs/DIALOGUE_AUDIT.md.
+Local acceptance: six scenarios / 238 assertions, 42 tooling tests, reviewed Ivar/first-wage/forge-lead screens. A discovered dialogue overflow was corrected and lodge/menu/opening rerun. Native and package evidence is retained by the release.
+
+No release remains pending for this work. Next: Windows playtesting of the first hour in an empty slot, plus continued existing-save guidance. Do not rebuild without new changes or a concrete failure. Keep previous builds and saves.
 
 ## Output discipline
 
-Use file-only capture and bounded diagnostics. Never dump image bytes, encoded binaries, full API results or old logs into conversations. Keep current status, handoff and backlog below 4,000 bytes; release notes and changelog below 8,000. History is preserved separately. These safeguards reduce known repository hazards; they cannot guarantee ChatGPT backend reliability.
-
-## First-hour follow-up
-
-The 0.106.0 candidate improves Ivar's welcome, lodge dialogue layout, immediate journal/HUD/shift-book leads and state-aware forge directions. See FIRST_HOUR.md for scope and acceptance. Preserve the 0.105.1 baseline until the full candidate passes and is published.
+Use file-only capture and bounded diagnostics. Never dump encoded binaries, complete API results or old logs into conversations. Keep current status, handoff and backlog under 4,000 bytes; release notes/changelog under 8,000. Repository safeguards do not guarantee ChatGPT backend reliability. [Previous handoff](history/SESSION_HANDOFF-before-0.106.0.md).
