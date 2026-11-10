@@ -2,7 +2,7 @@
 
 ## Finish Living Forges 0.104.0
 
-Draft PR #140 has distinct new communal/player layouts, physical production stations and single-owner anvils. Preserve saved rooms, furniture and storage. The validation repair clears Sten's exterior patrol route, updates stale catalogue/crafting expectations and opens the Keldrath capture through its story gate. Local/native review passed (9 scenarios / 858 assertions). Complete full hosted validation and the verified Windows release. See [implementation notes](LIVING_FORGES148.md).
+Merged PR #140 has distinct new communal/player layouts, physical production stations and single-owner anvils. Preserve saved rooms, furniture and storage. The validation repair clears Sten's exterior patrol route, updates stale catalogue/crafting expectations and opens the Keldrath capture through its story gate. Local/native review passed (9 scenarios / 858 assertions), followed by all 80 hosted source scenarios. The 0.104.0 candidate is built; complete its native/package gates and confirm publication. See [implementation notes](LIVING_FORGES148.md).
 
 ## Fresh-player review
 

@@ -1,15 +1,17 @@
 # Current status — 2026-11-10
 
-## Living Forges
+## Living Forges source complete
 
-Draft PR #140 implements distinct new Stonebridge communal and player workshop layouts, physical smelting/anvil/bench services, cold/restored activity and single-owner anvil rendering. Keldrath and existing saved rooms/storage retain their established dimensions and contents.
+PR #140 merged as `a009d0e363a318360b349620a06e226904bfe8ca`. All 80 native source scenarios and the final hosted gate passed (run 42730685187). Local acceptance also passed 9 scenarios / 858 assertions, with 42 tooling tests. Twelve captures were recorded; cold/restored communal, starter/industry player and Keldrath views were inspected with collision overlays.
 
-Validation repairs address a real communal-building collision regression blocking Sten's patrol, two outdated catalogue/crafting expectations, and a grand-forge capture that had not opened the Keldrath story gate. Bellows and hot-coal readability are refined at gameplay scale. Tooling tests: 42 passed. All 9 local native scenarios / 858 assertions passed without engine errors; 12 captures were reviewed. Full remote source checks (run 42730685187) and verified release gates are pending. This work is not merged or released yet.
+New communal/player workshops have distinct practical layouts and physical smelting/anvil/bench services. Cold Forge restoration controls coal heat, bellows, smith activity and ambience. Existing saved room dimensions, placed objects and storage are preserved. Sten's patrol is clear and each visible anvil has one rendering owner.
 
-Latest live Windows release is v0.103.0; the forge candidate is 0.104.0. Check live metadata before delivery.
+## Windows delivery
+
+The 0.104.0 candidate built successfully at commit `1b3d34ee4703834b5107998529013a8f04915b0a`. Release run 42731501280 is still checking all 80 native and 70 exported-package scenarios. It may publish only after verification succeeds. Live latest release remains v0.103.0 until confirmed otherwise.
 
 ## Conversation-size safeguards
 
-PR #141/#142 are merged and incorporated into the forge branch: bounded production output, file-only command capture, safe diagnostic excerpts, CI evidence artifacts, compact current docs and automated output-policy tests. Existing game and release gates remain enforced.
+PR #141/#142 are merged: bounded production output, file-only capture, safe diagnostics, CI evidence artifacts and automated output-policy tests. Active backlog and release notes now also have enforced budgets, with historical text preserved unchanged. Current recovery documents remain compact.
 
-The reported HTTP 413 / `conversation_too_large` is established, but its exact triggering payload and platform threshold are unknown. These repository safeguards reduce observable hazards; they cannot guarantee that ChatGPT conversations never fail. See CONVERSATION_OUTPUT.md for evidence and limitations.
+The reported HTTP 413 / conversation_too_large is established, but its exact triggering payload and platform threshold are unknown. These safeguards reduce known repository hazards; they cannot guarantee ChatGPT backend reliability. See CONVERSATION_OUTPUT.md.

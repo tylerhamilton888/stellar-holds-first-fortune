@@ -157,14 +157,28 @@
         "bytes": 955909,
         "sha256": "b247fc31f916e089ae70a709ca3b85b03d5651e77beaf3a400a85c984a1ab4e4"
       }
+    ],
+    "inspected_views": [
+      "communal-restored.png",
+      "communal-cold-collision.png",
+      "player-starter.png",
+      "player-industry-collision.png",
+      "keldrath-collision.png",
+      "keldrath-hearth.png"
     ]
   },
   "hosted_validation": {
     "run_id": 42730685187,
-    "status": "running"
+    "status": "success",
+    "native_cases": 80,
+    "merge_commit": "a009d0e363a318360b349620a06e226904bfe8ca"
   },
   "release": {
     "version": "0.104.0",
-    "status": "pending"
+    "status": "candidate built; verification running",
+    "run_id": 42731501280,
+    "source_commit": "1b3d34ee4703834b5107998529013a8f04915b0a",
+    "required_native_cases": 80,
+    "required_package_cases": 70
   }
 }

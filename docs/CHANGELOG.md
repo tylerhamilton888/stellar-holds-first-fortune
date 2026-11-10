@@ -1,6 +1,6 @@
-# Living forges148 — validation repair (0.104.0 candidate)
+# Living forges148 — source merged (0.104.0 candidate)
 
-Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Nine local native scenarios / 858 assertions and visual review passed; full source/release gates remain mandatory. The active backlog and release notes now have automated size budgets, with prior text preserved in history.
+Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Nine local native scenarios / 858 assertions, visual review and all 80 hosted source scenarios passed. PR #140 is merged; the Windows candidate is built and its release gates are still running. The active backlog and release notes now have automated size budgets, with prior text preserved in history.
 
 # Development tooling — enforced output safety sweep (2026-11-09)
 
