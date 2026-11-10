@@ -1,6 +1,6 @@
 # 0.105.1 — dialogue state corrections
 
-Completed jobs no longer issue obsolete requests; known research and restored forges use current-state hints. Replies reset scrolling, and betrothal messages distinguish time from trust. Existing costs, rewards and saves are unchanged.
+Completed jobs no longer issue obsolete requests; known research and restored forges use current-state hints. Replies reset scrolling, and betrothal messages distinguish time from trust. Existing costs, rewards and saves are unchanged. Windows 0.105.1 is published after all 80 native source scenarios, 70 exact-package scenarios / 14,170 assertions, integrity verification and publication passed in run 42902069734.
 
 # 0.105.0 — NPC conversation presentation released
 
