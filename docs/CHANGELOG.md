@@ -1,6 +1,6 @@
-# 0.106.0 — first-hour presentation (pending release)
+# 0.106.0 — first-hour presentation released
 
-Stage Ivar's welcome and work instructions; bring bunkhouse conversations into the lower dialogue shell with bounded layout and replaceable replies. Keep the journal, HUD and shift book on one immediate opening lead through first pay and the forge. Preserve an explicit alternative trade route. Forge hints follow inspection, practical coal processing, remaining deposits and the first firing. Existing rewards, costs, saves and progression are unchanged.
+Stage Ivar's welcome and work instructions; bring bunkhouse conversations into the lower dialogue shell with bounded layout and replaceable replies. Keep the journal, HUD and shift book on one immediate opening lead through first pay and the forge. Preserve an explicit alternative trade route. Forge hints follow inspection, practical coal processing, remaining deposits and the first firing. Existing rewards, costs, saves and progression are unchanged. Windows 0.106.0 passed all 80 native scenarios, 70 exact-package scenarios / 14,184 assertions, integrity verification and publication in run 42912965464.
 
 # 0.105.1 — dialogue state corrections
 

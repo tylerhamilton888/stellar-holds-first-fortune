@@ -2,7 +2,7 @@
 
 ## Playtest the current published build
 
-Use [CURRENT_STATUS.md](CURRENT_STATUS.md) for the verified release and [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md) for installation and the current route. Living Forges, NPC conversation presentation and dialogue-state corrections are delivered.
+Use [CURRENT_STATUS.md](CURRENT_STATUS.md) for the verified release and [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md) for installation and the current route. Living Forges, NPC conversation presentation, dialogue-state corrections and the first-hour guidance pass are delivered. See [FIRST_HOUR.md](FIRST_HOUR.md) for the staged welcome, optional routes and forge handoff.
 
 Review the first hour: arrival, meeting Ivar, the room, first shift, first pay and initial forge contribution. Watch unclear directions, excessive text, rushed reveals, ledger visibility, mine doorways, workshop purpose and awkward interaction approaches. Use an empty fortune slot for opening tests; separately check continued progress in existing saves.
 

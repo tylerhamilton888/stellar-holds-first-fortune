@@ -1,19 +1,19 @@
 # Current status — 2026-11-10
 
-## Windows 0.105.1 delivered
+## Windows 0.106.0 delivered
 
-[Download and release notes](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.105.1).
+[Download and release notes](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.106.0).
 
-Dialogue corrections from PR #146 are now in the published Windows build. Completed favors and civic projects stop requesting deliveries; restored forges and learned steel research receive accurate hints. Legacy lodge directions stay local. Gift/favor refusals reflect play-time waiting, betrothal distinguishes delay from trust, and replies return to the top. Includes the NPC conversation presentation from 0.105.0. Saves, costs, rewards, progression and timing rules are unchanged.
+The first-hour pass is merged in PR #150 and published. Ivar welcomes the player to their room before explaining the first shift. Lodge conversations use the lower dialogue shell with a fixed portrait and scrolling choices. The journal, HUD and shift book follow one immediate lead through first pay and the forge. Furnishing can wait; an alternate trade can be chosen explicitly. Forge guidance respects inspection, practical processing, carried coal and partial deposits.
 
-Version/notes PR #147 passed all hosted source checks and merged as 7bcbb33ad2d4c70078d0c48f67b401858a52907c. The exact release source is dc9a569e864b850b89b95ddabaeba034bf6e32bb. [Release run 42902069734](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42902069734) passed all 80 native source scenarios, 70 exported-package scenarios / 14,170 assertions, integrity verification and publication. Published build.json and release-summary.json agree on version, source, PCK and ZIP hashes. ZIP size: 964,648,066 bytes. Permanent verification evidence is attached to the release.
+Existing saves, costs, wages, rewards and progression requirements are unchanged. Wider town systems remain accessible on request. See [FIRST_HOUR.md](FIRST_HOUR.md) for scope and [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md) for the current route.
 
-Next: Windows playtesting of dialogue readability, completed/revisited tasks, forge guidance and relationship responses. Player-device rendering/input remain human playtest feedback. Preserve previous builds and saves; no rebuild without a new change or concrete failure.
+Source: 686a2d3ce914a257168d6798d8a8f11affee787c; merge: 7341b784b2424bf906a270c48ae8c4938ff7afeb. [Release run 42912965464](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/42912965464) passed all 80 native scenarios, 70 exact-package scenarios / 14,184 assertions, integrity verification and publication. Published build.json and release-summary.json agree on source, PCK and ZIP hashes; ZIP size is 964,651,997 bytes. Permanent evidence is attached to the release.
+
+Local acceptance covered six scenarios / 238 assertions and 42 tooling tests. Visual review caught a deferred dialogue-height issue; it was fixed and the affected lodge/menu/opening cases rerun successfully. Human Windows input/audio review and actual first-hour pacing remain playtest feedback.
+
+Next: play a fresh empty slot from arrival through first pay and the forge; also check existing saves. Preserve previous builds and saves. No rebuild without a new change or concrete failure.
 
 ## Conversation-size safeguards
 
-PR #141–143 enforce bounded production output, file-only capture, safe diagnostic excerpts, CI evidence artifacts and active-document budgets. History is archived. The reported HTTP 413 / conversation_too_large is established, but its precise trigger and platform threshold remain unknown. These controls block known repository regressions; they cannot guarantee ChatGPT backend reliability. See CONVERSATION_OUTPUT.md.
-
-## First-hour follow-up in validation
-
-Source 0.106.0 stages the bunkhouse welcome, keeps opening guidance consistent through first wages and the forge, and uses the compact dialogue shell for lodge conversations. Furnishing and alternate trades remain optional; progression and rewards are unchanged. See FIRST_HOUR.md. Windows 0.105.1 remains the published baseline until the full release gates and publication succeed.
+Bounded output, file-only capture, safe diagnostics, CI evidence and current-document budgets remain enforced. These controls reduce repository hazards; they cannot guarantee ChatGPT backend reliability. See CONVERSATION_OUTPUT.md. Previous delivery status is preserved in [history](history/CURRENT_STATUS-before-0.106.0.md).

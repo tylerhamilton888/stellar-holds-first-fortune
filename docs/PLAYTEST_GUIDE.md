@@ -14,6 +14,8 @@ Meet Ivar in the bunkhouse, visit your upstairs room, and follow the journal (**
 
 Return to Ivar's shift book. Find the enormous outdoor Ledger on its gilded stone lectern between two braziers, east of the bunkhouse. Stand at its front and press **E**. **M** reviews the same Ledger remotely; deliveries require the physical book or original indoor records desk and goods in your pack. Partial deliveries are saved.
 
+After your first pay, the journal offers room furnishing, a visit to Borin first, or an alternate trade. Furnishing is optional. When following the forge, its next-step guidance updates after inspection, coal processing and partial deliveries; the HUD follows the same lead.
+
 Follow the Cold Forge project's actual requirements, make your contributions, and return for its first firing. Choose a trade lesson and an optional collection that interests you; all three collections are not required. Follow current Ledger and journal requirements toward your home.
 
 Record any moment where you cannot tell what to do, where to go, which object to use or why an action is blocked. Note repeated trips, confusing prompts, overly long explanations and whether your first pay and forge restoration feel rewarding.
