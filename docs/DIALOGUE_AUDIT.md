@@ -6,7 +6,7 @@ Scope: current opening and first-shift instructions, NPC conversation routing, d
 
 - Completed favors acknowledge help after leaving and reopening the conversation; they do not request another delivery or promise another payment.
 - Every conversation response starts at the beginning, including same-topic replies and friendship errands.
-- Ivar stops recommending cold-forge work after restoration.
+- Ivar stops recommending cold-forge work after restoration. Older non-frontier lodges retain their north-door/High Trail directions and do not advertise a Stonebridge ledger.
 - Completed civic projects keep their completion/reward record but hide obsolete delivery instructions.
 - Steel research is only recommended while unlearned. Cold production explains the restoration requirement.
 - Gifts and favors say "for now", not "today": their existing ten-minute play intervals are separate from calendar days and sleeping.

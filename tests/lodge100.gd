@@ -73,5 +73,9 @@ func run():
  check(g.state.surface.decor.any(func(d):return d.area=="room:home" and d.kind=="chair"),"Existing player furnishings survive loading without a lodge migration")
  g.state.surface.first_visit99={"done":{},"guided":true,"focus":"basics","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"origin":[0.0,0.0]}
  check(not HoldFirstVisit99.lodge_intro(g.state) and g.surface.world.room_objects().any(func(o):return o.furnishing=="tea_table"),"Older first-visit saves also retain their original room")
+ g.state.surface.erase("frontier103");HoldWorkerLodge100.speak(g,0)
+ check(g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("north door") and l.text.contains("High Trail")),"Legacy lodge directions use its actual door and route, not Stonebridge stairs")
+ HoldFirstVisit99.data(g.state).rewarded=true;g.refresh_panel()
+ check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("great book outside")),"Legacy lodge does not direct players to a frontier-only ledger")
  print("LODGE100: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)
