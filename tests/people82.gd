@@ -72,6 +72,10 @@ func run():
  HoldConversation.start(g,"ivar");button("How have you been?");button("Any small jobs need doing?")
  check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("Could you bring me") or l.text.contains("I can pay")),"Revisited completed favor does not request or promise another delivery")
  await snap("favor-completed-revisit")
+ var calendar_before=HoldCalendar.data(g.state).duplicate(true)
+ HoldCalendar.advance(g.state,1440)
+ check(not HoldPeople.help(g,"ivar") and HoldPeople.gift(g,"ivar",liked).contains("for now"),"Calendar advance alone does not reset play-interval favors or gifts, and the refusal does not promise a new calendar day")
+ g.state.surface.calendar91=calendar_before
  g.state.elapsed+=600;g.state.add(disliked,1);HoldPeople.gift(g,"ivar",disliked)
  check(d.bond==5 and d.last.begins_with("Disliked"),"Disliked gift has its own saved reaction")
  check(HoldPeople.chat(g,"ivar")==d.persona.close,"Familiarity unlocks personal dialogue")

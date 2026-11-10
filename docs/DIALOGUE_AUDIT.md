@@ -9,6 +9,7 @@ Scope: current opening and first-shift instructions, NPC conversation routing, d
 - Ivar stops recommending cold-forge work after restoration.
 - Completed civic projects keep their completion/reward record but hide obsolete delivery instructions.
 - Steel research is only recommended while unlearned. Cold production explains the restoration requirement.
+- Gifts and favors say "for now", not "today": their existing ten-minute play intervals are separate from calendar days and sleeping.
 - Betrothal distinguishes the calendar delay from insufficient friendship. Personal replies use natural wording while costs and commitments remain explicit.
 
 ## Regression coverage

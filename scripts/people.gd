@@ -88,7 +88,7 @@ static func gift(g,id:String,item:String)->String:
  var d=records(g.state).get(id,{})
  if d.is_empty() or not HoldData.ITEMS.has(item):return "Let us introduce ourselves first."
  var day=int(g.state.elapsed/600.0)
- if int(d.gift_day)==day:return "One gift is plenty for today. Keep something for yourself."
+ if int(d.gift_day)==day:return "One gift is plenty for now. Keep something for yourself."
  if not g.state.pay({item:1}):return "You no longer have that in your pack."
  var liked=item==d.persona.like;var disliked=item==d.persona.dislike
  d.gift_day=day;d.bond=clampi(int(d.bond)+(3 if liked else -1 if disliked else 1),0,10 if id=="road_folk:8" else 20)
@@ -144,7 +144,7 @@ static func favor(g,id:String):
  var words=thanks if d.work_day==day else request+" Could you bring me "+amount+"? I can pay "+str(pay)+" crowns."
  HoldConversation.header(g,g.panel_body,id,words,true)
  if d.work_day==day:
-  g.label(g.panel_body,"You have helped today. Thank you. Nothing more is needed right now.",17)
+  g.label(g.panel_body,"Nothing else is needed right now.",17)
  else:
   g.label(g.panel_body,"In your pack: "+str(g.state.count(p.work))+" "+material,15,Color("a7c8bf"))
   var b=HoldConversation.choose(g,"Deliver 2 "+HoldData.ITEMS[p.work].name.to_lower(),func():
@@ -157,7 +157,7 @@ static func gifts(g,id:String):
  var d=records(g.state).get(id,{})
  if d.is_empty():return
  HoldConversation.header(g,g.panel_body,id,"What have you brought?",true)
- if int(d.gift_day)==int(g.state.elapsed/600.0):g.label(g.panel_body,"Already given a gift this workday. Another visit is enough.",16)
+ if int(d.gift_day)==int(g.state.elapsed/600.0):g.label(g.panel_body,"One gift is plenty for now. Your company is welcome.",16)
  else:
   g.label(g.panel_body,"Choose an item to give · one will leave your pack.",15)
   var count=0
