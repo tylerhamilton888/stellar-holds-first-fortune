@@ -13,3 +13,7 @@ Nine focused local scenarios / 2,845 assertions and 42 tooling tests passed. Rev
 ## Conversation-size safeguards
 
 PR #141–143 enforce bounded production output, file-only capture, safe diagnostic excerpts, CI evidence artifacts and active-document budgets. History is archived. The reported HTTP 413 / conversation_too_large is established, but its precise trigger and platform threshold remain unknown. These controls block known repository regressions; they cannot guarantee ChatGPT backend reliability. See CONVERSATION_OUTPUT.md.
+
+## Dialogue state follow-up
+
+A focused correction is in progress on `review/day-quality`: completed favors/projects, forge hints, reply visibility and courtship requirements. See DIALOGUE_AUDIT.md. Native validation is pending; Windows 0.105.0 remains the published build.

@@ -56,6 +56,10 @@ func run():
  var before=g.state.count("wood");g.player=Vector2(535,520);g.surface.placing="chair"
  check(g.surface.furniture_valid(Vector2(600,520),"chair") and g.surface.place(Vector2(600,520)),"A player can build a real chair in the private room")
  check(q.home_made and q.focus=="bay" and g.state.count("wood")==before-2,"The room project consumes real materials and offers the old bay next")
+ var old_opening=g.state.opening;g.state.opening=2
+ HoldWorkerLodge100.speak(g,0)
+ check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("forge could use a hand")),"Ivar stops recommending the cold-forge job once it is complete")
+ g.close_panel();g.state.opening=old_opening
  await snap("04-furnished-room");g.save_game();g.start_game(true);settle();q=HoldFirstVisit99.data(g.state)
  check(q.home_made and g.state.surface.decor.any(func(d):return d.area==HoldFrontier103.quarters(g.state) and d.kind=="chair"),"The completed room and placed furnishing survive save and reload")
  var paid=g.state.money;HoldFirstVisit99.tick(g);check(g.state.money==paid,"Reload does not repeat the wage")

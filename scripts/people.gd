@@ -141,7 +141,7 @@ static func favor(g,id:String):
  var amount={"wood":"two lengths of timber","stone":"two pieces of stone","coal":"two pieces of coal","turnip":"two turnips","dressed_stone":"two dressed stones"}.get(p.work,"two "+material)
  var request={"ivar":"The lamp rack needs dry pegs.","orla":"I need dividers for the exchange's return crates.","hedrik":"The late shift could use a proper supper.","borin":"The apprentice's practice forge needs fuel.","eldric":"The survey students need reference pieces.","eirik":"The public stair needs replacement stones."}.get(id,p.reason+".")
  var thanks="That will make a difference. Thank you for following through."
- var words=thanks if d.work_day==day and g.talk_line==thanks else request+" Could you bring me "+amount+"? I can pay "+str(pay)+" crowns."
+ var words=thanks if d.work_day==day else request+" Could you bring me "+amount+"? I can pay "+str(pay)+" crowns."
  HoldConversation.header(g,g.panel_body,id,words,true)
  if d.work_day==day:
   g.label(g.panel_body,"You have helped today. Thank you. Nothing more is needed right now.",17)

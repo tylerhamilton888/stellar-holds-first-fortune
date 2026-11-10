@@ -60,6 +60,8 @@ static func panel(g):
   if index==2:text="Sigrid lifts her mug. 'Rurik's already blamed the roof for the noise, hasn't he? There's an upstairs room if you want some quiet.'"
  if index==0 and HoldFirstVisit99.data(g.state).get("rewarded",false):
   text="'Good work. Your first twenty crowns are counted, and there's a little timber for your room. When you're settled, take a look at the great book outside. It keeps track of the work the town needs doing.'" if not HoldFirstVisit99.data(g.state).get("home_made",false) else "'That room's looking more lived in. There's more work in the great book outside whenever you're ready. Borin's forge could use a hand, for one.'"
+ if index==0 and HoldFirstVisit99.data(g.state).get("rewarded",false) and HoldFirstVisit99.data(g.state).get("home_made",false) and g.state.opening>=2:
+  text="'That room's looking more lived in. Good to hear Borin's hearth drawing again, too. The great book has the town's other work whenever you're ready.'"
  g.label(body,text,16)
  if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Ask about the shift book",func():g.open_panel("frontier103"))
  if index in [1,2]:

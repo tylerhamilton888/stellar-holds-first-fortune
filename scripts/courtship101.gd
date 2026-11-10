@@ -453,7 +453,7 @@ static func panel(g,id:String):
  HoldRidgePair124.options(g,id)
  if d.quest==0:
   HoldConversation.choose(g,"Offer to help",func():
-   if accept(g,id):g.talk_line="Thank you. There is no deadline; come back when you have what we need."
+   if accept(g,id):g.talk_line="Thank you. Come and find me when you have the supplies."
    g.refresh_panel())
  elif d.quest==1:
   g.label(g.panel_body,"Bring from your pack: "+HoldData.cost_text(arc.cost)+". Stored supplies stay where they are.",15)
@@ -471,7 +471,7 @@ static func panel(g,id:String):
   if d.stage==0:
    if eligible(g.state,id):
     if partner(g.state)!="":g.label(g.panel_body,"You have made a commitment to someone else. This friendship can still grow.",15)
-    elif bond(g.state,id)<5:g.label(g.panel_body,"Spend a little more time getting to know each other. Friendship can stay friendship.",15)
+    elif bond(g.state,id)<5:g.label(g.panel_body,"I enjoy your company. Let us get to know each other a little better.",15)
     elif d.ended==day(g.state):g.label(g.panel_body,"Give each other a little time before beginning again.",15)
     else:
      g.label(g.panel_body,"Craft a Hearthknot at a forge: 1 timber + 1 copper ingot. Bring it in your pack to invite courtship.",15)
@@ -481,7 +481,7 @@ static func panel(g,id:String):
       g.refresh_panel()
       if accepted:g.restore_menu.call_deferred(0,""))
      invitation.disabled=g.state.count("hearthknot")<1
-   else:g.label(g.panel_body,"A valued friendship. Their personal story remains yours to share.",15)
+   else:g.label(g.panel_body,"I am glad to have you as a friend.",15)
   elif d.stage==1:
    if date_ready(g.state,id):
     var index=d.dates.size();var scene=arc.dates[index]
@@ -495,7 +495,8 @@ static func panel(g,id:String):
    if can_promise(g.state,id):HoldConversation.choose(g,"Ask to become betrothed",func():
     if promise(g,id):g.talk_line=arc.promise
     g.refresh_panel())
-   elif d.dates.size()==3:g.label(g.panel_body,"Let these memories settle. Return another day as trusted friends to discuss a shared future.",15)
+   elif d.dates.size()==3:
+    g.label(g.panel_body,"Let us take a little time before we speak of our future." if day(g.state)<=d.last_date else "I care for you, but I would like us to know each other better before we make that promise.",15)
   if d.stage in [1,2] and not g.talk_line.begins_with(g.state.npc(id).first_name+" accepts your Hearthknot.\n\n"):
    HoldConversation.choose(g,"Discuss ending our courtship",func():g.talk_topic="courtship_end101";g.refresh_panel())
  HoldConversation.return_choice(g,id)

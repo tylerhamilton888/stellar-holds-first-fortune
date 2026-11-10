@@ -116,8 +116,9 @@ static func panel(g):
   var status="Complete" if done else ("Locked · raise the storehouse" if id=="winter" else "Locked · finish your first shift") if not unlocked(s,id) else "In progress" if not data(s).paid.get(id,{}).is_empty() else "Available"
   if id=="north_bridge" and not unlocked(s,id):status="Locked · rescue, Winter Stores and site inspection"
   var box=HoldMenuView.section(parent,p.title+" · "+status)
-  g.label(box,p.deeds+" — "+p.reward,14,Color("a7dfcb"));g.label(box,p.hint,15)
+  g.label(box,p.deeds+" — "+p.reward,14,Color("a7dfcb"))
   if done:continue
+  g.label(box,p.hint,15)
   for item in p.cost:
    var row=g.row(box);HoldItemArt.icon(row,item)
    g.label(row,"%s · %d / %d" % [HoldData.ITEMS[item].name,paid(s,id,item),p.cost[item]],15)
