@@ -1,4 +1,4 @@
-# Pending — dialogue state corrections
+# 0.105.1 — dialogue state corrections
 
 Completed jobs no longer issue obsolete requests; known research and restored forges use current-state hints. Replies reset scrolling, and betrothal messages distinguish time from trust. Existing costs, rewards and saves are unchanged.
 
