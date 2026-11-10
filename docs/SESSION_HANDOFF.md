@@ -2,16 +2,20 @@
 
 Read this file and CURRENT_STATUS.md at recovery; follow AGENTS.md. Current checkpoints stay below 4,000 bytes. Historical files are not startup reading.
 
-## Source accepted and merged
+## Completed delivery
 
-Living Forges PR #140 merged as `a009d0e363a318360b349620a06e226904bfe8ca`. Exact feature head `831c1abda29bba9aa72a37aaa41288ccdd0a8b6f` passed all 80 native source scenarios and the final gate in run 42730685187. Local focused checks: 9 scenarios / 858 assertions, no engine errors; tooling: 42 tests passed. Twelve native captures were recorded; representative cold/restored, starter/industry and Keldrath views with collision overlays were reviewed. See testing/living-forges148-acceptance.json.
+Living Forges PR #140 merged as `a009d0e363a318360b349620a06e226904bfe8ca`. Feature head `831c1abda29bba9aa72a37aaa41288ccdd0a8b6f` passed all 80 native source scenarios in run 42730685187. Local acceptance: 9 scenarios / 858 assertions, no engine errors; tooling: 42 tests passed. Twelve native captures were recorded, with representative scenario/collision views inspected.
 
-The update provides distinct new communal/player layouts and physical production stations while preserving existing rooms, furniture and stores. The repair restores Sten's exterior patrol, corrects stale catalogue/crafting fixtures and captures Keldrath through its story gate. Bellows and hot coals have clearer depth/heat at gameplay size.
+Windows 0.104.0 is published: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.104.0
 
-## Delivery in progress
+Release branch `release/0.104.0` preserves exact source `1b3d34ee4703834b5107998529013a8f04915b0a`. Release run 42731501280 succeeded: all 80 native scenarios, all 70 exact-package scenarios / 14,145 assertions, integrity verification and publication. Published build.json and release-summary.json agree on source, PCK and ZIP hashes. The ZIP is 964,645,943 bytes. See testing/living-forges148-acceptance.json and the permanent release evidence.
 
-Windows 0.104.0 candidate is built on branch `release/0.104.0`, commit `1b3d34ee4703834b5107998529013a8f04915b0a`. Verified release run 42731501280 is still running its own 80 native and 70 exact-package scenarios. Publication requires every gate; do not describe it as published until live release metadata confirms it. Existing published baseline is v0.103.0. Preserve older releases and backups.
+## Next work
 
-The candidate also contains concise release notes, an archived historical backlog/release log and enforced active-document budgets. Final delivery documentation is on `docs/living-forges148-delivery`; update it after release verification without modifying the running candidate.
+The requested forge implementation and verified delivery are complete. Next is normal Windows playtesting: workstation clarity, furniture access, forge sound/activity and the first-morning pacing. New communal/player rooms use compact layouts; existing saved room dimensions, furniture and stores remain authoritative. Preserve all older releases and backups. Do not rebuild without a new change or concrete failure.
 
-Capture noisy commands to files; return bounded summaries only. Never dump images, encoded binaries, full API results or historical logs. PR #141/#142 plus active-document budgets reduce observed payload hazards; they cannot guarantee repair of ChatGPT's server-side conversation failures.
+The accepted repair clears Sten's patrol, corrects stale catalogue/crafting fixtures and captures Keldrath through its story gate. Bellows and restored coals read clearly at gameplay size. The delivery follow-up is PR #143, including release notes, acceptance records and active-document budgets.
+
+## Output discipline
+
+Use file-only capture and bounded diagnostics. Never dump image bytes, encoded binaries, full API results or old logs into conversations. Current status/handoff/backlog have 4,000-byte budgets; release notes/changelog have 8,000-byte budgets. History is preserved separately. These safeguards reduce known repository hazards; ChatGPT backend failures cannot be guaranteed away.

@@ -175,10 +175,18 @@
   },
   "release": {
     "version": "0.104.0",
-    "status": "candidate built; verification running",
+    "status": "published; workflow succeeded",
     "run_id": 42731501280,
     "source_commit": "1b3d34ee4703834b5107998529013a8f04915b0a",
     "required_native_cases": 80,
-    "required_package_cases": 70
+    "required_package_cases": 70,
+    "url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.104.0",
+    "native_cases_passed": 80,
+    "package_cases_passed": 70,
+    "package_assertions": 14145,
+    "zip_bytes": 964645943,
+    "zip_sha256": "5cca7cc047c9660cd37a4565bca7b25422b0128cf6e461a9c434d8747f70b009",
+    "pack_sha256": "10596015288add10db3b5e15faa8ac8c6765ccb887f32d7dd4b2993d21ca4c5b",
+    "build_metadata_matches_verification": true
   }
 }
