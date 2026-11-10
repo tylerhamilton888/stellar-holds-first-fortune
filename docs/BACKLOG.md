@@ -1,17 +1,19 @@
 # Current backlog — 2026-11-10
 
-## Playtest Windows 0.105.0
+## Playtest the current published build
 
-The NPC conversation update is merged and published after all native/package gates. Play through first introductions, ordinary conversation, gifts, favors, friendship errands and a courtship moment. Check readability, keyboard/mouse navigation, understandable costs, character voice and whether important choices remain easy to find. Existing saves and relationship progress should continue naturally.
+Use [CURRENT_STATUS.md](CURRENT_STATUS.md) for the verified release and [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md) for installation and the current route. Living Forges, NPC conversation presentation and dialogue-state corrections are delivered.
 
-## Playtest Windows 0.104.0
+Review the first hour: arrival, meeting Ivar, the room, first shift, first pay and initial forge contribution. Watch unclear directions, excessive text, rushed reveals, ledger visibility, mine doorways, workshop purpose and awkward interaction approaches. Use an empty fortune slot for opening tests; separately check continued progress in existing saves.
 
-Living Forges is delivered. PR #140 is merged, and verified Windows 0.104.0 is published after all native/package gates. New communal/player layouts and physical production stations preserve existing saved rooms, furniture and storage. See [implementation notes](LIVING_FORGES148.md) and [the release](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.104.0).
+Revisit completed favors and projects, restored forges, learned research and relationship responses. Check reply scrolling, keyboard/mouse navigation, readable costs and character voice. New compact forge layouts apply to newly created rooms; existing rooms retain their saved layout, furniture and storage. See [Living Forges notes](LIVING_FORGES148.md).
 
-Playtest the Stonebridge introduction through the first shift and later Thane homecoming. Watch directions, excessive text, rushed reveals, character voice, ledger visibility, mine doorways and workshop clarity. Check furniture approaches, forge sound levels and restored activity during ordinary play. New compact layouts apply to newly created rooms. Refine further from feedback; do not expand systems before this pacing review.
+Continue through the Thane homecoming when testing campaign pacing. Record confusing next steps, repetitive trips and resource bottlenecks before expanding systems. Windows performance, input feel and audio still need ordinary playtesting.
 
 ## Maintain delivery safeguards
 
-Keep output bounded, detailed evidence in files and original assets intact. Preserve full native/exported-package release gates. Active backlog/release notes now have enforced byte budgets. The tooling sweep is complete; it does not prove or repair ChatGPT's server-side conversation failures.
+Follow [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md) for release preparation and post-publication documentation. Keep gameplay and package gates intact. Documentation-only corrections do not require a new game version or Windows rebuild.
 
-[Historical backlog](history/BACKLOG-2026-11-10.md) preserves previous entries, including superseded delivery/approval states. Use current status and live metadata for active work; read only a relevant historical section.
+Keep detailed evidence in files, bound conversational output, and preserve original assets and previous builds. Repository safeguards reduce known hazards; they do not guarantee ChatGPT backend reliability.
+
+[Earlier backlog](history/BACKLOG-before-doc-consolidation-2026-11-10.md) preserves superseded version-specific playtest headings. Use current status and live release metadata for delivery state.

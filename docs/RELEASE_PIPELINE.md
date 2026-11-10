@@ -1,37 +1,35 @@
-# Validation policy update — focused development checks
+# Current Windows release procedure
 
-Routine PRs now select affected cases plus startup/save checks; shared or unknown
-runtime changes still run the full source suite. Full Windows rehearsals are
-explicit, and actual releases retain complete native and exported coverage.
-See [VALIDATION_POLICY.md](VALIDATION_POLICY.md). The prior five-job / automatic
-PR package-rehearsal instructions below describe the historical workflow.
+Workflow authority: [.github/workflows/windows-release.yml](../.github/workflows/windows-release.yml). Coverage rules: [VALIDATION_POLICY.md](VALIDATION_POLICY.md). [CURRENT_STATUS.md](CURRENT_STATUS.md) identifies the verified published build; merged source alone is not a delivered Windows release.
 
-# Parallel Windows release checks
+## Prepare a requested release
 
-The 0.97.2 release spent **66m 50s** running all 61 exported-game cases sequentially. The verified four-runner trial completed the same case catalogue in **14m 59s elapsed test time**, a **77.6% reduction**. All **13,706 assertions** passed, and the aggregate gate confirmed every case exactly once against one source/PCK/ZIP identity. The 13 local pipeline safety tests also passed.
+1. Read current status, handoff and AGENTS.md. Confirm the requested changes, reviewed source commit and completed focused checks/visual review. Preserve existing releases and saves.
+2. Set the new version in `scripts/build_info.gd`, the authoritative build metadata. Confirm that its release tag does not already exist. Update RELEASE_NOTES.md and CHANGELOG.md, preserving superseded notes in history. Open the source/version PR.
+3. When publication is requested, create `release/<version>` at the exact reviewed commit. The branch suffix must match the build version. PR validation and release checks may overlap; merge the PR only after its required checks pass. Do not change an active release branch merely to update delivery documentation.
+4. Monitor the release run through publication. Use bounded summaries; retain complete logs and evidence in files. A queued/running display alone is not a reason to restart a run.
 
-The full non-publishing trial took **30m 29s**, including a fresh build and waiting for the native gate. Its final publication step was deliberately skipped because it was a PR rehearsal. Future elapsed time depends on native validation readiness, GitHub queues and runner performance; the 15-minute measurement covers the package test stage only. No gameplay test or completion/error check was removed.
+## Triggers and gates
 
-Evidence: [benchmark.json](testing/release136/benchmark.json), [parallel trial](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41769966860), [native gate](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/41769967228). [PR #119](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/119) merged as `a398cb54ea0d5a1fa8ca9a638666f3bf102c0051`; its tree matches the tested PR merge. The game version remains 0.97.2.
+- A push to `release/<version>` starts the publishing pipeline.
+- A manual **Verified Windows release** run is a full, non-publishing rehearsal, even when launched on a release branch.
+- Ordinary PR validation selects affected cases with conservative full-source fallback. It does not automatically build a Windows package.
+- Each release run builds one clean ZIP and independently runs all four native source groups against its own exact source. It does not borrow acceptance from an ancestor or another PR.
+- Four package workers verify the same candidate bytes and test the exported PCK. The aggregate verifier requires every current exported case exactly once, passing results and matching source/package/archive identity.
+- Publication requires build, source, package and verification success. It rechecks the candidate and refuses to replace an existing release.
 
-## Workflow
+Use the workflow's pinned engine/runtime installers and captured commands. A local export or focused test pass cannot replace complete release acceptance. Current suite membership comes from the manifests, not historical case counts in reports.
 
-1. Build one clean Windows ZIP and upload it with `build.json` as a one-day candidate artifact. Already-compressed files use artifact compression level zero.
-2. Independently require the full passing native gate for identical source. Search 64 ancestors instead of eight to tolerate delivery-only commits. If none exists, fail with an actionable error rather than silently launching another long sequential suite.
-3. Four test runners download the identical candidate, verify ZIP and member hashes, extract its PCK, and run their assigned cases. They check out only tools/tests, without importing the game's historical art.
-4. A read-only aggregation job requires all four jobs plus the native gate to succeed. It rejects missing/extra shards, focused runs, incomplete results, wrong source/package hashes, failures, missing cases and duplicates. Every current exported case must appear exactly once.
-5. Only an explicit `release/<version>` branch can publish. The publishing job rechecks the candidate against the aggregate proof and retains the existing release instead of replacing it. PR runs exercise the full pipeline but never publish.
+## Verify delivery and consolidate instructions
 
-## Starting a requested release
+After publication, confirm the release is public and its named Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz are uploaded. Check version/source and matching PCK/ZIP hashes in the published metadata and receipt; confirm the ZIP size agrees with the release asset.
 
-After local checks and review, open the source PR first. If the owner requested a release, create `release/<version>` from that exact reviewed source (or a documentation-only descendant) once its native validation run exists. Let package checks and native validation overlap; do not wait for the native PR run to finish before starting the release build. Merge the source once its required gates pass. Publication remains blocked until both complete gates succeed. Do not create a release branch when the owner requested source changes only.
+Record the release URL, exact source, run, results and limitations in CURRENT_STATUS.md. Update SESSION_HANDOFF.md and BACKLOG.md so completed delivery is not described as pending. Review README.md, PLAYTEST_GUIDE.md, RELEASE_NOTES.md and any affected feature audit for obsolete downloads, controls or installation instructions. Keep general download links on `releases/latest`; current status and the release's notes hold the specific version.
 
-## Evidence and retries
+Put superseded procedures in clearly linked history files rather than appending them below current instructions. Keep the current playtest guide and this procedure concise. Record delivery documentation on a separate docs branch and merge after its checks pass. Documentation-only corrections do not need a new game version or Windows rebuild.
 
-Each shard saves `report.json`, `results.json`, logs, timings and screenshots. Publication includes the complete evidence archive and `release-summary.json`. Candidate/shard transfer artifacts expire after one day; the aggregated evidence lasts seven days and is also preserved as a release asset. Required artifact transfers fail closed if storage/download fails.
+## Evidence and retry
 
-Rerun failed jobs within the same run while its candidate is retained. If the candidate expires, rerun the complete workflow. A rebuilt candidate with different bytes cannot reuse old shard proof. Do not edit or restart an unrelated release already in progress.
+Candidate and package-shard transfer artifacts last one day; aggregated evidence lasts seven days and is retained permanently as a release asset. Retry failed jobs only while their exact candidate remains available. If it has expired or the candidate changes, rebuild and rerun the complete source/package verification; do not reuse proof for different bytes. Missing artifact transfers block acceptance.
 
-`python3 -m unittest discover -s tools -p test_release_pipeline.py -v` exercises orchestration failure paths. `python3 tools/check_pack.py --list-cases --shard-count 4 --shard-index 0` lists a group's membership. Omitting shard arguments retains sequential local behavior; `--case` remains available for focused development but cannot satisfy release coverage.
-
-Native visual review and normal-speed Windows/audio playtesting retain their existing roles. This change affects delivery tooling only.
+Native visual review and normal-speed Windows/input/audio playtesting retain their separate roles. Historical timing measurements and superseded ancestor-gate instructions are preserved in [pipeline history](history/RELEASE_PIPELINE-before-doc-consolidation-2026-11-10.md), not current procedure.
