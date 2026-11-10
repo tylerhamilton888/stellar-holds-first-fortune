@@ -1,0 +1,126 @@
+{
+  "release": "0.105.0",
+  "release_url": "https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.105.0",
+  "source_sha": "9e480bd5666f76b3fc6f485cf0623ad693ca86ad",
+  "merge_commit": "de4ad55f7ef4beab6085bc5f8246c5494e916569",
+  "hosted_source_run": 42755885469,
+  "release_run": 42755883367,
+  "hosted_source_cases": 80,
+  "release_native_cases": 80,
+  "package_cases": 70,
+  "package_assertions": 14154,
+  "zip_bytes": 964649141,
+  "zip_sha256": "1434a472cae545c17a9dff8570ff703b71760598fca8d31efafeb1ccf4d55e95",
+  "pack_sha256": "af2af922739bc96ef4c1fa5abd0201ae5c8594c88aad4ba9fec8bd57adf44f37",
+  "tooling_tests": 42,
+  "local_cases": [
+    {
+      "test": "people",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 472,
+      "seconds": 72.44
+    },
+    {
+      "test": "hearthknot128",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 24,
+      "seconds": 44.48
+    },
+    {
+      "test": "firstvisit99",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 23,
+      "seconds": 59.49
+    },
+    {
+      "test": "opening146",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 14,
+      "seconds": 21.52
+    },
+    {
+      "test": "courtship101",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 413,
+      "seconds": 72.49
+    },
+    {
+      "test": "ridge124",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 211,
+      "seconds": 62.18
+    },
+    {
+      "test": "claim127",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 383,
+      "seconds": 75.44
+    },
+    {
+      "test": "friendship130",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 1267,
+      "seconds": 99.5
+    },
+    {
+      "test": "menu92",
+      "passed": true,
+      "exit_code": 0,
+      "errors": [],
+      "error_count": 0,
+      "checks": 38,
+      "seconds": 45.49
+    }
+  ],
+  "visual_captures_inspected": [
+    {
+      "case_capture": "npc-final-ui/menu92/conversation.png",
+      "sha256": "6a861964464386384bb10590686d65f5aa630eb0aff0a31b0ee2e3fc05811dfd"
+    },
+    {
+      "case_capture": "npc-final-ui/menu92/conversation-scrolled.png",
+      "sha256": "9c85da98eb1eaff6b4dc0264f8bb7ca15fc5a3247b5e8f125fef990676e8964e"
+    },
+    {
+      "case_capture": "npc-final-ui/people/favor-details.png",
+      "sha256": "07463c5950f9fd0ec7da85e145013a3df6f817449f7a8a4e7d39b13719b3798f"
+    },
+    {
+      "case_capture": "npc-final-ui/people/gift-picker.png",
+      "sha256": "2732c6f3f5b38b2259b1e8f6b644eabacc9287ad133692b7216062449b527af8"
+    },
+    {
+      "case_capture": "npc-final-ui/hearthknot128/invitation-accepted.png",
+      "sha256": "9d46250f74478e7b9b2070e213a28b5c00d6e28762ab481438fdf7ae6bf20ea8"
+    },
+    {
+      "case_capture": "npc-errand-final/friendship130/maren-errand.png",
+      "sha256": "8c982f668328a56ec43a6fbc5fdc83a5359a56e6c3c3959e5d750c6e7f47a1c8"
+    }
+  ],
+  "windows_human_playtest": "pending"
+}
