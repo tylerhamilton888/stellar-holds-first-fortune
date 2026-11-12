@@ -1,4 +1,4 @@
-# Current backlog — 2026-11-10
+# Current backlog — 2026-11-12
 
 ## Playtest the current published build
 
@@ -18,6 +18,6 @@ Keep detailed evidence in files, bound conversational output, and preserve origi
 
 [Earlier backlog](history/BACKLOG-before-doc-consolidation-2026-11-10.md) preserves superseded version-specific playtest headings. Use current status and live release metadata for delivery state.
 
-## Room blueprint draft
+## Surface room blueprint playtest
 
-Stage A surface room blueprint candidate is in PR #152. Complete the remaining gates before delivery; Stage B excavation, Stage C connected estates and provisional property-story integration remain deferred. See [BLUEPRINTS.md](BLUEPRINTS.md).
+Stage A shipped in 0.107.0 through PR #152. Test the room planner on a chartered holding: connected rooms, doorways, material costs, furnishing, renovation and save/reload. Stage B excavation, Stage C connected estates and provisional property-story integration remain deferred. See [BLUEPRINTS.md](BLUEPRINTS.md).

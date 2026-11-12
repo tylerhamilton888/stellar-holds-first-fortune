@@ -1,6 +1,6 @@
 # Surface room blueprints — Stage A
 
-Implementation: [PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152). Candidate version: 0.107.0. See CURRENT_STATUS for publication; source work alone is not a released build. Requirements: [owner directive](BLUEPRINT_DIRECTIVE.md).
+Implementation: [PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152). Released in 0.107.0. See [CURRENT_STATUS](CURRENT_STATUS.md) for verified delivery and evidence. Requirements: [owner directive](BLUEPRINT_DIRECTIVE.md).
 
 ## Player experience
 

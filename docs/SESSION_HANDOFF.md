@@ -1,19 +1,26 @@
 # Current handoff — 2026-11-12
 
-Published Windows baseline remains **0.106.0** until the current release gate publishes 0.107.0.
+## Published Windows build
 
-## Surface room blueprints
+**[0.107.0 — Surface room blueprints](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.107.0)** is published. [Source PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152) merged after all required checks passed.
 
-Stage A is implemented in [PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152), reviewed source `e20067f7d564b186ea3fce60a919f926b143c577`, tree `bf8e1e3fa0803df8a760ecb058eb9ddb600bae97`. See [BLUEPRINTS.md](BLUEPRINTS.md) and [owner directive](BLUEPRINT_DIRECTIVE.md). Surface rooms use the existing Hearthcraft economy and save data. Excavation planning, unified multilevel estates and provisional property-story changes remain deferred.
+- Release source: `e20067f7d564b186ea3fce60a919f926b143c577`; source tree: `bf8e1e3fa0803df8a760ecb058eb9ddb600bae97`.
+- Merge commit: `38112580276aa98c3a7b3cfd640f8e53b56b80aa`.
+- [Successful release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43270053006): 82 native source cases, 72 exact-package cases, aggregate verification and publication passed.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43269561230) passed all four gameplay groups and its aggregate gate.
+- Published assets confirmed: Windows ZIP, build.json, release-summary.json, verification-evidence.tar.gz.
+- Windows ZIP: 964,671,095 bytes; GitHub asset SHA-256 `6fea0bf3b1b0022d44943ba1c6911e8c47565c8837191dc7f5178c07cbb2763d`.
 
-Local native acceptance: 566 passing assertions (blueprints 61, furnished manor 47, architecture styles 60, architecture 347, LivingWorks 51). Tooling: 42 passing tests; output policy and diff checks passed. Native visual review passed after compacting the planner, focusing room zoom and correcting furniture approach assessment. Manor coverage includes shared costs, mixed-use furnishings, stocked storage, renovation, manual stairs and save/reload.
+The publication gate revalidated the exact source, PCK and ZIP against the verification receipt before upload. Post-publication asset names, sizes and digests were checked through GitHub. Direct retrieval of the two JSON asset bodies was unavailable through the connected reader after the local execution environment disconnected; no independent post-upload metadata-body comparison is claimed.
 
-## Delivery in progress
+## Delivered scope
 
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43269561230) runs full source coverage.
-- [Windows release](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43270053006) runs on `release/0.107.0` at the exact reviewed source. It requires 82 native source cases and 72 exact-package cases before publication.
-- Merge PR #152 only after required checks pass. Verify published ZIP, build metadata, receipt and evidence before recording delivery. Follow [release procedure](RELEASE_PIPELINE.md).
+Building Book (**O**) → **Plan Your Holding** supports saved ground-floor rooms/corridors, optional designation, shared materials, doorways, nearby construction, progress and research-gated finishes. Furnishings supply actual function. Removing a plan leaves structures and possessions intact. See [feature notes](BLUEPRINTS.md), [directive](BLUEPRINT_DIRECTIVE.md) and [playtest guide](PLAYTEST_GUIDE.md).
 
-The local command environment disconnected after source and evidence were committed. GitHub source is safe and its workflows continue independently; monitor through the connected GitHub tools. Do not restart healthy queued/running jobs. Documentation updates belong on `docs/blueprints-107-delivery`; do not move the active release branch for notes.
+Local acceptance passed 566 native assertions: blueprints 61, furnished manor 47, architecture styles 60, architecture 347, LivingWorks 51. Tooling passed 42 tests. Native screenshots were reviewed; the furnished manor covers mixed-use rooms, stocked storage, renovation, manual stairs and save/reload.
 
-Earlier first-hour release evidence: [history](history/CURRENT_STATUS-before-blueprints152.md). Preserve previous releases/saves and bounded diagnostics.
+## Next work and limits
+
+Normal-speed Windows input, audio, performance and enjoyment still need player testing. Excavation planning (Stage B), unified multilevel estates (Stage C) and provisional property-story changes remain deferred. Existing manual stairs remain supported.
+
+Preserve previous releases and saves. Use [release procedure](RELEASE_PIPELINE.md) for future delivery and bounded diagnostics. The local command environment disconnected after source acceptance; the committed source and published artifacts are authoritative. Earlier first-hour evidence remains in [history](history/CURRENT_STATUS-before-blueprints152.md).
