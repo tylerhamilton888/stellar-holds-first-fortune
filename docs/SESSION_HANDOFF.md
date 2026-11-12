@@ -1,13 +1,19 @@
 # Current handoff — 2026-11-12
 
-Published Windows baseline remains **0.106.0** until the release gate publishes 0.107.0. Prior first-hour delivery evidence is preserved in history/CURRENT_STATUS-before-blueprints152.md.
+Published Windows baseline remains **0.106.0** until the current release gate publishes 0.107.0.
 
-## Surface room blueprint candidate
+## Surface room blueprints
 
-[PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152), branch `feature/room-blueprints`, implements Stage A on the existing Hearthcraft system. See [BLUEPRINTS.md](BLUEPRINTS.md) and the preserved [directive](BLUEPRINT_DIRECTIVE.md). Stages B/C and provisional property-story changes remain deferred.
+Stage A is implemented in [PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152), reviewed source `e20067f7d564b186ea3fce60a919f926b143c577`, tree `bf8e1e3fa0803df8a760ecb058eb9ddb600bae97`. See [BLUEPRINTS.md](BLUEPRINTS.md) and [owner directive](BLUEPRINT_DIRECTIVE.md). Surface rooms use the existing Hearthcraft economy and save data. Excavation planning, unified multilevel estates and provisional property-story changes remain deferred.
 
-GitHub backup and native rendering blockers are resolved. Authenticated file-blob uploads can preserve the exact verified local Git tree without exposing file payloads; compare tree hashes before moving the branch. Native acceptance uses Godot 4.4.1. The local display requires its own Xauthority cookie and renderer/test in one isolated execution context.
+Local native acceptance: 566 passing assertions (blueprints 61, furnished manor 47, architecture styles 60, architecture 347, LivingWorks 51). Tooling: 42 passing tests; output policy and diff checks passed. Native visual review passed after compacting the planner, focusing room zoom and correcting furniture approach assessment. Manor coverage includes shared costs, mixed-use furnishings, stocked storage, renovation, manual stairs and save/reload.
 
-Local native results so far: blueprint transactions 61 assertions; five-room manor 40; architecture styles 60; existing buildings 347. All passed with no script errors. LivingWorks passed 51 assertions; the manor/stair rerun passed 45. A final room-access label regression is pending at this checkpoint. Tooling: 42 passed, output policy/diff checks passed. Inspected planner and furnished-manor screenshots; compacted controls and focused room zoom after review.
+## Delivery in progress
 
-Do not merge or publish based only on these local results. Complete final affected checks, full PR/native coverage and exact-package release gates. Update this checkpoint with the exact source/run/release after verified delivery. Keep earlier builds/saves and bounded logs. No encoded assets or full diagnostic dumps in conversation.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43269561230) runs full source coverage.
+- [Windows release](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43270053006) runs on `release/0.107.0` at the exact reviewed source. It requires 82 native source cases and 72 exact-package cases before publication.
+- Merge PR #152 only after required checks pass. Verify published ZIP, build metadata, receipt and evidence before recording delivery. Follow [release procedure](RELEASE_PIPELINE.md).
+
+The local command environment disconnected after source and evidence were committed. GitHub source is safe and its workflows continue independently; monitor through the connected GitHub tools. Do not restart healthy queued/running jobs. Documentation updates belong on `docs/blueprints-107-delivery`; do not move the active release branch for notes.
+
+Earlier first-hour release evidence: [history](history/CURRENT_STATUS-before-blueprints152.md). Preserve previous releases/saves and bounded diagnostics.
