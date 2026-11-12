@@ -14,7 +14,8 @@ var page="Rooms"
 var district_name="New district"
 var sparkle=0.0
 var masonry:HoldMasonry
-func _init(game,world:Deepworks):g=game;w=world;model=LivingWorks.new(g.state,w);masonry=HoldMasonry.new(g,w,model)
+var blueprints
+func _init(game,world:Deepworks):g=game;w=world;model=LivingWorks.new(g.state,w);masonry=HoldMasonry.new(g,w,model);blueprints=HoldExcavationBlueprints.new(self)
 func cancel():
  if mode!="" or not pending.is_empty():g.deep.strike_left=0;g.deep.contact_hold=0
  mode="";pending={};corner=Vector2i(-1,-1);ready=false
@@ -97,18 +98,19 @@ func interact()->bool:
   if f.kind=="mason" and int(f.depth)==w.depth() and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68:
    page="Masonry";g.open_panel("living");return true
  var r=model.at(Deepworks.cell(g.player))
- if r.is_empty() or not r.metrics.active:return false
+ if r.is_empty() or (r.kind!="undesignated" and not r.metrics.active):return false
  for f in model.data.furniture.values():
-  if f.get("room","")==r.id and f.kind in ["bench","anvil"] and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68:
+  if f.get("room","")==r.id and f.kind in ["bench","anvil"] and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68 and w.visible(g.player,Deepworks.center(Vector2i(f.x,f.y))):
    g.open_panel("forge");return true
  return false
 func panel():
  model.refresh()
  var tabs=g.row(g.menu_scroll.get_parent());g.menu_scroll.get_parent().move_child(tabs,g.menu_scroll.get_index())
- for name in ["Rooms","Furnish","Finishes","Folk","Masonry","Districts"]:
+ for name in ["Plans","Rooms","Furnish","Finishes","Folk","Masonry","Districts"]:
   var tab=g.small_button(tabs,name+(" •" if name=="Folk" and model.data.opportunity=="offered" else ""),func():page=name;g.open_panel("living",false))
   tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=page==name
  match page:
+  "Plans":HoldExcavationBlueprintView.show(blueprints)
   "Districts":HoldMineworks143.panel(g)
   "Masonry":masonry.panel()
   "Rooms":rooms_panel()
@@ -116,6 +118,7 @@ func panel():
   "Finishes":catalog(true)
   "Folk":folk_panel()
 func rooms_panel():
+ g.button(g.panel_body,"Plan Your Holding · chambers and corridors",func():page="Plans";g.open_panel("living",false))
  g.label(g.panel_body,"Carve out a home",20,Color("edc98a"))
  g.label(g.panel_body,"Clear a 4 × 4 to 9 × 9 chamber, then choose its two corners.",14)
  var line=g.row(g.panel_body)
@@ -195,6 +198,7 @@ func lamps()->Array:
  return result
 func draw():
  masonry.draw()
+ blueprints.draw()
  var z=w.depth();var lights=lamps()
  for surface in model.data.surfaces.values():
   if int(surface.depth)!=z:continue

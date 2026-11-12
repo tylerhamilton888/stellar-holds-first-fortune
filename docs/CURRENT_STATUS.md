@@ -24,3 +24,7 @@ Local acceptance passed 566 native assertions: blueprints 61, furnished manor 47
 Normal-speed Windows input, audio, performance and enjoyment still need player testing. Excavation planning (Stage B), unified multilevel estates (Stage C) and provisional property-story changes remain deferred. Existing manual stairs remain supported.
 
 Preserve previous releases and saves. Use [release procedure](RELEASE_PIPELINE.md) for future delivery and bounded diagnostics. The local command environment disconnected after source acceptance; the committed source and published artifacts are authoritative. Earlier first-hour evidence remains in [history](history/CURRENT_STATUS-before-blueprints152.md).
+
+## Stage B work in progress
+
+Branch `feature/underground-blueprints` extends mine planning. See [candidate notes](EXCAVATION154.md). Native tests and visual review are in progress; 0.107.0 remains the published build. No release branch exists for this stage yet.

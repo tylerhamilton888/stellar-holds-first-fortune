@@ -38,7 +38,8 @@
       "forge147",
       "living_forges148",
       "blueprints152",
-      "blueprint_manor152"
+      "blueprint_manor152",
+      "excavation154"
     ],
     "gameplay": [
       "loading",
@@ -122,7 +123,8 @@
       "forge147",
       "living_forges148",
       "blueprints152",
-      "blueprint_manor152"
+      "blueprint_manor152",
+      "excavation154"
     ],
     "modular": [
       "modular",
@@ -415,7 +417,8 @@
       "forge147",
       "living_forges148",
       "blueprints152",
-      "blueprint_manor152"
+      "blueprint_manor152",
+      "excavation154"
     ],
     "gameplay-3": [
       "orientation",
@@ -1056,6 +1059,16 @@
       "architecture_style",
       "architecture",
       "living"
+    ],
+    "excavation154-focus": [
+      "excavation154"
+    ],
+    "excavation154": [
+      "excavation154",
+      "mineworks143",
+      "mining",
+      "navigation94",
+      "blueprints152"
     ]
   },
   "cases": {
@@ -1390,6 +1403,10 @@
     "blueprint_manor152": {
       "script": "tests/blueprint_manor152.gd",
       "marker": "BLUEPRINT_MANOR152"
+    },
+    "excavation154": {
+      "script": "tests/excavation154.gd",
+      "marker": "EXCAVATION154"
     }
   }
 }

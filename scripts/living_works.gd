@@ -130,21 +130,31 @@ func quality(r:Dictionary)->Dictionary:
   styles[f.kind]=true
  var craft=minf(3,floor_points/(r.w*r.h)*6)+minf(3,wall_points/4)
  var missing=[]
- var needs=["bench","anvil"] if r.id=="old_cutters" else FUNCTIONS[r.kind].needs
+ var needs=["bench","anvil"] if r.id=="old_cutters" else FUNCTIONS.get(r.kind,{"needs":[]}).needs
  for k in needs:
   if not counts.has(k):missing.append(FURNITURE[k].name)
  var clutter=maxi(0,furniture_count-int(r.w*r.h*.32))*5
- var score=clampi(int((minf(5,functionality)*8 if r.kind=="workshop" else minf(5,comfort)*10)+craft*5+minf(3,heritage)*4)-clutter,0,100)
+ var score=clampi(int((minf(5,functionality)*8 if room_role(r,data.furniture)=="workshop" else minf(5,comfort)*10)+craft*5+minf(3,heritage)*4)-clutter,0,100)
  return {"score":score,"comfort":mini(comfort,5),"function":mini(functionality,5),"craft":craft,"heritage":mini(heritage,3),"clutter":clutter,"active":missing.is_empty() and access and connected(r),"missing":missing,"styles":styles}
+static func room_role(r:Dictionary,furniture:Dictionary)->String:
+ if r.kind!="undesignated":return r.kind
+ var kinds={}
+ for f in furniture.values():
+  if f.get("room","")==r.id:kinds[f.kind]=true
+ if kinds.has("bench") and kinds.has("anvil") and kinds.has("lamp"):return "workshop"
+ if kinds.has("bed") and kinds.has("lamp"):return "bedroom"
+ return "undesignated"
 func refresh():
  for r in data.rooms.values():r.metrics=quality(r)
 func assign(npc:String,room_id:String)->String:
  if not s.outpost.get("crew",{}).has(npc):return "Recruit this Dwarf through your existing outpost first."
  if not data.rooms.has(room_id):return "Choose a room first."
  var r=data.rooms[room_id]
+ var role=room_role(r,data.furniture)
+ if role not in ["workshop","bedroom"]:return "Install an accessible bed and lantern, or a bench, anvil and lantern, before assigning a Dwarf."
  if not r.metrics.active:return "Finish the room's required furnishings and accessible layout first."
  if not data.assignments.has(npc):data.assignments[npc]={"work":"","home":"","present":""}
- var field="work" if r.kind=="workshop" else "home"
+ var field="work" if role=="workshop" else "home"
  for id in data.assignments:
   if id!=npc and data.assignments[id].get(field,"")==room_id:return "This room already has an assigned Dwarf."
  data.assignments[npc][field]=room_id
@@ -157,7 +167,7 @@ func destination(npc:String)->Dictionary:
  return data.rooms.get(id,{})
 func stand(r:Dictionary)->Vector2i:
  for f in data.furniture.values():
-  if f.get("room","")!=r.id or f.kind!=("bench" if r.kind=="workshop" else "bed"):continue
+  if f.get("room","")!=r.id or f.kind!=("bench" if room_role(r,data.furniture)=="workshop" else "bed"):continue
   for d in Deepworks.DIRS:
    var c=Vector2i(f.x,f.y)+d
    if not at(c,int(r.depth)).is_empty() and w.walkable(c,int(r.depth)):return c
@@ -165,11 +175,13 @@ func stand(r:Dictionary)->Vector2i:
 func arrived(npc:String,r:Dictionary):
  var a=data.assignments[npc];a.present=r.id
  var folk=data.folk[npc];var q=r.metrics
- folk.activity="Shaping tools" if r.kind=="workshop" else "Resting in a proper berth"
- if r.kind=="bedroom" and q.active:folk.rested_until=s.elapsed+180
+ var role=room_role(r,data.furniture)
+ if role=="undesignated":a.present="";folk.activity="Waiting for furnishings";folk.morale=0;return
+ folk.activity="Shaping tools" if role=="workshop" else "Resting in a proper berth"
+ if role=="bedroom" and q.active:folk.rested_until=s.elapsed+180
  var preferred=q.styles.has(folk.preference.style)
  folk.morale=mini(15,int(q.score/10)+(3 if preferred else 0)+(3 if folk.rested_until>s.elapsed else 0))
- if npc=="brann" and r.kind=="workshop" and q.active and q.score>=40 and data.opportunity=="":
+ if npc=="brann" and role=="workshop" and q.active and q.score>=40 and data.opportunity=="":
   data.opportunity="offered";HoldOutpost.record(s,"living_offer","Brann has an idea for the workshop: A mark worth leaving.")
 func opportunity_ready()->bool:
  if data.opportunity!="offered" or not data.assignments.has("brann"):return false
@@ -193,7 +205,7 @@ static func production(state)->float:
    if not state.outpost.get("crew",{}).has(id):continue
    if state.outpost.crew[id].role!="miner":continue
    var a=works.assignments[id];var r=works.rooms.get(a.get("present",""),{})
-   if r.get("kind","")=="workshop" and r.get("metrics",{}).get("active",false):best=maxf(best,minf(.10,r.metrics.score*.001))
+   if not r.is_empty() and room_role(r,works.get("furniture",{}))=="workshop" and r.get("metrics",{}).get("active",false):best=maxf(best,minf(.10,r.metrics.score*.001))
  return 1+best
 func morale_bonus(npc:String)->float:
  return minf(.08,float(data.folk.get(npc,{}).get("morale",0))*.005)
