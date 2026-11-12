@@ -49,8 +49,9 @@ class Map extends Control:
    draw_rect(rect,Color(color,.13));draw_rect(rect,color,false,7)
    if str(r.id)==planner.selected:draw_rect(rect.grow(10),Color("f3dfa1"),false,4)
   for s in planner.data().stairs:
-   if int(s.depth)!=w.depth():continue
+   if w.depth() not in [int(s.depth),int(s.depth)+1]:continue
    var p=Vector2(s.x,s.y)*40
+   for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:draw_rect(Rect2(p+Vector2(d)*40,Vector2(40,40)),Color("b99e6b"),false,3)
    for i in 4:draw_line(p+Vector2(3+i*3,5+i*9),p+Vector2(37-i*3,5+i*9),Color("e2c385"),4)
   draw_circle(planner.g.player,24,Color("ffedbd"))
   if dragging:
@@ -111,4 +112,4 @@ static func show(p):
  action(g,links,"Fit stairs here",func():p.fit_stair();g.refresh_panel())
  action(g,links,"Remove stair guide",func():p.forget_stair();g.refresh_panel())
  action(g,links,"Workstations / storage",func():g.open_panel("handworks"))
- g.label(g.panel_body,"Stairs connect the five original depths. Mine both landings through existing access first. Lateral mineworks keep their adits. E down · Shift+E up.",13)
+ g.label(g.panel_body,"Stair crosses mark both landings. Mine their five tiles through existing access, then fit from above. The five original depths support stairs; lateral worksites keep their adits. E down · Shift+E up.",13)

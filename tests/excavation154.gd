@@ -101,6 +101,7 @@ func run():
  for c in p.cells(p.chosen()):
   if w.walkable(c):stand(c);p.finish_nearby()
  check(p.cost(p.chosen()).is_empty() and g.state.count("stone")==before-int(wall_quote.get("stone",0)),"Boundary wall finish spends its exact separate quote")
+ check(not w.walkable(Vector2i(13,14)) and w.at(Vector2i(13,14))!=0,"Finished boundary remains real solid rock")
  check(m.data.furniture.size()>=4,"Finishing preserves furnishings")
  g.deep.works.page="Plans";g.open_panel("living");await snap("02-finished-chamber-book")
  var focused=g.panel.find_children("*","Control",true,false).filter(func(n):return n is HoldExcavationBlueprintView.Map)[0]

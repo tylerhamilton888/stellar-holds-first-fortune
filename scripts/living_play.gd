@@ -213,6 +213,16 @@ func draw():
   base=base.lightened(float(posmod(c.x*17+c.y*31,7))*.009)
   if kind in ["runic","ancestor","inlay"]:base=Color("536c71")
   if kind=="ashlar":base=Color("a0afa2")
+  if not floor:
+   # Finished bedrock must read as a solid wall, not another walkable floor tile.
+   var family="oath" if kind in ["runic","ancestor"] else "forge" if kind=="masonry" else "hearth"
+   var tint=Color.WHITE.darkened(1-light)
+   g.draw_rect(Rect2(p,Vector2(40,8)),base.lightened(.22).darkened(1-light))
+   HoldArchitectureStyles.wall(g,Rect2(p+Vector2(0,8),Vector2(40,28)),{"wall":family},false,tint)
+   g.draw_line(p+Vector2(0,8),p+Vector2(40,8),base.lightened(.4).darkened(1-light),2)
+   g.draw_rect(Rect2(p+Vector2(0,36),Vector2(40,4)),Color("18292d"))
+   if kind=="ancestor":g.draw_arc(p+Vector2(20,22),8,0,TAU,12,Color("d6ae66").darkened(1-light),1.5)
+   continue
   g.draw_rect(Rect2(p,Vector2(40,40)),base.darkened(1-light))
   if kind=="timber":
    for j in 4:
@@ -234,7 +244,6 @@ func draw():
    g.draw_polyline(PackedVector2Array([q+Vector2(0,-13),q+Vector2(-8,-4),q+Vector2(8,4),q+Vector2(0,13)]),col,2)
    g.draw_line(q+Vector2(0,-13),q+Vector2(0,13),col,1)
    if kind=="ancestor":g.draw_arc(q,13,0,TAU,12,col,1)
-  if not floor:g.draw_rect(Rect2(p+Vector2(0,32),Vector2(40,8)),base.darkened(.5))
  for r in model.data.rooms.values():
   if int(r.depth)!=z:continue
   var rect=Rect2(r.x*40+2,r.y*40+2,r.w*40-4,r.h*40-4)

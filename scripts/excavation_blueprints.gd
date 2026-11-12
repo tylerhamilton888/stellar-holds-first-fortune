@@ -18,7 +18,7 @@ var purpose="Undesignated"
 var zoom=4.0
 var map_center=Vector2(500,400)
 var message="Drag a chamber or corridor. Mine its rock with your normal tools."
-func _init(play):owner_ref=weakref(play);map_center=play.g.player
+func _init(play):owner_ref=weakref(play);map_center=play.g.player;data()
 func available()->bool:return g.zone=="mine" and g.deep.world==w and g.state.active_site==g.deep.site
 func data()->Dictionary:
  if not w.data.has("blueprints154"):w.data.blueprints154={"next":1,"rooms":[],"stairs":[]}
@@ -179,6 +179,9 @@ func draw():
    if c.x==int(r.x+r.w)-1:g.draw_line(p+Vector2(40,0),p+Vector2(40,40),col,2)
    if c.y==int(r.y+r.h)-1:g.draw_line(p+Vector2(0,40),p+Vector2(40,40),col,2)
  for s in data().stairs:
-  if int(s.depth)!=w.depth() or not w.layer().seen.has(Deepworks.key(Vector2i(s.x,s.y))):continue
+  if w.depth() not in [int(s.depth),int(s.depth)+1]:continue
   var p=Vector2(s.x,s.y)*40
+  for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+   if w.layer().seen.has(Deepworks.key(Vector2i(s.x,s.y)+d)):g.draw_rect(Rect2(p+Vector2(d)*40,Vector2(40,40)),Color("b99e6b"),false,1.5)
+  if not w.layer().seen.has(Deepworks.key(Vector2i(s.x,s.y))):continue
   for i in 4:g.draw_line(p+Vector2(5+i*3,7+i*7),p+Vector2(35-i*3,7+i*7),Color("d3b576"),2)
