@@ -2,29 +2,28 @@
 
 ## Published Windows build
 
-**[0.107.0 — Surface room blueprints](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.107.0)** is published. [Source PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152) merged after all required checks passed.
+**[0.108.0 — Underground blueprints](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.108.0)** is published. [Source PR #154](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/154) merged after all required checks passed.
 
-- Release source: `e20067f7d564b186ea3fce60a919f926b143c577`; source tree: `bf8e1e3fa0803df8a760ecb058eb9ddb600bae97`.
-- Merge commit: `38112580276aa98c3a7b3cfd640f8e53b56b80aa`.
-- [Successful release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43270053006): 82 native source cases, 72 exact-package cases, aggregate verification and publication passed.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43269561230) passed all four gameplay groups and its aggregate gate.
-- Published assets confirmed: Windows ZIP, build.json, release-summary.json, verification-evidence.tar.gz.
-- Windows ZIP: 964,671,095 bytes; GitHub asset SHA-256 `6fea0bf3b1b0022d44943ba1c6911e8c47565c8837191dc7f5178c07cbb2763d`.
+- Release source: `9da4bf24d2001afd5771f71130343b66631165ae`; source tree: `870e7e9f1a6395bc25e4fd3358fe1d09afd5a820`.
+- Merge commit: `88a70b6fc00ddd824f6d133f90f14e8f55c27f5a`.
+- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43293815234): all 11 jobs passed, including 83 native source cases, 73 exact-package cases (14,352 assertions), aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43293182847): all four gameplay groups and aggregate gate passed.
+- Public assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz, all uploaded.
+- Windows ZIP: 964,754,927 bytes; SHA-256 `2f2fa58c7c727ba2be90c40fe8d6df2efbac1ff267c844767b77ea99713ac167`.
+- PCK SHA-256: `ed68705efecd1b7148719b11937b6acfdb5d3be39c101822b0297a24e3641b78`.
 
-The publication gate revalidated the exact source, PCK and ZIP against the verification receipt before upload. Post-publication asset names, sizes and digests were checked through GitHub. Direct retrieval of the two JSON asset bodies was unavailable through the connected reader after the local execution environment disconnected; no independent post-upload metadata-body comparison is claimed.
+The published build.json and release-summary.json were retrieved directly after upload. Version, source, PCK/ZIP hashes and passed receipt agree; ZIP size/hash agree with the GitHub release asset. Both retrieved JSON file hashes also match GitHub's asset digests. The full ZIP was verified by the publication gate, not independently downloaded again.
 
 ## Delivered scope
 
-Building Book (**O**) → **Plan Your Holding** supports saved ground-floor rooms/corridors, optional designation, shared materials, doorways, nearby construction, progress and research-gated finishes. Furnishings supply actual function. Removing a plan leaves structures and possessions intact. See [feature notes](BLUEPRINTS.md), [directive](BLUEPRINT_DIRECTIVE.md) and [playtest guide](PLAYTEST_GUIDE.md).
+In the mine, **O → Plans** offers saved chamber/corridor guides, real excavation progress, reachable paid finishes and optional labels. Furnishings supply actual function; guides do not spend materials or grant ore. Removing a guide preserves excavation, physical rooms, finishes, furniture and stocked storage. Stair guides mark both landings on the original five depths; clear both through existing access, then fit from above. Existing manual stairs remain supported.
 
-Local acceptance passed 566 native assertions: blueprints 61, furnished manor 47, architecture styles 60, architecture 347, LivingWorks 51. Tooling passed 42 tests. Native screenshots were reviewed; the furnished manor covers mixed-use rooms, stocked storage, renovation, manual stairs and save/reload.
+Surface room blueprints from 0.107.0 remain available on chartered holdings. See [underground notes](EXCAVATION154.md), [surface notes](BLUEPRINTS.md), [directive](BLUEPRINT_DIRECTIVE.md) and [playtest guide](PLAYTEST_GUIDE.md).
+
+Focused local acceptance passed 233 native assertions: excavation154 60, navigation94 31, blueprints152 61, mineworks143 43, mining 38. Tooling passed 42 tests. Native planner, furnished chamber, stone-wall finishes and stair controls were visually reviewed. The read-only map regression is fixed.
 
 ## Next work and limits
 
-Normal-speed Windows input, audio, performance and enjoyment still need player testing. Excavation planning (Stage B), unified multilevel estates (Stage C) and provisional property-story changes remain deferred. Existing manual stairs remain supported.
+Normal-speed Windows input, audio, performance and enjoyment still need player testing. Stage C connected surface/underground estates, unified worker/freight routing and provisional property-story integration remain deferred. This release adds no new mine depths or automated excavation workers.
 
-Preserve previous releases and saves. Use [release procedure](RELEASE_PIPELINE.md) for future delivery and bounded diagnostics. The local command environment disconnected after source acceptance; the committed source and published artifacts are authoritative. Earlier first-hour evidence remains in [history](history/CURRENT_STATUS-before-blueprints152.md).
-
-## Stage B work in progress
-
-Branch `feature/underground-blueprints` extends mine planning. See [candidate notes](EXCAVATION154.md). Native tests and visual review are in progress; 0.107.0 remains the published build. No release branch exists for this stage yet.
+Preserve previous releases and saves. Follow [release procedure](RELEASE_PIPELINE.md); documentation-only follow-up requires no rebuild. Prior delivery is in [history](history/CURRENT_STATUS-before-excavation154.md).

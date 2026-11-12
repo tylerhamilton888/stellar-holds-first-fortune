@@ -46,7 +46,7 @@ Add a replacement doorway before removing its old planned doorway. Built walls a
 
 Plan a hall, bedroom, kitchen, workshop and storehouse. Furnish and use them; try a bed and cooking hearth in an undesignated room. Stock a chest, renovate, save and reload. Confirm contents, finishes and unfinished plans remain. Existing manual stairs should still travel to supported upper floors. Removing a plan must leave every physical item intact.
 
-## Underground excavation plans (0.108.0 candidate)
+## Underground excavation plans (0.108.0)
 
 In the mine, press **O**, choose **Plan Your Holding** or the **Plans** tab, and drag a chamber or corridor. Plans can include solid stone; labels are optional. Blue guides are planned, amber means excavation has begun, and green means the floor is cleared. Mine normally; the plan spends nothing and grants no ore. Field-dress or haul the resulting chunks using the existing cargo tools.
 
