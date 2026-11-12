@@ -12,7 +12,7 @@ class Map extends Control:
  func cell_at(p:Vector2)->Vector2i:return Vector2i(((p-origin)/scale_factor/40).floor())
  func _gui_input(e):
   if e is InputEventMouseButton and e.button_index in [MOUSE_BUTTON_WHEEL_UP,MOUSE_BUTTON_WHEEL_DOWN] and e.pressed:
-   planner.zoom=clampf(planner.zoom*(1.25 if e.button_index==MOUSE_BUTTON_WHEEL_UP else .8),1,6);queue_redraw();accept_event();return
+   planner.zoom=clampf(planner.zoom*(1.25 if e.button_index==MOUSE_BUTTON_WHEEL_UP else .8),1,8);queue_redraw();accept_event();return
   if e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_MIDDLE:panning=e.pressed;accept_event();return
   if e is InputEventMouseMotion and panning:planner.map_center-=e.relative/scale_factor;queue_redraw();accept_event();return
   if e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT:
@@ -62,7 +62,10 @@ static func show(p):
  var g=p.g
  if not p.available():g.label(g.panel_body,"Visit the mine to plan its chambers.",17);return
  g.label(g.panel_body,"Plan Your Holding · "+HoldMineworks143.label(p.w.depth()),19,Color("edc98a"))
- var r=p.chosen();var id=p.selected;var controls=g.row(g.panel_body)
+ var r=p.chosen();var id=p.selected
+ if p.view_depth!=p.w.depth():p.view_depth=p.w.depth();p.map_center=g.player;p.zoom=4;p.focus_id=""
+ if not r.is_empty() and p.focus_id!=id:p.focus_id=id;p.map_center=Vector2(p.bounds(r).get_center())*40;p.zoom=minf(5,64.0/(int(r.h)+4))
+ var controls=g.row(g.panel_body)
  var purpose=OptionButton.new();purpose.custom_minimum_size=Vector2(150,34);controls.add_child(purpose)
  for name in p.PURPOSES:purpose.add_item(name)
  purpose.select(p.PURPOSES.find(r.get("purpose",p.purpose)))
@@ -72,7 +75,7 @@ static func show(p):
  for plan in p.rooms():ids.append(str(plan.id));selector.add_item("%s · %s" % [plan.id,plan.purpose])
  selector.select(maxi(0,ids.find(id)))
  selector.item_selected.connect(func(i):p.selected=ids[i];g.refresh_panel())
- var map=Map.new();map.planner=p;map.clip_contents=true;map.custom_minimum_size=Vector2(0,190);map.size_flags_horizontal=Control.SIZE_EXPAND_FILL;g.panel_body.add_child(map)
+ var map=Map.new();map.planner=p;map.clip_contents=true;map.custom_minimum_size=Vector2(0,140);map.size_flags_horizontal=Control.SIZE_EXPAND_FILL;g.panel_body.add_child(map)
  for room in p.rooms():map.statuses[str(room.id)]=p.progress(room).state
  var actions=g.row(g.panel_body)
  action(g,actions,"Return to mining",func():p.owner.cancel();g.close_panel();g.tool=0;g.mining_gun.selected=false)
@@ -92,12 +95,12 @@ static func show(p):
  g.label(g.panel_body,p.message,14,Color("b8c5bc"))
  g.label(g.panel_body,"Drag: plan · Click: select · Wheel: zoom · Middle drag: pan. Blue: planned · Amber: excavation begun · Green: cleared. Dark ground is unsurveyed.",13,Color("a8b9b6"))
  var nav=g.row(g.panel_body)
- action(g,nav,"My position",func():p.map_center=g.player;p.zoom=3;map.queue_redraw())
+ action(g,nav,"My position",func():p.map_center=g.player;p.zoom=5;map.queue_redraw())
  action(g,nav,"Whole level",func():p.map_center=Vector2(Deepworks.W,Deepworks.H)*20;p.zoom=1;map.queue_redraw())
- action(g,nav,"Selected room",func():p.map_center=Vector2(p.bounds(r).get_center())*40;p.zoom=3;map.queue_redraw(),not r.is_empty())
+ action(g,nav,"Selected room",func():p.map_center=Vector2(p.bounds(r).get_center())*40;p.zoom=minf(5,64.0/(int(r.h)+4));map.queue_redraw(),not r.is_empty())
  var finishes=g.row(g.panel_body)
  for surface in ["floor","wall"]:
-  var picker=OptionButton.new();picker.custom_minimum_size=Vector2(230,34);finishes.add_child(picker);picker.add_item("Keep natural "+surface);var options=[""]
+  var picker=OptionButton.new();picker.custom_minimum_size=Vector2(230,34);finishes.add_child(picker);picker.add_item("Keep current "+surface);var options=[""]
   for key in LivingWorks.FINISHES:
    var def=LivingWorks.FINISHES[key]
    if def.surface==surface:options.append(key);picker.add_item(def.name+(" · research needed" if not p.model.unlocked(def) else ""))

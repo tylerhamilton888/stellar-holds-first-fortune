@@ -12,8 +12,10 @@ var w:
 var model:
  get:return owner.model
 var selected=""
+var view_depth=-1
+var focus_id=""
 var purpose="Undesignated"
-var zoom=2.5
+var zoom=4.0
 var map_center=Vector2(500,400)
 var message="Drag a chamber or corridor. Mine its rock with your normal tools."
 func _init(play):owner_ref=weakref(play);map_center=play.g.player
@@ -58,7 +60,7 @@ func save_rectangle(a:Vector2i,b:Vector2i)->bool:
   var k=Deepworks.key(c);r.original[k]=w.at(c);r.damage[k]=w.layer().damage.get(k,0)
  if old.is_empty():data().rooms.append(r);data().next+=1
  else:data().rooms[data().rooms.find(old)]=r
- selected=str(r.id);map_center=Vector2(bounds(r).get_center())*40;zoom=3
+ selected=str(r.id);map_center=Vector2(bounds(r).get_center())*40;zoom=minf(5,64.0/(int(r.h)+4))
  message="Plan saved. Stone, ore and mining damage remain untouched.";g.save_game();return true
 func configure(field:String,value:String,id:String)->bool:
  if not available() or id!=selected:return false
@@ -97,6 +99,7 @@ func prepare_room()->bool:
  if target.is_empty() or w.route(Deepworks.cell(g.player),w.depth(),"",target[0]).is_empty():message="Open a walkable route into the chamber first.";return false
  var id="blueprint154_"+str(r.id)
  var record={"id":id,"kind":"undesignated","depth":r.depth,"x":r.x,"y":r.y,"w":r.w,"h":r.h,"name":r.purpose+" "+str(r.id),"metrics":{}}
+ if not model.connected(record):message="Clear a connected aisle around existing equipment before preparing this chamber.";return false
  model.data.rooms[id]=record;r.room=id;model.refresh();message="Chamber ready. Furnish it to suit; its label grants no equipment.";g.save_game();return true
 func finish_parts(r:Dictionary)->Array:
  var out=[];var walls={};var z=int(r.depth)
@@ -128,6 +131,7 @@ func finish_nearby()->int:
  return count
 func plan_stair(c:Vector2i)->bool:
  if not available():return false
+ if data().stairs.size()>=128:message="This mine already has 128 stair guides; existing connections are preserved.";return false
  var z=w.depth()
  if z>=Deepworks.DEPTHS-1:message="These lateral worksites connect through existing adits; no lower level is supported here.";return false
  for level in [z,z+1]:

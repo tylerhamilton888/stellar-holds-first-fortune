@@ -45,3 +45,11 @@ On your chartered holding, open the Building Book (**O**) and choose **Plan Your
 Add a replacement doorway before removing its old planned doorway. Built walls and doors must be recovered through Fine Construction before changing their openings. Build within reach spends carried materials on up to 32 nearby steps; walk around the room and repeat. The combined estimate counts shared pieces once. Optional finishing choices and research requirements are below the map.
 
 Plan a hall, bedroom, kitchen, workshop and storehouse. Furnish and use them; try a bed and cooking hearth in an undesignated room. Stock a chest, renovate, save and reload. Confirm contents, finishes and unfinished plans remain. Existing manual stairs should still travel to supported upper floors. Removing a plan must leave every physical item intact.
+
+## Underground excavation plans (0.108.0 candidate)
+
+In the mine, press **O**, choose **Plan Your Holding** or the **Plans** tab, and drag a chamber or corridor. Plans can include solid stone; labels are optional. Blue guides are planned, amber means excavation has begun, and green means the floor is cleared. Mine normally; the plan spends nothing and grants no ore. Field-dress or haul the resulting chunks using the existing cargo tools.
+
+Once a chamber is cleared and connected, choose **Prepare / furnish**. Use existing furnishings and workstations/storage. Choose floor and natural-wall finishes lower in the book, review the quote, then use **Finish within reach** while moving around the room. Research and actual carried supplies still apply. Removing a guide must leave the excavation, room, furnishings and stored materials intact.
+
+Stair guides apply only to the original five depths. Click **Plan stairs**, select the upper location, and excavate both five-tile landings using existing access to reach below. Stand on the upper guide and choose **Fit stairs here**. Test **E** down and **Shift+E** up, then save/reload. Lateral mineworks retain their adits; surface-to-underground estate connections remain future work.

@@ -1,3 +1,7 @@
+# 0.108.0 — underground excavation blueprints
+
+Add saved underground room and corridor guides, live excavation progress, optional room labels and nearby finishing through existing LivingWorks transactions. Preserve geology, damage, mining yields, storage and furnishings. Recognize equipment-based worker roles in undesignated chambers. Support planned stair connections within the original depths only after both real landings are mined; preserve lateral adits and existing stair behavior.
+
 # 0.107.0 — surface room blueprinting
 
 Add free persistent rectangular room plans, optional designations, connected doorways, shared material estimates, local construction in batches and editable architectural finishes. Reuse Hearthcraft geometry, inventory, collision, furnishing and stairs. Preserve paid finishes and refunds through ordinary component recovery; keep quality descriptive and equipment independent of room labels. Ground-floor surface scope only; underground/multilevel planning is deferred.
