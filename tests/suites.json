@@ -1040,6 +1040,9 @@
       "opening146",
       "equipment93",
       "architecture"
+    ],
+    "blueprints152-focus": [
+      "blueprints152"
     ]
   },
   "cases": {
@@ -1366,6 +1369,10 @@
     "living_forges148": {
       "script": "tests/living_forges148.gd",
       "marker": "LIVING_FORGES148"
+    },
+    "blueprints152": {
+      "script": "tests/blueprints152.gd",
+      "marker": "BLUEPRINTS152"
     }
   }
 }

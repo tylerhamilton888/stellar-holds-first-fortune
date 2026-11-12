@@ -17,3 +17,7 @@ Follow [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md) for release preparation and po
 Keep detailed evidence in files, bound conversational output, and preserve original assets and previous builds. Repository safeguards reduce known hazards; they do not guarantee ChatGPT backend reliability.
 
 [Earlier backlog](history/BACKLOG-before-doc-consolidation-2026-11-10.md) preserves superseded version-specific playtest headings. Use current status and live release metadata for delivery state.
+
+## Room blueprint draft
+
+Stage A subset is on `feature/room-blueprints`; not merged or released. See [BLUEPRINTS.md](BLUEPRINTS.md) for acceptance gaps and Stage B/C deferral.

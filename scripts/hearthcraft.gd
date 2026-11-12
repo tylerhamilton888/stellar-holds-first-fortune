@@ -212,7 +212,7 @@ func room_routes(map:Dictionary)->bool:
    if (Vector2(c)*20+Vector2(10,10)).distance_to(point.p)<70:found=true;break
   if not found:return false
  return true
-func build(p:Vector2,kind:String)->bool:
+func build(p:Vector2,kind:String,persist:bool=true)->bool:
  var c=cell(p)
  if not ready_to_build(c,kind):g.notify(reason);return false
  var map=tiles();var k=key(c);var t=map.get(k,{});var cost={}
@@ -243,7 +243,9 @@ func build(p:Vector2,kind:String)->bool:
   map[k]=t;data().facts[kind]=true
  if map.has(k) and map[k].is_empty():map.erase(k)
  contact=center(c);impact=.24;g.face=1 if contact.x>g.player.x else -1
- g.sound.effect("wood" if kind in ["door","wood_floor","roof"] else "stone",-14);g.save_game();return true
+ g.sound.effect("wood" if kind in ["door","wood_floor","roof"] else "stone",-14)
+ if persist:g.save_game()
+ return true
 func cost_text(cost:Dictionary)->String:
  var list=[]
  for k in cost:list.append(str(cost[k])+" "+("timber" if k=="wood" else "stone"))
@@ -306,6 +308,7 @@ func material(index:int,rect:Rect2,tint:Color=Color.WHITE):
  var size=Vector2(MATERIALS.get_width()/3.0,MATERIALS.get_height()/2.0)
  g.draw_texture_rect_region(MATERIALS,rect,Rect2(Vector2(index%3,index/3)*size,size),tint)
 func floor_draw():
+ if s.area=="claim" and level()==0:s.architecture.room_blueprints.draw_guides()
  if s.area!="claim" and not s.architecture.interior():return
  for z in range(level()):
   for k in tiles(z):
