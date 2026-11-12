@@ -20,4 +20,4 @@ Keep detailed evidence in files, bound conversational output, and preserve origi
 
 ## Surface room blueprint playtest
 
-Stage A shipped in 0.107.0 through PR #152. Test the room planner on a chartered holding: connected rooms, doorways, material costs, furnishing, renovation and save/reload. Stage B excavation, Stage C connected estates and provisional property-story integration remain deferred. See [BLUEPRINTS.md](BLUEPRINTS.md).
+Stage A shipped in 0.107.0 through PR #152. Test the room planner on a chartered holding: connected rooms, doorways, material costs, furnishing, renovation and save/reload. Stage B underground excavation and stair guides shipped in 0.108.0; see [EXCAVATION154.md](EXCAVATION154.md) and current status for delivery. Stage C connected estates and provisional property-story integration remain deferred. See [BLUEPRINTS.md](BLUEPRINTS.md).

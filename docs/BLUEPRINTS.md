@@ -26,4 +26,4 @@ The first raw dictionary reload comparison failed because serialized numeric typ
 
 ## Later stages
 
-Stage B excavation and Stage C connected multilevel estates are unimplemented. Manual stairs remain supported and tested; there is no planned stair placement, underground room planning or new unified worker/freight routing. Provisional Old Stonewright's Rise story integration is also deferred. Do not advertise those features as included in 0.107.0.
+Stage B adds underground room and stair landing guides in 0.108.0; see [underground blueprint notes](EXCAVATION154.md). Manual stairs remain supported and tested. Stage C connected surface/underground estates, unified worker/freight routing and provisional Old Stonewright's Rise story integration remain deferred.
