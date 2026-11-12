@@ -36,7 +36,9 @@
       "civic145",
       "opening146",
       "forge147",
-      "living_forges148"
+      "living_forges148",
+      "blueprints152",
+      "blueprint_manor152"
     ],
     "gameplay": [
       "loading",
@@ -118,7 +120,9 @@
       "civic145",
       "opening146",
       "forge147",
-      "living_forges148"
+      "living_forges148",
+      "blueprints152",
+      "blueprint_manor152"
     ],
     "modular": [
       "modular",
@@ -409,7 +413,9 @@
       "civic145",
       "opening146",
       "forge147",
-      "living_forges148"
+      "living_forges148",
+      "blueprints152",
+      "blueprint_manor152"
     ],
     "gameplay-3": [
       "orientation",
@@ -1043,6 +1049,13 @@
     ],
     "blueprints152-focus": [
       "blueprints152"
+    ],
+    "blueprints152": [
+      "blueprints152",
+      "blueprint_manor152",
+      "architecture_style",
+      "architecture",
+      "living"
     ]
   },
   "cases": {
@@ -1373,6 +1386,10 @@
     "blueprints152": {
       "script": "tests/blueprints152.gd",
       "marker": "BLUEPRINTS152"
+    },
+    "blueprint_manor152": {
+      "script": "tests/blueprint_manor152.gd",
+      "marker": "BLUEPRINT_MANOR152"
     }
   }
 }

@@ -1,11 +1,11 @@
-# 0.106.0 — A good first morning
+# 0.107.0 — Plan your holding
 
-Ivar welcomes you to your room before explaining your first shift. Conversations with him and the bunkhouse miners now use the lower dialogue panel, keeping their portraits and the world in view.
+Open the Building Book on your chartered surface holding and choose **Plan Your Holding**. Draw connected rooms and corridors, choose optional designations, add doorways and see the combined material estimate before spending anything. Unfinished plans survive saving and loading.
 
-Your journal, work book and HUD follow a clearer path from arrival through your first pay and the communal forge. Earning your first wages no longer unfolds later campaign instructions. Furnish your room, visit Borin first, or deliberately choose another trade; the wider town systems remain available.
+Build nearby parts of a room with one action. Floors, walls, doors and roofs use your actual supplies and remain compatible with individual construction. Shared structural pieces count once. Plans may be removed without removing any constructed property.
 
-Forge guidance follows your actual work: inspect the hearth, learn coal processing, deliver the remaining fuel, then return for the first firing. Partial contributions are remembered, and completed work is not requested again. Important costs and rewards remain visible.
+Furnish as you wish: a bed and cooking hearth work in an undesignated mixed-use room. Hearthstone, Forgehold and Oathhall finishes reuse existing architectural art; finishing costs follow coverage, with advanced collections requiring the relevant research. Renovations retain equipment and stocked chests.
 
-Existing saves, materials, payments, timing, progression requirements and optional activities are preserved.
+This release's blueprint scope is ground-floor surface rooms: 3–20 tiles on each side, up to 64 saved plans. Existing buildings and manual stairs remain available. Underground excavation plans and unified multilevel estates are later stages, not included here.
 
-Download the complete Windows ZIP, extract every file into a fresh folder, and run **FirstFortune.exe** beside **FirstFortune.pck**. Keep your previous build and saves. Use New Game and an empty slot to experience the opening, or Load Game to continue.
+Download the complete Windows ZIP, extract into a fresh folder and run FirstFortune.exe beside FirstFortune.pck. Keep earlier builds and saves. Publication is pending the full source/package gates until CURRENT_STATUS records delivery.

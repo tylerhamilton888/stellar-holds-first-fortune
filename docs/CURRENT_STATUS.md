@@ -1,11 +1,13 @@
 # Current status — 2026-11-12
 
-Published Windows baseline remains **0.106.0**. No blueprint release or merge has occurred. Prior delivered first-hour evidence is preserved in [the previous status](history/CURRENT_STATUS-before-blueprints152.md).
+Published Windows baseline remains **0.106.0** until the release gate publishes 0.107.0. Prior first-hour delivery evidence is preserved in history/CURRENT_STATUS-before-blueprints152.md.
 
-## Active draft
+## Surface room blueprint candidate
 
-`feature/room-blueprints`, based on master `dbe6a7e`, implements an initial surface room-planning subset. See [BLUEPRINTS.md](BLUEPRINTS.md) for verified behavior, exact blockers and remaining Stage A acceptance. Owner scope is preserved in [BLUEPRINT_DIRECTIVE.md](BLUEPRINT_DIRECTIVE.md).
+[PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152), branch `feature/room-blueprints`, implements Stage A on the existing Hearthcraft system. See [BLUEPRINTS.md](BLUEPRINTS.md) and the preserved [directive](BLUEPRINT_DIRECTIVE.md). Stages B/C and provisional property-story changes remain deferred.
 
-Godot 4.4.1 import passed. Focused headless gameplay: **31 assertions passed, zero failed**, no script errors. Native visual/input acceptance remains blocked and incomplete; the draft is not approved for merge or release. Stage A remains incomplete; Stages B and C are unimplemented.
+GitHub backup and native rendering blockers are resolved. Authenticated file-blob uploads can preserve the exact verified local Git tree without exposing file payloads; compare tree hashes before moving the branch. Native acceptance uses Godot 4.4.1. The local display requires its own Xauthority cookie and renderer/test in one isolated execution context.
 
-Continue with the outstanding Stage A list; preserve existing construction, materials, saves and prior releases. Do not interpret these limited checks as full validation. Follow AGENTS.md output capture and release gates.
+Local native results so far: blueprint transactions 61 assertions; five-room manor 40; architecture styles 60; existing buildings 347. All passed with no script errors. Final manual-stair acceptance and LivingWorks regression are pending at this checkpoint. Tooling: 42 passed, output policy/diff checks passed. Inspected planner and furnished-manor screenshots; compacted controls and focused room zoom after review.
+
+Do not merge or publish based only on these local results. Complete final affected checks, full PR/native coverage and exact-package release gates. Update this checkpoint with the exact source/run/release after verified delivery. Keep earlier builds/saves and bounded logs. No encoded assets or full diagnostic dumps in conversation.

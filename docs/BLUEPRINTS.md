@@ -1,29 +1,29 @@
-# Room blueprinting — draft checkpoint
+# Surface room blueprints — Stage A
 
-Branch: `feature/room-blueprints`, based on master `dbe6a7e` (published game remains 0.106.0). Requirements: [owner directive](BLUEPRINT_DIRECTIVE.md).
+Implementation: [PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152). Candidate version: 0.107.0. See CURRENT_STATUS for publication; source work alone is not a released build. Requirements: [owner directive](BLUEPRINT_DIRECTIVE.md).
 
-## Implemented draft subset
+## Player experience
 
-Building Book → Plan Your Holding opens a ground-floor map on chartered property. Drag a 3–20 tile rectangle; choose an optional designation and stone/oak flooring. Redraw an unstarted plan without paying. Add shared doorways and select saved plans. Build within reach performs up to 32 ordinary Hearthcraft component transactions, using the existing pack, collision, proximity and route checks. Walk around the plan and repeat to finish. Existing pieces reduce the remaining quote. Removing metadata leaves all physical property intact. Furniture and fine construction retain their existing menus and systems.
+Building Book → Plan Your Holding opens a ground-floor map on chartered property. Drag a rectangle, choose an optional designation and structural floor, and join rooms with doorways. Click to select; wheel zooms and middle-drag pans. Unstarted plans can be redrawn without spending supplies. Add a new doorway before removing an old planned opening; recover already-built openings through fine construction.
 
-Saved data is additive under the existing claim building's `blueprints152` dictionary. No separate economy, shell refund, storage capacity, equipment permission or production reward is introduced. Drawn plans do not create physical walls. Built floors/walls/doors/roofs remain ordinary Hearthcraft pieces. No existing save migration or asset path changes.
+Build within reach performs up to 32 nearby construction/finishing steps. Actual Hearthcraft floors, walls, doors and roofs consume the existing pack. Existing pieces reduce the quote, and the combined estimate counts shared pieces once. Shared foundation material and finish ownership follow the earlier room plan, independently of construction order. Removing a plan preserves every physical piece, furnishing and stored item.
 
-## Verified locally
+Hearthstone, Forgehold and Oathhall use the existing architectural painters. Advanced finishing requires stoneworking/fine masonry; estimates are available before research or supplies are ready. Coverage determines cost. Paid finishes live on physical tiles and survive plan removal; their material record is returned once when the underlying floor is recovered. Renovating leaves furniture and stocked chests in place.
 
-Godot 4.4.1 full import exited zero with no script errors. Focused headless game test: **31 passed / 0 failed**, exit zero, no script errors (`test-results/blueprints-headless/runner.log`). It covers free editing, quotes and exact expenditures, connected doors, shared built boundaries, overlap/terrain rejection, physical completion, idempotent payments, JSON round trips, missing supplies and off-property callbacks. This is not native input/visual acceptance or a complete save-file round trip.
+Designation is a label and source of suggested defaults, never equipment permission. An undesignated hall can contain a usable bed and cooking hearth. Descriptive comfort/heritage uses existing LivingWorks furniture values; it adds no artificial room level or production reward.
 
-Tooling: 42 Python tests passed; output-policy check passed; `git diff --check` passed. Full native and exact-package release gates have not run.
+## Persistence and bounds
 
-## Incomplete — do not merge or release yet
+Saved plans are additive under the existing claim building's `blueprints152` dictionary. Structural pieces remain ordinary Hearthcraft tiles; optional `style87` and `finish_paid152` fields belong to those physical tiles. No duplicate inventory, storage capacity, excavation reward or construction economy is introduced.
 
-Stage A is **not complete**. Native visual/input review could not run in this session: a local X server could not establish listening sockets; the available desktop terminal opened but would not accept focus/text. No rendered planner screenshot has been accepted.
+This stage supports ground-floor surface rectangles from 3–20 tiles per side and up to 64 saved plans. Existing records are never truncated. Existing authored buildings, furniture modes, fine construction and manual stairs remain available. Plans and physical construction persist independently.
 
-Remaining Stage A work:
-- Review map readability and selection at 960×540; add useful zoom/pan if needed. Review world guides beside actual Dwarf art.
-- Validate real drag/doorway input, furnishing/use and navigation in the connected five-room manor, including a fully undesignated mixed-use room.
-- Complete doorway relocation/removal, whole-plan shared estimates, clear blocked/inaccessible/completed status presentation and construction progress feedback.
-- Integrate per-room compatible styles and paid renovations without moving equipment; reconcile LivingWorks quality rather than adding another scoring system.
-- Verify actual save-file reloads, old-save property/storage/worker preservation, stale callbacks, manual edits and equipment obstructing work. Current JSON test is narrower.
-- Add accepted tests to required native/exact-package manifests, run affected regressions and full release gates. Review all UI changes before merge.
+## Acceptance
 
-Stage B excavation and Stage C connected estates are unimplemented. Existing manual stairs remain available; this draft does not add planned stairs or demonstrate vertical estate travel. No campaign/property-grant changes were made. Retain 0.106.0 until a coherent validated Stage A is ready.
+Native Godot 4.4.1 checks cover GUI dragging, a connected five-room manor, exact shared material estimates/payments, mixed-use sleeping/cooking, workshop equipment, actual chest deposits, renovation, actual save-file reloads, missing materials, stale actions, doorway changes, finish research and once-only recovery. Existing architecture/style and LivingWorks regressions are included. Native screenshots have been inspected at gameplay scale; the primary controls and material quote fit the visible book area. Source and exact-package manifests include both blueprint cases.
+
+The first raw dictionary reload comparison failed because serialized numeric types differed. Comparing normalized serialized records passed, including all furnishings and stocked storage; no property-loss fix was necessary. Current evidence and release gates are tracked in CURRENT_STATUS.
+
+## Later stages
+
+Stage B excavation and Stage C connected multilevel estates are unimplemented. Manual stairs remain supported and tested; there is no planned stair placement, underground room planning or new unified worker/freight routing. Provisional Old Stonewright's Rise story integration is also deferred. Do not advertise those features as included in 0.107.0.

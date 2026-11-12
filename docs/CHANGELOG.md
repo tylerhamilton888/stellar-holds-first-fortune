@@ -1,3 +1,7 @@
+# 0.107.0 — surface blueprint candidate
+
+Add free persistent rectangular room plans, optional designations, connected doorways, shared material estimates, local construction in batches and editable architectural finishes. Reuse Hearthcraft geometry, inventory, collision, furnishing and stairs. Preserve paid finishes and refunds through ordinary component recovery; keep quality descriptive and equipment independent of room labels. Ground-floor surface scope only; underground/multilevel planning is deferred. Full release gates pending.
+
 # 0.106.0 — first-hour presentation released
 
 Stage Ivar's welcome and work instructions; bring bunkhouse conversations into the lower dialogue shell with bounded layout and replaceable replies. Keep the journal, HUD and shift book on one immediate opening lead through first pay and the forge. Preserve an explicit alternative trade route. Forge hints follow inspection, practical coal processing, remaining deposits and the first firing. Existing rewards, costs, saves and progression are unchanged. Windows 0.106.0 passed all 80 native scenarios, 70 exact-package scenarios / 14,184 assertions, integrity verification and publication in run 42912965464.

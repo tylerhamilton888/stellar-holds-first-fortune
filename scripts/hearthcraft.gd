@@ -224,7 +224,9 @@ func build(p:Vector2,kind:String,persist:bool=true)->bool:
   elif t.get("roof",false):old="roof";t.erase("roof");tiles(level()+1).erase(k)
   elif t.get("wall","")!="":old=t.wall;t.erase("wall");t.erase("open")
   else:
-   old=t.floor;map.erase(k)
+   old=t.floor
+   for resource in t.get("finish_paid152",{}):g.state.add(resource,int(t.finish_paid152[resource]))
+   map.erase(k)
    if old=="roof_floor":old="roof";tiles(level()-1)[k].erase("roof")
    elif old=="landing_floor":old="stone_floor"
   for item in COSTS[old]:g.state.add(item,COSTS[old][item])
@@ -242,6 +244,7 @@ func build(p:Vector2,kind:String,persist:bool=true)->bool:
   else:t.wall=kind;t.open=kind=="door"
   map[k]=t;data().facts[kind]=true
  if map.has(k) and map[k].is_empty():map.erase(k)
+ s.architecture.room_blueprints.invalidate(c)
  contact=center(c);impact=.24;g.face=1 if contact.x>g.player.x else -1
  g.sound.effect("wood" if kind in ["door","wood_floor","roof"] else "stone",-14)
  if persist:g.save_game()
@@ -317,7 +320,8 @@ func floor_draw():
  for k in tiles():
   var t=tiles()[k];var p=Vector2(coords(k))*CELL
   if not t.has("floor"):continue
-  material(2 if t.floor=="roof_floor" else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL))
+  if t.has("style87") and t.floor!="roof_floor":HoldArchitectureStyles.floor_draw(g,Rect2(p,Vector2.ONE*CELL),HoldBlueprintFinishes.style(self,coords(k)).floor)
+  else:material(2 if t.floor=="roof_floor" else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL))
  for k in data().links:
   var z=int(k.get_slice("/",0));var c=coords(k.get_slice("/",1))
   if z!=level() and z+1!=level():continue
@@ -340,7 +344,7 @@ func roof_draw():
  for k in tiles():
   if not tiles()[k].get("roof",false):continue
   var p=Vector2(coords(k))*CELL;var alpha=.13 if inside.has(k) or center(coords(k)).distance_to(g.player)<75 else .95
-  material(2,Rect2(p-Vector2(0,46),Vector2(40,40)),Color(1,1,1,alpha))
+  HoldArchitectureStyles.roof(g,Rect2(p-Vector2(0,46),Vector2(40,40)),HoldBlueprintFinishes.style(self,coords(k)),Color(1,1,1,alpha))
   if not tiles().get(key(coords(k)+Vector2i.DOWN),{}).get("roof",false):g.draw_line(p+Vector2(0,-6),p+Vector2(40,-6),Color(.7,.52,.27,alpha),3)
 func preview():
  if not s.placing.begins_with("house:"):return

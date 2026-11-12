@@ -20,4 +20,4 @@ Keep detailed evidence in files, bound conversational output, and preserve origi
 
 ## Room blueprint draft
 
-Stage A subset is on `feature/room-blueprints`; not merged or released. See [BLUEPRINTS.md](BLUEPRINTS.md) for acceptance gaps and Stage B/C deferral.
+Stage A surface room blueprint candidate is in PR #152. Complete the remaining gates before delivery; Stage B excavation, Stage C connected estates and provisional property-story integration remain deferred. See [BLUEPRINTS.md](BLUEPRINTS.md).
