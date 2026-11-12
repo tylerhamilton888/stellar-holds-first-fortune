@@ -125,3 +125,7 @@ HoldMineView94 owns optional capture, unscaled screen-relative mouse look, bound
 ## Stonebridge work and contribution
 
 HoldWork132 owns additive surface.work132 production proof, lesson completions, selected task and the three shared trade seals. HoldWorkView132 presents it in the existing paused book. Handworks credits completed player raw loads once by normalized raw ID; State credits finished recipes; HomesteadLife credits real harvests and catches. Inventory adds, refunds and generic XP never supply proof. Deliveries atomically spend carried goods and their work allowance. Keep older completed projects/scores and authenticated tallies authoritative. The local steel-pick transaction belongs to Frontier103. See great-claim/WORK132.md.
+
+## Source upload when local Git authentication is unavailable
+
+Use the authenticated GitHub file-blob upload operations as the file-transfer fallback. Read UTF-8 source inside the execution orchestration and send each file directly; emit only path/count/hash metadata. Never echo whole source, encoded archives or binary bodies into the conversation. Build a tree over the known parent tree, require equality with the verified local Git tree SHA, then create the commit and move the branch using its expected head. Preserve unrelated paths and history. This does not waive validation, visual review or release gates.

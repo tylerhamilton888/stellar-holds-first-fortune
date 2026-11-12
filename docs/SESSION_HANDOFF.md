@@ -1,19 +1,13 @@
-# Current handoff — 2026-11-10
+# Current handoff — 2026-11-12
 
-Read this and CURRENT_STATUS.md first; follow AGENTS.md. Current instructions are PLAYTEST_GUIDE.md and RELEASE_PIPELINE.md; historical procedures are not startup reading.
+Published Windows baseline remains **0.106.0** until the release gate publishes 0.107.0. Prior first-hour delivery evidence is preserved in history/CURRENT_STATUS-before-blueprints152.md.
 
-## Completed delivery
+## Surface room blueprint candidate
 
-Windows 0.106.0 is published: https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.106.0
+[PR #152](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/152), branch `feature/room-blueprints`, implements Stage A on the existing Hearthcraft system. See [BLUEPRINTS.md](BLUEPRINTS.md) and the preserved [directive](BLUEPRINT_DIRECTIVE.md). Stages B/C and provisional property-story changes remain deferred.
 
-PR #150 delivers staged Ivar dialogue, the compact lodge conversation shell, consistent immediate journal/HUD/shift-book leads and state-aware forge directions. Optional furnishing, alternate trades and wider books remain available. Costs, rewards, saves and progression are unchanged. See FIRST_HOUR.md.
+GitHub backup and native rendering blockers are resolved. Authenticated file-blob uploads can preserve the exact verified local Git tree without exposing file payloads; compare tree hashes before moving the branch. Native acceptance uses Godot 4.4.1. The local display requires its own Xauthority cookie and renderer/test in one isolated execution context.
 
-Exact release source: 686a2d3ce914a257168d6798d8a8f11affee787c. Merge: 7341b784b2424bf906a270c48ae8c4938ff7afeb. PR validation 42912785452 passed. Release run 42912965464 passed all 80 native scenarios, 70 exact-package scenarios / 14,184 assertions, integrity verification and publication. Published metadata and receipt agree on source, package and ZIP hashes; ZIP size: 964,651,997 bytes.
+Local native results so far: blueprint transactions 61 assertions; five-room manor 40; architecture styles 60; existing buildings 347. All passed with no script errors. LivingWorks passed 51 assertions; the manor/stair rerun passed 45. A final room-access label regression is pending at this checkpoint. Tooling: 42 passed, output policy/diff checks passed. Inspected planner and furnished-manor screenshots; compacted controls and focused room zoom after review.
 
-Local acceptance: six scenarios / 238 assertions, 42 tooling tests, reviewed Ivar/first-wage/forge-lead screens. A discovered dialogue overflow was corrected and lodge/menu/opening rerun. Native and package evidence is retained by the release.
-
-No release remains pending for this work. Next: Windows playtesting of the first hour in an empty slot, plus continued existing-save guidance. Do not rebuild without new changes or a concrete failure. Keep previous builds and saves.
-
-## Output discipline
-
-Use file-only capture and bounded diagnostics. Never dump encoded binaries, complete API results or old logs into conversations. Keep current status, handoff and backlog under 4,000 bytes; release notes/changelog under 8,000. Repository safeguards do not guarantee ChatGPT backend reliability. [Previous handoff](history/SESSION_HANDOFF-before-0.106.0.md).
+Do not merge or publish based only on these local results. Complete final affected checks, full PR/native coverage and exact-package release gates. Update this checkpoint with the exact source/run/release after verified delivery. Keep earlier builds/saves and bounded logs. No encoded assets or full diagnostic dumps in conversation.

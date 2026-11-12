@@ -22,8 +22,11 @@ var details_group="Hearth"
 var draft_style={}
 var style_owner=""
 var plan_style={}
+var room_planning=false
+var room_blueprints
 func _init(surface):
  surface_ref=weakref(surface);g=surface.g;active_owner=weakref(self)
+ room_blueprints=HoldRoomBlueprints.new(self)
 static func current():return active_owner.get_ref() if active_owner!=null else null
 func data()->Dictionary:
  if not g.state.surface.has("architecture86"):g.state.surface.architecture86={"version":1,"next":1,"instances":[]}

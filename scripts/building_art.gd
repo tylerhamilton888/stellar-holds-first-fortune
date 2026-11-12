@@ -104,7 +104,7 @@ static func wall_piece(g,c:Vector2i,tiles:Dictionary):
  if kind=="":return
  var p=Vector2(c)*40+Vector2(20,20);var rect=Rect2(p-Vector2(20,46),Vector2(40,64))
  g.draw_rect(Rect2(rect.position+Vector2(4,5),rect.size),Color(0,0,0,.22))
- var style=HoldArchitectureStyles.room(g.surface.area)
+ var style=HoldBlueprintFinishes.style(g.surface.house,c)
  HoldArchitectureStyles.wall(g,rect,style,false)
  g.draw_rect(Rect2(rect.position-Vector2(0,3),Vector2(40,7)),Color("a49d83"))
  if kind=="wall":return

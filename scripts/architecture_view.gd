@@ -57,7 +57,9 @@ static func tab(g,parent:Node,title:String,active:bool,fn:Callable):
 static func action(g,parent:Node,title:String,fn:Callable,enabled:bool=true):
  var b=g.small_button(parent,title,fn);b.disabled=not enabled;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;return b
 static func book(a):
+ if a.room_planning:HoldRoomBlueprintView.show(a);return
  var g=a.g;var b=a.nearby()
+ action(g,g.panel_body,"Plan Your Holding",func():a.room_planning=true;g.refresh_panel())
  if not b.is_empty() and (not a.browse_only or a.interior()):
   renovation(a,b);return
  var tabs=g.row(g.panel_body)

@@ -37,3 +37,11 @@ The main route includes trade foundations and a home, Winter Stores, the survey-
 Optional collections, friendship episodes and the three persistent mineworks remain available. Mineworks support named districts and gated exploration; they are not an additional requirement for becoming Thane. Marriage remains future work.
 
 Report the displayed game version, fresh or existing save, location, expected action, actual result and whether it repeats after reloading. Record active play time separately from pauses. Automated acceptance does not establish enjoyment, Windows device performance or audio balance.
+
+## Surface room blueprints (0.107.0 candidate)
+
+On your chartered holding, open the Building Book (**O**) and choose **Plan Your Holding**. Drag a rectangle; click a plan or use the selector to inspect it. Scroll the map to zoom, middle-drag to pan, or use the position/overview controls below. New Room starts another rectangle; redraw only unstarted plans. Bedroom designation suggests oak flooring; equipment still supplies every actual function.
+
+Add a replacement doorway before removing its old planned doorway. Built walls and doors must be recovered through Fine Construction before changing their openings. Build within reach spends carried materials on up to 32 nearby steps; walk around the room and repeat. The combined estimate counts shared pieces once. Optional finishing choices and research requirements are below the map.
+
+Plan a hall, bedroom, kitchen, workshop and storehouse. Furnish and use them; try a bed and cooking hearth in an undesignated room. Stock a chest, renovate, save and reload. Confirm contents, finishes and unfinished plans remain. Existing manual stairs should still travel to supported upper floors. Removing a plan must leave every physical item intact.
