@@ -14,6 +14,8 @@ Choose **New Game** and an empty fortune slot for the current opening, or **Load
 
 The First Fortune follows a new worker from Stonebridge's bunkhouse through a player-built home, ancestral rescue, the engineering contest, Keldrath's defense and a homecoming as Thane. The Hold's Ledger guides practical campaign milestones, Winter Stores and North Crossing restoration, with optional profession collections. Twelve characters offer friendship episodes. Three permanent mineworks support named districts and gated expansion. Marriage remains future work.
 
+Surface room blueprints let you lay out connected rooms on your chartered holding, review shared construction costs, build within reach and furnish them to suit. Open the Building Book (**O**) and choose **Plan Your Holding**. Excavation planning and unified multilevel estates remain future work.
+
 ## Develop and release
 
 Read [current status](docs/CURRENT_STATUS.md), [handoff](docs/SESSION_HANDOFF.md), then [AGENTS.md](AGENTS.md). Clone `master`, which contains the editable game and original assets. Use Godot **4.4.1 stable**, the standard editor, and Python 3.11 or newer. Open `project.godot`; the editor imports assets. F5 runs the project.
