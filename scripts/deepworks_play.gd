@@ -321,7 +321,7 @@ func agents(dt:float):
   if not room.is_empty():
    var stand=works.model.stand(room)
    if c==stand:
-    a.work=room.kind=="workshop";a.status="At "+room.name
+    a.work=LivingWorks.room_role(room,works.model.data.furniture)=="workshop";a.status="At "+room.name
     works.model.arrived(a.id,room)
     if a.work and a.cool<=0:
      a.cool=1.2
@@ -544,7 +544,7 @@ func draw():
    if a.type=="bot":A.bot(g,p+Vector2(0,10),g.clock,a.work)
    else:
     var profile=g.state.npc(a.id);var assigned=works.model.destination(a.id)
-    if a.work and not assigned.is_empty() and assigned.kind=="workshop":
+    if a.work and not assigned.is_empty() and LivingWorks.room_role(assigned,works.model.data.furniture)=="workshop":
      var phase=fposmod(g.clock,.8)/.8
      HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,Vector2(1,.45),false,g.clock,1.0,offset,"hammer",phase)
     else:

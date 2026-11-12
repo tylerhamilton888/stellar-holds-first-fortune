@@ -14,7 +14,8 @@ var page="Rooms"
 var district_name="New district"
 var sparkle=0.0
 var masonry:HoldMasonry
-func _init(game,world:Deepworks):g=game;w=world;model=LivingWorks.new(g.state,w);masonry=HoldMasonry.new(g,w,model)
+var blueprints
+func _init(game,world:Deepworks):g=game;w=world;model=LivingWorks.new(g.state,w);masonry=HoldMasonry.new(g,w,model);blueprints=HoldExcavationBlueprints.new(self)
 func cancel():
  if mode!="" or not pending.is_empty():g.deep.strike_left=0;g.deep.contact_hold=0
  mode="";pending={};corner=Vector2i(-1,-1);ready=false
@@ -97,18 +98,19 @@ func interact()->bool:
   if f.kind=="mason" and int(f.depth)==w.depth() and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68:
    page="Masonry";g.open_panel("living");return true
  var r=model.at(Deepworks.cell(g.player))
- if r.is_empty() or not r.metrics.active:return false
+ if r.is_empty() or (r.kind!="undesignated" and not r.metrics.active):return false
  for f in model.data.furniture.values():
-  if f.get("room","")==r.id and f.kind in ["bench","anvil"] and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68:
+  if f.get("room","")==r.id and f.kind in ["bench","anvil"] and g.player.distance_to(Deepworks.center(Vector2i(f.x,f.y)))<68 and w.visible(g.player,Deepworks.center(Vector2i(f.x,f.y))):
    g.open_panel("forge");return true
  return false
 func panel():
  model.refresh()
  var tabs=g.row(g.menu_scroll.get_parent());g.menu_scroll.get_parent().move_child(tabs,g.menu_scroll.get_index())
- for name in ["Rooms","Furnish","Finishes","Folk","Masonry","Districts"]:
+ for name in ["Plans","Rooms","Furnish","Finishes","Folk","Masonry","Districts"]:
   var tab=g.small_button(tabs,name+(" •" if name=="Folk" and model.data.opportunity=="offered" else ""),func():page=name;g.open_panel("living",false))
   tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=page==name
  match page:
+  "Plans":HoldExcavationBlueprintView.show(blueprints)
   "Districts":HoldMineworks143.panel(g)
   "Masonry":masonry.panel()
   "Rooms":rooms_panel()
@@ -116,6 +118,7 @@ func panel():
   "Finishes":catalog(true)
   "Folk":folk_panel()
 func rooms_panel():
+ g.button(g.panel_body,"Plan Your Holding · chambers and corridors",func():page="Plans";g.open_panel("living",false))
  g.label(g.panel_body,"Carve out a home",20,Color("edc98a"))
  g.label(g.panel_body,"Clear a 4 × 4 to 9 × 9 chamber, then choose its two corners.",14)
  var line=g.row(g.panel_body)
@@ -195,6 +198,7 @@ func lamps()->Array:
  return result
 func draw():
  masonry.draw()
+ blueprints.draw()
  var z=w.depth();var lights=lamps()
  for surface in model.data.surfaces.values():
   if int(surface.depth)!=z:continue
@@ -209,6 +213,16 @@ func draw():
   base=base.lightened(float(posmod(c.x*17+c.y*31,7))*.009)
   if kind in ["runic","ancestor","inlay"]:base=Color("536c71")
   if kind=="ashlar":base=Color("a0afa2")
+  if not floor:
+   # Finished bedrock must read as a solid wall, not another walkable floor tile.
+   var family="oath" if kind in ["runic","ancestor"] else "forge" if kind=="masonry" else "hearth"
+   var tint=Color.WHITE.darkened(1-light)
+   g.draw_rect(Rect2(p,Vector2(40,8)),base.lightened(.22).darkened(1-light))
+   HoldArchitectureStyles.wall(g,Rect2(p+Vector2(0,8),Vector2(40,28)),{"wall":family},false,tint)
+   g.draw_line(p+Vector2(0,8),p+Vector2(40,8),base.lightened(.4).darkened(1-light),2)
+   g.draw_rect(Rect2(p+Vector2(0,36),Vector2(40,4)),Color("18292d"))
+   if kind=="ancestor":g.draw_arc(p+Vector2(20,22),8,0,TAU,12,Color("d6ae66").darkened(1-light),1.5)
+   continue
   g.draw_rect(Rect2(p,Vector2(40,40)),base.darkened(1-light))
   if kind=="timber":
    for j in 4:
@@ -230,7 +244,6 @@ func draw():
    g.draw_polyline(PackedVector2Array([q+Vector2(0,-13),q+Vector2(-8,-4),q+Vector2(8,4),q+Vector2(0,13)]),col,2)
    g.draw_line(q+Vector2(0,-13),q+Vector2(0,13),col,1)
    if kind=="ancestor":g.draw_arc(q,13,0,TAU,12,col,1)
-  if not floor:g.draw_rect(Rect2(p+Vector2(0,32),Vector2(40,8)),base.darkened(.5))
  for r in model.data.rooms.values():
   if int(r.depth)!=z:continue
   var rect=Rect2(r.x*40+2,r.y*40+2,r.w*40-4,r.h*40-4)

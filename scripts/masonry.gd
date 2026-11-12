@@ -103,7 +103,7 @@ func assign(id:String,f:Dictionary)->String:
  if not g.state.tech.has("masonry_apprentice"):return "Finish Brann's first stonework lesson before delegating."
  if not g.state.outpost.get("crew",{}).has(id):return "Recruit this Dwarf at your claimed mountain first."
  var room=works.data.rooms.get(f.room,{})
- if room.is_empty() or room.kind!="workshop" or not room.metrics.active:return "Your mason needs a functional workshop: joiner's bench, forge/anvil and lantern."
+ if room.is_empty() or LivingWorks.room_role(room,works.data.furniture)!="workshop" or not room.metrics.active:return "Your mason needs a functional workshop: joiner's bench, forge/anvil and lantern."
  for other in data.jobs:
   if other!=id and data.jobs[other].bench==w.link_key(Vector2i(f.x,f.y),int(f.depth)):return "This bench already has a mason."
  var result=works.assign(id,room.id)
