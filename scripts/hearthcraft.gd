@@ -244,7 +244,7 @@ func build(p:Vector2,kind:String,persist:bool=true)->bool:
   else:t.wall=kind;t.open=kind=="door"
   map[k]=t;data().facts[kind]=true
  if map.has(k) and map[k].is_empty():map.erase(k)
- s.architecture.room_blueprints.invalidate(c)
+ s.architecture.room_blueprints.invalidate(c,persist)
  contact=center(c);impact=.24;g.face=1 if contact.x>g.player.x else -1
  g.sound.effect("wood" if kind in ["door","wood_floor","roof"] else "stone",-14)
  if persist:g.save_game()

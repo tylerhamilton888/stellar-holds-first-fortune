@@ -60,8 +60,9 @@ func run():
  check(not chests.is_empty(),"Storehouse uses real chest storage")
  if not chests.is_empty():
   var chest=chests.back();g.surface.selected_chest=g.state.surface.chests.find_key(chest);at(Vector2(chest.x,chest.y+25));check(g.surface.transfer("crystal",7,true)==7,"Deposit actual resources in storage")
- var stair=Vector2i(55,30);at(h.center(stair))
- check(h.build(h.center(stair),"stairs"),"Fine construction adds a stair inside a planned room")
+ var stair=Vector2i(52,30);at(h.center(stair))
+ check(h.build(h.center(stair),"stairs"),"Fine construction adds a stair inside a planned room: "+h.reason)
+ check(p.rooms()[0].get("complete",false),"Fine detail work keeps completed room guides reconciled")
  check(h.use_stairs(true) and h.level()==1,"Real stair travel reaches the supported upper floor")
  check(not p.available(),"Surface planner does not pretend to support upper-floor plans")
  check(h.use_stairs(false) and h.level()==0,"Real stair travel returns to the same holding")
@@ -78,9 +79,10 @@ func run():
   var file=FileAccess.open(output+"/reload-diff.json",FileAccess.WRITE);file.store_string(JSON.stringify({"expected":expected,"actual":actual}));file.close()
  check(expected==actual,"Furnishings and storage survive reload")
  for r in p.rooms():check(p.remaining(r).is_empty(),"Reloaded structure remains complete: "+str(r.id))
- at(Vector2(2330,1410));p.select_room(ids[3]);p.zoom=2.5;p.map_center=Vector2(2440,1300);a.room_planning=true;g.open_panel("architecture")
+ at(Vector2(2330,1410));p.select_room(ids[3]);check(p.assessment(p.chosen()).contains("2 furnishings"),"Room assessment reports access independently of player proximity");p.zoom=2.5;p.map_center=Vector2(2440,1300);a.room_planning=true;g.open_panel("architecture")
  if DisplayServer.get_name()!="headless":
   await snap("02-manor-book")
+  g.menu_scroll.scroll_vertical=10000;await snap("02b-manor-finishes")
   check(g.panel_body.size.x<=g.menu_scroll.size.x+1,"Blueprint controls fit panel width")
   g.close_panel();await snap("03-furnished-manor")
  print("BLUEPRINT_MANOR152: %d passed / %d failed" % [passed,failed]);g.queue_free();await process_frame;quit(1 if failed else 0)

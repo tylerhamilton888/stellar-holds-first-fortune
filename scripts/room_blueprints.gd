@@ -142,9 +142,9 @@ func forget():
  var r=chosen()
  if r.is_empty():return
  data().rooms.erase(r);selected="";a.g.save_game();message="Plan removed. Constructed pieces and furnishings remain."
-func invalidate(c:Vector2i):
+func invalidate(c:Vector2i,reconcile:bool=false):
  for r in rooms():
-  if bounds(r).has_point(c):r.complete=false
+  if bounds(r).has_point(c):r.complete=reconcile and remaining(r).is_empty() and HoldBlueprintFinishes.cost(self,r).is_empty()
 func draw_guides():
  if not available():return
  for r in rooms():
@@ -189,11 +189,13 @@ func assessment(r:Dictionary)->String:
  var aliases={"double_bed":"bed","worktable":"bench","stone_pillar":"rune","royal_pillar":"rune"}
  for f in furniture:
   if not bounds(r).has_point(a.s.house.cell(f.p)):continue
-  if a.g.hearth.accessible(f):usable+=1
+  var approaches=[f.p+Vector2(0,40),f.p+Vector2(40,0),f.p-Vector2(40,0),f.p-Vector2(0,40)]
+  if f.kind in ["bed","double_bed"]:approaches=[HoldFurnishings.bedside(f.p,1,f.kind),HoldFurnishings.bedside(f.p,-1,f.kind)]
+  if approaches.any(func(position):return a.s.walkable(position) and a.s.clear_interaction(position,f.p+Vector2(0,25))):usable+=1
   var kind=aliases.get(f.kind,f.kind)
   if counts.has(kind) or not LivingWorks.FURNITURE.has(kind):continue
   counts[kind]=true;var def=LivingWorks.FURNITURE[kind];comfort+=int(def.comfort);heritage+=int(def.heritage)
- return "Comfort %d · heritage %d · %d accessible furnishings. Equipment works independently of designation." % [mini(5,comfort),mini(3,heritage),usable]
+ return "Comfort %d · heritage %d · %d furnishings with a clear approach. Equipment works independently of designation." % [mini(5,comfort),mini(3,heritage),usable]
 func configure(field:String,value:String,room_id:String)->bool:
  if not available() or selected!=room_id:return false
  var r=chosen()

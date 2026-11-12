@@ -1,6 +1,6 @@
-# 0.107.0 — surface blueprint candidate
+# 0.107.0 — surface room blueprinting
 
-Add free persistent rectangular room plans, optional designations, connected doorways, shared material estimates, local construction in batches and editable architectural finishes. Reuse Hearthcraft geometry, inventory, collision, furnishing and stairs. Preserve paid finishes and refunds through ordinary component recovery; keep quality descriptive and equipment independent of room labels. Ground-floor surface scope only; underground/multilevel planning is deferred. Full release gates pending.
+Add free persistent rectangular room plans, optional designations, connected doorways, shared material estimates, local construction in batches and editable architectural finishes. Reuse Hearthcraft geometry, inventory, collision, furnishing and stairs. Preserve paid finishes and refunds through ordinary component recovery; keep quality descriptive and equipment independent of room labels. Ground-floor surface scope only; underground/multilevel planning is deferred.
 
 # 0.106.0 — first-hour presentation released
 
