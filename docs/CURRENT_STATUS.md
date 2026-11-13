@@ -2,28 +2,30 @@
 
 ## Published Windows build
 
-**[0.110.0 — Plan a home across floors](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.110.0)** is published. [Source PR #158](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/158) merged after all required checks passed.
+**[0.111.1 — Crew berths and connected household routes](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.111.1)** is published. [Feature PR #160](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/160) and [legacy-site correction #161](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/161) merged after their required checks passed.
 
-- Release source: `088f3d75cf0d4b00369503eae8695e30a43638bd`; tree: `a22f2822cc4a10d0c35c702020bdb8436d123a1e`.
-- Source merge: `8439f92de53c9f59f378121cca4ebcb6bb792ad8`.
-- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43441360497): all 11 jobs passed, including 85 native source cases, 75 exact-package cases (14,452 assertions), aggregate verification and publication.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43441172297): all four gameplay groups and aggregate gate passed.
-- Uploaded assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
-- Windows ZIP: 964,715,080 bytes; SHA-256 `4bd1e3dfa3a26e6a3173bfd434312d1e9280f9d84e568a213262883b94ef5dc2`.
-- PCK SHA-256: `06af58d0d36a29d430dd41ed957b48dbe0f354f3eeede765ddfe6048853cd333`.
+- Release source: `fdf56920468474950488aa3051e4b780754ace55`; tree: `89c980e85154f0b5d81f084aba280695e7e987ab`.
+- Source merge: `ce1c022c6fdffd392ff2211e598cfa45afe69b73`.
+- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43501138113): all 11 jobs passed, including 86 native source cases, 76 exact-package cases (14,485 assertions), aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43501138451): all four gameplay groups and aggregate gate passed.
+- Assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
+- Windows ZIP: 964,793,762 bytes; SHA-256 `1a5d56c37345f5f01f48d0f667c82c27b686abfd9d8b7f65f352a1ecbb0fda40`.
+- PCK SHA-256: `037886dbc8d0442c5c719ac7d729a2b652ebcbb47db489d46e3ec39bca29368b`.
 
-Public metadata and receipt were retrieved directly. Version, clean source and PCK/ZIP hashes agree; ZIP size/hash agree with GitHub's asset record. Both downloaded JSON hashes match their asset digests. The publication gate verified the full ZIP; it was not independently downloaded again.
+[Post-upload verification](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43506857764) retrieved both public JSON documents, checked their asset digests and compared version, clean source, PCK/ZIP hashes and archive size with the published asset record. The publication gate verified the full ZIP; it was not independently downloaded again.
 
 ## Delivered scope
 
-This is **the second Stage C slice, not the whole stage**. In **O → Plan Your Holding**, select ground or upper floors 1–4, draw rooms and review missing supports or stair access. Planning leaves the player in place and spends nothing. Build below, fit an aligned stair locally for **4 timber / 2 stone**, then use **E up / Shift+E down**. Visit the selected floor to build; paid roof decks are reused without duplicate floor charges.
+This is the household-worker slice of Stage C. In **O → Plan Your Holding → A bed for your crew**, choose a floor and actual bed, then **Assign selected bed** to a recruited miner. Room designation is optional. Provide a clear built route, household stairs, a fitted cellar stair and provisions.
 
-Room plans, shared boundaries, quotes and finishes follow their floor. Existing saves default older plans to ground. Furnish, stock storage and renovate upstairs; deleting a guide preserves the physical building and possessions. Existing cellar stairs connect a three-level home to its original claim mine. See [upper-floor notes](UPPER158.md), [surface notes](BLUEPRINTS.md), [cellar notes](CELLAR156.md) and [playtest guide](PLAYTEST_GUIDE.md).
+The same worker walks from the claim mine to the bedside, rests and returns to the original assignment. Long commutes finish their rest; positions and berths survive reload. Obstructions stop travel. Missing beds cancel rest and return the worker through the remaining route. Rest requires actual arrival and provisions. Legacy workers at other worksites retain their prior behavior.
 
-Focused acceptance passed 208 native assertions: upper158 51, blueprints152 61, cellar156 49 and blueprint_manor152 47. Tooling passed 42 tests. Native floor-picker and furnished-room images were reviewed. The upstairs scenario covers exact spending, actual storage deposits, renovation, cold reload, old-save format and a ground kitchen/cellar workshop-storage connection.
+No duplicate roster or remote stock transfer is created. Masons return job cargo before commuting. Ground/upper plans and the existing cellar remain intact. See [crew routes](WORKERS160.md), [upper floors](UPPER158.md), [cellar notes](CELLAR156.md) and [playtest guide](PLAYTEST_GUIDE.md).
+
+Preflight passed 31 worker assertions in headless/native Godot 4.4.1 and 42 tooling tests. The final case adds two legacy-worksite checks and passed full source/package gates. Native berth controls and upstairs resident rendering were reviewed; the legacy correction does not change presentation.
 
 ## Next work and limits
 
-Next: explicit household-worker routes and automated freight across the surface/mine boundary. Current household and mine routes retain their owners; carts stay parked for household stairs. No new mine depths, automated excavation or property-story integration were added.
+Next core blueprint piece: automated freight across the household/mine boundary. Carts stay parked at household stairs. New mine depths, automated excavation and provisional-property story integration remain deferred.
 
-Normal-speed Windows input, audio, performance and enjoyment still need player testing. Preserve previous releases and saves. Follow [release procedure](RELEASE_PIPELINE.md); delivery-document updates need no rebuild. Previous delivery is retained in [history](history/CURRENT_STATUS-before-upper158.md).
+Normal-speed Windows input, audio, performance and enjoyment still need player testing. Preserve releases and saves. Follow [release procedure](RELEASE_PIPELINE.md); documentation-only updates need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-workers160.md).

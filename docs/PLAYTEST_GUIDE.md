@@ -58,7 +58,7 @@ Stair guides apply only to the original five depths. Click **Plan stairs**, sele
 
 On the claim ground floor, use **O → Plan Your Holding → Plan cellar stair here** while standing at the intended landing. Note its tile coordinates. The cellar is the existing claim mine directly beneath the grounds. Build five clear floor tiles at the upper landing; use the existing mine entrance to reach below and mine the five lower tiles plus a connected approach. Return above and fit for 4 timber / 2 stone.
 
-Use **Shift+E** at either landing. Take carried supplies down, furnish a room and stock a materials pallet, then save/reload on both sides. Check that the home, mine plans, furnishings and storage contents survive. Try a blocked landing and a hitched cart; travel should be refused with a reason. Unbuilt guides can be removed, but built stair landings stay protected. Household workers and carts do not cross this connection yet.
+Use **Shift+E** at either landing. Take carried supplies down, furnish a room and stock a materials pallet, then save/reload on both sides. Check that the home, mine plans, furnishings and storage contents survive. Try a blocked landing and a hitched cart; travel should be refused with a reason. Unbuilt guides can be removed, but built stair landings stay protected. Recruited miners with an assigned household berth can cross this connection; carts must remain parked.
 
 ## Upper-floor blueprints (0.110.0)
 
@@ -66,4 +66,12 @@ In **O → Plan Your Holding**, select an upper floor and draw a room over your 
 
 Choose the lower planning floor, stand at an interior landing and use **Plan upward stair at my X/Y**. Fit it locally for **4 timber / 2 stone**. E climbs and Shift+E descends. Select the visited floor before **Build within reach**; walk around inside the room to reach its far walls. Reused roof decks must not charge another floor cost.
 
-Make a cellar workshop/storage area, a ground kitchen/hall and an upstairs bedroom. Use their furnishings and storage, renovate upstairs, save and reload. Confirm the lower floor and stored items remain intact. Removing an upper plan must preserve the physical room. Existing manual stairs remain supported; carts stay parked, and cross-boundary household-worker/freight routing is still future work.
+Make a cellar workshop/storage area, a ground kitchen/hall and an upstairs bedroom. Use their furnishings and storage, renovate upstairs, save and reload. Confirm the lower floor and stored items remain intact. Removing an upper plan must preserve the physical room. Existing manual stairs remain supported; carts stay parked, and automated freight across the household boundary is still future work.
+
+## Crew berths — 0.111.1
+
+On your own claim, recruit and assign a miner, furnish a real bed, and connect it to the mine with clear constructed floors, household stairs and a fitted cellar stair. In **O → Plan Your Holding → A bed for your crew**, select the bed's floor and choose **Assign selected bed**. Room designation is optional. Keep provisions available.
+
+During the existing crew rest period, watch the miner walk home, rest at the bedside and return to the original mine assignment. Save and reload during the commute and upstairs: position and berth should survive without a duplicate worker. Try an obstructed route and then clear it; the worker should wait and resume, never cross the obstruction or gain rest remotely. Release the berth to return the worker to normal duties. Existing saves and workers at other worksites should retain their worksite behavior.
+
+Carts still stay parked at household stairs. This release adds worker movement, not automated storage transfers. Check normal-speed Windows performance and readability during ordinary play.

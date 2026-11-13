@@ -10,4 +10,4 @@ Stair guides live in `blueprints152.stairs158`, with lower floor and X/Y. Up to 
 
 The focused native case exercises stacked plans, support/access warnings, exact payments, physical stair input, furnishing and storage, renovation, cold reload and three-level travel. Existing surface, manor and cellar cases remain regression gates. Focused acceptance passed 208 assertions (upper158 51, blueprints152 61, cellar156 49, blueprint_manor152 47), plus 42 tooling tests. Native floor-picker and furnished-room images were reviewed. Full release validation passed 85 source cases and 75 package cases / 14,452 assertions; see current status for the exact source, run and hashes.
 
-Resident/worker travel across surface and mine, automated freight, new mine depths and property-story integration remain deferred. Normal-speed Windows input, audio, performance and enjoyment still require player testing.
+Household-worker travel across surface and mine shipped in 0.111.1; see [crew routes](WORKERS160.md). Automated freight, new mine depths and property-story integration remain deferred. Normal-speed Windows input, audio, performance and enjoyment still require player testing.
