@@ -54,7 +54,7 @@ Once a chamber is cleared and connected, choose **Prepare / furnish**. Use exist
 
 Stair guides apply only to the original five depths. Click **Plan stairs**, select the upper location, and excavate both five-tile landings using existing access to reach below. Stand on the upper guide and choose **Fit stairs here**. Test **E** down and **Shift+E** up, then save/reload. Lateral mineworks retain their adits; surface-to-underground estate connections remain future work.
 
-## Connected cellar (0.109.0 candidate)
+## Connected cellar (0.109.0)
 
 On the claim ground floor, use **O → Plan Your Holding → Plan cellar stair here** while standing at the intended landing. Note its tile coordinates. The cellar is the existing claim mine directly beneath the grounds. Build five clear floor tiles at the upper landing; use the existing mine entrance to reach below and mine the five lower tiles plus a connected approach. Return above and fit for 4 timber / 2 stone.
 

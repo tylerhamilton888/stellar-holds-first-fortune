@@ -1,6 +1,6 @@
 # Connected home and cellar — Stage C, first slice
 
-Candidate for 0.109.0; see CURRENT_STATUS.md for publication. The broader Stage C is not complete.
+Released in **0.109.0** through [PR #156](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/156). See [CURRENT_STATUS](CURRENT_STATUS.md) for verified delivery. The broader Stage C is not complete.
 
 ## Ownership and geometry
 
@@ -17,3 +17,5 @@ Surface household routines and mine workers have separate area/route ownership. 
 ## Validation
 
 The cellar156 native/exact-package case builds a surface room, plans a stair through the book, saves an unfinished connection, excavates a cellar through real mining contacts, pays for stairs, traverses actual input, places furnishings and stocked storage, and reloads on both sides. It rejects blocked destinations, missing materials, duplicate payment, remote/cross-site travel, cart crossing and destructive landing placement. Native captures cover the surface stair, underground stair and book controls. Required affected regressions are blueprints152, excavation154 and navigation94; full release gates remain mandatory.
+
+Focused acceptance passed 201 assertions, including 49 in the final cellar case with a recreated game loading the underground save. Tooling passed 42 tests. Full source, exact-package and publication gates passed; published metadata and receipt were independently compared after upload.
