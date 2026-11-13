@@ -10,9 +10,11 @@ Branch `feature/upper-blueprints`, based on master `d1fea58c88009d4446cd58b1ae6f
 
 Implemented floor selection (ground plus four upper storeys), additive floor-specific plans, support/access status, aligned stair guides, local paid construction and floor-specific finish quotes. Paid roof decks are reused without duplicate floor charges. Planning does not move the player; old records default to ground. Existing manual construction, cellar travel, inventory and storage remain authoritative. See [upper-floor notes](UPPER158.md).
 
-Native acceptance is in progress. Early checks found fixture placement/approach problems and a roof-deck finish rendering issue, now corrected. The final scenario covers a ground kitchen, upper bedroom/storage, renovated cold reload and a connected cellar workshop/storage. Affected surface/manor/cellar regressions and visual review are required before release. Tooling: 42 tests passed.
+Focused native acceptance passed **208 assertions**: upper158 51, blueprints152 61, cellar156 49 and blueprint_manor152 47. The obsolete manor assertion forbidding upstairs planning was replaced with availability/floor-isolation coverage. Tooling passed 42 tests. Native floor-picker and furnished-room images were reviewed.
 
-Next: complete focused native checks, review images, commit/upload the exact source, open the source PR, run required PR and full source/package release gates, merge after passing, publish and verify assets, then reconcile delivery docs separately. Follow [release procedure](RELEASE_PIPELINE.md). Never describe merged source as published delivery.
+[Source PR #158](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/158) is ready. Exact candidate source: `088f3d75cf0d4b00369503eae8695e30a43638bd`; tree: `a22f2822cc4a10d0c35c702020bdb8436d123a1e`. [PR checks](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43441172297) and [verified Windows release](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43441360497) are running. The release branch is frozen at this source. Do not restart healthy jobs.
+
+Next: merge PR #158 only after its required checks pass; monitor the independent source/package verification through publication, retrieve public assets and compare version/source/hashes, then finalize this delivery-doc branch and merge it after docs checks. Follow [release procedure](RELEASE_PIPELINE.md). The candidate is not yet a verified published release.
 
 ## Limits
 
