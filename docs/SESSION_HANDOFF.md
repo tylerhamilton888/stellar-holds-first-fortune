@@ -1,9 +1,9 @@
-# Current handoff — worker routes, in progress
+# Current handoff — worker routes, release candidate
 
-Published baseline: **0.110.0**, source merged through PR #158 and delivery docs through #159. See [CURRENT_STATUS](CURRENT_STATUS.md). Latest verified master at recovery: `6963c58`.
+Published baseline: **0.110.0**, source PR #158 and delivery docs #159. See [CURRENT_STATUS](CURRENT_STATUS.md). Baseline master: `6963c58`.
 
-Active branch: `feature/estate-worker-routes`. User requested the next blueprint piece: household-worker navigation. Implementation is in `scripts/estate_workers.gd`, integrated with the existing mine agent loop, surface renderer and Building Book. It connects recruited miners to actual household beds through built floors, upper stairs and cellar stairs, preserving mine assignments and saved positions. See [WORKERS160](WORKERS160.md).
+Active work: [PR #160](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/160), branch `feature/estate-worker-routes`, candidate **0.111.0**. User requested the next blueprint piece: household-worker navigation. The implementation connects recruited miners to real household beds through built floors, upper stairs and cellar stairs, preserving mine assignments and saved positions. See [WORKERS160](WORKERS160.md).
 
-New acceptance case `workers160` is registered for source and exact-package checks. Local checks are pending; the fresh workspace is importing assets using pinned Godot 4.4.1. Test evidence belongs in `test-results/workers160-*`. No release, merge or completed validation is claimed yet.
+Focused validation: pinned Godot 4.4.1 import and parsing passed; workers160 passed 31 assertions in headless and native runs; 42 tooling tests passed. Reviewed native resident rendering and the scrolled berth controls. Evidence: `test-results/workers160-native7` and `test-results/workers160-tooling2.log`. The new case is registered in source and exact-package catalogues.
 
-Remaining: finish focused native tests and visual review, tooling checks, review changes, prepare the source/version PR and verified release, then reconcile delivery docs. Preserve older releases and saves. Follow [release procedure](RELEASE_PIPELINE.md). Automated freight is the next separate blueprint piece; provisional-property story integration remains deferred.
+Pending: full PR/source and exported-package gates, merge, verified Windows publication and final delivery-document reconciliation. No publication or full-gate success is claimed yet. Preserve prior releases and saves; follow [release procedure](RELEASE_PIPELINE.md). Automated freight remains the next separate blueprint piece. Provisional-property story integration remains deferred.

@@ -48,9 +48,10 @@ func run():
  g.spawn_agents();g.state.agents_enabled=true
  var record={"x":2100.0,"y":1460.0,"z":1};var before=normal(g.state.inventory)
  check(HoldEstateWorkers.assign(g,"ivar",record).contains("Recruit"),"Reject borrowed or unrecruited people")
- g.surface.architecture.room_planning=true;g.open_panel("architecture");button("Bed (52, 36)")
+ g.surface.architecture.room_planning=true;g.open_panel("architecture");button("Assign selected bed")
  check(HoldEstateWorkers.homes(g).has("brann"),"Real book button assigns furnished upstairs berth")
  check(normal(g.state.inventory)==before,"Bed assignment does not move or spend supplies")
+ for frame in 4:await process_frame
  for scroll in g.panel.find_children("*","ScrollContainer",true,false):scroll.scroll_vertical=10000
  if DisplayServer.get_name()!="headless":await snap("01-crew-berth")
  g.close_panel()

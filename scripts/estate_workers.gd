@@ -197,11 +197,16 @@ static func panel(p):
   if a.type!="worker":continue
   var id=str(a.id);var record=homes(g).get(id,{});var label=g.state.npc(id).first_name
   if not record.is_empty():label+=" · bed on floor %d (%d, %d)" % [record.z,int(record.x/40),int(record.y/40)]
-  g.label(g.panel_body,label+" · "+a.status,15)
-  var row=g.row(g.panel_body)
+  var status="Berth reserved for the next rest period" if not record.is_empty() and a.status=="Awaiting assignment" else str(a.status)
+  g.label(g.panel_body,label+" · "+status,15)
+  var row=g.row(g.panel_body);var selector=OptionButton.new();selector.custom_minimum_size=Vector2(190,34);row.add_child(selector)
+  var targets=[]
   for b in available:
-   var target={"x":b.x,"y":b.y,"z":int(b.get("z",0))}
-   g.small_button(row,"Bed (%d, %d)" % [int(b.x/40),int(b.y/40)],func():g.notify(assign(g,id,target));g.save_game();g.refresh_panel())
+   targets.append({"x":b.x,"y":b.y,"z":int(b.get("z",0))});selector.add_item("Bed (%d, %d)" % [int(b.x/40),int(b.y/40)])
+  selector.disabled=targets.is_empty()
+  if not targets.is_empty():selector.select(maxi(0,targets.find(record)))
+  g.small_button(row,"Assign selected bed",func():
+   if selector.selected>=0 and selector.selected<targets.size():g.notify(assign(g,id,targets[selector.selected]));g.save_game();g.refresh_panel()).disabled=targets.is_empty()
   if not record.is_empty():g.small_button(row,"Release berth",func():
    if g.surface.active() and g.surface.area=="claim" and g.state.active_site=="claim":homes(g).erase(id);g.save_game();g.refresh_panel())
  if g.agents.is_empty():g.label(g.panel_body,"Recruit a miner for your own claim first.",14)
