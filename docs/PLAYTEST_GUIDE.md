@@ -60,7 +60,7 @@ On the claim ground floor, use **O → Plan Your Holding → Plan cellar stair h
 
 Use **Shift+E** at either landing. Take carried supplies down, furnish a room and stock a materials pallet, then save/reload on both sides. Check that the home, mine plans, furnishings and storage contents survive. Try a blocked landing and a hitched cart; travel should be refused with a reason. Unbuilt guides can be removed, but built stair landings stay protected. Household workers and carts do not cross this connection yet.
 
-## Upper-floor candidate (0.110.0)
+## Upper-floor blueprints (0.110.0)
 
 In **O → Plan Your Holding**, select an upper floor and draw a room over your ground plan. Switching floors must not move you or spend resources. An unsupported plan should say **Needs supports**; after building below, it should say **Needs stairs** until a built flight reaches it.
 

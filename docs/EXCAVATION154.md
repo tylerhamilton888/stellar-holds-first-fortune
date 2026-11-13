@@ -2,7 +2,7 @@
 
 Released in **0.108.0** through [PR #154](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/154).
 
-Extends the existing mine's Living Works book (O) with Plan Your Holding and a Plans tab. Drag saved chamber/corridor rectangles, optionally label them, mine with normal tools, then prepare the cleared chamber for existing furnishings and finishes. The first Stage C slice adds [home/cellar connections](CELLAR156.md) in 0.109.0; broader estate and worker/freight integration remains future work.
+Extends the existing mine's Living Works book (O) with Plan Your Holding and a Plans tab. Drag saved chamber/corridor rectangles, optionally label them, mine with normal tools, then prepare the cleared chamber for existing furnishings and finishes. The first Stage C slice adds [home/cellar connections](CELLAR156.md) in 0.109.0; [upper-floor planning](UPPER158.md) followed in 0.110.0. Unified worker/freight integration remains future work.
 
 ## Ownership and conservation
 

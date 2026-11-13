@@ -16,7 +16,7 @@ Designation is a label and source of suggested defaults, never equipment permiss
 
 Saved plans are additive under the existing claim building's `blueprints152` dictionary. Structural pieces remain ordinary Hearthcraft tiles; optional `style87` and `finish_paid152` fields belong to those physical tiles. No duplicate inventory, storage capacity, excavation reward or construction economy is introduced.
 
-The 0.110.0 candidate extends planning to ground and four upper floors, with rectangles from 3–20 tiles per side and up to 64 saved plans across the holding. See [upper-floor notes](UPPER158.md). Existing records are never truncated. Existing authored buildings, furniture modes, fine construction and manual stairs remain available. Plans and physical construction persist independently.
+Version 0.110.0 extends planning to ground and four upper floors, with rectangles from 3–20 tiles per side and up to 64 saved plans across the holding. See [upper-floor notes](UPPER158.md). Existing records are never truncated. Existing authored buildings, furniture modes, fine construction and manual stairs remain available. Plans and physical construction persist independently.
 
 ## Acceptance
 
@@ -26,4 +26,4 @@ The first raw dictionary reload comparison failed because serialized numeric typ
 
 ## Later stages
 
-Stage B adds underground room and stair landing guides in 0.108.0; see [underground blueprint notes](EXCAVATION154.md). Manual stairs remain supported and tested. The first Stage C slice adds [connected home/cellar stairs](CELLAR156.md) in 0.109.0. The next Stage C slice adds [upper-floor blueprints](UPPER158.md); check current status for delivery. Unified worker/freight routing and provisional Old Stonewright's Rise story integration remain deferred.
+Stage B adds underground room and stair landing guides in 0.108.0; see [underground blueprint notes](EXCAVATION154.md). Manual stairs remain supported and tested. The first Stage C slice adds [connected home/cellar stairs](CELLAR156.md) in 0.109.0. The second Stage C slice adds [upper-floor blueprints](UPPER158.md) in 0.110.0. Unified worker/freight routing and provisional Old Stonewright's Rise story integration remain deferred.
