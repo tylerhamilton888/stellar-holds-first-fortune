@@ -1,3 +1,11 @@
+# 0.110.0 — Upper-floor blueprints
+
+- Plan ground and four upper storeys without moving the player; old plans remain on ground level.
+- Show missing supports and stair access; build only on the visited floor using existing paid construction.
+- Save aligned stair guides, fit them for the existing cost and preserve built connections.
+- Isolate quotes, shared boundaries, renovation and guide removal by floor; display paid finishes on reused roof decks.
+- Continue Stage C with connected cellar/ground/upstairs homes. Household-worker and automated freight integration remain future work.
+
 # 0.109.0 — Connected home and cellar
 
 - Saved, aligned stair plans link a surface holding to its existing claim mine.

@@ -52,10 +52,18 @@ In the mine, press **O**, choose **Plan Your Holding** or the **Plans** tab, and
 
 Once a chamber is cleared and connected, choose **Prepare / furnish**. Use existing furnishings and workstations/storage. Choose floor and natural-wall finishes lower in the book, review the quote, then use **Finish within reach** while moving around the room. Research and actual carried supplies still apply. Removing a guide must leave the excavation, room, furnishings and stored materials intact.
 
-Stair guides apply only to the original five depths. Click **Plan stairs**, select the upper location, and excavate both five-tile landings using existing access to reach below. Stand on the upper guide and choose **Fit stairs here**. Test **E** down and **Shift+E** up, then save/reload. Lateral mineworks retain their adits; surface-to-underground estate connections remain future work.
+Stair guides apply only to the original five depths. Click **Plan stairs**, select the upper location, and excavate both five-tile landings using existing access to reach below. Stand on the upper guide and choose **Fit stairs here**. Test **E** down and **Shift+E** up, then save/reload. Lateral mineworks retain their adits; surface-to-underground cellar connections are covered below.
 
 ## Connected cellar (0.109.0)
 
 On the claim ground floor, use **O → Plan Your Holding → Plan cellar stair here** while standing at the intended landing. Note its tile coordinates. The cellar is the existing claim mine directly beneath the grounds. Build five clear floor tiles at the upper landing; use the existing mine entrance to reach below and mine the five lower tiles plus a connected approach. Return above and fit for 4 timber / 2 stone.
 
 Use **Shift+E** at either landing. Take carried supplies down, furnish a room and stock a materials pallet, then save/reload on both sides. Check that the home, mine plans, furnishings and storage contents survive. Try a blocked landing and a hitched cart; travel should be refused with a reason. Unbuilt guides can be removed, but built stair landings stay protected. Household workers and carts do not cross this connection yet.
+
+## Upper-floor candidate (0.110.0)
+
+In **O → Plan Your Holding**, select an upper floor and draw a room over your ground plan. Switching floors must not move you or spend resources. An unsupported plan should say **Needs supports**; after building below, it should say **Needs stairs** until a built flight reaches it.
+
+Choose the lower planning floor, stand at an interior landing and use **Plan upward stair at my X/Y**. Fit it locally for **4 timber / 2 stone**. E climbs and Shift+E descends. Select the visited floor before **Build within reach**; walk around inside the room to reach its far walls. Reused roof decks must not charge another floor cost.
+
+Make a cellar workshop/storage area, a ground kitchen/hall and an upstairs bedroom. Use their furnishings and storage, renovate upstairs, save and reload. Confirm the lower floor and stored items remain intact. Removing an upper plan must preserve the physical room. Existing manual stairs remain supported; carts stay parked, and cross-boundary household-worker/freight routing is still future work.

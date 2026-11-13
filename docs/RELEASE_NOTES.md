@@ -1,11 +1,11 @@
-# 0.109.0 — A cellar beneath your home
+# 0.110.0 — Plan a home across floors
 
-Connect a home on your chartered grounds to the existing claim mine below. Open **O → Plan Your Holding**, stand at the intended landing, and choose **Plan cellar stair here**. The plan uses the same tile coordinates above and below and survives saving.
+In **O → Plan Your Holding**, choose the ground floor or one of four upper floors. Save rooms above rooms, review missing supports and stair access, and plan future expansion before paying for construction. Switching the planning view leaves your character where they are.
 
-Build five clear floor tiles around the surface landing. Enter your claim mine through its existing entrance, excavate the lower landing and a connected approach with normal mining tools, then return above to fit the stairs for **4 timber and 2 stone**. Planning grants no materials; fitting removes no rock. Existing room plans, furniture and storage keep their owners.
+Plan an upward stair at your current X/Y on the displayed floor. Build the lower room and its roof deck, then fit the stair from its lower landing for **4 timber / 2 stone**. Use **E** to climb and **Shift+E** to descend. Visit the intended floor to build; existing paid roof decks count toward its floor, so they are not charged twice.
 
-Use **Shift+E** at either landing to descend from home or return from the cellar. Carried supplies travel with you. Built landings are protected from obstructing furniture, equipment, walls, deeper stairs and foundation removal. Both destinations are checked before travel. Park carts before using these stairs; their cargo stays with them.
+Each floor keeps its own room plans, shared boundaries, material quotes and finishes. Furnish, stock storage and renovate upstairs using the existing systems. Deleting a guide preserves the physical building and possessions. Existing saves without floor labels retain their ground-floor plans.
 
-This is the first connected-estate slice of Stage C. Surface rooms and the existing claim mine now have physical, saved connections. It does not yet add upper-floor blueprint editing, cross-boundary household-worker routes, freight automation or additional mine depths. Mine workers continue to use existing connected mine routes.
+Combine upper rooms with the existing home/cellar connection for a three-level holding. This continues Stage C; unified household-worker routes and automated freight across the surface/mine boundary remain future work. Park carts before stairs.
 
-Download the complete Windows ZIP and extract it into a fresh folder. Keep FirstFortune.exe beside FirstFortune.pck, and retain older builds and saves.
+Download the complete Windows ZIP and extract it into a fresh folder. Keep FirstFortune.exe beside FirstFortune.pck, and retain older builds and saves. Delivery status and validation are recorded in CURRENT_STATUS.md.

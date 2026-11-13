@@ -313,7 +313,7 @@ func material(index:int,rect:Rect2,tint:Color=Color.WHITE):
  var size=Vector2(MATERIALS.get_width()/3.0,MATERIALS.get_height()/2.0)
  g.draw_texture_rect_region(MATERIALS,rect,Rect2(Vector2(index%3,index/3)*size,size),tint)
 func floor_draw():
- if s.area=="claim" and level()==0:s.architecture.room_blueprints.draw_guides()
+ if s.area=="claim":s.architecture.room_blueprints.draw_guides()
  if s.area!="claim" and not s.architecture.interior():return
  for z in range(level()):
   for k in tiles(z):
@@ -322,8 +322,8 @@ func floor_draw():
  for k in tiles():
   var t=tiles()[k];var p=Vector2(coords(k))*CELL
   if not t.has("floor"):continue
-  if t.has("style87") and t.floor!="roof_floor":HoldArchitectureStyles.floor_draw(g,Rect2(p,Vector2.ONE*CELL),HoldBlueprintFinishes.style(self,coords(k)).floor)
-  else:material(2 if t.floor=="roof_floor" else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL))
+  if t.has("style87"):HoldArchitectureStyles.floor_draw(g,Rect2(p,Vector2.ONE*CELL),HoldBlueprintFinishes.style(self,coords(k)).floor)
+  else:material(2 if t.floor=="roof_floor" and not t.get("roof",false) else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL))
  for k in data().links:
   var z=int(k.get_slice("/",0));var c=coords(k.get_slice("/",1))
   if z!=level() and z+1!=level():continue
