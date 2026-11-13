@@ -3,16 +3,28 @@ const LANDING=Vector2i(54,34)
 func normal(v):return JSON.parse_string(JSON.stringify(v))
 func stand(c:Vector2i):g.player=Deepworks.center(c);g.transition_left=0
 func build_room(p):
+ var bounds=p.bounds(p.chosen())
  for attempt in 8:
-  for y in range(29,40,2):
-   for x in range(49,60,2):stand(Vector2i(x,y));p.work()
+  for c in [bounds.get_center(),bounds.position+Vector2i.ONE,Vector2i(bounds.end.x-2,bounds.position.y+1),bounds.end-Vector2i(2,2),Vector2i(bounds.position.x+1,bounds.end.y-2)]:
+   stand(c);p.work()
+  if p.remaining(p.chosen()).is_empty():break
  check(p.remaining(p.chosen()).is_empty(),"Build room through paid blueprint construction")
 func worker()->Dictionary:return g.agents.filter(func(a):return a.id=="brann")[0]
 func advance(count:int):
  for i in count:g.deep.agents(.1)
+func advance_until_home(count:int):
+ for i in count:
+  g.state.elapsed+=.1;g.deep.agents(.1)
+  if worker().status=="Resting at home":break
 func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
- g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
+ print("WORKERS160 setup: loading scene")
+ g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true
+ print("WORKERS160 setup: starting game")
+ g.start_game(false)
+ print("WORKERS160 setup: warming characters")
+ settle()
+ print("WORKERS160 setup: ready")
  g.state.opening=4;g.state.claim_id="old_delving";g.state.camp_stage=3;HoldOnboarding.ensure(g.state).fresh=false
  for item in HoldData.ITEMS:g.state.inventory[item]=10000
  g.state.money=10000
@@ -40,7 +52,8 @@ func run():
  check(HoldEstateWorkers.homes(g).has("brann"),"Real book button assigns furnished upstairs berth")
  check(normal(g.state.inventory)==before,"Bed assignment does not move or spend supplies")
  for scroll in g.panel.find_children("*","ScrollContainer",true,false):scroll.scroll_vertical=10000
- await snap("01-crew-berth");g.close_panel()
+ if DisplayServer.get_name()!="headless":await snap("01-crew-berth")
+ g.close_panel()
  var a=worker();var saved=g.deep.crew_entry(a)
  check(not saved.has("estate_area160"),"Old crew record defaults to mine without migration or relocation")
  var assigned=saved.assigned;g.state.elapsed=95
@@ -56,12 +69,12 @@ func run():
  advance(420)
  check(saved.get("estate_area160","mine")=="mine" and Vector2(saved.x,saved.y).y<Deepworks.center(block).y,"Worker cannot cross newly blocked mine passage")
  check(float(g.deep.works.model.data.folk.brann.rested_until)==0,"Blocked commute cannot grant remote rest")
- w.set_cell(block,0,0);advance(600)
+ w.set_cell(block,0,0);g.state.elapsed=121;advance_until_home(600)
  check(saved.get("estate_area160","")=="surface" and int(saved.get("estate_z160",-1))==1,"Worker crosses cellar and upstairs stairs without moving player")
- check(a.status=="Resting at home" and g.deep.works.model.data.folk.brann.rested_until>g.state.elapsed,"Actual bedside arrival grants rest")
+ check(a.status=="Resting at home" and g.deep.works.model.data.folk.brann.rested_until>g.state.elapsed,"Long commute survives the schedule boundary and grants rest only at bedside")
  check(int(saved.assigned)==int(assigned),"Home commute preserves mine work assignment")
  check(HoldEstateWorkers.objects(g).size()==1,"Resident rendered once on its own floor")
- await snap("02-worker-at-home")
+ if DisplayServer.get_name()!="headless":await snap("02-worker-at-home")
  var home_position=Vector2(saved.x,saved.y);g.save_game();g.queue_free();await process_frame
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(true);settle()
  a=worker();saved=g.deep.crew_entry(a);w=g.deep.world;h=g.surface.house;p=g.surface.architecture.room_blueprints

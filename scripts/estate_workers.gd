@@ -123,7 +123,7 @@ static func valid_step(g,saved:Dictionary,n:Dictionary)->bool:
   return z==0 and int(n.z)==0 and c==cell(n) and stairs(g).any(func(r):return cell(r)==c)
  if z!=int(n.z):
   if area=="surface":return c==cell(n) and building(g).get("links",{}).has(str(mini(z,int(n.z)))+"/"+Deepworks.key(c)) and clear(g,node(c,z),obstacles(g,z)) and clear(g,n,obstacles(g,int(n.z)))
-  return w.connections(z).any(func(link):return link.c==c and int(link.to)==int(n.z) and link.target==cell(n) and w.walkable(link.target,int(n.z)))
+  return w.connections(z).any(func(link):return link.c==c and int(link.to)==int(n.z) and link.target==cell(n) and w.walkable(c,z) and w.walkable(link.target,int(n.z)))
  if area=="surface":return clear(g,n,obstacles(g,z))
  return w.walkable(cell(n),z)
 static func tick(g,a:Dictionary,saved:Dictionary,dt:float)->bool:
