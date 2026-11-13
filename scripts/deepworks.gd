@@ -273,6 +273,8 @@ func survey(p:Vector2)->Array:
 func link_key(c:Vector2i,z:int)->String:return str(z)+":"+key(c)
 func can_descend(c:Vector2i,z:int)->bool:return data.links.has(link_key(c,z))
 func carve_stairs(c:Vector2i,kind:String="stair")->String:
+ for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+  if HoldEstateCellar.reserved(state,c+d,depth()):return "Keep the home cellar landing separate from deeper stairs."
  var z=depth()
  if kind not in ["stair","ladder"]:return "Choose stairs or a timber ladder."
  if z>=DEPTHS-1:return "The surveyed frontier ends here. Lateral mineworks connect through their marked adits."

@@ -46,6 +46,7 @@ func occupied_at(c:Vector2i,z:int)->bool:
    if o.area=="claim" and int(o.get("z",0))==z and HoldFurnishings.footprint(o.get("kind","chest"),Vector2(o.x,o.y)).intersects(Rect2(Vector2(c)*CELL,Vector2.ONE*CELL).grow(5)):return true
  return s.area=="claim" and level()==z and center(c).distance_to(g.player)<30
 func use_stairs(up:bool)->bool:
+ if not up and HoldEstateCellar.travel(g):return true
  var z=level();var lower=z if up else z-1
  if s.area!="claim" or lower<0:return false
  var found=Vector2i(-1,-1);var best=55.0
@@ -121,6 +122,7 @@ func valid(c:Vector2i,kind:String,check_routes:bool=true)->bool:
  var p=center(c)
  if g.player.distance_to(p)>170:reason="Move within reach of your work.";return false
  if not s.claim_ground(p) or p.y<320:reason="Keep to the clear homestead building grounds.";return false
+ if level()==0 and kind in ["remove","wall","window","door","stairs","ladder"] and HoldEstateCellar.protected(g,c):reason="Keep the built cellar landing intact and clear.";return false
  var t=tile(c)
  if kind=="remove":
   if t.is_empty():reason="No construction here.";return false
@@ -331,6 +333,8 @@ func floor_draw():
    var y=p.y-14+i*7;g.draw_line(Vector2(p.x-12,y),Vector2(p.x+12,y),Color("b99864") if ladder else Color("b4b3a0"),3 if ladder else 5)
   if ladder:
    for x in [-14,14]:g.draw_line(p+Vector2(x,-20),p+Vector2(x,20),Color("735735"),3)
+
+ if s.area=="claim" and level()==0:HoldEstateCellar.draw(g)
 
 func wall_draw(c:Vector2i):HoldBuildingArt.wall_piece(g,c,tiles())
 func roof_draw():

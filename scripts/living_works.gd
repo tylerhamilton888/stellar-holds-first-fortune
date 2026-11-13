@@ -71,6 +71,7 @@ func connected(r:Dictionary,blocked:Vector2i=Vector2i(-1,-1))->bool:
    if n in floor and not seen.has(k):seen[k]=true;queue.append(n)
  return seen.size()==floor.size()
 func place(c:Vector2i,kind:String,occupied:Array=[])->String:
+ if HoldEstateCellar.reserved(s,c,w.depth()):return "Keep the cellar stair landing clear."
  if not FURNITURE.has(kind):return "Unknown furnishing."
  var def=FURNITURE[kind];var r=at(c);var key=id_at(c)
  if r.is_empty() or w.at(c)!=0:return "Place furnishings on floor inside a designated room."

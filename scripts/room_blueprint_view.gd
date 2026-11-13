@@ -50,6 +50,7 @@ class Map extends Control:
    if str(r.id)==planner.selected:draw_rect(rect.grow(12),Color("f3dfa1"),false,6)
    draw_rect(rect,Color(color,.12));draw_rect(rect,color,false,8)
    for k in r.doors:draw_rect(Rect2(Vector2(planner.a.s.house.coords(k))*40,Vector2(40,40)),Color("87ce94"))
+  HoldEstateCellar.draw_map(self,planner.a.g)
   draw_circle(planner.a.g.player,22,Color("fff0b9"))
   if dragging:
    var end=cell_at(get_local_mouse_position());var low=Vector2i(mini(start.x,end.x),mini(start.y,end.y));var high=Vector2i(maxi(start.x,end.x),maxi(start.y,end.y))
@@ -118,3 +119,5 @@ static func show(a):
  # Keep the primary build controls and quote above optional navigation/finishes.
  g.panel_body.move_child(navigation,g.panel_body.get_child_count()-1)
  g.panel_body.move_child(style_row,g.panel_body.get_child_count()-1)
+
+ HoldEstateCellar.panel(g)

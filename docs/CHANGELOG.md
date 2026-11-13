@@ -1,3 +1,10 @@
+# 0.109.0 — Connected home and cellar
+
+- Saved, aligned stair plans link a surface holding to its existing claim mine.
+- Actual excavation and clear landings precede a single paid stair installation.
+- Shift+E travel, carried supplies and save/reload work across the boundary; built landings are protected.
+- The first Stage C slice retains existing mine worker routes and requires carts to be parked. Unified worker/freight routes and upper-floor blueprint editing remain future work.
+
 # 0.108.0 — underground excavation blueprints
 
 Add saved underground room and corridor guides, live excavation progress, optional room labels and nearby finishing through existing LivingWorks transactions. Preserve geology, damage, mining yields, storage and furnishings. Recognize equipment-based worker roles in undesignated chambers. Support planned stair connections within the original depths only after both real landings are mined; preserve lateral adits and existing stair behavior.

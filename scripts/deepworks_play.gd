@@ -84,6 +84,7 @@ func input(e:InputEvent)->bool:
    g.open_panel("rescue");return true
  return false
 func use_stairs(up:bool):
+ if up and HoldEstateCellar.travel(g):return
  if not up and HoldMineworks143.interact(g):return
  if not up and HoldAncestralClaim.interact(g):return
  ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
@@ -486,6 +487,7 @@ func draw():
   var p=Vector2(c)*40
   g.surface.world.detail(5,p+Vector2(20,39),40,38)
   # Passage names and keys are shown in the contextual HUD, never over actors.
+ HoldEstateCellar.draw(g)
  HoldMineworks143.draw_floor(g)
  for prop in HoldMineworks143.props(world):HoldMineworks143.draw_prop(g,prop)
  for id in l.fixtures:
