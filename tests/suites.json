@@ -41,7 +41,8 @@
       "blueprint_manor152",
       "excavation154",
       "cellar156",
-      "upper158"
+      "upper158",
+      "workers160"
     ],
     "gameplay": [
       "loading",
@@ -128,7 +129,8 @@
       "blueprint_manor152",
       "excavation154",
       "cellar156",
-      "upper158"
+      "upper158",
+      "workers160"
     ],
     "modular": [
       "modular",
@@ -422,7 +424,8 @@
       "living_forges148",
       "blueprints152",
       "blueprint_manor152",
-      "excavation154"
+      "excavation154",
+      "workers160"
     ],
     "gameplay-3": [
       "orientation",
@@ -1087,6 +1090,13 @@
       "blueprints152",
       "cellar156",
       "blueprint_manor152"
+    ],
+    "workers160": [
+      "workers160",
+      "upper158",
+      "cellar156",
+      "living",
+      "mineworks143"
     ]
   },
   "cases": {
@@ -1433,6 +1443,10 @@
     "upper158": {
       "script": "tests/upper158.gd",
       "marker": "UPPER158"
+    },
+    "workers160": {
+      "script": "tests/workers160.gd",
+      "marker": "WORKERS160"
     }
   }
 }

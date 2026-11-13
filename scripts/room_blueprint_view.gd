@@ -128,3 +128,5 @@ static func show(a):
 
  HoldUpperBlueprints.panel(p)
  if p.level()==0:HoldEstateCellar.panel(g)
+
+ HoldEstateWorkers.panel(p)
