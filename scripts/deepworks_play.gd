@@ -281,13 +281,15 @@ func agents(dt:float):
  var budget=1
  for a in g.agents:
   var saved=crew_entry(a);var z=int(saved.depth)
+  a.cool-=dt
+  if HoldEstateWorkers.tick(g,a,saved,dt):continue
   var room=works.model.destination(a.id) if a.type=="worker" else {}
   var task=str(room.get("id",""))
   if str(saved.get("room_task",""))!=task:
    saved.room_task=task;a.path=[];a.target=Vector2i(-1,-1)
   if not room.is_empty():saved.assigned=int(room.depth)
   if works.model.data.assignments.has(a.id):works.model.data.assignments[a.id].present=""
-  a.p=Vector2(saved.x,saved.y);a.cool-=dt;a.work=false
+  a.p=Vector2(saved.x,saved.y);a.work=false
   if a.fuel<=0:
    var item="food" if a.type=="worker" else "coal"
    if not g.state.pay({item:1}):a.status="Needs "+item;continue
@@ -501,7 +503,7 @@ func draw():
   if part.feature.found:
    var actor=part.duplicate();actor.p=part.base;actor.anchor=part.p;actors.append(actor)
  for a in g.agents:
-  if int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
+  if crew_entry(a).get("estate_area160","mine")=="mine" and int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
  actors.append_array(g.fight.objects())
  actors.append_array(g.handworks.objects())
  actors.append_array(HoldFirstShift.actors(g))
@@ -551,7 +553,7 @@ func draw():
      HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,Vector2(1,.45),false,g.clock,1.0,offset,"hammer",phase)
     else:
      var phase=fposmod(1.5-float(a.cool)/maxf(.1,float(a.get("swing",.6))),1.0)
-     HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,a.get("facing",Vector2.DOWN),not a.path.is_empty(),float(a.get("gait",0)),1.0,offset,"pick" if a.work else "",phase)
+     HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,a.get("facing",Vector2.DOWN),not a.path.is_empty() or a.get("estate_walking160",false),float(a.get("gait",0)),1.0,offset,"pick" if a.work else "",phase)
     if works.masonry.data.jobs.has(a.id) and not a.work:works.masonry.carry(p,1,works.masonry.data.jobs[a.id].cargo)
     if works.model.data.assignments.has(a.id):A.text(g,p+Vector2(-35,-81),g.state.npc(a.id).first_name+" · "+works.model.data.folk[a.id].activity,10,Color("dfc695"))
  g.draw_set_transform(offset)

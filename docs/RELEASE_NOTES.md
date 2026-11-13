@@ -1,11 +1,11 @@
-# 0.110.0 — Plan a home across floors
+# 0.111.0 — A home for your crew
 
-In **O → Plan Your Holding**, choose the ground floor or one of four upper floors. Save rooms above rooms, review missing supports and stair access, and plan future expansion before paying for construction. Switching the planning view leaves your character where they are.
+In **O → Plan Your Holding**, choose a floor and assign an actual bed to one of your recruited miners. Keep a continuous built floor route from the bed through household stairs to a fitted cellar stair. Room designations remain optional; an empty bedroom label provides no berth.
 
-Plan an upward stair at your current X/Y on the displayed floor. Build the lower room and its roof deck, then fit the stair from its lower landing for **4 timber / 2 stone**. Use **E** to climb and **Shift+E** to descend. Visit the intended floor to build; existing paid roof decks count toward its floor, so they are not charged twice.
+Workers walk home during their rest period, use the real stairs, rest at the bedside and return to their existing mine assignment. A long commute finishes with a short rest even if the scheduled rest period ends while the worker is walking. Masons return their carried job cargo before leaving.
 
-Each floor keeps its own room plans, shared boundaries, material quotes and finishes. Furnish, stock storage and renovate upstairs using the existing systems. Deleting a guide preserves the physical building and possessions. Existing saves without floor labels retain their ground-floor plans.
+Worker locations, home assignments and interrupted commutes survive saving and loading. Newly blocked paths stop travel; removed or released beds send residents back through available routes. Workers appear on their actual floor, and home rest requires arrival and provisions. Furniture, storage and underground work assignments retain their existing owners.
 
-Combine upper rooms with the existing home/cellar connection for a three-level holding. This continues Stage C; unified household-worker routes and automated freight across the surface/mine boundary remain future work. Park carts before stairs.
+This completes the household/mine worker-navigation piece of Stage C. Automated freight across the boundary remains separate; park carts before household stairs. No new mine depths or provisional-property story changes are included.
 
-Download the complete Windows ZIP and extract it into a fresh folder. Keep FirstFortune.exe beside FirstFortune.pck, and retain older builds and saves. Delivery status and validation are recorded in CURRENT_STATUS.md.
+Download the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Preserve older builds and saves. See CURRENT_STATUS.md for verified publication and validation; these notes alone do not establish delivery. Previous notes: [0.110.0](history/RELEASE_NOTES-before-workers160.md).

@@ -1,3 +1,11 @@
+# 0.111.0 — Household worker routes
+
+- Offer real household beds to recruited miners through the Building Book.
+- Walk between the existing claim mine, cellar stairs and upper-floor berths, retaining mine assignments.
+- Save exact worker locations and long-commute intent; recheck obstructions and require physical arrival for rest.
+- Keep masonry cargo with its existing job and render each worker only on their actual floor.
+- Automated household freight remains the next separate Stage C piece.
+
 # 0.110.0 — Upper-floor blueprints
 
 - Plan ground and four upper storeys without moving the player; old plans remain on ground level.

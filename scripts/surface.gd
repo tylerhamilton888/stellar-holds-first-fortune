@@ -759,6 +759,7 @@ func draw():
  if house.level()==0:objects.append_array(architecture.objects(area))
  if not room():objects.append_array(roads.furnishings(area))
  objects.append_array(roads.people(area))
+ objects.append_array(HoldEstateWorkers.objects(g))
  objects.append_array(g.fight.objects())
  objects.append_array(HoldInvasion131.objects(g))
  if HoldInvasion131.active(g.state) and HoldWorldZones.ward(area):objects=objects.filter(func(o):return o.kind!="citizen")

@@ -111,7 +111,7 @@ static func panel(g):
  for r in plans(g):
   var label="Connected" if r.built else "Planned"
   g.label(g.panel_body,"(%d, %d) · Ground ↔ cellar · %s" % [r.x,r.y,label],15)
- g.label(g.panel_body,"Shift+E at either landing travels between home and cellar. Carried supplies retain their owner; storage stays where you place it. Mine workers use existing mine routes. Household workers and carts do not cross this stair yet.",14)
+ g.label(g.panel_body,"Shift+E at either landing travels between home and cellar. Carried supplies retain their owner; storage stays where you place it. Assign crew beds in this book to connect household rest with mine work. Carts and automated freight do not cross this stair.",14)
 static func draw(g):
  if not here(g):return
  for r in plans(g):
