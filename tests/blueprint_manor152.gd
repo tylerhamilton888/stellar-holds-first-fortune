@@ -64,7 +64,7 @@ func run():
  check(h.build(h.center(stair),"stairs"),"Fine construction adds a stair inside a planned room: "+h.reason)
  check(p.rooms()[0].get("complete",false),"Fine detail work keeps completed room guides reconciled")
  check(h.use_stairs(true) and h.level()==1,"Real stair travel reaches the supported upper floor")
- check(not p.available(),"Surface planner does not pretend to support upper-floor plans")
+ check(p.available() and p.level()==1 and p.rooms().is_empty(),"Upper-floor planner is available without leaking ground-floor plans")
  check(h.use_stairs(false) and h.level()==0,"Real stair travel returns to the same holding")
  var decor=g.state.surface.decor.duplicate(true);var stores=g.state.surface.chests.duplicate(true)
  p.select_room(hall_id);p.chosen().style_family="forge"
