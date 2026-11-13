@@ -53,3 +53,9 @@ In the mine, press **O**, choose **Plan Your Holding** or the **Plans** tab, and
 Once a chamber is cleared and connected, choose **Prepare / furnish**. Use existing furnishings and workstations/storage. Choose floor and natural-wall finishes lower in the book, review the quote, then use **Finish within reach** while moving around the room. Research and actual carried supplies still apply. Removing a guide must leave the excavation, room, furnishings and stored materials intact.
 
 Stair guides apply only to the original five depths. Click **Plan stairs**, select the upper location, and excavate both five-tile landings using existing access to reach below. Stand on the upper guide and choose **Fit stairs here**. Test **E** down and **Shift+E** up, then save/reload. Lateral mineworks retain their adits; surface-to-underground estate connections remain future work.
+
+## Connected cellar (0.109.0 candidate)
+
+On the claim ground floor, use **O → Plan Your Holding → Plan cellar stair here** while standing at the intended landing. Note its tile coordinates. The cellar is the existing claim mine directly beneath the grounds. Build five clear floor tiles at the upper landing; use the existing mine entrance to reach below and mine the five lower tiles plus a connected approach. Return above and fit for 4 timber / 2 stone.
+
+Use **Shift+E** at either landing. Take carried supplies down, furnish a room and stock a materials pallet, then save/reload on both sides. Check that the home, mine plans, furnishings and storage contents survive. Try a blocked landing and a hitched cart; travel should be refused with a reason. Unbuilt guides can be removed, but built stair landings stay protected. Household workers and carts do not cross this connection yet.

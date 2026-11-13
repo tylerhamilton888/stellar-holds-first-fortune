@@ -523,6 +523,7 @@ func furniture_valid(p:Vector2,kind:String)->bool:
  if not can_furnish() or not HoldCollections141.furnishing_unlocked(g.state,kind):return false
  if not HoldFurnishings.ITEMS.has(kind) or p.distance_to(g.player)>140:return false
  var base=HoldFurnishings.footprint(kind,p)
+ if HoldEstateCellar.overlaps(g,base.grow(8)):return false
  if kind=="chest" and not walkable(p+Vector2(0,25),moving_furnishing):return false
  if kind=="ancestral_shrine" and not walkable(p+Vector2(0,30),moving_furnishing):return false
  if kind in ["bed","double_bed"] and not (walkable(HoldFurnishings.bedside(p,1,kind),moving_furnishing) or walkable(HoldFurnishings.bedside(p,-1,kind),moving_furnishing)):return false

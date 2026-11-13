@@ -27,3 +27,7 @@ Focused local acceptance passed 233 native assertions: excavation154 60, navigat
 Normal-speed Windows input, audio, performance and enjoyment still need player testing. Stage C connected surface/underground estates, unified worker/freight routing and provisional property-story integration remain deferred. This release adds no new mine depths or automated excavation workers.
 
 Preserve previous releases and saves. Follow [release procedure](RELEASE_PIPELINE.md); documentation-only follow-up requires no rebuild. Prior delivery is in [history](history/CURRENT_STATUS-before-excavation154.md).
+
+## Stage C first slice in progress
+
+Branch `feature/connected-cellar` implements saved home/claim-mine stair connections for 0.109.0. The basic native case passed 40 checks; expanded acceptance and affected regressions are in progress. See [candidate notes](CELLAR156.md). 0.108.0 remains the published release until the new delivery gates pass.

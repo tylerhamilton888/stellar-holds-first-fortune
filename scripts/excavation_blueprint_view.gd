@@ -53,6 +53,7 @@ class Map extends Control:
    var p=Vector2(s.x,s.y)*40
    for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:draw_rect(Rect2(p+Vector2(d)*40,Vector2(40,40)),Color("b99e6b"),false,3)
    for i in 4:draw_line(p+Vector2(3+i*3,5+i*9),p+Vector2(37-i*3,5+i*9),Color("e2c385"),4)
+  HoldEstateCellar.draw_map(self,planner.g)
   draw_circle(planner.g.player,24,Color("ffedbd"))
   if dragging:
    var end=cell_at(get_local_mouse_position());var low=Vector2i(mini(start.x,end.x),mini(start.y,end.y));var high=Vector2i(maxi(start.x,end.x),maxi(start.y,end.y))
@@ -113,3 +114,5 @@ static func show(p):
  action(g,links,"Remove stair guide",func():p.forget_stair();g.refresh_panel())
  action(g,links,"Workstations / storage",func():g.open_panel("handworks"))
  g.label(g.panel_body,"Stair crosses mark both landings. Mine their five tiles through existing access, then fit from above. The five original depths support stairs; lateral worksites keep their adits. E down · Shift+E up.",13)
+
+ HoldEstateCellar.panel(g)

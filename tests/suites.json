@@ -39,7 +39,8 @@
       "living_forges148",
       "blueprints152",
       "blueprint_manor152",
-      "excavation154"
+      "excavation154",
+      "cellar156"
     ],
     "gameplay": [
       "loading",
@@ -124,7 +125,8 @@
       "living_forges148",
       "blueprints152",
       "blueprint_manor152",
-      "excavation154"
+      "excavation154",
+      "cellar156"
     ],
     "modular": [
       "modular",
@@ -440,7 +442,8 @@
       "expedition97",
       "workplace98",
       "firstvisit99",
-      "troll133"
+      "troll133",
+      "cellar156"
     ],
     "calendar-preview": [
       "calendar"
@@ -1069,6 +1072,12 @@
       "mining",
       "navigation94",
       "blueprints152"
+    ],
+    "cellar156": [
+      "cellar156",
+      "blueprints152",
+      "excavation154",
+      "navigation94"
     ]
   },
   "cases": {
@@ -1407,6 +1416,10 @@
     "excavation154": {
       "script": "tests/excavation154.gd",
       "marker": "EXCAVATION154"
+    },
+    "cellar156": {
+      "script": "tests/cellar156.gd",
+      "marker": "CELLAR156"
     }
   }
 }

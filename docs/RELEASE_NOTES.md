@@ -1,11 +1,11 @@
-# 0.108.0 — Plan beneath the mountain
+# 0.109.0 — A cellar beneath your home
 
-Underground room and corridor blueprints are available in the mine's Living Works book (**O → Plan Your Holding / Plans**). Draw chambers inside stone, give them optional names of purpose, and keep unfinished plans across saving and loading.
+Connect a home on your chartered grounds to the existing claim mine below. Open **O → Plan Your Holding**, stand at the intended landing, and choose **Plan cellar stair here**. The plan uses the same tile coordinates above and below and survives saving.
 
-Mine through the outlines with your normal tools. Rock hardness, ore, damage and yields remain real; the planner neither removes stone nor grants free supplies. Progress follows the cleared floor. Natural bedrock does not need an aboveground shell built around it.
+Build five clear floor tiles around the surface landing. Enter your claim mine through its existing entrance, excavate the lower landing and a connected approach with normal mining tools, then return above to fit the stairs for **4 timber and 2 stone**. Planning grants no materials; fitting removes no rock. Existing room plans, furniture and storage keep their owners.
 
-Prepare a connected, excavated chamber and furnish it through the existing systems. Workstations, material storage and worker assignments remain usable in an undesignated room. Select floor and wall finishes, review their coverage costs and finish nearby surfaces with your actual supplies and research. Removing a guide preserves the room and its contents.
+Use **Shift+E** at either landing to descend from home or return from the cellar. Carried supplies travel with you. Built landings are protected from obstructing furniture, equipment, walls, deeper stairs and foundation removal. Both destinations are checked before travel. Park carts before using these stairs; their cargo stays with them.
 
-Plan physical stairs between the original five depths. Mine both landings through existing access before fitting the new connection; fitting never deletes rock. Existing manual stairs and lateral mineworks adits remain available. Surface-to-mine estates, additional levels and automated excavation are not part of this release.
+This is the first connected-estate slice of Stage C. Surface rooms and the existing claim mine now have physical, saved connections. It does not yet add upper-floor blueprint editing, cross-boundary household-worker routes, freight automation or additional mine depths. Mine workers continue to use existing connected mine routes.
 
 Download the complete Windows ZIP and extract it into a fresh folder. Keep FirstFortune.exe beside FirstFortune.pck, and retain older builds and saves.

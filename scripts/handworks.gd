@@ -128,6 +128,7 @@ func nearby_cart()->Dictionary:
   if vehicle(f):carts.append(f)
  return closest(carts,100)
 func can_place(p:Vector2)->bool:
+ if HoldEstateCellar.overlaps(g,footprint({"x":p.x,"y":p.y}).grow(10)):return false
  if g.zone!="mine" and g.surface.architecture.interior() and HoldFrontier103.public_building(g.surface.architecture.inside()) and not HoldFrontier103.private_room(g):return false
  if g.player.distance_to(p)>140 or footprint({"x":p.x,"y":p.y}).grow(10).has_point(g.player):return false
  if g.zone=="mine":
@@ -231,6 +232,7 @@ func input(e:InputEvent)->bool:
      if clear_line(g.player,parked):f.x=parked.x;f.y=parked.y
     g.save_game();return true
   if e.keycode==KEY_E:
+   if e.shift_pressed and HoldEstateCellar.here(g) and HoldEstateCellar.at_cell(g,Deepworks.cell(g.player)).get("built",false):return false
    if g.zone=="mine":
     var world=g.deep.world;var upper=world.depth()-1 if e.shift_pressed else world.depth()
     if upper>=0 and world.can_descend(Deepworks.cell(g.player),upper):return false
@@ -476,6 +478,8 @@ func overlay():
   g.draw_rect(Rect2(18,82,width,27),Color(.03,.08,.10,.9));HoldArt.text(g,Vector2(28,101),text,13,Color("ead6a4"))
 
 func prompt()->String:
+ var cellar_hint=HoldEstateCellar.prompt(g)
+ if cellar_hint!="":return cellar_hint
  var workplace_hint=HoldWorkplace98.prompt(g)
  if workplace_hint!="":return workplace_hint
  if g.zone=="mine" and g.deep.world!=null and HoldMineEntrance.inside_near(g.deep.world,g.player):return "E · Leave through the surface entryway"
