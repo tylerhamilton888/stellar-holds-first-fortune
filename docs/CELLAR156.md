@@ -12,7 +12,7 @@ Shift+E checks both destinations before crossing. The existing scene transitions
 
 ## Boundary of this slice
 
-Surface household routines and mine workers have separate area/route ownership. This patch does not copy or teleport workers across that boundary. Mine jobs continue using the mine entrance and existing internal stairs. Carts must be parked before this household stair; carried supplies may cross, but no stock is remotely spent or automatically transferred. Upper-floor room-blueprint editing shipped in 0.110.0; see [upper-floor notes](UPPER158.md) and current status. Unified household/worker/freight routes remain future Stage C work. Existing manual upper stairs and mine stairs remain available.
+Household-worker routes were added in 0.111.1; see [crew routes](WORKERS160.md). Recruited miners assigned a real household bed walk through the existing cellar connection while retaining their original roster, mine assignment and storage ownership. Workers at other worksites retain their existing behavior. Carts must still be parked before this household stair; carried supplies may cross, but automated freight and remote stock transfers remain deferred. Upper-floor room-blueprint editing shipped in 0.110.0; see [upper-floor notes](UPPER158.md). Existing manual upper stairs and mine stairs remain available.
 
 ## Validation
 
