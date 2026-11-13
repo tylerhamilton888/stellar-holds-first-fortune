@@ -1,0 +1,20 @@
+name: Verify published worker-route delivery
+on:
+  push:
+    branches: ['verify/workers160-legacy-delivery']
+permissions:
+  contents: read
+jobs:
+  verify-published:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          sparse-checkout: tools
+      - name: Compare published metadata and asset digests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 tools/capture_command.py --log test-results/verify-published160.log --timeout 120 -- python3 tools/verify_published_worker_release.py
+          python3 tools/read_diagnostics.py test-results/verify-published160.log --contains PUBLISHED160
