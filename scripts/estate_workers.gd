@@ -127,7 +127,7 @@ static func valid_step(g,saved:Dictionary,n:Dictionary)->bool:
  if area=="surface":return clear(g,n,obstacles(g,z))
  return w.walkable(cell(n),z)
 static func tick(g,a:Dictionary,saved:Dictionary,dt:float)->bool:
- if a.type!="worker":return false
+ if a.type!="worker" or g.state.active_site!="claim":return false
  var record=homes(g).get(a.id,{});var b=bed(g,record);var above=saved.get("estate_area160","mine")=="surface"
  var cargo=g.deep.works.masonry.data.jobs.get(a.id,{}).get("cargo",{})
  var rest_period=fmod(g.state.elapsed,120.0)>=90.0

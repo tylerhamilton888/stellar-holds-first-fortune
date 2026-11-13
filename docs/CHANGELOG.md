@@ -1,3 +1,8 @@
+# 0.111.1 — Preserve legacy worksite ownership
+
+- Restrict household commutes to the claim site, including old-format fortunes whose crew can still work at other sites.
+- Add regression checks that the household owner declines those actors without changing their saved position or schedule.
+
 # 0.111.0 — Household worker routes
 
 - Offer real household beds to recruited miners through the Building Book.

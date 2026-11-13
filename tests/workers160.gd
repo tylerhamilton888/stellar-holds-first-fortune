@@ -57,6 +57,17 @@ func run():
  g.close_panel()
  var a=worker();var saved=g.deep.crew_entry(a)
  check(not saved.has("estate_area160"),"Old crew record defaults to mine without migration or relocation")
+ # Legacy crew may retain their old worksite behavior outside the claim.
+ # The household owner must decline those actors instead of starting a commute.
+ var own_claim=g.state.claim_id
+ g.state.surface.homes.legacy=g.state.surface.homes[own_claim]
+ g.state.claim_id="legacy";g.state.active_site="hold";g.state.elapsed=95;g.deep.ensure()
+ var elsewhere=g.deep.crew_entry(a);var original_elsewhere=normal(elsewhere)
+ check(not HoldEstateWorkers.tick(g,a,elsewhere,.1),"Legacy crew at another worksite are not taken over by household navigation")
+ check(normal(elsewhere)==original_elsewhere,"Other-worksite worker position and schedule remain untouched")
+ g.state.claim_id=own_claim;g.state.active_site="claim";g.state.surface.homes.erase("legacy");g.deep.ensure()
+ saved=g.deep.crew_entry(a);w=g.deep.world
+
  var assigned=saved.assigned;g.state.elapsed=95
  advance(20)
  check(saved.get("estate_area160","mine")=="mine" and Vector2(saved.x,saved.y)!=Deepworks.center(Deepworks.ENTRY),"Worker walks the actual excavated approach")

@@ -1,9 +1,7 @@
-# Current handoff — worker routes, release candidate
+# Worker-route delivery — legacy guard candidate
 
-Published baseline: **0.110.0**, source PR #158 and delivery docs #159. See [CURRENT_STATUS](CURRENT_STATUS.md). Baseline master: `6963c58`.
+0.111.0 is published and PR #160 merged as `b7a9960838be67064ea27a12271a8daa28e9f594`. Source `9bd7d68c2fbe9dbc8996ca5a426bda78304d2bd0`, release run 43495183270 and PR run 43495194723 passed all gates. Local acceptance passed 31 worker-route assertions and 42 tooling tests; native resident and berth-control images were reviewed. Post-upload verification is on branch `verify/workers160-delivery`.
 
-Active work: [PR #160](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/160), branch `feature/estate-worker-routes`, candidate **0.111.0**. User requested the next blueprint piece: household-worker navigation. The implementation connects recruited miners to real household beds through built floors, upper stairs and cellar stairs, preserving mine assignments and saved positions. See [WORKERS160](WORKERS160.md).
+Final review found that legacy crew can run at a non-claim site, while the new household tick did not explicitly decline that site. Candidate **0.111.1**, branch `fix/worker-claim-site`, adds that explicit guard and two regression assertions without changing household rendering or the established worksite loop.
 
-Focused validation: pinned Godot 4.4.1 import and parsing passed; workers160 passed 31 assertions in headless and native runs; 42 tooling tests passed. Reviewed native resident rendering and the scrolled berth controls. Evidence: `test-results/workers160-native7` and `test-results/workers160-tooling2.log`. The new case is registered in source and exact-package catalogues.
-
-Pending: full PR/source and exported-package gates, merge, verified Windows publication and final delivery-document reconciliation. No publication or full-gate success is claimed yet. Preserve prior releases and saves; follow [release procedure](RELEASE_PIPELINE.md). Automated freight remains the next separate blueprint piece. Provisional-property story integration remains deferred.
+The local execution environment is unavailable. Source edits and verification continue through GitHub. Required checks, merge and the verified Windows release remain mandatory. Do not claim 0.111.1 is published until its pipeline finishes. After delivery reconcile current status, this handoff, README, playtest guide, backlog and affected feature notes. Automated freight is the next separate blueprint piece.
