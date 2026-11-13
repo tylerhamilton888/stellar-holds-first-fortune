@@ -8,13 +8,13 @@ static func cells(p,r:Dictionary)->Array:
  for y in range(b.position.y,b.end.y):
   for x in range(b.position.x,b.end.x):
    var c=Vector2i(x,y);var owner=true
-   for other in p.rooms():
+   for other in p.rooms(int(r.get("z",0))):
     if str(other.id)==str(r.id):break
     if p.bounds(other).has_point(c):owner=false;break
    if owner:result.append(c)
  return result
-static func style(h,c:Vector2i)->Dictionary:
- var t=h.tile(c);var result=HoldArchitectureStyles.room(h.s.area).duplicate()
+static func style(h,c:Vector2i,z:int=-1)->Dictionary:
+ var t=h.tile(c) if z<0 else (h.data().get("tiles",{}) if z==0 else h.data().get("levels",{}).get(str(z),{})).get(h.key(c),{});var result=HoldArchitectureStyles.room(h.s.area).duplicate()
  result.floor="oak" if t.get("floor","")=="wood_floor" else "slate"
  if t.has("style87"):return HoldArchitectureStyles.resolve(t)
  return result
@@ -32,12 +32,12 @@ static func cost(p,r:Dictionary)->Dictionary:
  if family=="" or not RESEARCH.has(family):return {}
  var target=HoldArchitectureStyles.preset(family);var total={};var h=p.a.s.house
  for c in cells(p,r):
-  var old=style(h,c)
-  if not h.tile(c).has("floor"):old.floor="oak" if r.floor=="wood_floor" else "slate"
+  var old=style(h,c,int(r.get("z",0)))
+  if not p.tile(c,int(r.get("z",0))).has("floor"):old.floor="oak" if r.floor=="wood_floor" else "slate"
   HoldBuildingPlans.add_cost(total,fee(old,target,p.edge(r,c)))
  return total
 static func work(p,r:Dictionary,limit:int)->int:
- if not p.available() or r not in p.rooms():return 0
+ if not p.available() or p.level()!=p.a.s.house.level() or r not in p.rooms():return 0
  var family=r.get("style_family","")
  if not RESEARCH.has(family):return 0
  var tech=RESEARCH[family]

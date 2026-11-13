@@ -40,9 +40,9 @@ class Map extends Control:
    for x in range(2,88):
     var c=Vector2i(x,y)
     if planner.a.s.claim_ground(planner.a.s.house.center(c)):draw_rect(Rect2(Vector2(c)*40,Vector2(39,39)),Color("263b3d"))
-  for solid in planner.a.s.base_obstacles()+planner.a.obstacles("claim"):draw_rect(solid,Color("756f62"))
-  for k in planner.a.s.house.tiles():
-   var t=planner.a.s.house.tiles()[k];var rect=Rect2(Vector2(planner.a.s.house.coords(k))*40,Vector2(40,40))
+  for solid in (planner.a.s.base_obstacles(0)+planner.a.obstacles("claim") if planner.level()==0 else []):draw_rect(solid,Color("756f62"))
+  for k in planner.tiles():
+   var t=planner.tiles()[k];var rect=Rect2(Vector2(planner.a.s.house.coords(k))*40,Vector2(40,40))
    draw_rect(rect,Color("baae8e") if t.get("wall","") in ["wall","window"] else Color("6b7970"))
   for r in planner.rooms():
    var rect=Rect2(planner.bounds(r));rect.position*=40;rect.size*=40
@@ -50,8 +50,9 @@ class Map extends Control:
    if str(r.id)==planner.selected:draw_rect(rect.grow(12),Color("f3dfa1"),false,6)
    draw_rect(rect,Color(color,.12));draw_rect(rect,color,false,8)
    for k in r.doors:draw_rect(Rect2(Vector2(planner.a.s.house.coords(k))*40,Vector2(40,40)),Color("87ce94"))
-  HoldEstateCellar.draw_map(self,planner.a.g)
-  draw_circle(planner.a.g.player,22,Color("fff0b9"))
+  HoldUpperBlueprints.draw_map(self,planner)
+  if planner.level()==0:HoldEstateCellar.draw_map(self,planner.a.g)
+  if planner.level()==planner.a.s.house.level():draw_circle(planner.a.g.player,22,Color("fff0b9"))
   if dragging:
    var end=cell_at(get_local_mouse_position());var low=Vector2i(mini(start.x,end.x),mini(start.y,end.y));var high=Vector2i(maxi(start.x,end.x),maxi(start.y,end.y))
    draw_rect(Rect2(Vector2(low)*40,Vector2(high-low+Vector2i.ONE)*40),Color("f1dba2"),false,8)
@@ -63,7 +64,11 @@ static func show(a):
  HoldArchitectureView.action(g,row,"Furnishing mode",func():g.open_panel("architecture_details"))
  HoldArchitectureView.action(g,row,"Fine construction",func():g.open_panel("house_build"))
  HoldArchitectureView.action(g,row,"Building catalogue",func():a.room_planning=false;g.refresh_panel())
- if not p.available():g.label(g.panel_body,"Visit your chartered holding at ground level to plan rooms.",17);return
+ var floors=g.row(g.panel_body);var floor_select=OptionButton.new();floor_select.custom_minimum_size=Vector2(190,34);floors.add_child(floor_select)
+ for z in HoldHearthcraft.MAX_Z:floor_select.add_item("Ground floor" if z==0 else "Upper floor %d" % z)
+ floor_select.select(clampi(p.level(),0,HoldHearthcraft.MAX_Z-1));floor_select.item_selected.connect(func(z):p.choose_level(z);g.refresh_panel())
+ g.label(floors,"You are on floor %d. Changing this view does not move you." % a.s.house.level(),14)
+ if not p.available():g.label(g.panel_body,"Visit your chartered holding and select a floor below the roof deck.",17);return
  var r=p.chosen();var room_id=p.selected;var settings=g.row(g.panel_body)
  var picker=OptionButton.new();picker.custom_minimum_size=Vector2(170,34);settings.add_child(picker)
  for purpose in p.PURPOSES:picker.add_item(purpose)
@@ -102,7 +107,7 @@ static func show(a):
  HoldArchitectureView.action(g,navigation,"Selected room",func():p.map_center=Vector2(p.bounds(r).get_center())*40;p.zoom=3;map.queue_redraw(),not r.is_empty())
  var controls=g.row(g.panel_body);var door=CheckBox.new();door.text="Doorways";controls.add_child(door);door.disabled=r.is_empty();door.toggled.connect(func(value):map.door_mode=value)
  var remove=CheckBox.new();remove.text="Remove";remove.disabled=r.is_empty();controls.add_child(remove);remove.toggled.connect(func(value):map.remove_door=value)
- HoldArchitectureView.action(g,controls,"Build within reach",func():p.work();g.refresh_panel(),not r.is_empty())
+ HoldArchitectureView.action(g,controls,"Build within reach",func():p.work();g.refresh_panel(),not r.is_empty() and p.level()==a.s.house.level())
  HoldArchitectureView.action(g,controls,"Remove plan",func():p.forget();g.refresh_panel(),not r.is_empty())
  if not r.is_empty():
   var fee=p.cost(r);HoldBuildingPlans.add_cost(fee,HoldBlueprintFinishes.cost(p,r));var status=p.progress(r)
@@ -111,13 +116,15 @@ static func show(a):
   if not fits:map.states[p.selected]="Blocked"
   g.label(g.panel_body,"No materials remaining" if fee.is_empty() else "This room · "+HoldData.cost_text(fee),16,Color("edc98a"))
   g.label(g.panel_body,p.assessment(r),14,Color("b8c5bc"))
+  if p.level()>0:g.label(g.panel_body,"%d missing supports below · %s" % [HoldUpperBlueprints.missing_supports(p,r),"Connected stair access" if HoldUpperBlueprints.access(p,r) else "Needs connected stair access"],14)
  var estate_fee=p.total_cost()
  if not estate_fee.is_empty():g.label(g.panel_body,"All saved plans · "+HoldData.cost_text(estate_fee)+" · shared pieces counted once",14)
  g.label(g.panel_body,p.message,15,Color("b8c5bc"))
- g.label(g.panel_body,"Ground floor · wheel: zoom · middle drag: pan · click: select. Blue: planned · amber: building · green: complete · red: blocked. Add a new doorway before removing the old one.",14,Color("a8b9b6"))
+ g.label(g.panel_body,"Selected floor · wheel: zoom · middle drag: pan · click: select. Blue: planned · amber: building · green: complete · red: blocked. Add a new doorway before removing the old one.",14,Color("a8b9b6"))
 
  # Keep the primary build controls and quote above optional navigation/finishes.
  g.panel_body.move_child(navigation,g.panel_body.get_child_count()-1)
  g.panel_body.move_child(style_row,g.panel_body.get_child_count()-1)
 
- HoldEstateCellar.panel(g)
+ HoldUpperBlueprints.panel(p)
+ if p.level()==0:HoldEstateCellar.panel(g)

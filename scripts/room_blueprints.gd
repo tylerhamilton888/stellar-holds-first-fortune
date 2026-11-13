@@ -7,6 +7,7 @@ var owner_ref:WeakRef
 var a:
  get:return owner_ref.get_ref()
 var selected=""
+var view_z=-1
 var purpose="Undesignated"
 var floor_kind="stone_floor"
 var style_family=""
@@ -14,12 +15,28 @@ var zoom=1.0
 var map_center=Vector2(1800,1100)
 var message="Drag a rectangle. Adjacent rooms can share a boundary."
 func _init(owner):owner_ref=weakref(owner)
-func available()->bool:return a.s.area=="claim" and a.g.state.claim_id!="" and a.s.house.level()==0
+func level()->int:return a.s.house.level() if view_z<0 else view_z
+func available()->bool:return a.s.active() and a.s.area=="claim" and a.g.state.claim_id!="" and level()<HoldHearthcraft.MAX_Z
+func tiles(z:int=-1)->Dictionary:
+ var d=a.s.house.data();var target=level() if z<0 else z
+ return d.get("tiles",{}) if target==0 else d.get("levels",{}).get(str(target),{})
+func tile(c:Vector2i,z:int=-1)->Dictionary:return tiles(z).get(a.s.house.key(c),{})
+func occupied(c:Vector2i)->bool:
+ var h=a.s.house
+ if level()==h.level():return h.occupied(c)
+ if h.occupied_at(c,level()):return true
+ if level()==0 and a.g.fieldwork:
+  for b in a.g.fieldwork.data().beds:
+   if b.get("area","")!="greenfields" and b.get("claim","")==a.g.state.claim_id and h.center(c).distance_to(a.g.fieldwork.pos(b))<55:return true
+ return false
+func choose_level(z:int):
+ if z<0 or z>=HoldHearthcraft.MAX_Z:return
+ view_z=z;selected="";message="Planning ground floor." if z==0 else "Planning upper floor %d. Build supports and stairs from below, then climb to work here." % z
 func data()->Dictionary:
  var d=a.s.house.data()
  if not d.has("blueprints152"):d.blueprints152={"next":1,"rooms":[]}
  return d.blueprints152
-func rooms()->Array:return data().rooms if available() else []
+func rooms(z:int=-1)->Array:return data().rooms.filter(func(r):return int(r.get("z",0))==(level() if z<0 else z)) if available() else []
 func chosen()->Dictionary:
  for r in rooms():
   if str(r.id)==selected:return r
@@ -30,7 +47,7 @@ func edge(r:Dictionary,c:Vector2i)->bool:
  return c.x==b.position.x or c.y==b.position.y or c.x==b.end.x-1 or c.y==b.end.y-1
 func parts(r:Dictionary)->Array:
  var out=[];var h=a.s.house;var b=bounds(r);var doors={}
- for other in rooms():
+ for other in rooms(int(r.get("z",0))):
   for k in other.doors:doors[k]=true
  for k in r.doors:doors[k]=true
  for kind in [r.floor,"door","wall","roof"]:
@@ -39,15 +56,15 @@ func parts(r:Dictionary)->Array:
     var c=Vector2i(x,y);var door=doors.has(h.key(c)) and edge(r,c)
     if kind=="door" and not door:continue
     if kind=="wall" and (not edge(r,c) or door):continue
-    out.append({"cell":c,"kind":floor_for(c,r) if kind.ends_with("floor") else kind})
+    out.append({"z":int(r.get("z",0)),"cell":c,"kind":floor_for(c,r) if kind.ends_with("floor") else kind})
  return out
 func floor_for(c:Vector2i,r:Dictionary)->String:
- for other in rooms():
+ for other in rooms(int(r.get("z",0))):
   if str(other.id)==str(r.id):break
   if bounds(other).has_point(c):return other.floor
  return r.floor
 func fulfilled(p:Dictionary)->bool:
- var t=a.s.house.tile(p.cell)
+ var t=tile(p.cell,int(p.get("z",0)))
  if p.kind.ends_with("floor"):return t.has("floor")
  if p.kind=="roof":return t.get("roof",false)
  if p.kind=="wall":return t.get("wall","") in ["wall","window","door"]
@@ -71,9 +88,12 @@ func progress(r:Dictionary)->Dictionary:
  var count=parts(r).size();var left=remaining(r).size()
  var state="Complete" if left==0 else "Under construction" if left<count else "Planned"
  if left==0 and not HoldBlueprintFinishes.cost(self,r).is_empty():state="Finishing"
+ if int(r.get("z",0))>0:
+  if HoldUpperBlueprints.missing_supports(self,r)>0:state="Needs supports"
+  elif not HoldUpperBlueprints.access(self,r):state="Needs stairs"
  return {"state":state,"built":count-left,"total":count}
 func validate(r:Dictionary,ignore:String="")->bool:
- if not available():message="Plan on your chartered surface holding at ground level.";return false
+ if not available():message="Plan on your chartered holding, below the roof deck.";return false
  var b=bounds(r);var h=a.s.house
  if b.size.x<3 or b.size.y<3 or b.size.x>20 or b.size.y>20:message="Choose between 3 and 20 tiles along each side.";return false
  for other in rooms():
@@ -82,27 +102,29 @@ func validate(r:Dictionary,ignore:String="")->bool:
   for y in range(overlap.position.y,overlap.end.y):
    for x in range(overlap.position.x,overlap.end.x):
     if not edge(r,Vector2i(x,y)) or not edge(other,Vector2i(x,y)):message="Rooms may share walls, but their usable spaces cannot overlap.";return false
- var solids=a.s.base_obstacles()+a.obstacles("claim")
+ if HoldUpperBlueprints.crosses_stair(self,r):message="Keep stair landings inside rooms or corridors, clear of walls.";return false
+ if level()>0:return HoldUpperBlueprints.validate(self,r)
+ var solids=a.s.base_obstacles(0)+a.obstacles("claim")
  for y in range(b.position.y,b.end.y):
   for x in range(b.position.x,b.end.x):
    var c=Vector2i(x,y);var p=h.center(c)
    if not a.s.claim_ground(p) or p.y<320:message="Keep the entire plan on usable building ground.";return false
    for solid in solids:
     if solid.grow(18).intersects(Rect2(Vector2(c)*40,Vector2(40,40))):message="The plan overlaps an existing building.";return false
-   if h.occupied(c) and (not h.tile(c).has("floor") or (edge(r,c) and h.tile(c).get("wall","")=="")):message="Move equipment, furniture or garden beds from the unfinished foundation or boundary.";return false
- var draft=h.tiles().duplicate(true)
+   if occupied(c) and (not tile(c).has("floor") or (edge(r,c) and tile(c).get("wall","")=="")):message="Move equipment, furniture or garden beds from the unfinished foundation or boundary.";return false
+ var draft=tiles().duplicate(true)
  for p in parts(r):
   var k=h.key(p.cell);var t=draft.get(k,{})
   if p.kind in ["wall","door"] and t.get("wall","")!="door":t.wall=p.kind;draft[k]=t
- if not h.routes_open(draft):message="Leave a route to the holding and existing services.";return false
+ if level()==h.level() and not h.routes_open(draft):message="Leave a route to the holding and existing services.";return false
  if not planned_access(r,ignore,solids):message="Every planned room needs a connected doorway to the holding.";return false
  return true
 func save_rectangle(start:Vector2i,finish:Vector2i)->bool:
  var old=chosen()
- if old.is_empty() and rooms().size()>=MAX_PLANS:message="This holding supports 64 saved room plans. Existing construction is always retained.";return false
+ if old.is_empty() and data().rooms.size()>=MAX_PLANS:message="This holding supports 64 saved room plans. Existing construction is always retained.";return false
  if not old.is_empty() and old.get("started",false):message="Work has begun. Alter built structure in fine construction.";return false
  var low=Vector2i(mini(start.x,finish.x),mini(start.y,finish.y));var high=Vector2i(maxi(start.x,finish.x),maxi(start.y,finish.y))
- var r={"id":selected,"x":low.x,"y":low.y,"w":high.x-low.x+1,"h":high.y-low.y+1,"purpose":purpose,"floor":floor_kind,"doors":[a.s.house.key(Vector2i((low.x+high.x)/2,high.y))],"started":false,"style_family":style_family}
+ var r={"z":level(),"id":selected,"x":low.x,"y":low.y,"w":high.x-low.x+1,"h":high.y-low.y+1,"purpose":purpose,"floor":floor_kind,"doors":[a.s.house.key(Vector2i((low.x+high.x)/2,high.y))],"started":false,"style_family":style_family}
  if not validate(r,selected):return false
  if old.is_empty():r.id=str(int(data().next));data().next=int(data().next)+1;data().rooms.append(r)
  else:
@@ -114,8 +136,8 @@ func doorway(c:Vector2i,remove:bool=false)->bool:
  var b=bounds(r)
  if c.x in [b.position.x,b.end.x-1] and c.y in [b.position.y,b.end.y-1]:message="Keep doorways away from corners.";return false
  var k=a.s.house.key(c)
- if a.s.house.tile(c).get("wall","") in ["wall","window"]:message="Recover the existing wall before adding a doorway.";return false
- if remove and a.s.house.tile(c).get("wall","")=="door":message="Recover the built doorway in fine construction first.";return false
+ if tile(c).get("wall","") in ["wall","window"]:message="Recover the existing wall before adding a doorway.";return false
+ if remove and tile(c).get("wall","")=="door":message="Recover the built doorway in fine construction first.";return false
  var saved=[]
  for other in rooms():
   if not bounds(other).has_point(c) or not edge(other,c):continue
@@ -127,8 +149,10 @@ func doorway(c:Vector2i,remove:bool=false)->bool:
   return false
  a.g.save_game();message="Doorways updated. Add the new doorway before removing an old one.";return true
 func work()->int:
+ if level()!=a.s.house.level():message="Climb to this floor before building or finishing it.";return 0
  var r=chosen()
  if r.is_empty() or not validate(r,selected):return 0
+ if level()>0 and (HoldUpperBlueprints.missing_supports(self,r)>0 or not HoldUpperBlueprints.access(self,r)):message="Complete the supporting floor and an accessible stair before building this room.";return 0
  var count=0;var h=a.s.house
  for p in remaining(r):
   if count>=32:break
@@ -143,11 +167,11 @@ func forget():
  if r.is_empty():return
  data().rooms.erase(r);selected="";a.g.save_game();message="Plan removed. Constructed pieces and furnishings remain."
 func invalidate(c:Vector2i,reconcile:bool=false):
- for r in rooms():
+ for r in rooms(a.s.house.level()):
   if bounds(r).has_point(c):r.complete=reconcile and remaining(r).is_empty() and HoldBlueprintFinishes.cost(self,r).is_empty()
 func draw_guides():
  if not available():return
- for r in rooms():
+ for r in rooms(a.s.house.level()):
   if r.get("complete",false):continue
   var rect=Rect2(bounds(r));rect.position*=40;rect.size*=40
   var color=Color("9bb9b0") if r.get("started",false) else Color("72b9c1")
@@ -158,8 +182,8 @@ func draw_guides():
 func planned_access(candidate:Dictionary,ignore:String,solids:Array)->bool:
  var h=a.s.house;var all=rooms().filter(func(r):return str(r.id)!=ignore)+[candidate]
  var blocked={};var doors={}
- for k in h.tiles():
-  if h.tiles()[k].get("wall","") in ["wall","window"]:blocked[k]=true
+ for k in tiles():
+  if tiles()[k].get("wall","") in ["wall","window"]:blocked[k]=true
  for r in all:
   for p in parts(r):
    if p.kind=="wall":blocked[h.key(p.cell)]=true
@@ -185,6 +209,7 @@ func select_room(id:String):
  if r.is_empty():return
  purpose=r.purpose;floor_kind=r.floor;style_family=r.get("style_family","");map_center=Vector2(bounds(r).get_center())*40;zoom=3
 func assessment(r:Dictionary)->String:
+ if level()!=a.s.house.level():return "Visit this floor to inspect furnishings and work within reach."
  var furniture=a.g.hearth.furniture();var counts={};var comfort=0;var heritage=0;var usable=0
  var aliases={"double_bed":"bed","worktable":"bench","stone_pillar":"rune","royal_pillar":"rune"}
  for f in furniture:

@@ -40,7 +40,8 @@
       "blueprints152",
       "blueprint_manor152",
       "excavation154",
-      "cellar156"
+      "cellar156",
+      "upper158"
     ],
     "gameplay": [
       "loading",
@@ -126,7 +127,8 @@
       "blueprints152",
       "blueprint_manor152",
       "excavation154",
-      "cellar156"
+      "cellar156",
+      "upper158"
     ],
     "modular": [
       "modular",
@@ -443,7 +445,8 @@
       "workplace98",
       "firstvisit99",
       "troll133",
-      "cellar156"
+      "cellar156",
+      "upper158"
     ],
     "calendar-preview": [
       "calendar"
@@ -1078,6 +1081,12 @@
       "blueprints152",
       "excavation154",
       "navigation94"
+    ],
+    "upper158": [
+      "upper158",
+      "blueprints152",
+      "cellar156",
+      "blueprint_manor152"
     ]
   },
   "cases": {
@@ -1420,6 +1429,10 @@
     "cellar156": {
       "script": "tests/cellar156.gd",
       "marker": "CELLAR156"
+    },
+    "upper158": {
+      "script": "tests/upper158.gd",
+      "marker": "UPPER158"
     }
   }
 }

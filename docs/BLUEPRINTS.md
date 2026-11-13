@@ -4,7 +4,7 @@ Implementation: [PR #152](https://github.com/tylerhamilton888/stellar-holds-firs
 
 ## Player experience
 
-Building Book → Plan Your Holding opens a ground-floor map on chartered property. Drag a rectangle, choose an optional designation and structural floor, and join rooms with doorways. Click to select; wheel zooms and middle-drag pans. Unstarted plans can be redrawn without spending supplies. Add a new doorway before removing an old planned opening; recover already-built openings through fine construction.
+Building Book → Plan Your Holding opens a selectable floor map on chartered property. Drag a rectangle, choose an optional designation and structural floor, and join rooms with doorways. Click to select; wheel zooms and middle-drag pans. Unstarted plans can be redrawn without spending supplies. Add a new doorway before removing an old planned opening; recover already-built openings through fine construction.
 
 Build within reach performs up to 32 nearby construction/finishing steps. Actual Hearthcraft floors, walls, doors and roofs consume the existing pack. Existing pieces reduce the quote, and the combined estimate counts shared pieces once. Shared foundation material and finish ownership follow the earlier room plan, independently of construction order. Removing a plan preserves every physical piece, furnishing and stored item.
 
@@ -16,7 +16,7 @@ Designation is a label and source of suggested defaults, never equipment permiss
 
 Saved plans are additive under the existing claim building's `blueprints152` dictionary. Structural pieces remain ordinary Hearthcraft tiles; optional `style87` and `finish_paid152` fields belong to those physical tiles. No duplicate inventory, storage capacity, excavation reward or construction economy is introduced.
 
-This stage supports ground-floor surface rectangles from 3–20 tiles per side and up to 64 saved plans. Existing records are never truncated. Existing authored buildings, furniture modes, fine construction and manual stairs remain available. Plans and physical construction persist independently.
+The 0.110.0 candidate extends planning to ground and four upper floors, with rectangles from 3–20 tiles per side and up to 64 saved plans across the holding. See [upper-floor notes](UPPER158.md). Existing records are never truncated. Existing authored buildings, furniture modes, fine construction and manual stairs remain available. Plans and physical construction persist independently.
 
 ## Acceptance
 
@@ -26,4 +26,4 @@ The first raw dictionary reload comparison failed because serialized numeric typ
 
 ## Later stages
 
-Stage B adds underground room and stair landing guides in 0.108.0; see [underground blueprint notes](EXCAVATION154.md). Manual stairs remain supported and tested. The first Stage C slice adds [connected home/cellar stairs](CELLAR156.md) in 0.109.0. Upper-floor blueprint editing, unified worker/freight routing and provisional Old Stonewright's Rise story integration remain deferred.
+Stage B adds underground room and stair landing guides in 0.108.0; see [underground blueprint notes](EXCAVATION154.md). Manual stairs remain supported and tested. The first Stage C slice adds [connected home/cellar stairs](CELLAR156.md) in 0.109.0. The next Stage C slice adds [upper-floor blueprints](UPPER158.md); check current status for delivery. Unified worker/freight routing and provisional Old Stonewright's Rise story integration remain deferred.

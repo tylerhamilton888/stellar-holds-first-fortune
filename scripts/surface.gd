@@ -371,9 +371,9 @@ func action(id:String):
  elif id=="pinewood_panel":g.open_panel("pinewood")
  elif id in ["homestead","camp","ship","home","forge","anniversary","hold_lift"]:g.open_panel(id)
  else:enter(id)
-func base_obstacles()->Array:
+func base_obstacles(z:int=-1)->Array:
  var list=[]
- if area=="claim" and house.level()>0:return list
+ if area=="claim" and (house.level() if z<0 else z)>0:return list
  if HoldWorldZones.ward(area):return world.obstacles()
  if room():return world.room_obstacles()
  if area=="trail":
