@@ -204,6 +204,7 @@ func tool_capabilities():
  desk("forge")
  check(not HoldFrontier103.transact(g,"tool","reinforced_pick") and s.count("iron")==raw_before.iron,"Raw resources alone do not bypass component assembly")
  g.set_meta("forge147_station","components");g.refresh_panel();await snap("components173-ready")
+ check(g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"All three component recipes fit without scrolling")
  for item in HoldForge147.COMPONENTS:
   var queued=s.queue.size();button(HoldData.RECIPES[item].name)
   check(s.queue.size()==queued+1 and s.queue.back().id==item,"Workshop button queues component: "+item)

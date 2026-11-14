@@ -133,8 +133,9 @@ static func panel(g):
   if station=="smelt" and id not in SMELTING:continue
   if station in ["anvil","bench"] and id in SMELTING:continue
   var r=HoldData.RECIPES[id]
-  if station=="components":g.label(g.panel_body,("Woodworking" if id=="shaped_haft" else "Smithing")+" · makes "+HoldData.cost_text(r.out),14)
-  var b=g.button(g.panel_body,r.name+" · "+HoldData.cost_text(r.cost),func():
+  var recipe_title=r.name+" · "+HoldData.cost_text(r.cost)
+  if station=="components":recipe_title+=" → "+HoldData.cost_text(r.out)+" · "+("Woodworking" if id=="shaped_haft" else "Smithing")
+  var b=g.button(g.panel_body,recipe_title,func():
    if HoldFrontier103.transact(g,"craft",id):g.save_game();g.refresh_panel())
   b.disabled=s.opening<2 or not s.afford(r.cost) or HoldCollections141.recipe_reason(s,id)!="" or s.queue.size()>=12
   if HoldCollections141.recipe_reason(s,id)!="":b.tooltip_text=HoldCollections141.recipe_reason(s,id)

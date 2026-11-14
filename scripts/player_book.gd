@@ -9,7 +9,8 @@ static func inventory(g):
  filter.tooltip_text="Include materials you do not currently carry" if g.inventory_owned_only else "Show only items in your pack"
  var layout=g.row(g.panel_body);layout.add_theme_constant_override("separation",18)
  var left=VBoxContainer.new();left.size_flags_horizontal=Control.SIZE_EXPAND_FILL;layout.add_child(left)
- var grid=GridContainer.new();grid.name="PackGrid";grid.columns=10;grid.add_theme_constant_override("h_separation",5);grid.add_theme_constant_override("v_separation",5);left.add_child(grid)
+ var pack_scroll=ScrollContainer.new();pack_scroll.name="PackScroll";pack_scroll.custom_minimum_size.y=204;pack_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;left.add_child(pack_scroll)
+ var grid=GridContainer.new();grid.name="PackGrid";grid.columns=10;grid.add_theme_constant_override("h_separation",5);grid.add_theme_constant_override("v_separation",5);pack_scroll.add_child(grid)
  var details=g.section(layout,"");details.get_parent().custom_minimum_size.x=235;details.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var cards=[]
  var show_item=func(id:String):
@@ -23,7 +24,9 @@ static func inventory(g):
   for slot in range(5,10):
    var pin=g.small_button(pins,str((slot+1)%10),func():g.hotbar.assign(id,slot));pin.tooltip_text="Pin "+HoldData.ITEMS[id].name+" to slot "+str((slot+1)%10)
   g.small_button(details,"Meals, ale & rest",func():g.open_panel("energy"))
-  for card in cards:card.node.button_pressed=card.id==id
+  for card in cards:
+   card.node.button_pressed=card.id==id
+   if card.id==id:pack_scroll.call_deferred("ensure_control_visible",card.node)
  for id in HoldData.ITEMS:
   if g.inventory_owned_only and g.state.count(id)==0:continue
   var b=Button.new();b.name="Item_"+id;b.custom_minimum_size=Vector2(46,46);b.toggle_mode=true;b.tooltip_text=HoldData.ITEMS[id].name+" · "+str(g.state.count(id))+" carried";b.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND;grid.add_child(b)
