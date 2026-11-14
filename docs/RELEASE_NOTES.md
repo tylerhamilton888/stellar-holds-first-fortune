@@ -8,4 +8,4 @@ Two civic projects or trade seals now earn household recognition. The ground was
 
 Existing frontier saves retain their property, custom names, construction, stocked chests, workers, recognition and campaign progress. Established holdings are never reseeded. Non-frontier fortunes keep their original opening.
 
-These are candidate notes until source/package release checks pass. CURRENT_STATUS.md records the verified published build. Preserve earlier builds and saves. [Previous notes](history/RELEASE_NOTES-before-home169.md).
+Published after all source/package release checks passed. CURRENT_STATUS.md records the verification evidence. Preserve earlier builds and saves. [Previous notes](history/RELEASE_NOTES-before-home169.md).
