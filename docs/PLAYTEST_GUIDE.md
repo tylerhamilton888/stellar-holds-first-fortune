@@ -79,3 +79,7 @@ Carts still stay parked at household stairs. This release adds worker movement, 
 ## Household freight (0.112.0)
 
 Use O → Plan Your Holding → Freight for the household. Mark a mine stockpile with U away from the entrance/cart, place a household chest, and select a miner, material and direction. Watch a 32-unit load cross the actual stairs. Try saving mid-trip, blocking a passage, finishing/stopping and returning a load. Confirm the chest receives the goods and crafting still requires withdrawal. See FREIGHT162.md and CURRENT_STATUS.md.
+
+## Old Stonewright’s Rise (0.113.0 candidate)
+
+After your first paid shift, visit Ivar’s book and accept provisional use. Check the short introduction, including save/reload and Skip. Follow the east road to the holding; O opens building plans. Build and store goods before completing two civic projects or trade seals, then return to record the permanent charter. Verify your work and supplies remain exactly where you left them. Existing permanent saves should keep their rights and chosen property names.

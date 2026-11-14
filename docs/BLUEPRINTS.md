@@ -26,4 +26,4 @@ The first raw dictionary reload comparison failed because serialized numeric typ
 
 ## Later stages
 
-Stage B adds underground room and stair landing guides in 0.108.0; see [underground blueprint notes](EXCAVATION154.md). Manual stairs remain supported and tested. The first Stage C slice adds [connected home/cellar stairs](CELLAR156.md) in 0.109.0. The second Stage C slice adds [upper-floor blueprints](UPPER158.md) in 0.110.0. Household [worker routes](WORKERS160.md) shipped in 0.111.1 and physical [freight routes](FREIGHT162.md) in 0.112.0. Provisional Old Stonewright's Rise story integration remains deferred.
+Stage B adds underground room and stair landing guides in 0.108.0; see [underground blueprint notes](EXCAVATION154.md). Manual stairs remain supported and tested. The first Stage C slice adds [connected home/cellar stairs](CELLAR156.md) in 0.109.0. The second Stage C slice adds [upper-floor blueprints](UPPER158.md) in 0.110.0. Household [worker routes](WORKERS160.md) shipped in 0.111.1 and physical [freight routes](FREIGHT162.md) in 0.112.0. The 0.113.0 candidate adds [Old Stonewright’s Rise](RISE165.md); see current status for delivery.

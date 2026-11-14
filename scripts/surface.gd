@@ -211,7 +211,7 @@ func points()->Array:
   if area=="trail":
    result=result.filter(func(p):return p.action!="hearthward")
    for point in result:
-    if point.action=="claim":point.name="Your household grounds" if g.state.claim_id!="" else "Household plots · speak with Ivar"
+    if point.action=="claim":point.name=("Old Stonewright’s Rise" if HoldFrontier103.data(g.state).get("rise165",{}).get("accepted",false) else "Your household grounds") if g.state.claim_id!="" else "Household plots · speak with Ivar"
    result.append(spot(100,690,"Road to Keldrath · later journey","hearthward"))
   if area=="claim":result=result.filter(func(p):return p.action in ["trail","mine"] or str(p.action).begins_with("house:"))
  result.append_array(HoldFrontier103.points(g))

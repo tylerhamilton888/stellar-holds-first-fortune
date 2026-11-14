@@ -1,0 +1,73 @@
+# 0.112.0 — Physical household freight
+
+- Assign existing recruited miners bidirectional marked-pile/chest routes with a selected item and bounded carried loads.
+- Follow actual excavated passages, mine links, cellar stairs and constructed household floors; recheck obstructions.
+- Preserve cargo through cold reload, stopping, destination removal and physical return to its source.
+- Keep storage, pack, wheelbarrow and masonry-job ownership intact; include carried freight in field totals.
+- Show the carried crate in both mine views and the household; exclude upstairs crew from the perspective mine renderer.
+
+# 0.111.1 — Preserve legacy worksite ownership
+
+- Restrict household commutes to the claim site, including old-format fortunes whose crew can still work at other sites.
+- Add regression checks that the household owner declines those actors without changing their saved position or schedule.
+
+# 0.111.0 — Household worker routes
+
+- Offer real household beds to recruited miners through the Building Book.
+- Walk between the existing claim mine, cellar stairs and upper-floor berths, retaining mine assignments.
+- Save exact worker locations and long-commute intent; recheck obstructions and require physical arrival for rest.
+- Keep masonry cargo with its existing job and render each worker only on their actual floor.
+- Automated household freight remains the next separate Stage C piece.
+
+# 0.110.0 — Upper-floor blueprints
+
+- Plan ground and four upper storeys without moving the player; old plans remain on ground level.
+- Show missing supports and stair access; build only on the visited floor using existing paid construction.
+- Save aligned stair guides, fit them for the existing cost and preserve built connections.
+- Isolate quotes, shared boundaries, renovation and guide removal by floor; display paid finishes on reused roof decks.
+- Continue Stage C with connected cellar/ground/upstairs homes. Household-worker and automated freight integration remain future work.
+
+# 0.109.0 — Connected home and cellar
+
+- Saved, aligned stair plans link a surface holding to its existing claim mine.
+- Actual excavation and clear landings precede a single paid stair installation.
+- Shift+E travel, carried supplies and save/reload work across the boundary; built landings are protected.
+- The first Stage C slice retains existing mine worker routes and requires carts to be parked. Unified worker/freight routes and upper-floor blueprint editing remain future work.
+
+# 0.108.0 — underground excavation blueprints
+
+Add saved underground room and corridor guides, live excavation progress, optional room labels and nearby finishing through existing LivingWorks transactions. Preserve geology, damage, mining yields, storage and furnishings. Recognize equipment-based worker roles in undesignated chambers. Support planned stair connections within the original depths only after both real landings are mined; preserve lateral adits and existing stair behavior.
+
+# 0.107.0 — surface room blueprinting
+
+Add free persistent rectangular room plans, optional designations, connected doorways, shared material estimates, local construction in batches and editable architectural finishes. Reuse Hearthcraft geometry, inventory, collision, furnishing and stairs. Preserve paid finishes and refunds through ordinary component recovery; keep quality descriptive and equipment independent of room labels. Ground-floor surface scope only; underground/multilevel planning is deferred.
+
+# 0.106.0 — first-hour presentation released
+
+Stage Ivar's welcome and work instructions; bring bunkhouse conversations into the lower dialogue shell with bounded layout and replaceable replies. Keep the journal, HUD and shift book on one immediate opening lead through first pay and the forge. Preserve an explicit alternative trade route. Forge hints follow inspection, practical coal processing, remaining deposits and the first firing. Existing rewards, costs, saves and progression are unchanged. Windows 0.106.0 passed all 80 native scenarios, 70 exact-package scenarios / 14,184 assertions, integrity verification and publication in run 42912965464.
+
+# 0.105.1 — dialogue state corrections
+
+Completed jobs no longer issue obsolete requests; known research and restored forges use current-state hints. Replies reset scrolling, and betrothal messages distinguish time from trust. Existing costs, rewards and saves are unchanged. Windows 0.105.1 is published after all 80 native source scenarios, 70 exact-package scenarios / 14,170 assertions, integrity verification and publication passed in run 42902069734.
+
+# 0.105.0 — NPC conversation presentation released
+
+Conversation and friendship errands use a compact lower-screen dialogue panel with a fixed speaker portrait/name and independently scrolling choices. New topic changes return to the start. Relationship counters and trait labels move out of conversation; the People book and journal preserve optional progress and reward details. Favor costs/payments and consequential gifts and courtship remain explicit. Introductions and character preference dialogue are less mechanical. Existing relationship state, quests, thresholds, choices, rewards and saves are unchanged. All 80 native source and 70 exported-package scenarios passed; verified Windows 0.105.0 is published.
+
+# 0.104.0 — Living Forges released
+
+Corrected the communal forge exterior footprint that blocked Sten's road patrol. Updated catalogue and remote-crafting fixtures for the new plan and bench, and opened Keldrath through its story gate before grand-forge review. Improved bellows depth and restored-coal readability. New-room layouts and physical stations preserve existing rooms, placed objects and storage. Nine local native scenarios / 858 assertions, visual review and all 80 hosted source scenarios passed. PR #140 is merged; Windows 0.104.0 is published after all 80 native and 70 exact-package scenarios (14,145 package assertions), integrity verification and publication succeeded. The active backlog and release notes now have automated size budgets, with prior text preserved in history.
+
+# Development tooling — enforced output safety sweep (2026-11-09)
+
+Bounded production-tool summaries; removed raw failure tails; capped repeated-error samples while retaining full logs and total error counts. Large validation plans stay in files. CI captures tool output and retains diagnostics on failure. Automated policy checks reject direct console/encoding paths, uncaptured workflow commands and oversized current documents. Added safe log excerpts and finite timeout validation. Existing release and test-success gates remain intact.
+
+# Development tooling — conversation payload follow-up (2026-11-09)
+
+Added a command capture wrapper that stores full output and returns metadata even on failure. Reduced mandatory recovery reading by preserving old status/handoff in history and keeping compact current checkpoints. Guidance now covers large tool arguments, source transfers and duplicated API responses. This reduces observable payload hazards; it does not establish or repair ChatGPT's server-side failure. No game runtime or release change.
+
+# Development tooling — bounded image evidence (2026-11-09)
+
+Replaced base64 image log dumps with PNG files and path/size manifests. Character inspection retains its rendered sheets and frame metadata as a downloadable Actions artifact. Added regression checks for bounded output and original-byte preservation, and documented safe image transfer after a reported conversation-size rejection. No game version or save changes.
+
+Earlier game/tooling changes are preserved in [the changelog archive](history/CHANGELOG-2026-11-09.md).

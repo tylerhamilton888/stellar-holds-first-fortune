@@ -8,11 +8,12 @@ var duration=2.0
 var scene_title:Label
 static func start_scene(g):
  if is_instance_valid(g.opening_scene):return
- var d=HoldClaim127.data(g.state)
- if d.is_empty() or d.scene=="":return
- if d.scene not in ["trial","verdict","journey","reception"]:
+ var rise=HoldFrontier103.rise_pending(g.state)
+ var d=HoldFrontier103.data(g.state).rise165 if rise else HoldClaim127.data(g.state)
+ if not rise and (d.is_empty() or d.scene==""):return
+ if not rise and d.scene not in ["trial","verdict","journey","reception"]:
   d.scene="";d.beat=0;g.save_game();return
- var scene=HoldClaimScene127.new();scene.game=g;scene.mode=d.scene;scene.step=int(d.beat)
+ var scene=HoldClaimScene127.new();scene.game=g;scene.mode="rise" if rise else d.scene;scene.step=int(d.beat)
  g.close_panel();g.sound.stop_voice();HoldClaim127.cancel(g)
  g.velocity=Vector2.ZERO;g.swing=0;g.mining_buffer=0;g.jump_buffer=0
  scene.layer=CanvasLayer.new();scene.layer.layer=30;g.add_child(scene.layer)
@@ -21,6 +22,10 @@ func _ready():
  var name=game.state.appearance.first_name
  var insights=HoldMountain104.data(game.state).insights
  match mode:
+  "rise":
+   lines=[["IVAR DEEPMEASURE","Old Stonewright's Rise. An abandoned quarry holding, east across the bridge. Sound ground, room for a hearth, and stone beneath it when you are ready to dig."],
+    ["IVAR DEEPMEASURE","I will put your name beside it for provisional use. No fee, no deadline. Two civic projects or trade seals, and we record your permanent household charter. Everything you build stays where you put it."],
+    ["IVAR DEEPMEASURE","Start with what you need. A dry room and a light are enough for a first night. Your room upstairs remains yours while you build. Come back when you want the charter recorded."]]
   "trial":
    lines=[["IVAR DEEPMEASURE",("The books are closed. Your work already exceeds Skarrin's tally, but he challenges your right to lead. Let the public test answer him. Today, the load decides." if HoldClaim127.closed_score(game.state)>int(HoldMountain104.data(game.state).rival_at_award) else "The books are closed. Work, deliveries and the charter allowance leave two equal claims. Today, the load decides.")],
     ["SKARRIN","My retaining wall already holds half this town. I trust we shall measure stone today, not grandfathers."],
@@ -70,11 +75,15 @@ func locate(area:String,p:Vector2):
  game.player=p;game.transition_left=0;game.transition_shade.visible=false;game.walking_pose=false
 func show_line():
  age=0;cast.clear();duration=2.0;load_height=0
- var d=HoldClaim127.data(game.state);d.beat=step
+ var d=HoldFrontier103.data(game.state).rise165 if mode=="rise" else HoldClaim127.data(game.state);d.beat=step
  speaker.text=lines[step][0];caption.text=lines[step][1]
- scene_title.text={"trial":"THE PUBLIC TEST","verdict":"THE RIGHTFUL CLAIMANT","journey":"THE ROAD TO KELDRATH","reception":"BENEATH THE OLD KINGS"}[mode]+"   ·   "+str(step+1)+" / "+str(lines.size())
+ scene_title.text={"rise":"OLD STONEWRIGHT’S RISE","trial":"THE PUBLIC TEST","verdict":"THE RIGHTFUL CLAIMANT","journey":"THE ROAD TO KELDRATH","reception":"BENEATH THE OLD KINGS"}[mode]+"   ·   "+str(step+1)+" / "+str(lines.size())
  next_button.text="Return to play" if step==lines.size()-1 else "Continue · Enter";next_button.disabled=true
- if mode in ["trial","verdict"]:
+ if mode=="rise":
+  locate(HoldFrontier103.lodge(game.state),Vector2(550,555));game.surface.direction=Vector2.LEFT
+  cast.append(actor("lodge_folk:0",Vector2(430,520) if step==0 else Vector2(480,520),Vector2(480,520)))
+  target_camera=game.surface.camera_target()
+ elif mode in ["trial","verdict"]:
   locate("trail",Vector2(760,905));game.surface.direction=Vector2.UP
   cast.append(actor("ivar",Vector2(620,890) if step==0 else Vector2(670,890),Vector2(670,890)))
   cast.append(actor("lodge_folk:1",Vector2(570,850) if step==0 else Vector2(600,850),Vector2(600,850)))
@@ -133,13 +142,14 @@ func _input(event):
 func finish():
  if finished:return
  finished=true
- HoldClaim127.complete_scene(game,mode)
+ if mode=="rise":HoldFrontier103.data(game.state).rise165.scene=false
+ else:HoldClaim127.complete_scene(game,mode)
  if mode=="journey":
   locate("hearthward",HoldWorldZones.GATE+Vector2(0,75));HoldClaim127.enter(game,"hearthward")
  game.opening_scene=null;game.velocity=Vector2.ZERO;game.walking_pose=false;game.swing=0;game.mining_buffer=0;game.jump_buffer=0
  game.surface.roads.portal_cooldown=1.0;game.camera=game.surface.camera_target()
  for n in [game.hud,game.status,game.objectives,game.footer]:n.visible=true
- game.notify({"trial":"The public lift trial is ready. E at each marked fitting; J keeps the instructions.","verdict":"Claim won. Skarrin refused Master of Works. The western road to Keldrath is open.","journey":"Welcome to Keldrath. Explore all three wards, then present your invitation in the royal hall.","reception":"Royal reception complete. Explore at your pace; King's Gate leads home."}[mode])
+ game.notify({"rise":"Old Stonewright’s Rise is open. Follow the east road to your holding; O opens building plans.","trial":"The public lift trial is ready. E at each marked fitting; J keeps the instructions.","verdict":"Claim won. Skarrin refused Master of Works. The western road to Keldrath is open.","journey":"Welcome to Keldrath. Explore all three wards, then present your invitation in the royal hall.","reception":"Royal reception complete. Explore at your pace; King's Gate leads home."}[mode])
  game.save_game();game.update_hud();game.queue_redraw();layer.queue_free()
 func objects()->Array:
  var out=[]

@@ -37,6 +37,7 @@ func run():
   check(not g.surface.recover_decor() and not g.surface.can_furnish(),"Public furniture is protected")
   check(not a.add_floor() and not a.expand("extend_x") and not a.recover(),"Shared town shell protected from free recovery")
  desk("lodge");check(not HoldFrontier103.permit(g),"Home plot must be earned")
+ check(not HoldFrontier103.offer_rise(g),"Provisional use requires a paid first shift")
  s.add("coal",8)
  HoldFirstVisit99.data(s).rewarded=true
  desk("forge");button("Inspect the cold hearth")
@@ -64,11 +65,52 @@ func run():
   for actor in g.surface.roads.people("trail",t):check(g.surface.walkable(actor.p),"Town route stays clear: "+actor.name)
  g.surface.enter("hearthward");check(g.surface.area=="trail","Keldrath remains a later journey")
  desk("lodge");HoldFirstVisit99.data(s).rewarded=true
+ g.refresh_panel();await snap("rise-offer")
+ g.menu_scroll.scroll_vertical=10000;await snap("rise-offer-scrolled")
+ at(Vector2(230,560));check(not HoldFrontier103.offer_rise(g),"Remote provisional offer rejected")
+ at(Vector2(480,500));var coins=s.money
+ check(HoldFrontier103.offer_rise(g),"Paid worker accepts provisional Rise without contributions")
+ check(HoldFrontier103.provisional(s) and not d.permit and s.money==coins,"Provisional use is free, distinct from permanent ownership")
+ check(not HoldFrontier103.offer_rise(g),"Provisional acceptance cannot repeat")
+ check(g.opening_scene is HoldClaimScene127 and g.opening_scene.mode=="rise","Ivar stages property introduction in the world")
+ if g.opening_scene is HoldClaimScene127:
+  g.opening_scene.set_process(false)
+  for actor in g.opening_scene.cast:
+   for t in [0.0,.25,.5,.75,1.0]:check(g.surface.walkable(actor.from.lerp(actor.to,t)),"Ivar's introduction route stays clear")
+  g.opening_scene.tick(3.0);await snap("rise-introduction")
+  g.opening_scene.advance()
+ g.save_game();g.start_game(true);settle();s=g.state;d=HoldFrontier103.data(s);a=g.surface.architecture
+ check(g.opening_scene is HoldClaimScene127 and g.opening_scene.mode=="rise" and g.opening_scene.step==1,"Reload resumes property scene at saved beat")
+ if g.opening_scene is HoldClaimScene127:
+  g.opening_scene.set_process(false);g.opening_scene.tick(3.0);await snap("rise-tenure")
+  g.opening_scene.finish()
+ check(not HoldFrontier103.rise_pending(s) and not d.permit,"Skipping scene neither repeats nor awards permanent charter")
+ check(not HoldClaim127.eligible(s),"Property introduction does not advance campaign authentication")
+ desk("lodge");check(not HoldFrontier103.permit(g),"Provisional holder still needs two contributions")
+ check("Two contributions" in HoldFrontier103.tenure_text(s),"Provisional dialogue states outstanding requirement")
+ await snap("rise-provisional-book")
+ g.menu_scroll.scroll_vertical=10000;await snap("rise-provisional-scrolled")
+ g.surface.enter("claim");settle()
+ s.surface.chests["rise165-proof"]={"area":"claim","x":1900,"y":1100,"z":0,"items":{"stone":7}}
+ s.surface.homes[s.claim_id].building.tiles["50,20"]={"floor":"stone_floor","wall":"","roof":false}
+ s.surface.decor.append({"area":"claim","kind":"chair","x":2100,"y":700,"z":0})
+ s.camp_stage=1
+ var property_before=JSON.stringify(s.surface.homes[s.claim_id]);var chest_before=JSON.stringify(s.surface.chests["rise165-proof"]);var decor_before=JSON.stringify(s.surface.decor)
+ desk("lodge")
  for id in ["watch","rest"]:
   for item in HoldGreatClaim102.PROJECTS[id].cost:s.add(item,HoldGreatClaim102.PROJECTS[id].cost[item])
   at(Vector2(670,440));check(HoldGreatClaim102.contribute(g,id),"Real civic delivery earns settlement progress")
+ check("contributions are entered" in HoldFrontier103.tenure_text(s),"Ready charter dialogue recognizes completed contributions")
  at(Vector2(480,500));check(HoldFrontier103.permit(g) and s.claim_id!="","First shift and two projects earn permanent residential plot")
  check(not HoldFrontier103.permit(g),"Residential permit cannot repeat")
+ check(not HoldFrontier103.provisional(s) and s.camp_stage==1,"Charter upgrades tenure without resetting development")
+ check(JSON.stringify(s.surface.homes[s.claim_id])==property_before and JSON.stringify(s.surface.chests["rise165-proof"])==chest_before and JSON.stringify(s.surface.decor)==decor_before,"Permanent charter preserves exact property and stocked chest")
+ check("charter is recorded" in HoldFrontier103.tenure_text(s),"Owner dialogue no longer offers provisional or unearned land")
+ var rise=d.rise165;d.erase("rise165")
+ check(not HoldFrontier103.provisional(s) and not HoldFrontier103.offer_rise(g) and d.permit,"Legacy permanent owners are never downgraded")
+ d.rise165=rise
+ g.refresh_panel();await snap("rise-permanent-book")
+ g.menu_scroll.scroll_vertical=10000;await snap("rise-permanent-scrolled")
  for item in {"stone":30,"wood":24,"iron":2}:s.add(item,{"stone":30,"wood":24,"iron":2}[item])
  HoldWork132.produced(s,"iron",2,"made");HoldWork132.produced(s,"wood",4,"cut");HoldWork132.data(s).facts.cart_distance=160
  for item in HoldCampaign138.STRUCTURE:
@@ -89,7 +131,7 @@ func run():
  key(KEY_O);check(g.panel_id=="homestead","Plot O opens the actual home design menu");await snap("home-design-menu");g.close_panel()
  for item in ["stone","wood","iron"]:s.add(item,1000)
  a.selected="cottage";a.furnish_plan=true;at(Vector2(2480,820))
- check(a.place(Vector2(2480,700)),"Player chooses and builds home with normal construction transaction")
+ check(a.place(Vector2(2480,700)),"Player chooses and builds home with normal construction transaction: "+a.reason)
  var home=a.data().instances[-1];check(not home.get("public103",false),"Player home is privately editable")
  g.surface.enter(HoldBuildingPlans.room_id(str(home.id)));settle();await snap("player-home")
  check(HoldFrontier103.home_ready(g),"Completed shell, bed and hearth satisfy home milestone")

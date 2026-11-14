@@ -24,6 +24,6 @@ Reviewed native book controls, upstairs carrier and perspective-mine crate rende
 
 ## Next work and limits
 
-The remaining blueprint follow-up is provisional property-story integration, followed by normal player testing and polish. New mine depths, automated excavation and Handworks raw-load freight are separate work. Normal-speed Windows input, audio, performance and enjoyment still need player testing.
+Candidate 0.113.0 implements provisional property-story integration locally; see [Rise notes](RISE165.md) and SESSION_HANDOFF.md for checks and the authorized delivery checkpoint. It is not yet released. Normal player testing and polish follow. New mine depths, automated excavation and Handworks raw-load freight are separate work. Normal-speed Windows input, audio, performance and enjoyment still need player testing.
 
 Preserve releases and saves. Documentation-only corrections need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-freight162.md).
