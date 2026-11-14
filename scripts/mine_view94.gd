@@ -293,6 +293,7 @@ func capture(object:Dictionary,kind:String):
 func place_prop(entry:Dictionary):
  var object=entry.canvas.object;var card:Sprite3D=entry.card
  apply_sprite(card,entry.vp.get_texture(),Rect2(-128,-220,256,256),object.p)
+ if entry.canvas.kind=="freight162":card.position+=camera.global_basis.z*.04
  if entry.canvas.kind in ["entryway144","mineworks143"]:
   # Architecture stays vertical against its wall, rather than tilting through rock with the camera.
   card.billboard=BaseMaterial3D.BILLBOARD_DISABLED

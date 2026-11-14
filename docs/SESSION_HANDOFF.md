@@ -10,9 +10,12 @@ Integration: deepworks_play, estate_workers, room_blueprint_view, surface and de
 
 ## Validation checkpoint
 
-Pinned official Godot 4.4.1 checksum verified. Clean asset import/parser completed. All 42 Python tooling checks passed. The expanded native freight run passed 40 assertions. The pack assertion was corrected to measure delivery before normal mining resumes. Existing workers160 regression passed 33 checks. Expanded case also checks an upstairs cold reload and a deeper mine ladder. Current rerun logs and native screenshots are under test-results/freight162-* locally. Native rendering uses locally extracted Xvfb through /tmp/freight-xvfb/run_native.py; server and Godot must share one execution session.
+Pinned official Godot 4.4.1 checksum verified. Asset import/parser and all 42 Python tooling tests passed. Final native freight162 passed 43 assertions; workers160 passed 33 and cellar156 passed 49. Native book, upstairs cargo and perspective-mine cargo were reviewed. The perspective crate receives a small camera-facing depth offset to avoid sprite occlusion; final targeted render completed without errors. Logs/screenshots: test-results/freight162-final-native3, freight162-regression and freight162-projection2.
 
-The carried crate was lowered and visually reviewed without covering the worker's face. Perspective mine filtering/cargo and three extra native assertions are in the final rerun. Candidate version is 0.112.0. Finish targeted tests, perspective visual review, source PR and the mandatory complete release pipeline. Nothing from this feature is merged or released yet.
+PR #163: https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/163
+Candidate version: 0.112.0. Full PR/source and Windows package/release gates are still required. GitHub's general run listing lagged; branch-filtered Actions queries and the live page showed execution. Do not restart solely for stale metadata.
+
+Nothing from this feature is merged or published yet. Complete delivery through docs/RELEASE_PIPELINE.md and reconcile published status/backlog/README/playtest guidance afterward. Keep final delivery docs separate from the active source/release branch.
 
 ## Safeguards
 
