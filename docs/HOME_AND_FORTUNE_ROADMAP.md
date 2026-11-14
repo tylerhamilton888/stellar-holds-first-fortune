@@ -1,6 +1,6 @@
 # A Home and a Fortune — next milestones
 
-Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). Building-grid polish was delivered in 0.114.0. The family-origin opening is delivered in 0.115.0; implementation and validation are documented in HOME169.md. The next milestone is tool/material capability progression.
+Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). Building-grid polish was delivered in 0.114.0. The family-origin opening is delivered in 0.115.0; implementation and validation are documented in HOME169.md. The first tool/material slice is delivered in 0.116.0 (TOOLS171.md): reinforced picks, basalt recovery and advanced floor finishing. Cross-profession manufacturing is next.
 
 ## Delivered baseline
 
@@ -19,13 +19,13 @@ Modify the existing owners, not parallel systems:
 
 First implementation slice: save-safe ownership migration plus brief arrival/property introduction, parental letter and modest new-save accommodation; retain the existing crafting economy. Validate through real new-game input, skipping/reloading, both existing tenure states and preservation of household/worker/storage records. Review recognition requirements so the starter dwelling does not automatically pay an improvement reward or force rebuilding. Publish only after the established source/package gates.
 
-## Next capability audit
+## Capability audit and first delivered slice
 
-Start with `geology.gd` hardness, `deepworks_play.gd` mining feedback, `frontier103.gd` tool transactions, `forge147.gd`, `data.gd` research and `excavation_blueprints.gd` material access. Existing steel crafting requires Tempered steel research plus 5 iron and 2 timber; planning already counts basalt tiles blocked by the missing pick. Reconcile mineworks/deepworks messages that mention research alone with the actual requirement to forge the tool. Preserve current steel ownership and saved excavation plans. Extend capabilities only after this shared path is clear; test planning before access, blocked execution and successful work after acquisition.
+Start with `geology.gd` hardness, `deepworks_play.gd` mining feedback, `frontier103.gd` tool transactions, `forge147.gd`, `data.gd` research and `excavation_blueprints.gd` material access. Existing steel crafting requires Tempered steel research plus 5 iron and 2 timber; planning already counts basalt tiles blocked by the missing pick. 0.116.0 reconciles mineworks/deepworks messages with the actual requirement to forge the tool. Preserve current steel ownership and saved excavation plans. Extend capabilities only after this shared path is clear; test planning before access, blocked execution and successful work after acquisition.
 
 ## Subsequent order
 
-1. Tool capabilities and advanced materials: extend existing hardness, equipment, research and blueprint requirements; allow ambitious plans before the player can build them.
+1. Tool capabilities and advanced materials: the first slice is delivered in 0.116.0. Broader advanced-metal and forge-equipment capabilities remain later extensions; preserve planning before acquisition.
 2. Cross-profession manufacturing: a small useful set of hafts, heads, fittings and advanced equipment; keep everyday recipes simple.
 3. Specialist commissions and alternative acquisition: existing NPC mentors, buying, commissioning and reliable permanent routes; prevent circular requirements or compulsory friendships.
 4. Ledger/sandbox integration: recognize completed work, give civic projects tangible benefits, and remove arbitrary introductory craft gates while preserving the authored campaign.

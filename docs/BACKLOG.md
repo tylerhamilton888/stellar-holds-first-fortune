@@ -2,7 +2,7 @@
 
 ## Current work and next milestone
 
-Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): 0.116.0 candidate adds reinforced picks and basalt masonry (TOOLS171.md); validate and publish, then develop cross-craft parts and specialist acquisition routes. Preserve existing building, navigation and freight systems.
+Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): 0.116.0 delivers reinforced picks and basalt masonry (TOOLS171.md); next develop cross-craft parts and specialist acquisition routes. Preserve existing building, navigation and freight systems.
 
 ## Playtest the current published build
 
@@ -24,4 +24,8 @@ Keep detailed evidence in files, bound conversational output, and preserve origi
 
 ## Surface room blueprint playtest
 
-Stage A shipped in 0.107.0 through PR #152. Test the room planner on a chartered holding: connected rooms, doorways, material costs, furnishing, renovation and save/reload. Stage B underground excavation and stair guides shipped in 0.108.0; see [EXCAVATION154.md](EXCAVATION154.md) and current status for delivery. The first Stage C slice adds saved home/cellar stairs in 0.109.0. The second Stage C slice shipped upper-floor blueprints in 0.110.0; playtest a cellar workshop/store, ground kitchen/hall and upper bedroom. See [upper-floor notes](UPPER158.md) and current status for evidence. Household-worker routes shipped in 0.111.1; see [crew routes](WORKERS160.md). Automated freight shipped in 0.112.0; see [freight routes](FREIGHT162.md). Playtest both directions, stopped/returned loads, blocked stairs and saving mid-trip. Version 0.113.0 introduced [provisional property-story integration](RISE165.md), superseded by the family-owned opening in 0.115.0. See [CELLAR156.md](CELLAR156.md). See [BLUEPRINTS.md](BLUEPRINTS.md).
+Test [room plans](BLUEPRINTS.md) on the family-owned holding: connected rooms, doorways, costs, furnishing, renovation and save/reload. Check [underground excavation](EXCAVATION154.md), [cellar stairs](CELLAR156.md) and [upper floors](UPPER158.md) with a cellar workshop/store, ground kitchen/hall and upper bedroom. Check [household-worker routes](WORKERS160.md) and [freight](FREIGHT162.md) in both directions, stopped/returned loads, blocked stairs and saving mid-trip. The 0.115.0 family-owned opening supersedes provisional property-story integration in RISE165.md.
+
+## Freight validation follow-up
+
+One PR freight162 lower-level route check failed once, then passed on targeted retry, in the package and in an isolated local case plus eight fixed-seed trials. The cause was not reproduced. Capture world seed and carrier/route state if it recurs; do not treat a retry as a root-cause fix.

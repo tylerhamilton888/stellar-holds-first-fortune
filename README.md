@@ -18,6 +18,8 @@ Surface room blueprints let you lay out connected rooms on your chartered holdin
 
 Version 0.114.0 adds [consistent building grids](docs/GRID167.md), live room dimensions and alignment guides. The [A Home and a Fortune roadmap](docs/HOME_AND_FORTUNE_ROADMAP.md) records the subsequent tool, crafting and progression work.
 
+Version 0.116.0 adds [reinforced picks and basalt masonry](docs/TOOLS171.md): stronger contacts, careful block recovery, dressed basalt floors and advance planning with actual material/knowledge checks. Existing tools and excavations remain intact.
+
 ## Develop and release
 
 Read [current status](docs/CURRENT_STATUS.md), [handoff](docs/SESSION_HANDOFF.md), then [AGENTS.md](AGENTS.md). Clone `master`, which contains the editable game and original assets. Use Godot **4.4.1 stable**, the standard editor, and Python 3.11 or newer. Open `project.godot`; the editor imports assets. F5 runs the project.
