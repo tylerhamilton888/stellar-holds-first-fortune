@@ -24,6 +24,6 @@ Reviewed the introduction and scrolled offer/provisional/permanent menus. Six fo
 
 ## Next work and limits
 
-Core blueprinting, connected estate travel, porter freight and provisional property introduction are delivered. Next is normal Windows playtesting and polish: first-hour clarity, building/charter pacing, input, audio, performance and enjoyment. New mine depths, automated excavation, Handworks raw-load freight and cart-sized household stairs remain separate scope.
+Core blueprinting, connected estate travel, porter freight and provisional property introduction are delivered. Candidate 0.114.0 adds [building-grid polish](GRID167.md); it is not yet delivered. The owner’s [new roadmap](HOME_AND_FORTUNE_ROADMAP.md) makes family-purchased ownership near arrival the next major milestone, replacing the long-term provisional-ownership story while preserving existing saves. Ordinary Windows playtesting remains necessary. New mine depths, automated excavation, Handworks raw-load freight and cart-sized household stairs remain separate scope.
 
 Preserve releases and saves. Documentation-only corrections need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-rise165.md).

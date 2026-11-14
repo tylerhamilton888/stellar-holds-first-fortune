@@ -18,6 +18,7 @@ var area="hearthward"
 var return_area="hearthward"
 var selected_chest=""
 const FURNITURE_GRID=10.0
+const CLAIM_GROUNDS=[Rect2(90,210,1810,750),Rect2(1900,210,1590,1850)]
 const FOOT_RADIUS=10.0
 var moving_furnishing:Dictionary={}
 var placing=""
@@ -71,7 +72,7 @@ func ensure():
  roads.ensure()
 func room()->bool:return area.begins_with("room:") or area.begins_with("home:")
 func size()->Vector2:return HoldRoomLayout.size(area) if room() else HoldNeighborhood.SIZE if HoldWorldZones.ward(area) else Vector2(3600,2200) if area=="claim" else SIZE
-func claim_ground(p:Vector2)->bool:return Rect2(90,210,1810,750).has_point(p) or Rect2(1900,210,1590,1850).has_point(p)
+func claim_ground(p:Vector2)->bool:return CLAIM_GROUNDS[0].has_point(p) or CLAIM_GROUNDS[1].has_point(p)
 func label()->String:
  if architecture.interior():return architecture.inside().get("name","Your building")+" · floor "+str(architecture.current_floor()+1)
  if HoldFrontier103.active(g.state):
@@ -498,7 +499,7 @@ func start_placement(kind:String):
  if kind in ["pantry","hearth_table"] and not g.state.tech.has("hearthkeeping"):
   g.notify("Research Hearthkeeping for these plans. Ordinary shelves and tables provide the same comfort.");return
  cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
- g.notify("Place on the fine grid. LMB builds; right click cancels. Keep approaches clear.")
+ g.notify("Quarter-tile placement. Bold lines mark full tiles. LMB builds; right click cancels. Keep approaches clear.")
 func can_furnish()->bool:
  if architecture.interior() and HoldFrontier103.public_building(architecture.inside()):return HoldFrontier103.private_room(g)
  return area=="room:home" or area=="claim" or area.begins_with("home:") or architecture.interior()
@@ -850,7 +851,7 @@ func draw():
  architecture.preview()
  if placing!="" and not placing.begins_with("house:") and not placing.begins_with("blueprint:"):
   var p=snap_furnishing(g.get_global_mouse_position()+g.camera)
-  if can_furnish():HoldBuildPreview.grid(g,g.camera,FURNITURE_GRID,build_bounds())
+  if can_furnish():HoldBuildPreview.world_grid(self,FURNITURE_GRID,p)
   var ok=furniture_ready(p,placing);var tint=HoldBuildPreview.color(ok)
   HoldFurnishings.draw(g,p,placing,Color(tint,.65))
   HoldBuildPreview.outline(g,HoldFurnishings.footprint(placing,p),ok)

@@ -353,7 +353,7 @@ func roof_draw():
 func preview():
  if not s.placing.begins_with("house:"):return
  var c=cell(g.get_global_mouse_position()+g.camera);var kind=s.placing.trim_prefix("house:");var ok=ready_to_build(c,kind)
- if s.area=="claim":HoldBuildPreview.grid(g,g.camera,CELL,Rect2(260,320,1300,600))
+ HoldBuildPreview.world_grid(s,CELL,center(c))
  var base=Rect2(Vector2(c)*CELL,Vector2.ONE*CELL)
  if kind in ["stone_floor","wood_floor","roof"]:material(1 if kind=="wood_floor" else 2 if kind=="roof" else 0,base,Color(HoldBuildPreview.color(ok),.55))
  HoldBuildPreview.outline(g,base,ok)

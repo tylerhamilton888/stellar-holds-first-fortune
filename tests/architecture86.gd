@@ -9,6 +9,14 @@ func run():
  check(not g.surface.walkable(Vector2(1840,1000)),"Expanded grounds keep the visible tributary unwalkable")
  check(g.surface.walkable(Vector2(1840,700)) and g.surface.walkable(Vector2(1920,1100)),"Eastern plots connect over dry ground beyond the old boundary")
  var a=g.surface.architecture
+ # Preview all three placement modes on expanded grounds before spending anything.
+ var preview_stock=g.state.inventory.duplicate(true)
+ for mode in ["blueprint:cottage","house:stone_floor","chair"]:
+  a.selected="cottage";g.surface.placing=mode
+  g.camera=g.surface.camera_target();g.get_viewport().warp_mouse(Vector2(2200,1000)-g.camera)
+  await snap("grid167-"+mode.replace(":","-"))
+  check(g.state.inventory==preview_stock,"Grid previews never spend resources: "+mode)
+ g.surface.cancel_placement()
  check(HoldBuildingPlans.catalogue().size()==26,"All 26 existing and frontier building designs are exposed through shared plans")
  for ward in HoldWorldZones.WARDS:
   for b in g.surface.world.buildings(ward):

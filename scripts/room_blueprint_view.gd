@@ -44,7 +44,9 @@ class Map extends Control:
   for k in planner.tiles():
    var t=planner.tiles()[k];var rect=Rect2(Vector2(planner.a.s.house.coords(k))*40,Vector2(40,40))
    draw_rect(rect,Color("baae8e") if t.get("wall","") in ["wall","window"] else Color("6b7970"))
+  var measure=Rect2i()
   for r in planner.rooms():
+   if str(r.id)==planner.selected:measure=planner.bounds(r)
    var rect=Rect2(planner.bounds(r));rect.position*=40;rect.size*=40
    var color={"Complete":Color("87ce94"),"Under construction":Color("e0ab68"),"Finishing":Color("e0ab68"),"Planned":Color("72b9c1")}.get(states.get(str(r.id),"Planned"),Color("d67b73"))
    if str(r.id)==planner.selected:draw_rect(rect.grow(12),Color("f3dfa1"),false,6)
@@ -55,8 +57,39 @@ class Map extends Control:
   if planner.level()==planner.a.s.house.level():draw_circle(planner.a.g.player,22,Color("fff0b9"))
   if dragging:
    var end=cell_at(get_local_mouse_position());var low=Vector2i(mini(start.x,end.x),mini(start.y,end.y));var high=Vector2i(maxi(start.x,end.x),maxi(start.y,end.y))
-   draw_rect(Rect2(Vector2(low)*40,Vector2(high-low+Vector2i.ONE)*40),Color("f1dba2"),false,8)
+   measure=Rect2i(low,high-low+Vector2i.ONE)
+   draw_rect(Rect2(Vector2(low)*40,Vector2(measure.size)*40),Color("f1dba2"),false,8)
   draw_set_transform(Vector2.ZERO)
+  if measure.has_area():
+   var others=[]
+   for r in planner.rooms():
+    if str(r.id)!=planner.selected:others.append(planner.bounds(r))
+   var axes=HoldRoomBlueprintView.aligned_axes(measure,others)
+   for x in axes.x:
+    var px=origin.x+x*40*scale_factor
+    draw_dashed_line(Vector2(px,0),Vector2(px,size.y),Color(.92,.79,.48,.55),1,5)
+   for y in axes.y:
+    var py=origin.y+y*40*scale_factor
+    draw_dashed_line(Vector2(0,py),Vector2(size.x,py),Color(.92,.79,.48,.55),1,5)
+   dimension_label(measure)
+ func dimension_label(rect:Rect2i):
+  var screen=Rect2(origin+Vector2(rect.position)*40*scale_factor,Vector2(rect.size)*40*scale_factor)
+  if not screen.intersects(Rect2(Vector2.ZERO,size)):return
+  var text=HoldRoomBlueprintView.dimension_text(rect);var font=ThemeDB.fallback_font
+  var width=font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,14).x
+  var at=Vector2(clampf(screen.get_center().x-width/2,7,maxf(7,size.x-width-7)),clampf(screen.end.y+20,20,size.y-7))
+  draw_rect(Rect2(at-Vector2(5,16),Vector2(width+10,22)),Color("10262c"))
+  draw_string(font,at,text,HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("f1dba2"))
+static func dimension_text(rect:Rect2i)->String:return "%d × %d tiles" % [rect.size.x,rect.size.y]
+static func aligned_axes(rect:Rect2i,others:Array)->Dictionary:
+ var result={"x":[],"y":[]}
+ var own={"x":[float(rect.position.x),float(rect.end.x),rect.position.x+rect.size.x/2.0],"y":[float(rect.position.y),float(rect.end.y),rect.position.y+rect.size.y/2.0]}
+ for other in others:
+  var edges={"x":[float(other.position.x),float(other.end.x),other.position.x+other.size.x/2.0],"y":[float(other.position.y),float(other.end.y),other.position.y+other.size.y/2.0]}
+  for axis in ["x","y"]:
+   for value in own[axis]:
+    if value in edges[axis] and value not in result[axis]:result[axis].append(value)
+ return result
 static func show(a):
  var p=a.room_blueprints;var g=a.g
  var row=g.row(g.panel_body)
@@ -110,6 +143,7 @@ static func show(a):
  HoldArchitectureView.action(g,controls,"Build within reach",func():p.work();g.refresh_panel(),not r.is_empty() and p.level()==a.s.house.level())
  HoldArchitectureView.action(g,controls,"Remove plan",func():p.forget();g.refresh_panel(),not r.is_empty())
  if not r.is_empty():
+  g.label(g.panel_body,"Footprint · "+dimension_text(p.bounds(r))+" · includes outer walls",14,Color("edc98a"))
   var fee=p.cost(r);HoldBuildingPlans.add_cost(fee,HoldBlueprintFinishes.cost(p,r));var status=p.progress(r)
   var prior=p.message;var fits=p.validate(r,p.selected);var obstruction=p.message;p.message=prior
   g.label(g.panel_body,(status.state if fits else "Blocked: "+obstruction)+" · %d/%d structural pieces" % [status.built,status.total],15,Color("b8c5bc"))
@@ -120,7 +154,7 @@ static func show(a):
  var estate_fee=p.total_cost()
  if not estate_fee.is_empty():g.label(g.panel_body,"All saved plans · "+HoldData.cost_text(estate_fee)+" · shared pieces counted once",14)
  g.label(g.panel_body,p.message,15,Color("b8c5bc"))
- g.label(g.panel_body,"Selected floor · wheel: zoom · middle drag: pan · click: select. Blue: planned · amber: building · green: complete · red: blocked. Add a new doorway before removing the old one.",14,Color("a8b9b6"))
+ g.label(g.panel_body,"Gold guides: aligned room edges/centres. Dimensions include walls. Selected floor · wheel: zoom · middle drag: pan · click: select. Blue: planned · amber: building · green: complete · red: blocked. Add a new doorway before removing the old one.",14,Color("a8b9b6"))
 
  # Keep the primary build controls and quote above optional navigation/finishes.
  g.panel_body.move_child(navigation,g.panel_body.get_child_count()-1)

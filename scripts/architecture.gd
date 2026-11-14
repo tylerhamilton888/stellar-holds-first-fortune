@@ -306,6 +306,7 @@ func apply_style()->bool:
 func preview():
  if not s.placing.begins_with("blueprint:"):return
  var p=((g.get_global_mouse_position()+g.camera)/20).round()*20
+ HoldBuildPreview.world_grid(s,20,p)
  var old=record(moving);var o=building_object(old) if not old.is_empty() else HoldBuildingPlans.instance(selected,p);o.p=p
  if old.is_empty() and not plan_style.is_empty():o.style87=plan_style
  var key=selected+":"+str(p)+":"+str((g.player/10).floor())+":"+moving
@@ -315,4 +316,4 @@ func preview():
  HoldBuildingArt.draw(s.world,o,.62)
  HoldBuildPreview.outline(g,HoldBuildingArt.footprint(o),fits)
  g.draw_circle(p,5,tint);g.draw_line(p,p+Vector2(0,45),tint,3)
- HoldSurface.A.text(g,p+Vector2(-120,65),"Doorway · "+("LMB build" if fits else reason),13,tint)
+ HoldSurface.A.text(g,p+Vector2(-120,65),"Doorway · "+("LMB build · half-tile grid" if fits else reason),13,tint)

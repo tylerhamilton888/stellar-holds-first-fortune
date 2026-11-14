@@ -8,6 +8,14 @@ func run():
  var a=g.surface.architecture;var p=a.room_blueprints;var h=g.surface.house
  var before=g.state.inventory.duplicate(true)
  check(p.available(),"Planning is available on owned ground")
+ check(HoldBuildPreview.regions(g.surface).any(func(r):return r.has_point(Vector2(3000,1800))),"Grid includes the expanded eastern and southern building grounds")
+ check(not HoldBuildPreview.regions(g.surface).any(func(r):return r.has_point(Vector2(1200,1500))),"Grid excludes the tributary cutout rather than outlining a false rectangular plot")
+ check(h.cell(Vector2(2199,1759))==Vector2i(54,43),"Fine construction retains structural tile snapping")
+ check(HoldSurface.snap_furnishing(Vector2(2206,1764))==Vector2(2210,1760),"Furniture retains quarter-tile snapping")
+ var axes=HoldRoomBlueprintView.aligned_axes(Rect2i(10,10,6,4),[Rect2i(16,10,4,8)])
+ check(16.0 in axes.x and 10.0 in axes.y and 14.0 in axes.y,"Room guides recognize aligned boundaries and centres")
+ check(HoldRoomBlueprintView.aligned_axes(Rect2i(10,10,6,4),[Rect2i(30,30,4,4)]).x.is_empty(),"Unaligned rooms do not receive misleading alignment guides")
+ check(HoldRoomBlueprintView.dimension_text(Rect2i(54,40,6,5))=="6 × 5 tiles","Room dimensions report the full footprint including walls")
  for tech in HoldData.RESEARCH:g.state.tech[tech]=true
  g.open_panel("architecture");button("Plan Your Holding")
  check(a.room_planning,"Book opens blueprint mode")
@@ -17,6 +25,8 @@ func run():
  check(g.state.inventory==before,"Planning spends nothing")
  if DisplayServer.get_name()!="headless":
   g.refresh_panel();await snap("01-plan-book")
+  var map=g.panel.find_children("*","Control",true,false).filter(func(n):return n is HoldRoomBlueprintView.Map)[0]
+  check(map.cell_at(map.origin+Vector2(54.5,40.5)*40*map.scale_factor)==Vector2i(54,40),"Map dimensions and selection use the same grid coordinates")
  p.purpose="Bedroom";check(p.save_rectangle(Vector2i(54,40),Vector2i(59,44)),"Resize an unbuilt room")
  check(p.chosen().purpose=="Bedroom","Designation survives editing")
  check(g.state.inventory==before,"Resizing spends nothing")

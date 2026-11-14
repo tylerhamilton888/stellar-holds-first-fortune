@@ -9,6 +9,17 @@ static func grid(n:Node2D,camera:Vector2,step:float,bounds:Rect2):
   n.draw_line(Vector2(x,visible.position.y),Vector2(x,visible.end.y),Color(.63,.85,.79,.16 if x%40==0 else .065),1)
  for y in range(int(ceil(visible.position.y/step)*step),int(visible.end.y)+1,int(step)):
   n.draw_line(Vector2(visible.position.x,y),Vector2(visible.end.x,y),Color(.63,.85,.79,.16 if y%40==0 else .065),1)
+static func regions(surface)->Array:
+ return HoldSurface.CLAIM_GROUNDS if surface.area=="claim" else [surface.build_bounds()]
+static func world_grid(surface,step:float,focus:Vector2):
+ var g=surface.g
+ for bounds in regions(surface):
+  grid(g,g.camera,step,bounds)
+  var visible=Rect2(g.camera,Vector2(960,540)).intersection(bounds)
+  if not visible.has_area():continue
+  var guide=Color(.92,.79,.48,.55)
+  if focus.x>=visible.position.x and focus.x<=visible.end.x:g.draw_dashed_line(Vector2(focus.x,visible.position.y),Vector2(focus.x,visible.end.y),guide,1,6)
+  if focus.y>=visible.position.y and focus.y<=visible.end.y:g.draw_dashed_line(Vector2(visible.position.x,focus.y),Vector2(visible.end.x,focus.y),guide,1,6)
 static func outline(n:Node2D,base:Rect2,valid:bool):
  var tint=color(valid)
  n.draw_rect(base,Color(tint,.12))
