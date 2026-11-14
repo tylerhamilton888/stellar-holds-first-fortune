@@ -83,3 +83,7 @@ Use O → Plan Your Holding → Freight for the household. Mark a mine stockpile
 ## Old Stonewright’s Rise (0.113.0)
 
 After your first paid shift, visit Ivar’s book and accept provisional use. Check the short introduction, including save/reload and Skip. Follow the east road to the holding; O opens building plans. Build and store goods before completing two civic projects or trade seals, then return to record the permanent charter. Verify your work and supplies remain exactly where you left them. Existing permanent saves should keep their rights and chosen property names.
+
+## Building grid (0.114.0 candidate)
+
+At the Rise, use fine construction, the building catalogue and furniture placement. Compare the shared bold tile lines and finer subdivisions on the expanded eastern/southern grounds and inside a player-built room. Check gold row/column guides against the preview. In O → Plan Your Holding, drag a room and inspect its live footprint dimensions; align edges/centers with another plan, zoom and pan, and switch floors. Save/reload and confirm existing placements are unchanged.

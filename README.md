@@ -28,3 +28,5 @@ Read [current status](docs/CURRENT_STATUS.md), [handoff](docs/SESSION_HANDOFF.md
 Use file-only command capture and new output directories as documented in AGENTS.md. A successful export alone is not release acceptance.
 
 Original assets, UIDs and previous releases remain preserved. Earlier README instructions are in [history](docs/history/README-before-doc-consolidation-2026-11-10.md).
+
+Building-grid polish is prepared for 0.114.0; see [grid notes](docs/GRID167.md) and current status for delivery. The [A Home and a Fortune roadmap](docs/HOME_AND_FORTUNE_ROADMAP.md) records the next family-origin opening and subsequent craft/progression work.

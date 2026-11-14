@@ -26,6 +26,11 @@ func run():
   var press=InputEventMouseButton.new();press.button_index=MOUSE_BUTTON_LEFT;press.pressed=true;press.position=map.global_position+map.origin+Vector2(50.5,25.5)*40*map.scale_factor
   root.push_input(press,true);await process_frame
   var release=InputEventMouseButton.new();release.button_index=MOUSE_BUTTON_LEFT;release.pressed=false;release.position=map.global_position+map.origin+Vector2(57.5,32.5)*40*map.scale_factor
+  root.warp_mouse(release.position)
+  var motion=InputEventMouseMotion.new();motion.position=release.position;motion.button_mask=MOUSE_BUTTON_MASK_LEFT
+  root.push_input(motion,true);await process_frame
+  check(map.dragging and p.rooms().is_empty(),"Live dimension preview does not commit a room before release")
+  await snap("grid167-drag-dimensions")
   root.push_input(release,true);await process_frame
   check(p.rooms().size()==1,"Native GUI drag saves a room")
  else:check(p.save_rectangle(Vector2i(50,25),Vector2i(57,32)),"Headless room plan")

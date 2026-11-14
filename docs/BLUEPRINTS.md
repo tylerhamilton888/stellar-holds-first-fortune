@@ -4,7 +4,7 @@ Implementation: [PR #152](https://github.com/tylerhamilton888/stellar-holds-firs
 
 ## Player experience
 
-Building Book → Plan Your Holding opens a selectable floor map on chartered property. Drag a rectangle, choose an optional designation and structural floor, and join rooms with doorways. Click to select; wheel zooms and middle-drag pans. Unstarted plans can be redrawn without spending supplies. Add a new doorway before removing an old planned opening; recover already-built openings through fine construction.
+Building Book → Plan Your Holding opens a selectable floor map on chartered property. Drag a rectangle, choose an optional designation and structural floor, and join rooms with doorways. Click to select; wheel zooms and middle-drag pans. The 0.114.0 candidate adds live/selected footprint dimensions and visual edge/center alignment guides; see [grid notes](GRID167.md). Unstarted plans can be redrawn without spending supplies. Add a new doorway before removing an old planned opening; recover already-built openings through fine construction.
 
 Build within reach performs up to 32 nearby construction/finishing steps. Actual Hearthcraft floors, walls, doors and roofs consume the existing pack. Existing pieces reduce the quote, and the combined estimate counts shared pieces once. Shared foundation material and finish ownership follow the earlier room plan, independently of construction order. Removing a plan preserves every physical piece, furnishing and stored item.
 

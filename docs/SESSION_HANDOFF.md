@@ -12,12 +12,16 @@ After the first paid shift, Ivar offers free provisional use of Old Stonewrightâ
 
 Owners: frontier103 tenure; claim_scene127 introduction; main reload; first_visit99 opening presentation; surface property label; ledger137 guidance. Six focused native cases passed 727 assertions plus all 42 tooling tests. Introduction and scrolled menus were visually reviewed. See RISE165.md.
 
-## Next piece
+## Active grid polish and next roadmap
 
-Core surface/underground/upper-floor blueprinting, cellar links, worker travel, porter freight and provisional property introduction are delivered. Next is Windows playtesting and polish: first-hour clarity, building/charter pacing, input, audio, performance and enjoyment. New depths, automated excavation, Handworks raw-load freight and cart-sized household stairs are separate work. Preserve existing possessions and progression.
+Local branch feature/grid167 from master 57b4729. Candidate 0.114.0 unifies visible grids over actual claim/interior bounds, adds row/column guides and live/selected room dimensions with exact alignment guides. Existing placement, costs and saves are preserved. See GRID167.md. Five focused native cases passed 537 assertions; 42 tooling tests and output policy passed. Visual review covered all three placement modes, selected/dragged dimensions and room alignment. Evidence is under test-results/grid167*. Full source/package checks and publication remain pending.
+
+The owner attached a new development directive on 2026-11-14. Its full text is preserved at design/HOME_AND_FORTUNE_DIRECTIVE.md and its concise staged plan at HOME_AND_FORTUNE_ROADMAP.md. The current request is grid polish first, then awareness of these next steps. Next major milestone: family-purchased Rise accessible near arrival; civic registration replaces earning ownership; modest new-save cottage; optional mining introduction; additive migration preserving existing possessions and rights. This story revision is not implemented in the grid update.
+
+Remaining sequence: tool/material capabilities; cross-craft components; specialist NPC commissions and reliable purchase alternatives; Ledger/sandbox integration; environmental/experiential polish. Do not repeat delivered blueprint, vertical travel or freight stages.
 
 ## Recovery safeguards
 
 Resume from current master or the verified release source, not an older ZIP. Source and release evidence are in GitHub. Local Git had no credentials; connected blob/tree/commit uploads were verified against the local Git tree. Public fetch works. Do not expose encoded source/assets or large logs in conversation.
 
-Use Godot 4.4.1, bounded capture and selected diagnostics. Local rendering used /tmp/freight-xvfb/run_native.py. Follow RELEASE_PIPELINE.md. Preserve releases, saves and original art. Documentation-only changes need no game rebuild. No sub-agents unless requested.
+Use Godot 4.4.1, bounded capture and selected diagnostics. Local rendering used the pinned 4.4.1 engine and runtime/run_native.py in the task workspace. Follow RELEASE_PIPELINE.md. Preserve releases, saves and original art. Documentation-only changes need no game rebuild. No sub-agents unless requested.

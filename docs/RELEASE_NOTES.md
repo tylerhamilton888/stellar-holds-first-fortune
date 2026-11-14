@@ -1,9 +1,9 @@
-# 0.113.0 — Old Stonewright’s Rise
+# 0.114.0 — A clearer building grid
 
-After your first paid shift, visit Ivar’s shift book and choose **Accept provisional use · Old Stonewright’s Rise**. Ivar introduces the abandoned quarry holding in a short in-world scene. Provisional use is free, with no deadline. Follow the east road to the same household grounds and press **O** to begin building.
+Fine construction, whole-building placement and furnishing now show the same world-aligned structural grid across the full holding, including its eastern and southern grounds. Building placement retains half-tile snapping; furniture retains quarter-tile snapping. Gold row/column guides follow the placement point. Interiors use their own actual room bounds. The grid excludes the holding’s tributary cutout; placement checks still decide what can be built.
 
-Two civic projects or trade seals still earn the permanent household charter. Return to Ivar to record it. Your buildings, furnishings, stored goods, cellar, worker routes and development stay on the same property. The existing finished-home reward still requires permanent tenure. The upstairs lodge room remains available.
+The Blueprint Book shows live width × height while dragging and the selected room’s footprint, including outer walls. Gold guides mark exact edge/center alignment with other plans on the selected floor. Guidance is visual; it does not pull a plan or object away from the chosen grid position. Costs, saved positions, construction and ownership are unchanged.
 
-Older permanent owners keep their tenure, names and property. No estate is replaced or awarded fully built. Saving during Ivar’s introduction resumes the current beat; skipping it does not bypass contribution requirements or advance the campaign.
+The owner’s next-development directive is preserved in HOME_AND_FORTUNE_ROADMAP.md and its linked full text. The family-purchased property opening is the next major milestone; this update does not change 0.113.0’s ownership story.
 
-Extract the complete Windows ZIP into a fresh folder. Preserve older builds and saves. Version 0.113.0 is published after all source and exact-package gates passed; CURRENT_STATUS.md records the verified evidence. [Previous notes](history/RELEASE_NOTES-before-rise165.md).
+CURRENT_STATUS.md identifies the verified published build. These are candidate notes until the release gates pass. Preserve previous releases and saves. [Previous notes](history/RELEASE_NOTES-before-grid167.md).
