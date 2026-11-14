@@ -14,6 +14,9 @@ func run():
  check(g.panel.find_child("PackGrid",true,false).columns==10,"Inventory presents a ten-column slot grid")
  g.panel.find_child("Item_basalt_block",true,false).pressed.emit();await snap("basalt-inventory")
  check(g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"Basalt selection preserves visible full pack and character summary")
+ for component in HoldForge147.COMPONENTS:
+  g.panel.find_child("Item_"+component,true,false).pressed.emit();await snap("component-"+component)
+  check(g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"Component selection keeps pack summary visible: "+component)
  var item=g.panel.find_child("Item_stone",true,false);item.pressed.emit();button("6")
  check(g.hotbar.data().slots[5]=="stone" and g.state.inventory==inventory,"Pinning uses existing hotbar without transferring or duplicating goods")
  var search=g.panel.find_child("PackSearch",true,false);search.text="no such item";search.text_changed.emit(search.text)

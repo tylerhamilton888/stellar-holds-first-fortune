@@ -69,6 +69,8 @@ static func learn(s,id:String)->bool:
  if has(s,id) or missing(s,id)!="":return false
  data(s).learned[id]=true;return true
 static func recipe_path(id:String)->String:
+ if id=="shaped_haft":return "woodworking"
+ if id in ["forged_pickhead","tool_fittings"]:return "smithing"
  if id in ["parts","assembly"]:return "engineer"
  if id=="energy_cell":return "runecarving"
  if id in ["iron","copper","iron_slag","copper_slag","scrap_iron","shell_iron","ammo"]:return "smithing"

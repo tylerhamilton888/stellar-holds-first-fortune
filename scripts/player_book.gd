@@ -102,6 +102,7 @@ static func recipes(g):
   var recipe=HoldData.RECIPES[id]
   var head=g.row(detail);HoldItemArt.icon(head,recipe.out.keys()[0]);g.label(head,recipe.name,19)
   g.label(detail,"Makes "+HoldData.cost_text(recipe.out),15)
+  if id in HoldForge147.COMPONENTS:g.label(detail,"Reinforced-pick component · make at the communal workshop or buy at the market.",14)
   for item in recipe.cost:
    var row=g.row(detail);HoldItemArt.icon(row,item);g.label(row,"%s · %d / %d" % [HoldData.ITEMS[item].name,g.state.count(item),recipe.cost[item]],14)
   var locked_reason=HoldCollections141.recipe_reason(g.state,id)

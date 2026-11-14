@@ -2,7 +2,7 @@ class_name HoldToolCapabilities
 extends RefCounted
 
 # Existing steel ownership stays authoritative; the stronger pick is additive.
-const COSTS={"steel":{"iron":5,"wood":2},"reinforced_pick":{"iron":8,"copper":2,"coal":3,"wood":2}}
+const COSTS={"steel":{"iron":5,"wood":2},"reinforced_pick":{"shaped_haft":1,"forged_pickhead":1,"tool_fittings":1}}
 static func reinforced(s)->bool:return s.steel and bool(s.outpost.get("reinforced_pick",false))
 static func power(s)->float:return 2.1 if reinforced(s) else 1.65 if s.steel else 1.0
 static func basalt_hint(s)->String:

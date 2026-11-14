@@ -9,6 +9,7 @@ const FORGE_BASE=Rect2(-68,-27,136,27)
 const ANVIL=Vector2(580.475,445.7)
 const BORIN=Vector2(620,410)
 const BORIN_TALK=Vector2(650,455)
+const COMPONENTS=["shaped_haft","forged_pickhead","tool_fittings"]
 const SMELTING=["iron","copper","iron_slag","copper_slag","scrap_iron","shell_iron"]
 const DECOR=[
  ["barrel",Vector2(250,470),""],["barrel",Vector2(250,525),""],
@@ -104,30 +105,35 @@ static func draw_stock(g,o:Dictionary):
   HoldItemArt.draw(g,Rect2(o.p+Vector2(-15,-43),Vector2(30,25)),HoldItemArt.item_index(o.forge_stock),HoldItemArt.tint(o.forge_stock))
 static func panel(g):
  var s=g.state;var station=str(g.get_meta("forge147_station","all"))
- var header="Smelting hearth" if station=="smelt" else "Anvil & metalwork" if station in ["anvil","bench"] else "The communal forge"
+ var header="Tool components" if station=="components" else "Smelting hearth" if station=="smelt" else "Anvil & metalwork" if station in ["anvil","bench"] else "The communal forge"
  g.label(g.panel_body,header,21,Color("edc98a"))
- g.label(g.panel_body,"Use ore and coal here to make ingots." if station=="smelt" else "Shape metal into tools, equipment and useful fittings." if station in ["anvil","bench"] else "Smelt ore at the hearth, then use the anvil or workbenches for tools and fittings.",16)
+ g.label(g.panel_body,"Shape the haft at the workbench; forge the head and fittings at the anvil. Components are also sold at the market." if station=="components" else "Use ore and coal here to make ingots." if station=="smelt" else "Shape metal into tools, equipment and useful fittings." if station in ["anvil","bench"] else "Smelt ore at the hearth, then use the anvil or workbenches for tools and fittings.",16)
  if s.opening<2:g.label(g.panel_body,"The hearth is cold. The great book records what is needed to relight it.",16)
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Smelting",func():g.set_meta("forge147_station","smelt");g.refresh_panel())
  g.small_button(nav,"Metalwork",func():g.set_meta("forge147_station","anvil");g.refresh_panel())
+ g.small_button(nav,"Tool components",func():g.set_meta("forge147_station","components");g.refresh_panel())
  g.small_button(nav,"All workshop recipes",func():g.set_meta("forge147_station","all");g.refresh_panel())
  if s.tech.has("automation"):g.small_button(nav,"Industry",func():g.set_meta("forge147_station","industry");g.refresh_panel())
  if station=="industry":HoldIndustry.panel(g);return
  if not s.queue.is_empty():g.label(g.panel_body,"%d/12 jobs · %s · %.0f sec" % [s.queue.size(),HoldData.RECIPES[s.queue[0].id].name,s.queue[0].left],15)
- if station!="smelt":
+ if station not in ["smelt","components"]:
   for id in HoldToolCapabilities.COSTS:
-   var title="Forge steel pick" if id=="steel" else "Forge reinforced pick"
+   var title="Forge steel pick" if id=="steel" else "Assemble reinforced pick"
    var tool=g.button(g.panel_body,title+" · "+HoldData.cost_text(HoldToolCapabilities.COSTS[id]),func():
     if HoldFrontier103.transact(g,"tool",id):g.save_game();g.notify("Steel pick forged · basalt access." if id=="steel" else "Reinforced pick forged · hold Shift while mining basalt to recover blocks.");g.refresh_panel())
    var reason=HoldToolCapabilities.reason(s,id);tool.disabled=reason!="";tool.tooltip_text=reason
    if reason!="":g.label(g.panel_body,reason,14)
+  g.small_button(g.panel_body,"Make or buy the components",func():g.set_meta("forge147_station","components");g.refresh_panel())
   g.label(g.panel_body,"Reinforced picks make stronger contacts. Careful basalt work [Shift+LMB] yields blocks; ordinary strikes still yield stone.",14)
   g.button(g.panel_body,"Forge weapons and armor",func():g.gear_tab="forge";g.open_panel("equipment"))
+ if station=="components":g.small_button(g.panel_body,"Assemble at the anvil",func():g.set_meta("forge147_station","anvil");g.refresh_panel())
  for id in HoldData.RECIPES:
+  if station=="components" and id not in COMPONENTS:continue
   if station=="smelt" and id not in SMELTING:continue
   if station in ["anvil","bench"] and id in SMELTING:continue
   var r=HoldData.RECIPES[id]
+  if station=="components":g.label(g.panel_body,("Woodworking" if id=="shaped_haft" else "Smithing")+" · makes "+HoldData.cost_text(r.out),14)
   var b=g.button(g.panel_body,r.name+" · "+HoldData.cost_text(r.cost),func():
    if HoldFrontier103.transact(g,"craft",id):g.save_game();g.refresh_panel())
   b.disabled=s.opening<2 or not s.afford(r.cost) or HoldCollections141.recipe_reason(s,id)!="" or s.queue.size()>=12
