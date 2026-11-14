@@ -1,23 +1,24 @@
 # Session handoff — 2026-11-13
 
-Read CURRENT_STATUS.md and AGENTS.md. Published Windows remains 0.112.0 (release run 43538478196, source 0333a54554592847579b4e211798ce625da7e321). 0.113.0 delivery is now authorized and being prepared.
+Read CURRENT_STATUS.md and AGENTS.md. User explicitly approved upload, checked merge and 0.113.0 publication. No repeated routine confirmation is needed.
 
-## Active work: Old Stonewright’s Rise
+## Active delivery: Old Stonewright’s Rise
 
-Local branch `feature/rise165`, based on master `864d68481012f028886ac0773fa6a8570af13ca8`. Implementation commits aff116d and 9ccc777; the final dialogue polish and checkpoint are in the branch’s latest local commit. Candidate version 0.113.0.
+Source PR #165: https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/165
+Source commit: `138c972507ef34ddaa2ca3fc092b42c25f60b861`
+Exact tree: `4f8b9f562a47e57400f9eedd8716b986ba91eb57`
+Branches: feature/rise165 and release/0.113.0. Connected GitHub blob/tree/commit upload verified equality with the tested local tree. Local Git has no credentials; public fetch works.
 
-After the first paid shift, Ivar offers free provisional use of the existing copper_ridge household. The short saved scene is optional/skippable; no campaign credit is granted. Two civic projects/trade seals still grant permanent tenure. The upgrade preserves the same house, furniture, stocked chests, camp stage and property name. Legacy permanent owners keep their rights. Finished-home registration still needs permanent tenure. See RISE165.md.
+PR validation: https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621985
+Verified Windows release: https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621321
+Both are running. No failures observed at checkpoint. Do not restart for unchanged status alone. PR requires all 87 source cases; release independently tests all source and exact-package cases before publication. Merge after the PR gate passes. After publication verify public metadata/digests and finish delivery docs. Published build remains 0.112.0 until that verification.
 
-Owners: frontier103 for tenure, claim_scene127 for the additional scene, main for reload, first_visit99 for opening presentation, surface for property label, ledger137 for guidance. Existing frontier103 test extended; no new test-suite member.
+## Implemented scope and local evidence
 
-## Validation
+After the first paid shift, Ivar offers free provisional use of the existing copper_ridge household. The saved in-world scene is optional/skippable, with no campaign credit. Two civic projects/trade seals grant permanent tenure on the same property. The upgrade preserves house, furniture, chests, camp stage and name. Legacy permanent owners retain their rights. Finished-home registration still needs permanent tenure. See RISE165.md.
 
-Pinned /tmp/godot441/Godot_v4.4.1-stable_linux.x86_64. Use /tmp/freight-xvfb/run_native.py for rendered tests in this environment; all commands use bounded tools/capture_command.py.
+Pinned Godot 4.4.1: frontier103 252 assertions; claim127 383; opening146 14; ledger137 36; loading 19; firstvisit99 23. All 42 tooling tests passed. Reviewed introduction and scrolled offer/provisional/permanent menus. Evidence is under test-results/rise165-review4, rise165-final3 and rise165-loading. Use /tmp/freight-xvfb/run_native.py for local rendering and tools/capture_command.py for bounded logs.
 
-42 tooling tests passed. Output policy passed. Final frontier103 passed 252 assertions in test-results/rise165-review4. Reviewed introduction and scrolled offer, provisional and permanent menus; Ivar appears once. Earlier test failures were a stored test chest in the later cottage footprint (moved), not a waived placement rule. Campaign scenes passed 383 assertions; opening passed 14; ledger passed 36 in test-results/rise165-final3. Loading passed 19 in test-results/rise165-loading. Firstvisit99 passed 23 assertions. All six focused game cases and 42 tooling tests passed; complete CI source/package gates remain pending publication approval.
+## Continuation
 
-## Authorized delivery
-
-The user explicitly approved upload, checked merge and publication of 0.113.0 in this conversation. Earlier automatic-review publication blocks are resolved by that approval. Local Git has no credentials; use the connected GitHub blob/tree/commit tools and require the uploaded tree to equal the tested local tree before opening the PR.
-
-Follow RELEASE_PIPELINE.md. Plan requires all 87 source cases; release also requires complete exact-package coverage. Preserve existing source, saves, backups and releases. Update current status after verified publication. No sub-agents unless requested.
+Current local docs branch: docs/rise165-delivery, based on the exact uploaded source. Keep release/0.113.0 immutable. After verified publication reconcile CURRENT_STATUS, SESSION_HANDOFF, README, PLAYTEST_GUIDE, BACKLOG, feature notes and RELEASE_NOTES, then merge the docs-only PR after its checks. See RELEASE_PIPELINE.md. Preserve releases, saves and original assets. No sub-agents unless requested.

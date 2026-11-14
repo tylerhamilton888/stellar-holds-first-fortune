@@ -24,6 +24,6 @@ Reviewed native book controls, upstairs carrier and perspective-mine crate rende
 
 ## Next work and limits
 
-Candidate 0.113.0 implements provisional property-story integration locally; see [Rise notes](RISE165.md) and SESSION_HANDOFF.md for checks and the authorized delivery checkpoint. It is not yet released. Normal player testing and polish follow. New mine depths, automated excavation and Handworks raw-load freight are separate work. Normal-speed Windows input, audio, performance and enjoyment still need player testing.
+Candidate 0.113.0 is uploaded in [PR #165](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/165); full validation and [release run 43556621321](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621321) are running. See [Rise notes](RISE165.md) and SESSION_HANDOFF.md. It is not yet verified as published. Normal player testing and polish follow. New mine depths, automated excavation and Handworks raw-load freight are separate work. Normal-speed Windows input, audio, performance and enjoyment still need player testing.
 
 Preserve releases and saves. Documentation-only corrections need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-freight162.md).
