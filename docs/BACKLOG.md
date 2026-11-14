@@ -2,7 +2,7 @@
 
 ## Current work and next milestone
 
-Delivered: 0.114.0 [building-grid presentation](GRID167.md). Next, follow the owner’s [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): family-purchased property near arrival, civic registration distinct from ownership, and save-safe starter accommodation. Keep the existing building, navigation and freight systems. This revised story supersedes the earlier plan to leave provisional ownership as the long-term opening.
+Delivered: 0.114.0 [building-grid presentation](GRID167.md). Candidate 0.115.0 implements [the family-origin opening](HOME169.md); validation/publication are pending. Continue with the owner’s [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): family-purchased property near arrival, civic registration distinct from ownership, and save-safe starter accommodation. Keep the existing building, navigation and freight systems. This revised story supersedes the earlier plan to leave provisional ownership as the long-term opening.
 
 ## Playtest the current published build
 

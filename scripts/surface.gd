@@ -77,7 +77,7 @@ func label()->String:
  if architecture.interior():return architecture.inside().get("name","Your building")+" · floor "+str(architecture.current_floor()+1)
  if HoldFrontier103.active(g.state):
   if area=="trail":return "Stonebridge · frontier town"
-  if area=="claim":return "Stonebridge · your household grounds · Z+"+str(house.level())
+  if area=="claim":return "Stonebridge · "+HoldOutpost.title(g.state)+" · Z+"+str(house.level())
  if area=="greenfields":return "Greenhearth · the holdfarms"
  if area in HoldRoads.ROOMS:return HoldRoads.ROOMS[area]
  if HoldNeighborhood.is_home(area):return HoldNeighborhood.title(area)
@@ -131,6 +131,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  world.speech="";rest_time=0
  remember();var old=area
  g.flush_pickups()
+ if id=="claim" and HoldFrontier103.family(g.state):HoldFrontier103.data(g.state).home169.visited=true
  var claim_site=id=="claim" or id.begins_with("home:") or (HoldBuildingPlans.owned_room(id) and architecture.record(HoldBuildingPlans.room_parts(id)[0]).get("area","")=="claim") or (id.begins_with("room:") and g.state.active_site=="claim" and old=="claim")
  g.state.switch_site("claim" if claim_site else "hold",g.geo)
  if id.begins_with("room:") or id.begins_with("home:"):

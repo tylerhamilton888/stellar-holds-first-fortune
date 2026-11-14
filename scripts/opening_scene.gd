@@ -56,11 +56,11 @@ func _ready():
  elif mode=="frontier_arrival":
   # The frontier opening happens in the actual lodge, with the player's chosen dwarf.
   lines=[
-   ["THE ROAD EAST", "The lamps of home faded behind you days ago. At the end of the road lies Stonebridge, where there's work to be had and room to begin again."],
-   ["A LETTER FROM HOME", "Your father's note is creased from the journey. 'Write when you arrive. Your mother says that means more than putting your name on an envelope.'"],
+   ["THE ROAD EAST", "The lamps of home faded behind you days ago. At the end of the road lies Stonebridge—and the little holding your parents bought after years of saving."],
+   ["A LETTER FROM HOME", "The deed and your parents' letter share an inner pocket. 'Sound mountain foundations! Traditional stone dwelling!' Your father has underlined 'room for improvement'."],
    ["STONEBRIDGE · THE NEXT MORNING", "You arrived after dark. Now the bunkhouse hearth is lit, and the first shift is already stirring."],
-   ["IVAR DEEPMEASURE", "'You're awake. Good. There's a room upstairs if you'd like a moment to yourself.'"],
-   ["IVAR DEEPMEASURE", "'I'm Ivar. Come and find me when you're ready; we'll see about your first shift.'"]]
+   ["IVAR DEEPMEASURE", "'You're awake. Good. I'm Ivar. Your parents wrote ahead about Old Stonewright's Rise. The papers are all in order.'"],
+   ["IVAR DEEPMEASURE", "'Your place is east across the bridge. Come over when you're ready; I'll show you. Paid work can wait until you've seen your own hearth.'"]]
   step=clampi(int(HoldFirstVisit99.data(game.state).get("intro_beat",0)),0,lines.size()-1)
   game.transition_left=0;game.transition_shade.visible=false
   game.camera=game.surface.camera_target();game.surface.direction=Vector2.UP

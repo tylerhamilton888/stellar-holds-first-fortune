@@ -1,3 +1,7 @@
+# 0.115.0 — A gift from home
+
+Makes Old Stonewright’s Rise family-purchased property from arrival, with a modest editable cottage, persistent parental letter and Ivar’s saved/skippable introduction. Separates two-contribution civic recognition from ownership; optional first-shift work and local opportunities preserve chosen ambitions. Additive migration preserves established estates and story progress. See HOME169.md.
+
 # 0.114.0 — A clearer building grid
 
 Unifies visible placement grids across the actual holding and editable interiors, preserving structural/half-tile/quarter-tile snapping. Adds row/column guides, live Blueprint Book dimensions and exact room edge/center alignment guides. No placement, cost, save or ownership rules change. Records the owner’s family-origin homestead directive as the next roadmap milestone.

@@ -287,6 +287,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  velocity=Vector2.ZERO;camera=Vector2.ZERO;particles.clear();drops.clear();popups.clear()
  if zone=="mine":camera=deep.camera_target()
  playing=true;launching=false;launch_time=0;autosave=0;close_panel()
+ if load_saved:HoldFrontier103.settle_home(self)
  surface.restore()
  if is_instance_valid(title_ui):title_ui.queue_free()
  for n in [hud,status,objectives,footer]:n.visible=true

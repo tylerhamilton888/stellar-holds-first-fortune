@@ -1,6 +1,9 @@
 class_name HoldFrontier103
 extends RefCounted
 # Town shells use the ordinary player building catalogue and room instances.
+const HOME_DOOR=Vector2(2300,1180)
+const HOME_BED=Vector2(2230,1020)
+const HOME_CHEST=Vector2(2380,940)
 const BUILDINGS={"lodge":["frontier_lodge",190,430],"forge":["frontier_forge",880,570],"survey":["frontier_office",1480,450],"watch":["frontier_watch",1660,870]}
 static func active(s)->bool:return s.surface.has("frontier103")
 static func data(s)->Dictionary:return s.surface.get("frontier103",{})
@@ -43,7 +46,7 @@ static func points(g)->Array:
  if g.surface.area==room(s,"survey",1):out.append(g.surface.spot(690,575,"Archive · charter law and town records","frontier_archive103"))
  if g.surface.area==lodge(s):
   out.append(g.surface.spot(670,425,"Hold’s Ledger","great_claim102"))
-  out.append(g.surface.spot(480,500,"Ivar's shift book · work and home plot","frontier103"))
+  out.append(g.surface.spot(480,500,"Ivar's shift book · work and household records","frontier103"))
   for p in HoldWorkerLodge100.people(g):out.append({"p":p.p,"name":p.name,"action":p.interaction})
  elif g.surface.area==quarters(s):
   out.append({"p":HoldFurnishings.bedside(Vector2(290,420)),"name":"Your bed · rest and save","action":"rest","bed":Vector2(290,420)})
@@ -52,46 +55,66 @@ static func points(g)->Array:
   if key=="forge":out.append_array(HoldForge147.points(g))
   else:out.append(g.surface.spot(480,500,{"survey":"Survey desk · research and town plan","watch":"Watch stores · buy and sell","stores":"Community stores · buy and sell"}[key],"frontier103"))
  return out
+# Ownership is separate from the existing civic-recognition flag (permit).
+static func family(s)->bool:return active(s) and data(s).has("home169")
+static func opportunities(s)->bool:return family(s) or bool(HoldFirstVisit99.data(s).get("rewarded",false))
+static func settle_home(g,fresh:bool=false):
+ var s=g.state
+ if not active(s) or family(s):return
+ var empty=s.claim_id==""
+ data(s).home169={"version":1,"visited":not empty,"introduced":not empty,"seeded":false}
+ if not empty:return # Existing homes, names, workers and belongings are never reseeded.
+ s.claim_id="copper_ridge"
+ HoldOutpost.ensure(s);s.outpost.name="Old Stonewright's Rise"
+ g.surface.ensure()
+ var h=s.surface.homes[s.claim_id]
+ if h.has("building") or s.surface.decor.any(func(f):return f.area=="claim") or s.surface.chests.values().any(func(c):return c.area=="claim") or g.surface.architecture.data().instances.any(func(b):return b.area=="claim"):return
+ var tiles={};var roof={}
+ for y in range(22,28):
+  for x in range(54,61):
+   var k=str(x)+","+str(y);var edge=x in [54,60] or y in [22,27]
+   tiles[k]={"floor":"stone_floor","roof":true,"wall":"wall" if edge else ""}
+   roof[k]={"floor":"roof_floor"}
+ tiles["57,27"].wall="door";tiles["57,27"].open=true
+ tiles["54,24"].wall="window";tiles["60,24"].wall="window"
+ h.building={"tiles":tiles,"levels":{"1":roof},"links":{},"facts":{},"z":0}
+ s.surface.decor.append({"area":"claim","kind":"bed","x":HOME_BED.x,"y":HOME_BED.y,"z":0})
+ s.surface.chests["home169:chest"]={"area":"claim","x":HOME_CHEST.x,"y":HOME_CHEST.y,"z":0,"items":{}}
+ data(s).home169.seeded=true
+ if fresh:HoldFirstVisit99.data(s).focus="homestead"
+static func letter(g):
+ if not family(g.state) or g.state.claim_id!="copper_ridge":return
+ var box=HoldMenuView.disclosure(g,g.panel_body,"Read your parents' letter","home169_letter")
+ if box==null:return
+ g.label(box,"Our dear one,",18,Color("edc98a"))
+ g.label(box,"The papers are in the inner pocket. Old Stonewright's Rise is yours, paid in full. We have put a little aside for years; this is what it was for.",16)
+ g.label(box,"The agent called it an established masonry yard with a traditional stone dwelling. Your father says that means the stones have had plenty of time to settle. There is a bed and a sound roof. Take a lamp; we forgot to ask about a lamp.",16)
+ g.label(box,"It is a modest beginning, with room for a bigger table and whatever work you find worth doing. Make it yours a little at a time. Eat properly. Write when you arrive. We love you. — Mum and Dad",16)
 static func provisional(s)->bool:
- return active(s) and s.claim_id=="copper_ridge" and bool(data(s).get("rise165",{}).get("accepted",false)) and not data(s).permit
+ return not family(s) and active(s) and s.claim_id=="copper_ridge" and bool(data(s).get("rise165",{}).get("accepted",false)) and not data(s).permit
 static func rise_pending(s)->bool:
  return active(s) and bool(data(s).get("rise165",{}).get("scene",false))
+static func near_ivar(g)->bool:
+ return near(g,"lodge") or (g.zone!="mine" and g.surface.area==lodge(g.state) and HoldWorkerLodge100.people(g).any(func(p):return p.interaction=="lodge_folk:0" and g.player.distance_to(p.p)<110))
 static func offer_rise(g)->bool:
  var s=g.state
- if not near(g,"lodge") or s.claim_id!="" or data(s).permit or not HoldFirstVisit99.data(s).get("rewarded",false):return false
- s.claim_id="copper_ridge";s.camp_stage=0
+ if not family(s) or not near_ivar(g) or data(s).home169.introduced or s.claim_id!="copper_ridge":return false
+ HoldFirstVisit99.meet_ivar(g)
+ data(s).home169.introduced=true
  data(s).rise165={"accepted":true,"scene":true,"beat":0}
- HoldOutpost.ensure(s);s.outpost.name="Old Stonewright's Rise"
- g.surface.ensure();s.surface.chests.erase("claim:copper_ridge:starter")
- HoldOutpost.record(s,"rise165_use","Ivar granted provisional use of Old Stonewright's Rise. Two civic projects or trade seals earn its permanent household charter; the same buildings and belongings remain in place.")
  g.save_game();HoldClaimScene127.start_scene(g);return true
 static func rise_card(g):
  var s=g.state
- if not near(g,"lodge") or not HoldFirstVisit99.data(s).get("rewarded",false):return
- if s.claim_id=="" and not data(s).permit:
-  g.label(g.panel_body,"Ivar: 'There is an old quarry holding on the eastern rise. Nobody has kept a hearth there in years. You may make a start, if you mean to stay.'",16)
-  g.label(g.panel_body,"Provisional use costs nothing. Two civic projects or trade seals earn permanent ownership. Your building work stays in place; there is no deadline.",14)
-  g.button(g.panel_body,"Accept provisional use · Old Stonewright's Rise",func():offer_rise(g))
- elif provisional(s):
-  g.label(g.panel_body,"Provisional holding · %d / 2 contributions toward permanent ownership. Follow the east road; O opens your building plans. Your lodge room remains available." % mini(2,HoldWork132.contributions(s)),14)
+ if family(s) and near_ivar(g) and not data(s).home169.introduced:g.button(g.panel_body,"Show me Old Stonewright’s Rise",func():offer_rise(g))
 static func tenure_text(s)->String:
- if data(s).permit:return "Ivar: 'Your household charter is recorded. Build at your own pace; the ground remains yours, whatever comes of the contest.'"
- if provisional(s) and HoldWork132.contributions(s)>=2:return "Ivar: 'Your contributions are entered. We can record your permanent charter whenever you are ready.'"
- if provisional(s):return "Ivar: 'Two contributions, and we can make your tenure permanent. Civic projects, trade seals, or one of each. Nothing you build needs to move.'"
- if s.claim_id!="":return "Ivar: 'You already have a holding. Its charter and possessions remain yours.'"
- return "Ivar: 'The upstairs room is yours while you find your feet. Your first paid shift opens the Rise; two contributions earn its permanent charter.'"
+ if data(s).permit:return "Ivar: 'Your household is recorded. Your home and ground remain yours, whatever comes of the contest.'"
+ if HoldWork132.contributions(s)>=2:return "Ivar: 'Your contributions are entered. We can record your household whenever you are ready. The land was already yours.'"
+ return "Ivar: 'The holding is yours. Two civic projects or trade seals, and we enter your household in Stonebridge’s book. There is no hurry.'"
 static func permit(g)->bool:
  var s=g.state
- if not near(g,"lodge") or data(s).permit or not HoldFirstVisit99.data(s).get("rewarded",false) or HoldWork132.contributions(s)<2:return false
- if s.claim_id!="" and not provisional(s):return false
- var existing=provisional(s)
- if not existing:s.claim_id="copper_ridge";s.camp_stage=0
+ if not family(s) or not near(g,"lodge") or data(s).permit or s.claim_id=="" or HoldWork132.contributions(s)<2:return false
  data(s).permit=true
- HoldOutpost.ensure(s)
- if not existing:
-  s.outpost.name="Old Stonewright's Rise"
-  g.surface.ensure();s.surface.chests.erase("claim:copper_ridge:starter")
- g.save_game();g.notify("Your permanent household charter is recorded. The same ground, buildings and belongings remain yours. The lodge room stays available.");return true
+ g.save_game();g.notify("Your household is recognized in Stonebridge. The same home, ground and belongings remain yours.");return true
 static func home_ready(g)->bool:
  if not active(g.state) or not data(g.state).permit:return false
  for b in g.surface.architecture.data().instances:
@@ -152,7 +175,7 @@ static func panel(g):
  if near(g,"lodge") and HoldFirstVisit99.opening_route(g) and not bool(g.get_meta("early_shift_book_open",false)):
   g.label(g.panel_body,"Ivar’s shift book",21,Color("edc98a"))
   HoldFirstVisit99.opening_card(g)
-  rise_card(g)
+  if not family(s):rise_card(g)
   g.small_button(g.panel_body,"Look through the rest of the book",func():g.set_meta("early_shift_book_open",true);g.refresh_panel())
   return
  var welcome=HoldMenuView.section(g.panel_body,"")
@@ -164,8 +187,8 @@ static func panel(g):
   var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",20);directions.add_child(grid)
   for place in [["West","Bunkhouse & Wayfarer’s Hearth"],["North","Old Workings & communal forge"],["Across the bridge","Survey hall & watch stores"],["South","Pinewood & Greenhearth"]]:
    g.label(grid,place[0],15,Color("edc98a"));g.label(grid,place[1],15)
- if HoldFirstVisit99.data(s).get("rewarded",false):
-  g.label(g.panel_body,"Your home · "+("registered" if data(s).home_reward else "permanent charter" if data(s).permit else "provisional use" if provisional(s) else "%d / 2 contributions toward a plot" % mini(2,HoldWork132.contributions(s))),16,Color("a7dfcb"))
+ if opportunities(s):
+  g.label(g.panel_body,"Your home · "+("improved home registered" if data(s).home_reward else "recognized household" if data(s).permit else "%d / 2 contributions toward household recognition" % mini(2,HoldWork132.contributions(s))),16,Color("a7dfcb"))
  HoldClaim127.panel(g)
  if HoldMountain104.eligible(s):HoldMountain104.panel(g)
  if near(g,"lodge"):
@@ -182,10 +205,10 @@ static func panel(g):
   g.button(g.panel_body,"The Winter Stores · restoration stages",func():g.open_panel("campaign138"))
   g.button(g.panel_body,"Read contribution ledger",func():g.open_panel("great_claim102"))
   if not data(s).permit:
-   var b=g.button(g.panel_body,"Record my permanent household charter" if provisional(s) else "Accept a household plot",func():permit(g);g.refresh_panel())
-   b.disabled=not HoldFirstVisit99.data(s).get("rewarded",false) or HoldWork132.contributions(s)<2 or (s.claim_id!="" and not provisional(s))
+   var b=g.button(g.panel_body,"Record my household · two contributions",func():permit(g);g.refresh_panel())
+   b.disabled=not family(s) or s.claim_id=="" or HoldWork132.contributions(s)<2
   else:
-   HoldMenuView.illustrated_text(g.panel_body,"wood","Your household plot","Follow the east road. O opens building plans. Build a home with a bed and a nearby lamp or hearth, then register it here.")
+   HoldMenuView.illustrated_text(g.panel_body,"wood","Your household","Follow the east road. O opens building plans. Improve your home with a bed and a nearby lamp or hearth, then register it here. The starter cottage needs a light; you do not need to rebuild it.")
    var b=g.button(g.panel_body,"Register my finished home · 60 marks",func():finish_home(g);g.refresh_panel())
    b.disabled=data(s).home_reward or not home_ready(g)
  elif near(g,"survey"):
@@ -243,7 +266,7 @@ static func home_panel(g):
  g.button(g.panel_body,"Renovate the nearest building",func():g.surface.architecture.browse_only=false;g.open_panel("architecture"))
  g.button(g.panel_body,"Workstations and hauling equipment",func():g.open_panel("handworks"))
  g.button(g.panel_body,"Gardens and fishing",func():g.open_panel("fieldwork"))
- g.label(g.panel_body,"Home milestone: build a roofed shell or enclosed piece-built room, then place a bed and nearby lamp or hearth. Return to Ivar's shift book to register it for 60 marks. The design stays yours to change.",16)
+ g.label(g.panel_body,"Home milestone: a roofed, enclosed home with a bed and nearby lamp or hearth. Existing construction counts; the starter cottage only needs a light. After two civic contributions, record your household with Ivar and register the improved home for 60 marks. The design stays yours to change.",16)
 
 static func archive_panel(g):
  if not active(g.state) or g.surface.area!=room(g.state,"survey",1) or g.player.distance_to(Vector2(690,575))>90:return
@@ -251,5 +274,5 @@ static func archive_panel(g):
  g.label(g.panel_body,"THE STONEBRIDGE REGISTER",22,Color("edc98a"))
  g.label(g.panel_body,"The first leaves record the bridge survey, retaining walls and drainage cut. Skarrin's name appears often, alongside Bram's road crew and Sten's haulers. Ivar has kept the workers' names beside their foreman's.",16)
  g.label(g.panel_body,"The charter reserves hereditary allowances for authenticated ancestral rights. No claimant may certify their own evidence. Work marks remain separately recorded; equal totals require a public test of skill.",16)
- g.label(g.panel_body,"Household permits grant lasting space within the settlement. They do not confer the Thane's title. Homes, workshops and belongings remain attached to their households when the settlement's leadership changes.",16)
+ g.label(g.panel_body,"Household recognition records service to the settlement. Your own property is already yours; recognition does not confer the Thane's title. Homes, workshops and belongings remain attached to their households when the settlement's leadership changes.",16)
  g.button(g.panel_body,"Read the contribution ledger",func():g.open_panel("great_claim102"))

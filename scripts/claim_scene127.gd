@@ -23,9 +23,10 @@ func _ready():
  var insights=HoldMountain104.data(game.state).insights
  match mode:
   "rise":
-   lines=[["IVAR DEEPMEASURE","Old Stonewright's Rise. An abandoned quarry holding, east across the bridge. Sound ground, room for a hearth, and stone beneath it when you are ready to dig."],
-    ["IVAR DEEPMEASURE","I will put your name beside it for provisional use. No fee, no deadline. Two civic projects or trade seals, and we record your permanent household charter. Everything you build stays where you put it."],
-    ["IVAR DEEPMEASURE","Start with what you need. A dry room and a light are enough for a first night. Your room upstairs remains yours while you build. Come back when you want the charter recorded."]]
+   lines=[["IVAR DEEPMEASURE","Your parents chose sound ground. The agent called it an established masonry yard. Well, it has certainly been here a while. Come along; I'll show you."],
+    ["IVAR DEEPMEASURE","There she is. A roof and a place to begin—that is what your parents wanted for you. The quarry has slept for years, but the stone hasn't gone anywhere. The place is yours, paid in full."],
+    ["IVAR DEEPMEASURE","Put your own touch on it. If you want wages, the western rack and stonebreaker at Old Workings are on loan. There are trades to learn and town projects in the great book, too. Start with what matters to you."]]
+   if not HoldFrontier103.data(game.state).get("home169",{}).get("seeded",false):lines[1][1]="The holding and everything you have put into it remain yours. Two contributions record your household in the town book; they are not a price for your own ground."
   "trial":
    lines=[["IVAR DEEPMEASURE",("The books are closed. Your work already exceeds Skarrin's tally, but he challenges your right to lead. Let the public test answer him. Today, the load decides." if HoldClaim127.closed_score(game.state)>int(HoldMountain104.data(game.state).rival_at_award) else "The books are closed. Work, deliveries and the charter allowance leave two equal claims. Today, the load decides.")],
     ["SKARRIN","My retaining wall already holds half this town. I trust we shall measure stone today, not grandfathers."],
@@ -73,13 +74,22 @@ func actor(id:String,p:Vector2,target:Vector2)->Dictionary:
 func locate(area:String,p:Vector2):
  if game.surface.area!=area:game.surface.enter(area,p)
  game.player=p;game.transition_left=0;game.transition_shade.visible=false;game.walking_pose=false
+func locate_home():
+ locate("claim",HoldFrontier103.HOME_DOOR)
+ if not game.surface.walkable(game.player):game.player=game.surface.spawn("claim")
 func show_line():
  age=0;cast.clear();duration=2.0;load_height=0
  var d=HoldFrontier103.data(game.state).rise165 if mode=="rise" else HoldClaim127.data(game.state);d.beat=step
  speaker.text=lines[step][0];caption.text=lines[step][1]
  scene_title.text={"rise":"OLD STONEWRIGHT’S RISE","trial":"THE PUBLIC TEST","verdict":"THE RIGHTFUL CLAIMANT","journey":"THE ROAD TO KELDRATH","reception":"BENEATH THE OLD KINGS"}[mode]+"   ·   "+str(step+1)+" / "+str(lines.size())
  next_button.text="Return to play" if step==lines.size()-1 else "Continue · Enter";next_button.disabled=true
- if mode=="rise":
+ if mode=="rise" and HoldFrontier103.family(game.state) and HoldFrontier103.data(game.state).home169.seeded and step>0:
+  locate_home()
+  for offset in [Vector2(-70,0),Vector2(70,0),Vector2(0,70)]:
+   if game.surface.walkable(game.player+offset):
+    cast.append(actor("ivar",game.player+offset,game.player+offset));break
+  target_camera=game.surface.camera_target()
+ elif mode=="rise":
   locate(HoldFrontier103.lodge(game.state),Vector2(550,555));game.surface.direction=Vector2.LEFT
   cast.append(actor("lodge_folk:0",Vector2(430,520) if step==0 else Vector2(480,520),Vector2(480,520)))
   target_camera=game.surface.camera_target()
@@ -142,7 +152,9 @@ func _input(event):
 func finish():
  if finished:return
  finished=true
- if mode=="rise":HoldFrontier103.data(game.state).rise165.scene=false
+ if mode=="rise":
+  HoldFrontier103.data(game.state).rise165.scene=false
+  if HoldFrontier103.family(game.state) and HoldFrontier103.data(game.state).home169.seeded:locate_home()
  else:HoldClaim127.complete_scene(game,mode)
  if mode=="journey":
   locate("hearthward",HoldWorldZones.GATE+Vector2(0,75));HoldClaim127.enter(game,"hearthward")

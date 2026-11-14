@@ -10,9 +10,9 @@ func run():
  check(not L.active(g.state),"Legacy fortune unaffected")
  HoldFirstVisit99.begin(g);settle();var s=g.state
  ledger();s.add("coal",12);s.add("wood",20);s.add("iron",10)
- check(not L.contribute(g,"forge","coal",1),"First shift required")
+ check(L.unlocked(s,"forge") and not HoldFirstVisit99.data(s).rewarded,"Owners can contribute without the optional first shift")
  HoldFirstVisit99.data(s).rewarded=true
- HoldFirstVisit99.data(s).home_made=true
+ HoldFirstVisit99.data(s).home_made=true;HoldFirstVisit99.data(s).focus="forge"
  check(L.forge_lead(s).title=="A hearth gone cold","First forge lead begins with a local inspection")
  check(not L.contribute(g,"invalid","coal",1),"Unknown project rejected")
  check(not L.contribute(g,"forge","wood",1),"Wrong material rejected")

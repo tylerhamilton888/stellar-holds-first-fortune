@@ -19,7 +19,7 @@ static func structure_ready(s)->bool:
  return data(s).get("inspected",false) and ((learned(s,"smelt") and learned(s,"timber") and learned(s,"cart")) or data(s).get("legacy_rescue",false) or int(HoldAncestralClaim.data(s).stage)>0)
 static func foundations(s)->Array:
  return [
-  ["A place of your own",bool(HoldFrontier103.data(s).get("home_reward",false)),"Register a real home with Ivar. Any two civic projects or trade seals earn its plot.",""],
+  ["A place of your own",bool(HoldFrontier103.data(s).get("home_reward",false)),"Improve your home and register it with Ivar. Any two civic projects or trade seals earn household recognition.",""],
   ["From seam to steel",learned(s,"ore") and learned(s,"smelt") and learned(s,"steel"),"Process ore and coal, relight the forge, smelt two iron, research Tempered steel and forge the pick.","forge"],
   ["Timber and transport",learned(s,"timber") and learned(s,"cart"),"Saw four timber and move a loaded handcart. The lessons supply its fittings.","haul"],
   ["Feed your Folk",learned(s,"kit") and learned(s,"harvest") and learned(s,"cook"),"Craft the field kit, catch fish OR harvest crops, then cook a meal.","food"],
@@ -29,7 +29,7 @@ static func foundations(s)->Array:
 static func eligible(s)->bool:
  if not active(s):return false
  if int(HoldAncestralClaim.data(s).stage)>0 or data(s).get("legacy_rescue",false):return true
- if not HoldFirstVisit99.data(s).get("rewarded",false):return false
+ if not HoldFrontier103.opportunities(s):return false
  for row in foundations(s):
   if not row[1]:return false
  return true
@@ -68,7 +68,7 @@ static func points(g)->Array:
  return [g.surface.spot(SITE.x,SITE.y,"The Winter Stores · restoration site","campaign138")]
 static func summary(g):
  var s=g.state
- if not active(s) or not HoldFirstVisit99.data(s).get("rewarded",false):return
+ if not active(s) or not HoldFrontier103.opportunities(s):return
  g.label(g.panel_body,"CAMPAIGN · "+title(s),18)
  if eligible(s):g.label(g.panel_body,"Ivar’s rescue lead is available." if int(HoldAncestralClaim.data(s).stage)==0 else "Your accepted story continues. Earlier milestones remain recorded.",15)
  else:g.label(g.panel_body,"Foundations · %d / 7 · No deadline. Recognition follows deeds, not a target score." % progress(s),15)
