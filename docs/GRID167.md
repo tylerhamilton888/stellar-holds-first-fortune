@@ -8,4 +8,4 @@ Regression coverage extends existing blueprints152, blueprint_manor152 and archi
 
 The new [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) is future work. The current grid task does not revise property acquisition or seed cottages into existing saves.
 
-Local validation: all five focused native cases passed (537 assertions) plus 42 tooling tests and the output-policy check. Reviewed the three world placement modes, selected and dragged room labels, and shared-wall alignment guides. Full source/package release checks remain required.
+Local validation: all five focused native cases passed (537 assertions) plus 42 tooling tests and the output-policy check. Reviewed the three world placement modes, selected and dragged room labels, and shared-wall alignment guides. Published 0.114.0 passed all 11 release jobs: 87 source cases and 77 exact-package cases / 14,561 assertions. Public metadata and asset identity were verified; see CURRENT_STATUS.md.

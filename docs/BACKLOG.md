@@ -1,8 +1,8 @@
-# Current backlog — 2026-11-13
+# Current backlog — 2026-11-14
 
 ## Current work and next milestone
 
-Current candidate: 0.114.0 [building-grid presentation](GRID167.md). After verified delivery, follow the owner’s [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): family-purchased property near arrival, civic registration distinct from ownership, and save-safe starter accommodation. Keep the existing building, navigation and freight systems. This revised story supersedes the earlier plan to leave provisional ownership as the long-term opening.
+Delivered: 0.114.0 [building-grid presentation](GRID167.md). Next, follow the owner’s [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): family-purchased property near arrival, civic registration distinct from ownership, and save-safe starter accommodation. Keep the existing building, navigation and freight systems. This revised story supersedes the earlier plan to leave provisional ownership as the long-term opening.
 
 ## Playtest the current published build
 

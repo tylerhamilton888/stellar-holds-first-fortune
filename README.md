@@ -16,6 +16,8 @@ The First Fortune follows a new worker from Stonebridge's bunkhouse through a pl
 
 Surface room blueprints let you lay out connected rooms on your chartered holding, review shared construction costs, build within reach and furnish them to suit. Open the Building Book (**O**) and choose **Plan Your Holding**. Underground, the Living Works book adds saved chamber and corridor guides, excavation progress, reachable finishing and stair landing guides. Mine with normal tools, then furnish the cleared rooms. Cellar stair plans connect the ground-floor home to those existing claim-mine rooms. Clear both landings, fit the paid stairs, then use Shift+E to travel with carried supplies. Version 0.110.0 adds [upper-floor blueprints](docs/UPPER158.md), support/access warnings and saved stair guides. Recruited miners can now use household beds and walk between home and mine in 0.111.1; see [crew routes](docs/WORKERS160.md). Version 0.112.0 adds [physical freight routes](docs/FREIGHT162.md) between marked mine stockpiles and household chests, using the same crew and connected stairs. Version 0.113.0 introduces [Old Stonewright’s Rise](docs/RISE165.md), with provisional use after the first paid shift and permanent tenure after two contributions. See [underground notes](docs/EXCAVATION154.md) and [connected cellar notes](docs/CELLAR156.md).
 
+Version 0.114.0 adds [consistent building grids](docs/GRID167.md), live room dimensions and alignment guides. The [A Home and a Fortune roadmap](docs/HOME_AND_FORTUNE_ROADMAP.md) records the next family-origin opening and subsequent craft/progression work; that story revision is not yet implemented.
+
 ## Develop and release
 
 Read [current status](docs/CURRENT_STATUS.md), [handoff](docs/SESSION_HANDOFF.md), then [AGENTS.md](AGENTS.md). Clone `master`, which contains the editable game and original assets. Use Godot **4.4.1 stable**, the standard editor, and Python 3.11 or newer. Open `project.godot`; the editor imports assets. F5 runs the project.
@@ -28,5 +30,3 @@ Read [current status](docs/CURRENT_STATUS.md), [handoff](docs/SESSION_HANDOFF.md
 Use file-only command capture and new output directories as documented in AGENTS.md. A successful export alone is not release acceptance.
 
 Original assets, UIDs and previous releases remain preserved. Earlier README instructions are in [history](docs/history/README-before-doc-consolidation-2026-11-10.md).
-
-Building-grid polish is prepared for 0.114.0; see [grid notes](docs/GRID167.md) and current status for delivery. The [A Home and a Fortune roadmap](docs/HOME_AND_FORTUNE_ROADMAP.md) records the next family-origin opening and subsequent craft/progression work.
