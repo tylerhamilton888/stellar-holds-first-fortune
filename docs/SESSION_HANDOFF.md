@@ -1,22 +1,23 @@
-# Session handoff — freight work in progress
+# Session handoff — 2026-11-13
 
-Published baseline remains **0.111.1**, verified in CURRENT_STATUS.md. Start from current master, not an older ZIP.
+Read this and CURRENT_STATUS.md first. User authorized routine source changes, PR, checked merge and verified release; do not request repeated permission.
 
-## Active work
+## Completed delivery
 
-Branch: feature/estate-freight162. User asked to proceed with the remaining automated household freight slice. New scripts/estate_freight.gd gives existing miners selectable marked-pile/chest routes, direction, material and 32-unit physical loads. Routes reuse existing cellar/upper stairs and deeper mine links. Cargo stays in the order while carried; pack, carts, storage and mining owners remain separate. Finish-and-stop and return-load controls preserve interrupted cargo. Native carried-crate presentation uses existing artwork.
+**0.112.0 is published:** https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.112.0
 
-Integration: deepworks_play, estate_workers, room_blueprint_view, surface and deep_haul field accounting. New freight162 acceptance case belongs to source and exact-package manifests. No story integration or new excavation scope.
+Feature PR #163 merged. Release source `0333a54554592847579b4e211798ce625da7e321`, tree `25f92aa50fd96396c23a73bd2acdc5c8ad76fbc8`, merge `94486969f7da5b9920b42afa49bd6657dc6bc73f`. Release run 43538478196 passed all 11 jobs: 87 native source cases and 77 exact-package cases / 14,528 assertions. PR run 43538483052 passed. Public JSON digests, clean source, PCK/ZIP hashes and asset size were checked after publication; CURRENT_STATUS holds the hashes.
 
-## Validation checkpoint
+Freight is in **O → Plan Your Holding → Freight for the household**. Existing recruited miners carry selected stack items between marked mine stockpiles and household chests, in either direction, through actual passages and stairs. Loads are capped at 32. Stop, resume, return and finish-delivery controls preserve interrupted cargo; blocked/missing stores do not delete it. Provisions, masonry jobs, berths, work assignments, pack and chest ownership stay with their existing systems. Wheelbarrows stay underground.
 
-Pinned official Godot 4.4.1 checksum verified. Asset import/parser and all 42 Python tooling tests passed. Final native freight162 passed 43 assertions; workers160 passed 33 and cellar156 passed 49. Native book, upstairs cargo and perspective-mine cargo were reviewed. The perspective crate receives a small camera-facing depth offset to avoid sprite occlusion; final targeted render completed without errors. Logs/screenshots: test-results/freight162-final-native3, freight162-regression and freight162-projection2.
+Implementation: scripts/estate_freight.gd; integration in estate_workers, deepworks_play, deep_haul, room_blueprint_view, surface and mine_view94. Orders/cargo live additively in the claim building's freight162 dictionary; worker location remains in the existing crew record. Paths are transient. tests/freight162.gd is included in source/package coverage. Native preflight passed 43 freight, 33 worker and 49 cellar assertions; tooling passed 42 tests. Book, upstairs cargo and perspective cargo were visually reviewed. See FREIGHT162.md.
 
-PR #163: https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/163
-Candidate version: 0.112.0. Full PR/source and Windows package/release gates are still required. GitHub's general run listing lagged; branch-filtered Actions queries and the live page showed execution. Do not restart solely for stale metadata.
+## Next piece
 
-Nothing from this feature is merged or published yet. Complete delivery through docs/RELEASE_PIPELINE.md and reconcile published status/backlog/README/playtest guidance afterward. Keep final delivery docs separate from the active source/release branch.
+Core connected estate travel and automated porter freight are delivered. Provisional Old Stonewright's Rise/property-story introduction remains the next blueprint follow-up, then normal Windows playtesting and polish. New depths, automated excavation, Handworks raw-load freight and cart-sized household stairs are separate scope. Preserve existing possessions and progression.
 
-## Safeguards
+## Recovery safeguards
 
-Read AGENTS.md and current status. Capture noisy commands with tools/capture_command.py and inspect bounded excerpts. Preserve saves, assets and previous releases. Routine source upload, PR, checked merge and verified release are already authorized. No sub-agents. Detailed evidence stays in files.
+Recover from current master or the release source, not an older ZIP. Source and release evidence are in GitHub. General Actions listings briefly lagged; branch-filtered queries and the live page confirmed the jobs. Do not restart merely for stale status displays.
+
+Use pinned Godot 4.4.1, bounded capture and selected diagnostic excerpts. Keep source/assets out of large encoded tool payloads. Preserve original art, saves and releases. No sub-agents unless requested. Follow RELEASE_PIPELINE.md; documentation-only changes do not rebuild the game.

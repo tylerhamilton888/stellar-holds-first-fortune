@@ -1,6 +1,6 @@
 # Household freight
 
-Candidate implementation for 0.112.0. CURRENT_STATUS.md remains the delivery authority.
+Released in 0.112.0 through [PR #163](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/163). CURRENT_STATUS.md records the verified delivery.
 
 Choose **O → Plan Your Holding → Freight for the household** on your claim. Select a recruited miner, direction, material, marked mine stockpile and a chest on the selected floor. In the mine, U away from the entrance and wheelbarrow marks a stockpile. Household chests are existing furniture; create and stock them normally. Routes carry stack items, not Handworks raw-load records or communal supplies.
 
@@ -10,4 +10,4 @@ Orders live additively in the claim building's freight162 dictionary. A carried 
 
 Freight does not make stored supplies available to remote crafting. Wheelbarrows remain underground. Existing manually carried cargo, mine furniture, room construction and saves keep their owners. No new mine depths, free excavation, property narrative or raw-load automation is introduced.
 
-Acceptance: freight162 exercises the actual book control, paid rooms/stairs/furniture, existing stockpile and chest actions, both directions, partial loads, mine and upstairs cold reloads, dynamic obstructions, deeper ladders, stop/return, removed chests, legacy-site rejection and exact cargo conservation. Native preflight passed 43 freight assertions, 33 existing worker assertions and 49 cellar assertions; all 42 tooling tests passed. Reviewed native screenshots cover the book, upstairs crate and perspective-mine crate. Full source/package gates are required before release; ordinary Windows performance and play feel remain player checks.
+Acceptance: freight162 exercises the actual book control, paid rooms/stairs/furniture, existing stockpile and chest actions, both directions, partial loads, mine and upstairs cold reloads, dynamic obstructions, deeper ladders, stop/return, removed chests, legacy-site rejection and exact cargo conservation. Native preflight passed 43 freight assertions, 33 existing worker assertions and 49 cellar assertions; all 42 tooling tests passed. Reviewed native screenshots cover the book, upstairs crate and perspective-mine crate. All full source/package gates passed for 0.112.0; ordinary Windows performance and play feel remain player checks.
