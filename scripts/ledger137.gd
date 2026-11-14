@@ -115,7 +115,7 @@ static func panel(g):
   HoldCampaign138.summary(g)
  var home=HoldMenuView.disclosure(g,g.panel_body,"Personal ambition · A place of your own","ledger137_home")
  if home!=null:
-  for entry in [[HoldFirstVisit99.data(s).get("rewarded",false),"Learn the first shift and earn your wages"],[HoldFirstVisit99.data(s).get("home_made",false),"Furnish your upstairs room · O opens plans"],[HoldFrontier103.data(s).permit,"Complete two civic projects or trade seals; collect your plot at Ivar’s shift book"],[HoldFrontier103.data(s).home_reward,"Build a home on the eastern rise, with bed and light; register it with Ivar · 60 marks"]]:
+  for entry in [[HoldFirstVisit99.data(s).get("rewarded",false),"Learn the first shift and earn your wages"],[HoldFirstVisit99.data(s).get("home_made",false),"Furnish your upstairs room · O opens plans"],[s.claim_id!="","Ask Ivar about provisional use of the eastern rise after your first paid shift"],[HoldFrontier103.data(s).permit,"Complete two civic projects or trade seals; record your permanent charter with Ivar"],[HoldFrontier103.data(s).home_reward,"Build a home on the eastern rise, with bed and light; register it with Ivar · 60 marks"]]:
    g.label(home,("✓ " if entry[0] else "○ ")+entry[1],15)
   g.button(home,"Town services and household plot",func():g.open_panel("frontier103"))
  var other_projects=null

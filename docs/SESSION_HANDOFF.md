@@ -1,23 +1,23 @@
 # Session handoff — 2026-11-13
 
-Read this and CURRENT_STATUS.md first. User authorized routine source changes, PR, checked merge and verified release; do not request repeated permission.
+Read CURRENT_STATUS.md and AGENTS.md. Published Windows remains 0.112.0 (release run 43538478196, source 0333a54554592847579b4e211798ce625da7e321). 0.113.0 delivery is now authorized and being prepared.
 
-## Completed delivery
+## Active work: Old Stonewright’s Rise
 
-**0.112.0 is published:** https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.112.0
+Local branch `feature/rise165`, based on master `864d68481012f028886ac0773fa6a8570af13ca8`. Implementation commits aff116d and 9ccc777; the final dialogue polish and checkpoint are in the branch’s latest local commit. Candidate version 0.113.0.
 
-Feature PR #163 merged. Release source `0333a54554592847579b4e211798ce625da7e321`, tree `25f92aa50fd96396c23a73bd2acdc5c8ad76fbc8`, merge `94486969f7da5b9920b42afa49bd6657dc6bc73f`. Release run 43538478196 passed all 11 jobs: 87 native source cases and 77 exact-package cases / 14,528 assertions. PR run 43538483052 passed. Public JSON digests, clean source, PCK/ZIP hashes and asset size were checked after publication; CURRENT_STATUS holds the hashes.
+After the first paid shift, Ivar offers free provisional use of the existing copper_ridge household. The short saved scene is optional/skippable; no campaign credit is granted. Two civic projects/trade seals still grant permanent tenure. The upgrade preserves the same house, furniture, stocked chests, camp stage and property name. Legacy permanent owners keep their rights. Finished-home registration still needs permanent tenure. See RISE165.md.
 
-Freight is in **O → Plan Your Holding → Freight for the household**. Existing recruited miners carry selected stack items between marked mine stockpiles and household chests, in either direction, through actual passages and stairs. Loads are capped at 32. Stop, resume, return and finish-delivery controls preserve interrupted cargo; blocked/missing stores do not delete it. Provisions, masonry jobs, berths, work assignments, pack and chest ownership stay with their existing systems. Wheelbarrows stay underground.
+Owners: frontier103 for tenure, claim_scene127 for the additional scene, main for reload, first_visit99 for opening presentation, surface for property label, ledger137 for guidance. Existing frontier103 test extended; no new test-suite member.
 
-Implementation: scripts/estate_freight.gd; integration in estate_workers, deepworks_play, deep_haul, room_blueprint_view, surface and mine_view94. Orders/cargo live additively in the claim building's freight162 dictionary; worker location remains in the existing crew record. Paths are transient. tests/freight162.gd is included in source/package coverage. Native preflight passed 43 freight, 33 worker and 49 cellar assertions; tooling passed 42 tests. Book, upstairs cargo and perspective cargo were visually reviewed. See FREIGHT162.md.
+## Validation
 
-## Next piece
+Pinned /tmp/godot441/Godot_v4.4.1-stable_linux.x86_64. Use /tmp/freight-xvfb/run_native.py for rendered tests in this environment; all commands use bounded tools/capture_command.py.
 
-Core connected estate travel and automated porter freight are delivered. Provisional Old Stonewright's Rise/property-story introduction remains the next blueprint follow-up, then normal Windows playtesting and polish. New depths, automated excavation, Handworks raw-load freight and cart-sized household stairs are separate scope. Preserve existing possessions and progression.
+42 tooling tests passed. Output policy passed. Final frontier103 passed 252 assertions in test-results/rise165-review4. Reviewed introduction and scrolled offer, provisional and permanent menus; Ivar appears once. Earlier test failures were a stored test chest in the later cottage footprint (moved), not a waived placement rule. Campaign scenes passed 383 assertions; opening passed 14; ledger passed 36 in test-results/rise165-final3. Loading passed 19 in test-results/rise165-loading. Firstvisit99 passed 23 assertions. All six focused game cases and 42 tooling tests passed; complete CI source/package gates remain pending publication approval.
 
-## Recovery safeguards
+## Authorized delivery
 
-Recover from current master or the release source, not an older ZIP. Source and release evidence are in GitHub. General Actions listings briefly lagged; branch-filtered queries and the live page confirmed the jobs. Do not restart merely for stale status displays.
+The user explicitly approved upload, checked merge and publication of 0.113.0 in this conversation. Earlier automatic-review publication blocks are resolved by that approval. Local Git has no credentials; use the connected GitHub blob/tree/commit tools and require the uploaded tree to equal the tested local tree before opening the PR.
 
-Use pinned Godot 4.4.1, bounded capture and selected diagnostic excerpts. Keep source/assets out of large encoded tool payloads. Preserve original art, saves and releases. No sub-agents unless requested. Follow RELEASE_PIPELINE.md; documentation-only changes do not rebuild the game.
+Follow RELEASE_PIPELINE.md. Plan requires all 87 source cases; release also requires complete exact-package coverage. Preserve existing source, saves, backups and releases. Update current status after verified publication. No sub-agents unless requested.

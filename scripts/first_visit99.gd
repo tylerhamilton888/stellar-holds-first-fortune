@@ -104,7 +104,7 @@ static func opening_route(g)->bool:
  var s=g.state
  if not HoldFrontier103.active(s) or not lodge_intro(s) or s.opening>=2:return false
  var q=data(s);var town=HoldFrontier103.data(s)
- return q.get("focus","")!="work" and not town.get("permit",false) and not town.get("home_reward",false) and HoldWork132.contributions(s)<2 and int(HoldAncestralClaim.data(s).get("stage",0))==0
+ return q.get("focus","")!="work" and not HoldFrontier103.provisional(s) and not town.get("permit",false) and not town.get("home_reward",false) and HoldWork132.contributions(s)<2 and int(HoldAncestralClaim.data(s).get("stage",0))==0
 static func opening_lead(g)->Dictionary:
  var q=data(g.state)
  if q.get("rewarded",false):

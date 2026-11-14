@@ -313,7 +313,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  if load_saved:HoldBridgeScene139.start_bridge(self)
  if load_saved:HoldThaneScene131.start_scene(self)
  if load_saved:HoldFriendScene130.start_scene(self)
- if load_saved and HoldClaim127.eligible(state) and HoldClaim127.data(state).scene!="":HoldClaimScene127.start_scene(self)
+ if load_saved and (HoldFrontier103.rise_pending(state) or (HoldClaim127.eligible(state) and HoldClaim127.data(state).scene!="")):HoldClaimScene127.start_scene(self)
 
 func spawn_agents():
  var previous=agents.duplicate()
