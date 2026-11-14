@@ -6,4 +6,4 @@ Loads move only at the actual stores. Household goods stay in their chest until 
 
 Carriers display an existing timber crate in household and mine views. Wheelbarrows stay in the mine; this update adds porter routes, not cart-sized household stairs. Handworks raw-load pallets, automated excavation and property-story integration remain separate.
 
-Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Preserve older builds and saves. CURRENT_STATUS.md identifies the verified published release; these notes describe the candidate until its full release checks pass. [Previous notes](history/RELEASE_NOTES-before-freight162.md).
+Extract the complete Windows ZIP into a fresh folder and keep FirstFortune.exe beside FirstFortune.pck. Preserve older builds and saves. See CURRENT_STATUS.md for the verified release and source/package evidence. [Previous notes](history/RELEASE_NOTES-before-freight162.md).

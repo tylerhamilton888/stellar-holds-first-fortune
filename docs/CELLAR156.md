@@ -12,7 +12,7 @@ Shift+E checks both destinations before crossing. The existing scene transitions
 
 ## Boundary of this slice
 
-Household-worker routes were added in 0.111.1; see [crew routes](WORKERS160.md). Recruited miners assigned a real household bed walk through the existing cellar connection while retaining their original roster, mine assignment and storage ownership. Workers at other worksites retain their existing behavior. Carts must still be parked before this household stair; carried supplies may cross, but automated freight and remote stock transfers remain deferred. Upper-floor room-blueprint editing shipped in 0.110.0; see [upper-floor notes](UPPER158.md). Existing manual upper stairs and mine stairs remain available.
+Household-worker routes were added in 0.111.1; see [crew routes](WORKERS160.md). Recruited miners assigned a real household bed walk through the existing cellar connection while retaining their original roster, mine assignment and storage ownership. Workers at other worksites retain their existing behavior. Carts must still be parked before this household stair. Version 0.112.0 adds [automated porter freight](FREIGHT162.md) through the same stairs; it does not provide remote stock transfers or remote crafting. Upper-floor room-blueprint editing shipped in 0.110.0; see [upper-floor notes](UPPER158.md). Existing manual upper stairs and mine stairs remain available.
 
 ## Validation
 

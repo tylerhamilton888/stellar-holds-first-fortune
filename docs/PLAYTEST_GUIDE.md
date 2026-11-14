@@ -66,7 +66,7 @@ In **O → Plan Your Holding**, select an upper floor and draw a room over your 
 
 Choose the lower planning floor, stand at an interior landing and use **Plan upward stair at my X/Y**. Fit it locally for **4 timber / 2 stone**. E climbs and Shift+E descends. Select the visited floor before **Build within reach**; walk around inside the room to reach its far walls. Reused roof decks must not charge another floor cost.
 
-Make a cellar workshop/storage area, a ground kitchen/hall and an upstairs bedroom. Use their furnishings and storage, renovate upstairs, save and reload. Confirm the lower floor and stored items remain intact. Removing an upper plan must preserve the physical room. Existing manual stairs remain supported; carts stay parked, and automated freight across the household boundary is still future work.
+Make a cellar workshop/storage area, a ground kitchen/hall and an upstairs bedroom. Use their furnishings and storage, renovate upstairs, save and reload. Confirm the lower floor and stored items remain intact. Removing an upper plan must preserve the physical room. Existing manual stairs remain supported; carts stay parked, while recruited miners can carry household freight through the same stairs (see below).
 
 ## Crew berths — 0.111.1
 
@@ -76,6 +76,6 @@ During the existing crew rest period, watch the miner walk home, rest at the bed
 
 Carts still stay parked at household stairs. This release adds worker movement, not automated storage transfers. Check normal-speed Windows performance and readability during ordinary play.
 
-## Freight candidate (0.112.0)
+## Household freight (0.112.0)
 
-After publication, use O → Plan Your Holding → Freight for the household. Mark a mine stockpile with U away from the entrance/cart, place a household chest, and select a miner, material and direction. Watch a 32-unit load cross the actual stairs. Try saving mid-trip, blocking a passage, finishing/stopping and returning a load. Confirm the chest receives the goods and crafting still requires withdrawal. See FREIGHT162.md and CURRENT_STATUS.md.
+Use O → Plan Your Holding → Freight for the household. Mark a mine stockpile with U away from the entrance/cart, place a household chest, and select a miner, material and direction. Watch a 32-unit load cross the actual stairs. Try saving mid-trip, blocking a passage, finishing/stopping and returning a load. Confirm the chest receives the goods and crafting still requires withdrawal. See FREIGHT162.md and CURRENT_STATUS.md.

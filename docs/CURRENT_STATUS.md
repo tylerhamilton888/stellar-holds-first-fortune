@@ -2,30 +2,28 @@
 
 ## Published Windows build
 
-**[0.111.1 — Crew berths and connected household routes](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.111.1)** is published. [Feature PR #160](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/160) and [legacy-site correction #161](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/161) merged after their required checks passed.
+**[0.112.0 — Freight through the holding](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.112.0)** is published. [PR #163](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/163) merged after its full validation passed.
 
-- Release source: `fdf56920468474950488aa3051e4b780754ace55`; tree: `89c980e85154f0b5d81f084aba280695e7e987ab`.
-- Source merge: `ce1c022c6fdffd392ff2211e598cfa45afe69b73`.
-- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43501138113): all 11 jobs passed, including 86 native source cases, 76 exact-package cases (14,485 assertions), aggregate verification and publication.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43501138451): all four gameplay groups and aggregate gate passed.
-- Assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
-- Windows ZIP: 964,793,762 bytes; SHA-256 `1a5d56c37345f5f01f48d0f667c82c27b686abfd9d8b7f65f352a1ecbb0fda40`.
-- PCK SHA-256: `037886dbc8d0442c5c719ac7d729a2b652ebcbb47db489d46e3ec39bca29368b`.
+- Release source: `0333a54554592847579b4e211798ce625da7e321`; tree: `25f92aa50fd96396c23a73bd2acdc5c8ad76fbc8`.
+- Source merge: `94486969f7da5b9920b42afa49bd6657dc6bc73f`.
+- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43538478196): all 11 jobs passed, including 87 native source cases, 77 exact-package cases / 14,528 assertions, aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43538483052): all four gameplay groups and the final gate passed.
+- Public assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
+- Windows ZIP: 964,793,495 bytes; SHA-256 `facfad92ed80fb7a249daca6aff0be5f08684030152a1943809a1868971a67b4`.
+- PCK SHA-256: `f7eae9034773d52a0f70278d491004c56c5bd557a89cae7178dd5f2fdfacc5a5`.
 
-[Post-upload verification](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43506857764) retrieved both public JSON documents, checked their asset digests and compared version, clean source, PCK/ZIP hashes and archive size with the published asset record. The publication gate verified the full ZIP; it was not independently downloaded again.
+Post-publication checks downloaded both public JSON documents, verified their asset digests and matched version, clean source, PCK/ZIP hashes and ZIP size to the uploaded asset record. The publication gate verified the full ZIP; it was not independently downloaded again.
 
 ## Delivered scope
 
-This is the household-worker slice of Stage C. In **O → Plan Your Holding → A bed for your crew**, choose a floor and actual bed, then **Assign selected bed** to a recruited miner. Room designation is optional. Provide a clear built route, household stairs, a fitted cellar stair and provisions.
+In **O → Plan Your Holding → Freight for the household**, choose a recruited miner, material, direction, marked mine stockpile and chest on the selected floor. The same worker carries up to 32 units through actual mine passages, stairs/ladders, cellar stairs and built household floors. Goods stay in their existing stores or in one carried load; crafting still requires chest withdrawal.
 
-The same worker walks from the claim mine to the bedside, rests and returns to the original assignment. Long commutes finish their rest; positions and berths survive reload. Obstructions stop travel. Missing beds cancel rest and return the worker through the remaining route. Rest requires actual arrival and provisions. Legacy workers at other worksites retain their prior behavior.
+Stops finish the current delivery. Return controls bring cargo physically back to its source; a returning load can instead finish delivery if its source is gone. Blocked routes and missing chests retain cargo. Order, floor, position and load survive reload. Freight yields to masonry cargo and unladen rest, uses ordinary crew provisions and preserves mine assignments and berths. A reassigned carrier waits until assigned as a miner again. Wheelbarrows stay underground.
 
-No duplicate roster or remote stock transfer is created. Masons return job cargo before commuting. Ground/upper plans and the existing cellar remain intact. See [crew routes](WORKERS160.md), [upper floors](UPPER158.md), [cellar notes](CELLAR156.md) and [playtest guide](PLAYTEST_GUIDE.md).
-
-Preflight passed 31 worker assertions in headless/native Godot 4.4.1 and 42 tooling tests. The final case adds two legacy-worksite checks and passed full source/package gates. Native berth controls and upstairs resident rendering were reviewed; the legacy correction does not change presentation.
+Reviewed native book controls, upstairs carrier and perspective-mine crate rendering. The perspective mine view excludes upstairs crew. Preflight passed 43 freight, 33 worker and 49 cellar assertions plus all 42 tooling tests. See [freight](FREIGHT162.md), [crew](WORKERS160.md) and [playtest guide](PLAYTEST_GUIDE.md).
 
 ## Next work and limits
 
-Next core blueprint piece: automated freight across the household/mine boundary. Carts stay parked at household stairs. New mine depths, automated excavation and provisional-property story integration remain deferred.
+The remaining blueprint follow-up is provisional property-story integration, followed by normal player testing and polish. New mine depths, automated excavation and Handworks raw-load freight are separate work. Normal-speed Windows input, audio, performance and enjoyment still need player testing.
 
-Normal-speed Windows input, audio, performance and enjoyment still need player testing. Preserve releases and saves. Follow [release procedure](RELEASE_PIPELINE.md); documentation-only updates need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-workers160.md).
+Preserve releases and saves. Documentation-only corrections need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-freight162.md).
