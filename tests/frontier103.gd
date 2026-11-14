@@ -157,6 +157,7 @@ func run():
  g.save_game();g.start_game(true);settle()
  check(HoldFrontier103.data(g.state).home_reward and HoldFrontier103.data(g.state).storehouse,"Home and town construction persist after reload")
  check(g.surface.architecture.record(str(home.id)).rooms.size()==2,"Player design and upper floor survive reload")
+ await tool_capabilities()
  print("FRONTIER103: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
 
@@ -170,3 +171,61 @@ func town_routes():
   if b.area!="trail":continue
   var finish=Vector2i(roundi((b.x-90)/20),roundi((b.y+45-210)/20))
   check(not grid.get_id_path(start,finish).is_empty(),"Town street has a continuous walkable route to "+b.name)
+
+func tool_capabilities():
+ var s=g.state
+ s.steel=false;s.outpost.erase("reinforced_pick");s.tech.erase("extraction");s.tech.erase("reinforced_tools")
+ for item in ["iron","copper","coal","wood","water"]:s.add(item,100)
+ s.money=1000;desk("forge")
+ var before=s.count("iron")
+ check(not HoldFrontier103.transact(g,"tool","steel") and s.count("iron")==before,"Unresearched pick cannot spend materials")
+ desk("survey");check(HoldFrontier103.transact(g,"research","extraction"),"Research existing steel method at survey desk")
+ check(not s.steel and HoldToolCapabilities.basalt_hint(s).contains("Forge one"),"Research does not grant a pick and feedback names remaining forging step")
+ check(not HoldFrontier103.transact(g,"tool","steel"),"Stale remote forge callback rejected")
+ desk("forge");before=s.count("iron")
+ check(HoldFrontier103.transact(g,"tool","steel") and s.steel and s.count("iron")==before-5,"Steel pick uses existing five-iron cost")
+ check(not HoldFrontier103.transact(g,"tool","steel") and s.count("iron")==before-5,"Duplicate steel forging cannot charge again")
+ check(HoldToolCapabilities.basalt_hint(s)=="Your steel pick can cut basalt.","Owned tool guidance no longer asks for research or forging")
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick"),"Reinforcement requires its own technique")
+ desk("survey");check(HoldFrontier103.transact(g,"research","reinforced_tools"),"Reinforcement uses ordinary reachable ingredients")
+ desk("forge");s.inventory.copper=0;before=s.count("iron")
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick") and s.count("iron")==before,"Missing reinforcement material leaves payment atomic")
+ s.add("copper",2)
+ check(HoldFrontier103.transact(g,"tool","reinforced_pick") and HoldToolCapabilities.reinforced(s),"Locally forge reinforced pick")
+ check(s.count("iron")==before-8 and s.count("copper")==0,"Reinforced pick charges exact materials")
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick"),"Duplicate reinforced forging rejected")
+ g.refresh_panel();await snap("tools171-forge")
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(s.steel and HoldToolCapabilities.reinforced(s),"Both pick capabilities survive real save reload")
+ g.change_zone("mine");settle();var w=g.deep.world;var c=Vector2i(12,12)
+ for d in Deepworks.DIRS:w.set_cell(c+d,0)
+ w.set_cell(c,7);s.steel=false
+ var damage=JSON.stringify(w.layer().damage);before=s.mined
+ check(w.strike(c).get("blocked",false) and JSON.stringify(w.layer().damage)==damage and s.mined==before,"Basalt blocks execution without damage or reward when pick is absent")
+ s.steel=true;s.outpost.reinforced_pick=false
+ var result={}
+ for i in 20:
+  result=w.strike(c,-1,false,false,"careful")
+  if result.get("broken",false):break
+ check(result.get("item","")=="stone","Existing steel careful mining retains ordinary stone")
+ w.set_cell(c,7);s.outpost.reinforced_pick=true
+ for i in 20:
+  result=w.strike(c,-1,false,false,"careful")
+  if result.get("broken",false):break
+ check(result.get("item","")=="basalt_block" and result.get("count",0)==2,"Careful reinforced contacts recover two basalt blocks")
+ check(g.handworks.rock(result,c),"Basalt blocks enter existing physical raw-load system")
+ var raw=g.handworks.data().loose.back()
+ check(g.handworks.raw_item(raw)=="basalt_block" and int(raw.units)==2,"Raw load preserves basalt identity and quantity")
+ w.set_cell(c,7)
+ for i in 20:
+  result=w.strike(c,-1,false,false,"pick")
+  if result.get("broken",false):break
+ check(result.get("item","")=="stone","Ordinary reinforced strikes still supply everyday stone")
+ s.add("basalt_block",2);s.tech.erase("fine_masonry");s.queue=[]
+ check(not s.craft("dressed_basalt"),"Advanced masonry recipe respects knowledge gate")
+ s.tech.fine_masonry=true;before=s.count("basalt_block")
+ check(s.craft("dressed_basalt") and s.count("basalt_block")==before-2,"Dressing recipe spends exactly two blocks")
+ before=s.count("dressed_basalt");s.tick(30)
+ check(s.count("dressed_basalt")==before+2,"Completed dressing produces the quoted basalt finish material")
+ var cargo_before=int(g.deep.haul.bucket().get("basalt_block",0));g.deep.haul.collect("basalt_block",2,g.player)
+ check(int(g.deep.haul.bucket().get("basalt_block",0))==cargo_before+2,"Recovered basalt uses physical bulk haulage")

@@ -232,7 +232,7 @@ func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:Stri
  if k==7 and not state.steel and not thermal:return {"blocked":true}
  var l=layer(z);var id=key(c)
  var prior=float(l.damage.get(id,0))
- var power=12.0 if thermal else (1.65 if state.steel else 1.0)
+ var power=12.0 if thermal else HoldToolCapabilities.power(state)
  if method=="hammer" and not thermal:power=2.6 if prior>=resistance(k)*.4 else .65
  if not thermal and exposed(c,z)>=2:power+=.3
  if not thermal:power+=float(work.get("focus",0))
@@ -247,6 +247,8 @@ func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:Stri
   if nk in [2,3,4,7] and method!="careful":
    var nid=key(n);l.damage[nid]=minf(resistance(nk)*.8,float(l.damage.get(nid,0))+(.9 if method=="hammer" else .4)+float(work.get("fracture",0)))
  var item=HoldData.TILES[k].item
+ # Careful quarrying preserves whole blocks; ordinary strikes still yield stone.
+ if k==7 and method=="careful" and not thermal and HoldToolCapabilities.reinforced(state):item="basalt_block";count=2
  if thermal:
   if k in [3,4]:item="iron_slag" if k==3 else "copper_slag"
   if k==5:count=0

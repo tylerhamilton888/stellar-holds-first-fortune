@@ -158,9 +158,7 @@ static func finish_home(g)->bool:
  var d=HoldGreatClaim102.data(g.state);d.points=int(d.points)+60
  g.save_game();g.notify("A hearth of your own · 60 Claim marks. Keep designing and extending your home.");return true
 static func transact(g,kind:String,id:String,buy:bool=true)->bool:
- if kind=="tool" and id=="steel":
-  if not near(g,"forge") or g.state.opening<2 or g.state.steel or not g.state.tech.has("extraction") or not g.state.pay({"iron":5,"wood":2}):return false
-  g.state.steel=true;return true
+ if kind=="tool":return HoldToolCapabilities.forge(g,id)
  if kind=="trade" and HoldData.ITEMS.has(id) and (near(g,"watch") or (HoldCampaign138.data(g.state).get("winter_ready",false) and near(g,"stores"))):return g.state.trade(id,buy)
  if kind=="craft" and HoldData.RECIPES.has(id) and near(g,"forge") and g.state.opening>=2:return g.state.craft(id)
  if kind=="research" and HoldData.RESEARCH.has(id) and near(g,"survey"):return g.state.research(id)

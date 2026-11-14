@@ -89,6 +89,17 @@ func run():
  for step in 300:g.deep.agents(.1)
  check(m.data.assignments.brann.present==room_record.id and actor.work,"Assigned worker walks actual corridors and works in undesignated workshop")
  g.agents=[];g.state.claim_id=previous_claim
+ p.configure("floor","basalt",room);g.state.tech.erase("fine_masonry")
+ check(p.chosen().floor=="basalt" and p.cost(p.chosen())=={"dressed_basalt":64},"Ambitious basalt finish can be planned before knowledge and materials")
+ g.deep.works.page="Plans";g.open_panel("living");await snap("tools171-basalt-plan");g.close_panel()
+ check(p.finish_nearby()==0,"Planned advanced finish does not bypass masonry knowledge")
+ g.state.tech.fine_masonry=true;g.state.inventory.dressed_basalt=0
+ check(p.finish_nearby()==0,"Known advanced finish still requires its actual material")
+ g.state.add("dressed_basalt",64)
+ for c in p.cells(p.chosen()):
+  if w.walkable(c):stand(c);p.finish_nearby()
+ check(p.cost(p.chosen()).is_empty() and g.state.count("dressed_basalt")==0,"Basalt finishing uses exact surface coverage and payment")
+ g.close_panel();stand(Vector2i(15,19));await snap("tools171-basalt-floor")
  p.configure("floor","flags",room);var quote=p.cost(p.chosen());check(quote=={"stone":64},"Finishing quote uses cleared floor coverage only")
  var before=g.state.count("stone");g.state.tech.erase("stoneworking");check(p.finish_nearby()==0 and g.state.count("stone")==before,"Finishing research cannot be bypassed")
  g.state.tech.stoneworking=true

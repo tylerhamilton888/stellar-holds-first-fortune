@@ -19,3 +19,5 @@ The complete owner directive remains in design/HOME_AND_FORTUNE_DIRECTIVE.md. HO
 Resume from current master or verified release source, not an old ZIP. Source, directive and release evidence are on GitHub. Connector uploads matched the local Git tree; public Git fetch works but local Git has no credentials. Preserve original artwork, releases and saves. Bound output and use capture helpers with Godot 4.4.1. Local evidence: test-results/home169*; pinned runtime under the task workspace’s runtime directory. Follow RELEASE_PIPELINE.md. Delivery documentation does not require a Windows rebuild. Ordinary Windows input/audio/performance and normal-speed arrival pacing remain to playtest. No sub-agents unless requested.
 
 [Previous handoff](history/SESSION_HANDOFF-before-home169.md).
+
+Candidate 0.116.0 is implemented on feature/tools171: reinforced pick, careful basalt recovery, dressed basalt floors and accurate forging guidance. Validation and publication pending; see TOOLS171.md.

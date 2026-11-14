@@ -91,7 +91,8 @@ static func show(p):
   g.label(g.panel_body,"%s · %d/%d floor tiles cleared" % [progress.state,progress.open,progress.total],16,Color("edc98a"))
   var costs=p.cost(r)
   g.label(g.panel_body,"Finishes · "+("No materials remaining" if costs.is_empty() else HoldData.cost_text(costs)),15)
-  if progress.hard:g.label(g.panel_body,"%d basalt tiles need a tempered pick. All rock keeps its normal hardness and yields." % progress.hard,14)
+  if progress.hard:g.label(g.panel_body,"%d basalt tiles. " % progress.hard+HoldToolCapabilities.basalt_hint(g.state),14)
+  if r.get("floor","")=="basalt":g.label(g.panel_body,"Dressed basalt: carefully quarry blocks with a reinforced pick, then dress them using Fine masonry. You can save this design before acquiring either.",14)
   if r.room!="" and p.model.data.rooms.has(r.room):
    var q=p.model.quality(p.model.data.rooms[r.room]);g.label(g.panel_body,"Comfort %d · Craft %.1f · Heritage %d · Furnishings supply function." % [q.comfort,q.craft,q.heritage],14)
  g.label(g.panel_body,p.message,14,Color("b8c5bc"))

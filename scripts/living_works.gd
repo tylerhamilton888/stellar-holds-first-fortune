@@ -14,6 +14,7 @@ const FURNITURE={
  "chair":{"name":"Carved chair","cost":{"wood":3},"tech":"furnishings","solid":false,"function":0,"comfort":2,"heritage":1},
  "rune":{"name":"Ancestral pillar","cost":{"stone":5,"copper":1},"tech":"fine_masonry","solid":true,"function":0,"comfort":0,"heritage":3}}
 const FINISHES={
+ "basalt":{"name":"Dressed basalt floor","surface":"floor","cost":{"dressed_basalt":1},"tech":"fine_masonry","craft":3},
  "ashlar":{"name":"Dressed stone floor","surface":"floor","cost":{"dressed_stone":1},"tech":"","craft":2},
  "timber":{"name":"Timber floor","surface":"floor","cost":{"wood":1},"tech":"","craft":1},
  "flags":{"name":"Flagstone floor","surface":"floor","cost":{"stone":1},"tech":"stoneworking","craft":1},
