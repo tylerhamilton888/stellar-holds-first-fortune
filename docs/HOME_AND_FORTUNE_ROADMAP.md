@@ -1,14 +1,14 @@
 # A Home and a Fortune — next milestones
 
-Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). Building-grid polish was delivered in 0.114.0. The owner has now requested the family-origin opening; its 0.115.0 candidate implementation is documented in HOME169.md. Validation/publication are pending.
+Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). Building-grid polish was delivered in 0.114.0. The family-origin opening is delivered in 0.115.0; implementation and validation are documented in HOME169.md. The next milestone is tool/material capability progression.
 
 ## Delivered baseline
 
-0.113.0 already provides surface/underground/upper-floor blueprinting, cellar links, household workers, freight and Ivar’s provisional-use introduction. Retain those systems. The new directive supersedes the future story direction of provisional ownership; it does not mean the family-origin opening is already implemented.
+0.113.0 already provides surface/underground/upper-floor blueprinting, cellar links, household workers, freight and Ivar’s provisional-use introduction. Retain those systems. The family-origin opening in 0.115.0 supersedes provisional ownership while retaining those building and household systems.
 
-## Active milestone: family-origin opening
+## Delivered in 0.115.0: family-origin opening
 
-The parents bought Old Stonewright’s Rise as a modest gift; Ivar is its practical local guide. New players reach a weathered, usable cottage with basic sleeping/storage in roughly 5–10 minutes. First-shift mining becomes an attractive optional opportunity. Two contributions become civic household recognition, not a transfer of land already owned. Add a warm initial parental letter; family purchase remains unrelated to ancestry.
+The parents bought Old Stonewright’s Rise as a modest gift; Ivar is its practical local guide. New players reach a weathered, usable cottage with basic sleeping/storage with a 5–10 minute arrival target still requiring normal-speed playtesting. First-shift mining becomes an attractive optional opportunity. Two contributions become civic household recognition, not a transfer of land already owned. Add a warm initial parental letter; family purchase remains unrelated to ancestry.
 
 Modify the existing owners, not parallel systems:
 
@@ -18,6 +18,10 @@ Modify the existing owners, not parallel systems:
 - `ledger137.gd`, `work132.gd`, `campaign138.gd` and onboarding/journal text: distinguish ownership from civic registration, credit genuine improvements to the starter home and keep the player’s selected ambition prominent. Audit consumers of permit/home_reward/claim_id before changing semantics.
 
 First implementation slice: save-safe ownership migration plus brief arrival/property introduction, parental letter and modest new-save accommodation; retain the existing crafting economy. Validate through real new-game input, skipping/reloading, both existing tenure states and preservation of household/worker/storage records. Review recognition requirements so the starter dwelling does not automatically pay an improvement reward or force rebuilding. Publish only after the established source/package gates.
+
+## Next capability audit
+
+Start with `geology.gd` hardness, `deepworks_play.gd` mining feedback, `frontier103.gd` tool transactions, `forge147.gd`, `data.gd` research and `excavation_blueprints.gd` material access. Existing steel crafting requires Tempered steel research plus 5 iron and 2 timber; planning already counts basalt tiles blocked by the missing pick. Reconcile mineworks/deepworks messages that mention research alone with the actual requirement to forge the tool. Preserve current steel ownership and saved excavation plans. Extend capabilities only after this shared path is clear; test planning before access, blocked execution and successful work after acquisition.
 
 ## Subsequent order
 

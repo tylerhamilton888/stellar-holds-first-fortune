@@ -1,4 +1,6 @@
-# Old Stonewright’s Rise
+# Old Stonewright’s Rise — historical 0.113.0
+
+Superseded by the [family-purchased opening in 0.115.0](HOME169.md). The notes below describe the prior provisional-use implementation, preserved as history.
 
 The existing copper_ridge household site gains a provisional-use story; it is not a new map or replacement estate. At Ivar’s local shift book, a paid first shift permits optional acceptance. The same book records permanent tenure after two civic projects/trade seals. Existing direct permanent acceptance remains compatible.
 

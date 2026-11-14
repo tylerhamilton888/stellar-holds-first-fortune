@@ -8,17 +8,17 @@ The verified version and release evidence are recorded in [CURRENT_STATUS.md](CU
 2. Extract the whole ZIP into a fresh folder. Keep **FirstFortune.exe** and **FirstFortune.pck** together with the supplied supporting files. Do not run from inside the ZIP or combine files from different builds.
 3. Keep the previous build and saves. Use **New Game** and an empty fortune slot for a fresh opening test, or **Load Game** to check an existing fortune. Older non-frontier fortunes retain their earlier route.
 
-## First hour
+## First hour — A gift from home
 
-Meet Ivar in the bunkhouse, visit your upstairs room, and follow the journal (**J**) to the first paid stone load at Old Workings. Use the in-world prompts for the current work step. Select the pick with **1**, stand still and hold the left mouse button to excavate. **E** lifts a freed load or stocks the western loan rack; hold **E** at the western stonebreaker to work. New output enters your pack; **E** collects older bench output. The eastern crew's stock belongs to the hold.
+Choose **New Game** in an empty slot to test the family-origin opening. Your parents have already bought Old Stonewright’s Rise. Speak with Ivar in the bunkhouse and choose **Show me Old Stonewright’s Rise**, or follow the eastern road across the bridge yourself. Test the brief introduction normally, by skipping it and by saving/reloading mid-scene. It should not award mining or campaign progress.
 
-Return to Ivar's shift book. Find the enormous outdoor Ledger on its gilded stone lectern between two braziers, east of the bunkhouse. Stand at its front and press **E**. **M** reviews the same Ledger remotely; deliveries require the physical book or original indoor records desk and goods in your pack. Partial deliveries are saved.
+At the cottage, try the bedside **E** interaction and the empty chest. **O** opens building plans. The existing floors, walls, door and roof can be edited; this is the same household site used throughout the story. In **J**, read the parents’ letter and expand **Choose what to do next**. Try home improvement, paid mining, the communal forge and a local trade as alternative ambitions. Note whether the chosen guidance remains useful instead of switching you to an unrelated task.
 
-After your first pay, the journal offers room furnishing, a visit to Borin first, or an alternate trade. Furnishing is optional. When following the forge, its next-step guidance updates after inspection, coal processing and partial deliveries; the HUD follows the same lead.
+If you choose the first shift, follow the northern town path to Old Workings. Select the pick with **1**, stand still and hold left mouse to excavate. **E** lifts a freed load or stocks the western loan rack; hold **E** at the western stonebreaker to work. New output enters your pack; **E** collects older bench output. The eastern crew’s stock belongs to the hold. The first completed lesson pays 20 crowns and supplies once, but it is not required to own or improve your home.
 
-Follow the Cold Forge project's actual requirements, make your contributions, and return for its first firing. Choose a trade lesson and an optional collection that interests you; all three collections are not required. Follow current Ledger and journal requirements toward your home.
+The enormous outdoor Ledger stands on its gilded stone lectern between two braziers, east of the bunkhouse. Stand at its front and press **E**. **M** reviews it remotely; deliveries require the physical book or indoor records desk and carried supplies. Two civic projects or trade seals earn household recognition at Ivar’s shift book. Add a light to the usable cottage bedroom, then register the improved home for 60 marks after recognition. You do not need to demolish or rebuild it.
 
-Record any moment where you cannot tell what to do, where to go, which object to use or why an action is blocked. Note repeated trips, confusing prompts, overly long explanations and whether your first pay and forge restoration feel rewarding.
+Follow the Cold Forge’s actual inspection, processing and contribution requirements if you choose that project; its guidance should reflect saved partial deliveries. Report unclear directions, repeated trips, overly long explanations and whether the homestead arrival feels natural within the intended first 5–10 minutes. Automated checks do not establish normal-speed pacing.
 
 ## Revisit completed work and people
 
@@ -80,9 +80,9 @@ Carts still stay parked at household stairs. This release adds worker movement, 
 
 Use O → Plan Your Holding → Freight for the household. Mark a mine stockpile with U away from the entrance/cart, place a household chest, and select a miner, material and direction. Watch a 32-unit load cross the actual stairs. Try saving mid-trip, blocking a passage, finishing/stopping and returning a load. Confirm the chest receives the goods and crafting still requires withdrawal. See FREIGHT162.md and CURRENT_STATUS.md.
 
-## Old Stonewright’s Rise (0.113.0)
+## Existing fortunes — 0.115.0 migration
 
-After your first paid shift, visit Ivar’s book and accept provisional use. Check the short introduction, including save/reload and Skip. Follow the east road to the holding; O opens building plans. Build and store goods before completing two civic projects or trade seals, then return to record the permanent charter. Verify your work and supplies remain exactly where you left them. Existing permanent saves should keep their rights and chosen property names.
+Load a prior provisional holding and a permanent household. Verify claim/name, buildings, furniture, stocked chests, workers, development and story progress remain intact. Existing holdings do not receive a second cottage or replacement furnishings. Old permanent recognition remains recorded; prior provisional holders own their existing holding and can earn civic recognition through two contributions. A frontier fortune without a holding receives the Rise without overwriting preexisting construction/storage. Older non-frontier fortunes retain their original route.
 
 ## Building grid (0.114.0)
 
