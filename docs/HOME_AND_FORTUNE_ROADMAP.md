@@ -1,12 +1,12 @@
 # A Home and a Fortune — next milestones
 
-Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). The current request implements the building-grid polish first and records this directive as subsequent work. The family-origin opening is not part of the grid release.
+Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). Building-grid polish was delivered in 0.114.0. The owner has now requested the family-origin opening; its 0.115.0 candidate implementation is documented in HOME169.md. Validation/publication are pending.
 
 ## Delivered baseline
 
 0.113.0 already provides surface/underground/upper-floor blueprinting, cellar links, household workers, freight and Ivar’s provisional-use introduction. Retain those systems. The new directive supersedes the future story direction of provisional ownership; it does not mean the family-origin opening is already implemented.
 
-## Next major milestone: family-origin opening
+## Active milestone: family-origin opening
 
 The parents bought Old Stonewright’s Rise as a modest gift; Ivar is its practical local guide. New players reach a weathered, usable cottage with basic sleeping/storage in roughly 5–10 minutes. First-shift mining becomes an attractive optional opportunity. Two contributions become civic household recognition, not a transfer of land already owned. Add a warm initial parental letter; family purchase remains unrelated to ancestry.
 

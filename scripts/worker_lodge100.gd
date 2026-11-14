@@ -72,7 +72,12 @@ static func panel(g):
   text="'Good work. Your first twenty crowns are counted, and there's a little timber for your room. Your journal has the next leads when you're ready.'"
  if index in [1,2] and bool(g.get_meta("lodge_memorial_reply",false)):
   text="Rurik rubs his shoulder. 'The old shift. Keldran gets a nod before I go below, but I still check the props. My grandfather would haunt me for skipping that.'" if index==1 else "Sigrid sets down her mug. 'Our departed. Nyrda keeps them; we keep their names. I read them on Namesday. Come if you like. Grandmother preferred a useful deed to a long speech.'"
+ if index==0 and HoldFrontier103.family(g.state):
+  if HoldFirstVisit99.data(g.state).get("rewarded",false):text="'Your first pay is counted. Put it toward something useful at home—or keep it for a rainy day. The great book has more work whenever you want it.'"
+  elif not HoldFrontier103.data(g.state).home169.introduced:text="Ivar sets down his cup. 'Your parents wrote ahead. Old Stonewright’s Rise is yours, paid in full. East across the bridge. A little weathered, but you could make something of it. Shall I show you?'"
+  else:text="'Settling in? If you want a wage, the western rack and stonebreaker at Old Workings are ready. Twenty crowns and a few building supplies for your first completed load. The great book has work for the town, too.'"
  g.label(g.panel_body,text,19,Color("f2e7d2"))
+ if index==0:HoldFrontier103.rise_card(g)
  if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Where should I go next?",func():g.open_panel("commission"))
  if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Ask about the shift book",func():g.open_panel("frontier103"))
  if index in [1,2]:

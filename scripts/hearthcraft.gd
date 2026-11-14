@@ -297,7 +297,7 @@ func rest(p:Vector2)->bool:
  if s.architecture.interior():g.save_game();return true
  var room=shelter(s.g.player)
  if not room.enclosed or not room.roofed:g.notify("A home needs walls, a door and a roof over the floor around its bed.");return false
- data().facts.home=true;g.save_game();g.notify("Under a roof you raised yourself. Rested; fortune saved.");return true
+ data().facts.home=true;g.save_game();g.notify("Under your own roof. Rested; fortune saved.");return true
 func panel():HoldArchitectureView.structure(s.architecture)
 func lesson():
  g.label(g.panel_body,"A HEARTH YOU RAISED · Practical building lesson",17,Color("edc98a"))

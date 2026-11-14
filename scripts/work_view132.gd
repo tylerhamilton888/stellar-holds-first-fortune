@@ -10,7 +10,7 @@ static func summary(g):
  var s=g.state
  if not W.active(s):return
  var q=HoldFirstVisit99.data(s)
- if HoldFirstVisit99.first_morning(s):
+ if HoldFirstVisit99.first_morning(s) and not HoldFrontier103.family(s):
   var box=HoldMenuView.section(g.panel_body,"Your next step")
   var title="A word with Ivar";var hint="Speak with Ivar by the bunkhouse hearth. E talks.";var art="wood"
   if q.get("work_started",false) and g.zone=="mine":
@@ -23,7 +23,7 @@ static func summary(g):
   else:HoldMenuView.illustrated_text(box,art,title,hint)
   if q.get("ivar_spoken",false):g.label(box,"Ivar will pay for your first completed load.",15,Color("a7dfcb"))
   return
- elif not q.get("home_made",false) and q.focus=="home":
+ elif not HoldFrontier103.family(s) and not q.get("home_made",false) and q.focus=="home":
   var card=HoldMenuView.section(g.panel_body,"Your first wages")
   HoldMenuView.illustrated_text(card,"wood","A corner that is yours","You earned 20 crowns and room supplies. Upstairs in the bunkhouse, press O and place a chair, lamp or table on a green position.")
   g.label(card,"Your room is yours to change. There is no deadline.",15)
@@ -32,8 +32,8 @@ static func summary(g):
  else:
   var plot_ready=W.contributions(s)>=2 and not HoldFrontier103.data(s).permit
   if plot_ready:
-   var card=HoldMenuView.section(g.panel_body,"Your next milestone · household plot earned")
-   g.label(card,"Two contributions are recorded. Visit Ivar's shift book in the bunkhouse to accept your plot, then follow the eastern road and design your home.",17)
+   var card=HoldMenuView.section(g.panel_body,"Your next milestone · household recognition earned")
+   g.label(card,"Two contributions are recorded. Visit Ivar's shift book in the bunkhouse to record your household. Your property and improvements remain yours.",17)
   var id="" if plot_ready else W.tracked(s)
   if id!="":
    var card=HoldMenuView.section(g.panel_body,"Your next step · "+W.LESSONS[id].title)
@@ -41,7 +41,7 @@ static func summary(g):
    for p in W.progress(s,id):g.label(card,("✓ " if p[1]>=p[2] else "○ ")+p[0]+" · %d / %d" % [mini(p[1],p[2]),p[2]],15)
    if W.ready(s,id):g.label(card,"Ready to report at the Stonebridge "+W.LESSONS[id].host+" desk.",16,Color("a7dfcb"))
  if not W.closed(s):
-  if not HoldFrontier103.data(s).permit:meter(g,g.panel_body,"A plot of your own · contributions",W.contributions(s),2)
+  if not HoldFrontier103.data(s).permit:meter(g,g.panel_body,"Household recognition · contributions",W.contributions(s),2)
   else:HoldCampaign138.summary(g)
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Learn a trade · step by step",func():open(g))
@@ -55,7 +55,7 @@ static func panel(g):
  if mode=="contribute":contributions(g);return
  g.label(g.panel_body,"USEFUL HANDS · CHOOSE WHAT TO LEARN",21,Color("edc98a"))
  g.label(g.panel_body,"Choose any path. Completed work counts before you select it; you can switch without losing progress. Lessons reward supplies and wages. Contest deliveries are on the next page.",15)
- if not HoldFirstVisit99.data(s).get("rewarded",false):g.label(g.panel_body,"Finish the introductory stone load first. J keeps its steps at the top.",16);return
+ if not HoldFrontier103.opportunities(s):g.label(g.panel_body,"Finish the introductory stone load first. J keeps its steps at the top.",16);return
  var chain=str(g.get_meta("work132_chain","forge"));var row=g.row(g.panel_body)
  for key in W.CHAINS:
   var target=str(key);var b=g.small_button(row,W.CHAINS[key],func():g.set_meta("work132_chain",target);g.refresh_panel());b.disabled=chain==target
@@ -110,4 +110,4 @@ static func contributions(g):
   var b=g.button(card,"Deliver %d %s · made/gathered %d/%d · pack %d/%d" % [amount,HoldData.ITEMS[item].name,mini(credit,amount),amount,mini(s.count(item),amount),amount],func():W.deliver(g,trade,key);g.refresh_panel())
   b.disabled=not HoldGreatClaim102.near(g) or not W.can_deliver(s,trade,item)
  g.label(g.panel_body,"Deliver supplies you produced. Three seals are shared across all trades; each spends its supplies and work credit once. Buying finished goods alone earns no seal. No deadlines.",15)
- g.label(g.panel_body,"Your milestones: paid first shift + any two projects or seals → household plot. Register your home → 60 marks. The campaign foundations and Winter Stores open the rescue. Trade seals and civic projects count equally toward community service.",15)
+ g.label(g.panel_body,"Your milestones: any two civic projects or trade seals → household recognition. The property is already yours. Register your home → 60 marks. The campaign foundations and Winter Stores open the rescue. Trade seals and civic projects count equally toward community service.",15)

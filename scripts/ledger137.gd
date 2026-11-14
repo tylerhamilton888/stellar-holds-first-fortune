@@ -30,7 +30,7 @@ static func remaining(s,id:String)->Dictionary:
  return cost
 static func unlocked(s,id:String)->bool:
  if id=="north_bridge":return HoldRestoration139.unlocked(s) and HoldRestoration139.data(s).inspected
- return active(s) and PROJECTS.has(id) and HoldFirstVisit99.data(s).get("rewarded",false) and (id!="winter" or HoldFrontier103.data(s).get("storehouse",false))
+ return active(s) and PROJECTS.has(id) and HoldFrontier103.opportunities(s) and (id!="winter" or HoldFrontier103.data(s).get("storehouse",false))
 static func contribute(g,id:String,item:String,amount:int)->bool:
  if not active(g.state) or not HoldGreatClaim102.near(g) or not unlocked(g.state,id) or complete(g.state,id) or amount<=0:return false
  if not PROJECTS[id].cost.has(item) or amount>int(remaining(g.state,id).get(item,0)):return false
@@ -83,7 +83,7 @@ static func skarrin_options(g):
 static func forge_lead(s)->Dictionary:
  if complete(s,"forge"):return {"title":"The forge is alight","art":"coal","hint":"Borin's hearth is working again. Smelting and crafting are available at the communal forge.","goal":"The forge is alight · visit Borin for smelting and crafting"}
  if not data(s).inspected:return {"title":"A hearth gone cold","art":"coal","hint":"Borin's forge stands north of the town square. Visit the communal forge and inspect the cold hearth before gathering its fuel.","goal":"Visit the communal forge · inspect the cold hearth · J"}
- if not HoldFirstVisit99.data(s).get("rewarded",false):return {"title":"A first shift to finish","art":"stone","hint":"Ivar has a place for you at the western rack and stonebreaker in Old Workings. Finish your first shift before contributing to the forge.","goal":"Finish your first shift at Old Workings · J"}
+ if not HoldFrontier103.opportunities(s):return {"title":"A first shift to finish","art":"stone","hint":"Ivar has a place for you at the western rack and stonebreaker in Old Workings. Finish your first shift before contributing to the forge.","goal":"Finish your first shift at Old Workings · J"}
  if HoldWork132.proof(s,"cut:coal")<1:return {"title":"Coal for Borin","art":"coal","hint":"At Old Workings, mine a coal seam and carry a freed load to the western rack. Hold E at the borrowed stonebreaker to process it. Coal already delivered stays recorded; you still need to learn this step yourself.","goal":"Old Workings · process a coal load at the western stonebreaker · J"}
  var need=int(remaining(s,"forge").get("coal",0))
  if need>0:
@@ -104,7 +104,7 @@ static func panel(g):
  var s=g.state
  if HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_ledger_open",false)):
   HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Names and careful columns fill the pages: stone for a wall, lamps for the road, meals for the crews. This is where Stonebridge records work done for the town.")
-  g.label(g.panel_body,"Ivar can tell you more after your first shift. Contributions are made here at the great book outside or at the records desk in the bunkhouse. Press M to read it from anywhere.",16)
+  g.label(g.panel_body,"Ivar can explain the work when you are ready. Contributions are made here at the great book outside or at the records desk in the bunkhouse. Press M to read it from anywhere.",16)
   g.small_button(g.panel_body,"Browse the projects",func():g.set_meta("early_ledger_open",true);g.refresh_panel())
   return
  HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Build a place in Stonebridge. Contributions stay recorded; there are no deadlines. M reviews this ledger anywhere. Deliver carried supplies at the great book outside, east of the bunkhouse.")
@@ -115,9 +115,9 @@ static func panel(g):
   HoldCampaign138.summary(g)
  var home=HoldMenuView.disclosure(g,g.panel_body,"Personal ambition · A place of your own","ledger137_home")
  if home!=null:
-  for entry in [[HoldFirstVisit99.data(s).get("rewarded",false),"Learn the first shift and earn your wages"],[HoldFirstVisit99.data(s).get("home_made",false),"Furnish your upstairs room · O opens plans"],[s.claim_id!="","Ask Ivar about provisional use of the eastern rise after your first paid shift"],[HoldFrontier103.data(s).permit,"Complete two civic projects or trade seals; record your permanent charter with Ivar"],[HoldFrontier103.data(s).home_reward,"Build a home on the eastern rise, with bed and light; register it with Ivar · 60 marks"]]:
+  for entry in [[HoldFirstVisit99.data(s).get("rewarded",false),"Optional: learn the first shift and earn wages"],[HoldFirstVisit99.data(s).get("home_made",false),"Optional: furnish your upstairs room · O opens plans"],[s.claim_id!="","Your holding is yours · follow the east road"],[HoldFrontier103.data(s).permit,"Complete two civic projects or trade seals; record household recognition with Ivar"],[HoldFrontier103.data(s).home_reward,"Improve your home with bed and light; register it with Ivar · 60 marks"]]:
    g.label(home,("✓ " if entry[0] else "○ ")+entry[1],15)
-  g.button(home,"Town services and household plot",func():g.open_panel("frontier103"))
+  g.button(home,"Town services and household records",func():g.open_panel("frontier103"))
  var other_projects=null
  for id in ["forge","watch","rest","stores","storehouse","winter","north_bridge"]:
   var parent=g.panel_body

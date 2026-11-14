@@ -22,6 +22,6 @@ Five local native cases passed 537 assertions; 42 tooling tests and output polic
 
 ## Next work and limits
 
-Follow [A Home and a Fortune](HOME_AND_FORTUNE_ROADMAP.md): the family-purchased Rise, early modest cottage, optional first shift, civic registration distinct from ownership, and migration preserving all existing possessions and rights. This story revision is not implemented in 0.114.0; its current opening retains provisional use after the first paid shift and permanent tenure after two contributions.
+Follow [A Home and a Fortune](HOME_AND_FORTUNE_ROADMAP.md): the family-purchased Rise, early modest cottage, optional first shift, civic registration distinct from ownership, and migration preserving all existing possessions and rights. Candidate 0.115.0 implements this story revision; validation and publication are pending. The published 0.114.0 opening still retains provisional use after the first paid shift and permanent tenure after two contributions. See HOME169.md.
 
 Then extend tools/materials, cross-craft components, specialist commissions and reliable buying alternatives, Ledger/sandbox integration and environmental polish. Keep delivered blueprinting, connected floors, workers and freight. Normal Windows input, performance, audio and pacing still need ordinary playtesting. Preserve releases and saves. [Previous delivery](history/CURRENT_STATUS-before-grid167.md).

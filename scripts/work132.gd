@@ -16,7 +16,7 @@ const LESSONS={
  "steel":{"chain":"forge","title":"A better bite","host":"forge","after":"smelt","reward":{"food":3},"crowns":25,"hint":"At the survey desk across the bridge, research Tempered steel (4 iron, 3 timber, 35 crowns). Return to the communal forge and forge a steel pick (5 iron, 2 timber). It opens basalt and improves your mining.","reply":"Borin: 'An edge worth keeping. Take it below and bring it home again.'"},
  "timber":{"chain":"haul","title":"Timber has roots","host":"lodge","after":"","reward":{"wood":2},"crowns":10,"hint":"Walk south to Pinewood. Use axe [3] to fell and section a tree. E lifts logs and stocks the loan timber rack; hold E at its sawbench. Saw 4 timber. Bought timber does not teach the work.","reply":"Ivar: 'Straight timber. There is a place for that in every sound home.'"},
  "cart":{"chain":"haul","title":"More than two shoulders","host":"lodge","after":"timber","reward":{"food":3},"crowns":15,"hint":"In Old Workings or Pinewood, Shift+B opens worksite plans. Place a Handcart on clear ground (6 timber, 2 iron). E puts a raw load into it; C takes the handles. Walk with the loaded cart, then C parks it. Stairs carry carts; ladders do not.","reply":"Ivar: 'A cart earns its keep on the walk home. Park it clear of the next dwarf's bench.'"},
- "room":{"chain":"haul","title":"A corner that is yours","host":"lodge","after":"cart","reward":{"stone":4,"wood":2},"crowns":15,"hint":"Upstairs in the lodge, O opens furnishing plans. Place a chair, lamp or table within reach. Your own completed household also counts. Building is useful work; two town projects or trade seals earn a permanent plot.","reply":"Ivar: 'Keep making it yours. A town begins with people who mean to stay.'"},
+ "room":{"chain":"haul","title":"A corner that is yours","host":"lodge","after":"cart","reward":{"stone":4,"wood":2},"crowns":15,"hint":"Upstairs in the lodge, O opens furnishing plans. Place a chair, lamp or table within reach. Your own completed household also counts. Building is useful work; two town projects or trade seals earn household recognition.","reply":"Ivar: 'Keep making it yours. A town begins with people who mean to stay.'"},
  "survey":{"chain":"survey","title":"Read before you dig","host":"survey","after":"","reward":{"wood":4},"crowns":10,"hint":"Enter Old Workings and press X to survey below. Read the mineral bands before choosing a descent. Z opens the explored-floor map and return routes. Surveying costs no materials.","reply":"Edda: 'A line on a survey can save an afternoon of blind digging.'"},
  "route":{"chain":"survey","title":"Leave yourself a way home","host":"survey","after":"survey","reward":{"iron":2},"crowns":15,"hint":"Underground, V opens passage plans. Place a timber ladder or carve stairs on clear floor; basalt below needs a steel pick. At that passage, E descends and Shift+E returns. Make the round trip. V also places lamps; O opens excavated rooms and stone pillars after Stoneworking research.","reply":"Edda: 'Down and back. That second half is the part I wanted recorded.'"},
  "crystal":{"chain":"survey","title":"Light from below","host":"survey","after":"route","reward":{"wood":4,"iron":2},"crowns":25,"hint":"Survey and follow crystal seams on a lower floor. Mine and process 2 crystal from depth 1 or deeper. Bring light, use your explored map, and keep the return passage clear. Crystal feeds later runic crafting.","reply":"Edda: 'A useful find, and a route another worker can trust.'"},
@@ -56,7 +56,7 @@ static func cart_moved(g,f:Dictionary,distance:float):
  var facts=data(g.state).facts;facts.cart_distance=minf(160,float(facts.get("cart_distance",0))+minf(distance,10))
 static func proof(s,key:String)->int:return int(data(s).get("facts",{}).get(key,0))
 static func unlocked(s,id:String)->bool:
- if not active(s) or not LESSONS.has(id) or not HoldFirstVisit99.data(s).get("rewarded",false):return false
+ if not active(s) or not LESSONS.has(id) or not HoldFrontier103.opportunities(s):return false
  return LESSONS[id].after=="" or data(s).done.has(LESSONS[id].after)
 static func progress(s,id:String)->Array:
  match id:
@@ -94,7 +94,7 @@ static func claim_lesson(g,id:String)->bool:
  g.save_game();g.notify(task.reply);return true
 static func available(s,item:String)->int:return maxi(0,int(data(s).earned.get(item,0))-int(data(s).spent.get(item,0)))
 static func can_deliver(s,trade:String,item:String)->bool:
- if not active(s) or closed(s) or seals(s)>=SEAL_LIMIT or not HoldFirstVisit99.data(s).get("rewarded",false):return false
+ if not active(s) or closed(s) or seals(s)>=SEAL_LIMIT or not HoldFrontier103.opportunities(s):return false
  if not TRADES.has(trade) or not TRADES[trade].items.has(item):return false
  var amount=int(TRADES[trade].items[item])
  return available(s,item)>=amount and s.count(item)>=amount
@@ -104,13 +104,13 @@ static func deliver(g,trade:String,item:String)->bool:
  if not g.state.pay({item:amount}):return false
  d.spent[item]=int(d.spent.get(item,0))+amount;d.seals.append({"trade":trade,"item":item,"amount":amount})
  var ledger=HoldGreatClaim102.data(g.state);ledger.points=int(ledger.points)+SEAL_MARKS
- g.save_game();g.notify("Ivar records your "+TRADES[trade].kind.to_lower()+" delivery · 40 Claim marks."+(" Your household plot is ready at Ivar's shift book." if contributions(g.state)>=2 and not HoldFrontier103.data(g.state).permit else " Your supplies are committed to Stonebridge."));return true
+ g.save_game();g.notify("Ivar records your "+TRADES[trade].kind.to_lower()+" delivery · 40 Claim marks."+(" Your household recognition is ready at Ivar's shift book." if contributions(g.state)>=2 and not HoldFrontier103.data(g.state).permit else " Your supplies are committed to Stonebridge."));return true
 static func tracked(s)->String:
  if not active(s):return ""
  var id=str(data(s).track)
  return id if unlocked(s,id) and not data(s).done.has(id) else ""
 static func goal(s)->String:
- if active(s) and contributions(s)>=2 and not HoldFrontier103.data(s).permit:return "Household plot earned · collect it at Ivar's shift book · J"
+ if active(s) and contributions(s)>=2 and not HoldFrontier103.data(s).permit:return "Household recognition earned · record it at Ivar's shift book · J"
  var id=tracked(s)
  if id=="":return ""
  if ready(s,id):return "Report: "+LESSONS[id].title+" · Stonebridge "+LESSONS[id].host+" · J"

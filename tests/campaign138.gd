@@ -18,7 +18,7 @@ func run():
  for item in ["stone","wood","iron","iron_ore","coal","food"]:s.add(item,200)
  HoldGreatClaim102.data(s).points=9999
  check(not C.eligible(s),"Arbitrary recognition cannot skip foundations")
- ledger();check(not L.contribute(g,"storehouse","wood",1),"First shift gates new material deposits")
+ ledger();check(L.unlocked(s,"storehouse") and not HoldFirstVisit99.data(s).rewarded,"Owned homestead allows civic deposits before the optional first shift")
  HoldFirstVisit99.data(s).rewarded=true;HoldFirstVisit99.data(s).ivar_spoken=true;HoldFirstVisit99.data(s).room_seen=true
  var inventory=s.inventory.duplicate(true)
  check(not C.inspect(g) and not C.assemble(g) and s.inventory==inventory,"Remote site actions cannot spend supplies")

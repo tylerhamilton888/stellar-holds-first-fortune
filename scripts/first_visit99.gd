@@ -12,6 +12,7 @@ static func active(s)->bool:return s.surface.has("first_visit99")
 static func data(s)->Dictionary:return s.surface.get("first_visit99",{})
 static func lodge_intro(s)->bool:return active(s) and bool(data(s).get("lodge_intro",false))
 static func first_morning(s)->bool:
+ if HoldFrontier103.family(s):return s.opening<=1 and not data(s).get("rewarded",false) and not HoldFrontier103.data(s).permit and int(HoldAncestralClaim.data(s).get("stage",0))==0 and not HoldFrontier103.data(s).home169.visited
  if not lodge_intro(s) or data(s).get("rewarded",false) or s.opening>1:return false
  if int(HoldAncestralClaim.data(s).get("stage",0))>0:return false
  if HoldFrontier103.active(s):
@@ -23,6 +24,7 @@ static func begin(g):
  s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"intro_pending":not g.skip_arrival and g.capture_mode=="","intro_beat":0,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
  HoldGreatClaim102.begin(s)
  HoldFrontier103.begin(g)
+ HoldFrontier103.settle_home(g,true)
  HoldCampaign138.begin(s)
  HoldRestoration139.begin(s)
  s.opening=1;s.tracked_npc=""
@@ -47,11 +49,12 @@ static func room_entered(g):
   q.room_seen=true;q.ivar_departed=true
   g.notify("Your room in the lodge · bed, chest and desk are ready · O opens furnishing plans.")
 static func mine_entered(g):
+ if HoldFrontier103.family(g.state) and g.state.active_site!="hold":return
  if not lodge_intro(g.state):return
  var q=data(g.state)
  if q.get("work_started",false):return
  q.work_started=true;q.origin=[g.player.x,g.player.y];q.ivar_departed=true
- if q.focus=="lodge":q.focus="basics"
+ if q.focus in ["lodge","homestead"]:q.focus="basics"
  if g.depth_nav.explore.enabled:g.depth_nav.toggle_view()
  g.notify("First shift · the western rack and stonebreaker are on loan · J: work steps.")
 static func furnished(g,kind:String):
@@ -80,11 +83,11 @@ static func tick(g):
   if checks[i] and not q.done.get(str(i),false):q.done[str(i)]=true;changed=true
  if step(g.state)==TASKS.size() and not q.rewarded:
   q.rewarded=true
-  if q.focus=="basics":q.focus="home" if lodge_intro(g.state) and not q.get("home_made",false) else "bay"
+  if q.focus=="basics":q.focus="homestead" if HoldFrontier103.family(g.state) else "home" if lodge_intro(g.state) and not q.get("home_made",false) else "bay"
   for item in {"stone":4,"iron":3,"coal":2}:g.state.add(item,{"stone":4,"iron":3,"coal":2}[item])
   if lodge_intro(g.state):
    g.state.money+=20;g.state.add("wood",4)
-   g.notify("First shift complete · 20 crowns and room supplies earned. "+("J has your next lead." if q.get("home_made",false) else "Return to your quarters · O opens plans."))
+   g.notify("First shift complete · 20 crowns and supplies for your home earned. "+("J has your next lead." if q.get("home_made",false) or HoldFrontier103.family(g.state) else "Return to your quarters · O opens plans."))
   else:g.notify("First shift learned. Your repair allowance: 4 stone, 3 iron, 2 coal. J has a lead on an old workplace.")
   g.sound.effect("quest",-18);changed=true
  if g.state.active_site=="hold" and HoldWorkplace98.active(g):
@@ -104,9 +107,11 @@ static func opening_route(g)->bool:
  var s=g.state
  if not HoldFrontier103.active(s) or not lodge_intro(s) or s.opening>=2:return false
  var q=data(s);var town=HoldFrontier103.data(s)
+ if HoldFrontier103.family(s):return not town.permit and q.get("focus","")!="work" and int(HoldAncestralClaim.data(s).get("stage",0))==0
  return q.get("focus","")!="work" and not HoldFrontier103.provisional(s) and not town.get("permit",false) and not town.get("home_reward",false) and HoldWork132.contributions(s)<2 and int(HoldAncestralClaim.data(s).get("stage",0))==0
 static func opening_lead(g)->Dictionary:
  var q=data(g.state)
+ if HoldFrontier103.family(g.state):return family_lead(g)
  if q.get("rewarded",false):
   if not q.get("home_made",false) and q.get("focus","")=="home":
    return {"title":"A corner that is yours","art":"wood","hint":"Your first twenty crowns are yours, along with timber and stone for your room. Upstairs in the bunkhouse, press O and place a chair, lamp or table on a green position. Right-click cancels without spending.","goal":"Your own corner · O: place a chair, lamp or table" if HoldFrontier103.private_room(g) else "First wages earned · return to your room above the bunkhouse · J"}
@@ -118,6 +123,7 @@ static func opening_lead(g)->Dictionary:
  if not q.get("room_seen",false):return {"title":"A room upstairs","art":"wood","hint":"Take the stairs inside the bunkhouse. Your bed, chest and desk are ready; you can leave your things and look around before work.","goal":"Bunkhouse stairs → your room above · J"}
  return {"title":"The path to Old Workings","art":"stone","hint":"Leave the bunkhouse and follow the northern town path to Old Workings. At the mine entrance, press E. The borrowed rack and stonebreaker are on the west side of the entrance bay.","goal":"Northern town path → Old Workings · J"}
 static func opening_card(g):
+ if HoldFrontier103.family(g.state):family_card(g);return
  var lead=opening_lead(g);var q=data(g.state)
  var card=HoldMenuView.section(g.panel_body,"Your first wages" if q.get("rewarded",false) and not q.get("home_made",false) and q.get("focus","")=="home" else "Your next step")
  HoldMenuView.illustrated_text(card,lead.art,lead.title,lead.hint)
@@ -131,18 +137,20 @@ static func opening_card(g):
 static func goal(g)->String:
  if not active(g.state):return ""
  var q=data(g.state)
+ if HoldFrontier103.family(g.state) and q.guided and not HoldFrontier103.data(g.state).permit and int(HoldAncestralClaim.data(g.state).get("stage",0))==0:
+  return HoldWork132.goal(g.state) if q.focus=="work" and HoldWork132.goal(g.state)!="" else family_lead(g).goal
  if HoldFrontier103.active(g.state) and q.guided:
   if opening_route(g):return opening_lead(g).goal
   if g.zone=="mine" and q.get("work_started",false) and not q.get("rewarded",false):
    var n=step(g.state)
    return "First shift · %d/5 · %s · J: help" % [mini(n+1,5),TASKS[mini(n,4)][0]]
-  if q.get("rewarded",false) and not q.get("home_made",false) and q.focus=="home":
+  if q.get("rewarded",false) and not q.get("home_made",false) and q.focus=="home" and not HoldFrontier103.family(g.state):
    return "Your own corner · O: place a chair, lamp or table" if HoldFrontier103.private_room(g) else "First wages earned · return to your room above the bunkhouse · J"
-  if not q.get("ivar_spoken",false):return "First morning · speak with Ivar by the bunkhouse hearth · E"
-  if not q.get("room_seen",false):return "First morning · bunkhouse stairs → your room above · J"
-  if not q.get("rewarded",false):return "First shift · northern town path → Old Workings · J"
+  if not q.get("ivar_spoken",false) and not HoldFrontier103.family(g.state):return "First morning · speak with Ivar by the bunkhouse hearth · E"
+  if not q.get("room_seen",false) and not HoldFrontier103.family(g.state):return "First morning · bunkhouse stairs → your room above · J"
+  if not q.get("rewarded",false) and not HoldFrontier103.family(g.state):return "First shift · northern town path → Old Workings · J"
   if not HoldMountain104.eligible(g.state) and HoldWork132.goal(g.state)!="":return HoldWork132.goal(g.state)
-  if not HoldFrontier103.data(g.state).permit:return "A place of your own · two civic projects or trade seals → Ivar’s shift book · J"
+  if not HoldFrontier103.data(g.state).permit:return "Household recognition · two civic projects or trade seals → Ivar’s shift book · J"
   if HoldMountain104.eligible(g.state):
    var stage=int(HoldAncestralClaim.data(g.state).stage)
    if stage==0:return "A runner from the mine · visit Ivar’s shift book · J"
@@ -227,6 +235,11 @@ static func journal(g):
 
 static func frontier_journal(g):
  var q=data(g.state)
+ if HoldFrontier103.family(g.state) and not HoldFrontier103.data(g.state).permit and int(HoldAncestralClaim.data(g.state).get("stage",0))==0:
+  family_card(g)
+  if q.focus=="work":HoldWorkView132.summary(g)
+  g.small_button(g.panel_body,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())
+  return
  if opening_route(g):
   opening_card(g)
   var nav=g.row(g.panel_body)
@@ -247,9 +260,34 @@ static func frontier_journal(g):
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Town services",func():g.open_panel("frontier103"))
  g.small_button(nav,"Take a break from guidance" if q.guided else "Resume guidance",func():q.guided=not q.guided;g.save_game();g.refresh_panel())
- if not q.get("rewarded",false):return
+ if not HoldFrontier103.opportunities(g.state):return
+ HoldFrontier103.letter(g)
  var ambitions=HoldMenuView.disclosure(g,g.panel_body,"Longer ambitions","journal135_ambitions")
  if ambitions!=null:
-  HoldMenuView.illustrated_text(ambitions,"wood","A home you build","Complete any two civic projects or trade seals, then accept your household plot from Ivar. Your upstairs room stays yours.")
+  HoldMenuView.illustrated_text(ambitions,"wood","A home you build","Your home is yours to develop. Two civic projects or trade seals earn household recognition from Ivar. Your upstairs room stays available.")
   g.label(ambitions,"Build a home with a bed and a nearby lamp or hearth. Register it for 60 marks. The campaign milestones in the Hold’s Ledger lead to Ivar’s rescue.",15)
   g.small_button(ambitions,"View Hold’s Ledger",func():g.open_panel("great_claim102"))
+
+static func family_lead(g)->Dictionary:
+ var s=g.state;var q=data(s);var home=HoldFrontier103.data(s).home169
+ if q.focus=="forge":return HoldLedger137.forge_lead(s)
+ if q.focus=="basics" and not q.rewarded:
+  var n=mini(step(s),4)
+  return {"title":"Paid work · "+TASKS[n][0],"art":"stone","hint":TASKS[n][1]+" The first completed load earns 20 crowns and building supplies. Your holding is already yours.","goal":"Optional first shift · northern Old Workings · J: work steps" if g.zone!="mine" else TASKS[n][0]+" · J: help"}
+ if not home.visited:
+  return {"title":"Old Stonewright's Rise","art":"wood","hint":"Your parents bought the old holding for you. Ivar can show you around, or leave the bunkhouse and follow the eastern road across the bridge. The cottage stands farther east, beside the masonry yard.","goal":"Your own holding · ask Ivar for directions or follow the east road · J"}
+ if not home.seeded:return {"title":"Your own holding","art":"wood","hint":"Your ground, buildings and belongings remain yours. O opens building plans. Improve or furnish at your own pace; a finished home with a bed and light can be registered with Ivar after two civic contributions.","goal":"Your own holding · O: build and furnish · J: choose an ambition"}
+ return {"title":"A place to make your own","art":"wood","hint":"This is your place to change. O opens plans: furnish, extend the rooms or explore the quarry. A finished home needs a bed and light; existing construction counts toward registration after two civic contributions. Paid work and local trades are there whenever you want them.","goal":"Old Stonewright's Rise · O: improve your home · J: choose an ambition"}
+static func family_card(g):
+ var q=data(g.state);var lead=family_lead(g)
+ HoldMenuView.illustrated_text(g.panel_body,lead.art,lead.title,lead.hint)
+ HoldFrontier103.rise_card(g)
+ HoldFrontier103.letter(g)
+ g.small_button(g.panel_body,"Town services",func():g.open_panel("frontier103"))
+ var choices=HoldMenuView.disclosure(g,g.panel_body,"Choose what to do next","home169_ambitions")
+ if choices!=null:
+  g.small_button(choices,"Make a start at home",func():focus(g,"homestead"))
+  g.small_button(choices,"Follow the paid first shift",func():focus(g,"basics"))
+  g.small_button(choices,"Help relight the communal forge",func():focus(g,"forge"))
+  g.small_button(choices,"Learn a local trade",func():q.focus="work";g.save_game();HoldWorkView132.open(g))
+  g.small_button(choices,"Browse the Hold’s Ledger",func():g.open_panel("great_claim102"))

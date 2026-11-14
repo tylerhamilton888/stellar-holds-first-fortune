@@ -41,10 +41,10 @@ func run():
  W.produced(g.state,"stone",99,"cut")
  check(not g.state.surface.has("work132"),"Legacy fortunes receive no new work ledger")
  HoldFirstVisit99.begin(g);settle();g.open_panel("commission")
- check(g.panel_body.get_child(0).get_child(0).get_child(0).text=="Your next step","Immediate instruction is first in the new journal")
+ check(g.panel_body.find_children("*","Label",true,false).any(func(l):return "Old Stonewright's Rise" in l.text),"The new journal begins with the owned homestead")
  await snap("first-step");g.close_panel()
  var s=g.state;s.money=1000;s.add("stone",24)
- check(not W.can_deliver(s,"quarry","stone") and not W.unlocked(s,"ore"),"Tutorial completion gates new work without granting purchased-stock proof")
+ check(not W.can_deliver(s,"quarry","stone") and W.unlocked(s,"ore"),"Optional work is available without granting purchased-stock proof")
  HoldFirstVisit99.data(s).rewarded=true;HoldFirstVisit99.data(s).ivar_spoken=true;HoldFirstVisit99.data(s).room_seen=true
  s.trade("stone",true);HoldDisciplines.award(s,"masonry",30)
  check(W.available(s,"stone")==0,"Buying, gifts and discipline XP cannot fabricate production")
