@@ -12,6 +12,8 @@ Fine masonry unlocks a recipe (2 basalt blocks + 1 water → 2 dressed basalt) a
 
 ## Validation and follow-up
 
+The first full release gate caught the new basalt description pushing the inventory summary below the viewport. New entries now retain the established catalogue order, with acquisition guidance in the forge/planning screens. menu92 explicitly checks basalt selection in a full pack.
+
 Extended frontier103 covers local/remote/duplicate/payment guards, research versus forging, actual save reload, blocked basalt, ordinary versus careful yields, physical loads and material production. Extended excavation154 covers advance planning, research/material rejection, exact surface payment and visual floor review. Required source/package release checks remain pending. Ordinary Windows input, audio, perceived tool speed and progression balance still need playtesting.
 
 This is the first capability/material slice. Shaped hafts, forged heads, fittings, specialist commissions and later forge-equipment capabilities remain subsequent roadmap work.

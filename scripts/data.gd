@@ -2,8 +2,6 @@ class_name HoldData
 extends RefCounted
 
 const ITEMS = {
- "basalt_block":{"name":"Basalt block","price":8,"color":"535e72","desc":"Recovered with careful reinforced-pick contacts in basalt. Dress it for durable dark floors."},
- "dressed_basalt":{"name":"Dressed basalt","price":12,"color":"65738a"},
  "hold_ale":{"name":"Hold ale","price":8,"color":"cf9c55"},
  "barley":{"name":"Hold barley","price":4,"color":"d9ba65"},
  "barley_seed":{"name":"Barley seed","price":1,"color":"d9ba65"},
@@ -41,10 +39,11 @@ const ITEMS = {
  "copper": {"name":"Copper ingot", "price":16, "color":"eeb278"},
  "parts": {"name":"Machine parts", "price":36, "color":"e0bf83"},
  "assembly": {"name":"Drive assembly", "price":95, "color":"a6dfc7"},
- "hearthknot":{"name":"Hearthknot","price":20,"color":"c58c59","trade":false,"desc":"A hand-carved timber knot with copper inlay. Offer it during a personal conversation to ask someone to begin courting."}
+ "hearthknot":{"name":"Hearthknot","price":20,"color":"c58c59","trade":false,"desc":"A hand-carved timber knot with copper inlay. Offer it during a personal conversation to ask someone to begin courting."},
+ "basalt_block":{"name":"Basalt block","price":8,"color":"535e72"},
+ "dressed_basalt":{"name":"Dressed basalt","price":12,"color":"65738a"}
 }
 const RECIPES = {
- "dressed_basalt":{"name":"Dress basalt blocks","cost":{"basalt_block":2,"water":1},"out":{"dressed_basalt":2},"time":5.0,"tech":"fine_masonry"},
  "surveyors_stone":{"name":"Surveyor’s dressed stone","cost":{"stone":5,"water":1},"out":{"dressed_stone":3},"time":4.0,"tech":"stoneworking","collection":"miner"},
  "hearthknot":{"name":"Craft a Hearthknot","cost":{"wood":1,"copper":1},"out":{"hearthknot":1},"time":4.0,"tech":""},
  "hold_ale":{"name":"Brew hold ale","cost":{"barley":2,"water":2},"out":{"hold_ale":2},"time":15.0,"tech":""},
@@ -65,10 +64,10 @@ const RECIPES = {
  "copper": {"name":"Smelt copper", "cost":{"copper_ore":2,"coal":1},"out":{"copper":1},"time":3.0,"tech":""},
  "parts": {"name":"Forge machine parts", "cost":{"iron":2,"copper":1},"out":{"parts":2},"time":4.0,"tech":"metallurgy"},
  "assembly": {"name":"Assemble drive", "cost":{"parts":3,"copper":2,"crystal":1},"out":{"assembly":1},"time":5.0,"tech":"automation"},
- "food": {"name":"Pack provisions", "cost":{"water":2,"wood":1},"out":{"food":2},"time":3.0,"tech":""}
+ "food": {"name":"Pack provisions", "cost":{"water":2,"wood":1},"out":{"food":2},"time":3.0,"tech":""},
+ "dressed_basalt":{"name":"Dress basalt blocks","cost":{"basalt_block":2,"water":1},"out":{"dressed_basalt":2},"time":5.0,"tech":"fine_masonry"}
 }
 const RESEARCH = {
- "reinforced_tools":{"name":"Reinforced tools","desc":"Forge a reinforced pick for stronger contacts and careful recovery of basalt blocks. Fine masonry dresses the blocks for dark stone floors.","cost":{"iron":6,"copper":3},"money":65,"requires":"extraction"},
  "hearthkeeping":{"name":"Hearthkeeping","desc":"Longer shared-meal benefits and carved pantry furnishings. Any home style is welcome.","cost":{"wood":6,"stone":6},"money":15,"requires":""},
  "stoneworking":{"name":"Stoneworking","desc":"Smooth walls, lay flagstones and build pillars. Nearby pillars brace controlled fracture work.","cost":{"stone":12,"wood":3},"money":15,"requires":""},
  "furnishings":{"name":"Dwarven furnishings","desc":"Carved chairs make practical rooms comfortable without forcing a different architectural style.","cost":{"wood":10,"iron":2},"money":20,"requires":"stoneworking"},
@@ -77,7 +76,8 @@ const RESEARCH = {
  "voidcraft":{"name":"Pressure engineering","desc":"After your freight beacon and first keel, install sealed engineering bays: double production, efficient cells and reduced ship material costs.","cost":{"parts":6,"crystal":2,"copper":4},"money":95,"requires":"automation"},
  "extraction": {"name":"Tempered steel", "desc":"Unlock a steel pick: stronger contacts, basalt access and supported hammer section breaking.","cost":{"iron":4,"wood":3},"money":35,"requires":""},
  "metallurgy": {"name":"Precision forging", "desc":"Make machine parts; expand your hold.","cost":{"copper":3,"stone":12},"money":45,"requires":""},
- "automation": {"name":"Clockwork industry", "desc":"Build a miner, assemble starship drives, and commission powered workshops (+50% production).","cost":{"parts":4,"crystal":1},"money":65,"requires":"metallurgy"}
+ "automation": {"name":"Clockwork industry", "desc":"Build a miner, assemble starship drives, and commission powered workshops (+50% production).","cost":{"parts":4,"crystal":1},"money":65,"requires":"metallurgy"},
+ "reinforced_tools":{"name":"Reinforced tools","desc":"Forge a reinforced pick for stronger contacts and careful recovery of basalt blocks. Fine masonry dresses the blocks for dark stone floors.","cost":{"iron":6,"copper":3},"money":65,"requires":"extraction"}
 }
 const SHIP = [
  {"name":"Lay the keel", "cost":{"stone":30,"wood":15,"iron":8},"money":75},

@@ -8,4 +8,4 @@ Fine masonry lets you dress two blocks with one water into two dressed basalt pi
 
 Basalt uses existing raw loads, hauling, pallets and freight. Merchants also sell the materials through the existing market. Existing steel picks, terrain, saved plans and possessions remain intact.
 
-Candidate: focused and full release validation pending. CURRENT_STATUS.md identifies the published build. [Previous notes](history/RELEASE_NOTES-before-tools171.md).
+CURRENT_STATUS.md records delivery and verification evidence for the published build. [Previous notes](history/RELEASE_NOTES-before-tools171.md).
