@@ -10,7 +10,7 @@ def load_cases():
     cases = [('ambient', (ROOT/'tests/pack_ambient61.gd').read_text(), 'PACK AMBIENT61')]
     # Inline only the test fixture. Game scripts/assets must resolve inside the pack.
     fixture = (ROOT/'tests/support/game_fixture.gd').read_text()
-    for name, marker in [('workers160', 'WORKERS160'), ('upper158', 'UPPER158'), ('cellar156', 'CELLAR156'), ('excavation154', 'EXCAVATION154'), ('blueprints152', 'BLUEPRINTS152'), ('blueprint_manor152', 'BLUEPRINT_MANOR152')]:
+    for name, marker in [('freight162', 'FREIGHT162'), ('workers160', 'WORKERS160'), ('upper158', 'UPPER158'), ('cellar156', 'CELLAR156'), ('excavation154', 'EXCAVATION154'), ('blueprints152', 'BLUEPRINTS152'), ('blueprint_manor152', 'BLUEPRINT_MANOR152')]:
         body = (ROOT / ('tests/' + name + '.gd')).read_text().split('\n', 1)[1]
         cases.append((name, fixture + '\n' + body, marker))
     body = (ROOT/'tests/living_forges148.gd').read_text().split('\n', 1)[1]

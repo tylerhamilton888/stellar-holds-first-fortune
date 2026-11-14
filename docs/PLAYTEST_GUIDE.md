@@ -75,3 +75,7 @@ On your own claim, recruit and assign a miner, furnish a real bed, and connect i
 During the existing crew rest period, watch the miner walk home, rest at the bedside and return to the original mine assignment. Save and reload during the commute and upstairs: position and berth should survive without a duplicate worker. Try an obstructed route and then clear it; the worker should wait and resume, never cross the obstruction or gain rest remotely. Release the berth to return the worker to normal duties. Existing saves and workers at other worksites should retain their worksite behavior.
 
 Carts still stay parked at household stairs. This release adds worker movement, not automated storage transfers. Check normal-speed Windows performance and readability during ordinary play.
+
+## Freight candidate (0.112.0)
+
+After publication, use O → Plan Your Holding → Freight for the household. Mark a mine stockpile with U away from the entrance/cart, place a household chest, and select a miner, material and direction. Watch a 32-unit load cross the actual stairs. Try saving mid-trip, blocking a passage, finishing/stopping and returning a load. Confirm the chest receives the goods and crafting still requires withdrawal. See FREIGHT162.md and CURRENT_STATUS.md.

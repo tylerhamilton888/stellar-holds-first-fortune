@@ -794,7 +794,9 @@ func draw():
   elif o.kind=="royal_prop":HoldRoyalStage.draw_prop(g,o,g.clock)
   elif o.kind=="royal_guide":
    HoldDrawnAnimation.paint(g,o.p-cam,g.state.npc("ivar"),Vector2.UP,false,0,.85,-cam)
-  elif o.kind=="citizen":world.draw_citizen(o)
+  elif o.kind=="citizen":
+   world.draw_citizen(o)
+   if not o.get("freight162",{}).is_empty():HoldEstateFreight.draw_load(g,o.p)
   elif o.kind=="fighter":g.fight.draw_enemy(o.enemy)
   elif o.kind=="escort":g.opening_scene.draw_guide()
   elif o.kind=="invasion_person131":HoldInvasion131.draw_person(g,o)

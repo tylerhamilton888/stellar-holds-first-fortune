@@ -130,3 +130,4 @@ static func show(a):
  if p.level()==0:HoldEstateCellar.panel(g)
 
  HoldEstateWorkers.panel(p)
+ HoldEstateFreight.panel(p)
