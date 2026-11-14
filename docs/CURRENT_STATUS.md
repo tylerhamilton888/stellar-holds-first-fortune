@@ -25,3 +25,5 @@ Eight focused local native cases passed 681 assertions; 42 tooling tests and out
 ## Next work and limits
 
 Follow [A Home and a Fortune](HOME_AND_FORTUNE_ROADMAP.md): next audit and extend tool/material capabilities, then cross-craft components, specialist commissions and reliable buying alternatives, Ledger/sandbox integration and environmental polish. Normal Windows input, performance, audio and the 5–10 minute arrival target still need ordinary playtesting. Preserve releases and saves. [Previous delivery](history/CURRENT_STATUS-before-home169.md).
+
+Candidate 0.116.0 is implemented on feature/tools171: reinforced pick, careful basalt recovery, dressed basalt floors and accurate forging guidance. Validation and publication pending; see TOOLS171.md.

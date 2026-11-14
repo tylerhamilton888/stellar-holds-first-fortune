@@ -213,6 +213,7 @@ func draw():
   base=base.lightened(float(posmod(c.x*17+c.y*31,7))*.009)
   if kind in ["runic","ancestor","inlay"]:base=Color("536c71")
   if kind=="ashlar":base=Color("a0afa2")
+  if kind=="basalt":base=Color("535e72")
   if not floor:
    # Finished bedrock must read as a solid wall, not another walkable floor tile.
    var family="oath" if kind in ["runic","ancestor"] else "forge" if kind=="masonry" else "hearth"
@@ -236,7 +237,7 @@ func draw():
   for j in 7:
    var fleck=p+Vector2(posmod(c.x*13+j*17,36)+2,posmod(c.y*19+j*7,36)+2)
    g.draw_line(fleck,fleck+Vector2(2,0),base.lightened(.12).darkened(1-light),1)
-  if kind=="ashlar":
+  if kind in ["ashlar","basalt"]:
    g.draw_rect(Rect2(p+Vector2(3,3),Vector2(34,34)),Color("ced0b2").darkened(1-light),false,1)
    g.draw_line(p+Vector2(5,35),p+Vector2(35,35),Color("4c6465").darkened(1-light),2)
   if kind in ["inlay","runic","ancestor"]:

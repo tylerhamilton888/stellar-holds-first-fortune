@@ -116,10 +116,13 @@ static func panel(g):
  if station=="industry":HoldIndustry.panel(g);return
  if not s.queue.is_empty():g.label(g.panel_body,"%d/12 jobs · %s · %.0f sec" % [s.queue.size(),HoldData.RECIPES[s.queue[0].id].name,s.queue[0].left],15)
  if station!="smelt":
-  var tool=g.button(g.panel_body,"Forge steel pick · 5 iron + 2 timber",func():
-   if HoldFrontier103.transact(g,"tool","steel"):g.save_game();g.notify("Steel pick forged · stronger contacts and basalt access.");g.refresh_panel())
-  tool.disabled=s.opening<2 or s.steel or not s.tech.has("extraction") or not s.afford({"iron":5,"wood":2})
-  if not s.steel and not s.tech.has("extraction"):g.label(g.panel_body,"First research Tempered steel at Stonebridge's survey desk.",14)
+  for id in HoldToolCapabilities.COSTS:
+   var title="Forge steel pick" if id=="steel" else "Forge reinforced pick"
+   var tool=g.button(g.panel_body,title+" · "+HoldData.cost_text(HoldToolCapabilities.COSTS[id]),func():
+    if HoldFrontier103.transact(g,"tool",id):g.save_game();g.notify("Steel pick forged · basalt access." if id=="steel" else "Reinforced pick forged · hold Shift while mining basalt to recover blocks.");g.refresh_panel())
+   var reason=HoldToolCapabilities.reason(s,id);tool.disabled=reason!="";tool.tooltip_text=reason
+   if reason!="":g.label(g.panel_body,reason,14)
+  g.label(g.panel_body,"Reinforced picks make stronger contacts. Careful basalt work [Shift+LMB] yields blocks; ordinary strikes still yield stone.",14)
   g.button(g.panel_body,"Forge weapons and armor",func():g.gear_tab="forge";g.open_panel("equipment"))
  for id in HoldData.RECIPES:
   if station=="smelt" and id not in SMELTING:continue

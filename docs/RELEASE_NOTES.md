@@ -1,11 +1,11 @@
-# 0.115.0 — A gift from home
+# 0.116.0 — A stronger pick, a finer floor
 
-Your parents have bought Old Stonewright’s Rise for you. Meet Ivar in Stonebridge, read their letter, and visit your holding before taking a mining shift. The modest cottage has a usable bed, empty chest and editable construction. Bring a light and make it yours.
+Research teaches the method; forging gives you the tool. Basalt guidance now distinguishes the two steps and shows the steel pick's unchanged cost.
 
-Ivar’s brief property introduction can be skipped and resumed after saving. The journal offers home improvement, paid mining, the communal forge, local trades and the Ledger without making the first shift a prerequisite for your homestead.
+After Tempered steel, learn Reinforced tools at the survey desk and forge the upgraded pick at the communal forge. It costs 8 iron, 2 copper, 3 coal and 2 timber. Stronger contacts speed excavation; careful basalt work (Shift + left mouse) recovers two basalt blocks. Ordinary strikes still supply stone.
 
-Two civic projects or trade seals now earn household recognition. The ground was already yours. Improve the cottage with a lamp or hearth and register the finished home after recognition; no rebuilding is required.
+Fine masonry lets you dress two blocks with one water into two dressed basalt pieces. Use them for a dark, carefully jointed floor in your underground rooms. Plans can include this finish before you own its knowledge or materials; actual work checks both. Each floor tile costs one dressed basalt.
 
-Existing frontier saves retain their property, custom names, construction, stocked chests, workers, recognition and campaign progress. Established holdings are never reseeded. Non-frontier fortunes keep their original opening.
+Basalt uses existing raw loads, hauling, pallets and freight. Merchants also sell the materials through the existing market. Existing steel picks, terrain, saved plans and possessions remain intact.
 
-Published after all source/package release checks passed. CURRENT_STATUS.md records the verification evidence. Preserve earlier builds and saves. [Previous notes](history/RELEASE_NOTES-before-home169.md).
+Candidate: focused and full release validation pending. CURRENT_STATUS.md identifies the published build. [Previous notes](history/RELEASE_NOTES-before-tools171.md).

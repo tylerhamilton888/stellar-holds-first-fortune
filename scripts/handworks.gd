@@ -12,7 +12,7 @@ const SPECS={
  "store":{"name":"Materials pallet","cost":{"wood":3},"art":4,"accept":"processed","capacity":200},
  "wagon":{"name":"Freight wagon","cost":{"wood":12,"iron":4},"art":9,"accept":"all","capacity":24},
  "cart":{"name":"Handcart","cost":{"wood":6,"iron":2},"art":5,"accept":"all","capacity":8}}
-const OUTPUTS=["stone","wood","dressed_stone","iron_ore","copper_ore","coal","crystal"]
+const OUTPUTS=["basalt_block","dressed_basalt","stone","wood","dressed_stone","iron_ore","copper_ore","coal","crystal"]
 var g
 var placing=""
 var active_id=""

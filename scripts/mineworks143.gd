@@ -125,7 +125,7 @@ static func interact(g)->bool:
   g.deep.works.page="Districts";g.open_panel("living");return true
  var p=nearby(g)
  if p.is_empty():return false
- if not p.open:g.notify("The basalt seal blocks this adit. Research Tempered steel, then mine the dark face beside the portal.");return true
+ if not p.open:g.notify(HoldToolCapabilities.basalt_hint(g.state)+" Mine the dark face beside the portal.");return true
  var w=g.deep.world;prepare(w)
  if not w.walkable(p.target,int(p.to)):
   g.notify("The far landing is blocked. Clear its approach before using this adit.");return true
@@ -174,7 +174,7 @@ static func panel(g):
  var w=g.deep.world;var q=data(w)
  g.label(g.panel_body,"MINEWORKS & DISTRICTS",20)
  g.label(g.panel_body,"Stonewright Delve → Blackvein Reach → Farbank Works. Each is a separate, permanent worksite. Follow the adit beside the Old Workings landing. The original five depths remain accessible by their stairs.",15)
- g.label(g.panel_body,"Eastern seal: "+("Open" if q.seal else "Research Tempered steel, then mine the dark basalt face at the end of Stonewright's eastern heading."),15)
+ g.label(g.panel_body,"Eastern seal: "+("Open" if q.seal else HoldToolCapabilities.basalt_hint(g.state)+" Mine the dark face at the end of the eastern heading."),15)
  g.label(g.panel_body,"Fault bridge: "+("Restored · carts can cross" if q.bridge else "Stoneworking + "+HoldData.cost_text(BRIDGE_COST)+". Inspect the broken seats in Blackvein Reach."),15)
  if near_bridge(g) and not q.bridge:
   g.button(g.panel_body,"Rebuild fault bridge",func():g.notify(repair(g));g.open_panel("living",false))

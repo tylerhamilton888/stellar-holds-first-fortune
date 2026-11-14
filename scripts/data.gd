@@ -2,6 +2,8 @@ class_name HoldData
 extends RefCounted
 
 const ITEMS = {
+ "basalt_block":{"name":"Basalt block","price":8,"color":"535e72","desc":"Recovered with careful reinforced-pick contacts in basalt. Dress it for durable dark floors."},
+ "dressed_basalt":{"name":"Dressed basalt","price":12,"color":"65738a"},
  "hold_ale":{"name":"Hold ale","price":8,"color":"cf9c55"},
  "barley":{"name":"Hold barley","price":4,"color":"d9ba65"},
  "barley_seed":{"name":"Barley seed","price":1,"color":"d9ba65"},
@@ -42,6 +44,7 @@ const ITEMS = {
  "hearthknot":{"name":"Hearthknot","price":20,"color":"c58c59","trade":false,"desc":"A hand-carved timber knot with copper inlay. Offer it during a personal conversation to ask someone to begin courting."}
 }
 const RECIPES = {
+ "dressed_basalt":{"name":"Dress basalt blocks","cost":{"basalt_block":2,"water":1},"out":{"dressed_basalt":2},"time":5.0,"tech":"fine_masonry"},
  "surveyors_stone":{"name":"Surveyor’s dressed stone","cost":{"stone":5,"water":1},"out":{"dressed_stone":3},"time":4.0,"tech":"stoneworking","collection":"miner"},
  "hearthknot":{"name":"Craft a Hearthknot","cost":{"wood":1,"copper":1},"out":{"hearthknot":1},"time":4.0,"tech":""},
  "hold_ale":{"name":"Brew hold ale","cost":{"barley":2,"water":2},"out":{"hold_ale":2},"time":15.0,"tech":""},
@@ -65,6 +68,7 @@ const RECIPES = {
  "food": {"name":"Pack provisions", "cost":{"water":2,"wood":1},"out":{"food":2},"time":3.0,"tech":""}
 }
 const RESEARCH = {
+ "reinforced_tools":{"name":"Reinforced tools","desc":"Forge a reinforced pick for stronger contacts and careful recovery of basalt blocks. Fine masonry dresses the blocks for dark stone floors.","cost":{"iron":6,"copper":3},"money":65,"requires":"extraction"},
  "hearthkeeping":{"name":"Hearthkeeping","desc":"Longer shared-meal benefits and carved pantry furnishings. Any home style is welcome.","cost":{"wood":6,"stone":6},"money":15,"requires":""},
  "stoneworking":{"name":"Stoneworking","desc":"Smooth walls, lay flagstones and build pillars. Nearby pillars brace controlled fracture work.","cost":{"stone":12,"wood":3},"money":15,"requires":""},
  "furnishings":{"name":"Dwarven furnishings","desc":"Carved chairs make practical rooms comfortable without forcing a different architectural style.","cost":{"wood":10,"iron":2},"money":20,"requires":"stoneworking"},

@@ -123,7 +123,7 @@ func panel():
   else:g.notify("A lamp needs 1 timber and 1 coal.")
   g.close_panel())
  g.button(g.panel_body,"Assign mining crew to this depth [T]",func():assign_crew();g.close_panel())
- g.label(g.panel_body,"Crew walk excavated tunnels and use connected stairs. Their existing mineral priorities, provisions, coal and industrial unlocks still apply. M manages recruitment and priorities. Basalt needs Tempered steel. Lamps illuminate work areas.",16)
+ g.label(g.panel_body,"Crew walk excavated tunnels and use connected stairs. Their existing mineral priorities, provisions, coal and industrial unlocks still apply. M manages recruitment and priorities. Basalt needs a forged steel pick. A reinforced pick recovers basalt blocks with careful contacts [Shift+LMB]. Lamps illuminate work areas.",16)
  g.button(g.panel_body,"Haulage [H] · personal cargo / wheelbarrow / stockpiles",func():g.open_panel("haulage"))
  g.button(g.panel_body,"Living Works [O] · rooms / finishing / furnishings",func():g.open_panel("living"))
  g.button(g.panel_body,"Project ledger [L]",func():g.open_panel("projects"))
@@ -247,7 +247,7 @@ func hit(c:Vector2i,thermal:bool=false):
   g.state.outpost.gun_charge=charge-1;g.sound.effect("thermal_pulse",-12)
  var work=worksite(c);var result=world.strike(c,-1,thermal,false,mining_method,work)
  if result.is_empty():return
- if result.has("blocked"):g.notify("Hard basalt: research Tempered steel at the survey office.");return
+ if result.has("blocked"):g.notify(HoldToolCapabilities.basalt_hint(g.state));return
  HoldWorkEnergy.spend(g.state,.08)
  g.sound.impact(result.kind,result.broken);pulse=.18 if result.broken else .14;contact_hold=.09 if result.broken else .055
  var color=ore_color(result.kind) if result.kind in [3,4,5,6] else color(result.kind,world.depth()).lightened(.25)

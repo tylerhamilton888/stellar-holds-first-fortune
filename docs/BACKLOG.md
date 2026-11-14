@@ -2,7 +2,7 @@
 
 ## Current work and next milestone
 
-Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): audit and extend existing tool/material capabilities next, then cross-craft parts and specialist acquisition routes. Preserve existing building, navigation and freight systems.
+Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): 0.116.0 candidate adds reinforced picks and basalt masonry (TOOLS171.md); validate and publish, then develop cross-craft parts and specialist acquisition routes. Preserve existing building, navigation and freight systems.
 
 ## Playtest the current published build
 
