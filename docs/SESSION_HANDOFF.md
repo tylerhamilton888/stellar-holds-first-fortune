@@ -1,24 +1,23 @@
-# Session handoff — 2026-11-13
+# Session handoff — 0.113.0 delivered
 
-Read CURRENT_STATUS.md and AGENTS.md. User explicitly approved upload, checked merge and 0.113.0 publication. No repeated routine confirmation is needed.
+Read CURRENT_STATUS.md and AGENTS.md. User explicitly approved upload, checked merge and publication. No repeated routine confirmation is needed.
 
-## Active delivery: Old Stonewright’s Rise
+## Completed delivery
 
-Source PR #165: https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/165
-Source commit: `138c972507ef34ddaa2ca3fc092b42c25f60b861`
-Exact tree: `4f8b9f562a47e57400f9eedd8716b986ba91eb57`
-Branches: feature/rise165 and release/0.113.0. Connected GitHub blob/tree/commit upload verified equality with the tested local tree. Local Git has no credentials; public fetch works.
+**0.113.0 is published:** https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.113.0
 
-PR validation: https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621985
-Verified Windows release: https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621321
-Both are running. No failures observed at checkpoint. Do not restart for unchanged status alone. PR requires all 87 source cases; release independently tests all source and exact-package cases before publication. Merge after the PR gate passes. After publication verify public metadata/digests and finish delivery docs. Published build remains 0.112.0 until that verification.
+PR #165 merged. Source `138c972507ef34ddaa2ca3fc092b42c25f60b861`, tree `4f8b9f562a47e57400f9eedd8716b986ba91eb57`, merge `5f08f1ca53b692b5cc67ae52b8fe2f4a62ffc247`. Release run 43556621321 passed all 11 jobs: 87 source and 77 exact-package cases / 14,549 assertions. PR run 43556621985 passed. Public JSON digests, clean source, PCK/ZIP hashes and asset size were verified; CURRENT_STATUS holds the hashes.
 
-## Implemented scope and local evidence
+After the first paid shift, Ivar offers free provisional use of Old Stonewright’s Rise. Two civic projects/trade seals earn the permanent charter on the same persistent household. The upgrade preserves construction, furniture, chests, camp stage and name. Legacy permanent owners retain their rights. Finished-home registration still requires permanent tenure. No campaign credit is granted for the saved/skippable introduction.
 
-After the first paid shift, Ivar offers free provisional use of the existing copper_ridge household. The saved in-world scene is optional/skippable, with no campaign credit. Two civic projects/trade seals grant permanent tenure on the same property. The upgrade preserves house, furniture, chests, camp stage and name. Legacy permanent owners retain their rights. Finished-home registration still needs permanent tenure. See RISE165.md.
+Owners: frontier103 tenure; claim_scene127 introduction; main reload; first_visit99 opening presentation; surface property label; ledger137 guidance. Six focused native cases passed 727 assertions plus all 42 tooling tests. Introduction and scrolled menus were visually reviewed. See RISE165.md.
 
-Pinned Godot 4.4.1: frontier103 252 assertions; claim127 383; opening146 14; ledger137 36; loading 19; firstvisit99 23. All 42 tooling tests passed. Reviewed introduction and scrolled offer/provisional/permanent menus. Evidence is under test-results/rise165-review4, rise165-final3 and rise165-loading. Use /tmp/freight-xvfb/run_native.py for local rendering and tools/capture_command.py for bounded logs.
+## Next piece
 
-## Continuation
+Core surface/underground/upper-floor blueprinting, cellar links, worker travel, porter freight and provisional property introduction are delivered. Next is Windows playtesting and polish: first-hour clarity, building/charter pacing, input, audio, performance and enjoyment. New depths, automated excavation, Handworks raw-load freight and cart-sized household stairs are separate work. Preserve existing possessions and progression.
 
-Current local docs branch: docs/rise165-delivery, based on the exact uploaded source. Keep release/0.113.0 immutable. After verified publication reconcile CURRENT_STATUS, SESSION_HANDOFF, README, PLAYTEST_GUIDE, BACKLOG, feature notes and RELEASE_NOTES, then merge the docs-only PR after its checks. See RELEASE_PIPELINE.md. Preserve releases, saves and original assets. No sub-agents unless requested.
+## Recovery safeguards
+
+Resume from current master or the verified release source, not an older ZIP. Source and release evidence are in GitHub. Local Git had no credentials; connected blob/tree/commit uploads were verified against the local Git tree. Public fetch works. Do not expose encoded source/assets or large logs in conversation.
+
+Use Godot 4.4.1, bounded capture and selected diagnostics. Local rendering used /tmp/freight-xvfb/run_native.py. Follow RELEASE_PIPELINE.md. Preserve releases, saves and original art. Documentation-only changes need no game rebuild. No sub-agents unless requested.

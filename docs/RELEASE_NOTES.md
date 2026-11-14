@@ -6,4 +6,4 @@ Two civic projects or trade seals still earn the permanent household charter. Re
 
 Older permanent owners keep their tenure, names and property. No estate is replaced or awarded fully built. Saving during Ivar’s introduction resumes the current beat; skipping it does not bypass contribution requirements or advance the campaign.
 
-Extract the complete Windows ZIP into a fresh folder. Preserve older builds and saves. CURRENT_STATUS.md identifies the verified published release; these are candidate notes until all release gates pass. [Previous notes](history/RELEASE_NOTES-before-rise165.md).
+Extract the complete Windows ZIP into a fresh folder. Preserve older builds and saves. Version 0.113.0 is published after all source and exact-package gates passed; CURRENT_STATUS.md records the verified evidence. [Previous notes](history/RELEASE_NOTES-before-rise165.md).

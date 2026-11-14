@@ -10,4 +10,4 @@ Playtest: earn first wages, return to the shift book, accept provisional use, sa
 
 ## Local verification
 
-Godot 4.4.1: frontier103 passed 252 assertions; claim127 383; opening146 14; ledger137 36; loading 19; firstvisit99 23. All 42 tooling tests passed. Introduction and scrolled offer/provisional/permanent menus were visually reviewed. These focused checks do not replace the full 87-case source and exact-package release gates. The user explicitly approved source upload, checked merge and publication; full release gates remain required.
+Godot 4.4.1: frontier103 passed 252 assertions; claim127 383; opening146 14; ledger137 36; loading 19; firstvisit99 23. All 42 tooling tests passed. Introduction and scrolled offer/provisional/permanent menus were visually reviewed. PR #165 merged after validation. Release run 43556621321 passed all 87 source cases and 77 exact-package cases / 14,549 assertions, then published 0.113.0. Public JSON digests and source/PCK/ZIP identity were checked after publication. See CURRENT_STATUS.md.

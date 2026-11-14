@@ -1,29 +1,29 @@
-# Current status — 2026-11-13
+# Current status — 0.113.0 delivered
 
 ## Published Windows build
 
-**[0.112.0 — Freight through the holding](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.112.0)** is published. [PR #163](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/163) merged after its full validation passed.
+**[0.113.0 — Old Stonewright’s Rise](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.113.0)** is published. [PR #165](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/165) merged after all required checks passed.
 
-- Release source: `0333a54554592847579b4e211798ce625da7e321`; tree: `25f92aa50fd96396c23a73bd2acdc5c8ad76fbc8`.
-- Source merge: `94486969f7da5b9920b42afa49bd6657dc6bc73f`.
-- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43538478196): all 11 jobs passed, including 87 native source cases, 77 exact-package cases / 14,528 assertions, aggregate verification and publication.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43538483052): all four gameplay groups and the final gate passed.
+- Release source: `138c972507ef34ddaa2ca3fc092b42c25f60b861`; tree: `4f8b9f562a47e57400f9eedd8716b986ba91eb57`.
+- Source merge: `5f08f1ca53b692b5cc67ae52b8fe2f4a62ffc247`.
+- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621321): all 11 jobs passed, including 87 source cases, 77 exact-package cases / 14,549 assertions, aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621985): all four gameplay groups and final validation passed.
 - Public assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
-- Windows ZIP: 964,793,495 bytes; SHA-256 `facfad92ed80fb7a249daca6aff0be5f08684030152a1943809a1868971a67b4`.
-- PCK SHA-256: `f7eae9034773d52a0f70278d491004c56c5bd557a89cae7178dd5f2fdfacc5a5`.
+- Windows ZIP: 964,796,661 bytes; SHA-256 `20874dcbcb8f5eba5014272ed8273511cfc4e94d1906d899fa93f7239a8a2813`.
+- PCK SHA-256: `c421ccfa5855bed92ab2ac5341f9c62b665b76f905050ff1f95126f4a19bcaac`.
 
-Post-publication checks downloaded both public JSON documents, verified their asset digests and matched version, clean source, PCK/ZIP hashes and ZIP size to the uploaded asset record. The publication gate verified the full ZIP; it was not independently downloaded again.
+Post-publication checks downloaded both public JSON documents, verified their GitHub asset digests, and matched clean source, version, PCK/ZIP hashes and ZIP size. The publication gate verified the complete ZIP; it was not independently downloaded again.
 
 ## Delivered scope
 
-In **O → Plan Your Holding → Freight for the household**, choose a recruited miner, material, direction, marked mine stockpile and chest on the selected floor. The same worker carries up to 32 units through actual mine passages, stairs/ladders, cellar stairs and built household floors. Goods stay in their existing stores or in one carried load; crafting still requires chest withdrawal.
+After the first paid shift, visit Ivar’s shift book and choose **Accept provisional use · Old Stonewright’s Rise**. The short in-world introduction resumes its saved beat; skipping it does not advance campaign progress. Provisional use is free, with no deadline.
 
-Stops finish the current delivery. Return controls bring cargo physically back to its source; a returning load can instead finish delivery if its source is gone. Blocked routes and missing chests retain cargo. Order, floor, position and load survive reload. Freight yields to masonry cargo and unladen rest, uses ordinary crew provisions and preserves mine assignments and berths. A reassigned carrier waits until assigned as a miner again. Wheelbarrows stay underground.
+Two civic projects or trade seals still earn the permanent household charter. Record it with Ivar to keep developing the same property. Construction, furniture, stocked chests, camp progress and chosen name are preserved. Existing permanent owners retain their rights and names. Finished-home registration still requires permanent tenure; the lodge room remains available.
 
-Reviewed native book controls, upstairs carrier and perspective-mine crate rendering. The perspective mine view excludes upstairs crew. Preflight passed 43 freight, 33 worker and 49 cellar assertions plus all 42 tooling tests. See [freight](FREIGHT162.md), [crew](WORKERS160.md) and [playtest guide](PLAYTEST_GUIDE.md).
+Reviewed the introduction and scrolled offer/provisional/permanent menus. Six focused native cases passed 727 assertions, plus all 42 tooling tests. See [Rise notes](RISE165.md) and [playtest guide](PLAYTEST_GUIDE.md).
 
 ## Next work and limits
 
-Candidate 0.113.0 is uploaded in [PR #165](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/165); full validation and [release run 43556621321](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621321) are running. See [Rise notes](RISE165.md) and SESSION_HANDOFF.md. It is not yet verified as published. Normal player testing and polish follow. New mine depths, automated excavation and Handworks raw-load freight are separate work. Normal-speed Windows input, audio, performance and enjoyment still need player testing.
+Core blueprinting, connected estate travel, porter freight and provisional property introduction are delivered. Next is normal Windows playtesting and polish: first-hour clarity, building/charter pacing, input, audio, performance and enjoyment. New mine depths, automated excavation, Handworks raw-load freight and cart-sized household stairs remain separate scope.
 
-Preserve releases and saves. Documentation-only corrections need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-freight162.md).
+Preserve releases and saves. Documentation-only corrections need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-rise165.md).
