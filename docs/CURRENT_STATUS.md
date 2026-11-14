@@ -1,29 +1,25 @@
-# Current status — 0.115.0 delivered
+# Current status — 0.116.0 delivered
 
 ## Published Windows build
 
-**[0.115.0 — A gift from home](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.115.0)** is published. [PR #169](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/169) merged after required checks passed.
+**[0.116.0 — A stronger pick, a finer floor](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.116.0)** is published. [PR #171](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/171) merged after required checks passed.
 
-- Release source: `bafb91778234741e7f8bf5d264f96f66bce882d4`; tree: `3cf34d0fec0cd3bdecbe38098eb10cac18483e74`.
-- Source merge: `76a8d66d773d7636f53623bc6cb061243e596aaf`.
-- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43639562812): all 11 jobs passed, including 87 source cases, 77 exact-package cases / 14,570 assertions, aggregate verification and publication.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43639563209): all four gameplay groups and final validation passed.
+- Release source: `3da895e026c1b574e001787aea8c6bae24fdb01a`; tree: `87b80fff2faaa2470f1faeabfe712863396e973e`.
+- Source merge: `b814bcbbb7bb7c8010e8fd49ee9f5447999e2e2a`.
+- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43647018869): all 11 jobs passed, including all native source groups, 77 exact-package cases / 14,599 assertions, aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43647021962) passed.
 - Public assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
-- Windows ZIP: 964,809,219 bytes; SHA-256 `03fce333245c47223e513aac79d9ed132007c7f49560200d2df9f1e3af372152`.
-- PCK SHA-256: `a20dc430a6d8f7d8398da4bbbfa3467f1ac94ae1ef707cbc0cdf60f11ca65114`.
+- Windows ZIP: 964,818,236 bytes; SHA-256 `0ec83b6c81fe372dd5a341ae9914c41ee61d0e2e0dc9f2f3d5318f1cf616a7a3`.
+- PCK SHA-256: `c2eb5150ec0694753dc9f3806a75c5989d7d95fed8227200e35a9fea5784a99f`.
 
 Downloaded both public JSON documents, verified their GitHub asset digests, and matched clean source, version, PCK/ZIP hashes and ZIP size. The publication gate verified the complete ZIP; it was not independently downloaded again.
 
 ## Delivered scope
 
-Parents have already bought Old Stonewright’s Rise. New fortunes receive a modest editable cottage with a usable bed and empty chest. Ivar offers a saved/skippable introduction before mining. The journal holds the parent letter and optional home, paid work, forge, trade and civic opportunities. Two contributions earn civic recognition instead of ownership. Adding paid light can qualify the starter home for recognition without rebuilding; the cottage grants no automatic improvement reward.
+Steel-pick guidance distinguishes learning the method, forging the tool and already owning it. Reinforced tools research enables a paid pick upgrade with stronger contacts. Careful basalt mining recovers blocks; Fine masonry dresses them for a dark jointed floor. Ordinary contacts still yield stone. Plans can select the finish before knowledge/material acquisition; execution pays each actual surface. New materials use existing raw loads, hauling, pallets, freight and market purchases.
 
-Existing frontier holdings retain property, names, structures, inventory, workers and progression without reseeding. Family purchase is independent of ancestry. Non-frontier fortunes retain their original opening. The building grid and blueprint, vertical travel, worker and freight systems remain available.
-
-Eight focused local native cases passed 681 assertions; 42 tooling tests and output policy passed. Reviewed cottage/bedside interaction, introduction, parent letter and Ivar dialogue. See [implementation](HOME169.md) and [playtest guide](PLAYTEST_GUIDE.md).
+Existing steel ownership, terrain, plans, homes and goods are preserved. The reinforced-pick flag is additive in the existing outpost save data. Eight local native cases passed 565 assertions; 42 tooling tests passed. Forge, floor and scrolled blueprint requirements were visually reviewed. See [implementation](TOOLS171.md) and [playtest guide](PLAYTEST_GUIDE.md).
 
 ## Next work and limits
 
-Follow [A Home and a Fortune](HOME_AND_FORTUNE_ROADMAP.md): next audit and extend tool/material capabilities, then cross-craft components, specialist commissions and reliable buying alternatives, Ledger/sandbox integration and environmental polish. Normal Windows input, performance, audio and the 5–10 minute arrival target still need ordinary playtesting. Preserve releases and saves. [Previous delivery](history/CURRENT_STATUS-before-home169.md).
-
-Candidate 0.116.0 is implemented on feature/tools171: reinforced pick, careful basalt recovery, dressed basalt floors and accurate forging guidance. Validation and publication pending; see TOOLS171.md.
+Continue [A Home and a Fortune](HOME_AND_FORTUNE_ROADMAP.md) with cross-profession components and improved equipment, then specialist commissions/reliable acquisition, Ledger/sandbox integration and environmental polish. Broader forge-equipment and advanced-metal capabilities remain later work. One PR freight-route test failed once, then passed on its targeted retry; it also passed in the exact package, an isolated local run and eight fixed-seed trials (344 assertions). The cause was not reproduced and remains a validation follow-up. Normal Windows input, performance, audio and progression balance still need ordinary playtesting. Preserve releases and saves. [Previous delivery](history/CURRENT_STATUS-before-tools171.md).

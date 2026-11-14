@@ -1,4 +1,4 @@
-# Tools and basalt masonry — 0.116.0 candidate
+# Tools and basalt masonry — 0.116.0 delivered
 
 The existing steel pick still costs 5 iron and 2 timber after Tempered steel. Reinforced tools research requires Tempered steel, 6 iron, 3 copper and 65 coins. The pick upgrade then costs 8 iron, 2 copper, 3 coal and 2 timber at the lit communal forge. Neither step consumes materials from behind its own access gate. Existing market purchases provide an alternative source of basalt materials.
 
@@ -14,6 +14,6 @@ Fine masonry unlocks a recipe (2 basalt blocks + 1 water → 2 dressed basalt) a
 
 The first full release gate caught the new basalt description pushing the inventory summary below the viewport. New entries now retain the established catalogue order, with acquisition guidance in the forge/planning screens. menu92 explicitly checks basalt selection in a full pack.
 
-Extended frontier103 covers local/remote/duplicate/payment guards, research versus forging, actual save reload, blocked basalt, ordinary versus careful yields, physical loads and material production. Extended excavation154 covers advance planning, research/material rejection, exact surface payment and visual floor review. Required source/package release checks remain pending. Ordinary Windows input, audio, perceived tool speed and progression balance still need playtesting.
+Extended frontier103 covers local/remote/duplicate/payment guards, research versus forging, actual save reload, blocked basalt, ordinary versus careful yields, physical loads and material production. Extended excavation154 covers advance planning, research/material rejection, exact surface payment and visual floor review. Eight local native cases passed 565 assertions; 42 tooling tests passed. Full source/package release checks passed; CURRENT_STATUS.md records the published evidence. Ordinary Windows input, audio, perceived tool speed and progression balance still need playtesting.
 
 This is the first capability/material slice. Shaped hafts, forged heads, fittings, specialist commissions and later forge-equipment capabilities remain subsequent roadmap work.
