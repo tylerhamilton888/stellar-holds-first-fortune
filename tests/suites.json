@@ -42,7 +42,8 @@
       "excavation154",
       "cellar156",
       "upper158",
-      "workers160"
+      "workers160",
+      "freight162"
     ],
     "gameplay": [
       "loading",
@@ -130,7 +131,8 @@
       "excavation154",
       "cellar156",
       "upper158",
-      "workers160"
+      "workers160",
+      "freight162"
     ],
     "modular": [
       "modular",
@@ -425,7 +427,8 @@
       "blueprints152",
       "blueprint_manor152",
       "excavation154",
-      "workers160"
+      "workers160",
+      "freight162"
     ],
     "gameplay-3": [
       "orientation",
@@ -1097,6 +1100,14 @@
       "cellar156",
       "living",
       "mineworks143"
+    ],
+    "freight162": [
+      "freight162",
+      "workers160",
+      "upper158",
+      "cellar156",
+      "mining",
+      "living"
     ]
   },
   "cases": {
@@ -1447,6 +1458,10 @@
     "workers160": {
       "script": "tests/workers160.gd",
       "marker": "WORKERS160"
+    },
+    "freight162": {
+      "script": "tests/freight162.gd",
+      "marker": "FREIGHT162"
     }
   }
 }

@@ -88,11 +88,12 @@ static func mine_steps(path:Array,z:int)->Array:
  var result=[]
  for p in path:result.append(node(Deepworks.cell(p),z,"mine"))
  return result
-static func route(g,saved:Dictionary,b:Dictionary,resting:bool)->Array:
+static func route(g,saved:Dictionary,b:Dictionary,resting:bool,targets:Array=[])->Array:
+ if resting and targets.is_empty():targets=approaches(b)
  var w=g.deep.world;var c=Deepworks.cell(Vector2(saved.x,saved.y));var area=saved.get("estate_area160","mine")
  if area=="surface":
   var start=node(c,int(saved.get("estate_z160",0)))
-  if resting:return surface_route(g,start,approaches(b)).get("path",[])
+  if resting:return surface_route(g,start,targets).get("path",[])
   var available=stairs(g);var ends=[]
   for stair in available:ends.append(node(cell(stair),0))
   var r=surface_route(g,start,ends)
@@ -109,7 +110,7 @@ static func route(g,saved:Dictionary,b:Dictionary,resting:bool)->Array:
   var path=mine_steps(best.path,z);path.append(node(best.link.target,int(best.link.to),"mine"));return path
  var best=[]
  for stair in stairs(g):
-  var above=surface_route(g,node(cell(stair),0),approaches(b))
+  var above=surface_route(g,node(cell(stair),0),targets)
   if above.is_empty():continue
   var below=w.route(c,0,"",cell(stair))
   if below.is_empty():continue
@@ -185,7 +186,7 @@ static func objects(g)->Array:
  for a in g.agents:
   var saved=g.deep.crew_entry(a)
   if saved.get("estate_area160","mine")!="surface" or int(saved.get("estate_z160",0))!=g.surface.house.level():continue
-  result.append({"kind":"citizen","p":Vector2(saved.x,saved.y),"profile":g.state.npc(a.id),"aim":a.get("facing",Vector2.DOWN),"walking":a.get("estate_walking160",false),"time":g.clock,"gait":a.get("gait",0),"name":g.state.npc(a.id).name,"role":a.status})
+  result.append({"kind":"citizen","p":Vector2(saved.x,saved.y),"profile":g.state.npc(a.id),"aim":a.get("facing",Vector2.DOWN),"walking":a.get("estate_walking160",false),"time":g.clock,"gait":a.get("gait",0),"name":g.state.npc(a.id).name,"role":a.status,"freight162":HoldEstateFreight.orders(g).get(a.id,{}).get("cargo",{})})
  return result
 static func panel(p):
  var g=p.a.g

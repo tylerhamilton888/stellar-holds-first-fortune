@@ -282,6 +282,7 @@ func agents(dt:float):
  for a in g.agents:
   var saved=crew_entry(a);var z=int(saved.depth)
   a.cool-=dt
+  if HoldEstateFreight.tick(g,a,saved,dt):continue
   if HoldEstateWorkers.tick(g,a,saved,dt):continue
   var room=works.model.destination(a.id) if a.type=="worker" else {}
   var task=str(room.get("id",""))
@@ -554,6 +555,7 @@ func draw():
     else:
      var phase=fposmod(1.5-float(a.cool)/maxf(.1,float(a.get("swing",.6))),1.0)
      HoldDrawnAnimation.paint(g,p+Vector2(0,12)+offset,profile,a.get("facing",Vector2.DOWN),not a.path.is_empty() or a.get("estate_walking160",false),float(a.get("gait",0)),1.0,offset,"pick" if a.work else "",phase)
+    if g.state.active_site=="claim" and not HoldEstateFreight.orders(g).get(a.id,{}).get("cargo",{}).is_empty():HoldEstateFreight.draw_load(g,p)
     if works.masonry.data.jobs.has(a.id) and not a.work:works.masonry.carry(p,1,works.masonry.data.jobs[a.id].cargo)
     if works.model.data.assignments.has(a.id):A.text(g,p+Vector2(-35,-81),g.state.npc(a.id).first_name+" · "+works.model.data.folk[a.id].activity,10,Color("dfc695"))
  g.draw_set_transform(offset)

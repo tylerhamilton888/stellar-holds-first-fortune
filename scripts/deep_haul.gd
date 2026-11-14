@@ -101,6 +101,8 @@ func in_field(item:String)->int:
  for site in s.deepworks.values():
   var h=site.get("haulage",{});n+=int(h.get("cart",{}).get("cargo",{}).get(item,0))
   for a in h.get("piles",{}).values():n+=int(a.cargo.get(item,0))
+ for home in s.surface.get("homes",{}).values():
+  for order in home.get("building",{}).get("freight162",{}).values():n+=int(order.get("cargo",{}).get(item,0))
  var hands=s.hauling.get("hands",{});var raw=[]
  raw.append_array(hands.get("loose",[]));raw.append_array(hands.get("carry",[]))
  for f in hands.get("facilities",[]):
