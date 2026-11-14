@@ -6,4 +6,4 @@ The Blueprint Book shows live width × height while dragging and the selected ro
 
 The owner’s next-development directive is preserved in HOME_AND_FORTUNE_ROADMAP.md and its linked full text. The family-purchased property opening is the next major milestone; this update does not change 0.113.0’s ownership story.
 
-CURRENT_STATUS.md identifies the verified published build. These are candidate notes until the release gates pass. Preserve previous releases and saves. [Previous notes](history/RELEASE_NOTES-before-grid167.md).
+0.114.0 is published after all source/package release gates passed; CURRENT_STATUS.md records delivery evidence. Preserve previous releases and saves. [Previous notes](history/RELEASE_NOTES-before-grid167.md).

@@ -1,29 +1,27 @@
-# Current status — 0.113.0 delivered
+# Current status — 0.114.0 delivered
 
 ## Published Windows build
 
-**[0.113.0 — Old Stonewright’s Rise](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.113.0)** is published. [PR #165](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/165) merged after all required checks passed.
+**[0.114.0 — A clearer building grid](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.114.0)** is published. [PR #167](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/167) merged after required checks passed.
 
-- Release source: `138c972507ef34ddaa2ca3fc092b42c25f60b861`; tree: `4f8b9f562a47e57400f9eedd8716b986ba91eb57`.
-- Source merge: `5f08f1ca53b692b5cc67ae52b8fe2f4a62ffc247`.
-- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621321): all 11 jobs passed, including 87 source cases, 77 exact-package cases / 14,549 assertions, aggregate verification and publication.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43556621985): all four gameplay groups and final validation passed.
+- Release source: `a4a4d755f39335a67f74d4341ea55d10a0e42661`; tree: `43ff6afd5d3c89c9245ab6f433d7d92bd0061f6c`.
+- Source merge: `91d01623fe32226a524aa2ef35d4f633ad2ac5e3`.
+- [Release run](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43628793692): all 11 jobs passed, including 87 source cases, 77 exact-package cases / 14,561 assertions, aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43628794197): all four gameplay groups and final validation passed.
 - Public assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
-- Windows ZIP: 964,796,661 bytes; SHA-256 `20874dcbcb8f5eba5014272ed8273511cfc4e94d1906d899fa93f7239a8a2813`.
-- PCK SHA-256: `c421ccfa5855bed92ab2ac5341f9c62b665b76f905050ff1f95126f4a19bcaac`.
+- Windows ZIP: 964,804,952 bytes; SHA-256 `da2f1bc32a5e3b639612c35afbeb7475bcce049be409fe704ebf6e2c73f6e2b8`.
+- PCK SHA-256: `a13a34752b46e3a0ccfae519fb0965f36cd3356857227d7e3491d8fac05186b5`.
 
-Post-publication checks downloaded both public JSON documents, verified their GitHub asset digests, and matched clean source, version, PCK/ZIP hashes and ZIP size. The publication gate verified the complete ZIP; it was not independently downloaded again.
+Downloaded both public JSON documents, verified their GitHub asset digests, and matched clean source, version, PCK/ZIP hashes and ZIP size. The publication gate verified the complete ZIP; it was not independently downloaded again.
 
 ## Delivered scope
 
-After the first paid shift, visit Ivar’s shift book and choose **Accept provisional use · Old Stonewright’s Rise**. The short in-world introduction resumes its saved beat; skipping it does not advance campaign progress. Provisional use is free, with no deadline.
+Fine construction, catalogue buildings and furnishings share a visible structural grid over the full L-shaped holding and editable interiors. Existing 40-unit structural, 20-unit building and 10-unit furniture snapping is unchanged. Gold guides follow the placement anchor. The Blueprint Book shows live and selected room dimensions, including outer walls, with exact edge/center alignment guides on the selected floor. Costs, placement validity, saved coordinates and ownership are unchanged.
 
-Two civic projects or trade seals still earn the permanent household charter. Record it with Ivar to keep developing the same property. Construction, furniture, stocked chests, camp progress and chosen name are preserved. Existing permanent owners retain their rights and names. Finished-home registration still requires permanent tenure; the lodge room remains available.
-
-Reviewed the introduction and scrolled offer/provisional/permanent menus. Six focused native cases passed 727 assertions, plus all 42 tooling tests. See [Rise notes](RISE165.md) and [playtest guide](PLAYTEST_GUIDE.md).
+Five local native cases passed 537 assertions; 42 tooling tests and output policy passed. Reviewed all three world modes, selected/dragged room dimensions and adjacent-room alignment. See [grid notes](GRID167.md) and [playtest guide](PLAYTEST_GUIDE.md).
 
 ## Next work and limits
 
-Core blueprinting, connected estate travel, porter freight and provisional property introduction are delivered. Candidate 0.114.0 adds [building-grid polish](GRID167.md); it is not yet delivered. The owner’s [new roadmap](HOME_AND_FORTUNE_ROADMAP.md) makes family-purchased ownership near arrival the next major milestone, replacing the long-term provisional-ownership story while preserving existing saves. Ordinary Windows playtesting remains necessary. New mine depths, automated excavation, Handworks raw-load freight and cart-sized household stairs remain separate scope.
+Follow [A Home and a Fortune](HOME_AND_FORTUNE_ROADMAP.md): the family-purchased Rise, early modest cottage, optional first shift, civic registration distinct from ownership, and migration preserving all existing possessions and rights. This story revision is not implemented in 0.114.0; its current opening retains provisional use after the first paid shift and permanent tenure after two contributions.
 
-Preserve releases and saves. Documentation-only corrections need no rebuild. [Previous delivery](history/CURRENT_STATUS-before-rise165.md).
+Then extend tools/materials, cross-craft components, specialist commissions and reliable buying alternatives, Ledger/sandbox integration and environmental polish. Keep delivered blueprinting, connected floors, workers and freight. Normal Windows input, performance, audio and pacing still need ordinary playtesting. Preserve releases and saves. [Previous delivery](history/CURRENT_STATUS-before-grid167.md).
