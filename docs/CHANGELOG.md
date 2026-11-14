@@ -1,3 +1,11 @@
+# 0.112.0 — Physical household freight
+
+- Assign existing recruited miners bidirectional marked-pile/chest routes with a selected item and bounded carried loads.
+- Follow actual excavated passages, mine links, cellar stairs and constructed household floors; recheck obstructions.
+- Preserve cargo through cold reload, stopping, destination removal and physical return to its source.
+- Keep storage, pack, wheelbarrow and masonry-job ownership intact; include carried freight in field totals.
+- Show the carried crate in both mine views and the household; exclude upstairs crew from the perspective mine renderer.
+
 # 0.111.1 — Preserve legacy worksite ownership
 
 - Restrict household commutes to the claim site, including old-format fortunes whose crew can still work at other sites.

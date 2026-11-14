@@ -10,9 +10,9 @@ Integration: deepworks_play, estate_workers, room_blueprint_view, surface and de
 
 ## Validation checkpoint
 
-Pinned official Godot 4.4.1 checksum verified. Clean asset import/parser completed. All 42 Python tooling checks passed. Initial headless and native freight runs each passed 32 assertions, with one failing pack-accounting assertion under investigation; do not claim final acceptance. Expanded case also checks an upstairs cold reload and a deeper mine ladder. Current rerun logs and native screenshots are under test-results/freight162-* locally. Native rendering uses locally extracted Xvfb through /tmp/freight-xvfb/run_native.py; server and Godot must share one execution session.
+Pinned official Godot 4.4.1 checksum verified. Clean asset import/parser completed. All 42 Python tooling checks passed. The expanded native freight run passed 40 assertions. The pack assertion was corrected to measure delivery before normal mining resumes. Existing workers160 regression passed 33 checks. Expanded case also checks an upstairs cold reload and a deeper mine ladder. Current rerun logs and native screenshots are under test-results/freight162-* locally. Native rendering uses locally extracted Xvfb through /tmp/freight-xvfb/run_native.py; server and Godot must share one execution session.
 
-The first crate screenshot covered the worker's face; its vertical placement has been adjusted and needs reinspection. Finish targeted tests, visual review, documentation/version preparation, source PR and the mandatory complete release pipeline. Nothing from this feature is merged or released yet.
+The carried crate was lowered and visually reviewed without covering the worker's face. Perspective mine filtering/cargo and three extra native assertions are in the final rerun. Candidate version is 0.112.0. Finish targeted tests, perspective visual review, source PR and the mandatory complete release pipeline. Nothing from this feature is merged or released yet.
 
 ## Safeguards
 

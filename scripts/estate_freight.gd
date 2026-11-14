@@ -63,7 +63,7 @@ static func stop(g,id:String,return_load:bool=false):
   if a.id==id:a.freight_path162=[];a.cool=0
 static func walk(g,a:Dictionary,saved:Dictionary,targets:Array,dt:float):
  if a.get("freight_path162",[]).is_empty():
-  if a.cool>0:return
+  if a.cool>0:a.status="Freight route blocked";return
   a.cool=.75;a.freight_path162=path_to(g,saved,targets)
   if a.freight_path162.is_empty():a.status="Freight route blocked";return
  var next=a.freight_path162[0]
@@ -91,7 +91,9 @@ static func tick(g,a:Dictionary,saved:Dictionary,dt:float)->bool:
  if g.panel_id!="" or g.transition_left>0:return true
  var above=bool(r.to_home) if loaded and not r.returning else not bool(r.to_home)
  var e=endpoint(g,r,above)
- if e.is_empty():a.status="Freight store missing · return or restore the load's route";a.freight_path162=[];return true
+ if e.is_empty():
+  a.status="Freight store missing · return the carried load" if loaded else "Freight store missing · choose a new route"
+  a.freight_path162=[];return true
  if a.fuel<=0:
   if not g.state.pay({"food":1}):a.status="Freight waiting for provisions";return true
   a.fuel=12
@@ -140,13 +142,16 @@ static func panel(p):
    g.notify(assign(g,workers[who.selected],piles[source.selected],chests[dest.selected],items[material.selected],direction.selected==0));g.save_game();g.refresh_panel())
  for id in orders(g):
   var r=orders(g)[id];var title=g.state.npc(id).first_name+" · "+("mine → home" if r.to_home else "home → mine")+" · "+HoldData.ITEMS.get(r.item,{"name":r.item}).name
-  var status="Paused" if not r.enabled else "Waiting for assigned miner"
+  var status="Stopped · regular duties resumed" if not r.enabled and r.cargo.is_empty() else "Waiting for assigned miner"
   for a in g.agents:
-   if a.id==id:status=a.status
+   if a.id==id and (r.enabled or not r.cargo.is_empty()):status="Route ready · starts when the book closes" if a.status=="Awaiting assignment" else a.status
   g.label(g.panel_body,title+"\n"+status+" · carrying "+DeepHaul.contents(r.cargo),14)
   var row=g.row(g.panel_body)
   if r.enabled:g.small_button(row,"Finish load & stop",func():stop(g,id);g.save_game();g.refresh_panel())
-  if not r.cargo.is_empty():g.small_button(row,"Return carried load & stop",func():stop(g,id,true);g.save_game();g.refresh_panel())
+  elif r.cargo.is_empty():g.small_button(row,"Resume route",func():g.notify(assign(g,id,r.pile,r.chest,r.item,r.to_home));g.save_game();g.refresh_panel())
+  if not r.cargo.is_empty():
+   if r.returning:g.small_button(row,"Deliver carried load & stop",func():stop(g,id);g.save_game();g.refresh_panel())
+   else:g.small_button(row,"Return carried load & stop",func():stop(g,id,true);g.save_game();g.refresh_panel())
 static func draw_load(g,p:Vector2):
  HoldFurnishings.draw(g,p+Vector2(0,4),"crate")
  for side in [-1,1]:

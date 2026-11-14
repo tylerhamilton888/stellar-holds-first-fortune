@@ -229,10 +229,10 @@ func update_actors():
   if not textures.has(key):var atlas=AtlasTexture.new();atlas.atlas=tex;atlas.region=source;textures[key]=atlas
   apply_sprite(s,textures[key],Rect2((source.position-root)*scale,source.size*scale),e.p,facing.x<0)
  for a in g.agents:
-  if int(d.crew_entry(a).depth)!=d.world.depth() or not nearby(a.p):continue
+  if d.crew_entry(a).get("estate_area160","mine")!="mine" or int(d.crew_entry(a).depth)!=d.world.depth() or not nearby(a.p):continue
   if a.type=="bot":continue # Original mechanical art is captured with props below.
   var beat=fposmod(1.5-float(a.cool)/maxf(.1,float(a.get("swing",.6))),1.0)
-  person(sprite("crew:"+str(a.id)),a.p,g.state.npc(a.id),a.get("facing",Vector2.DOWN),not a.path.is_empty(),float(a.get("gait",0)),"pick" if a.work else "",beat)
+  person(sprite("crew:"+str(a.id)),a.p,g.state.npc(a.id),a.get("facing",Vector2.DOWN),not a.path.is_empty() or a.get("estate_walking160",false),float(a.get("gait",0)),"pick" if a.work else "",beat)
  for a in HoldFirstShift.actors(g):
   if not nearby(a.p):continue
   var crew=HoldFirstShift.data(g).crew;var bench=HoldFirstShift.station(g,"crewbench");var mason=a.role=="mason"
@@ -272,6 +272,8 @@ func rebuild_props():
   if nearby(p):capture({"p":p},"lamp")
  for a in g.agents:
   if a.type=="bot" and int(g.deep.crew_entry(a).depth)==g.deep.world.depth() and nearby(a.p):capture({"p":a.p,"work":a.work},"bot")
+ for a in g.agents:
+  if g.state.active_site=="claim" and g.deep.crew_entry(a).get("estate_area160","mine")=="mine" and int(g.deep.crew_entry(a).depth)==g.deep.world.depth() and nearby(a.p) and not HoldEstateFreight.orders(g).get(a.id,{}).get("cargo",{}).is_empty():capture({"p":a.p,"facility":{"id":"freight:"+a.id}},"freight162")
  for pile in g.deep.haul.data.piles.values():
   var p=Deepworks.center(Vector2i(pile.x,pile.y))
   if int(pile.depth)==g.deep.world.depth() and nearby(p) and DeepHaul.amount(pile.cargo)>0:capture({"p":p,"cargo":pile.cargo},"pile")
@@ -338,6 +340,7 @@ class PropCanvas extends Node2D:
    var copy=object.duplicate(true);copy.p=at
    if copy.has("facility"):copy.facility.hitched=false;copy.facility.x=at.x;copy.facility.y=at.y
    painter.draw_object(copy)
+  elif kind=="freight162":HoldEstateFreight.draw_load(self,at)
   elif kind=="bot":HoldArt.bot(self,at,game.clock,object.work)
   elif kind in ["cart","pile"]:
    var painter=hand_painter;painter.sprite(5 if kind=="cart" else 2,at,90 if kind=="cart" else 58)

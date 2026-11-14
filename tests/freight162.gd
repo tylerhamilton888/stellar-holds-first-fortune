@@ -69,6 +69,16 @@ func run():
   if not r.cargo.is_empty():break
  check(int(r.cargo.get("stone",0))==32 and int(pile.cargo.get("stone",0))==32,"Worker reaches the mine pile and lifts one bounded load")
  check(chest.items.is_empty(),"Pickup does not deliver remotely")
+ if DisplayServer.get_name()!="headless":
+  var zone=g.zone;var player=g.player;g.zone="mine";w.survey(a.p);g.player=a.p+Vector2(0,-80);w.survey(g.player)
+  var view=g.depth_nav.explore;view.enabled=true;g.depth_nav.update(0)
+  check(view.sprite_pool.has("crew:brann") and view.sprite_pool["crew:brann"].visible,"Perspective mine view renders the freight carrier")
+  check(view.prop_pool.has("freight162:freight:brann"),"Perspective view retains the carried crate")
+  await snap("03-mine-carrier")
+  saved.estate_area160="surface";view.update_actors()
+  check(view.sprite_pool.has("crew:brann") and not view.sprite_pool["crew:brann"].visible,"Perspective view excludes workers on household floors")
+  saved.estate_area160="mine";view.enabled=false;g.depth_nav.update(0);g.zone=zone;g.player=player
+
  check(g.deep.haul.in_field("stone")==64,"Field accounting includes carried freight exactly once")
  check(HoldEstateFreight.assign(g,"brann",pile_id,chest_id,"wood",false).contains("Finish"),"Cannot replace an order that owns cargo")
  advance(3);var mid=Vector2(saved.x,saved.y)
@@ -93,11 +103,11 @@ func run():
  r=HoldEstateFreight.orders(g).brann;pile=g.deep.haul.data.piles[pile_id];chest=g.state.surface.chests[chest_id]
  check(saved.get("estate_area160","")=="surface" and int(saved.estate_z160)==1 and Vector2(saved.x,saved.y)==upper_position and int(r.cargo.get("stone",0))==32,"Upstairs cold reload preserves floor, location and cargo")
  if DisplayServer.get_name()!="headless":await snap("02-upstairs-carrier")
- advance(120)
+ for i in 120:
+  g.deep.agents(.1)
+  if r.cargo.is_empty():break
  check(r.cargo.is_empty() and int(chest.items.get("stone",0))==32 and int(pile.cargo.get("stone",0))==32,"Stop finishes the current delivery without taking another load")
  var after=normal(g.state.inventory)
- for item in before:
-  if before[item]!=after.get(item,0):print("FREIGHT162 pack delta ",item,": ",before[item]," -> ",after.get(item,0))
  var food_spent=int(before.food)-int(after.food);after.food=before.food
  check(after==before and food_spent>=0 and food_spent<=2,"Delivery preserves pack materials and only uses ordinary crew provisions")
  check(int(saved.assigned)==int(original_assignment),"Freight preserves the existing mine assignment")
