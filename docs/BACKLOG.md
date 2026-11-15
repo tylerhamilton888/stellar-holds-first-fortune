@@ -2,7 +2,7 @@
 
 ## Current work and next milestone
 
-Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): 0.116.0 delivers reinforced picks and basalt masonry (TOOLS171.md); 0.117.0 delivers the first cross-craft parts chain (COMPONENTS173.md). 0.118.0 delivers Borin’s commission service (COMMISSIONS175.md). 0.119.0 delivers the first civic-livelihood slice (LIVELIHOOD177.md). A focused Rise presentation pass is implemented in the 0.120.0 candidate (RISE179.md), pending acceptance. Preserve existing building, navigation and freight systems.
+Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): 0.116.0 delivers reinforced picks and basalt masonry (TOOLS171.md); 0.117.0 delivers the first cross-craft parts chain (COMPONENTS173.md). 0.118.0 delivers Borin’s commission service (COMMISSIONS175.md). 0.119.0 delivers the first civic-livelihood slice (LIVELIHOOD177.md). 0.120.0 delivers the focused Rise presentation pass (RISE179.md). Review normal-speed pacing and the existing interiors before choosing further environmental work. Preserve existing building, navigation and freight systems.
 
 ## Playtest the current published build
 

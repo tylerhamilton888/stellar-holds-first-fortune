@@ -24,4 +24,4 @@ The 5–10 minute arrival target still needs normal-speed human pacing review. L
 
 ## Presentation follow-up
 
-The 0.120.0 candidate (RISE179.md) polishes the seeded cottage approach and arrival, adds two optional family letters from existing registrations and updates lodge reactions. Construction, ownership and migration remain with the original owners above; no estate is reseeded.
+0.120.0 (RISE179.md) polishes the seeded cottage approach and arrival, adds two optional family letters from existing registrations and updates lodge reactions. Construction, ownership and migration remain with the original owners above; no estate is reseeded.
