@@ -22,6 +22,8 @@ Version 0.116.0 adds [reinforced picks and basalt masonry](docs/TOOLS171.md): st
 
 Version 0.117.0 adds [cross-profession tool components](docs/COMPONENTS173.md): make or buy a shaped haft, forged pickhead and fittings, then assemble a reinforced pick. Completed manufacturing credits the relevant profession; existing tools stay owned. The inventory now keeps character details visible while its item grid scrolls.
 
+Version 0.120.0 adds [Rise presentation polish](docs/RISE179.md): a cottage approach, gentler arrival guidance, household-aware lodge greetings and two optional family letters. Civic registration no longer puts an unchosen ore lesson first in the journal.
+
 Version 0.119.0 lets you supply the Cold Forge and Winter Stores through gathering, crafting or buying. Rescue readiness depends on civic recognition, a steel pick, safe underground preparation, stocked Winter Stores and three contributions; unrelated craft lessons and home renovation are optional. See [civic livelihoods](docs/LIVELIHOOD177.md).
 
 Version 0.118.0 adds [Borin’s specialist commissions](docs/COMMISSIONS175.md): bring materials and pay his fee for a steel pick, reinforced assembly or individual components. His expertise provides a route without player research or friendship requirements; paid work grants no personal crafting experience.

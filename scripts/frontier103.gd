@@ -85,11 +85,22 @@ static func settle_home(g,fresh:bool=false):
 static func letter(g):
  if not family(g.state) or g.state.claim_id!="copper_ridge":return
  var box=HoldMenuView.disclosure(g,g.panel_body,"Read your parents' letter","home169_letter")
- if box==null:return
- g.label(box,"Our dear one,",18,Color("edc98a"))
- g.label(box,"The papers are in the inner pocket. Old Stonewright's Rise is yours, paid in full. We have put a little aside for years; this is what it was for.",16)
- g.label(box,"The agent called it an established masonry yard with a traditional stone dwelling. Your father says that means the stones have had plenty of time to settle. There is a bed and a sound roof. Take a lamp; we forgot to ask about a lamp.",16)
- g.label(box,"It is a modest beginning, with room for a bigger table and whatever work you find worth doing. Make it yours a little at a time. Eat properly. Write when you arrive. We love you. — Mum and Dad",16)
+ if box!=null:
+  g.label(box,"Our dear one,",18,Color("edc98a"))
+  g.label(box,"The papers are in the inner pocket. Old Stonewright's Rise is yours, paid in full. We have put a little aside for years; this is what it was for.",16)
+  g.label(box,"The agent called it an established masonry yard with a traditional stone dwelling. Your father says that means the stones have had plenty of time to settle. There is a bed and a sound roof. Take a lamp; we forgot to ask about a lamp.",16)
+  g.label(box,"It is a modest beginning, with room for a bigger table and whatever work you find worth doing. Make it yours a little at a time. Eat properly. Write when you arrive. We love you. — Mum and Dad",16)
+ for note in home_letters(g.state):
+  var page=HoldMenuView.disclosure(g,g.panel_body,note.title,note.id)
+  if page!=null:g.label(page,note.body,16)
+static func home_letters(s)->Array:
+ var notes=[]
+ if not family(s):return notes
+ if data(s).permit:
+  notes.append({"id":"home179_recognition","title":"A letter from home · A name in the book","body":"Our dear one,\n\nIvar sent word that your household is in the town book. Your father read that bit twice, then said of course they would see your worth. He has kept the envelope.\n\nWe hoped the Rise would give you somewhere to begin. It is good to hear you are finding people to begin with. There is room at our table whenever you want it.\n\nAll our love,\nMum and Dad"})
+ if data(s).home_reward:
+  notes.append({"id":"home179_improvement","title":"A letter from home · Making it yours","body":"Our dear one,\n\nThe notice of your home registration arrived. Your father laid it beside the old agent's description and said yours was the better piece of writing. I think he meant the house.\n\nWe will leave the furnishing to you. Though if you ever want that old table, your father has already measured the wagon. Twice.\n\nWe are proud of you. We were before the papers, too.\nMum and Dad"})
+ return notes
 static func provisional(s)->bool:
  return not family(s) and active(s) and s.claim_id=="copper_ridge" and bool(data(s).get("rise165",{}).get("accepted",false)) and not data(s).permit
 static func rise_pending(s)->bool:

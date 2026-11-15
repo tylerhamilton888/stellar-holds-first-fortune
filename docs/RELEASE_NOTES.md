@@ -1,9 +1,11 @@
-# 0.119.0 — Your own trade
+# 0.120.0 — A place to come home to
 
-Stonebridge now accepts supplied goods without making you learn every craft first. Inspect and fuel the Cold Forge with gathered or purchased coal. Supply, build and provision the Winter Stores with goods you gather, make or buy. The forge and community counter still open through real work at their sites.
+The cottage at Old Stonewright's Rise now has a stone approach from the masonry lane. Ivar's introduction leaves more room to settle in, and the homestead journal suggests a small first improvement without listing the campaign's requirements.
 
-The rescue now asks for a recognized household, a sound steel pick, safe underground preparation, opened Winter Stores and three civic contributions. A pick commissioned from Borin counts. Home improvement, smithing, timber/cart and food lessons remain optional paths with their existing rewards. Surveying, a demonstrated return route and Stoneworking still prepare you for the actual rescue.
+Ivar, Rurik and Sigrid acknowledge your household registration and home improvements. Their greetings give priority to the rescue and your eventual homecoming. Two optional letters from Mum and Dad mark your household and home registrations; earlier letters remain in the journal.
 
-Work you already completed and supplies already delivered count. Buying goods earns civic recognition when you contribute them, but never invents personal crafting experience or manufacturing credit. Your cottage, belongings and existing story progress remain intact.
+Your existing home, possessions, workers and story progress remain intact. There are no new upkeep tasks, required replies or letter rewards. See CURRENT_STATUS.md for delivery evidence and RISE179.md for scope.
 
-See CURRENT_STATUS.md for delivery evidence and LIVELIHOOD177.md for scope. Later bridge specialist orders and the authored campaign are unchanged. [Previous notes](history/RELEASE_NOTES-before-livelihood177.md).
+[Previous notes](history/RELEASE_NOTES-before-rise179.md).
+
+The journal no longer promotes the default ore lesson over another chosen ambition after civic registration; selecting work guidance still shows the lesson.

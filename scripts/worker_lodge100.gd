@@ -72,10 +72,9 @@ static func panel(g):
   text="'Good work. Your first twenty crowns are counted, and there's a little timber for your room. Your journal has the next leads when you're ready.'"
  if index in [1,2] and bool(g.get_meta("lodge_memorial_reply",false)):
   text="Rurik rubs his shoulder. 'The old shift. Keldran gets a nod before I go below, but I still check the props. My grandfather would haunt me for skipping that.'" if index==1 else "Sigrid sets down her mug. 'Our departed. Nyrda keeps them; we keep their names. I read them on Namesday. Come if you like. Grandmother preferred a useful deed to a long speech.'"
- if index==0 and HoldFrontier103.family(g.state):
-  if HoldFirstVisit99.data(g.state).get("rewarded",false):text="'Your first pay is counted. Put it toward something useful at home—or keep it for a rainy day. The great book has more work whenever you want it.'"
-  elif not HoldFrontier103.data(g.state).home169.introduced:text="Ivar sets down his cup. 'Your parents wrote ahead. Old Stonewright’s Rise is yours, paid in full. East across the bridge. A little weathered, but you could make something of it. Shall I show you?'"
-  else:text="'Settling in? If you want a wage, the western rack and stonebreaker at Old Workings are ready. Twenty crowns and a few building supplies for your first completed load. The great book has work for the town, too.'"
+ if HoldFrontier103.family(g.state) and not bool(g.get_meta("lodge_memorial_reply",false)):
+  var home_line=household_greeting(g,index)
+  if home_line!="":text=home_line
  g.label(g.panel_body,text,19,Color("f2e7d2"))
  if index==0:HoldFrontier103.rise_card(g)
  if index==0 and HoldFrontier103.active(g.state):g.button(g.panel_body,"Where should I go next?",func():g.open_panel("commission"))
@@ -85,3 +84,21 @@ static func panel(g):
    g.button(g.panel_body,"Whose names are on that stone?",func():g.set_meta("lodge_memorial_reply",true);g.refresh_panel();g.restore_menu.call_deferred(0,""))
   else:g.button(g.panel_body,"Back to our conversation",func():g.remove_meta("lodge_memorial_reply");g.refresh_panel();g.restore_menu.call_deferred(0,""))
  g.button(g.panel_body,"Thanks · back to the lodge",g.close_panel)
+
+static func household_greeting(g,index:int)->String:
+ var s=g.state;var d=HoldFrontier103.data(s)
+ if not HoldFrontier103.family(s):return ""
+ if bool(s.surface.get("invasion131",{}).get("returned",false)):
+  return ["Ivar makes room beside the hearth. 'Welcome home, Thane. Sit down. The book can wait until morning.'","Rurik shifts his mug. 'Thane or no Thane, you can still sit here. Sigrid says I mustn't ask you to settle arguments about snoring.'","Sigrid smiles over her cup. 'There you are. For tonight, let somebody else keep an eye on the doors.'"][index]
+ var rescue=int(HoldAncestralClaim.data(s).stage)
+ if rescue in [1,2] and index==0:return "Ivar lowers his voice. 'The survey crew is still below. Check your route and your supports. I'll be here when you have news.'"
+ if rescue>=3:
+  return ["Ivar looks toward the occupied benches. 'Good to hear them arguing over supper again. You brought our people home. I won't forget it.'","Rurik nods toward the benches. 'The survey lot are back to complaining about the stew. Never thought I'd be pleased to hear that.'","Sigrid sets down her cup. 'They're home. That's enough for one evening. Sit with us a while.'"][index]
+ if d.home_reward:
+  return ["Ivar smiles. 'Your home registration is safely in the book. Your parents chose the ground; you've begun to give it a life of its own.'","Rurik grins. 'Heard you registered the house. I won't offer decorating advice. My best chair has a stone under one leg.'","Sigrid lifts her cup. 'To your home, then. May the kettle always be easier to find than the hammer.'"][index]
+ if d.permit:
+  return ["Ivar taps the closed book. 'Your household is entered. People know your name now. How are you finding the place?'","Rurik moves his elbows off the table. 'Saw your name in the book. Pull up a chair; you're no stranger here.'","Sigrid smiles. 'Ivar has your household in the records. He looked pleased about it, though he'd never admit the book could please him.'"][index]
+ if index!=0:return ""
+ if not d.home169.visited and not d.home169.introduced:return "Ivar sets down his cup. 'Your parents wrote ahead. Old Stonewright’s Rise is yours, paid in full. East across the bridge. A little weathered, but you could make something of it. Shall I show you?'"
+ if HoldFirstVisit99.data(s).get("rewarded",false):return "'Your first pay is counted. Put it toward something useful at home—or keep it for a rainy day. How are you settling in?'"
+ return "Ivar warms his hands around his cup. 'Found your way to the Rise, then? Old Stonewright always said a house ought to leave you room for a bigger table. No hurry to fill it.'" if d.home169.visited else "'The Rise is waiting when you're ready. East across the bridge; follow the masonry lane to the cottage. I'll show you if you'd rather have company.'"

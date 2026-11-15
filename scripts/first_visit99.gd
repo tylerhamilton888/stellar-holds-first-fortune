@@ -277,7 +277,7 @@ static func family_lead(g)->Dictionary:
  if not home.visited:
   return {"title":"Old Stonewright's Rise","art":"wood","hint":"Your parents bought the old holding for you. Ivar can show you around, or leave the bunkhouse and follow the eastern road across the bridge. The cottage stands farther east, beside the masonry yard.","goal":"Your own holding · ask Ivar for directions or follow the east road · J"}
  if not home.seeded:return {"title":"Your own holding","art":"wood","hint":"Your ground, buildings and belongings remain yours. O opens building plans. Improve or furnish at your own pace; a finished home with a bed and light can be registered with Ivar after two civic contributions.","goal":"Your own holding · O: build and furnish · J: choose an ambition"}
- return {"title":"A place to make your own","art":"wood","hint":"This is your place to change. O opens plans: furnish, extend the rooms or explore the quarry. A finished home needs a bed and light; existing construction counts toward registration after two civic contributions. Paid work and local trades are there whenever you want them.","goal":"Old Stonewright's Rise · O: improve your home · J: choose an ambition"}
+ return {"title":"A place to make your own","art":"wood","hint":"The cottage is yours. There is room for a lamp by the bed, a table, or whatever you want to make first. O opens your building plans. The road back to Stonebridge is there whenever you want company or paid work.","goal":"Old Stonewright's Rise · O: building plans · J: choose an ambition"}
 static func family_card(g):
  var q=data(g.state);var lead=family_lead(g)
  HoldMenuView.illustrated_text(g.panel_body,lead.art,lead.title,lead.hint)
