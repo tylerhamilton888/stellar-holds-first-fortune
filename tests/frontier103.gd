@@ -188,12 +188,58 @@ func tool_capabilities():
  check(HoldToolCapabilities.basalt_hint(s)=="Your steel pick can cut basalt.","Owned tool guidance no longer asks for research or forging")
  check(not HoldFrontier103.transact(g,"tool","reinforced_pick"),"Reinforcement requires its own technique")
  desk("survey");check(HoldFrontier103.transact(g,"research","reinforced_tools"),"Reinforcement uses ordinary reachable ingredients")
- desk("forge");s.inventory.copper=0;before=s.count("iron")
- check(not HoldFrontier103.transact(g,"tool","reinforced_pick") and s.count("iron")==before,"Missing reinforcement material leaves payment atomic")
- s.add("copper",2)
- check(HoldFrontier103.transact(g,"tool","reinforced_pick") and HoldToolCapabilities.reinforced(s),"Locally forge reinforced pick")
- check(s.count("iron")==before-8 and s.count("copper")==0,"Reinforced pick charges exact materials")
- check(not HoldFrontier103.transact(g,"tool","reinforced_pick"),"Duplicate reinforced forging rejected")
+ desk("forge");s.queue=[]
+ for item in HoldForge147.COMPONENTS:s.inventory[item]=0
+ var raw_before={}
+ for item in ["iron","copper","coal","wood"]:raw_before[item]=s.count(item)
+ var wood_xp=HoldDisciplines.xp(s,"woodworking");var smith_xp=HoldDisciplines.xp(s,"smithing")
+ s.tech.erase("reinforced_tools")
+ check(not HoldFrontier103.transact(g,"craft","forged_pickhead") and s.count("iron")==raw_before.iron,"Unknown head technique cannot spend ingredients")
+ s.tech.reinforced_tools=true
+ s.opening=1
+ check(not HoldFrontier103.transact(g,"craft","shaped_haft"),"Cold workshop cannot start component production")
+ s.opening=2
+ at(Vector2(230,560))
+ check(not HoldFrontier103.transact(g,"craft","shaped_haft"),"Stale remote component callback cannot start work")
+ desk("forge")
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick") and s.count("iron")==raw_before.iron,"Raw resources alone do not bypass component assembly")
+ g.set_meta("forge147_station","components");g.refresh_panel();await snap("components173-ready")
+ check(g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"All three component recipes fit without scrolling")
+ for item in HoldForge147.COMPONENTS:
+  var queued=s.queue.size();button(HoldData.RECIPES[item].name)
+  check(s.queue.size()==queued+1 and s.queue.back().id==item,"Workshop button queues component: "+item)
+ check(HoldDisciplines.xp(s,"woodworking")==wood_xp and HoldDisciplines.xp(s,"smithing")==smith_xp,"Queued work earns no early craft credit")
+ check(s.count("iron")==raw_before.iron-8 and s.count("copper")==raw_before.copper-2 and s.count("coal")==raw_before.coal-3 and s.count("wood")==raw_before.wood-2,"Three components retain the former upgrade's total raw material cost")
+ g.set_meta("forge147_station","components");g.refresh_panel();await snap("components173-queue")
+ s.tick(1);var queue_before=JSON.stringify(s.queue)
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(JSON.stringify(s.queue)==queue_before,"Partly completed component queue survives real save reload")
+ for item in HoldForge147.COMPONENTS:s.tick(30)
+ check(s.count("shaped_haft")==1 and s.count("forged_pickhead")==1 and s.count("tool_fittings")==1,"Queue completes exactly one of each component")
+ check(HoldDisciplines.xp(s,"woodworking")==wood_xp+1 and HoldDisciplines.xp(s,"smithing")==smith_xp+2,"Completed components credit their actual professions")
+ s.tick(30)
+ check(s.count("shaped_haft")==1 and HoldDisciplines.xp(s,"woodworking")==wood_xp+1,"Finished queue cannot duplicate output or craft credit")
+ desk("forge");s.inventory.tool_fittings=0
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick") and s.count("shaped_haft")==1 and s.count("forged_pickhead")==1,"Missing fittings preserve the other components atomically")
+ desk("watch");var money=s.money;var quote=s.price("tool_fittings",true);smith_xp=HoldDisciplines.xp(s,"smithing")
+ check(HoldFrontier103.transact(g,"trade","tool_fittings",true) and s.money==money-quote,"Market supplies missing fittings at the quoted price")
+ check(HoldDisciplines.xp(s,"smithing")==smith_xp,"Buying fittings does not claim smithing work")
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick") and s.count("tool_fittings")==1,"Remote assembly preserves bought components")
+ desk("forge");before=s.count("iron")
+ check(HoldFrontier103.transact(g,"tool","reinforced_pick") and HoldToolCapabilities.reinforced(s),"Assemble a reinforced pick from crafted and purchased components")
+ for item in HoldForge147.COMPONENTS:check(s.count(item)==0,"Assembly spends exactly one "+item)
+ check(s.count("iron")==before,"Assembly does not charge raw materials a second time")
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick"),"Duplicate reinforced assembly rejected")
+ # A player can buy every part without learning each manufacturing technique.
+ s.outpost.reinforced_pick=false;s.tech.erase("reinforced_tools");desk("watch");s.money=1000
+ wood_xp=HoldDisciplines.xp(s,"woodworking");smith_xp=HoldDisciplines.xp(s,"smithing")
+ for item in HoldForge147.COMPONENTS:check(HoldFrontier103.transact(g,"trade",item,true),"Every component has a reliable buying route: "+item)
+ desk("forge")
+ check(not HoldFrontier103.transact(g,"tool","reinforced_pick"),"Bought parts do not bypass assembly knowledge")
+ s.tech.reinforced_tools=true
+ check(HoldFrontier103.transact(g,"tool","reinforced_pick"),"A fully purchased component set assembles normally")
+ check(HoldDisciplines.xp(s,"woodworking")==wood_xp and HoldDisciplines.xp(s,"smithing")==smith_xp,"Purchase and assembly do not fabricate manufacturing credit")
+ g.set_meta("forge147_station","anvil")
  g.refresh_panel();await snap("tools171-forge")
  g.save_game();g.start_game(true);settle();s=g.state
  check(s.steel and HoldToolCapabilities.reinforced(s),"Both pick capabilities survive real save reload")

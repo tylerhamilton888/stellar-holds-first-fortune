@@ -25,7 +25,7 @@ static func item_index(id:String)->int:
  if id in HoldRawArt135.IDS:return 40+HoldRawArt135.IDS.find(id)
  if id in HEARTH_IDS:return 20+HEARTH_IDS.find(id)
  if id.ends_with("_seed"):return 13
- return {"river_fish":12,"turnip_seed":13,"turnip":14,"energy_cell":8,"iron_slag":4,"copper_slag":4,"ammo":6,"scrap":9,"shell":4,"stone":4,"iron_ore":4,"copper_ore":4,"coal":5,"iron":6,"copper":6,"wood":7,"crystal":8,"parts":9,"assembly":9,"food":10,"water":11}.get(id,4)
+ return {"shaped_haft":7,"forged_pickhead":6,"tool_fittings":9,"river_fish":12,"turnip_seed":13,"turnip":14,"energy_cell":8,"iron_slag":4,"copper_slag":4,"ammo":6,"scrap":9,"shell":4,"stone":4,"iron_ore":4,"copper_ore":4,"coal":5,"iron":6,"copper":6,"wood":7,"crystal":8,"parts":9,"assembly":9,"food":10,"water":11}.get(id,4)
 static func tint(id:String)->Color:
  if id in HoldRawArt135.IDS:return Color.WHITE
  return {"stone":Color("9caab5"),"copper":Color("efac72"),"copper_ore":Color("ffba88")}.get(id,Color.WHITE)

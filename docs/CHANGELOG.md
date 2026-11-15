@@ -1,3 +1,7 @@
+# 0.117.0 — Cross-profession tool components
+
+Adds shaped hafts, forged pickheads and tool fittings through existing queued recipes and market transactions. Reinforced-pick assembly consumes one of each, preserving its former total raw cost and all owned tools. Completed manufacturing credits Woodworking or Smithing, while buying parts earns no craft credit. Adds a compact component page in the existing communal forge. See COMPONENTS173.md.
+
 # 0.116.0 — Tools and basalt masonry
 
 Adds reinforced-pick crafting and stronger contacts, careful recovery of basalt blocks, Fine masonry dressing and a paid basalt floor finish. Unifies state-dependent steel-pick guidance and guards both tool transactions at activation. Advanced finishes remain plannable before acquisition. Preserves steel ownership, terrain and plans; integrates new materials with bulk hauling and pallets. See TOOLS171.md.
