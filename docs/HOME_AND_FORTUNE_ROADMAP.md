@@ -1,6 +1,6 @@
 # A Home and a Fortune — next milestones
 
-Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). Building-grid polish was delivered in 0.114.0. The family-origin opening is delivered in 0.115.0; implementation and validation are documented in HOME169.md. The first tool/material slice is delivered in 0.116.0 (TOOLS171.md): reinforced picks, basalt recovery and advanced floor finishing. Cross-profession manufacturing is next.
+Owner directive received 2026-11-14: [complete supplied text](design/HOME_AND_FORTUNE_DIRECTIVE.md). Building-grid polish was delivered in 0.114.0. The family-origin opening is delivered in 0.115.0; implementation and validation are documented in HOME169.md. The first tool/material slice is delivered in 0.116.0 (TOOLS171.md): reinforced picks, basalt recovery and advanced floor finishing. The first cross-profession manufacturing slice is delivered in 0.117.0 (COMPONENTS173.md): craft or buy hafts, heads and fittings for reinforced-pick assembly. Specialist commissions and acquisition alternatives are next.
 
 ## Delivered baseline
 
@@ -26,7 +26,7 @@ Start with `geology.gd` hardness, `deepworks_play.gd` mining feedback, `frontier
 ## Subsequent order
 
 1. Tool capabilities and advanced materials: the first slice is delivered in 0.116.0. Broader advanced-metal and forge-equipment capabilities remain later extensions; preserve planning before acquisition.
-2. Cross-profession manufacturing: a small useful set of hafts, heads, fittings and advanced equipment; keep everyday recipes simple.
+2. Cross-profession manufacturing: the first haft/head/fittings chain is delivered in 0.117.0. Broader advanced equipment and additional component uses remain future extensions; keep everyday recipes simple.
 3. Specialist commissions and alternative acquisition: existing NPC mentors, buying, commissioning and reliable permanent routes; prevent circular requirements or compulsory friendships.
 4. Ledger/sandbox integration: recognize completed work, give civic projects tangible benefits, and remove arbitrary introductory craft gates while preserving the authored campaign.
 5. Environmental/experiential polish: the neglected Rise becomes a personal stronghold; family letters and NPC reactions, without new upkeep chores.

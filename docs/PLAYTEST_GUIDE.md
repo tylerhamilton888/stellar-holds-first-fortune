@@ -22,11 +22,13 @@ Follow the Cold Forge’s actual inspection, processing and contribution require
 
 ## Tools and basalt masonry
 
-At the survey desk, learn Tempered steel, then forge the steel pick (5 iron + 2 timber). Research alone must not open basalt. Afterward learn Reinforced tools (6 iron + 3 copper + 65 crowns) and forge the reinforced pick at the lit communal forge (8 iron + 2 copper + 3 coal + 2 timber). Reopening the menu should show ownership; repeat activation must not charge again.
+At the survey desk, learn Tempered steel, then forge the steel pick (5 iron + 2 timber). Research alone must not open basalt. Afterward learn Reinforced tools (6 iron + 3 copper + 65 crowns). At the lit communal workshop, open Tool components: shape a haft (2 timber), forge a pickhead (6 iron + 3 coal) and make fittings (2 iron + 2 copper). Save/reload with work queued; completed parts should appear once and credit Woodworking or Smithing. Alternatively buy any or all three parts at the market. Assemble the reinforced pick at the anvil using one of each; assembly must not charge raw materials again. Reopening the menu should show ownership; repeat activation must not charge again.
 
 In basalt, ordinary contacts still yield stone. Hold Shift + left mouse for careful contacts with the reinforced pick to recover blocks, then use the normal raw-load/field-dressing and hauling controls. Fine masonry permits the dressing recipe: 2 blocks + 1 water → 2 dressed basalt. Existing town stores offer a buying alternative.
 
 In an underground room's Living Works → Plans, choose Dressed basalt floor before you own its research or supplies. The design should save; finishing must wait for both and spend one dressed basalt per actual tile. Inspect the floor, save/reload and check the pick, partial plans, stock and room contents. Note upgrade pacing and whether stronger contacts feel worthwhile.
+
+In the inventory, scroll the item grid and select each new component. The selected item and character summary should stay visible. Bought parts must not award manufacturing experience, and previously owned reinforced picks should need no replacement parts.
 
 ## Revisit completed work and people
 
