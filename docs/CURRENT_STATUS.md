@@ -1,4 +1,4 @@
-# Current status — 0.118.0 delivered
+# Current status — 0.118.0 delivered; 0.119.0 candidate
 
 ## Published Windows build
 
@@ -19,6 +19,10 @@ Downloaded both public JSON documents, verified their GitHub asset digests and m
 Borin accepts material-plus-fee orders for steel picks, reinforced-pick assembly and individual hafts, heads and fittings. His expertise replaces player research for these orders, with no friendship requirement. Work completes immediately, without personal manufacturing credit or research grants. Self-crafting, market purchases, existing tools and saves are preserved.
 
 Three focused native cases passed 855 assertions without errors; 42 tooling tests passed. Reviewed both conversation pages, quoted costs, blocked/completed orders and scrolled closing responses. See [implementation](COMMISSIONS175.md) and [playtest guide](PLAYTEST_GUIDE.md).
+
+## Candidate
+
+0.119.0 implements the first civic-livelihood integration slice (LIVELIHOOD177.md). Validation and publication are pending; 0.118.0 remains the delivered build.
 
 ## Next work and limits
 

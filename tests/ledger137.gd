@@ -22,7 +22,7 @@ func run():
  check(not L.contribute(g,"forge","coal",6),"Excess cannot overfill slot")
  desk("forge");check(not L.contribute(g,"forge","coal",1),"Delivery requires physical ledger")
  check(L.inspect(g) and not L.inspect(g),"Inspection recorded once at forge")
- check(L.forge_lead(s).title=="Coal for Borin","Buying fuel does not hide the practical processing lesson")
+ check(L.forge_lead(s).title=="An entry in the Ledger","Purchased fuel points straight to the remaining delivery")
  g.open_panel("commission");await snap("forge-processing-lead");g.close_panel()
  ledger();g.save_game();g.start_game(true);settle();s=g.state
  check(L.paid(s,"forge","coal")==3 and L.data(s).inspected,"Partial delivery and investigation survive JSON reload")
@@ -32,7 +32,7 @@ func run():
  check(L.forge_lead(s).title=="Fuel for the first firing" and L.forge_lead(s).hint.contains("still needs 5"),"Spent or missing pack coal changes the next action without losing deposits")
  s.inventory.coal=held_coal;HoldWork132.data(s).facts.erase("cut:coal")
  ledger();check(L.contribute(g,"forge","coal",5),"Remaining fuel accepted")
- check(not L.ready(s,"forge"),"Inventory cannot substitute for practical coal processing")
+ check(L.ready(s,"forge"),"Delivered fuel is sufficient without a compulsory processing lesson")
  HoldWork132.produced(s,"coal",2,"cut")
  check(L.forge_lead(s).title=="The first firing" and HoldFirstVisit99.goal(g).contains("relight the hearth"),"Fully paid and learned forge points back to the hearth in journal and HUD")
  check(L.ready(s,"forge") and not L.finish(g,"forge"),"Completed materials require return to hearth")

@@ -1,41 +1,25 @@
-# Hands of the hold — authored foundations and Winter Stores
+# Hands of the hold — current foundations and Winter Stores
 
-Source 0.99.0 replaces the score threshold for new Stonebridge fortunes. Recognition marks still support the authored contest and closed-round trial; they do not unlock the rescue. The first paid shift remains the prerequisite to the seven foundations below.
+The 0.119.0 candidate continues the authored campaign with five rescue foundations:
 
-## Seven practical milestones
+- Civic household recognition from Ivar after two civic projects or trade seals; existing improved-home recognition also counts.
+- Ownership of a steel pick, self-forged or commissioned from Borin.
+- Recorded underground survey, descent and return through a passage, plus Stoneworking research for supports.
+- Open, stocked Winter Stores.
+- Three civic projects or genuine trade seals in any combination, including the storehouse.
 
-- Register the existing player-built home after earning its plot.
-- Process two iron ore and one coal, relight the forge, smelt two iron, research Tempered steel and forge the pick.
-- Process four timber and travel with a loaded handcart.
-- Craft field tools, catch four fish OR harvest four crops, and cook one meal. Turnip stew now counts alongside fish and advanced meals.
-- Read an underground survey, descend and return through a passage, and research Stoneworking for rescue supports.
-- Complete the Winter Stores.
-- Complete three civic projects or trade seals in any combination, including the storehouse. Repeated specialization and mixed trades have equal narrative eligibility.
-
-Existing work132 production hooks provide proof. Having bought inventory or inflated recognition never substitutes for introductory practice. Reporting every optional lesson is not required; completed work counts automatically.
+Unrelated profession lessons, first-shift completion and home renovation are optional for family-origin fortunes. Existing factual work counts without reporting every lesson; purchased goods qualify for supply projects but never create personal production proof or crafting experience. Later North Crossing specialist work orders retain their explicit personal-production requirements. Recognition marks are presentation, not a rescue score threshold or simulated rival race.
 
 ## Winter Stores
 
-The restoration point is outside the eastern storehouse site. Inspect its foundations, contribute 30 stone, 24 timber and two iron through the Ledger in saved installments, then return to raise the original public building. Smelting, timber and loaded-hauling experience are required. The existing 70-mark reward is paid once without charging deposited materials twice.
+Inspect the eastern foundations, contribute 30 stone, 24 timber and two iron through the physical Ledger in saved installments, then return to raise the original building. Gather, make or buy supplies. The original 70-mark reward pays once; deposited materials are not charged again.
 
-After construction, contribute twelve provisions in installments. Complete the food introduction and return to open the stores. Three permanent supply props appear inside; the storehouse trading counter becomes available. The watch trader remains available throughout. No extra reward is invented for the final opening, and no deposited provision is refunded or consumed twice.
+After construction contribute twelve provisions and return to open the stores. The stocked interior and community trading counter become available. No food lesson is required and no second reward or duplicate consumption is introduced. Remote panels review requirements; construction and opening remain local.
 
-The Ledger, town services and campaign panel explain current requirements. The site has a physical E interaction; remote panels only review requirements. The campaign view names Acts I–V using the existing home/rescue/ancestry/trial state. This batch changes the Act II-to-III eligibility; it does not finish the larger Act IV projects or rebalance the entire finale.
+## State and validation
 
-## Save compatibility
+Existing owners retain inspection, escrow, production facts, tool ownership, household recognition, rewards and story stages. No new save schema or migration reset is introduced. Legacy rescue invitations and accepted/later story progress remain eligible. Act II and Skarrin's household reaction use recognition, not optional renovation.
 
-New first visits initialize surface.campaign138 explicitly. When an older save first reads the new state, an already registered home with at least 180 marks preserves its earned rescue invitation. Accepted rescues and later story stages remain eligible. Existing completed storehouses are recognized as open. No money, supplies, title, house or relationship is granted, removed or reset during migration. Earlier unfinished fortunes follow the new practical milestones using whatever production evidence they already possess.
+The expanded campaign138 case covers original crafting and supplier/commission routes, early deposits, mandatory safety conditions, services, unchanged cottage, reload, no fake experience and once-only optional rewards. Current acceptance is in [LIVELIHOOD177.md](../LIVELIHOOD177.md); publication is recorded in [CURRENT_STATUS.md](../CURRENT_STATUS.md). Normal-speed economy and Windows playtesting remain necessary.
 
-State contains only version, site inspection, Winter Stores completion and preserved legacy invitation. Existing owners retain material escrow, production facts, home/project flags, rewards, scenes and trial totals.
-
-## Validation and remaining work
-
-campaign138-focus verifies prerequisites, staged world changes, local/remote actions, partial deliveries, save/reload, once-only rewards, food/specialist alternatives, zero-score eligibility, and legacy invitation preservation. campaign138 adds the affected trade, frontier, rescue, trial, civic, Ledger and opening regressions. Authored character-rescue tests explicitly reconstruct established older-save eligibility; the new case covers fresh progression.
-
-Remaining: additional substantial restoration and optional collection projects, advanced production/transport adventures, deeper late-act specialization and further Skarrin scenes. Normal-speed pacing, overall campaign duration and Windows device performance still require playtesting. Preserve the existing Thane homecoming and defer marriage/district expansion.
-
-## Next owner playtest
-
-Start a new fortune, finish the paid shift, and follow the Ledger at normal speed. Note whether each unfinished foundation tells you where to go and whether the required technologies feel like natural discoveries. Try a farming-led food route or a repeated trade specialization; neither should require switching to fishing or completing every optional lesson.
-
-Make a partial Winter Stores delivery, save and reload, then inspect and assemble it in person. Check the provisioning stage, the stocked interior, and the newly opened counter. Finally, complete the remaining foundations and speak to Ivar for the rescue. Record active play time and any stretches that feel repetitive; accelerated regression tests do not establish campaign length.
+[Superseded seven-foundation design](../history/CAMPAIGN138-before-livelihood177.md). Rescue, ancestry, invasion, trial and Thane homecoming remain authored story stages.

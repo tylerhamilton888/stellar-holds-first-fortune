@@ -16,15 +16,15 @@ static func learned(s,id:String)->bool:
   if p[1]<p[2]:return false
  return not HoldWork132.progress(s,id).is_empty()
 static func structure_ready(s)->bool:
- return data(s).get("inspected",false) and ((learned(s,"smelt") and learned(s,"timber") and learned(s,"cart")) or data(s).get("legacy_rescue",false) or int(HoldAncestralClaim.data(s).stage)>0)
+ return bool(data(s).get("inspected",false))
+static func recognized(s)->bool:
+ return bool(HoldFrontier103.data(s).get("permit",false)) or bool(HoldFrontier103.data(s).get("home_reward",false))
 static func foundations(s)->Array:
  return [
-  ["A place of your own",bool(HoldFrontier103.data(s).get("home_reward",false)),"Improve your home and register it with Ivar. Any two civic projects or trade seals earn household recognition.",""],
-  ["From seam to steel",learned(s,"ore") and learned(s,"smelt") and learned(s,"steel"),"Process ore and coal, relight the forge, smelt two iron, research Tempered steel and forge the pick.","forge"],
-  ["Timber and transport",learned(s,"timber") and learned(s,"cart"),"Saw four timber and move a loaded handcart. The lessons supply its fittings.","haul"],
-  ["Feed your Folk",learned(s,"kit") and learned(s,"harvest") and learned(s,"cook"),"Craft the field kit, catch fish OR harvest crops, then cook a meal.","food"],
-  ["A safe way below",learned(s,"survey") and learned(s,"route") and s.tech.has("stoneworking"),"Survey underground, descend and return through a passage, and research Stoneworking for the rescue's supports.","survey"],
-  ["The Winter Stores",bool(data(s).get("winter_ready",false)),"Inspect the eastern site, supply its structure, raise the building, then contribute twelve provisions and open the stores.",""],
+  ["A recognized household",recognized(s),"Record your household with Ivar after two civic projects or trade seals. Improving your home is optional; your existing recognition counts.",""],
+  ["A sound expedition pick",s.steel,"Own a steel pick: forge it yourself or commission Borin. His work needs no smithing research from you.","forge"],
+  ["A safe way below",learned(s,"survey") and learned(s,"route") and s.tech.has("stoneworking"),"Survey underground, descend and return through a passage, and research Stoneworking for the rescue's supports. Earlier completed work counts.","survey"],
+  ["The Winter Stores",bool(data(s).get("winter_ready",false)),"Inspect the eastern site, supply its structure, raise the building, then contribute twelve provisions and open the stores. Gather, make or buy the supplies.",""],
   ["Hands of the hold",HoldWork132.contributions(s)>=3,"Complete three civic projects or trade seals in any combination. Specializing in one trade counts equally.",""]]
 static func eligible(s)->bool:
  if not active(s):return false
@@ -38,7 +38,7 @@ static func act(s)->int:
  if HoldClaim127.stage(s)>0:return 5
  if int(q.stage)>=3:return 4
  if int(q.stage)>0 or eligible(s):return 3
- return 2 if HoldFrontier103.data(s).get("home_reward",false) else 1
+ return 2 if recognized(s) else 1
 static func title(s)->String:
  return ["","I · A place of your own","II · Hands of the hold","III · Beneath the mountain","IV · The weight of an oath","V · The Thane’s trial"][act(s)]
 static func progress(s)->int:
@@ -50,7 +50,7 @@ static func near_site(g)->bool:
  return active(g.state) and g.zone!="mine" and g.surface.area=="trail" and g.surface.walkable(g.player) and g.player.distance_to(SITE)<110 and g.surface.clear_interaction(g.player,SITE)
 static func inspect(g)->bool:
  if not near_site(g) or data(g.state).inspected or HoldFrontier103.data(g.state).get("storehouse",false):return false
- data(g.state).inspected=true;g.save_game();g.notify("The eastern foundations are sound. Ivar needs dressed stone, timber and iron fittings, then a loaded-cart delivery and a hand raising the shell.");return true
+ data(g.state).inspected=true;g.save_game();g.notify("The eastern foundations are sound. Ivar needs dressed stone, timber and iron fittings, then a hand raising the shell. Gather, make or buy the supplies.");return true
 static func assemble(g)->bool:
  if not near_site(g) or not HoldLedger137.ready(g.state,"storehouse"):return false
  return HoldFrontier103.build_storehouse(g)
@@ -71,7 +71,7 @@ static func summary(g):
  if not active(s) or not HoldFrontier103.opportunities(s):return
  g.label(g.panel_body,"CAMPAIGN · "+title(s),18)
  if eligible(s):g.label(g.panel_body,"Ivar’s rescue lead is available." if int(HoldAncestralClaim.data(s).stage)==0 else "Your accepted story continues. Earlier milestones remain recorded.",15)
- else:g.label(g.panel_body,"Foundations · %d / 7 · No deadline. Recognition follows deeds, not a target score." % progress(s),15)
+ else:g.label(g.panel_body,"Foundations · %d / %d · No deadline. Recognition follows deeds, not a target score." % [progress(s),foundations(s).size()],15)
  if int(HoldAncestralClaim.data(s).stage)>=3:
   g.label(g.panel_body,HoldRestoration139.goal(s),15)
   g.small_button(g.panel_body,"The North Crossing · stages and work orders",func():g.open_panel("restoration139"))
@@ -79,15 +79,15 @@ static func summary(g):
 static func panel(g):
  var s=g.state
  if not active(s):return
- HoldMenuView.illustrated_text(g.panel_body,"wood",title(s),"Make a home, learn the essentials, and help Stonebridge prepare. The rescue opens after these foundations; contribution marks record recognition.")
+ HoldMenuView.illustrated_text(g.panel_body,"wood",title(s),"Build a life in Stonebridge and help your neighbours prepare. Your recorded work already counts. Home improvements and profession lessons are optional; the rescue still needs safe underground preparation.")
  if data(s).get("legacy_rescue",false):g.label(g.panel_body,"Your previously earned rescue invitation is preserved. New projects remain optional for this established fortune.",15)
  var box=HoldMenuView.section(g.panel_body,"The Winter Stores · "+("Open" if data(s).winter_ready else "Stock the shelves" if HoldFrontier103.data(s).get("storehouse",false) else "Raise the shell" if HoldLedger137.remaining(s,"storehouse").is_empty() else "Inspect and supply"))
- g.label(box,"Eastern site: south of the bridge, in front of the storehouse foundations. Inspect here, deliver materials at the great book outside, east of the bunkhouse, then return to raise the shell. Twelve provisions finish the stores after you have learned harvesting/fishing and cooking.",15)
+ g.label(box,"Eastern site: south of the bridge, in front of the storehouse foundations. Inspect here, deliver materials at the great book outside, east of the bunkhouse, then return to raise the shell. Twelve provisions finish the stores. Gather, make or buy what the crews need; no profession lesson is required.",15)
  if not data(s).inspected and not HoldFrontier103.data(s).get("storehouse",false):
   var b=g.button(box,"Inspect the eastern foundations",func():inspect(g);g.refresh_panel());b.disabled=not near_site(g)
  elif not HoldFrontier103.data(s).get("storehouse",false):
   g.label(box,"Materials still needed: "+("all delivered" if HoldLedger137.remaining(s,"storehouse").is_empty() else HoldData.cost_text(HoldLedger137.remaining(s,"storehouse"))),15)
-  for id in ["smelt","timber","cart"]:g.label(box,("✓ " if learned(s,id) else "○ ")+HoldWork132.LESSONS[id].title,15)
+  g.label(box,("✓ " if data(s).inspected else "○ ")+"Eastern foundations inspected",15)
   var b=g.button(box,"Raise the community storehouse · 70 marks",func():assemble(g);g.refresh_panel());b.disabled=not near_site(g) or not HoldLedger137.ready(s,"storehouse")
  elif not data(s).winter_ready:
   g.label(box,"Provisions delivered · %d / 12" % HoldLedger137.paid(s,"winter","food"),15)
@@ -97,5 +97,5 @@ static func panel(g):
  for row in foundations(s):
   var card=HoldMenuView.section(g.panel_body,("✓ " if row[1] else "○ ")+row[0]);g.label(card,row[2],15)
   if row[3]!="":
-   var chain=str(row[3]);g.small_button(card,"Open practical lessons",func():g.set_meta("work132_chain",chain);HoldWorkView132.open(g))
+   var chain=str(row[3]);g.small_button(card,"Optional practical lessons",func():g.set_meta("work132_chain",chain);HoldWorkView132.open(g))
  if eligible(s) and int(HoldAncestralClaim.data(s).stage)==0:g.label(g.panel_body,"Ready: visit Ivar’s shift book in the bunkhouse to accept the rescue.",17)
