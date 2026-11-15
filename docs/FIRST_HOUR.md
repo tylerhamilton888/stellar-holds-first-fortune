@@ -1,4 +1,4 @@
-# First-hour presentation — 0.119.0
+# First-hour presentation — 0.120.0 candidate
 
 The opening begins with the parents’ purchased holding. Ivar introduces the same Rise near arrival; the player can use the modest cottage, read the parent letter and choose a personal ambition before mining. The brief scene is saved/skippable, and existing fortunes retain their property and progress. See [implementation and migration](HOME169.md).
 
@@ -15,3 +15,5 @@ Eight focused native cases passed 681 assertions, with 42 tooling tests and outp
 [Previous 0.106.0 presentation audit](history/FIRST_HOUR-before-home169.md) records the superseded bunkhouse-first progression.
 
 Current campaign changes and delivered acceptance: [LIVELIHOOD177.md](LIVELIHOOD177.md). [Previous presentation audit](history/FIRST_HOUR-before-livelihood177.md).
+
+The Rise polish pass (RISE179.md) adds a clear cottage approach, a less instructional final tour beat, milestone-aware lodge greetings and optional family letters after registrations. The post-registration journal respects non-work ambitions instead of promoting the default ore lesson. Earlier opening controls, costs and property ownership remain unchanged.

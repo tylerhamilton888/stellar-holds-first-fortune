@@ -34,7 +34,7 @@ static func summary(g):
   if plot_ready:
    var card=HoldMenuView.section(g.panel_body,"Your next milestone · household recognition earned")
    g.label(card,"Two contributions are recorded. Visit Ivar's shift book in the bunkhouse to record your household. Your property and improvements remain yours.",17)
-  var id="" if plot_ready else W.tracked(s)
+  var id="" if plot_ready or (HoldFrontier103.family(s) and q.focus!="work") else W.tracked(s)
   if id!="":
    var card=HoldMenuView.section(g.panel_body,"Your next step · "+W.LESSONS[id].title)
    HoldMenuView.illustrated_text(card,{"forge":"iron_ore","haul":"wood","survey":"crystal","food":"river_fish"}[W.LESSONS[id].chain],"",W.LESSONS[id].hint)

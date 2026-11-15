@@ -107,3 +107,11 @@ Speak to Borin in the communal forge and ask him to make a pick or components. T
 Try a supplier route: buy fuel, inspect the cold hearth, contribute eight coal at the Ledger, and relight the forge. Partial deliveries made before inspection must remain recorded. Supply and inspect the eastern storehouse site, raise it, contribute twelve provisions and return to open the stores. Confirm its trading counter works; no smelting, hauling, farming, fishing or cooking lesson should be required for these supply projects.
 
 Earn household recognition from Ivar, commission or forge a steel pick, survey underground, descend and return through a passage, and research Stoneworking. Complete three civic projects or genuine trade seals in total. Leave the cottage unchanged and check that the campaign offers the rescue. Existing work should count without repeating it. Save/reload midway and revisit completed projects: deliveries and rewards must not duplicate. Optional trade seals and later North Crossing work orders still require their stated personal production; buying supplies must not award crafting experience.
+
+## A place to come home to (0.120.0 candidate)
+
+On a new fortune, take Ivar's property tour through its final beat. Follow the masonry lane to the cottage's stone approach and check the doorway/bed/chest as before. In an established estate, confirm no construction or contents are replaced and no extra approach appears on a property that was never seeded with the cottage.
+
+Register the household through two real contributions. Talk to Ivar, Rurik and Sigrid; they should acknowledge the registration without insisting on a first mining shift. Open J and read **A letter from home · A name in the book**. Improve and register the home to unlock **Making it yours**; both letters should remain available after reload, without rewards or reply requirements. Scroll each letter to its signature. Choosing another ambition should not place the default ore lesson first; choosing work should still show it.
+
+Check greetings during an active rescue, after the rescue and after the final homecoming. Those events should take priority. Sigrid/Rurik's memorial topic should still replace the greeting cleanly. Report whether the warmer responses feel natural on repeat visits; automated checks cannot judge normal-speed pacing.

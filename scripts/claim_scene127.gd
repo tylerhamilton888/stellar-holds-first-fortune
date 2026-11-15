@@ -25,8 +25,10 @@ func _ready():
   "rise":
    lines=[["IVAR DEEPMEASURE","Your parents chose sound ground. The agent called it an established masonry yard. Well, it has certainly been here a while. Come along; I'll show you."],
     ["IVAR DEEPMEASURE","There she is. A roof and a place to begin—that is what your parents wanted for you. The quarry has slept for years, but the stone hasn't gone anywhere. The place is yours, paid in full."],
-    ["IVAR DEEPMEASURE","Put your own touch on it. If you want wages, the western rack and stonebreaker at Old Workings are on loan. There are trades to learn and town projects in the great book, too. Start with what matters to you."]]
-   if not HoldFrontier103.data(game.state).get("home169",{}).get("seeded",false):lines[1][1]="The holding and everything you have put into it remain yours. Two contributions record your household in the town book; they are not a price for your own ground."
+    ["IVAR DEEPMEASURE","The masonry lane runs along the yard; these old stones lead to your door. I'll leave you to look around. Come by the bunkhouse when you want company—or work. There's no need to decide everything today."]]
+   if not HoldFrontier103.data(game.state).get("home169",{}).get("seeded",false):
+    lines[1][1]="The holding and everything you have put into it remain yours. Two contributions record your household in the town book; they are not a price for your own ground."
+    lines[2][1]="I'll leave you to look around. Come by the bunkhouse when you want company—or work. There's no need to decide everything today."
   "trial":
    lines=[["IVAR DEEPMEASURE",("The books are closed. Your work already exceeds Skarrin's tally, but he challenges your right to lead. Let the public test answer him. Today, the load decides." if HoldClaim127.closed_score(game.state)>int(HoldMountain104.data(game.state).rival_at_award) else "The books are closed. Work, deliveries and the charter allowance leave two equal claims. Today, the load decides.")],
     ["SKARRIN","My retaining wall already holds half this town. I trust we shall measure stone today, not grandfathers."],

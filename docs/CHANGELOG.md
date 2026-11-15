@@ -1,3 +1,11 @@
+# 0.120.0 — A place to come home to
+
+- Added a nonblocking stone approach to the seeded cottage using existing ground art.
+- Softened Ivar's arrival scene and early home guidance while retaining factual old-estate variants.
+- Added milestone-aware lodge greetings with rescue, homecoming and memorial priorities.
+- Added two optional family letters from existing registrations, without tasks or rewards.
+- Extended state, payment, save and native-view coverage in the existing opening case.
+
 # 0.119.0 — Civic livelihoods
 
 - Cold Forge and Winter Stores accept supplied goods without compulsory personal-production lessons.

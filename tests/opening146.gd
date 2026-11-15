@@ -40,6 +40,7 @@ func run():
  await snap("home169-introduction")
  g.save_game();g.start_game(true);settle()
  check(g.opening_scene is HoldClaimScene127 and g.opening_scene.step==1,"Property introduction resumes its saved beat")
+ g.opening_scene.age=4;g.opening_scene.advance();await snap("polish179-introduction-farewell")
  g.opening_scene.finish();await process_frame;settle()
  check(g.surface.area=="claim" and g.surface.walkable(g.player) and not HoldFirstVisit99.data(g.state).rewarded,"Skipping leaves the player at their usable holding without mining credit")
  at(HoldFurnishings.bedside(HoldFrontier103.HOME_BED))
@@ -71,4 +72,59 @@ func run():
  at(Vector2(480,500));var property=JSON.parse_string(JSON.stringify(g.state.surface.homes))
  check(HoldFrontier103.permit(g) and not HoldFirstVisit99.data(g.state).rewarded,"Two real civic projects earn recognition without requiring paid mining")
  check(JSON.parse_string(JSON.stringify(g.state.surface.homes))==property and not HoldFrontier103.home_ready(g),"Recognition preserves the cottage and does not pay its improvement milestone")
+ await polish179()
  print("OPENING146: %d passed / %d failed" % [passed,failed]);g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)
+
+func polish179():
+ var s=g.state;var d=HoldFrontier103.data(s)
+ var money=s.money;var inventory=s.inventory.duplicate(true);var estate=JSON.parse_string(JSON.stringify(s.surface.homes))
+ check(HoldFrontier103.home_letters(s).size()==1,"Civic registration unlocks only its own family letter")
+ HoldWorkerLodge100.speak(g,0)
+ check(has_label("Your household is entered") and not has_label("first completed load"),"Recognized Ivar greeting replaces first-shift instructions without requiring mining")
+ await snap("polish179-ivar-recognition");g.close_panel()
+ for i in [1,2]:
+  HoldWorkerLodge100.speak(g,i)
+  check(not has_label("new hand") and not has_label("upstairs room"),"Miners recognize the registered household")
+  g.close_panel()
+ HoldWorkerLodge100.speak(g,2);button("Whose names")
+ check(has_label("Our departed") and not has_label("household in the records"),"Memorial reply retains priority over household chatter");g.close_panel()
+ HoldFirstVisit99.data(s).focus="homestead";g.open_panel("commission")
+ check(not has_label("Your next step · Ore"),"Registered household journal does not override a non-work ambition with the default ore lesson")
+ g.close_panel();HoldFirstVisit99.data(s).focus="work";g.open_panel("commission")
+ check(has_label("Your next step · Ore"),"Explicitly chosen work guidance retains the practical lesson")
+ g.close_panel();HoldFirstVisit99.data(s).focus="homestead";g.open_panel("commission");button("+ A letter from home · A name")
+ check(has_label("He has kept the envelope") and not has_label("The notice of your home"),"Only earned correspondence appears in the journal")
+ await snap("polish179-recognition-letter");await letter_end();await snap("polish179-recognition-scrolled");g.close_panel()
+ check(s.money==money and s.inventory==inventory and JSON.parse_string(JSON.stringify(s.surface.homes))==estate,"Reading and revisiting letters/greetings never pays rewards or changes the estate")
+ g.surface.enter("claim");settle();at(HoldFrontier103.HOME_DOOR)
+ for p in [Vector2(2300,1140),Vector2(2300,1180),Vector2(2400,1180),Vector2(2520,1180)]:check(g.surface.walkable(p),"Cottage approach remains physically clear: "+str(p))
+ await snap("polish179-cottage-approach")
+ for item in ["wood","stone","iron"]:s.add(item,10)
+ at(Vector2(2300,1050));g.surface.placing="lamp"
+ check(g.surface.place(Vector2(2380,1020)),"Home polish follows an actual paid cottage improvement")
+ g.surface.enter(HoldFrontier103.lodge(s));settle();at(Vector2(480,500))
+ check(HoldFrontier103.finish_home(g),"Improved-home registration uses its existing once-only owner")
+ check(HoldFrontier103.home_letters(s).size()==2,"Home registration adds its family note while keeping earlier correspondence")
+ HoldWorkerLodge100.speak(g,0);check(has_label("give it a life of its own"),"Ivar acknowledges the registered improvement");await snap("polish179-ivar-home");g.close_panel()
+ g.open_panel("commission");button("+ A letter from home · Making")
+ check(has_label("We were before the papers, too"),"Home note is warm correspondence rather than a new chore")
+ await letter_end();await snap("polish179-home-letter-scrolled");g.close_panel()
+ var rescue=HoldAncestralClaim.data(s);rescue.stage=1
+ HoldWorkerLodge100.speak(g,0);check(has_label("survey crew is still below") and not has_label("home registration"),"Active rescue takes precedence over domestic congratulations");g.close_panel()
+ rescue.stage=3;HoldWorkerLodge100.speak(g,0);check(has_label("brought our people home"),"Successful rescue has its own greeting");g.close_panel();rescue.stage=0
+ var prior=s.surface.get("invasion131",{}).duplicate(true);s.surface.invasion131={"returned":true}
+ HoldWorkerLodge100.speak(g,0);check(has_label("Welcome home, Thane"),"Recorded final homecoming takes precedence over early milestones");g.close_panel()
+ if prior.is_empty():s.surface.erase("invasion131")
+ else:s.surface.invasion131=prior
+ money=s.money;inventory=s.inventory.duplicate(true);estate=JSON.parse_string(JSON.stringify(s.surface.homes))
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(HoldFrontier103.home_letters(s).size()==2 and s.money==money and s.inventory==inventory and JSON.parse_string(JSON.stringify(s.surface.homes))==estate,"Correspondence survives reload without duplicate rewards or property changes")
+ var saved=HoldFrontier103.data(s).duplicate(true);HoldFrontier103.data(s).erase("home169")
+ check(HoldFrontier103.home_letters(s).is_empty() and HoldWorkerLodge100.household_greeting(g,0)=="","Legacy non-family fortunes do not acquire invented family history")
+ s.surface.frontier103=saved
+
+func letter_end():
+ for i in 10:await process_frame
+ var focused=root.gui_get_focus_owner()
+ if focused!=null:focused.release_focus()
+ g.menu_scroll.scroll_vertical=10000

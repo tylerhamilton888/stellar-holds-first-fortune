@@ -1,4 +1,4 @@
-# Current status — 0.119.0 delivered
+# Current status — 0.119.0 delivered; 0.120.0 candidate
 
 ## Published Windows build
 
@@ -19,6 +19,10 @@ Downloaded both public JSON documents, verified their GitHub asset digests and m
 Cold Forge and Winter Stores accept gathered, crafted or purchased supplies. Inspection, physical completion, saved partial deposits, real services and once-only rewards remain. Five rescue foundations recognize household registration, owned steel pick, underground survey/return route and Stoneworking, opened Winter Stores and three contributions. Unrelated professions and home renovation are optional. Genuine craft credit, later bridge orders and the authored story remain unchanged.
 
 Five focused native cases passed 527 assertions; 42 tooling tests passed. Reviewed the Ledger, forge-ready screen and campaign top/scrolled views. See [implementation](LIVELIHOOD177.md) and [playtest guide](PLAYTEST_GUIDE.md).
+
+## Candidate
+
+0.120.0 implements the focused Rise presentation pass (RISE179.md). Focused validation and native visual review are running; publication is pending.
 
 ## Next work and limits
 

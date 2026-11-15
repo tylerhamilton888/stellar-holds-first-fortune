@@ -29,6 +29,6 @@ Start with `geology.gd` hardness, `deepworks_play.gd` mining feedback, `frontier
 2. Cross-profession manufacturing: the first haft/head/fittings chain is delivered in 0.117.0. Broader advanced equipment and additional component uses remain future extensions; keep everyday recipes simple.
 3. Specialist commissions and alternative acquisition: the first paid Borin service is implemented in 0.118.0. Personal specialist stories and further techniques remain extensions. Preserve buying, self-making and reliable permanent routes; prevent circular requirements or compulsory friendships.
 4. Ledger/sandbox integration: delivered in 0.119.0. Existing facts/deposits count, supplied projects unlock their actual services, and unrelated craft/home gates are removed. Authored rescue safeguards and North Crossing specialist orders remain.
-5. Environmental/experiential polish: the neglected Rise becomes a personal stronghold; family letters and NPC reactions, without new upkeep chores.
+5. Environmental/experiential polish: the 0.120.0 candidate adds a cottage approach, gentler arrival, family milestone letters and lodge reactions without upkeep chores (RISE179.md). Continue with normal-speed review before choosing further interior/environment work.
 
 Preserve the same property through Thaneship, all possessions and story records. The family supplied the beginning; the player builds the fortune. Ordinary Windows playtesting remains necessary throughout.

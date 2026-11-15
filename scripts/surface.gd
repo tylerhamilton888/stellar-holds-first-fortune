@@ -947,6 +947,10 @@ func draw_outdoors():
  if area=="claim":
   world.tile(0,Rect2(1780,560,800,80),100,Color("b8b29a"))
   world.tile(0,Rect2(2480,560,80,1370),100,Color("b8b29a"))
+  if HoldFrontier103.family(g.state) and HoldFrontier103.data(g.state).home169.seeded:
+   # Ground treatment only: keep the original cottage and every player alteration intact.
+   world.tile(0,Rect2(2260,1140,260,80),100,Color("aaa48a"))
+   world.tile(0,Rect2(2260,1100,80,80),100,Color("aaa48a"))
  for i in 8:scenery(Vector2(120+i*245,245+sin(i)*30),1,330)
  if area=="claim" and not HoldFrontier103.active(g.state):
   var upgraded=int(g.state.surface.homes[g.state.claim_id].level)>0
