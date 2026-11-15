@@ -108,7 +108,7 @@ Try a supplier route: buy fuel, inspect the cold hearth, contribute eight coal a
 
 Earn household recognition from Ivar, commission or forge a steel pick, survey underground, descend and return through a passage, and research Stoneworking. Complete three civic projects or genuine trade seals in total. Leave the cottage unchanged and check that the campaign offers the rescue. Existing work should count without repeating it. Save/reload midway and revisit completed projects: deliveries and rewards must not duplicate. Optional trade seals and later North Crossing work orders still require their stated personal production; buying supplies must not award crafting experience.
 
-## A place to come home to (0.120.0 candidate)
+## A place to come home to (0.120.0)
 
 On a new fortune, take Ivar's property tour through its final beat. Follow the masonry lane to the cottage's stone approach and check the doorway/bed/chest as before. In an established estate, confirm no construction or contents are replaced and no extra approach appears on a property that was never seeded with the cottage.
 
