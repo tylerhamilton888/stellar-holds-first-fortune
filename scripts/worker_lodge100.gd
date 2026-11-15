@@ -99,6 +99,6 @@ static func household_greeting(g,index:int)->String:
  if d.permit:
   return ["Ivar taps the closed book. 'Your household is entered. People know your name now. How are you finding the place?'","Rurik moves his elbows off the table. 'Saw your name in the book. Pull up a chair; you're no stranger here.'","Sigrid smiles. 'Ivar has your household in the records. He looked pleased about it, though he'd never admit the book could please him.'"][index]
  if index!=0:return ""
- if not d.home169.visited and not d.home169.introduced:return "Ivar sets down his cup. 'Your parents wrote ahead. Old Stonewright’s Rise is yours, paid in full. East across the bridge. A little weathered, but you could make something of it. Shall I show you?'"
  if HoldFirstVisit99.data(s).get("rewarded",false):return "'Your first pay is counted. Put it toward something useful at home—or keep it for a rainy day. How are you settling in?'"
+ if not d.home169.visited and not d.home169.introduced:return "Ivar sets down his cup. 'Your parents wrote ahead. Old Stonewright’s Rise is yours, paid in full. East across the bridge. A little weathered, but you could make something of it. Shall I show you?'"
  return "Ivar warms his hands around his cup. 'Found your way to the Rise, then? Old Stonewright always said a house ought to leave you room for a bigger table. No hurry to fill it.'" if d.home169.visited else "'The Rise is waiting when you're ready. East across the bridge; follow the masonry lane to the cottage. I'll show you if you'd rather have company.'"
