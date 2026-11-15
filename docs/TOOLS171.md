@@ -1,5 +1,7 @@
 # Tools and basalt masonry — 0.116.0 delivered
 
+**Current recipe:** 0.117.0 supersedes the direct raw-material reinforced-pick payment described below with one shaped haft, forged pickhead and fitting set. The total self-made raw cost and owned tools are unchanged. See [component manufacturing](COMPONENTS173.md).
+
 The existing steel pick still costs 5 iron and 2 timber after Tempered steel. Reinforced tools research requires Tempered steel, 6 iron, 3 copper and 65 coins. The pick upgrade then costs 8 iron, 2 copper, 3 coal and 2 timber at the lit communal forge. Neither step consumes materials from behind its own access gate. Existing market purchases provide an alternative source of basalt materials.
 
 ## Ownership and behavior

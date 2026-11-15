@@ -20,6 +20,8 @@ Version 0.114.0 adds [consistent building grids](docs/GRID167.md), live room dim
 
 Version 0.116.0 adds [reinforced picks and basalt masonry](docs/TOOLS171.md): stronger contacts, careful block recovery, dressed basalt floors and advance planning with actual material/knowledge checks. Existing tools and excavations remain intact.
 
+Version 0.117.0 adds [cross-profession tool components](docs/COMPONENTS173.md): make or buy a shaped haft, forged pickhead and fittings, then assemble a reinforced pick. Completed manufacturing credits the relevant profession; existing tools stay owned. The inventory now keeps character details visible while its item grid scrolls.
+
 ## Develop and release
 
 Read [current status](docs/CURRENT_STATUS.md), [handoff](docs/SESSION_HANDOFF.md), then [AGENTS.md](AGENTS.md). Clone `master`, which contains the editable game and original assets. Use Godot **4.4.1 stable**, the standard editor, and Python 3.11 or newer. Open `project.godot`; the editor imports assets. F5 runs the project.
