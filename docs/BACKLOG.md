@@ -1,8 +1,8 @@
-# Current backlog — 2026-11-14
+# Current backlog — 2026-11-15
 
 ## Current work and next milestone
 
-Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): 0.116.0 delivers reinforced picks and basalt masonry (TOOLS171.md); 0.117.0 delivers the first cross-craft parts chain (COMPONENTS173.md). 0.118.0 implements a candidate Borin commission service (COMMISSIONS175.md); validation/delivery are pending. After delivery, continue Ledger/sandbox integration. Preserve existing building, navigation and freight systems.
+Delivered: 0.114.0 [building-grid presentation](GRID167.md) and 0.115.0 [family-origin opening](HOME169.md), including family-purchased property, starter cottage, optional work and civic recognition distinct from ownership. Continue with the [A Home and a Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md): 0.116.0 delivers reinforced picks and basalt masonry (TOOLS171.md); 0.117.0 delivers the first cross-craft parts chain (COMPONENTS173.md). 0.118.0 delivers Borin’s commission service (COMMISSIONS175.md). Next continue Ledger/sandbox integration: recognize completed work and review arbitrary introductory profession gates without disrupting the authored campaign. Preserve existing building, navigation and freight systems.
 
 ## Playtest the current published build
 

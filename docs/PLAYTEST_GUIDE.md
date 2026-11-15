@@ -98,6 +98,6 @@ Load a prior provisional holding and a permanent household. Verify claim/name, b
 
 At the Rise, use fine construction, the building catalogue and furniture placement. Compare the shared bold tile lines and finer subdivisions on the expanded eastern/southern grounds and inside a player-built room. Check gold row/column guides against the preview. In O → Plan Your Holding, drag a room and inspect its live footprint dimensions; align edges/centers with another plan, zoom and pan, and switch floors. Save/reload and confirm existing placements are unchanged.
 
-## Borin’s commissions (0.118.0 candidate)
+## Borin’s commissions (0.118.0)
 
 Speak to Borin in the communal forge and ask him to make a pick or components. Try a steel pick with 5 iron, 2 timber and 35 crowns without Tempered steel research; then commission parts or bring bought/crafted ones for reinforced assembly (45 crowns). The steel pick must already be owned. Check the quoted cost before choosing; completed work goes straight into the pack or tool ownership. Check both pages and scroll to the closing response. Missing supplies, a cold forge and walking away must never charge you. Reload after a component order and after assembly. Personal crafting experience and research should remain unchanged.
