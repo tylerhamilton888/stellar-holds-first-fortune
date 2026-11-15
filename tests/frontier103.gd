@@ -158,6 +158,7 @@ func run():
  check(HoldFrontier103.data(g.state).home_reward and HoldFrontier103.data(g.state).storehouse,"Home and town construction persist after reload")
  check(g.surface.architecture.record(str(home.id)).rooms.size()==2,"Player design and upper floor survive reload")
  await tool_capabilities()
+ await specialist_commissions()
  print("FRONTIER103: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
 
@@ -275,3 +276,55 @@ func tool_capabilities():
  check(s.count("dressed_basalt")==before+2,"Completed dressing produces the quoted basalt finish material")
  var cargo_before=int(g.deep.haul.bucket().get("basalt_block",0));g.deep.haul.collect("basalt_block",2,g.player)
  check(int(g.deep.haul.bucket().get("basalt_block",0))==cargo_before+2,"Recovered basalt uses physical bulk haulage")
+
+func specialist_commissions():
+ var s=g.state
+ desk("forge");at(HoldForge147.BORIN_TALK)
+ s.steel=false;s.outpost.reinforced_pick=false;s.tech.erase("extraction");s.tech.erase("reinforced_tools");s.money=1000
+ for item in ["iron","copper","coal","wood"]:s.inventory[item]=100
+ for item in HoldForge147.COMPONENTS:s.inventory[item]=0
+ var smith_xp=HoldDisciplines.xp(s,"smithing");var wood_xp=HoldDisciplines.xp(s,"woodworking")
+ HoldPeople.meet(g,"borin")
+ var record=JSON.stringify(HoldPeople.records(s).get("borin",{}))
+ var original=JSON.stringify(s.inventory);var money=s.money
+ check(not HoldToolCapabilities.commission(g,"unknown") and s.money==money and JSON.stringify(s.inventory)==original,"Unknown commission leaves payment untouched")
+ s.opening=1
+ check(not HoldToolCapabilities.commission(g,"steel"),"Cold forge rejects specialist work")
+ s.opening=2
+ check(not HoldToolCapabilities.commission(g,"reinforced_pick"),"Reinforced assembly cannot skip the base pick")
+ at(Vector2(230,560))
+ check(not HoldToolCapabilities.commission(g,"steel") and s.money==money,"Remote smith callback cannot charge the player")
+ at(HoldForge147.BORIN_TALK);s.money=34
+ check(not HoldToolCapabilities.commission(g,"steel") and s.money==34 and JSON.stringify(s.inventory)==original,"Missing fee preserves all materials")
+ s.money=1000;s.inventory.iron=4;original=JSON.stringify(s.inventory)
+ check(not HoldToolCapabilities.commission(g,"steel") and s.money==1000 and JSON.stringify(s.inventory)==original,"Missing materials preserve fee and remaining pack")
+ s.inventory.iron=100
+ HoldConversation.start(g,"borin");button("Could you make a pick")
+ check(g.talk_topic=="tool_commission","Borin exposes the service in his actual conversation")
+ await snap("commissions175-picks")
+ button("Steel pick ·")
+ check(s.steel and s.money==965 and s.count("iron")==95 and s.count("wood")==98,"Conversation orders a steel pick for exact materials and fee without research")
+ check(not HoldToolCapabilities.commission(g,"steel") and s.money==965,"Already-owned steel pick cannot charge again")
+ button("Ask for individual components")
+ await snap("commissions175-parts")
+ for id in HoldForge147.COMPONENTS:button(HoldToolCapabilities.commission_name(id)+" ·")
+ check(s.count("shaped_haft")==1 and s.count("forged_pickhead")==1 and s.count("tool_fittings")==1,"Borin makes each component without player research")
+ check(s.money==917 and s.count("iron")==87 and s.count("copper")==98 and s.count("coal")==97 and s.count("wood")==96,"All component commissions consume exact recipe materials and quoted fees")
+ check(JSON.stringify(HoldPeople.records(s).get("borin",{}))==record,"Paid work neither requires nor fabricates relationship progress")
+ check(HoldDisciplines.xp(s,"smithing")==smith_xp and HoldDisciplines.xp(s,"woodworking")==wood_xp,"Specialist work grants no personal manufacturing experience")
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(s.steel and s.count("forged_pickhead")==1 and s.money==917,"Commissioned tool, components and payment survive reload")
+ desk("forge");at(HoldForge147.BORIN_TALK);s.inventory.tool_fittings=0
+ var before=JSON.stringify(s.inventory)
+ check(not HoldToolCapabilities.commission(g,"reinforced_pick") and s.money==917 and JSON.stringify(s.inventory)==before,"Incomplete assembly leaves fee and other parts untouched")
+ s.inventory.tool_fittings=1
+ HoldConversation.start(g,"borin");button("Could you make a pick");button("Reinforced pick assembly ·")
+ check(HoldToolCapabilities.reinforced(s) and s.money==872,"Borin assembles the reinforced pick without compulsory research")
+ for id in HoldForge147.COMPONENTS:check(s.count(id)==0,"Specialist assembly uses exactly one "+id)
+ check(not s.tech.has("extraction") and not s.tech.has("reinforced_tools"),"Commissioning does not pretend the player learned manufacturing techniques")
+ check(not HoldToolCapabilities.commission(g,"reinforced_pick") and s.money==872,"Completed specialist upgrade cannot charge twice")
+ await snap("commissions175-complete")
+ g.menu_scroll.scroll_vertical=10000;await snap("commissions175-scrolled")
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(HoldToolCapabilities.reinforced(s) and s.money==872,"Completed specialist capability persists without replaying payment")
+ check(HoldDisciplines.xp(s,"smithing")==smith_xp and HoldDisciplines.xp(s,"woodworking")==wood_xp,"Assembly and reload preserve personal craft experience")

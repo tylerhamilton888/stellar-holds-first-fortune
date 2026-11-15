@@ -1,3 +1,10 @@
+# 0.118.0 — Specialist commissions
+
+- Borin offers material-plus-fee commissions through his conversation: steel picks, reinforced assembly and three components.
+- Commissioning substitutes his expertise for player research, with no friendship gates or fabricated craft credit.
+- Atomic payment, locality, cold-forge and duplicate-tool guards preserve existing possessions and self-crafting routes.
+- Extended source and exact-package frontier acceptance covers the real conversation, costs, blocked orders and reload.
+
 # 0.117.0 — Cross-profession tool components
 
 Adds shaped hafts, forged pickheads and tool fittings through existing queued recipes and market transactions. Reinforced-pick assembly consumes one of each, preserving its former total raw cost and all owned tools. Completed manufacturing credits Woodworking or Smithing, while buying parts earns no craft credit. Adds a compact component page in the existing communal forge. See COMPONENTS173.md.
