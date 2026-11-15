@@ -89,7 +89,9 @@ static func greeting(g,id:String)->String:
 static func panel(g):
  var id=g.talk_id;var s=g.state;var q=HoldOnboarding.ensure(s)
  if not local(g,id):g.label(g.panel_body,"This conversation has ended. Visit the resident to speak again.");return
- if g.talk_topic=="person":
+ if id=="borin" and g.talk_topic in ["tool_commission","tool_parts"]:
+  HoldToolCapabilities.commissions_panel(g)
+ elif g.talk_topic=="person":
   HoldPeople.panel(g,id)
  elif g.talk_topic=="friend130":
   HoldFriendship130.panel(g,id)
@@ -143,6 +145,7 @@ static func panel(g):
    choose(g,errand.name,func():g.open_panel("social"),true)
   var matter=HoldClaimStories.ensure(s).active
   if not matter.is_empty() and matter.actor==id:choose(g,HoldClaimStories.TITLES[matter.kind],func():g.open_panel("claim_stories"),true)
+  if id=="borin":choose(g,"Could you make a pick or components for me?",func():g.talk_topic="tool_commission";g.talk_line="";g.refresh_panel())
   if id=="borin" and HoldForge147.active(g):choose(g,"Use the communal forge",func():g.set_meta("forge147_station","anvil");g.open_panel("frontier103"))
   elif SERVICES.has(id) and id!="ivar":choose(g,SERVICES[id][0],func():g.open_panel(SERVICES[id][1]))
   for i in TOPICS.get(id,[]).size():

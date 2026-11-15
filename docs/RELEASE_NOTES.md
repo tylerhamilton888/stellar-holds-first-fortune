@@ -1,9 +1,9 @@
-# 0.117.0 — A tool made by many hands
+# 0.118.0 — A smith’s skilled hands
 
-A reinforced pick now brings two crafts together. Shape a timber haft, forge a pickhead and a set of fittings, then assemble them at Stonebridge’s anvil after learning Reinforced tools. The ordinary steel pick remains a simple recipe, and any reinforced pick you already own remains yours.
+Borin now takes paid orders for steel picks, reinforced-pick assembly and individual tool components. Speak to him and ask whether he can make a pick or components. Bring the displayed materials and fee; he completes each order immediately.
 
-The communal workshop’s Tool components page shows each recipe and its profession. Completing a haft earns Woodworking experience; completing a head or fittings earns Smithing experience. Queued work survives saving and reloading. You can also buy any or all of the components at the existing market; purchases do not count as manufacturing.
+You can earn your living in another craft and pay for Borin’s expertise without learning the relevant research yourself. Friendship is not required. Making your own parts and assembling your own pick remain available without his service fee, and existing market purchases still work.
 
-Making the full set still costs 8 iron, 2 copper, 3 coal and 2 timber in total. Final assembly consumes only the three components. Existing homes, inventories, workers and mining capabilities are preserved.
+Steel picks cost 5 iron, 2 timber and 35 crowns. Reinforced assembly costs one shaped haft, forged pickhead and fitting set plus 45 crowns, and requires an owned steel pick. Individual hafts, heads and fittings use their usual raw materials plus 6, 24 and 18 crowns respectively. Paid NPC work earns no personal manufacturing experience or research unlocks.
 
-See CURRENT_STATUS.md for publication status and COMPONENTS173.md for implementation details. [Previous notes](history/RELEASE_NOTES-before-components173.md).
+Orders recheck location, materials, money, forge readiness and existing tools before payment. Existing saves and possessions are preserved. See CURRENT_STATUS.md for publication status and COMMISSIONS175.md for verification. [Previous notes](history/RELEASE_NOTES-before-commissions175.md).

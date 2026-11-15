@@ -1,4 +1,4 @@
-# Current status — 0.117.0 delivered
+# Current status — 0.117.0 delivered; 0.118.0 candidate
 
 ## Published Windows build
 
@@ -19,6 +19,10 @@ Downloaded both public JSON documents, verified their GitHub asset digests and m
 Reinforced picks now assemble from one shaped haft, forged pickhead and fitting set. The existing queued recipes and market supply all parts; manufacturing the full set retains the former raw cost of 8 iron, 2 copper, 3 coal and 2 timber. Completed hafts credit Woodworking, while heads/fittings credit Smithing. Buying parts does not claim manufacturing credit. Ordinary steel crafting and all existing owned picks remain intact.
 
 A compact Tool components page shows inputs, outputs and professions. The inventory item grid scrolls independently so the character summary stays visible as the catalogue grows. Five focused native cases passed 483 assertions and 42 tooling tests passed. Reviewed the component page, assembly costs/ownership and expanded inventory. See [implementation](COMPONENTS173.md) and [playtest guide](PLAYTEST_GUIDE.md).
+
+## Candidate and next work
+
+0.118.0 adds Borin’s paid tool/component commissions; local and release validation are pending. It is not yet a published build. See COMMISSIONS175.md.
 
 ## Next work and limits
 
