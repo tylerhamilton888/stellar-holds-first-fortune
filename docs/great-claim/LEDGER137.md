@@ -1,6 +1,6 @@
 # Hold's Ledger — current civic supply route
 
-The [campaign directive](OPENING_CAMPAIGN_DIRECTIVE.md) retains the five-act story framework. The 0.119.0 candidate removes unrelated personal-crafting gates from civic supply projects.
+The [campaign directive](OPENING_CAMPAIGN_DIRECTIVE.md) retains the five-act story framework. 0.119.0 removes unrelated personal-crafting gates from civic supply projects.
 
 - Cold Forge: inspect locally, contribute eight gathered or purchased coal in saved installments, then return for first firing. The existing authority pays 65 crowns and opens smelting/crafting. Coal-processing proof is optional.
 - Winter Stores: inspect and supply the structure, raise it locally, deliver twelve provisions and return to open it. The stocked interior and trading counter are actual benefits. See [campaign foundations](CAMPAIGN138.md).

@@ -1,4 +1,4 @@
-# First-hour presentation — 0.119.0 candidate
+# First-hour presentation — 0.119.0
 
 The opening begins with the parents’ purchased holding. Ivar introduces the same Rise near arrival; the player can use the modest cottage, read the parent letter and choose a personal ambition before mining. The brief scene is saved/skippable, and existing fortunes retain their property and progress. See [implementation and migration](HOME169.md).
 
@@ -14,4 +14,4 @@ Eight focused native cases passed 681 assertions, with 42 tooling tests and outp
 
 [Previous 0.106.0 presentation audit](history/FIRST_HOUR-before-home169.md) records the superseded bunkhouse-first progression.
 
-Current campaign changes and pending acceptance: [LIVELIHOOD177.md](LIVELIHOOD177.md). [Previous presentation audit](history/FIRST_HOUR-before-livelihood177.md).
+Current campaign changes and delivered acceptance: [LIVELIHOOD177.md](LIVELIHOOD177.md). [Previous presentation audit](history/FIRST_HOUR-before-livelihood177.md).
