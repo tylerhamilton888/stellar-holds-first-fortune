@@ -1,6 +1,6 @@
 # Hands of the hold — current foundations and Winter Stores
 
-The 0.119.0 candidate continues the authored campaign with five rescue foundations:
+0.119.0 continues the authored campaign with five rescue foundations:
 
 - Civic household recognition from Ivar after two civic projects or trade seals; existing improved-home recognition also counts.
 - Ownership of a steel pick, self-forged or commissioned from Borin.

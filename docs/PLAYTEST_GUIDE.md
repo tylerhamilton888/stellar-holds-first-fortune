@@ -102,7 +102,7 @@ At the Rise, use fine construction, the building catalogue and furniture placeme
 
 Speak to Borin in the communal forge and ask him to make a pick or components. Try a steel pick with 5 iron, 2 timber and 35 crowns without Tempered steel research; then commission parts or bring bought/crafted ones for reinforced assembly (45 crowns). The steel pick must already be owned. Check the quoted cost before choosing; completed work goes straight into the pack or tool ownership. Check both pages and scroll to the closing response. Missing supplies, a cold forge and walking away must never charge you. Reload after a component order and after assembly. Personal crafting experience and research should remain unchanged.
 
-## Your own trade (0.119.0 candidate)
+## Your own trade (0.119.0)
 
 Try a supplier route: buy fuel, inspect the cold hearth, contribute eight coal at the Ledger, and relight the forge. Partial deliveries made before inspection must remain recorded. Supply and inspect the eastern storehouse site, raise it, contribute twelve provisions and return to open the stores. Confirm its trading counter works; no smelting, hauling, farming, fishing or cooking lesson should be required for these supply projects.
 
