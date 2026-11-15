@@ -1,3 +1,10 @@
+# 0.119.0 — Civic livelihoods
+
+- Cold Forge and Winter Stores accept supplied goods without compulsory personal-production lessons.
+- Five rescue foundations recognize civic service, owned tool capability and real underground safety preparation; home improvements are optional.
+- Existing work/deposits count retroactively; genuine craft lessons and trade seals retain their own production-credit rules.
+- Updated project, HUD and rival guidance; extended source/package route and save regressions.
+
 # 0.118.0 — Specialist commissions
 
 - Borin offers material-plus-fee commissions through his conversation: steel picks, reinforced assembly and three components.

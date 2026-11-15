@@ -149,7 +149,7 @@ static func goal(g)->String:
   if not q.get("ivar_spoken",false) and not HoldFrontier103.family(g.state):return "First morning · speak with Ivar by the bunkhouse hearth · E"
   if not q.get("room_seen",false) and not HoldFrontier103.family(g.state):return "First morning · bunkhouse stairs → your room above · J"
   if not q.get("rewarded",false) and not HoldFrontier103.family(g.state):return "First shift · northern town path → Old Workings · J"
-  if not HoldMountain104.eligible(g.state) and HoldWork132.goal(g.state)!="":return HoldWork132.goal(g.state)
+  if q.focus=="work" and not HoldMountain104.eligible(g.state) and HoldWork132.goal(g.state)!="":return HoldWork132.goal(g.state)
   if not HoldFrontier103.data(g.state).permit:return "Household recognition · two civic projects or trade seals → Ivar’s shift book · J"
   if HoldMountain104.eligible(g.state):
    var stage=int(HoldAncestralClaim.data(g.state).stage)
@@ -157,7 +157,7 @@ static func goal(g)->String:
    if stage<3:return "The mountain remembers · rescue the trapped survey crew · J"
    if stage in [3,4] and not HoldRestoration139.witnessed(g.state):return "The North Crossing · "+HoldRestoration139.goal(g.state)+" · M"
    if stage<5:return "The mountain remembers · survivors and ancestral evidence · J"
-  if HoldFrontier103.data(g.state).home_reward:return "Hands of the hold · campaign foundations %d/7 · M: Ledger" % HoldCampaign138.progress(g.state)
+  if HoldCampaign138.recognized(g.state):return "Hands of the hold · campaign foundations %d/%d · M: Ledger" % [HoldCampaign138.progress(g.state),HoldCampaign138.foundations(g.state).size()]
   return "Your household plot · east road · O: design and build your home · J"
  if not q.guided:return "Explore at your own pace · J: resume guidance or choose a goal"
  match str(q.focus):

@@ -33,14 +33,14 @@ func run():
  for item in C.STRUCTURE:
   var amount=int(L.remaining(s,"storehouse").get(item,0))
   check(L.contribute(g,"storehouse",item,amount),"Complete structural slot: "+item)
- site();check(not C.assemble(g),"Buying supplies cannot replace practical production and hauling")
+ site();check(L.ready(s,"storehouse"),"Inspected site and delivered supplies suffice without compulsory production lessons")
  # Existing production hooks supply factual history; work132 verifies real bench/cart inputs.
  W.produced(s,"iron_ore",2,"cut");W.produced(s,"coal",1,"cut");W.produced(s,"wood",4,"cut")
  s.opening=2;desk("forge")
  for i in 2:check(HoldFrontier103.transact(g,"craft","iron"),"Queue real introductory smelting")
  s.tick(4);s.tick(4)
  check(C.learned(s,"smelt"),"Completed forge jobs provide the prerequisite")
- site();check(not C.assemble(g),"Smelting and timber alone cannot replace loaded hauling")
+ site();check(L.ready(s,"storehouse"),"Optional smelting and timber work do not add a hauling gate")
  g.walking_pose=true
  for i in 16:W.cart_moved(g,{"raw":[{"kind":"log"}],"cargo":[]},10)
  var money=s.money;inventory=s.inventory.duplicate(true);var points=int(HoldGreatClaim102.data(s).points)
@@ -53,7 +53,7 @@ func run():
  check(not L.contribute(g,"winter","food",8),"Excess provisions cannot overfill the project")
  g.save_game();g.start_game(true);settle();s=g.state;ledger()
  check(L.paid(s,"winter","food")==5 and L.contribute(g,"winter","food",7),"Remaining provisions survive reload and finish exactly")
- site();check(not C.stock(g),"Bought provisions do not replace the food introduction")
+ site();check(L.ready(s,"winter"),"Bought provisions may open the stores without a food lesson")
  g.fieldwork.data().kit=true;W.produced(s,"turnip",4,"grown")
  desk("forge");s.add("turnip",2);s.add("water",1)
  check(HoldFrontier103.transact(g,"craft","turnip_stew"),"Crop route queues a real beginner meal")
@@ -80,10 +80,13 @@ func run():
  var facts=HoldOnboarding.ensure(s).facts;facts.sample=1
  check(not C.eligible(s),"Survey without a descent and return is insufficient")
  facts.route_tested=1;HoldGreatClaim102.data(s).points=0
- check(C.progress(s)==7 and C.eligible(s) and C.act(s)==3,"All practical foundations open Act III even without a score threshold")
+ check(C.progress(s)==5 and C.eligible(s) and C.act(s)==3,"All practical foundations open Act III even without a score threshold")
+ HoldFrontier103.data(s).home_reward=false
+ check(C.eligible(s),"Registered home improvements are optional for the rescue")
+ HoldFrontier103.data(s).home_reward=true
  var history=W.data(s).facts.duplicate(true)
  for spec in [["cut:iron_ore",0],["made:iron",0],["cart_distance",0],["meals",0]]:
-  W.data(s).facts[spec[0]]=spec[1];check(not C.eligible(s),"Missing practical requirement cannot be bypassed: "+spec[0]);W.data(s).facts=history.duplicate(true)
+  W.data(s).facts[spec[0]]=spec[1];check(C.eligible(s),"Optional profession history is not a campaign gate: "+spec[0]);W.data(s).facts=history.duplicate(true)
  # Food and trade routes are true alternatives, not cumulative profession requirements.
  W.data(s).facts.erase("grown:turnip");W.produced(s,"river_fish",4,"caught")
  check(C.eligible(s),"Fishing replaces farming for identical narrative eligibility")
@@ -101,5 +104,60 @@ func run():
  inventory=s.inventory.duplicate(true);points=int(HoldGreatClaim102.data(s).points)
  check(C.data(s).legacy_rescue and C.data(s).winter_ready and C.eligible(s),"Established older save retains its rescue invitation and completed storehouse")
  check(s.inventory==inventory and int(HoldGreatClaim102.data(s).points)==points,"Migration does not pay or consume anything")
+ await livelihood_path()
  print("CAMPAIGN138: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
+
+func buy_stock(stock:Dictionary):
+ desk("watch")
+ for item in stock:
+  for i in int(stock[item]):check(HoldFrontier103.transact(g,"trade",item,true),"Purchase civic supply: "+item)
+func livelihood_path():
+ g.start_game(false);settle();HoldFirstVisit99.begin(g);settle()
+ var s=g.state;s.money=10000
+ var estate=JSON.parse_string(JSON.stringify(s.surface.homes[s.claim_id]))
+ var wood_xp=HoldDisciplines.xp(s,"woodworking");var smith_xp=HoldDisciplines.xp(s,"smithing")
+ buy_stock({"coal":8});ledger()
+ check(L.contribute(g,"forge","coal",8) and not L.ready(s,"forge"),"Early full fuel deposit still requires a real hearth inspection")
+ desk("forge");check(L.inspect(g) and L.ready(s,"forge"),"Inspection recognizes coal supplied before accepting any lesson")
+ check(L.finish(g,"forge") and W.proof(s,"cut:coal")==0,"Purchased fuel opens actual smelting and commissions without fake mining credit")
+ buy_stock({"stone":46,"wood":43,"iron":9,"food":12})
+ ledger()
+ for item in C.STRUCTURE:check(L.contribute(g,"storehouse",item,C.STRUCTURE[item]),"Pre-inspection delivery: "+item)
+ check(not L.ready(s,"storehouse"),"Structural deposits retain the physical site-inspection requirement")
+ site();check(C.inspect(g) and L.ready(s,"storehouse"),"Already delivered materials count immediately when site is inspected")
+ check(C.assemble(g) and not C.assemble(g),"Purchased materials build exactly one working civic storehouse")
+ ledger();check(L.contribute(g,"winter","food",12),"Purchased provisions count without farming or cooking")
+ site();check(C.stock(g) and not C.stock(g),"Site action opens the provisioned stores exactly once")
+ desk("stores");check(HoldFrontier103.transact(g,"trade","food",true),"Civic work unlocks its real community trading counter")
+ ledger()
+ for id in ["watch","rest"]:
+  for item in L.remaining(s,id):check(L.contribute(g,id,item,L.remaining(s,id)[item]),"Supply third-livelihood civic project")
+  check(L.finish(g,id),"Purchased civic supplies earn ordinary recognition")
+ desk("lodge");check(HoldFrontier103.permit(g),"Three completed civic projects earn household recognition without trade lessons")
+ check(C.act(s)==2 and not HoldFrontier103.data(s).home_reward,"Recognized household advances the act without home renovation")
+ check(not C.eligible(s),"Civic success alone cannot skip rescue preparations")
+ desk("forge");at(HoldForge147.BORIN_TALK)
+ check(HoldToolCapabilities.commission(g,"steel") and not s.tech.has("extraction"),"Borin supplies the actual expedition capability without personal smithing research")
+ desk("survey");check(HoldFrontier103.transact(g,"research","stoneworking"),"Actual support-construction knowledge remains required")
+ var facts=HoldOnboarding.ensure(s).facts;facts.sample=1
+ check(not C.eligible(s),"A survey still requires a demonstrated return route")
+ facts.route_tested=1
+ check(C.eligible(s) and C.progress(s)==5,"Supplier livelihood reaches rescue readiness without home improvement or compulsory professions")
+ s.steel=false;check(not C.eligible(s),"Missing expedition pick still blocks the rescue");s.steel=true
+ s.tech.erase("stoneworking");check(not C.eligible(s),"Missing rescue-support knowledge still blocks dispatch");s.tech.stoneworking=true
+ facts.sample=0;check(not C.eligible(s),"Missing survey still blocks dispatch");facts.sample=1
+ check(W.data(s).done.is_empty() and W.data(s).earned.is_empty() and W.data(s).facts.is_empty(),"Civic purchases do not invent lesson claims or manufacturing history")
+ check(not g.fieldwork.data().kit and not HoldFirstVisit99.data(s).rewarded,"No compulsory field kit or first shift was slipped into the supplier route")
+ check(HoldDisciplines.xp(s,"woodworking")==wood_xp and HoldDisciplines.xp(s,"smithing")==smith_xp,"Paid supplies and specialist work preserve personal crafting experience")
+ check(JSON.parse_string(JSON.stringify(s.surface.homes[s.claim_id]))==estate,"Civic progression leaves the original cottage unchanged")
+ HoldFirstVisit99.data(s).focus="forge";check(HoldFirstVisit99.goal(g).contains("Ivar"),"Ready player is directed to the rescue instead of an unclaimed craft lesson")
+ g.open_panel("campaign138");await snap("livelihood177-ready");g.menu_scroll.scroll_vertical=10000;await snap("livelihood177-ready-scrolled");g.close_panel()
+ var money=s.money;var inventory=s.inventory.duplicate(true)
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(C.eligible(s) and s.money==money and s.inventory==inventory,"Already completed civic work survives reload without repeated supplies or rewards")
+ desk("lodge");check(HoldMountain104.act(g,"rescue") and not HoldMountain104.act(g,"rescue"),"Supplier route enters the same authored rescue exactly once")
+ # Optional lessons retain factual history recorded before their rewards are claimed.
+ W.produced(s,"wood",4,"cut");desk("lodge");var proof=W.proof(s,"cut:wood");money=s.money
+ check(W.ready(s,"timber") and W.claim_lesson(g,"timber"),"Earlier personal production still earns its optional lesson reward")
+ check(not W.claim_lesson(g,"timber") and W.proof(s,"cut:wood")==proof and s.money==money+10,"Optional credit pays once without repeating production")

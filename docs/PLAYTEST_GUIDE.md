@@ -18,7 +18,7 @@ If you choose the first shift, follow the northern town path to Old Workings. Se
 
 The enormous outdoor Ledger stands on its gilded stone lectern between two braziers, east of the bunkhouse. Stand at its front and press **E**. **M** reviews it remotely; deliveries require the physical book or indoor records desk and carried supplies. Two civic projects or trade seals earn household recognition at Ivar’s shift book. Add a light to the usable cottage bedroom, then register the improved home for 60 marks after recognition. You do not need to demolish or rebuild it.
 
-Follow the Cold Forge’s actual inspection, processing and contribution requirements if you choose that project; its guidance should reflect saved partial deliveries. Report unclear directions, repeated trips, overly long explanations and whether the homestead arrival feels natural within the intended first 5–10 minutes. Automated checks do not establish normal-speed pacing.
+Follow the Cold Forge’s inspection and contribution requirements; gathered or purchased coal both qualify if you choose that project; its guidance should reflect saved partial deliveries. Report unclear directions, repeated trips, overly long explanations and whether the homestead arrival feels natural within the intended first 5–10 minutes. Automated checks do not establish normal-speed pacing.
 
 ## Tools and basalt masonry
 
@@ -42,7 +42,7 @@ Existing forge rooms retain their saved layout and objects; newly created rooms 
 
 ## Continue the chapter
 
-The main route includes trade foundations and a home, Winter Stores, the survey-crew rescue, North Crossing, ancestry and engineering proof, Keldrath's defense and the Thane homecoming. Follow the current in-game requirements. The contest is a story framework with no rival countdown.
+The main route includes household recognition, a steel pick, underground preparation, Winter Stores and three contributions, followed by the survey-crew rescue, North Crossing, ancestry and engineering proof, Keldrath's defense and the Thane homecoming. Follow the current in-game requirements. The contest is a story framework with no rival countdown.
 
 Optional collections, friendship episodes and the three persistent mineworks remain available. Mineworks support named districts and gated exploration; they are not an additional requirement for becoming Thane. Marriage remains future work.
 
@@ -101,3 +101,9 @@ At the Rise, use fine construction, the building catalogue and furniture placeme
 ## Borin’s commissions (0.118.0)
 
 Speak to Borin in the communal forge and ask him to make a pick or components. Try a steel pick with 5 iron, 2 timber and 35 crowns without Tempered steel research; then commission parts or bring bought/crafted ones for reinforced assembly (45 crowns). The steel pick must already be owned. Check the quoted cost before choosing; completed work goes straight into the pack or tool ownership. Check both pages and scroll to the closing response. Missing supplies, a cold forge and walking away must never charge you. Reload after a component order and after assembly. Personal crafting experience and research should remain unchanged.
+
+## Your own trade (0.119.0 candidate)
+
+Try a supplier route: buy fuel, inspect the cold hearth, contribute eight coal at the Ledger, and relight the forge. Partial deliveries made before inspection must remain recorded. Supply and inspect the eastern storehouse site, raise it, contribute twelve provisions and return to open the stores. Confirm its trading counter works; no smelting, hauling, farming, fishing or cooking lesson should be required for these supply projects.
+
+Earn household recognition from Ivar, commission or forge a steel pick, survey underground, descend and return through a passage, and research Stoneworking. Complete three civic projects or genuine trade seals in total. Leave the cottage unchanged and check that the campaign offers the rescue. Existing work should count without repeating it. Save/reload midway and revisit completed projects: deliveries and rewards must not duplicate. Optional trade seals and later North Crossing work orders still require their stated personal production; buying supplies must not award crafting experience.

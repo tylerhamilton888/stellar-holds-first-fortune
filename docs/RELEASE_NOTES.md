@@ -1,9 +1,9 @@
-# 0.118.0 — A smith’s skilled hands
+# 0.119.0 — Your own trade
 
-Borin now takes paid orders for steel picks, reinforced-pick assembly and individual tool components. Speak to him and ask whether he can make a pick or components. Bring the displayed materials and fee; he completes each order immediately.
+Stonebridge now accepts supplied goods without making you learn every craft first. Inspect and fuel the Cold Forge with gathered or purchased coal. Supply, build and provision the Winter Stores with goods you gather, make or buy. The forge and community counter still open through real work at their sites.
 
-You can earn your living in another craft and pay for Borin’s expertise without learning the relevant research yourself. Friendship is not required. Making your own parts and assembling your own pick remain available without his service fee, and existing market purchases still work.
+The rescue now asks for a recognized household, a sound steel pick, safe underground preparation, opened Winter Stores and three civic contributions. A pick commissioned from Borin counts. Home improvement, smithing, timber/cart and food lessons remain optional paths with their existing rewards. Surveying, a demonstrated return route and Stoneworking still prepare you for the actual rescue.
 
-Steel picks cost 5 iron, 2 timber and 35 crowns. Reinforced assembly costs one shaped haft, forged pickhead and fitting set plus 45 crowns, and requires an owned steel pick. Individual hafts, heads and fittings use their usual raw materials plus 6, 24 and 18 crowns respectively. Paid NPC work earns no personal manufacturing experience or research unlocks.
+Work you already completed and supplies already delivered count. Buying goods earns civic recognition when you contribute them, but never invents personal crafting experience or manufacturing credit. Your cottage, belongings and existing story progress remain intact.
 
-Orders recheck location, materials, money, forge readiness and existing tools before payment. Existing saves and possessions are preserved. See CURRENT_STATUS.md for publication status and COMMISSIONS175.md for verification. [Previous notes](history/RELEASE_NOTES-before-commissions175.md).
+See CURRENT_STATUS.md for delivery evidence and LIVELIHOOD177.md for scope. Later bridge specialist orders and the authored campaign are unchanged. [Previous notes](history/RELEASE_NOTES-before-livelihood177.md).
