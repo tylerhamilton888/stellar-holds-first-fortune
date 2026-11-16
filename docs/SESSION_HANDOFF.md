@@ -1,19 +1,17 @@
-# Session handoff — Rise polish delivered
+# Session handoff — character and quest scenes candidate
 
-Read CURRENT_STATUS.md and AGENTS.md first. Routine requested source upload, PR, merge and verified release are authorized. Keep output bounded; no subagents unless requested.
+Read CURRENT_STATUS.md and AGENTS.md first. Requested source uploads, PR, merge and verified Windows delivery are authorized. Keep outputs bounded; no subagents unless requested.
 
-## Verified checkpoint
+## Current work
 
-0.120.0 is published. Source PR179 merged at b6771d9b11542e6161e28e9f14a38a81f6e441ab. Release source 43d944f9928e34fc88e38798fe954e00f0d44cb8, tree 81653df88af8683b055620748b8ad950cfca3cfe. Release run 43767707547 passed all 11 jobs: 87 native source cases and 77 exact-package cases / 14810 assertions. PR run 43767565159 passed all six jobs. Public JSON digests, clean source, ZIP/PCK hashes and ZIP size verified; CURRENT_STATUS records provenance.
+Branch feature/quest-scenes181 builds on master c755fd174da317e35a0ff85847e15909da05d748, delivered 0.120.0. Version 0.121.0 adds Rurik/Sigrid opening introductions, optional Borin introduction and short forge/Winter Stores/rescue scenes. Quest transactions commit before UI scenes. Additive surface.quest_scene181 owns only pending/seen presentation; old completed quests do not replay. See SCENES181.md.
 
-The seeded cottage has a ground-art approach from the masonry lane. Ivar's final property-tour beat and home journal guidance are gentler. Lodge greetings respond to household/home milestones while rescue, homecoming and memorial states take priority. Two optional family letters follow existing registrations. The journal no longer promotes an unchosen ore lesson. No new save schema, rewards, upkeep or property replacement. See RISE179.md.
+Pinned import and 42 tooling tests passed. Focused evidence: test-results/scenes181-reviewed (opening146 57, ledger137 48, campaign138 218) plus scenes181-focus/mountain104 (44). Native views checked all speakers and quest presentations; captions fit, portraits refresh and interaction prompts are hidden. Preserve quest locality, rewards, saved-beat resume and skip behavior.
 
-Six focused cases passed 682 assertions: opening146 53, lodge100 56, frontier103 335, polish135 69, work132 146, firstvisit99 23. Pinned import and 42 tooling checks passed. Reviewed cottage approach, final tour beat, Ivar replies and both scrolled letters. An occupied-display launch was rerun; a paid-greeting priority regression was fixed and verified. Superseded PR run 43767335127 was automatically cancelled.
+## Next actions
 
-## Next work
+Confirm final focused results, open the source PR, start release/0.121.0 at the reviewed commit, merge only after required checks, verify public metadata and reconcile delivery documentation per RELEASE_PIPELINE.md. Existing release remains 0.120.0 until publication.
 
-The first presentation polish slice is delivered. Review normal-speed arrival, letter discoverability, repeat conversations and the existing interiors before choosing the next small pass. Broader specialist stories and equipment remain extensions. Preserve the building, workers, freight, tool and authored campaign owners.
+Normal Windows pacing/input/audio and the older intermittent freight-route issue remain follow-ups. Keep original estates, belongings, workers, artwork and the authored campaign.
 
-Normal Windows input/audio/performance and earning-rate balance remain human playtests. The earlier intermittent freight-route failure remains a follow-up. Follow RELEASE_PIPELINE.md for future delivery, including native visual review and exact-package acceptance.
-
-[Previous handoff](history/SESSION_HANDOFF-before-rise179.md).
+[Previous handoff](history/SESSION_HANDOFF-before-scenes181.md).

@@ -8,8 +8,11 @@ func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
  check(not L.active(g.state),"Legacy fortune unaffected")
+ HoldQuestScene181.resume(g)
+ check(not is_instance_valid(g.opening_scene) and not g.state.surface.has("quest_scene181"),"Older saves do not acquire or replay quest scenes on load")
  HoldFirstVisit99.begin(g);settle();var s=g.state
  ledger();s.add("coal",12);s.add("wood",20);s.add("iron",10)
+ check(not HoldQuestScene181.play(g,"borin"),"Borin introduction cannot be launched remotely")
  check(L.unlocked(s,"forge") and not HoldFirstVisit99.data(s).rewarded,"Owners can contribute without the optional first shift")
  HoldFirstVisit99.data(s).rewarded=true
  HoldFirstVisit99.data(s).home_made=true;HoldFirstVisit99.data(s).focus="forge"
@@ -21,6 +24,7 @@ func run():
  check(L.contribute(g,"forge","coal",3) and s.count("coal")==before-3,"Partial delivery spends exact pack amount")
  check(not L.contribute(g,"forge","coal",6),"Excess cannot overfill slot")
  desk("forge");check(not L.contribute(g,"forge","coal",1),"Delivery requires physical ledger")
+ await introduction181();s=g.state
  check(L.inspect(g) and not L.inspect(g),"Inspection recorded once at forge")
  check(L.forge_lead(s).title=="An entry in the Ledger","Purchased fuel points straight to the remaining delivery")
  g.open_panel("commission");await snap("forge-processing-lead");g.close_panel()
@@ -38,7 +42,14 @@ func run():
  check(L.ready(s,"forge") and not L.finish(g,"forge"),"Completed materials require return to hearth")
  desk("forge");g.open_panel("frontier103");await snap("forge-ready");g.close_panel()
  var money=s.money;before=s.count("coal")
- check(L.finish(g,"forge") and s.opening==2,"First firing opens authoritative forge")
+ g.open_panel("frontier103");button("Relight the communal forge")
+ check(s.opening==2 and g.opening_scene is HoldQuestScene181,"First firing commits the actual forge before its scene")
+ await snap("scenes181-first-fire")
+ g.opening_scene.age=1;g.opening_scene.advance();g.save_game();g.start_game(true);settle();s=g.state
+ check(g.opening_scene is HoldQuestScene181 and g.opening_scene.mode=="forge" and g.opening_scene.step==1 and s.money==money+65,"Reload resumes the firing without paying again")
+ await snap("scenes181-forge-open")
+ g.opening_scene.finish();await process_frame
+ check(not HoldQuestScene181.play(g,"forge"),"Finished firing scene is not replayed")
  check(not HoldFirstVisit99.opening_route(g) and L.forge_lead(s).title=="The forge is alight","Completed forge leaves opening guidance without asking for fuel again")
  check(s.money==money+65 and s.count("coal")==before,"Escrow is not charged again; wage paid once")
  check(not L.finish(g,"forge") and s.money==money+65,"Repeated firing cannot duplicate wage")
@@ -77,5 +88,25 @@ func run():
  var saved=s.inventory.duplicate(true);g.save_game();g.start_game(true);settle();s=g.state
  check(s.inventory==saved and L.data(s).gift,"Gift and supplies persist")
  check(L.skarrin(s).contains("that timber"),"Milestone dialogue survives reload")
+ var prior_money=s.money;HoldQuestScene181.record(s).active="forge";HoldQuestScene181.record(s).beat=1
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(not is_instance_valid(g.opening_scene) and HoldQuestScene181.record(s).active=="" and s.money==prior_money,"Stale scene at an incompatible location is cleared without rewards or teleporting")
  print("LEDGER137: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
+
+func introduction181():
+ var s=g.state;var money=s.money;var inventory=s.inventory.duplicate(true)
+ check(not HoldQuestScene181.play(g,"forge") and not HoldQuestScene181.play(g,"invalid"),"Scenes reject unearned milestones and unknown IDs")
+ g.open_panel("frontier103");button("Meet Borin")
+ check(g.opening_scene is HoldQuestScene181 and not L.data(s).inspected,"Borin's introduction does not inspect or pay for the hearth")
+ check(not HoldQuestScene181.play(g,"borin"),"An active scene cannot stack another scene")
+ await snap("scenes181-borin-introduction")
+ g.opening_scene.age=1;g.opening_scene.advance();g.save_game();g.start_game(true);settle();s=g.state
+ check(g.opening_scene is HoldQuestScene181 and g.opening_scene.step==1,"Character introduction resumes its saved beat")
+ await snap("scenes181-borin-purpose")
+ var event=InputEventKey.new();event.pressed=true;event.keycode=KEY_ESCAPE
+ g.opening_scene._input(event);await process_frame
+ check(not is_instance_valid(g.opening_scene) and s.money==money and s.inventory==inventory,"Escape returns control without spending supplies or granting rewards")
+ check(HoldQuestScene181.record(s).seen.borin and not HoldQuestScene181.play(g,"borin"),"Skipped introduction is remembered without automatic replay")
+ g.save_game();g.start_game(true);settle()
+ check(not is_instance_valid(g.opening_scene),"Completed introduction stays complete after reload")

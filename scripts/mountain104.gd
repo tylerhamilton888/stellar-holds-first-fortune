@@ -99,7 +99,8 @@ static func panel(g):
   if q.stage==4 and q.archive and q.family and HoldRestoration139.witnessed(g.state):choices.append(["Authenticate the ancestral right and record its allowance","translate"])
  if q.stage==4 and not q.archive and g.surface.area==HoldFrontier103.room(g.state,"survey",1):choices.append(["Compare the founding charter in the archive","archive"])
  for choice in choices:
-  var action=str(choice[1]);g.button(g.panel_body,choice[0],func():act(g,action))
+  var action=str(choice[1]);g.button(g.panel_body,choice[0],func():
+   if act(g,action) and action=="rescue":HoldQuestScene181.play(g,"rescue"))
 static func reaction(g,id:String):
  if not active(g.state) or HoldPeople.nearby(g,id).is_empty():return
  var q=HoldAncestralClaim.data(g.state);var d=data(g.state)

@@ -1,3 +1,10 @@
+# 0.121.0 — Faces and first deeds
+
+- Added Rurik/Sigrid opening introductions with their own portraits and an optional local Borin scene.
+- Added forge reopening, Winter Stores and rescue-acceptance scenes after successful quest transactions.
+- Added saved-beat resume, skip/once-only presentation state and safe rejection of stale or remote scenes.
+- Extended opening, Ledger and campaign tests for UI actions, reload, reward preservation and native review.
+
 # 0.120.0 — A place to come home to
 
 - Added a nonblocking stone approach to the seeded cottage using existing ground art.

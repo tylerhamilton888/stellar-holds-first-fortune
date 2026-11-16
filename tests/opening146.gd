@@ -21,6 +21,11 @@ func run():
  check(is_instance_valid(g.opening_scene) and g.opening_scene.mode=="frontier_arrival" and g.opening_scene.step==1,"Reload resumes an unfinished introduction")
  g.opening_scene.age=1.0;g.opening_scene.advance();g.opening_scene.age=1.0;g.opening_scene.advance()
  await snap("01b-ivar-welcome")
+ for who in ["IVAR DEEPMEASURE","RURIK STONEHAND","SIGRID EMBERBRAID"]:
+  g.opening_scene.age=1;g.opening_scene.advance()
+  check(g.opening_scene.speaker.text==who,"Opening names the person currently speaking: "+who)
+  await snap("scenes181-intro-"+str(g.opening_scene.step))
+ check(g.opening_scene.foreman_portrait.profile.name.contains("Sigrid"),"Sigrid's introduction uses her own portrait")
  g.opening_scene.finish();await process_frame
  check(not is_instance_valid(g.opening_scene) and not HoldFirstVisit99.data(g.state).intro_pending and g.surface.area==HoldFrontier103.lodge(g.state),"Skipping returns control in the lodge")
  g.open_panel("commission")

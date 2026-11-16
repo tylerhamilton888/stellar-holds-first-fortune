@@ -92,12 +92,16 @@ static func forge_lead(s)->Dictionary:
 static func forge_panel(g):
  if not active(g.state) or complete(g.state,"forge"):return
  var lead=forge_lead(g.state)
+ if not g.state.surface.get("quest_scene181",{}).get("seen",{}).get("borin",false):
+  var meet=g.button(g.panel_body,"Meet Borin · a word at the anvil",func():HoldQuestScene181.play(g,"borin"));meet.disabled=not HoldFrontier103.near(g,"forge")
  HoldMenuView.illustrated_text(g.panel_body,"coal","The Cold Forge","Borin brushes the ash from the hearth. 'Sound stonework. It only wants a good fire in it.'" if not data(g.state).inspected else "Borin has set the bellows in order. The hearth is ready for its first fire.")
  g.label(g.panel_body,lead.title,18,Color("edc98a"));g.label(g.panel_body,lead.hint,16)
  var b=g.button(g.panel_body,"Inspect the cold hearth",func():inspect(g);g.refresh_panel());b.disabled=data(g.state).inspected or not HoldFrontier103.near(g,"forge")
  g.label(g.panel_body,"Coal delivered: %d / 8 · Gathered or purchased fuel is welcome." % paid(g.state,"forge","coal"),15)
  g.label(g.panel_body,"First firing: 65 crowns · opens smelting and crafting. Partial deliveries are kept.",14,Color("a7dfcb"))
- b=g.button(g.panel_body,"Relight the communal forge",func():finish(g,"forge");g.refresh_panel());b.disabled=not ready(g.state,"forge") or not HoldFrontier103.near(g,"forge")
+ b=g.button(g.panel_body,"Relight the communal forge",func():
+  if finish(g,"forge"):HoldQuestScene181.play(g,"forge")
+  else:g.refresh_panel());b.disabled=not ready(g.state,"forge") or not HoldFrontier103.near(g,"forge")
  g.button(g.panel_body,"Review the Hold’s Ledger",func():g.open_panel("great_claim102"))
 static func panel(g):
  var s=g.state

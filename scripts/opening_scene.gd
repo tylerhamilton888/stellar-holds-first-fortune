@@ -60,7 +60,10 @@ func _ready():
    ["A LETTER FROM HOME", "The deed and your parents' letter share an inner pocket. 'Sound mountain foundations! Traditional stone dwelling!' Your father has underlined 'room for improvement'."],
    ["STONEBRIDGE · THE NEXT MORNING", "You arrived after dark. Now the bunkhouse hearth is lit, and the first shift is already stirring."],
    ["IVAR DEEPMEASURE", "'You're awake. Good. I'm Ivar. Your parents wrote ahead about Old Stonewright's Rise. The papers are all in order.'"],
-   ["IVAR DEEPMEASURE", "'Your place is east across the bridge. Come over when you're ready; I'll show you. Paid work can wait until you've seen your own hearth.'"]]
+   ["IVAR DEEPMEASURE", "'Your place is east across the bridge. Come over when you're ready; I'll show you. Paid work can wait until you've seen your own hearth.'"],
+   ["RURIK STONEHAND", "Rurik nods toward the table. 'Rurik. I haul the stone Ivar measures twice. If he says the job will take an afternoon, bring supper.'"],
+   ["SIGRID EMBERBRAID", "Sigrid gives Rurik a sidelong look. 'Sigrid. Ignore his estimates too. There's always a seat here when you come back from the Rise.'"],
+   ["IVAR DEEPMEASURE", "Ivar smiles into his cup. 'You know where to find us, then. Go and see your place. Stonebridge will still be here when you get back.'"]]
   step=clampi(int(HoldFirstVisit99.data(game.state).get("intro_beat",0)),0,lines.size()-1)
   game.transition_left=0;game.transition_shade.visible=false
   game.camera=game.surface.camera_target();game.surface.direction=Vector2.UP
@@ -93,6 +96,8 @@ func show_line():
  if mode=="audience":royal_portrait.visible=step not in [0,6];foreman_portrait.visible=step in [0,6]
  if mode=="frontier_arrival":
   foreman_portrait.visible=step>=3
+  if step>=3:
+   foreman_portrait.apply_profile(HoldWorkerLodge100.profile(game,1 if lines[step][0]=="RURIK STONEHAND" else 2 if lines[step][0]=="SIGRID EMBERBRAID" else 0))
   speaker.position.x=125 if step>=3 else 28
   caption.position.x=125 if step>=3 else 28;caption.size.x=635 if step>=3 else 735
  next_button.text=("Begin" if mode=="frontier_arrival" else "Enter the hold" if mode=="arrival" else "Return to work") if step==lines.size()-1 else "Continue"

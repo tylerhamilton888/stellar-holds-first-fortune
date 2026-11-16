@@ -45,6 +45,8 @@ func run():
  desk("lodge");at(Vector2(670,425));check(HoldLedger137.contribute(g,"forge","coal",8),"Ledger accepts forge fuel")
  desk("forge");button("Relight the communal forge")
  check(s.opening==2,"Local foreman accepts real coal and relights communal forge")
+ check(g.opening_scene is HoldQuestScene181,"First firing opens its narrative scene")
+ if g.opening_scene is HoldQuestScene181:g.opening_scene.finish()
  desk("forge");s.add("iron_ore",4);s.add("coal",2)
  check(HoldFrontier103.transact(g,"craft","iron") and s.queue.size()>0,"Local forge starts real smelting")
  g.player=Vector2(230,560);check(not HoldFrontier103.transact(g,"craft","iron"),"Remote forge callback blocked")

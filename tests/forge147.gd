@@ -35,6 +35,8 @@ func run():
  HoldWork132.produced(s,"coal",1,"cut");s.add("coal",8)
  g.surface.enter(HoldFrontier103.lodge(s));settle();at(Vector2(670,425));check(HoldLedger137.contribute(g,"forge","coal",8),"Fuel is contributed at the ledger")
  g.surface.enter(room);settle();at(forge.p);key(KEY_E);button("Relight the communal forge");check(s.opening==2,"The forge is restored through its real project");g.close_panel()
+ check(g.opening_scene is HoldQuestScene181,"First firing opens its narrative scene")
+ if g.opening_scene is HoldQuestScene181:g.opening_scene.finish()
  at(forge.p);key(KEY_E);check(g.panel_id=="frontier103" and g.get_meta("forge147_station","")=="smelt","The restored hearth opens smelting");g.close_panel()
  s.add("iron_ore",2);s.add("coal",1);check(HoldFrontier103.transact(g,"craft","iron"),"The restored hearth starts real smelting")
  at(anvil.p);key(KEY_E);check(g.get_meta("forge147_station","")=="anvil","The anvil opens metalwork");g.close_panel()

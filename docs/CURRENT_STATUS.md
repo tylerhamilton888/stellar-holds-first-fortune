@@ -1,4 +1,4 @@
-# Current status — 0.120.0 delivered
+# Current status — 0.120.0 delivered; 0.121.0 candidate
 
 ## Published Windows build
 
@@ -19,6 +19,10 @@ Downloaded both public JSON documents, verified their GitHub asset digests and m
 A stone approach connects the seeded cottage to the masonry lane. The arrival scene and home guidance give the player room to settle in. Lodge greetings acknowledge household and home registrations, with rescue, homecoming and memorial priorities. Two optional family letters use existing registrations; no new chores or rewards. The journal respects non-work ambitions instead of promoting the default ore lesson.
 
 Six focused native cases passed 682 assertions; 42 tooling tests passed. Reviewed the cottage, final tour beat, Ivar's milestone/pay replies and both scrolled letters. A paid-greeting priority regression was caught, corrected and verified. See [implementation](RISE179.md) and [playtest guide](PLAYTEST_GUIDE.md).
+
+## Candidate
+
+0.121.0 adds character introductions and short quest scenes (SCENES181.md). Focused tests and visual review are underway; publication is pending.
 
 ## Next work and limits
 

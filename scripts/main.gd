@@ -311,6 +311,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
   opening_scene=HoldOpeningScene.begin(self,"arrival")
  elif HoldOnboarding.ensure(state).get("escort_pending",false):opening_scene=HoldArrivalEscort.start(self)
  if load_saved and HoldFirstVisit99.data(state).get("intro_pending",false):opening_scene=HoldOpeningScene.begin(self,"frontier_arrival")
+ if load_saved:HoldQuestScene181.resume(self)
  if load_saved:HoldBridgeScene139.start_bridge(self)
  if load_saved:HoldThaneScene131.start_scene(self)
  if load_saved:HoldFriendScene130.start_scene(self)
