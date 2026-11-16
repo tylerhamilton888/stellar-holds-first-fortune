@@ -86,9 +86,11 @@ During the existing crew rest period, watch the miner walk home, rest at the bed
 
 Carts still stay parked at household stairs. This release adds worker movement, not automated storage transfers. Check normal-speed Windows performance and readability during ordinary play.
 
-## Household freight (0.112.0)
+## Household freight (0.123.1 follow-up)
 
 Use O → Plan Your Holding → Freight for the household. Mark a mine stockpile with U away from the entrance/cart, place a household chest, and select a miner, material and direction. Watch a 32-unit load cross the actual stairs. Try saving mid-trip, blocking a passage, finishing/stopping and returning a load. Confirm the chest receives the goods and crafting still requires withdrawal. See FREIGHT162.md and CURRENT_STATUS.md.
+
+Also reassign a miner while walking near a narrow tunnel bend. The carrier should finish entering the cell and continue the route, preserving the carried load. See FREIGHT187.md.
 
 ## Existing fortunes — 0.115.0 migration
 

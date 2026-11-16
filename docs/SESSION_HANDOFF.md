@@ -1,23 +1,19 @@
-# Session handoff — 0.123.0 delivered
+# Session handoff — 0.123.1 delivered
 
-Read CURRENT_STATUS.md and AGENTS.md. Owner requested pre-playtest polish, especially visibility and reasonable building sizes. Routine checked source merge and verified Windows delivery are authorized.
+Read CURRENT_STATUS.md and AGENTS.md. The owner requested continued pre-playtest polish and explicitly directed completion of delivery. Checked source merge, Windows publication and delivery documentation are authorized.
 
 ## Completed
 
-0.123.0 is published; source PR #185 merged at 880d847ed4bea7d0537d3fca8c78c96e771ab61b. Release source 78394c0fce379bfbf76e7498741b1f59a39dc346. PR run 43921480366 and all 11 release jobs in run 43922798661 passed. Public metadata and asset digests were verified. See CURRENT_STATUS.md for exact hashes and counts.
+0.123.1 is public. Source PR #187 merged at a3ecadfa639a20dfe180b6f621df5f3f12e255fd; release source ff7d29c72c097845a043bad12f23761cb0f279cd. All six PR jobs in run 43954606488 and all eleven release jobs in run 43954597970 passed. Public metadata, ZIP size and asset digests were verified; exact counts/hashes are in CURRENT_STATUS.md.
 
-Opening rooms now follow the player with cast-friendly headroom; north-wall fixtures can be revealed. Established room exits retain their clear framing. Tall foreground furnishings fade over the player without altering collision. Compact new workshops and older saved layouts retain their sizes and belongings. Native captures reviewed rooms, cottage, wards and entrances. See VISIBILITY185.md for scope and the camera regressions caught and corrected before release.
-
-## Follow-up validation
-
-PR #187 reproduces a mid-step freight reassignment failure with replay seed 162: an off-centre miner repeatedly cuts a blocked corner. Freight now centres before following a new route. Failure snapshots and an explicit corner regression were added. 0.123.1 is pending checks and publication; 0.123.0 remains the verified release. The older lower-level failure is not claimed resolved. See TESTING.md; use PR/release checks for current validation.
+Reassigned freight carriers centre before turning through tight tunnels. Seed 162 reproduced the original corner trap; cargo, storage and save owners are preserved. Tests now retain replay seeds and per-failure map/carrier/cargo snapshots. The earlier package-harness duplicate-function error was corrected before the successful full rebuild. See FREIGHT187.md and TESTING.md.
 
 ## Next work
 
-Owner and wife playtest the first hours using the latest Windows ZIP. Check opening visibility, north-wall furnishings, exits above the hotbar, tall-prop cutaways, readable approaches and saved belongings. Then gather pacing/discoverability feedback before another feature batch. Windows hardware, input, audio and performance remain human tests.
+Owner and wife playtest the first hours with the latest Windows ZIP. Check opening/cottage/forge/exploration flow, visibility, entrances, saved belongings and freight after reassigning a moving miner near a bend. Gather pacing/discoverability feedback before expanding features. Windows input, audio and hardware performance remain human checks.
 
-Preserve the owner's direction: dwarves are perfectionists; approval follows sound workmanship. No story, economy or progression changes in this pass. Capture seed and worker/route state if the intermittent freight issue recurs.
+Preserve dwarven perfectionism: approval follows sound workmanship. The older unrecorded lower-level freight failure remains a separate follow-up; preserve the replay seed and failure snapshots if it recurs.
 
-Delivery documentation is maintained separately from the tested release source; do not change release/0.123.0 for documentation-only edits.
+Delivery documentation is separate from tested release source. Do not change release/0.123.1 for documentation-only edits. All assets and prior releases remain intact.
 
-[Previous handoff](history/SESSION_HANDOFF-before-visibility185.md).
+[Previous handoff](history/SESSION_HANDOFF-before-freight187.md).

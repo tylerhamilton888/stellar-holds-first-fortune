@@ -2,7 +2,7 @@
 
 ## Current work and next milestone
 
-Delivered through 0.123.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
+Delivered through 0.123.1: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
 
 0.122.0 delivers Borin’s optional repair and early discovery/people scenes (STORY183.md). Source PR #183 is merged; full source/package acceptance and publication passed. Respect the owner’s dwarven craft standards; playtest pacing before extending the story batch.
 
@@ -32,4 +32,4 @@ Test [room plans](BLUEPRINTS.md) on the family-owned holding: connected rooms, d
 
 ## Freight validation follow-up
 
-The older intermittent lower-level failure remains unreproduced. Freight checks now retain replay seeds and per-failure state (TESTING.md). PR #187 separately reproduces a mid-step corner trap with seed 162 and centres carriers before a new route. Check its validation and 0.123.1 delivery; a passing retry alone is not a root-cause fix.
+0.123.1 fixes the reproduced mid-step corner trap (PR #187; FREIGHT187.md). Source merge, full source/package checks and publication passed. The older unrecorded lower-level failure remains unconfirmed. Preserve replay seeds and per-failure snapshots (TESTING.md); a passing retry alone is not a root-cause fix.
