@@ -38,7 +38,7 @@ In the inventory, scroll the item grid and select each new component. The select
 - Try gifts, favors, friendship errands and an available courtship moment. Costs and commitments should be clear. Waiting messages should distinguish play-time limits, calendar delays and insufficient trust.
 - Save, reload and confirm your possessions, work and relationships persist.
 
-Existing forge rooms retain their saved layout and objects; newly created rooms use the compact layouts. Check station approaches, furniture, sound levels and activity. In 0.123.0, approach the north wall and exit to check the moving room camera, then walk behind a tall pillar to check that your Dwarf remains visible.
+Existing forge rooms retain their saved layout and objects; newly created rooms use the compact layouts. Check station approaches, furniture, sound levels and activity. In 0.123.0, check that Ivar is fully visible when the bunkhouse opens. Approach the north wall to reveal its high fixtures, then walk south and confirm the exit clears the hotbar. Walk behind a tall pillar: it should fade enough to reveal your Dwarf, then become solid-looking again when you step away. Its base should still block movement. Check the same entrances in an older save.
 
 ## Continue the chapter
 
