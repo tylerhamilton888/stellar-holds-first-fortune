@@ -12,7 +12,7 @@ static func camera(area:String,p:Vector2)->Vector2:
  # Leave the north wall and tall furnishings below the 112px HUD band.
  # Follow the player through large rooms instead of cropping their northern bays.
  var top=65.0
- var target=p-Vector2(480,340)
+ var target=p-Vector2(480,350)
  target.y=maxf(target.y,lerpf(top,max_y,clampf((p.y-(r.end.y-120))/95.0,0,1)))
  return target.clamp(Vector2(0,top),Vector2(maxf(0,plan.size.x-960),max_y))
 static func objects(w,area:String)->Array:
