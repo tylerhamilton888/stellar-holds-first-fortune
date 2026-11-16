@@ -1,12 +1,12 @@
-# Current backlog — 2026-11-15
+# Current backlog — 2026-11-16
 
 ## Current work and next milestone
 
-Delivered through 0.121.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
+Delivered through 0.122.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
 
 0.121.0 delivers the first character/quest scene batch (SCENES181.md); source is merged and public release verification passed. Playtest this batch before choosing optional specialist-story follow-through.
 
-0.122.0 candidate: optional Borin repair and early discovery/people scenes (STORY183.md); validation and release pending. Respect the owner’s dwarven craft standards.
+0.122.0 delivers Borin’s optional repair and early discovery/people scenes (STORY183.md). Source PR #183 is merged; full source/package acceptance and publication passed. Respect the owner’s dwarven craft standards; playtest pacing before extending the story batch.
 
 ## Playtest the current published build
 
