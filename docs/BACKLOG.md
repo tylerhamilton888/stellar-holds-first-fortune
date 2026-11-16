@@ -8,6 +8,8 @@ Delivered through 0.122.0: building-grid clarity, family-owned Rise and cottage,
 
 0.122.0 delivers Borin’s optional repair and early discovery/people scenes (STORY183.md). Source PR #183 is merged; full source/package acceptance and publication passed. Respect the owner’s dwarven craft standards; playtest pacing before extending the story batch.
 
+0.123.0 pre-playtest visibility work is in progress: room framing and selective tall-prop cutaways. See VISIBILITY185.md; publication is not yet verified.
+
 ## Playtest the current published build
 
 Use [CURRENT_STATUS.md](CURRENT_STATUS.md) for the verified release and [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md) for installation and the current route. Living Forges, NPC conversation presentation, dialogue-state corrections and the first-hour guidance pass are delivered. See [FIRST_HOUR.md](FIRST_HOUR.md) for the staged welcome, optional routes and forge handoff.
