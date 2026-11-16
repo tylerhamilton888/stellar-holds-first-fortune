@@ -83,6 +83,10 @@ func run():
  g.close_panel();g.state.elapsed=30
  var r=HoldEstateFreight.orders(g).brann
  check(normal(g.state.inventory)==before and chest.items.is_empty(),"Arrangement neither spends nor transfers remote stock")
+ # A worker reassigned partway along the horizontal approach must centre
+ # before turning into the narrow vertical tunnel, not cut its rock corner.
+ a.p=Deepworks.center(Vector2i(54,8))+Vector2(-19,0);saved.x=a.p.x;saved.y=a.p.y
+ check(not w.solid(a.p,0),"Mid-step reassignment starts on clear mine floor")
  for i in 1000:
   g.deep.agents(.1)
   if not r.cargo.is_empty():break

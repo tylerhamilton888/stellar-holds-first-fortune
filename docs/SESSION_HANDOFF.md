@@ -10,7 +10,7 @@ Opening rooms now follow the player with cast-friendly headroom; north-wall fixt
 
 ## Follow-up validation
 
-PR #187 adds replay seeds and per-failure world/carrier/cargo snapshots to the existing freight case. It does not claim to resolve the intermittent failure or change the published build. See TESTING.md for replay instructions; use the PR checks for its validation state.
+PR #187 reproduces a mid-step freight reassignment failure with replay seed 162: an off-centre miner repeatedly cuts a blocked corner. Freight now centres before following a new route. Failure snapshots and an explicit corner regression were added. 0.123.1 is pending checks and publication; 0.123.0 remains the verified release. The older lower-level failure is not claimed resolved. See TESTING.md; use PR/release checks for current validation.
 
 ## Next work
 

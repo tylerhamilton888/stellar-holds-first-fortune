@@ -64,7 +64,14 @@ static func stop(g,id:String,return_load:bool=false):
 static func walk(g,a:Dictionary,saved:Dictionary,targets:Array,dt:float):
  if a.get("freight_path162",[]).is_empty():
   if a.cool>0:a.status="Freight route blocked";return
-  a.cool=.75;a.freight_path162=path_to(g,saved,targets)
+  a.cool=.75
+  # Reassignment can interrupt ordinary mining between cell centres. Routes
+  # are planned centre-to-centre: first finish entering the current cell so
+  # the first turn cannot cut a blocked corner and retry forever.
+  var area=str(saved.get("estate_area160","mine"))
+  var z=int(saved.get("estate_z160",0)) if area=="surface" else int(saved.depth)
+  var c=Deepworks.cell(a.p)
+  a.freight_path162=[HoldEstateWorkers.node(c,z,area)] if a.p.distance_to(Deepworks.center(c))>=1 else path_to(g,saved,targets)
   if a.freight_path162.is_empty():a.status="Freight route blocked";return
  var next=a.freight_path162[0]
  if not HoldEstateWorkers.valid_step(g,saved,next):a.freight_path162=[];a.cool=.75;a.status="Freight route blocked";return

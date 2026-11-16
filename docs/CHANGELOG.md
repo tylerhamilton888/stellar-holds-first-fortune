@@ -1,6 +1,7 @@
-# Development — freight diagnostics
+# 0.123.1 — Clear corners (pending verification)
 
-- Freight acceptance failures now retain generated world, route, carrier and cargo evidence outside temporary saves, with an optional replay seed. No runtime or release-version change; the intermittent route issue remains unconfirmed.
+- Reassigned freight carriers centre in their current cell before taking a new route, avoiding repeated collision at tight tunnel corners.
+- Freight acceptance failures retain generated world, route, carrier and cargo evidence with a replay seed. The older lower-level report remains unconfirmed.
 
 # 0.123.0 — A clearer view
 
