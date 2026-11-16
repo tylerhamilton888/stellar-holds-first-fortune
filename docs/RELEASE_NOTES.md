@@ -1,11 +1,9 @@
-# 0.120.0 — A place to come home to
+# 0.121.0 — Faces and first deeds
 
-The cottage at Old Stonewright's Rise now has a stone approach from the masonry lane. Ivar's introduction leaves more room to settle in, and the homestead journal suggests a small first improvement without listing the campaign's requirements.
+Meet Rurik and Sigrid during your first morning with Ivar. At the communal forge, an optional introduction gives Borin a moment at his own anvil.
 
-Ivar, Rurik and Sigrid acknowledge your household registration and home improvements. Their greetings give priority to the rescue and your eventual homecoming. Two optional letters from Mum and Dad mark your household and home registrations; earlier letters remain in the journal.
+Reopening the forge, opening the provisioned Winter Stores and accepting the missing-crew rescue now have short story scenes. They play in the actual location and leave the practical instructions in your journal.
 
-Your existing home, possessions, workers and story progress remain intact. There are no new upkeep tasks, required replies or letter rewards. See CURRENT_STATUS.md for delivery evidence and RISE179.md for scope.
+Enter or Space continues; Escape skips. Save during a scene and return to the same beat. Quest progress and payments are recorded before the scene, so skipping never undoes your work or pays you twice. Older completed quests do not replay scenes.
 
-[Previous notes](history/RELEASE_NOTES-before-rise179.md).
-
-The journal no longer promotes the default ore lesson over another chosen ambition after civic registration; selecting work guidance still shows the lesson.
+See SCENES181.md for scope and CURRENT_STATUS.md for verified delivery. [Previous notes](history/RELEASE_NOTES-before-scenes181.md).

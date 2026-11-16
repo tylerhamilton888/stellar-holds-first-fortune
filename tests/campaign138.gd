@@ -58,7 +58,11 @@ func run():
  desk("forge");s.add("turnip",2);s.add("water",1)
  check(HoldFrontier103.transact(g,"craft","turnip_stew"),"Crop route queues a real beginner meal")
  s.tick(4);check(C.learned(s,"cook"),"Turnip stew counts as cooking without a fishing detour")
- site();check(C.stock(g),"Finished food introduction opens the supplied stores")
+ site();g.open_panel("campaign138");button("Open the provisioned Winter Stores")
+ check(C.data(s).winter_ready and g.opening_scene is HoldQuestScene181,"Opening the supplied stores commits progress before its scene")
+ await snap("scenes181-winter-stores")
+ g.opening_scene.age=1;g.opening_scene.advance();await snap("scenes181-winter-counter")
+ g.opening_scene.finish();await process_frame
  var decor=s.surface.decor.size();points=int(HoldGreatClaim102.data(s).points)
  check(not C.stock(g) and decor==s.surface.decor.size() and points==int(HoldGreatClaim102.data(s).points),"Opening cannot duplicate furniture or recognition")
  desk("stores");check(HoldFrontier103.transact(g,"trade","food",true),"Opened storehouse provides actual trading service")
@@ -96,7 +100,16 @@ func run():
  HoldGreatClaim102.data(s).projects=projects;W.data(s).seals=[]
  g.open_panel("campaign138");await snap("04-ready");g.close_panel()
  ledger();check(not HoldMountain104.act(g,"rescue"),"Ledger is not the foreman's local dispatch desk")
- desk("lodge");check(HoldMountain104.act(g,"rescue") and not HoldMountain104.act(g,"rescue"),"Ivar dispatches the prepared player exactly once")
+ desk("lodge");g.open_panel("frontier103");button("The missing survey crew")
+ check(g.opening_scene is HoldQuestScene181 and int(HoldAncestralClaim.data(s).stage)==1,"Accepted rescue begins Ivar's briefing after its saved dispatch")
+ check(not HoldMountain104.act(g,"rescue"),"Ivar cannot dispatch the rescue twice")
+ await snap("scenes181-rescue-briefing")
+ g.opening_scene.age=1;g.opening_scene.advance();await snap("scenes181-rescue-safety")
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(g.opening_scene is HoldQuestScene181 and g.opening_scene.mode=="rescue" and g.opening_scene.step==1,"Rescue briefing resumes without changing the accepted quest")
+ g.opening_scene.age=1;g.opening_scene.advance();await snap("scenes181-rescue-journal")
+ g.opening_scene.finish();await process_frame
+ check(HoldQuestScene181.record(s).seen.rescue and int(HoldAncestralClaim.data(s).stage)==1,"Finishing the briefing neither completes nor resets the rescue")
  var home=s.claim_id;g.save_game();g.start_game(true);settle();s=g.state
  check(C.eligible(s) and C.data(s).winter_ready and s.claim_id==home,"Story eligibility, stocked world and original household survive reload")
  # Migration never consumes items, awards work, resets a story, or withdraws an earned invitation.

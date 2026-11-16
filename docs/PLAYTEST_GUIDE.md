@@ -115,3 +115,13 @@ On a new fortune, take Ivar's property tour through its final beat. Follow the m
 Register the household through two real contributions. Talk to Ivar, Rurik and Sigrid; they should acknowledge the registration without insisting on a first mining shift. Open J and read **A letter from home · A name in the book**. Improve and register the home to unlock **Making it yours**; both letters should remain available after reload, without rewards or reply requirements. Scroll each letter to its signature. Choosing another ambition should not place the default ore lesson first; choosing work should still show it.
 
 Check greetings during an active rescue, after the rescue and after the final homecoming. Those events should take priority. Sigrid/Rurik's memorial topic should still replace the greeting cleanly. Report whether the warmer responses feel natural on repeat visits; automated checks cannot judge normal-speed pacing.
+
+## Faces and first deeds (0.121.0 candidate)
+
+Start a new fortune and continue through the morning introductions. Check that Ivar, Rurik and Sigrid each have the correct name and portrait, and that long captions fit. Escape should return control immediately; a completed introduction should not replay on reload.
+
+At the cold communal forge, choose **Meet Borin · a word at the anvil**. Save mid-scene, reload and continue or skip. Inspect and supply the hearth normally, then choose **Relight the communal forge**. Its scene should begin with the forge already open and 65 crowns paid exactly once. Skipping/reloading must preserve the payment and fuel deposits.
+
+Open the provisioned Winter Stores at their actual site and watch or skip the brief acknowledgment. The stocked interior and counter should already work. Accept the missing-crew rescue from Ivar's shift book: the briefing should leave the rescue accepted, with detailed instructions in J. Test saving on its second beat and returning to the same beat. Neither finishing nor skipping should complete the rescue or alter your inventory.
+
+Try continued saves with these quests already completed: there should be no surprise retrospective scene. Check Enter/Space, Escape and mouse buttons at normal speed, and report reading pace, portrait mismatches, obscured captions or unexpected repeats.

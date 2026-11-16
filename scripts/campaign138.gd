@@ -91,7 +91,9 @@ static func panel(g):
   var b=g.button(box,"Raise the community storehouse · 70 marks",func():assemble(g);g.refresh_panel());b.disabled=not near_site(g) or not HoldLedger137.ready(s,"storehouse")
  elif not data(s).winter_ready:
   g.label(box,"Provisions delivered · %d / 12" % HoldLedger137.paid(s,"winter","food"),15)
-  var b=g.button(box,"Open the provisioned Winter Stores",func():stock(g);g.refresh_panel());b.disabled=not near_site(g) or not HoldLedger137.ready(s,"winter")
+  var b=g.button(box,"Open the provisioned Winter Stores",func():
+   if stock(g):HoldQuestScene181.play(g,"winter")
+   else:g.refresh_panel());b.disabled=not near_site(g) or not HoldLedger137.ready(s,"winter")
  else:g.label(box,"The supplied storehouse is open. Its community counter trades supplies inside.",16)
  g.button(box,"Review material slots in the Hold’s Ledger",func():g.open_panel("great_claim102"))
  for row in foundations(s):

@@ -11,3 +11,5 @@ The [campaign directive](OPENING_CAMPAIGN_DIRECTIVE.md) retains the five-act sto
 Existing surface.ledger137 escrow, inspection and gift fields remain authoritative. Supplies leave the pack only through physical delivery; remote viewing is read-only. No duplicate consumption, personal production proof, experience or rewards are granted for purchases. Optional trade seals and later specialist orders retain genuine production requirements.
 
 Validation extends ledger137 and campaign138, including native forge and scrolled campaign views. See [LIVELIHOOD177.md](../LIVELIHOOD177.md) and [CURRENT_STATUS.md](../CURRENT_STATUS.md) for current acceptance. [Superseded first-integration design](../history/LEDGER137-before-livelihood177.md).
+
+Presentation follow-up in the 0.121.0 candidate (../SCENES181.md): the cold forge offers an optional Borin introduction; its actual relight button opens a short first-firing scene after the original 65-crown transaction. Saving or skipping does not repeat that payment.

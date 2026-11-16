@@ -23,3 +23,5 @@ Existing owners retain inspection, escrow, production facts, tool ownership, hou
 The expanded campaign138 case covers original crafting and supplier/commission routes, early deposits, mandatory safety conditions, services, unchanged cottage, reload, no fake experience and once-only optional rewards. Current acceptance is in [LIVELIHOOD177.md](../LIVELIHOOD177.md); publication is recorded in [CURRENT_STATUS.md](../CURRENT_STATUS.md). Normal-speed economy and Windows playtesting remain necessary.
 
 [Superseded seven-foundation design](../history/CAMPAIGN138-before-livelihood177.md). Rescue, ancestry, invasion, trial and Thane homecoming remain authored story stages.
+
+Presentation follow-up in the 0.121.0 candidate (../SCENES181.md): opening the supplied stores and accepting the rescue through their actual UI choices now start brief skippable scenes after the transaction is saved. Their presentation state never substitutes for campaign requirements or repeats rewards.
