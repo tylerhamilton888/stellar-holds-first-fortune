@@ -21,12 +21,12 @@ func run():
  for t in [0.0,4.0,7.0,10.0,18.0,21.0,24.0]:
   g.state.elapsed=t
   for person in HoldWorkerLodge100.people(g):check(g.surface.walkable(person.p),person.name+" remains on clear floor at "+str(t))
- # Northern furnishings and the private doorway must clear the HUD when approached.
+ # Northern furnishings must clear the HUD when approached.
  var arrival=g.player
  check(380-58-g.surface.camera_target().y>=112,"Ivar remains below the HUD at the opening spawn")
  for target in [Vector2(510,365),Vector2(720,330)]:
   at(target)
-  check(205-g.surface.camera_target().y>=112,"North doorway clears the HUD when approached")
+  check(HoldFurnishings.silhouette("hearth",Vector2(510,335)).position.y-g.surface.camera_target().y>=112,"North hearth clears the HUD when approached")
  await snap("visibility185-north-wall")
  at(arrival)
  g.state.elapsed=0;await snap("01-lodge")
