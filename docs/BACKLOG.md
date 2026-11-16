@@ -32,6 +32,4 @@ Test [room plans](BLUEPRINTS.md) on the family-owned holding: connected rooms, d
 
 ## Freight validation follow-up
 
-One PR freight162 lower-level route check failed once, then passed on targeted retry, in the package and in an isolated local case plus eight fixed-seed trials. The cause was not reproduced. The case now records a replay seed and writes map/carrier/route/cargo snapshots at each failure; see TESTING.md. Preserve those files if it recurs; do not treat a retry as a root-cause fix.
-
-PR #187 separately reproduces a mid-step reassignment corner trap with seed 162 and adds centring before a new freight route. Check its validation and 0.123.1 delivery before calling that fix released.
+The older intermittent lower-level failure remains unreproduced. Freight checks now retain replay seeds and per-failure state (TESTING.md). PR #187 separately reproduces a mid-step corner trap with seed 162 and centres carriers before a new route. Check its validation and 0.123.1 delivery; a passing retry alone is not a root-cause fix.
