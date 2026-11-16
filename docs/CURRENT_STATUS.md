@@ -1,33 +1,31 @@
-# Current status — 0.123.0 visibility work
+# Current status — 0.123.0 A clearer view
 
-0.123.0 is being validated on polish/visibility185. Room framing and tall-prop cutaways are implemented; native review and release checks are pending. 0.122.0 below remains the verified public build. See VISIBILITY185.md.
+**[0.123.0 — A clearer view](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.123.0)** is public. [PR #185](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/185) merged after required checks and native visual review.
 
-## Published Windows build
+## Verified delivery
 
-**[0.122.0 — Fit for the work](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.122.0)** is public. [PR #183](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/183) merged after required checks and native visual review.
-
-- Release source: `cf0b6c156a33c3d13f37ce64a2c65798c76fc5fb`; tree: `af4027f9ccbc6fe4f9e91e503030058f9d4e4ca4`.
-- Source merge: `831a1f43f8e12bb648085ef3f851361a0c07f4eb`.
-- [Release validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43882962292): all 11 jobs passed, including 87 native source cases and 77 exact-package cases / 14839 assertions, aggregate verification and publication.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43882705082): all 6 jobs passed.
+- Release source: `78394c0fce379bfbf76e7498741b1f59a39dc346`; tree: `898ae1ab42bc1b93a4e647cd19a29afcacf33d09`.
+- Source merge: `880d847ed4bea7d0537d3fca8c78c96e771ab61b`.
+- [Release validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43922798661): all 11 jobs passed, including 87 native source cases and 77 exact-package cases / 14848 assertions, aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43921480366): all 6 jobs passed.
 - Public assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
-- Windows ZIP: 964,791,260 bytes; SHA-256 `28e59222f471ec5bb511ae65c675d1981746e7dc577f63e5244d06c996771d94`.
-- PCK SHA-256: `5539845129068e9a75a9e3a9cae4f8f74ad9178b1759c50d11e75f24756db7b9`.
+- Windows ZIP: 964,832,843 bytes; SHA-256 `069379fe017aa179d3a332259cc9490673de3c025bfca50ec9af385ea8455f13`.
+- PCK SHA-256: `9f59473c20f99b90ed9c23a95fbea8edf84b4b49cfc9f2bb3f5549ae37858341`.
 
 Downloaded both public JSON documents, verified their GitHub asset digests and matched version, clean source, PCK/ZIP hashes and ZIP size. The ZIP digest matches GitHub's asset digest. Publication verified the complete archive; it was not independently downloaded again.
 
 ## Delivered scope
 
-Borin's optional training-pick repair condemns a split haft and requires one shaped haft and one iron ingot. Materials can be made or bought; exact reimbursement is stated before delivery. Borin inspects fit, collar and balance before approving work worthy of the forge's name. The finished pick is displayed on an existing crate; his greeting remembers it. No tool, friendship or campaign gate depends on this job.
+The bunkhouse and starter quarters follow the player to reveal upper furnishings and southern exits. Ivar stays visible at the opening spawn. Standard rooms can show more of their north wall; established southern exit framing and the throne camera are preserved. Tall foreground furnishings fade when they obscure the player, while their physical bases remain unchanged.
 
-New fortunes receive first-arrival Old Workings/Pinewood scenes. Newly met Alden and Maren offer optional local introductions. Scenes remain saved, skippable and once-only; older saves do not acquire retrospective arrival scenes. Existing major scenes and property are preserved.
+Reviewed the compact communal/starter workshops, legacy forge, cottage roof cutaway, hold wards and entrances. Existing room sizes, saved belongings, storage, costs and story are preserved. This was a targeted visibility review, not an exhaustive visual review of every game area.
 
-Four focused native cases passed 181 assertions; 42 tooling tests passed. Native views checked portraits, captions, mine controls, the repaired pick and conversation follow-up. An older-layout display conflict was fixed by using existing fixtures without changing furniture or collision. See [implementation](STORY183.md) and [playtest guide](PLAYTEST_GUIDE.md).
+Five focused native cases passed 256 assertions; the final civic/lodge replay passed 124 after the exit correction. The 42 Python tooling tests passed. See [review](VISIBILITY185.md) and [playtest guide](PLAYTEST_GUIDE.md).
 
 ## Next work and limits
 
-Playtest the first few hours for pacing, discoverability and repeated visits before expanding the story batch. Preserve the owner's direction: dwarves are perfectionists who take craftsmanship seriously; approval follows sound work, not generic reassurance about mistakes.
+Playtest the first few hours for pacing, discoverability, movement, Windows input/audio and performance before expanding the feature batch. Use a new fortune for the opening and an older save to check belongings and room entrances. Preserve dwarven craft standards: approval follows sound workmanship.
 
-Normal Windows input, audio, performance and economy remain human playtests. The older intermittent freight-route issue remains a follow-up; capture seed and worker/route state if it recurs.
+The older intermittent freight-route issue remains a follow-up; capture seed and worker/route state if it recurs.
 
-[Previous delivery](history/CURRENT_STATUS-before-story183.md).
+[Previous delivery](history/CURRENT_STATUS-before-visibility185.md).

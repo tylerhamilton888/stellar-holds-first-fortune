@@ -2,11 +2,11 @@
 
 ## Current work and next milestone
 
-Delivered through 0.122.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
+Delivered through 0.123.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
 
 0.122.0 delivers Borin’s optional repair and early discovery/people scenes (STORY183.md). Source PR #183 is merged; full source/package acceptance and publication passed. Respect the owner’s dwarven craft standards; playtest pacing before extending the story batch.
 
-0.123.0 pre-playtest visibility work is in progress: room framing and selective tall-prop cutaways. See VISIBILITY185.md; publication is not yet verified.
+0.123.0 delivers room framing and selective tall-prop cutaways. PR #185 merged; full source/package acceptance and public asset verification passed. See VISIBILITY185.md.
 
 ## Playtest the current published build
 

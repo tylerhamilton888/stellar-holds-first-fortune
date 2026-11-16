@@ -11,6 +11,10 @@ Scope: room framing, foreground props, workshop scale and reachable services. No
 
 ## Verification
 
-Pending focused native review: living_forges148, lodge100, opening146 and forge147. Existing cases check real station access, material transactions and saved storage. Added regression coverage checks north-wall visibility, pillar overlap, preserved collision and opaque non-overlapping furniture.
+Focused native review passed: living_forges148 (42 assertions), lodge100 (59), opening146 (66), forge147 (24) and civic (65). The final civic/lodge replay passed all 124 assertions after restoring established rooms' exit framing. The 42 Python tooling tests passed.
 
-Full source and exact-package gates remain required before release. Human Windows input, audio, performance and first-hours pacing remain playtest items.
+Native captures covered the opening cast, northern furnishings, restored and cold forges, starter workshop, legacy forge, pillar cutaway, upstairs quarters, cottage roof cutaway, ward approaches and room exits. Existing tests protect real station access, material transactions and saved storage. Added checks cover Ivar's headroom, north-hearth visibility, pillar overlap, preserved collision and opaque non-overlapping furniture.
+
+The initial following-camera change obscured Ivar; the native lodge assertion caught it. Broader civic validation then caught exits under the hotbar in established rooms. Welcome-specific following offsets and established-room southern framing corrected both issues; the final native replay passed.
+
+PR #185 merged after all required checks. Release run 43922798661 passed all 11 jobs, including 87 source cases and 77 package cases / 14848 assertions. Public 0.123.0 metadata and asset digests match the reviewed source and tested ZIP. See CURRENT_STATUS.md. Human Windows input, audio, performance and first-hours pacing remain playtest items.
