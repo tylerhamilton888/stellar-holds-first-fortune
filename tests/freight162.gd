@@ -1,5 +1,21 @@
 extends "res://tests/support/game_fixture.gd"
 const LANDING=Vector2i(54,34)
+var replay_seed:int
+func check(ok:bool,label:String):
+ super.check(ok,label)
+ if ok or g==null:return
+ # Preserve the generated map and actual carrier state before later checks
+ # change them. The runner's temporary save directory is deleted on exit.
+ var evidence={"check":label,"replay_seed":replay_seed,"world_seed":g.state.seed_value,"elapsed":g.state.elapsed,"zone":g.zone,"transition":g.transition_left,"panel":g.panel_id}
+ if g.deep!=null and g.deep.world!=null:
+  evidence.world=g.deep.world.data
+  evidence.orders=HoldEstateFreight.orders(g)
+  evidence.chests=g.state.surface.chests
+  evidence.building=HoldEstateWorkers.building(g)
+  evidence.hauling=g.state.hauling
+  evidence.agents=g.agents
+ var file=FileAccess.open(output+"/failure-%02d.json" % failed,FileAccess.WRITE)
+ if file:file.store_string(JSON.stringify(evidence))
 func normal(v):return JSON.parse_string(JSON.stringify(v))
 func stand(c:Vector2i):g.player=Deepworks.center(c);g.transition_left=0
 func build_room(p):
@@ -18,6 +34,9 @@ func advance_until_home(count:int):
   if worker().status=="Resting at home":break
 func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
+ replay_seed=int(OS.get_environment("STELLAR_FREIGHT_SEED")) if OS.has_environment("STELLAR_FREIGHT_SEED") else randi()
+ seed(replay_seed)
+ print("FREIGHT162 replay seed: ",replay_seed)
  print("FREIGHT162 setup: loading scene")
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true
  print("FREIGHT162 setup: starting game")
