@@ -165,7 +165,9 @@ func leave():
  var p=g.state.surface.positions.get(back,[])
  enter(back,Vector2(p[0],p[1])+Vector2(0,35) if p.size()==2 else spawn(back))
 func camera_target()->Vector2:
- if room():return HoldRoomLayout.camera(area,g.player)
+ if room():
+  var welcome=area==HoldFrontier103.lodge(g.state) or HoldFrontier103.private_room(g) or (area=="room:home" and HoldFirstVisit99.lodge_intro(g.state))
+  return HoldRoomLayout.camera(area,g.player,welcome)
  if HoldWorldZones.ward(area):return HoldTerraces.camera(area,g.player-Vector2(0,55 if g.fight.giant_near() else 0))
  return (g.player-Vector2(480,300)).clamp(Vector2(0,-65),Vector2(maxf(0,size().x-960),maxf(-65,size().y-480)))
 func level()->int:return 0 if area=="crownward" else 2 if area=="forgeward" else 1
