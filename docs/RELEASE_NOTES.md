@@ -1,7 +1,7 @@
-# 0.123.0 — A clearer view
+# 0.123.1 — Clear corners
 
-The bunkhouse and private-room camera now follows you toward the north wall and the exit. Doorways, high fixtures and the bottom of the room are easier to inspect without the HUD covering them.
+Miners reassigned to household freight now finish entering their current cell before following a new route. This prevents a tight tunnel corner from leaving a carrier repeatedly reporting a blocked route despite an open passage.
 
-Tall pillars and other high furnishings become translucent only when they overlap your Dwarf. Their size and solid bases stay unchanged. New workshops retain their compact plans; existing rooms and stored belongings are preserved.
+Freight checks now retain a replay seed and map/carrier/cargo snapshots if an assertion fails. Cargo, storage, stair access, costs and save formats are unchanged.
 
-See VISIBILITY185.md for the review and CURRENT_STATUS.md for delivery status. [Previous notes](history/RELEASE_NOTES-before-visibility185.md).
+The original intermittent lower-level report remains separate; this fix addresses a reproduced mid-step reassignment failure. See CURRENT_STATUS.md for the verified published build. [Previous notes](history/RELEASE_NOTES-before-freight187.md).

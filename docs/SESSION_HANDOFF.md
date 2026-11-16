@@ -8,6 +8,10 @@ Read CURRENT_STATUS.md and AGENTS.md. Owner requested pre-playtest polish, espec
 
 Opening rooms now follow the player with cast-friendly headroom; north-wall fixtures can be revealed. Established room exits retain their clear framing. Tall foreground furnishings fade over the player without altering collision. Compact new workshops and older saved layouts retain their sizes and belongings. Native captures reviewed rooms, cottage, wards and entrances. See VISIBILITY185.md for scope and the camera regressions caught and corrected before release.
 
+## Follow-up validation
+
+PR #187 reproduces a mid-step freight reassignment failure with replay seed 162: an off-centre miner repeatedly cuts a blocked corner. Freight now centres before following a new route. Failure snapshots and an explicit corner regression were added. 0.123.1 is pending checks and publication; 0.123.0 remains the verified release. The older lower-level failure is not claimed resolved. See TESTING.md; use PR/release checks for current validation.
+
 ## Next work
 
 Owner and wife playtest the first hours using the latest Windows ZIP. Check opening visibility, north-wall furnishings, exits above the hotbar, tall-prop cutaways, readable approaches and saved belongings. Then gather pacing/discoverability feedback before another feature batch. Windows hardware, input, audio and performance remain human tests.

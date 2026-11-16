@@ -1,3 +1,8 @@
+# 0.123.1 — Clear corners (pending verification)
+
+- Reassigned freight carriers centre in their current cell before taking a new route, avoiding repeated collision at tight tunnel corners.
+- Freight acceptance failures retain generated world, route, carrier and cargo evidence with a replay seed. The older lower-level report remains unconfirmed.
+
 # 0.123.0 — A clearer view
 
 - Room cameras reveal north-wall fixtures when approached and follow movement through the bunkhouse and private quarters.
