@@ -116,7 +116,7 @@ Register the household through two real contributions. Talk to Ivar, Rurik and S
 
 Check greetings during an active rescue, after the rescue and after the final homecoming. Those events should take priority. Sigrid/Rurik's memorial topic should still replace the greeting cleanly. Report whether the warmer responses feel natural on repeat visits; automated checks cannot judge normal-speed pacing.
 
-## Faces and first deeds (0.121.0 candidate)
+## Faces and first deeds (0.121.0)
 
 Start a new fortune and continue through the morning introductions. Check that Ivar, Rurik and Sigrid each have the correct name and portrait, and that long captions fit. Escape should return control immediately; a completed introduction should not replay on reload.
 

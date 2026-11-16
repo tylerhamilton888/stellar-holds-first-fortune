@@ -6,4 +6,4 @@ Reopening the forge, opening the provisioned Winter Stores and accepting the mis
 
 Enter or Space continues; Escape skips. Save during a scene and return to the same beat. Quest progress and payments are recorded before the scene, so skipping never undoes your work or pays you twice. Older completed quests do not replay scenes.
 
-See SCENES181.md for scope and CURRENT_STATUS.md for verified delivery. [Previous notes](history/RELEASE_NOTES-before-scenes181.md).
+Published and source merged; full source/package validation passed. See SCENES181.md for scope and CURRENT_STATUS.md for verified delivery. [Previous notes](history/RELEASE_NOTES-before-scenes181.md).

@@ -1,4 +1,4 @@
-# Faces and first deeds — 0.121.0 candidate
+# Faces and first deeds — 0.121.0
 
 A first set of short, skippable scenes uses existing in-world locations, character portraits and story owners.
 
@@ -12,6 +12,6 @@ Enter/Space advances and Escape skips. A saved scene resumes its current beat in
 
 The additive surface.quest_scene181 record contains version, active ID, beat and seen IDs. New scene logic lives in quest_scene181.gd; UI callbacks invoke it only after successful existing transactions. It uses the current portrait renderer's refresh method when identities change. No artwork, save IDs or resource paths are replaced.
 
-Expanded opening146, ledger137 and campaign138 checks cover introductions, real quest-button transactions, once-only payments, skipping, reload, incompatible state and native views. mountain104 protects the existing rescue/story flow. Pinned Godot 4.4.1 focused validation covers 367 assertions across four cases; 42 tooling tests pass. Native views were reviewed for the opening portraits, Borin, first firing, Winter Stores and Ivar briefing; ordinary interaction prompts are hidden while scenes play. Public delivery remains tracked in CURRENT_STATUS.md. Normal-speed Windows reading pace, controls and audio remain playtest feedback.
+Expanded opening146, ledger137 and campaign138 checks cover introductions, real quest-button transactions, once-only payments, skipping, reload, incompatible state and native views. mountain104 protects the existing rescue/story flow. Pinned Godot 4.4.1 focused validation covers 727 assertions across six cases; 42 tooling tests pass. Native views were reviewed for the opening portraits, Borin, first firing, Winter Stores and Ivar briefing; ordinary interaction prompts are hidden while scenes play. Public delivery remains tracked in CURRENT_STATUS.md. Normal-speed Windows reading pace, controls and audio remain playtest feedback.
 
-Full-source validation caught two older forge interaction cases continuing while the new scene was still open. frontier103 and forge147 now assert the scene starts and close it before their existing archive, workshop and property checks; no gameplay assertion was removed. The corrected source requires a fresh complete release acceptance.
+Full-source validation caught two older forge interaction cases continuing while the new scene was still open. frontier103 and forge147 now assert the scene starts and close it before their existing archive, workshop and property checks; no gameplay assertion was removed. Their local reruns passed 336 and 24 assertions respectively. Complete release acceptance passed on corrected source 4ef70080086afac185fc507640851296e4026e32: 87 source cases and 77 package cases / 14827 assertions. PR #181 is merged and the public build metadata matches that source.

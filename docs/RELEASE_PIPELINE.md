@@ -26,7 +26,7 @@ After publication, confirm the release is public and its named Windows ZIP, buil
 
 Record the release URL, exact source, run, results and limitations in CURRENT_STATUS.md. Update SESSION_HANDOFF.md and BACKLOG.md so completed delivery is not described as pending. Review README.md, PLAYTEST_GUIDE.md, RELEASE_NOTES.md and any affected feature audit for obsolete downloads, controls or installation instructions. Keep general download links on `releases/latest`; current status and the release's notes hold the specific version.
 
-Put superseded procedures in clearly linked history files rather than appending them below current instructions. Keep the current playtest guide and this procedure concise. Record delivery documentation on a separate docs branch and merge after its checks pass. Documentation-only corrections do not need a new game version or Windows rebuild.
+Put superseded procedures in clearly linked history files rather than appending them below current instructions. Keep the current playtest guide and this procedure concise. Record delivery documentation on a separate docs branch and merge after its checks pass. Documentation-only corrections do not need a new game version or Windows rebuild. Publication can precede the source merge: do not report the implementation fully delivered until its source PR is merged, public metadata is verified and the delivery-documentation PR is merged. If interrupted, record each remaining step explicitly in the handoff.
 
 ## Evidence and retry
 

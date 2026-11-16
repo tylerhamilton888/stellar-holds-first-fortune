@@ -24,4 +24,4 @@ The expanded campaign138 case covers original crafting and supplier/commission r
 
 [Superseded seven-foundation design](../history/CAMPAIGN138-before-livelihood177.md). Rescue, ancestry, invasion, trial and Thane homecoming remain authored story stages.
 
-Presentation follow-up in the 0.121.0 candidate (../SCENES181.md): opening the supplied stores and accepting the rescue through their actual UI choices now start brief skippable scenes after the transaction is saved. Their presentation state never substitutes for campaign requirements or repeats rewards.
+Presentation follow-up in the 0.121.0 (../SCENES181.md): opening the supplied stores and accepting the rescue through their actual UI choices now start brief skippable scenes after the transaction is saved. Their presentation state never substitutes for campaign requirements or repeats rewards.

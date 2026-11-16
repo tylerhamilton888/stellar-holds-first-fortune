@@ -1,33 +1,27 @@
-# Current status — 0.120.0 delivered; 0.121.0 candidate
+# Current status — 0.121.0 delivered
 
 ## Published Windows build
 
-**[0.120.0 — A place to come home to](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.120.0)** is published. [PR #179](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/179) merged after required checks and native visual review.
+**[0.121.0 — Faces and first deeds](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.121.0)** is published. [PR #181](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/181) is merged after required checks and native visual review.
 
-- Release source: `43d944f9928e34fc88e38798fe954e00f0d44cb8`; tree: `81653df88af8683b055620748b8ad950cfca3cfe`.
-- Source merge: `b6771d9b11542e6161e28e9f14a38a81f6e441ab`.
-- [Release validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43767707547): all 11 jobs passed, including 87 native source cases and 77 exact-package cases / 14810 assertions, aggregate verification and publication.
-- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43767565159): all 6 jobs passed.
+- Release source: `4ef70080086afac185fc507640851296e4026e32`; tree: `c7e77d4c4117a41c7f78077b56bbb9ad84fd3157`.
+- Source merge: `4fe32550fedf3502e4938232771fd711185979fb`.
+- [Release validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43781555374): all 11 jobs passed, including 87 native source cases and 77 exact-package cases / 14827 assertions, aggregate verification and publication.
+- [PR validation](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/43781385001): all 6 jobs passed.
 - Public assets: Windows ZIP, build.json, release-summary.json and verification-evidence.tar.gz.
-- Windows ZIP: 964,779,371 bytes; SHA-256 `d44edd38f8187d7c057ce7494753c0f6f616530003e0eac4dbbe372cff491a2c`.
-- PCK SHA-256: `656f85b169b9359be59764aea8c6149196fa4724264673b15878dab27cbd6efe`.
+- Windows ZIP: 964,832,037 bytes; SHA-256 `b64eef26735bbaf1199de04680b51d0e4e6fb2c67e67f2cf4e55886bbb4fd70a`.
+- PCK SHA-256: `d2ed29092d887e879ca27607145a012b42946ae55204a2ffc2a5f08c4609b2d4`.
 
-Downloaded both public JSON documents, verified their GitHub asset digests and matched version, clean source, PCK/ZIP hashes and ZIP size. The ZIP digest also matches GitHub's asset digest. The publication gate verified the complete archive; it was not independently downloaded again.
+Downloaded both public JSON documents, verified their GitHub asset digests and matched version, clean source, PCK/ZIP hashes and ZIP size. The ZIP digest matches GitHub's asset digest. The publication gate verified the complete archive; it was not independently downloaded again. Source was merged after publication; the download already contains that reviewed source.
 
 ## Delivered scope
 
-A stone approach connects the seeded cottage to the masonry lane. The arrival scene and home guidance give the player room to settle in. Lodge greetings acknowledge household and home registrations, with rescue, homecoming and memorial priorities. Two optional family letters use existing registrations; no new chores or rewards. The journal respects non-work ambitions instead of promoting the default ore lesson.
+Rurik and Sigrid join the opening introductions; Borin has an optional local introduction. First forge firing, Winter Stores opening and rescue dispatch receive short, skippable scenes in their actual locations. Quest owners commit their transactions before presentation. Saved scenes resume at the current beat; skipping never repeats rewards and completed older quests do not replay.
 
-Six focused native cases passed 682 assertions; 42 tooling tests passed. Reviewed the cottage, final tour beat, Ivar's milestone/pay replies and both scrolled letters. A paid-greeting priority regression was caught, corrected and verified. See [implementation](RISE179.md) and [playtest guide](PLAYTEST_GUIDE.md).
-
-## Candidate
-
-0.121.0 adds character introductions and short quest scenes (SCENES181.md). Focused tests and visual review are underway; publication is pending.
+Six focused native cases passed 727 assertions; 42 tooling tests passed. Native views checked portraits, captions, controls and hidden interaction prompts. Two older forge interaction tests were updated to close the new scene before continuing their existing checks. The corrected source passed the complete release pipeline. See [implementation](SCENES181.md) and [playtest guide](PLAYTEST_GUIDE.md).
 
 ## Next work and limits
 
-The first environmental/experiential polish slice is delivered. Review normal-speed arrival pacing, letter discoverability and repeat visits before choosing further interior/environment work. Broader specialist stories and advanced equipment remain extensions; preserve existing property and the authored campaign.
+Playtest opening pace, scene discoverability and repeat visits before expanding optional specialist stories. Normal Windows input, audio, performance and progression economy remain human playtests. The intermittent freight-route failure from 0.116.0 remains a follow-up; capture seed and worker/route state if it recurs.
 
-Normal Windows input, audio, performance and progression economy remain human playtests. The intermittent freight-route failure from 0.116.0 is still a follow-up, not fixed here; capture seed and worker/route state if it recurs.
-
-[Previous delivery](history/CURRENT_STATUS-before-rise179.md).
+[Previous delivery](history/CURRENT_STATUS-before-scenes181.md).

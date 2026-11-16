@@ -2,9 +2,9 @@
 
 ## Current work and next milestone
 
-Delivered through 0.120.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
+Delivered through 0.121.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
 
-0.121.0 implements the first character/quest scene batch (SCENES181.md), pending validation and publication.
+0.121.0 delivers the first character/quest scene batch (SCENES181.md); source is merged and public release verification passed. Playtest this batch before choosing optional specialist-story follow-through.
 
 ## Playtest the current published build
 
