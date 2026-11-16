@@ -1,0 +1,11 @@
+# Fit for the work — 0.122.0 candidate
+
+Borin's optional personal quest repairs a condemned training pick after the communal forge has been restored. It requires one shaped haft and one iron ingot, crafted or bought through existing services. The panel states the exact material cost and reimbursement before acceptance or delivery. Borin inspects the fit, collar and balance before approving the work. A painted pick is displayed on an existing forge crate and his local greeting remembers the finished repair.
+
+Character direction: dwarves are perfectionists who take craftsmanship seriously. This is not a human reassurance story about being allowed to make mistakes. A training tool carries the forge's name; concealed defects are unacceptable. Approval follows a specific inspection and a sound result. Keep this standard in later dwarf stories while allowing individual personalities.
+
+The quest is optional and does not gate ordinary tools, friendship, commissions or the campaign. Existing quest owners remain authoritative. Additive surface.story183 records its stage; delivery consumes materials and records reimbursement before the completion scene. Scene finish/skip only changes presentation. Existing furniture, chests and inventory records are never replaced by the display.
+
+New fortunes receive two short arrival scenes: Old Workings at the hold entrance bay and Pinewood on the first visit. They use the existing quest scene owner, saved beats and skip controls. Older saves do not receive retrospective arrival scenes. Alden and Maren offer optional local introductions while newly met; established bonds are not treated as strangers. Existing home, bridge, rescue, city and campaign staging remain with their current owners.
+
+Validation extends ledger137 for actual dialogue buttons, locality, missing supplies, saved offer/completion beats, exact consumption/payment, follow-up and display preservation; opening146 covers real zone arrivals, saved mine beats, once-only visits, local people and older-save behavior. Initial checks caught a display placement conflict in older forge layouts; the display now uses an existing crate without adding collision or rewriting furniture. Mine controls are hidden during the arrival scene. Native visual review and release acceptance are required. Normal-speed pacing/audio/input remain playtest feedback.

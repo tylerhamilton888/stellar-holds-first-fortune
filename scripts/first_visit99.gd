@@ -22,6 +22,7 @@ static func first_morning(s)->bool:
 static func begin(g):
  var s=g.state
  s.surface.first_visit99={"done":{},"guided":true,"focus":"lodge","rewarded":false,"bay_found":false,"bay_warm":false,"bay_worked":false,"lodge_intro":true,"intro_pending":not g.skip_arrival and g.capture_mode=="","intro_beat":0,"ivar_spoken":false,"ivar_departed":false,"room_seen":false,"work_started":false,"home_made":false,"origin":[0.0,0.0]}
+ HoldStory183.data(s).arrivals=true
  HoldGreatClaim102.begin(s)
  HoldFrontier103.begin(g)
  HoldFrontier103.settle_home(g,true)

@@ -100,6 +100,16 @@ static func draw_furnace(g,p:Vector2):
   var heat=.65+.25*sin(g.clock*2.8+i*1.7)
   g.draw_circle(ember,1.4,Color(.85,.19,.025,heat))
   g.draw_circle(ember+Vector2(0,-.3),.65,Color(1,.63,.13,heat))
+static func display_position(g)->Vector2:
+ if not active(g) or HoldStory183.stage(g.state)!=2:return Vector2.INF
+ for d in g.state.surface.decor:
+  if d.area==g.surface.area and int(d.get("z",0))==0 and d.kind=="crate":return Vector2(d.x,d.y)
+ for prop in props(g):
+  if prop.get("furnishing","")=="crate":return prop.p
+ return Vector2.INF
+static func draw_display(g,p:Vector2):
+ HoldItemArt.draw(g,Rect2(p+Vector2(-24,-81),Vector2(48,54)),0)
+ if g.player.distance_to(p)<180 and not is_instance_valid(g.opening_scene):HoldSurface.A.text(g,p+Vector2(-65,-90),"Restored training pick",12,Color("edc98a"))
 static func draw_stock(g,o:Dictionary):
  if o.has("forge_stock"):
   HoldItemArt.draw(g,Rect2(o.p+Vector2(-15,-43),Vector2(30,25)),HoldItemArt.item_index(o.forge_stock),HoldItemArt.tint(o.forge_stock))

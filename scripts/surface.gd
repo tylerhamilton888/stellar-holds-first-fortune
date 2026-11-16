@@ -154,7 +154,7 @@ func enter(id:String,at:Vector2=Vector2.INF):
  g.state.region_travel.active=false;g.state.hold_travel.active=false
  g.camera=camera_target();g.close_panel();g.spawn_agents();g.sound.set_context(HoldLivingForges148.sound_context(g))
  g.handworks.arrive(travelling_cart)
- g.begin_transition(label().to_upper());g.save_game()
+ g.begin_transition(label().to_upper());g.save_game();HoldStory183.arrive(g)
 func leave():
  if architecture.interior():architecture.leave();return
  if HoldNeighborhood.is_home(area):enter(HoldNeighborhood.parts(area)[0],HoldNeighborhood.home_door(int(HoldNeighborhood.parts(area)[1]))+Vector2(0,35));return
@@ -782,6 +782,7 @@ func draw():
   objects=objects.filter(func(o):return not g.opening_scene.hide_object(o))
   objects.append_array(g.opening_scene.objects())
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))
+ var restored_pick=HoldForge147.display_position(g)
  for o in objects:
   g.draw_set_transform(-cam)
   if o.kind=="building":world.draw_building(o)
@@ -826,6 +827,7 @@ func draw():
   else:
    furniture(o.p,o.kind)
    HoldLivingForges148.stock(g,o.p,o.kind)
+  if o.p==restored_pick:HoldForge147.draw_display(g,o.p)
  if g.handworks.working:
   var station=g.handworks.facility()
   if not station.is_empty() and not station.job.is_empty():

@@ -17,3 +17,7 @@ Scope: current opening and first-shift instructions, NPC conversation routing, d
 Extend existing people, menu92, lodge100, forge147, ledger137 and courtship101 cases rather than adding a duplicate suite. Check visible text after real transactions and reopening panels. Existing source/package coverage remains mandatory for a release.
 
 Tooling: 42 passing tests; pinned Godot 4.4.1 import passed. Native interaction results, screenshot review and hosted checks are recorded in PR #146. Windows 0.105.1 includes this follow-up. Release run 42902069734 passed all 80 native scenarios, 70 exact-package scenarios / 14,170 assertions, integrity verification and publication; published metadata and verification receipt agree. This audit reduces known contradictions; it does not certify every possible story combination or replace human playtesting.
+
+## Dwarven craftsmanship direction (owner correction, 2026-11-16)
+
+Dwarves are perfectionists who take craftsmanship seriously. Do not turn an artisan quest into generic human reassurance about being allowed to make mistakes. Show specific standards, inspection, accountability and pride in sound work; approval follows a result worthy of the maker’s name. Personalities may differ without making craftsmanship casual. Borin’s training-pick story applies this in STORY183.md.

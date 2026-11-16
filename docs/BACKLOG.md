@@ -6,6 +6,8 @@ Delivered through 0.121.0: building-grid clarity, family-owned Rise and cottage,
 
 0.121.0 delivers the first character/quest scene batch (SCENES181.md); source is merged and public release verification passed. Playtest this batch before choosing optional specialist-story follow-through.
 
+0.122.0 candidate: optional Borin repair and early discovery/people scenes (STORY183.md); validation and release pending. Respect the owner’s dwarven craft standards.
+
 ## Playtest the current published build
 
 Use [CURRENT_STATUS.md](CURRENT_STATUS.md) for the verified release and [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md) for installation and the current route. Living Forges, NPC conversation presentation, dialogue-state corrections and the first-hour guidance pass are delivered. See [FIRST_HOUR.md](FIRST_HOUR.md) for the staged welcome, optional routes and forge handoff.

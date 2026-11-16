@@ -1,4 +1,4 @@
-# First-hour presentation — 0.121.0
+# First-hour presentation — 0.122.0 candidate
 
 The opening begins with the parents’ purchased holding. Ivar introduces the same Rise near arrival; the player can use the modest cottage, read the parent letter and choose a personal ambition before mining. The brief scene is saved/skippable, and existing fortunes retain their property and progress. See [implementation and migration](HOME169.md).
 
@@ -19,3 +19,5 @@ Current campaign changes and delivered acceptance: [LIVELIHOOD177.md](LIVELIHOOD
 The Rise polish pass (RISE179.md) adds a clear cottage approach, a less instructional final tour beat, milestone-aware lodge greetings and optional family letters after registrations. The post-registration journal respects non-work ambitions instead of promoting the default ore lesson. Earlier opening controls, costs and property ownership remain unchanged.
 
 SCENES181.md adds Rurik/Sigrid to the saved opening and an optional local Borin introduction. Short quest scenes follow successful UI completion/acceptance of the forge, Winter Stores and rescue; they own only presentation state. Practical costs and instructions remain in the existing panels/journal.
+
+STORY183.md adds first-arrival Old Workings/Pinewood scenes for new fortunes, optional local Alden/Maren introductions, and Borin’s optional training-pick repair after first firing. Keep the primary journal route above the personal job. Craftsmanship is exacting: the tool is condemned until its fit, collar and balance meet Borin’s standard.

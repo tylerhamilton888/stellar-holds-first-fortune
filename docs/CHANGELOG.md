@@ -1,3 +1,10 @@
+# 0.122.0 — Fit for the work
+
+- Added Borin's optional training-pick repair, inspection scenes, exact material/reimbursement choices and remembered completion.
+- Added a visible completed-work display without replacing saved furnishings.
+- Added first-visit Old Workings/Pinewood scenes for new fortunes and optional Alden/Maren introductions.
+- Preserved save/skip behavior and existing tool, friendship and campaign access.
+
 # 0.121.0 — Faces and first deeds
 
 - Added Rurik/Sigrid opening introductions with their own portraits and an optional local Borin scene.

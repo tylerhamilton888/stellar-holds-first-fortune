@@ -1,19 +1,11 @@
-# Session handoff — 0.121.0 delivered
+# Session handoff — story183 candidate
 
-Read CURRENT_STATUS.md and AGENTS.md first. Keep outputs bounded; no subagents unless requested. Routine requested source uploads, merges after checks and verified releases are authorized.
+Read CURRENT_STATUS.md and AGENTS.md first. Current published delivery is 0.121.0; source and docs PRs #181/#182 are merged. User authorized Borin's personal quest plus story moments for early discoveries and people. Routine source upload, merge after checks and verified release are authorized. No subagents.
 
-## Delivery checkpoint
+Branch feature/story183 starts at master e6ac62ceb4cbb3760c6bd0f843505ee2bf56beea. Candidate 0.122.0 adds optional training-pick repair after the forge opens (one haft + one iron; exact reimbursement), visible display, remembered greeting, new-fortune Old Workings/Pinewood arrival scenes and optional local Alden/Maren introductions. See STORY183.md. Preserve old saves, property, furniture, commissions and existing larger scenes.
 
-0.121.0 — Faces and first deeds is public. Source PR #181 merged as 4fe32550fedf3502e4938232771fd711185979fb. Release source is 4ef70080086afac185fc507640851296e4026e32, tree c7e77d4c4117a41c7f78077b56bbb9ad84fd3157. PR run 43781385001 passed all 6 jobs; release run 43781555374 passed all 11 jobs (87 source cases, 77 package cases / 14827 assertions). Public metadata digests, source, ZIP/PCK hashes and ZIP size were independently checked; details in CURRENT_STATUS.md.
+Owner correction: dwarves are perfectionists who take craftsmanship seriously. Do not frame the repair as reassurance about being allowed to make mistakes. Borin condemns a split haft and inspects fit, collar and balance before approving work to the forge's standard.
 
-Rurik/Sigrid introductions, optional Borin introduction and forge/Winter Stores/rescue scenes are delivered. Additive surface.quest_scene181 owns presentation only. Preserve locality, saved beats, skipping, existing quest transactions and once-only rewards. See SCENES181.md.
+Local pinned import completed without errors. Expanded ledger137/opening146 cases run in test-results/story183-focused; tooling in story183-tooling.log. Finish diagnostics, native visual review, focused regressions and tooling before source PR/release. Source/public verification/docs closeout must all finish before calling delivery complete.
 
-Local focused evidence: scenes181-reviewed (opening146 57, ledger137 48, campaign138 218), scenes181-focus/mountain104 (44), scenes181-compat (frontier103 336, forge147 24): 727 assertions total. Native scenes reviewed. Initial failed acceptance exposed older test flows continuing through the new scene; the corrected tests preserve existing assertions. Full acceptance passed on the corrected source.
-
-## Next work
-
-Playtest a new fortune for opening introductions and existing saves for continued progress. Capture confusing directions, text/pacing issues and awkward interactions before selecting the next optional character-story slice. No further gameplay feature is authorized by this documentation closeout alone.
-
-Normal Windows pacing/input/audio and the older intermittent freight-route issue remain follow-ups. Preserve property, belongings, workers, artwork and the authored campaign. Do not rebuild 0.121.0 for documentation changes. Treat delivery as complete only after source merge, public verification and delivery-documentation merge per RELEASE_PIPELINE.md.
-
-[Previous handoff](history/SESSION_HANDOFF-before-scenes181.md).
+[Previous handoff](history/SESSION_HANDOFF-before-story183.md).

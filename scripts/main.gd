@@ -848,6 +848,7 @@ func change_zone(z:String):
  begin_transition("THE LOWER WORKINGS" if z=="mine" else "BACK TO THE HOLD");sound.set_context(z)
  notify("DEEPWORKS: WASD move · Hold LMB dig · V carve stairs · E down / Shift+E up · X survey below." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
  save_game()
+ HoldStory183.arrive(self)
 func interact():
  if surface.active():surface.use();return
  if zone=="mine":deep.use_stairs(Input.is_key_pressed(KEY_SHIFT));return
@@ -1677,9 +1678,9 @@ func ivar_welcome_panel():
  label(panel_body,"Mind your head. Gate was built for kings in their crowns. Somehow it’s the rest of us who keep hitting it.\n\nI’m Ivar. Foreman of the lower works.\n\nYou’ll have a room, a sound pick, and wages for what you bring up. Keep the stairs clear. Brace your workings. And if something down there starts glowing, fetch me before you hit it again.\n\nSee those lights along the vault? My grandfather helped lay the conduits. His grandfather carved the stone around them. Both swore the other had the easier trade.\n\nYou could make a good life here.\n\nBut if it’s a mountain of your own you’re after… well. Earn your charter. Find good folk. Give them a reason to stay.\n\nYour name isn’t carved above a gate yet.\n\nPlenty of stone left.\n\nCome on. Let’s get you started.",17)
 func commission_panel(details:bool=false):
  if HoldInvasion131.eligible(state) and not details:
-  HoldInvasion131.panel(self);button(panel_body,"Useful hands · optional lessons",func():HoldWorkView132.open(self));HoldFriendship130.journal(self);HoldTraditions126.journal(self);return
+  HoldInvasion131.panel(self);HoldStory183.journal(self);button(panel_body,"Useful hands · optional lessons",func():HoldWorkView132.open(self));HoldFriendship130.journal(self);HoldTraditions126.journal(self);return
  if HoldFirstVisit99.active(state) and not details:
-  HoldFirstVisit99.journal(self)
+  HoldFirstVisit99.journal(self);HoldStory183.journal(self)
   if not HoldFirstVisit99.first_morning(state):HoldTraditions126.journal(self);HoldFriendship130.journal(self);HoldInvasion131.panel(self)
   return
  var current=HoldOnboarding.primary(state)

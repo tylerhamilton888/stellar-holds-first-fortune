@@ -2,6 +2,12 @@ class_name HoldQuestScene181
 extends HoldOpeningScene
 # Presentation only. Quest owners commit their transactions before these scenes begin.
 const SCENES={
+ "practice_offer":{"title":"FIT FOR THE WORK","end":"Borin's training pick · J records the materials and reimbursement.","lines":[["borin","Borin turns a pick beneath the lamplight. A fine split runs under its collar. 'The head is sound. The haft is condemned. Paint and a tighter wedge would hide it. They would not mend it.'"],["borin","'Bring a shaped haft and an iron ingot. Straight grain, no checks. I will inspect the fit myself. An apprentice's tool carries the forge's name as surely as a master's.'"]]},
+ "practice_done":{"title":"THE MAKER'S STANDARD","end":"Training pick restored · reimbursement received · Borin keeps the finished work on display.","lines":[["borin","Borin seats the head, checks it against the haft and turns the new collar in the light. His thumb follows the joint. He tests the balance once, then again."],["borin","'Square. Close-fitting. No play in the head.' He sets the finished pick with the forge's tools. 'That will serve. Your materials are paid for.'"]]},
+ "workings183":{"title":"OLD WORKINGS · BENEATH STONEBRIDGE","end":"Old Workings · the north doorway leads home · J keeps your work steps.","lines":[["","Daylight narrows behind the entrance timbers. Below, old pick marks run in straight courses along the stone. Generations of work lie beyond the lamplight."],["","The borrowed rack and stonebreaker stand to the west. The crew's stores lie east. For now, this entrance bay is enough: learn the stone, and keep the way home clear."]]},
+ "pinewood183":{"title":"PINEWOOD · THE TIMBER ROAD","end":"Pinewood · explore at your own pace; meet the folk along the trail.","lines":[["","The hammering of Stonebridge gives way to wind in the pines. Wheel ruts score the timber road; cut ends show where the forest has already supplied the hold."],["","Beyond the familiar stonework are living trees, running water and other people's paths. Every beam in a new roof begins somewhere like this."]]},
+ "alden183":{"title":"ALDEN PINEWARD · RANGER","end":"Alden Pineward · speak again to ask about life along the trail.","lines":[["road_folk:10","'Alden Pineward.' He studies the trail before looking back at you. 'If you find a washed-out crossing, mark it. The next cart may be carrying someone who cannot turn back.'"],["road_folk:10","'Stonebridge needs timber. It also needs the folk who bring it home. Learn the road before you put a load on it.'"]]},
+ "maren183":{"title":"MAREN HEARTHWELL · TRAIL COOK","end":"Maren Hearthwell · speak again to ask about her work and the trail kitchen.","lines":[["road_folk:11","'Maren Hearthwell. Trail suppers, mended coats, and a kitchen of my own before long.' She gives you a measuring look. 'If you mean to help carry a table, take the heavy end.'"],["road_folk:11","'A kitchen ought to be ready when the shift comes home. Good food, clean bowls, and enough for the last pair of boots through the door. That takes work worth doing properly.'"]]},
  "borin":{"title":"BORIN · THE COMMUNAL SMITH","end":"Inspect the hearth · J keeps your next lead.","lines":[["borin","Borin wipes a clear patch on the anvil. 'New at the Rise? Borin. If it has an edge, a hinge or a habit of breaking, it usually finds its way here.'"],["borin","'The hearth's cold, but the stonework is sound. Have a look. When the fuel is in, we'll put some warmth back into this place.'"]]},
  "forge":{"title":"THE FIRST FIRING","end":"The forge is open · smelting, crafting and Borin's commissions are available.","lines":[["borin","Borin works the bellows. A thin red line brightens beneath the coal; then the hearth catches. He holds out his hands to the warmth."],["borin","'There she is. Your pay's counted. Bring your work here when you're ready—or ask me to make something. A town ought to have a forge people can use.'"]]},
  "winter":{"title":"SOMETHING SET ASIDE","end":"Winter Stores are open · the community trading counter is inside.","lines":[["","The last provisions are entered in the book. Inside, stocked barrels and crates stand ready for the colder months."],["","There will be tools to mend and more stone to shift tomorrow. For now, Stonebridge has something set aside. The community counter is open."]]},
@@ -10,8 +16,15 @@ static func record(s)->Dictionary:
  if not s.surface.has("quest_scene181"):s.surface.quest_scene181={"version":1,"active":"","beat":0,"seen":{}}
  return s.surface.quest_scene181
 static func allowed(g,id:String)->bool:
- if not HoldFrontier103.active(g.state) or g.zone=="mine":return false
+ if not HoldFrontier103.active(g.state):return false
+ if id=="workings183":return g.zone=="mine" and g.state.active_site=="hold" and g.deep.world.depth()==0
+ if g.zone=="mine":return false
  match id:
+  "practice_offer":return HoldStory183.local(g) and HoldStory183.stage(g.state)==1
+  "practice_done":return HoldStory183.local(g) and HoldStory183.stage(g.state)==2
+  "pinewood183":return g.surface.area=="pinewood"
+  "alden183":return HoldConversation.local(g,"road_folk:10")
+  "maren183":return HoldConversation.local(g,"road_folk:11")
   "borin":return HoldFrontier103.near(g,"forge") and not HoldLedger137.complete(g.state,"forge")
   "forge":return HoldFrontier103.near(g,"forge") and HoldLedger137.complete(g.state,"forge")
   "winter":return HoldCampaign138.near_site(g) and HoldCampaign138.data(g.state).winter_ready
@@ -28,7 +41,7 @@ static func resume(g):
  if id=="":return
  if not SCENES.has(id) or not allowed(g,id):d.active="";d.beat=0;g.save_game();return
  var scene=HoldQuestScene181.new();scene.game=g;scene.mode=id;scene.step=int(d.beat)
- g.close_panel();g.sound.stop_voice();g.velocity=Vector2.ZERO;g.walking_pose=false;g.swing=0;g.mining_buffer=0;g.jump_buffer=0
+ g.close_panel();g.transition_left=0;g.transition_shade.visible=false;g.sound.stop_voice();g.velocity=Vector2.ZERO;g.walking_pose=false;g.swing=0;g.mining_buffer=0;g.jump_buffer=0
  scene.layer=CanvasLayer.new();scene.layer.layer=30;g.add_child(scene.layer);g.opening_scene=scene;scene.layer.add_child(scene)
 func _ready():
  lines=SCENES[mode].lines;step=clampi(step,0,lines.size()-1)
@@ -50,7 +63,7 @@ func show_line():
  speaker.text=game.state.npc(id).name if id!="" else "STONEBRIDGE"
  speaker.position.x=125 if id!="" else 26;caption.position.x=speaker.position.x;caption.size.x=620 if id!="" else 720
  caption.text=lines[step][1];next_button.text="Return to play" if step==lines.size()-1 else "Continue · Enter"
- game.camera=game.surface.camera_target();game.queue_redraw();queue_redraw()
+ game.camera=game.deep.camera_target()+Vector2(0,60) if game.zone=="mine" else game.surface.camera_target();game.queue_redraw();queue_redraw()
 func advance():
  if finished or age<.25:return
  if step==lines.size()-1:finish();return
@@ -63,6 +76,6 @@ func finish():
  game.surface.roads.portal_cooldown=1.0;game.save_game();game.update_hud();game.notify(SCENES[mode].end);game.queue_redraw();layer.queue_free()
 func _process(dt):
  if not get_window().has_focus() or HoldFolk.warming():return
- age+=dt;clock+=dt;game.clock+=dt;game.camera=game.surface.camera_target();game.queue_redraw()
+ age+=dt;clock+=dt;game.clock+=dt;game.camera=game.deep.camera_target()+Vector2(0,60) if game.zone=="mine" else game.surface.camera_target();game.queue_redraw()
 func _draw():
  HoldCinematic.progress(self,step,lines.size())
