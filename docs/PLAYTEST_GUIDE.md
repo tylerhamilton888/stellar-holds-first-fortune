@@ -126,7 +126,7 @@ Open the provisioned Winter Stores at their actual site and watch or skip the br
 
 Try continued saves with these quests already completed: there should be no surprise retrospective scene. Check Enter/Space, Escape and mouse buttons at normal speed, and report reading pace, portrait mismatches, obscured captions or unexpected repeats.
 
-## Fit for the work (0.122.0 candidate)
+## Fit for the work (0.122.0)
 
 Start a new fortune for Old Workings/Pinewood arrival scenes. Check that each plays once, skips cleanly and resumes at the saved beat. Meet Alden on his ranger path and Maren at the Wayfarer's Hearth; use the optional introduction choice.
 

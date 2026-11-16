@@ -22,7 +22,7 @@ Version 0.116.0 adds [reinforced picks and basalt masonry](docs/TOOLS171.md): st
 
 Version 0.117.0 adds [cross-profession tool components](docs/COMPONENTS173.md): make or buy a shaped haft, forged pickhead and fittings, then assemble a reinforced pick. Completed manufacturing credits the relevant profession; existing tools stay owned. The inventory now keeps character details visible while its item grid scrolls.
 
-Version 0.122.0 adds [Fit for the work](docs/STORY183.md): Borin’s optional training-pick repair, first-arrival scenes and introductions along the trail. See current status for delivery.
+Published version 0.122.0 adds [Fit for the work](docs/STORY183.md): Borin’s optional training-pick repair, first-arrival scenes and introductions along the trail. Source and verified Windows delivery are recorded in [current status](docs/CURRENT_STATUS.md).
 
 Published version 0.121.0 adds [character introductions and quest scenes](docs/SCENES181.md): meet Rurik, Sigrid and Borin, then see short saved/skippable story beats for the forge, Winter Stores and rescue dispatch.
 

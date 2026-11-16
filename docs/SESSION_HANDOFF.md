@@ -1,11 +1,19 @@
-# Session handoff — story183 candidate
+# Session handoff — 0.122.0 delivered
 
-Read CURRENT_STATUS.md and AGENTS.md first. Current published delivery is 0.121.0; source and docs PRs #181/#182 are merged. User authorized Borin's personal quest plus story moments for early discoveries and people. Routine source upload, merge after checks and verified release are authorized. No subagents.
+Read CURRENT_STATUS.md and AGENTS.md first. Keep outputs bounded; no subagents unless requested. Routine requested implementation includes source upload, merge after checks, verified release and documentation closeout.
 
-Branch feature/story183 starts at master e6ac62ceb4cbb3760c6bd0f843505ee2bf56beea. Candidate 0.122.0 adds optional training-pick repair after the forge opens (one haft + one iron; exact reimbursement), visible display, remembered greeting, new-fortune Old Workings/Pinewood arrival scenes and optional local Alden/Maren introductions. See STORY183.md. Preserve old saves, property, furniture, commissions and existing larger scenes.
+## Delivery checkpoint
 
-Owner correction: dwarves are perfectionists who take craftsmanship seriously. Do not frame the repair as reassurance about being allowed to make mistakes. Borin condemns a split haft and inspects fit, collar and balance before approving work to the forge's standard.
+0.122.0 — Fit for the work is public. Source PR #183 merged as 831a1f43f8e12bb648085ef3f851361a0c07f4eb. Release source is cf0b6c156a33c3d13f37ce64a2c65798c76fc5fb, tree af4027f9ccbc6fe4f9e91e503030058f9d4e4ca4. PR run 43882705082 passed all 6 jobs; release run 43882962292 passed all 11 (87 source cases, 77 package cases / 14839 assertions). Public JSON digests, source, ZIP/PCK hashes and ZIP size were independently checked; details in CURRENT_STATUS.md. No rebuild is needed for delivery documentation.
 
-Local pinned import completed without errors. Expanded ledger137/opening146 cases run in test-results/story183-focused; tooling in story183-tooling.log. Finish diagnostics, native visual review, focused regressions and tooling before source PR/release. Source/public verification/docs closeout must all finish before calling delivery complete.
+Delivered: optional Borin training-pick repair, inspection/approval scenes, once-only material reimbursement, displayed pick and remembered greeting. New fortunes receive first-arrival Old Workings/Pinewood scenes; newly met Alden/Maren offer local introductions. surface.story183 owns the optional job and new-save arrival eligibility; quest_scene181 owns presentation. Preserve ordinary tool/commission access, quest locality, saved beats, existing property and inventory. See STORY183.md.
+
+Owner correction: dwarves are perfectionists who take craftsmanship seriously. Never frame Borin's story as reassurance about being allowed to make mistakes. He condemns defective work and inspects fit, collar and balance before approval. This direction is recorded in DIALOGUE_AUDIT.md.
+
+Final local evidence: story183-accepted (ledger137 60, opening146 66, forge147 24) plus story183-arrivals/navigation94 (31): 181 assertions; 42 tooling tests. Native visuals reviewed. A display conflict in older forge layouts was fixed using an existing crate; furniture and collision remain unchanged. Full release acceptance passed on the exact published source.
+
+## Next work
+
+Playtest a new fortune for first-arrival scenes; check old saves for continued progress without retrospective scenes. Review pacing, discoverability, optional job costs, repeat visits and the ordinary forge services. Extend later character/place stories only after choosing the next scope. Windows input/audio/performance/economy and the older intermittent freight-route issue remain follow-ups.
 
 [Previous handoff](history/SESSION_HANDOFF-before-story183.md).

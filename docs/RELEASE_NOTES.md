@@ -6,4 +6,4 @@ New fortunes receive short arrival scenes on entering Old Workings and Pinewood.
 
 This personal quest is optional. Tools, commissions and the campaign remain available independently.
 
-See STORY183.md and CURRENT_STATUS.md for scope and verified delivery. [Previous notes](history/RELEASE_NOTES-before-story183.md).
+Published with source PR #183 merged and full source/package validation passed. See STORY183.md and CURRENT_STATUS.md for scope and verified delivery. [Previous notes](history/RELEASE_NOTES-before-story183.md).
