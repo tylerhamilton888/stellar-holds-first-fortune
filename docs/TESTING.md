@@ -7,6 +7,8 @@ directory before subsequent steps change the state. It contains the actual
 world seed/map, carrier/path state, orders, household building, chests and
 hauling data. Keep this evidence with the log; the runner deletes temporary
 saves. A passing retry does not resolve the intermittent route issue.
+Use a separately named diagnostic helper: exact-package tests inline the
+shared fixture, so overriding its `check` method creates a duplicate function.
 
 # Bounded command capture
 
