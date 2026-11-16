@@ -1,3 +1,7 @@
+# Development — freight diagnostics
+
+- Freight acceptance failures now retain generated world, route, carrier and cargo evidence outside temporary saves, with an optional replay seed. No runtime or release-version change; the intermittent route issue remains unconfirmed.
+
 # 0.123.0 — A clearer view
 
 - Room cameras reveal north-wall fixtures when approached and follow movement through the bunkhouse and private quarters.

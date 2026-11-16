@@ -8,6 +8,10 @@ Read CURRENT_STATUS.md and AGENTS.md. Owner requested pre-playtest polish, espec
 
 Opening rooms now follow the player with cast-friendly headroom; north-wall fixtures can be revealed. Established room exits retain their clear framing. Tall foreground furnishings fade over the player without altering collision. Compact new workshops and older saved layouts retain their sizes and belongings. Native captures reviewed rooms, cottage, wards and entrances. See VISIBILITY185.md for scope and the camera regressions caught and corrected before release.
 
+## Follow-up validation
+
+PR #187 adds replay seeds and per-failure world/carrier/cargo snapshots to the existing freight case. It does not claim to resolve the intermittent failure or change the published build. See TESTING.md for replay instructions; use the PR checks for its validation state.
+
 ## Next work
 
 Owner and wife playtest the first hours using the latest Windows ZIP. Check opening visibility, north-wall furnishings, exits above the hotbar, tall-prop cutaways, readable approaches and saved belongings. Then gather pacing/discoverability feedback before another feature batch. Windows hardware, input, audio and performance remain human tests.
