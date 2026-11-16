@@ -1,4 +1,4 @@
-# 0.123.1 — Clear corners (pending verification)
+# 0.123.1 — Clear corners
 
 - Reassigned freight carriers centre in their current cell before taking a new route, avoiding repeated collision at tight tunnel corners.
 - Freight acceptance failures retain generated world, route, carrier and cargo evidence with a replay seed. The older lower-level report remains unconfirmed.
