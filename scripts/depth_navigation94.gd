@@ -44,7 +44,7 @@ func input(e)->bool:
   explore.yaw+=(-1 if e.keycode==KEY_BRACKETLEFT else 1)*PI/2;explore.invalidate();return true
  return false
 func sync_visibility()->bool:
- var visible=g.playing and g.zone=="mine" and g.panel_id=="" and not g.deep.survey_open and not is_instance_valid(g.creator)
+ var visible=g.playing and g.zone=="mine" and g.panel_id=="" and not g.deep.survey_open and not is_instance_valid(g.creator) and not is_instance_valid(g.opening_scene)
  view_button.visible=visible;map_button.visible=visible;controls_button.visible=visible and explore.enabled
  return visible
 func update(dt:float):

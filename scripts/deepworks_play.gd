@@ -406,7 +406,7 @@ func draw():
  A.draw_offset=offset;g.draw_set_transform(offset)
  var room_lamps=works.lamps()
  var z=world.depth();var l=world.layer();var start=Deepworks.cell(g.camera)-Vector2i.ONE
- var aim=world.target(g.player,g.world_mouse(),180 if g.mining_gun.selected else 52)
+ var aim=Vector2i(-1,-1) if g.opening_scene is HoldQuestScene181 else world.target(g.player,g.world_mouse(),180 if g.mining_gun.selected else 52)
  for y in range(maxi(0,start.y),mini(Deepworks.H,start.y+17)):
   for x in range(maxi(0,start.x),mini(Deepworks.W,start.x+27)):
    var c=Vector2i(x,y);var id=Deepworks.key(c)
@@ -571,6 +571,7 @@ func draw():
  for m in messages:A.text(g,m.p,m.text,13,Color(1,.88,.62,minf(1,m.life)))
  if pulse>0:g.draw_arc(contact,4+(1-pulse/.14)*17,0,TAU,12,Color(1,.9,.7,pulse*5),2)
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
+ if g.opening_scene is HoldQuestScene181:return
  g.draw_rect(Rect2(0,0,960,74),Color("0e202c"));g.draw_line(Vector2(24,73),Vector2(936,73),Color("63756c"))
  g.draw_rect(Rect2(0,462,960,36),Color(.04,.09,.12,.9));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"))
  var district=HoldMineworks143.district_at(world,Deepworks.cell(g.player))

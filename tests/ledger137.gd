@@ -91,6 +91,7 @@ func run():
  var prior_money=s.money;HoldQuestScene181.record(s).active="forge";HoldQuestScene181.record(s).beat=1
  g.save_game();g.start_game(true);settle();s=g.state
  check(not is_instance_valid(g.opening_scene) and HoldQuestScene181.record(s).active=="" and s.money==prior_money,"Stale scene at an incompatible location is cleared without rewards or teleporting")
+ await story183()
  print("LEDGER137: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
 
@@ -110,3 +111,39 @@ func introduction181():
  check(HoldQuestScene181.record(s).seen.borin and not HoldQuestScene181.play(g,"borin"),"Skipped introduction is remembered without automatic replay")
  g.save_game();g.start_game(true);settle()
  check(not is_instance_valid(g.opening_scene),"Completed introduction stays complete after reload")
+
+func story183():
+ check(not HoldStory183.accept(g) and not HoldStory183.deliver(g),"Borin's personal work rejects remote transactions")
+ desk("forge");at(HoldForge147.BORIN_TALK)
+ var s=g.state;var money=s.money;var inv=s.inventory.duplicate(true);var decor=JSON.parse_string(JSON.stringify(s.surface.decor))
+ HoldConversation.start(g,"borin");button("That split handle");await snap("story183-offer-panel")
+ button("I'll bring the haft")
+ check(HoldStory183.stage(s)==1 and g.opening_scene is HoldQuestScene181,"Accepting optional work saves its stage before Borin's scene")
+ check(s.money==money and s.inventory==inv and not HoldStory183.accept(g),"Accepting work neither spends nor pays and cannot repeat")
+ await snap("story183-inspection")
+ g.opening_scene.age=1;g.opening_scene.advance();await snap("story183-standard")
+ g.save_game();g.start_game(true);settle();s=g.state
+ check(g.opening_scene is HoldQuestScene181 and g.opening_scene.step==1 and HoldStory183.stage(s)==1,"Borin's accepted work and scene beat resume together")
+ g.opening_scene.finish();await process_frame
+ s.inventory.shaped_haft=0;s.inventory.iron=0
+ check(not HoldStory183.deliver(g) and HoldStory183.stage(s)==1,"Missing materials cannot complete the repair")
+ g.open_panel("commission");check(g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("Borin's training pick")),"Optional repair remains in the work journal");g.close_panel()
+ s.add("shaped_haft",1);s.add("iron",1);money=s.money
+ HoldConversation.start(g,"borin");button("About the apprentice");button("Deliver the haft")
+ check(HoldStory183.stage(s)==2 and s.count("shaped_haft")==0 and s.count("iron")==0 and s.money==money+HoldStory183.pay(s),"Delivery consumes exact materials and reimburses once before the scene")
+ check(not HoldStory183.deliver(g),"Repeated delivery cannot award extra money")
+ await snap("story183-restoration")
+ g.opening_scene.age=1;g.opening_scene.advance();await snap("story183-approval")
+ var paid=s.money;g.save_game();g.start_game(true);settle();s=g.state
+ check(g.opening_scene is HoldQuestScene181 and g.opening_scene.step==1 and s.money==paid,"Completed repair resumes without paying twice")
+ g.opening_scene.finish();await process_frame
+ var display=HoldForge147.display_position(g)
+ check(display!=Vector2.INF and JSON.parse_string(JSON.stringify(s.surface.decor))==decor,"Restored tool display appears without rewriting saved furniture")
+ if display!=Vector2.INF:
+  for offset in [Vector2(0,55),Vector2(0,-55),Vector2(-55,0),Vector2(55,0)]:
+   if g.surface.walkable(display+offset):at(display+offset);break
+  await snap("story183-tool-display")
+ at(HoldForge147.BORIN_TALK);HoldConversation.start(g,"borin");await snap("story183-followup")
+ check(HoldConversation.greeting(g,"borin").contains("back in service"),"Borin remembers work completed to the forge's standard")
+ g.close_panel();g.save_game();g.start_game(true);settle()
+ check(not is_instance_valid(g.opening_scene) and HoldStory183.stage(g.state)==2 and not HoldStory183.deliver(g),"Completed story persists without replay or reward duplication")

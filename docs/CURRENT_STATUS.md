@@ -1,4 +1,4 @@
-# Current status — 0.121.0 delivered
+# Current status — 0.121.0 delivered; 0.122.0 candidate
 
 ## Published Windows build
 
@@ -19,6 +19,10 @@ Downloaded both public JSON documents, verified their GitHub asset digests and m
 Rurik and Sigrid join the opening introductions; Borin has an optional local introduction. First forge firing, Winter Stores opening and rescue dispatch receive short, skippable scenes in their actual locations. Quest owners commit their transactions before presentation. Saved scenes resume at the current beat; skipping never repeats rewards and completed older quests do not replay.
 
 Six focused native cases passed 727 assertions; 42 tooling tests passed. Native views checked portraits, captions, controls and hidden interaction prompts. Two older forge interaction tests were updated to close the new scene before continuing their existing checks. The corrected source passed the complete release pipeline. See [implementation](SCENES181.md) and [playtest guide](PLAYTEST_GUIDE.md).
+
+## Candidate
+
+0.122.0 adds Borin’s optional repair and early discovery/people scenes (STORY183.md). Local checks and native review are underway. No new release has been published yet.
 
 ## Next work and limits
 

@@ -78,6 +78,7 @@ func run():
  check(HoldFrontier103.permit(g) and not HoldFirstVisit99.data(g.state).rewarded,"Two real civic projects earn recognition without requiring paid mining")
  check(JSON.parse_string(JSON.stringify(g.state.surface.homes))==property and not HoldFrontier103.home_ready(g),"Recognition preserves the cottage and does not pay its improvement milestone")
  await polish179()
+ await discoveries183()
  print("OPENING146: %d passed / %d failed" % [passed,failed]);g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)
 
 func polish179():
@@ -133,3 +134,38 @@ func letter_end():
  var focused=root.gui_get_focus_owner()
  if focused!=null:focused.release_focus()
  g.menu_scroll.scroll_vertical=10000
+
+func discoveries183():
+ g.skip_arrival=true;g.surface.enter("trail");settle()
+ g.skip_arrival=false;g.change_zone("mine")
+ check(g.opening_scene is HoldQuestScene181 and g.opening_scene.mode=="workings183","First Old Workings arrival receives an in-world introduction")
+ if is_instance_valid(g.opening_scene):
+  check(not g.depth_nav.map_button.visible and not g.depth_nav.view_button.visible,"Mine scene hides gameplay buttons while reading")
+  await snap("story183-old-workings")
+  g.opening_scene.age=1;g.opening_scene.advance();await snap("story183-bay")
+  g.save_game();g.start_game(true);settle()
+  check(g.opening_scene is HoldQuestScene181 and g.opening_scene.step==1,"Mine introduction reloads in the same bay and beat")
+  g.opening_scene.finish();await process_frame
+ g.surface.enter("trail");settle();g.change_zone("mine")
+ check(not is_instance_valid(g.opening_scene),"Returning to Old Workings does not replay its introduction")
+ g.surface.enter("pinewood");settle()
+ check(g.opening_scene is HoldQuestScene181 and g.opening_scene.mode=="pinewood183","First Pinewood arrival introduces the new landscape")
+ if is_instance_valid(g.opening_scene):
+  await snap("story183-pinewood");g.opening_scene.age=1;g.opening_scene.advance();await snap("story183-timber-road");g.opening_scene.finish();await process_frame
+ for id in ["road_folk:10","road_folk:11"]:
+  g.skip_arrival=true
+  var found=false
+  for area in ["pinewood","room:wayfarer"]:
+   g.surface.enter(area);settle()
+   for actor in g.surface.roads.people(area):
+    if actor.get("interaction","")==id:
+     at(actor.p+Vector2(0,45));HoldConversation.start(g,id);button("We haven't properly");found=true;break
+   if found:break
+  check(found and g.opening_scene is HoldQuestScene181,"Local character introduction is available: "+id)
+  if is_instance_valid(g.opening_scene):
+   await snap("story183-person-"+id.get_slice(":",1));g.opening_scene.age=1;g.opening_scene.advance();await snap("story183-person-last-"+id.get_slice(":",1));g.opening_scene.finish();await process_frame
+ g.skip_arrival=false;g.surface.enter("trail");settle();g.surface.enter("pinewood");settle()
+ check(not is_instance_valid(g.opening_scene),"Pinewood arrival is remembered after leaving and returning")
+ g.state.surface.erase("story183");g.state.surface.erase("quest_scene181");g.surface.enter("trail");settle();g.surface.enter("pinewood");settle()
+ check(not is_instance_valid(g.opening_scene) and not g.state.surface.has("story183"),"Older saves do not acquire retrospective arrival scenes")
+ g.skip_arrival=true

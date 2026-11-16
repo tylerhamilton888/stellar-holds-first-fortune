@@ -125,3 +125,9 @@ At the cold communal forge, choose **Meet Borin · a word at the anvil**. Save m
 Open the provisioned Winter Stores at their actual site and watch or skip the brief acknowledgment. The stocked interior and counter should already work. Accept the missing-crew rescue from Ivar's shift book: the briefing should leave the rescue accepted, with detailed instructions in J. Test saving on its second beat and returning to the same beat. Neither finishing nor skipping should complete the rescue or alter your inventory.
 
 Try continued saves with these quests already completed: there should be no surprise retrospective scene. Check Enter/Space, Escape and mouse buttons at normal speed, and report reading pace, portrait mismatches, obscured captions or unexpected repeats.
+
+## Fit for the work (0.122.0 candidate)
+
+Start a new fortune for Old Workings/Pinewood arrival scenes. Check that each plays once, skips cleanly and resumes at the saved beat. Meet Alden on his ranger path and Maren at the Wayfarer's Hearth; use the optional introduction choice.
+
+After relighting the forge, speak with Borin about the split handle. Inspect the stated materials and reimbursement, accept, then make or buy one shaped haft and one iron ingot. Deliver locally. Look for his inspection, changed greeting and the tool display; repeat visits/reloads must not spend or pay again. Confirm ordinary tools and commissions remain independent of the personal quest.

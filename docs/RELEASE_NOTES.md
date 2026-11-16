@@ -1,9 +1,9 @@
-# 0.121.0 — Faces and first deeds
+# 0.122.0 — Fit for the work
 
-Meet Rurik and Sigrid during your first morning with Ivar. At the communal forge, an optional introduction gives Borin a moment at his own anvil.
+After restoring the communal forge, speak with Borin about the split handle. Bring a shaped haft and an iron ingot, made or bought, and watch him inspect the repaired training pick. Its workmanship must meet the forge's standard. The materials are reimbursed once; the finished tool stays on display and Borin remembers the work.
 
-Reopening the forge, opening the provisioned Winter Stores and accepting the missing-crew rescue now have short story scenes. They play in the actual location and leave the practical instructions in your journal.
+New fortunes receive short arrival scenes on entering Old Workings and Pinewood. Alden and Maren also offer a proper introduction when first getting acquainted. Enter/Space continues; Escape skips. Saved scenes resume at their current beat, without repeating payment. Older saves keep their existing history.
 
-Enter or Space continues; Escape skips. Save during a scene and return to the same beat. Quest progress and payments are recorded before the scene, so skipping never undoes your work or pays you twice. Older completed quests do not replay scenes.
+This personal quest is optional. Tools, commissions and the campaign remain available independently.
 
-Published and source merged; full source/package validation passed. See SCENES181.md for scope and CURRENT_STATUS.md for verified delivery. [Previous notes](history/RELEASE_NOTES-before-scenes181.md).
+See STORY183.md and CURRENT_STATUS.md for scope and verified delivery. [Previous notes](history/RELEASE_NOTES-before-story183.md).

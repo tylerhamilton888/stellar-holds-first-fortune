@@ -80,6 +80,7 @@ static func greeting(g,id:String)->String:
  if g.talk_line!="":return g.talk_line
  if id.begins_with("road_folk:"):return HoldRoadCharacters.greeting(g,id)
  if id.begins_with("resident:"):return "A moment away from the shift? Gladly. What is on your mind?"
+ if id=="borin" and HoldStory183.local(g) and HoldStory183.stage(g.state)==2:return "The training pick is back in service. A sound fit, and work the forge can put its name to. What needs doing?"
  if id=="borin" and HoldForge147.active(g):return "'There's good iron under that soot. Once the hearth is lit, we can put it to use.'" if g.state.opening<2 else "'The hearth's drawing well. Ore by the hearth. Tools at the anvil. Leave the little fittings on the bench; I'll look them over when they're ready.'"
  var stage=HoldOnboarding.stage(g.state)
  if id=="ivar" and HoldOnboarding.settling(g.state):return "Your room is waiting on the northwestern street. Rest your feet and check the chest. There is time enough for introductions afterwards."
@@ -89,7 +90,9 @@ static func greeting(g,id:String)->String:
 static func panel(g):
  var id=g.talk_id;var s=g.state;var q=HoldOnboarding.ensure(s)
  if not local(g,id):g.label(g.panel_body,"This conversation has ended. Visit the resident to speak again.");return
- if id=="borin" and g.talk_topic in ["tool_commission","tool_parts"]:
+ if id=="borin" and g.talk_topic=="practice183":
+  HoldStory183.panel(g)
+ elif id=="borin" and g.talk_topic in ["tool_commission","tool_parts"]:
   HoldToolCapabilities.commissions_panel(g)
  elif g.talk_topic=="person":
   HoldPeople.panel(g,id)
@@ -119,6 +122,7 @@ static func panel(g):
  else:
   header(g,g.panel_body,id,greeting(g,id))
   responses(g)
+  HoldStory183.options(g,id)
   HoldLedger137.skarrin_options(g)
   if id=="eirik" and HoldClaim127.eligible(s):
    if HoldInvasion131.eligible(s):HoldInvasion131.panel(g)
