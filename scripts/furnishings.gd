@@ -58,6 +58,12 @@ static func footprint(kind:String,p:Vector2)->Rect2:
 static func silhouette(kind:String,p:Vector2)->Rect2:
  var item=geometry(kind);var size:Vector2=item.size
  return Rect2(p-Vector2(size.x*float(item.get("anchor_x",.5)),size.y),size)
+# Tall foreground fixtures keep their real footprint but reveal a Dwarf behind them.
+static func foreground_alpha(kind:String,p:Vector2,player:Vector2)->float:
+ var item=geometry(kind)
+ if item.size.y-item.base.size.y<55 or player.y>=p.y+float(ITEMS.get(kind,{}).get("sort_offset",0)):return 1.0
+ var actor=Rect2(player-Vector2(16,58),Vector2(32,58))
+ return .38 if silhouette(kind,p).intersects(actor) else 1.0
 static func draw(n:CanvasItem,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
  if kind=="civic_ledger":n.draw_texture_rect(CIVIC_LEDGER,silhouette(kind,p),false,tint)

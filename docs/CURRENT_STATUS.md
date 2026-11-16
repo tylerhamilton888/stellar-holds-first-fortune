@@ -1,4 +1,6 @@
-# Current status — 0.122.0 delivered
+# Current status — 0.123.0 visibility work
+
+0.123.0 is being validated on polish/visibility185. Room framing and tall-prop cutaways are implemented; native review and release checks are pending. 0.122.0 below remains the verified public build. See VISIBILITY185.md.
 
 ## Published Windows build
 

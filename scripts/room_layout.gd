@@ -6,12 +6,19 @@ static func floor_rect(area:String)->Rect2:return HoldBuildingPlans.geometry(are
 static func bounds(area:String)->Rect2:return HoldBuildingPlans.geometry(area).bounds
 static func size(area:String)->Vector2:return HoldBuildingPlans.geometry(area).size
 static func exit_point(area:String)->Vector2:return HoldBuildingPlans.geometry(area).exit
-static func camera(area:String,p:Vector2)->Vector2:
+static func camera(area:String,p:Vector2,welcome:bool=false)->Vector2:
  var plan=HoldBuildingPlans.geometry(area);var r=plan.floor;var max_y=r.end.y-375
  if plan.template=="room:throne":return (p-Vector2(480,280)).clamp(Vector2(170,100),Vector2(maxf(170,plan.size.x-960),maxf(705,plan.size.y-475)))
- var target=p-Vector2(480,280)
- target.y=maxf(target.y,lerpf(115,max_y,clampf((p.y-(r.end.y-220))/110.0,0,1)))
- return target.clamp(Vector2(0,115),Vector2(maxf(0,plan.size.x-960),max_y))
+ # Leave the north wall and tall furnishings below the 112px HUD band.
+ # Follow the player through large rooms instead of cropping their northern bays.
+ var top=65.0
+ var target=p-Vector2(480,350 if welcome else 280)
+ # Welcoming rooms keep the cast in view at their authored starting position.
+ # Other rooms retain the established arrival framing of the complete exit.
+ var approach=120.0 if welcome else 220.0
+ var distance=95.0 if welcome else 110.0
+ target.y=maxf(target.y,lerpf(top,max_y,clampf((p.y-(r.end.y-approach))/distance,0,1)))
+ return target.clamp(Vector2(0,top),Vector2(maxf(0,plan.size.x-960),max_y))
 static func objects(w,area:String)->Array:
  if area=="room:home":
   if HoldFirstVisit99.lodge_intro(w.g.state):return []

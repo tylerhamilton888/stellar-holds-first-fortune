@@ -275,7 +275,9 @@ func draw_furnishing(o:Dictionary):
  if o.furnishing=="hearth" and HoldFrontier103.active(g.state) and s.area==HoldFrontier103.room(g.state,"forge") and g.state.opening<2:
   var item=HoldFurnishings.geometry("hearth")
   g.draw_texture_rect_region(HoldFurnishings.ATLAS,HoldFurnishings.silhouette("hearth",o.p),HoldFurnishings.CROPS[item.art],Color(.36,.39,.43))
- else:HoldFurnishings.draw(g,o.p,o.furnishing)
+ else:
+  var alpha=HoldFurnishings.foreground_alpha(o.furnishing,o.p,g.player) if current_area()==s.area else 1.0
+  HoldFurnishings.draw(g,o.p,o.furnishing,Color(1,1,1,alpha))
  if s.area=="room:forge" and o.furnishing=="worktable":
   var index=[Vector2(970,550),Vector2(970,755),Vector2(680,755)].find(o.p)
   if index>=0:

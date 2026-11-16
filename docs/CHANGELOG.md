@@ -1,3 +1,9 @@
+# 0.123.0 — A clearer view
+
+- Room cameras reveal north-wall fixtures when approached and follow movement through the bunkhouse and private quarters.
+- Tall foreground furnishings reveal the player while overlapping, retaining their physical size and collision.
+- Preserved compact new workshop plans, larger legacy rooms, furnishings, storage and construction costs.
+
 # 0.122.0 — Fit for the work
 
 - Added Borin's optional training-pick repair, inspection scenes, exact material/reimbursement choices and remembered completion.
