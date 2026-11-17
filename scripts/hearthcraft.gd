@@ -10,11 +10,12 @@ var surface_ref:WeakRef
 var s:
  get:return surface_ref.get_ref()
 var g
+var view:HoldHouseView189
 var timer=0.0
 var impact=0.0
 var contact=Vector2.ZERO
 var reason=""
-func _init(surface):surface_ref=weakref(surface);g=surface.g
+func _init(surface):surface_ref=weakref(surface);g=surface.g;view=HoldHouseView189.new(self)
 func data()->Dictionary:
  s.ensure()
  if s.architecture.interior():return s.architecture.construction()
@@ -76,7 +77,10 @@ func walls(map:Dictionary)->Array:
   if map[k].get("wall","")!="" and not (map[k].wall=="door" and map[k].get("open",false)):
    result.append(Rect2(Vector2(coords(k))*CELL,Vector2.ONE*CELL))
  return result
-func obstacles()->Array:return walls(tiles()) if s.area=="claim" or s.architecture.interior() else []
+func obstacles()->Array:
+ var result=walls(tiles()) if s.area=="claim" or s.architecture.interior() else []
+ if s.area=="claim":result.append_array(view.boundary_obstacles())
+ return result
 func occupied(c:Vector2i)->bool:
  if g.fieldwork:
   for b in g.fieldwork.data().beds:
@@ -256,7 +260,7 @@ func cost_text(cost:Dictionary)->String:
  for k in cost:list.append(str(cost[k])+" "+("timber" if k=="wood" else "stone"))
  return " + ".join(list)
 func update(dt:float):
- impact=maxf(0,impact-dt);timer=maxf(0,timer-dt)
+ impact=maxf(0,impact-dt);timer=maxf(0,timer-dt);view.cooldown=maxf(0,view.cooldown-dt)
  if s.placing.begins_with("house:") and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and timer<=0 and not g.hotbar.over() and not g.hotbar.blocked:
   timer=.18;build(g.get_global_mouse_position()+g.camera,s.placing.trim_prefix("house:"))
 func points()->Array:
@@ -264,7 +268,7 @@ func points()->Array:
  if s.area!="claim" and not s.architecture.interior():return list
  for k in tiles():
   var t=tiles()[k]
-  if t.get("wall","")=="door":list.append({"p":center(coords(k)),"name":"Close door" if t.get("open",false) else "Open door","action":"house:"+k})
+  if t.get("wall","")=="door":list.append({"p":center(coords(k)),"name":("Leave home" if view.inside() else "Enter home") if not view.portal(k).is_empty() else "Close door" if t.get("open",false) else "Open door","action":"house:"+k})
  for k in data().links:
   var z=int(k.get_slice("/",0));var c=coords(k.get_slice("/",1))
   if z==level():list.append({"p":center(c),"name":"Climb to Z+%d · E" % (z+1),"action":"house_up"})
@@ -272,6 +276,7 @@ func points()->Array:
  list.sort_custom(func(a,b):return a.action=="house_up" and b.action!="house_up")
  return list
 func toggle(k:String)->bool:
+ if s.area=="claim" and view.use(k):return true
  if not tiles().has(k) or tiles()[k].get("wall","")!="door" or g.player.distance_to(center(coords(k)))>80:return false
  var t=tiles()[k]
  if t.get("open",false) and Rect2(Vector2(coords(k))*CELL,Vector2.ONE*CELL).grow(14).has_point(g.player):g.notify("Step out of the doorway first.");return false
@@ -315,18 +320,19 @@ func material(index:int,rect:Rect2,tint:Color=Color.WHITE):
 func floor_draw():
  if s.area=="claim":s.architecture.room_blueprints.draw_guides()
  if s.area!="claim" and not s.architecture.interior():return
- for z in range(level()):
+ for z in range(0 if view.inside() else level()):
   for k in tiles(z):
    var t=tiles(z)[k];var p=Vector2(coords(k))*CELL
    material(2 if t.get("roof",false) or t.floor=="roof_floor" else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL),Color(.55,.62,.66,.45))
  for k in tiles():
   var t=tiles()[k];var p=Vector2(coords(k))*CELL
-  if not t.has("floor"):continue
-  if t.has("style87"):HoldArchitectureStyles.floor_draw(g,Rect2(p,Vector2.ONE*CELL),HoldBlueprintFinishes.style(self,coords(k)).floor)
+  if not t.has("floor") or not view.visible_cell(coords(k)):continue
+  if s.area=="claim" and not view.inside() and not view.wall_visible(coords(k)):continue
+  if t.has("style87") or (s.area=="claim" and t.floor!="roof_floor"):HoldArchitectureStyles.floor_draw(g,Rect2(p,Vector2.ONE*CELL),HoldBlueprintFinishes.style(self,coords(k)).floor)
   else:material(2 if t.floor=="roof_floor" and not t.get("roof",false) else 1 if t.floor=="wood_floor" else 0,Rect2(p,Vector2.ONE*CELL))
  for k in data().links:
   var z=int(k.get_slice("/",0));var c=coords(k.get_slice("/",1))
-  if z!=level() and z+1!=level():continue
+  if (z!=level() and z+1!=level()) or not view.visible_cell(c):continue
   var p=center(c);g.draw_rect(Rect2(p-Vector2(15,18),Vector2(30,36)),Color("20383a"))
   var ladder=data().links[k].kind=="ladder"
   for i in 5:
@@ -336,20 +342,15 @@ func floor_draw():
 
  if s.area=="claim" and level()==0:HoldEstateCellar.draw(g)
 
-func wall_draw(c:Vector2i):HoldBuildingArt.wall_piece(g,c,tiles())
+func wall_draw(c:Vector2i):
+ if s.area=="claim":HoldHouseArt189.wall(self,c,view.inside())
+ else:HoldBuildingArt.wall_piece(g,c,tiles())
 func roof_draw():
- if s.area!="claim":return
- var inside=shelter(g.player).cells if tile(cell(g.player)).has("floor") else {}
- var expanded=inside.duplicate()
- for k in inside:
-  for dy in range(-1,2):
-   for dx in range(-1,2):expanded[key(coords(k)+Vector2i(dx,dy))]=true
- inside=expanded
+ if s.area!="claim" or view.inside():return
+ var grouped={}
+ for group in view.groups():grouped.merge(group.cells)
  for k in tiles():
-  if not tiles()[k].get("roof",false):continue
-  var p=Vector2(coords(k))*CELL;var alpha=.13 if inside.has(k) or center(coords(k)).distance_to(g.player)<75 else .95
-  HoldArchitectureStyles.roof(g,Rect2(p-Vector2(0,46),Vector2(40,40)),HoldBlueprintFinishes.style(self,coords(k)),Color(1,1,1,alpha))
-  if not tiles().get(key(coords(k)+Vector2i.DOWN),{}).get("roof",false):g.draw_line(p+Vector2(0,-6),p+Vector2(40,-6),Color(.7,.52,.27,alpha),3)
+  if tiles()[k].get("roof",false) and not grouped.has(k):HoldHouseArt189.roof(self,coords(k),tiles(),46)
 func preview():
  if not s.placing.begins_with("house:"):return
  var c=cell(g.get_global_mouse_position()+g.camera);var kind=s.placing.trim_prefix("house:");var ok=ready_to_build(c,kind)

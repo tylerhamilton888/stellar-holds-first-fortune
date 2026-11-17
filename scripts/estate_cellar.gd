@@ -116,6 +116,7 @@ static func draw(g):
  if not here(g):return
  for r in plans(g):
   var c=cell(r);var p=Deepworks.center(c)
+  if g.zone!="mine" and not g.surface.house.view.visible(p):continue
   if g.zone=="mine" and not g.deep.world.layer(0).seen.has(Deepworks.key(c)):continue
   if r.built:g.surface.world.detail(5,p+Vector2(0,19),40,38)
   else:
