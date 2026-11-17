@@ -12,6 +12,8 @@ HoldHouseArt189 composes the existing Hearthstone/Forgehold/Oathhall atlas at co
 
 ## Review and evidence
 
+The first broad PR gate caught the older frontier test expecting a walk-through exterior threshold. Its regression now verifies collision plus real E exit/re-entry; the new candidate must repeat full source/package acceptance.
+
 Pinned Godot 4.4.1 native runs, isolated saves, software OpenGL. Local evidence: test-results/cottage189 (not committed). Reviewed starter exterior/interior, expanded interior, upper interior and two-storey exterior beside the player. The first drafts exposed repeated side-wall posts and incomplete corner grouping; both were corrected before delivery.
 
 Cottage acceptance covers explicit E entry/exit, blocked threshold walking, transition repeat prevention, blocked landing, save/load indoors, unchanged construction/belongings, all four corners, expansion, connected partitions and enclosed upper floors. Existing opening, upper construction, room blueprint, cellar, worker and freight cases check integration. The 42 Python tooling checks passed. Full source and exact-package gates remain mandatory for publication; CURRENT_STATUS.md records the verified delivery.
