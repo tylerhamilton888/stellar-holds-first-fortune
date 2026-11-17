@@ -2,9 +2,9 @@
 
 ## Current work and next milestone
 
-In progress: 0.124.0 cottage architecture and explicit door entry, approved by the owner. See COTTAGE189.md and SESSION_HANDOFF.md. Publication remains gated by complete source/package verification.
+0.124.0 is delivered: coherent editable cottage architecture and explicit E entry into the actual connected interior. PR #189 merged; complete source/package acceptance and public metadata verification passed. See COTTAGE189.md and CURRENT_STATUS.md.
 
-Delivered through 0.123.1: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
+Delivered through 0.124.0: building-grid clarity, family-owned Rise and cottage, tools/materials, cross-craft components, Borin's commissions, civic livelihood routes and first presentation polish. See the [Home and Fortune roadmap](HOME_AND_FORTUNE_ROADMAP.md) and [previous backlog](history/BACKLOG-before-scenes181.md). Preserve existing building, navigation, household and freight owners.
 
 ## Playtest the current published build
 

@@ -25,3 +25,7 @@ The 5–10 minute arrival target still needs normal-speed human pacing review. L
 ## Presentation follow-up
 
 0.120.0 (RISE179.md) polishes the seeded cottage approach and arrival, adds two optional family letters from existing registrations and updates lodge reactions. Construction, ownership and migration remain with the original owners above; no estate is reseeded.
+
+## Cottage presentation in 0.124.0
+
+The original editable tiles now assemble into a coherent pitched-roof exterior. Press E at an exterior door to enter or leave the dedicated view of the actual connected rooms; internal doors retain ordinary controls. The view does not copy the home, grant furnishings or change stored possessions. See [COTTAGE189.md](COTTAGE189.md) for implementation and verification.

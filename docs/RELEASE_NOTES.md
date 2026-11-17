@@ -6,4 +6,4 @@ Use **E** at an exterior door to enter or leave. Inside, the view shows the actu
 
 Existing floors, finishes, possessions, saves, workers and freight routes are retained. Entry requires a clear landing; park a hitched cart first. The new view does not create a second house or grant furnishings.
 
-See CURRENT_STATUS.md for publication status and COTTAGE189.md for review. [Previous notes](history/RELEASE_NOTES-before-cottage189.md).
+Full native source verification and 78 exact-package cases / 14868 assertions passed. See CURRENT_STATUS.md for verified delivery and COTTAGE189.md for review. [Previous notes](history/RELEASE_NOTES-before-cottage189.md).
