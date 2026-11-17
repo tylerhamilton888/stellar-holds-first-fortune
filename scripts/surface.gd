@@ -77,7 +77,7 @@ func label()->String:
  if architecture.interior():return architecture.inside().get("name","Your building")+" · floor "+str(architecture.current_floor()+1)
  if HoldFrontier103.active(g.state):
   if area=="trail":return "Stonebridge · frontier town"
-  if area=="claim":return "Stonebridge · "+HoldOutpost.title(g.state)+" · Z+"+str(house.level())
+  if area=="claim":return "Stonebridge · "+HoldOutpost.title(g.state)+(" · inside" if house.view.inside() else "")+" · Z+"+str(house.level())
  if area=="greenfields":return "Greenhearth · the holdfarms"
  if area in HoldRoads.ROOMS:return HoldRoads.ROOMS[area]
  if HoldNeighborhood.is_home(area):return HoldNeighborhood.title(area)
@@ -165,11 +165,13 @@ func leave():
  var p=g.state.surface.positions.get(back,[])
  enter(back,Vector2(p[0],p[1])+Vector2(0,35) if p.size()==2 else spawn(back))
 func camera_target()->Vector2:
+ if area=="claim" and house.view.inside():return house.view.camera()
  if room():
   var welcome=area==HoldFrontier103.lodge(g.state) or HoldFrontier103.private_room(g) or (area=="room:home" and HoldFirstVisit99.lodge_intro(g.state))
   return HoldRoomLayout.camera(area,g.player,welcome)
  if HoldWorldZones.ward(area):return HoldTerraces.camera(area,g.player-Vector2(0,55 if g.fight.giant_near() else 0))
- return (g.player-Vector2(480,300)).clamp(Vector2(0,-65),Vector2(maxf(0,size().x-960),maxf(-65,size().y-480)))
+ var focus=house.view.outdoor_focus(g.player) if area=="claim" else g.player
+ return (focus-Vector2(480,300)).clamp(Vector2(0,-65),Vector2(maxf(0,size().x-960),maxf(-65,size().y-480)))
 func level()->int:return 0 if area=="crownward" else 2 if area=="forgeward" else 1
 func points()->Array:
  var result=[]
@@ -248,6 +250,7 @@ func points()->Array:
     var access=HoldFurnishings.bedside(bed,side,d.kind)
     if walkable(access):result.append({"p":access,"bed":bed,"name":"Bed · rest in your own house","action":"house_rest"})
   elif house.local(d) and d.kind=="desk":result.append({"p":HoldFurnishings.desk_access(Vector2(d.x,d.y)),"name":"Writing desk · write home","action":"letter"})
+ if area=="claim":result=result.filter(func(point):return house.view.visible(point.p))
  return result
 func spot(x:float,y:float,title:String,action:String)->Dictionary:return {"p":Vector2(x,y),"name":title,"action":action}
 func nearest()->Dictionary:
@@ -715,11 +718,12 @@ func draw():
   world.draw_neighbors()
   world.draw_ground()
   for link in HoldTerraces.links(area):HoldTerraces.draw_connection(world,link,area)
+ elif area=="claim" and house.view.inside():g.draw_rect(Rect2(cam,Vector2(960,600)),Color("172325"))
  elif room():draw_room()
  else:draw_outdoors()
- if area=="claim" and house.level()>0:g.draw_rect(Rect2(Vector2.ZERO,SIZE),Color(.02,.06,.08,.5))
+ if area=="claim" and house.level()>0 and not house.view.inside():g.draw_rect(Rect2(Vector2.ZERO,SIZE),Color(.02,.06,.08,.5))
  house.floor_draw()
- HoldClaim127.draw(g)
+ if not house.view.inside():HoldClaim127.draw(g)
  var objects=[]
  if HoldWorldZones.ward(area):
   objects.append_array(world.buildings());objects.append_array(world.people());objects.append_array(world.landmarks())
@@ -729,12 +733,12 @@ func draw():
  if is_instance_valid(g.opening_scene) and g.opening_scene.mode=="audience":objects.append({"p":g.opening_scene.ivar_p,"kind":"royal_guide"})
  if room():objects.append_array(world.routines.people(area,g.state.elapsed))
  if area in ["claim","pinewood"] and house.level()==0:objects.append(world.furn("desk",740 if area=="claim" else 300,780 if area=="claim" else 790))
- if area in ["claim","trail"]:
+ if area in ["claim","trail"] and not house.view.inside():
   g.draw_set_transform(-cam);HoldMineEntrance.ground(g,HoldMineEntrance.position(area))
   objects.append_array(world.exterior_objects())
  if area=="claim" or architecture.interior():
   for k in house.tiles():
-   if house.tiles()[k].get("wall","")!="":objects.append({"p":house.center(house.coords(k))+Vector2(0,20),"kind":"wall","c":house.coords(k)})
+   if house.tiles()[k].get("wall","")!="" and house.view.wall_visible(house.coords(k)):objects.append({"p":house.center(house.coords(k))+Vector2(0,20),"kind":"wall","c":house.coords(k)})
  for c in g.state.surface.chests.values():
   if house.local(c):objects.append({"p":Vector2(c.x,c.y),"kind":"chest_open" if g.panel_id=="storage" and c==g.state.surface.chests.get(selected_chest,{}) else "chest"})
  for d in g.state.surface.decor:
@@ -782,6 +786,9 @@ func draw():
  if g.opening_scene is HoldFriendScene130:
   objects=objects.filter(func(o):return not g.opening_scene.hide_object(o))
   objects.append_array(g.opening_scene.objects())
+ if area=="claim":
+  objects=objects.filter(func(o):return house.view.visible(o.p) or (o.kind=="wall" and house.view.visible_cell(o.c)))
+  objects.append_array(house.view.exterior_objects())
  objects.append({"p":g.player,"kind":"player"});objects.sort_custom(func(a,b):return a.get("sort_y",a.p.y)<b.get("sort_y",b.p.y))
  var restored_pick=HoldForge147.display_position(g)
  for o in objects:
@@ -820,6 +827,7 @@ func draw():
     A.draw_offset=-cam;HoldNpcActivity.social(g,o.p,g.clock+(0 if o.id=="hedrik" else posmod(hash(o.id),11)),-1,g.state.npc(o.id),true);A.draw_offset=Vector2.ZERO
    else:actor(o.p,g.state.npc(o.id),false,-1,g.clock)
    g.draw_set_transform(-cam);
+  elif o.kind=="house_exterior189":HoldHouseArt189.exterior(house,o.group)
   elif o.kind=="wall":house.wall_draw(o.c)
   elif o.kind=="tree":draw_fir(o.p,int(o.i))
   elif o.kind=="hearth" and HoldForge147.active(g) and g.state.opening<2:

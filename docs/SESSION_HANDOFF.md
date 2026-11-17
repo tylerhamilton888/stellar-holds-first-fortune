@@ -1,19 +1,15 @@
-# Session handoff — 0.123.1 delivered
+# Session handoff — cottage189 delivery in progress
 
-Read CURRENT_STATUS.md and AGENTS.md. The owner requested continued pre-playtest polish and explicitly directed completion of delivery. Checked source merge, Windows publication and delivery documentation are authorized.
+Read CURRENT_STATUS.md and AGENTS.md. The published baseline remains 0.123.1. The owner approved a coherent modular cottage exterior and explicit zoning into its actual interior, then said “Do it.” Source/art upload, checked merge and verified Windows delivery remain authorized.
 
-## Completed
+## Implementation
 
-0.123.1 is public. Source PR #187 merged at a3ecadfa639a20dfe180b6f621df5f3f12e255fd; release source ff7d29c72c097845a043bad12f23761cb0f279cd. All six PR jobs in run 43954606488 and all eleven release jobs in run 43954597970 passed. Public metadata, ZIP size and asset digests were verified; exact counts/hashes are in CURRENT_STATUS.md.
+Branch feature/cottage189, based on b98c260c4704e9e1e370b2d89e4249c4c3b04e7b. Version candidate 0.124.0. HoldHouseView189 derives enclosed connected rooms from existing claim tiles and turns external doors into deliberate E portals. Player, belongings, construction, stairs and crew keep their original coordinates and owners. Internal doors keep their existing controls. HoldHouseArt189 assembles the shared painted masonry/slate into a pitched exterior and reveals the real interior with low foreground walls.
 
-Reassigned freight carriers centre before turning through tight tunnels. Seed 162 reproduced the original corner trap; cargo, storage and save owners are preserved. Tests now retain replay seeds and per-failure map/carrier/cargo snapshots. The earlier package-harness duplicate-function error was corrected before the successful full rebuild. See FREIGHT187.md and TESTING.md.
+## Evidence and remaining delivery
 
-## Next work
+Focused native checks and visual review are being completed. Cottage entry/exit, reload, blocked landing, connected partition and expansion checks passed. Opening146, upper158, workers160 and freight162 passed; tooling tests passed. Native captures are under test-results/cottage189. COTTAGE189.md records the final evidence before publication.
 
-Owner and wife playtest the first hours with the latest Windows ZIP. Check opening/cottage/forge/exploration flow, visibility, entrances, saved belongings and freight after reassigning a moving miner near a bend. Gather pacing/discoverability feedback before expanding features. Windows input, audio and hardware performance remain human checks.
+Remaining: finish final upper-storey visual review and focused checks, upload the reviewed source, create source PR/release branch, require all source/package gates, merge checked source, verify public assets and reconcile delivery documentation. Do not describe this candidate as published until those steps complete. Follow RELEASE_PIPELINE.md; preserve previous releases and saves.
 
-Preserve dwarven perfectionism: approval follows sound workmanship. The older unrecorded lower-level freight failure remains a separate follow-up; preserve the replay seed and failure snapshots if it recurs.
-
-Delivery documentation is separate from tested release source. Do not change release/0.123.1 for documentation-only edits. All assets and prior releases remain intact.
-
-[Previous handoff](history/SESSION_HANDOFF-before-freight187.md).
+[Previous handoff](history/SESSION_HANDOFF-before-cottage189.md).

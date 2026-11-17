@@ -1,3 +1,9 @@
+# 0.124.0 — Under your own roof
+
+- Reassembled editable houses with continuous pitched slate, masonry gables and restrained timber framing using existing architectural art.
+- Added explicit exterior-door entry/exit and a dedicated view of the real connected rooms; removed proximity roof fading.
+- Preserved paid construction, finishes, possessions, stairs and worker/freight owners. Added native and exact-package cottage acceptance.
+
 # 0.123.1 — Clear corners
 
 - Reassigned freight carriers centre in their current cell before taking a new route, avoiding repeated collision at tight tunnel corners.
