@@ -44,7 +44,8 @@
       "upper158",
       "workers160",
       "freight162",
-      "cottage189"
+      "cottage189",
+      "room_stages197"
     ],
     "gameplay": [
       "loading",
@@ -134,7 +135,8 @@
       "upper158",
       "workers160",
       "freight162",
-      "cottage189"
+      "cottage189",
+      "room_stages197"
     ],
     "modular": [
       "modular",
@@ -568,7 +570,8 @@
       "ridge124",
       "traditions126",
       "claim127",
-      "hearthknot128"
+      "hearthknot128",
+      "room_stages197"
     ],
     "menu-quality-regression": [
       "quest_ui",
@@ -1112,6 +1115,13 @@
       "mining",
       "living",
       "cottage189"
+    ],
+    "room-stages197": [
+      "room_stages197",
+      "blueprints152",
+      "blueprint_manor152",
+      "upper158",
+      "cottage189"
     ]
   },
   "cases": {
@@ -1470,6 +1480,10 @@
     "cottage189": {
       "script": "tests/cottage189.gd",
       "marker": "COTTAGE189"
+    },
+    "room_stages197": {
+      "script": "tests/room_stages197.gd",
+      "marker": "ROOM_STAGES197"
     }
   }
 }

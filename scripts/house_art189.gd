@@ -81,16 +81,22 @@ static func roof(h,c:Vector2i,cells:Dictionary,offset:float=88.0,z:int=-1,bounds
    if a.x<=mid and b.x>mid:g.draw_line(Vector2(mid,bounds.end.y-(bounds.end.y-a.y)*.6-offset),slope(Vector2(mid,a.y),bounds,offset),Color("574632"),7)
   g.draw_polyline(line,Color("273437"),7)
   g.draw_polyline(line,Color("ac9877"),3)
-static func exterior(h,group:Dictionary):
+static func exterior(h,group:Dictionary,construction:Callable=Callable()):
  var g=h.g;var bounds:Rect2=group.bounds
  g.draw_rect(Rect2(bounds.position+Vector2(12,0),bounds.size+Vector2(8,10)),Color(0,0,0,.24))
  for k in group.cells:
+  if not h.tiles()[k].has("floor"):continue
   var c=h.coords(k);var p=Vector2(c)*40
   p.y=bounds.end.y-(bounds.end.y-p.y)*.6
   HoldArchitectureStyles.floor_draw(g,Rect2(p,Vector2(40,24)),HoldBlueprintFinishes.style(h,c).floor)
  var keys=group.cells.keys();keys.sort_custom(func(a,b):return h.coords(a).y<h.coords(b).y)
  for k in keys:
   if h.tiles()[k].get("wall","")!="":wall(h,h.coords(k),false,-1,bounds)
+ if construction.is_valid():construction.call()
+ elif h is HoldHearthcraft:
+  var planner=h.s.architecture.room_blueprints
+  for plan in planner.rooms(h.level()):
+   if bounds.encloses(Rect2(Vector2(plan.x,plan.y)*40,Vector2(plan.w,plan.h)*40)):HoldRoomConstruction197.site(g,planner,plan,true)
  for k in keys:
   if h.tiles()[k].get("roof",false):roof(h,h.coords(k),group.cells,88,-1,bounds)
  # A continuous raised ridge gives the modular footprint one pitched silhouette.
