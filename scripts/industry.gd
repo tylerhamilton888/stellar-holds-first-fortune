@@ -25,7 +25,7 @@ static func install(s,site:String)->bool:
 static func gun_reason(s)->String:
  if s.outpost.get("mining_gun",false):return "Already built • press 5 to equip"
  if maxi(tier(s),tier(s,"hold"))<1:return "Install a powered workshop"
- if not s.tech.has("thermal"):return "Research Runic thermal extraction"
+ if not s.tech.has("thermal"):return "Research Energy cells & slagcasting"
  return ""
 static func build_gun(s)->bool:
  if gun_reason(s)!="" or not s.pay(GUN_COST,120):return false

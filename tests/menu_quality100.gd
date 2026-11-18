@@ -41,6 +41,15 @@ func run():
    var bar=g.menu_scroll.get_v_scroll_bar();bar.value=bar.max_value-bar.page
    check(labels.any(func(l):return l.text.contains("Scroll up")),"Scroll hint follows the reader to the bottom")
   g.close_panel();g.update_hud()
+ var known_tech=g.state.tech.duplicate(true);var inventory=g.state.inventory.duplicate(true)
+ g.state.tech.clear();g.recipe_selection="parts";g.open_panel("recipes",false);await capture_screen("05-recipes-known")
+ var recipes=g.panel.find_children("*","Button",true,false)
+ check(not recipes.any(func(b):return b.tooltip_text.begins_with(HoldData.RECIPES.parts.name)),"Recipes hide unknown technology even when an old selection points to it")
+ check(recipes.any(func(b):return b.tooltip_text==HoldData.RECIPES.iron.name),"Known recipes remain visible without enough materials")
+ g.state.tech.metallurgy=true;g.refresh_panel();await process_frame
+ check(g.panel.find_children("*","Button",true,false).any(func(b):return b.tooltip_text==HoldData.RECIPES.parts.name),"Research reveals its recipe without spending inventory")
+ check(g.state.inventory==inventory,"Recipe browsing and filtering never spend supplies")
+ g.state.tech=known_tech
  g.show_title()
  check(not g.energy_button.visible and not g.energy_bar.visible and not g.calendar_button.visible,"Returning to title immediately hides gameplay HUD")
  check(not g.depth_nav.map_button.visible and not g.depth_nav.view_button.visible and not g.depth_nav.controls_button.visible and not g.menu_shade.visible,"Returning to title clears mine controls and menu shade")

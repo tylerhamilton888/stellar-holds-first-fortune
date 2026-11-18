@@ -1,6 +1,9 @@
 class_name HoldDisciplineView
 extends RefCounted
 
+static func work_unit(path:String)->String:
+ return {"mining":"rock faces","smithing":"metal batches","masonry":"stone loads","forestry":"timber sections","woodworking":"logs / furnishings","brewing":"batches","farming":"harvests","fishing":"catches","gathering":"deposits","runecarving":"cell batches","warrior":"enemies","overseer":"recruits","engineer":"parts / drives"}.get(path,"completed jobs")
+
 static func panel(g):
  if not g.skill_detail:
   overview(g);return
@@ -10,7 +13,7 @@ static func panel(g):
  var hero=g.row(body);var art=TextureRect.new();art.texture=load("res://assets/disciplines71/"+path+".svg");art.custom_minimum_size=Vector2(94,94);art.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;hero.add_child(art)
  var heading=VBoxContainer.new();heading.size_flags_horizontal=Control.SIZE_EXPAND_FILL;hero.add_child(heading)
  g.label(heading,info[0],24,Color("edc98a"));g.label(heading,info[1],16);g.label(heading,"%d work completed · %s" % [HoldDisciplines.xp(g.state,path),info[2]],16,Color("a7dfcb"))
- if path=="brewing":g.label(body,"Brewing techniques will arrive with a dedicated brewing workstation. There are no spendable unlocks here yet.",16)
+ if path=="brewing":g.label(body,"There are no brewing techniques to learn yet. Available drink recipes are listed under Craft.",16)
  if path=="overseer":g.label(body,"Leadership skill is separate from your civic title. Learning a technique grants no claim or access to hold-owned supplies.",16)
  if path=="mining":g.label(body,"Milestones · 12 mined faces: strong shoulders and joint reading. 40 faces: controlled sections and four extra cart loads.",16)
  for id in HoldDisciplines.NODES:
@@ -52,5 +55,5 @@ static func overview(g):
   var title=g.small_button(row,info[0],func():g.discipline_tab=path;g.skill_detail=true;g.refresh_panel());title.custom_minimum_size.x=118;title.tooltip_text=info[1]
   var body=VBoxContainer.new();body.add_theme_constant_override("separation",1);body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(body)
   var bar=ProgressBar.new();bar.max_value=maxi(1,target);bar.value=mini(work,target) if target>0 else (1 if total>0 else 0);bar.show_percentage=false;bar.custom_minimum_size.y=6;body.add_child(bar)
-  g.label(body,"%d / %d work" % [mini(work,target),target] if target>0 else ("All techniques learned" if total>0 else "No techniques available yet"),14)
+  g.label(body,"%d / %d %s" % [mini(work,target),target,work_unit(path)] if target>0 else ("All techniques learned" if total>0 else "No techniques available yet"),14)
   title.tooltip_text+=" · %d / %d techniques learned" % [learned,total]

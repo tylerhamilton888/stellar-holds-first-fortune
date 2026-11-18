@@ -119,7 +119,7 @@ func project()->Dictionary:
  if chosen in ["bench","anvil","rune"]:return {"name":LivingWorks.FURNITURE[chosen].name,"cost":LivingWorks.FURNITURE[chosen].cost,"money":0,"panel":"living"}
  if chosen=="stoneworking":return {"name":"Stoneworking research","cost":HoldData.RESEARCH.stoneworking.cost,"money":15,"panel":"research"}
  match chosen:
-  "steel":return {"name":"Tempered steel research"+(" · complete" if s.tech.has("extraction") else ""),"cost":{} if s.tech.has("extraction") else HoldData.RESEARCH.extraction.cost,"money":35,"panel":"research"}
+  "steel":return {"name":"Steel tools research"+(" · complete" if s.tech.has("extraction") else ""),"cost":{} if s.tech.has("extraction") else HoldData.RESEARCH.extraction.cost,"money":35,"panel":"research"}
   "iron":return {"name":"Smelt iron ingot","cost":HoldData.RECIPES.iron.cost,"money":0,"panel":"forge"}
   "assembly":return {"name":"Starship drive assembly","cost":HoldData.RECIPES.assembly.cost,"money":0,"panel":"forge"}
  return {"name":"Wheelbarrow"+(" · built" if not cart().is_empty() else ""),"cost":{} if not cart().is_empty() else CART_COST,"money":0,"panel":"haulage"}

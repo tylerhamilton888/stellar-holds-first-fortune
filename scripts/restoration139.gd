@@ -6,7 +6,7 @@ const CENTER=Vector2(1235,500)
 const ORDERS={
  "smith":{"title":"Fittings for the crossing","tech":"metallurgy","items":{"parts":4},"hint":"Research Precision forging at the survey desk. Forge four machine parts at the communal forge; the bridge crew fits your ironwork."},
  "builder":{"title":"Stone and timber for the crews","tech":"fine_masonry","items":{"wood":20,"stone":36},"hint":"Research Fine masonry. Process twenty timber OR thirty-six stone yourself at the loan benches; the masons exchange your stock for dressed seats and seasoned beams."},
- "provisioner":{"title":"Meals for the bridge shift","tech":"hearthkeeping","items":{"barley_bread":6,"root_hotpot":6,"fish_chowder":5},"hint":"Research Hearthkeeping. Cook six breads, six hotpots OR five chowders. Feeding the hired crew covers one share of their work; farming and fishing are alternatives."}}
+ "provisioner":{"title":"Meals for the bridge shift","tech":"hearthkeeping","items":{"barley_bread":6,"root_hotpot":6,"fish_chowder":5},"hint":"Research Home comforts. Cook six breads, six hotpots OR five chowders. Feeding the hired crew covers one share of their work; farming and fishing are alternatives."}}
 static func active(s)->bool:return HoldFrontier103.active(s)
 static func data(s)->Dictionary:
  if not active(s):return {}

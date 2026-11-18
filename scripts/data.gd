@@ -74,15 +74,15 @@ const RECIPES = {
  "dressed_basalt":{"name":"Dress basalt blocks","cost":{"basalt_block":2,"water":1},"out":{"dressed_basalt":2},"time":5.0,"tech":"fine_masonry"}
 }
 const RESEARCH = {
- "hearthkeeping":{"name":"Hearthkeeping","desc":"Longer shared-meal benefits and carved pantry furnishings. Any home style is welcome.","cost":{"wood":6,"stone":6},"money":15,"requires":""},
- "stoneworking":{"name":"Stoneworking","desc":"Smooth walls, lay flagstones and build pillars. Nearby pillars brace controlled fracture work.","cost":{"stone":12,"wood":3},"money":15,"requires":""},
+ "hearthkeeping":{"name":"Home comforts","desc":"Longer shared-meal benefits and carved pantry furnishings. Any home style is welcome.","cost":{"wood":6,"stone":6},"money":15,"requires":""},
+ "stoneworking":{"name":"Stoneworking","desc":"Unlock multi-storey home plans. Smooth walls, lay flagstones and build pillars. Nearby pillars brace controlled fracture work.","cost":{"stone":12,"wood":3},"money":15,"requires":""},
  "furnishings":{"name":"Dwarven furnishings","desc":"Carved chairs make practical rooms comfortable without forcing a different architectural style.","cost":{"wood":10,"iron":2},"money":20,"requires":"stoneworking"},
- "fine_masonry":{"name":"Fine masonry","desc":"Copper inlay, runic stonework and ancestral pillars for distinctive chambers.","cost":{"stone":24,"copper":2},"money":30,"requires":"stoneworking"},
- "thermal":{"name":"Runic thermal extraction","desc":"Powered workshops can fabricate a slagcaster. Craft energy cells and quench recovered metal slag.","cost":{"parts":5,"crystal":2},"money":85,"requires":"automation"},
+ "fine_masonry":{"name":"Fine masonry","desc":"Unlock hall building plans, copper inlay, runic stonework and carved pillars.","cost":{"stone":24,"copper":2},"money":30,"requires":"stoneworking"},
+ "thermal":{"name":"Energy cells & slagcasting","desc":"Powered workshops can fabricate a slagcaster. Craft energy cells and quench recovered metal slag.","cost":{"parts":5,"crystal":2},"money":85,"requires":"automation"},
  "voidcraft":{"name":"Pressure engineering","desc":"After your freight beacon and first keel, install sealed engineering bays: double production, efficient cells and reduced ship material costs.","cost":{"parts":6,"crystal":2,"copper":4},"money":95,"requires":"automation"},
- "extraction": {"name":"Tempered steel", "desc":"Unlock a steel pick: stronger contacts, basalt access and supported hammer section breaking.","cost":{"iron":4,"wood":3},"money":35,"requires":""},
- "metallurgy": {"name":"Precision forging", "desc":"Make machine parts; expand your hold.","cost":{"copper":3,"stone":12},"money":45,"requires":""},
- "automation": {"name":"Clockwork industry", "desc":"Build a miner, assemble starship drives, and commission powered workshops (+50% production).","cost":{"parts":4,"crystal":1},"money":65,"requires":"metallurgy"},
+ "extraction": {"name":"Steel tools", "desc":"Unlock a steel pick: stronger contacts, basalt access and supported hammer section breaking.","cost":{"iron":4,"wood":3},"money":35,"requires":""},
+ "metallurgy": {"name":"Precision forging", "desc":"Make machine parts and unlock workshop building plans.","cost":{"copper":3,"stone":12},"money":45,"requires":""},
+ "automation": {"name":"Powered machinery", "desc":"Build a miner, assemble starship drives, and commission powered workshops (+50% production).","cost":{"parts":4,"crystal":1},"money":65,"requires":"metallurgy"},
  "reinforced_tools":{"name":"Reinforced tools","desc":"Forge a pickhead and fittings, then assemble them with a shaped haft into a reinforced pick. Components can also be bought at the market.","cost":{"iron":6,"copper":3},"money":65,"requires":"extraction"}
 }
 const SHIP = [

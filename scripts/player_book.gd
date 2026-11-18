@@ -114,10 +114,12 @@ static func recipes(g):
   g.label(detail,"%d seconds per batch at a workstation" % recipe.time,14)
   for key in buttons:buttons[key].button_pressed=key==id
  for id in HoldData.RECIPES:
+  if HoldCollections141.recipe_reason(g.state,id)!="":continue
   var recipe=HoldData.RECIPES[id];var b=Button.new();b.custom_minimum_size=Vector2(58,58);b.toggle_mode=true;b.tooltip_text=recipe.name;grid.add_child(b);buttons[id]=b
   HoldItemArt.icon(b,recipe.out.keys()[0]);var icon=b.get_child(0);icon.position=Vector2(10,7);icon.size=Vector2(38,38);icon.mouse_filter=Control.MOUSE_FILTER_IGNORE
   if HoldCollections141.recipe_reason(g.state,id)!="":icon.modulate.a=.45;b.tooltip_text+=" · "+HoldCollections141.recipe_reason(g.state,id)
   b.pressed.connect(func():select.call(id))
- select.call(g.recipe_selection if HoldData.RECIPES.has(g.recipe_selection) else HoldData.RECIPES.keys()[0])
+ if not buttons.is_empty():select.call(g.recipe_selection if buttons.has(g.recipe_selection) else buttons.keys()[0])
+ else:g.label(detail,"Learn a recipe through research or town collections.",16)
  if g.room_id=="forge":g.button(g.panel_body,"Use this forge",func():g.open_panel("forge"))
  else:g.small_button(g.panel_body,"Find Borin’s forge",func():g.state.tracked_npc="borin";g.save_game();g.close_panel())

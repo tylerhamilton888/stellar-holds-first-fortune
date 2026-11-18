@@ -1,3 +1,5 @@
+Clarity196 (isolated 0.124-based patch): clearer player-facing names, functional building details and research-filtered plans/recipes. The missing 0.125 visual source still requires recovery and integration. See CLARITY196.md; not released.
+
 # 0.124.0 — Under your own roof
 
 - Reassembled editable houses with continuous pitched slate, masonry gables and restrained timber framing using existing architectural art.

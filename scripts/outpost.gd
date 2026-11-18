@@ -171,7 +171,7 @@ static func next_step(s)->String:
  if not s.tech.has("metallurgy"):return "Research Precision forging, then forge machine parts for your freight beacon."
  if s.camp_stage<3:return "Commission your freight beacon. It opens the launchyard and remote recruitment."
  if s.ship_stage==0:return "Save materials for the ship's keel. An engineer must supervise construction."
- if s.ship_stage<3:return "Build the next ship stage. Clockwork industry unlocks drive assemblies."
+ if s.ship_stage<3:return "Build the next ship stage. Powered machinery unlocks drive assemblies."
  return "Inspect the completed ship at the launchyard and make your maiden launch."
 static func build_ship(s)->bool:
  if s.claim_id=="" or s.camp_stage<3 or s.ship_stage>=3 or role_count(s,"engineer")==0:return false

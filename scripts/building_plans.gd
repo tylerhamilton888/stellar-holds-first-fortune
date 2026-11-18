@@ -16,8 +16,8 @@ static func catalogue()->Dictionary:
  for ward in HoldWorldZones.WARDS:
   for i in 3:
    var id="folk_"+ward+"_"+str(i)
-   out[id]={"name":HoldHouseholds.name_for(ward,i)+" house","category":"Hearths","rooms":[HoldNeighborhood.home_id(ward,i),HoldNeighborhood.home_id(ward,i,1)],"ward":true,"art":0,"id":-2,"home":HoldNeighborhood.home_id(ward,i),"width":[260.0,240.0,280.0][i]}
- for item in [["cottage","Charter cottage","Hearths","home:blueprint",0,350.0],["wayfarer","Wayfarer's Hearth","Hearths","room:wayfarer",1,290.0],["farmhouse","Greenhearth farmhouse","Hearths","room:greenhearth",0,320.0],["workshop","Charter workshop","Industry","room:forge",4,260.0]]:
+   out[id]={"name":"Two-storey house · "+ward.capitalize()+" "+str(i+1),"category":"Hearths","rooms":[HoldNeighborhood.home_id(ward,i),HoldNeighborhood.home_id(ward,i,1)],"ward":true,"art":0,"id":-2,"home":HoldNeighborhood.home_id(ward,i),"width":[260.0,240.0,280.0][i]}
+ for item in [["cottage","Cottage","Hearths","home:blueprint",0,350.0],["wayfarer","Travel lodge","Hearths","room:wayfarer",1,290.0],["farmhouse","Farmhouse","Hearths","room:greenhearth",0,320.0],["workshop","Workshop","Industry","room:forge",4,260.0]]:
   out[item[0]]={"name":item[1],"category":item[2],"rooms":[item[3]],"ward":false,"art":item[4],"id":-3,"width":item[5]}
  out.frontier_lodge={"name":"Stonebridge bunkhouse","category":"Hearths","rooms":["room:lodge","room:home"],"ward":false,"art":0,"id":-3,"width":300.0}
  out.frontier_office={"name":"Survey hall and archive","category":"Civic","rooms":["room:research","room:research"],"stair":[550,550],"ward":false,"art":2,"id":-3,"width":260.0}
@@ -26,8 +26,39 @@ static func catalogue()->Dictionary:
  out.workshop.rooms=["room:workshop148"]
  out.frontier_forge=out.workshop.duplicate(true)
  out.frontier_forge.name="Stonebridge communal forge";out.frontier_forge.rooms=["room:communal148"];out.frontier_forge.key="frontier_forge"
+ var generic_names={"hold_throne":"Great hall","hold_research":"Research office","hold_home":"Lodge","hold_tavern":"Tavern","hold_market":"Market hall","hold_commission":"Office","hold_forge":"Large forge","hold_training":"Training hall","archive":"Archive","frontier_lodge":"Bunkhouse","frontier_office":"Two-storey office","frontier_watch":"Storehouse","frontier_forge":"Large workshop"}
+ for key in generic_names:
+  if out.has(key):out[key].name=generic_names[key]
  catalogue_cache=out;return out
 static func plan(id:String)->Dictionary:return catalogue().get(id,{})
+# Construction research is checked in the catalogue and again before spending.
+static func required_technology(id:String)->String:
+ var p=plan(id)
+ if p.is_empty():return ""
+ if p.category=="Civic":return "fine_masonry"
+ if p.category=="Industry":return "metallurgy"
+ if p.rooms.size()>1:return "stoneworking"
+ return ""
+static func unlocked(s,id:String)->bool:
+ return not plan(id).is_empty() and (required_technology(id)=="" or s.tech.has(required_technology(id)))
+static func category_label(id:String)->String:
+ return {"Hearths":"Homes","Industry":"Workshops","Civic":"Halls"}.get(plan(id).get("category",""),"Building")
+static func purpose(id:String)->String:
+ var p=plan(id)
+ if p.is_empty():return ""
+ if p.category=="Hearths":return "Living space for beds, meals and storage. Choose the included furniture or furnish it yourself."
+ if p.category=="Industry":return "Workspace for equipment and storage. The equipment you place determines what you can make here."
+ return "A large interior for your own furnishings. Building a copy does not add town services or recruit staff."
+static func contents_summary(w,id:String)->String:
+ var counts={}
+ for room in plan(id).get("rooms",[]):
+  for f in contents(w,room):
+   var key=str(f.get("furnishing",""))
+   if not HoldFurnishings.ITEMS.has(key):continue
+   counts[key]=int(counts.get(key,0))+1
+ var lines:PackedStringArray=[]
+ for key in counts:lines.append("%d × %s" % [counts[key],HoldFurnishings.ITEMS[key].title])
+ return ", ".join(lines) if not lines.is_empty() else "No furniture included."
 static func identify(b:Dictionary,area:String)->String:
  if b.has("plan"):return b.plan
  if b.has("home"):return b.home.trim_prefix("room:").rsplit("_",true,1)[0]

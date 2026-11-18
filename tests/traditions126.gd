@@ -81,7 +81,7 @@ func run():
  g.open_panel("home")
  var shrine_button:Button
  for b in g.panel.find_children("*","Button",true,false):
-  if b.text.begins_with("Ancestral hearthstone"):shrine_button=b
+  if b.text.begins_with("Ancestor memorial"):shrine_button=b
  check(shrine_button!=null,"Private-room catalogue exposes the shrine with its own icon")
  if shrine_button!=null:
   await process_frame;g.menu_scroll.ensure_control_visible(shrine_button)

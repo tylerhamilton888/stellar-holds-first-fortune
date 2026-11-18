@@ -25,7 +25,7 @@ static func foundations(s)->Array:
   ["A sound expedition pick",s.steel,"Own a steel pick: forge it yourself or commission Borin. His work needs no smithing research from you.","forge"],
   ["A safe way below",learned(s,"survey") and learned(s,"route") and s.tech.has("stoneworking"),"Survey underground, descend and return through a passage, and research Stoneworking for the rescue's supports. Earlier completed work counts.","survey"],
   ["The Winter Stores",bool(data(s).get("winter_ready",false)),"Inspect the eastern site, supply its structure, raise the building, then contribute twelve provisions and open the stores. Gather, make or buy the supplies.",""],
-  ["Hands of the hold",HoldWork132.contributions(s)>=3,"Complete three civic projects or trade seals in any combination. Specializing in one trade counts equally.",""]]
+  ["Town contributions",HoldWork132.contributions(s)>=3,"Complete three civic projects or trade seals in any combination. Specializing in one trade counts equally.",""]]
 static func eligible(s)->bool:
  if not active(s):return false
  if int(HoldAncestralClaim.data(s).stage)>0 or data(s).get("legacy_rescue",false):return true

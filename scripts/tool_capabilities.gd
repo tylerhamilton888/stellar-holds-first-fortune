@@ -7,7 +7,7 @@ static func reinforced(s)->bool:return s.steel and bool(s.outpost.get("reinforce
 static func power(s)->float:return 2.1 if reinforced(s) else 1.65 if s.steel else 1.0
 static func basalt_hint(s)->String:
  if s.steel:return "Your reinforced pick can cut basalt; careful contacts preserve blocks." if reinforced(s) else "Your steel pick can cut basalt."
- return "Basalt needs a steel pick. Forge one at Stonebridge's anvil: 5 iron + 2 timber. Or commission Borin for those materials + 35 crowns." if s.tech.has("extraction") else "Basalt needs a steel pick. Research Tempered steel at the survey desk, then forge the pick: 5 iron + 2 timber. Or commission Borin for those materials + 35 crowns."
+ return "Basalt needs a steel pick. Forge one at Stonebridge's anvil: 5 iron + 2 timber. Or commission Borin for those materials + 35 crowns." if s.tech.has("extraction") else "Basalt needs a steel pick. Research Steel tools at the survey desk, then forge the pick: 5 iron + 2 timber. Or commission Borin for those materials + 35 crowns."
 static func reason(s,id:String)->String:
  if not COSTS.has(id):return "Unknown tool."
  if (id=="steel" and s.steel) or (id=="reinforced_pick" and reinforced(s)):return "Already owned."

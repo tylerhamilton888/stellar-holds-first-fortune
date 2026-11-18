@@ -67,17 +67,19 @@ static func book(a):
  for id in HoldArchitectureStyles.FAMILIES:
   tab(g,tabs,HoldArchitectureStyles.FAMILIES[id].title,a.collection==id,func():a.collection=id;g.refresh_panel())
  if a.collection!="all":g.label(g.panel_body,HoldArchitectureStyles.FAMILIES[a.collection].mood,16,Color("b8c5bc"))
- else:g.label(g.panel_body,"Choose a familiar silhouette. Mix matching stone, roof and trim for its additions.",16,Color("b8c5bc"))
+ else:g.label(g.panel_body,"Choose a building plan. Styles change appearance, not function. Research unlocks more plans.",16,Color("b8c5bc"))
  if not b.is_empty():action(g,g.panel_body,"Return to "+b.name,func():a.browse_only=false;g.refresh_panel())
  var cards=grid(g.panel_body)
  for id in HoldBuildingPlans.catalogue():
+  if not HoldBuildingPlans.unlocked(g.state,id):continue
   var p=HoldBuildingPlans.plan(id);var family=HoldArchitectureStyles.family(id)
   if a.collection!="all" and family!=a.collection:continue
   var box=card(g,cards);box.get_parent().custom_minimum_size.x=248
   preview(box,HoldBuildingPlans.instance(id,Vector2.ZERO),104)
   var name=g.label(box,p.name,16);name.custom_minimum_size.y=32
-  g.label(box,"%d floor%s · %s" % [p.rooms.size(),"s" if p.rooms.size()>1 else "",p.category],14,Color("a8b9b6"))
+  g.label(box,"%d floor%s · %s" % [p.rooms.size(),"s" if p.rooms.size()>1 else "",HoldBuildingPlans.category_label(id)],14,Color("a8b9b6"))
   action(g,box,"Choose plan",func():a.select_plan(id))
+ if cards.get_child_count()==0:g.label(g.panel_body,"No researched building plans in this style. Choose All plans or learn more building research in Skills.",15)
  action(g,g.panel_body,"Build piece by piece · floors, walls and roofs",func():g.open_panel("house_build"))
 static func renovation(a,b:Dictionary):
  if HoldFrontier103.public_building(b):
@@ -85,7 +87,7 @@ static func renovation(a,b:Dictionary):
   preview(g.panel_body,a.building_object(b),180)
   g.label(g.panel_body,b.name+" · shared town building",21)
   g.label(g.panel_body,"This building uses the same shell, interiors and stairs available in your building book. You may build your own version on your household plot.",16)
-  action(g,g.panel_body,"View this building plan",func():a.select_plan(b.plan))
+  if HoldBuildingPlans.unlocked(g.state,b.plan):action(g,g.panel_body,"View this building plan",func():a.select_plan(b.plan))
   if HoldFrontier103.private_room(g):action(g,g.panel_body,"Furnish my upstairs room",func():g.open_panel("home"))
   return
  var g=a.g;var row=g.row(g.panel_body)
@@ -101,8 +103,8 @@ static func renovation(a,b:Dictionary):
   if value!="":b.name=value;g.save_game();g.refresh_panel())
  action(g,summary,"Materials & finishes",a.open_style)
  var tools=grid(g.panel_body)
- action(g,tools,"Furniture & details",func():g.open_panel("architecture_details"))
- action(g,tools,"Floors & partitions",func():g.open_panel("house_build"))
+ action(g,tools,"Furniture & decorations",func():g.open_panel("architecture_details"))
+ action(g,tools,"Walls, floors & doors",func():g.open_panel("house_build"))
  action(g,tools,"Workstations & storage",func():g.open_panel("handworks"))
  action(g,tools,"Move furniture",a.s.move_nearby_furnishing)
  action(g,tools,"Recover furniture",a.s.recover_decor)
@@ -115,7 +117,7 @@ static func renovation(a,b:Dictionary):
   action(g,extend,"Add side bay",func():a.expand("extend_x"),int(b.extend_x)<6 and g.state.afford(fee))
   action(g,extend,"Add rear bay",func():a.expand("extend_y"),int(b.extend_y)<6 and g.state.afford(fee))
   action(g,extend,"Relocate building",a.move_building)
-  var recover=action(g,extend,"Recover shell",a.recover,a.empty_for_recovery(b));recover.tooltip_text="Empty all floors first. Returns the materials paid for the shell and finishes."
+  var recover=action(g,extend,"Dismantle building",a.recover,a.empty_for_recovery(b));recover.tooltip_text="Empty all floors first. Returns the materials paid for the shell and finishes."
   action(g,g.panel_body,"Browse more building plans",func():a.browse_only=true;g.refresh_panel())
  else:g.label(g.panel_body,"Step outside to extend or relocate this building. E climbs; Shift+E descends.",14,Color("b8c5bc"))
 static func choices(a,parent:Node,draft:Dictionary):
@@ -131,20 +133,24 @@ static func choices(a,parent:Node,draft:Dictionary):
   picker.select(values.find(draft[key]));picker.item_selected.connect(func(i):draft[key]=values[i];g.refresh_panel())
 static func plan_page(a):
  var g=a.g;var p=HoldBuildingPlans.plan(a.selected)
- if p.is_empty():return
+ if p.is_empty() or not HoldBuildingPlans.unlocked(g.state,a.selected):
+  g.label(g.panel_body,"This plan is not available. Research its building technology first.",16);return
  if a.plan_style.is_empty():a.plan_style=HoldArchitectureStyles.preset(HoldArchitectureStyles.family(a.selected))
  var row=g.row(g.panel_body);var b=HoldBuildingPlans.instance(a.selected,Vector2.ZERO);b.style87=a.plan_style
  var art=preview(row,b,260);art.custom_minimum_size.x=270;art.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
  var right=VBoxContainer.new();right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;right.add_theme_constant_override("separation",7);row.add_child(right)
  g.label(right,p.name,22,Color("edc98a"))
- g.label(right,"%d floor%s · %s" % [p.rooms.size(),"s" if p.rooms.size()>1 else "",p.category],15)
- var furnished=CheckBox.new();furnished.text="Include original furnishings";furnished.button_pressed=a.furnish_plan;right.add_child(furnished);furnished.toggled.connect(func(value):a.furnish_plan=value;g.refresh_panel())
+ g.label(right,"%d floor%s · %s" % [p.rooms.size(),"s" if p.rooms.size()>1 else "",HoldBuildingPlans.category_label(a.selected)],15)
+ g.label(right,HoldBuildingPlans.purpose(a.selected),15)
+ var furnished=CheckBox.new();furnished.text="Include furniture & workstations";furnished.button_pressed=a.furnish_plan;right.add_child(furnished);furnished.toggled.connect(func(value):a.furnish_plan=value;g.refresh_panel())
  g.label(right,HoldData.cost_text(a.cost(a.selected)),16,Color("e9c586"))
  action(g,right,"Build this plan",func():a.start(a.selected),a.s.area=="claim" and g.state.afford(a.cost(a.selected)))
  g.label(right,"Place its doorway near you on your land. Large halls fit on the eastern grounds.",14,Color("a8b9b6"))
- var finish=g.section(g.panel_body,"Compatible materials")
+ var finish=g.section(g.panel_body,"Interior & extension finishes")
  g.label(finish,"The original frontage stays intact. These choices finish its rooms, new wings and upper storeys.",14,Color("b8c5bc"))
  choices(a,finish,a.plan_style)
+ var included=g.section(g.panel_body,"Included furniture & workstations" if a.furnish_plan else "Optional furniture & workstations")
+ g.label(included,HoldBuildingPlans.contents_summary(a.s.world,a.selected),14)
 static func style_page(a):
  var g=a.g;var b=a.nearby()
  if b.is_empty() or str(b.id)!=a.style_owner:return
@@ -154,27 +160,29 @@ static func style_page(a):
  var row=g.row(g.panel_body);var left=VBoxContainer.new();left.custom_minimum_size.x=280;row.add_child(left)
  var study=a.building_object(b);study.p=Vector2.ZERO;study.extend_x=maxi(3,int(study.extend_x));study.extra_storeys=maxi(1,int(study.extra_storeys));study.style87=a.draft_style
  preview(left,study,148)
- g.label(left,"Example wing & upper room",14,Color("a8b9b6"))
+ g.label(left,"Extension & upstairs preview",14,Color("a8b9b6"))
  var room=preview(left,{},86);room.finish=a.draft_style
  var right=VBoxContainer.new();right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;right.add_theme_constant_override("separation",8);row.add_child(right)
  g.label(right,b.name,20,Color("edc98a"));choices(a,right,a.draft_style)
  var fee=a.style_cost(b)
  g.label(right,"Already applied" if fee.is_empty() else HoldData.cost_text(fee),16,Color("e9c586"))
  action(g,right,"Apply finishes",a.apply_style,not fee.is_empty() and g.state.afford(fee))
- g.label(g.panel_body,"Mix any collection. The original frontage remains unchanged; finishes cover rooms, new partitions and additions. Existing furniture and painted floor tiles stay in place.",14,Color("a8b9b6"))
+ g.label(g.panel_body,"Mix any architectural style. The original frontage remains unchanged; finishes cover rooms, new partitions and additions. Existing furniture and painted floor tiles stay in place.",14,Color("a8b9b6"))
 static func furniture(a):
  var g=a.g;var tabs=g.row(g.panel_body)
  var groups={"Hearth":["hearthkeeper_table","double_bed","bed","hearth","hearth_table","tea_table","table","chair","pantry","counter","serving_counter","ancestral_shrine"],"Study & storage":["chest","desk","bookcase","lamp","orrery","notice_board"],"Workshop":["anvil","worktable","pressure_manifold","training_rack"],"Stonework":["stone_pillar","royal_pillar","royal_throne","royal_arch","royal_brazier","oath_stone"],"Roadside":["runestone","signpost","road_lantern","barrel","crate","plinth"]}
- for key in groups:tab(g,tabs,key,a.details_group==key,func():a.details_group=key;g.refresh_panel())
+ for key in groups:tab(g,tabs,"Home furniture" if key=="Hearth" else key,a.details_group==key,func():a.details_group=key;g.refresh_panel())
  g.label(g.panel_body,"Choose a piece, then place it on the grid. Keep doors, stairs and work approaches clear.",14,Color("b8c5bc"))
  var cards=grid(g.panel_body,3)
  for id in groups.get(a.details_group,groups.Hearth):
+  if id in ["pantry","hearth_table"] and not g.state.tech.has("hearthkeeping"):continue
+  if not HoldCollections141.furnishing_unlocked(g.state,id):continue
   var item=HoldFurnishings.ITEMS[id];var box=card(g,cards);box.get_parent().custom_minimum_size.x=248
   var pic=preview(box,{},86);pic.furnishing=id
   var title=g.label(box,item.title,15);title.custom_minimum_size.y=42
   var price=g.label(box,HoldData.cost_text(item.cost),14,Color("a8b9b6"));price.custom_minimum_size.y=24
   var unlocked=(id not in ["pantry","hearth_table"] or g.state.tech.has("hearthkeeping")) and HoldCollections141.furnishing_unlocked(g.state,id)
-  var btn=action(g,box,"Place" if unlocked else ("Complete collection" if id=="hearthkeeper_table" else "Learn Hearthkeeping"),func():a.s.start_placement(id),unlocked and a.s.can_furnish() and g.state.afford(item.cost))
+  var btn=action(g,box,"Place" if unlocked else ("Complete collection" if id=="hearthkeeper_table" else "Learn Home comforts"),func():a.s.start_placement(id),unlocked and a.s.can_furnish() and g.state.afford(item.cost))
   btn.tooltip_text=item.title
 static func structure(a):
  var g=a.g;var house=a.s.house;var style=HoldArchitectureStyles.room(a.s.area)

@@ -1,21 +1,11 @@
-# Session handoff — 0.124.0 delivered
+# Session handoff — clarity196 recovery branch
 
-Read CURRENT_STATUS.md and AGENTS.md. The owner approved a coherent modular cottage exterior and explicit entry into its actual interior, then said “Do it.” Checked source merge, verified Windows delivery and delivery documentation remain authorized.
+User requested clear practical terminology throughout the game, concrete building purposes, and technology-filtered construction. Read CLARITY196.md and CURRENT_STATUS.md.
 
-## Completed
+Missing: previous presentation/holding191 checkout and book195-verified-source.bundle. Remote ref absent; saved 0.125 screenshots/artwork survive. Recovered master 1a5633176866f744f9292bc3b06c72c275278f84 into branch clarity/player-language196. This is a patch over 0.124, not restoration of the 0.125 visual source. Do not publish it as that candidate or replace approved artwork/UI.
 
-0.124.0 is public. Source PR #189 merged at 5d46caa9e82b827f92e499ff66c921beefcf9aef; release source db5ab368fec1c9cc14768273a9fec6a099d53d18. All six PR jobs in run 44001751339 and all eleven release jobs in run 44001746261 passed. Public JSON digests, source identity, ZIP size and PCK/ZIP hashes were verified. Exact counts and evidence are in CURRENT_STATUS.md.
+Implemented shared labels, style/material explanations, functional skill names/descriptions, research/notification consistency, generic names for buildable copies, purpose text and real furnishing lists. Prefab gates: single-storey homes basic, multi-storey homes Stoneworking, Industry plans Precision forging, Civic plans Fine masonry. Same guard in catalogue/selection/preparation/start/placement; relocation exempt. Existing furniture/recipe locks now filter lists. Old IDs and existing named possessions preserved. AGENTS.md records the clarity standard.
 
-HoldHouseView189 derives connected interiors and exterior E portals from the saved claim tiles. HoldHouseArt189 assembles coherent pitched-roof exteriors and readable interior walls using the shared architecture atlas. Player, possessions, construction, stairs and crew retain their original coordinates and owners. Internal doors keep their controls; blocked landings and hitched carts prevent entry. Existing saves are not reseeded.
+Passed: architecture_style 69, menu_quality100 36 and disciplines 38 at clarity196-r1, zero script errors. Output policy and whitespace checks pass. Final menu_quality100 at clarity196-final also passed 36 checks; final skill-progress layout reviewed. Local commit and incremental source package prepared. Persistent remote backup and 0.125 integration remain blocked. Pinned engine at ../godot441/Godot_v4.4.1-stable_linux.x86_64; runner ../run_clarity196.py starts Xorg in the same process namespace. Logs test-results/clarity196-r1. Do not substitute installed Godot 4.6.3. Do not repeat passed checks without a change or concern.
 
-The first broad candidate was blocked by an old frontier test expecting walk-through entry. Its replacement verifies collision and actual E exit/re-entry; the corrected candidate passed full source/package acceptance. See COTTAGE189.md.
-
-## Next work
-
-Owner/wife playtest the starter cottage and an established estate: E entry/exit, bed/chest access, room edits, internal doors, upper floors and crew routes. Collect feedback on visual coherence and proportions before another feature batch. Windows input/audio/performance remain ordinary playtest checks.
-
-The prior unrecorded lower-level freight failure remains a separate follow-up; preserve replay seed and failure snapshots if it recurs. Preserve dwarven perfectionism and existing progression/ownership.
-
-Delivery documentation is separate from tested release source. Do not change release/0.124.0 for documentation-only edits. Preserve all previous releases and saves.
-
-[Prior delivery](history/SESSION_HANDOFF-before-cottage189.md); [implementation checkpoint](history/SESSION_HANDOFF-before-cottage189-delivery.md).
+Earlier automatic publication review requires fresh explicit approval for source/reference publication. No push/PR/merge/release attempted. Need durable backup; avoid another scratch-only handoff. Current request authorizes implementation, but do not bypass the earlier publication block. Integrate with the missing 0.125 source when recovered and repeat affected visual checks there.

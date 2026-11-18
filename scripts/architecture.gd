@@ -172,9 +172,11 @@ func access_open(candidate:Rect2,ignore:String,door:Vector2)->bool:
   if not found:return false
  return true
 func start(id:String):
+ if not HoldBuildingPlans.unlocked(g.state,id):g.notify("Research the required building technology first.");return
  preview_key="";selected=id;moving="";s.cancel_placement();g.handworks.placing="";s.placing="blueprint:"+id;g.close_panel()
  g.notify("Place the doorway near you. Green fits; right click cancels. Walk inside after building. Choose furnishings in the Building Book.")
 func place(p:Vector2)->bool:
+ if moving=="" and not HoldBuildingPlans.unlocked(g.state,selected):g.notify("This building plan has not been researched.");return false
  p=(p/20).round()*20
  var b=record(moving)
  if HoldFrontier103.public_building(b):return false
@@ -277,6 +279,7 @@ func details_panel():HoldArchitectureView.furniture(self)
 func plan_panel():HoldArchitectureView.plan_page(self)
 func style_panel():HoldArchitectureView.style_page(self)
 func select_plan(id:String):
+ if not HoldBuildingPlans.unlocked(g.state,id):g.notify("This building plan has not been researched.");return
  selected=id;plan_style=HoldArchitectureStyles.preset(HoldArchitectureStyles.family(id));g.open_panel("architecture_plan")
 func open_style():
  var b=nearby()
