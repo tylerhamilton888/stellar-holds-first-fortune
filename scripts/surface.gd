@@ -502,7 +502,7 @@ func cancel_placement():
 func start_placement(kind:String):
  if not HoldCollections141.furnishing_unlocked(g.state,kind):g.notify("Complete the Hearthkeeper’s collection for this plan.");return
  if kind in ["pantry","hearth_table"] and not g.state.tech.has("hearthkeeping"):
-  g.notify("Research Hearthkeeping for these plans. Ordinary shelves and tables provide the same comfort.");return
+  g.notify("Research Home comforts for these plans. Ordinary shelves and tables provide the same comfort.");return
  cancel_placement();g.handworks.placing="";placing=kind;g.close_panel()
  g.notify("Quarter-tile placement. Bold lines mark full tiles. LMB builds; right click cancels. Keep approaches clear.")
 func can_furnish()->bool:

@@ -101,7 +101,7 @@ func favor(id:String)->bool:
  if g.surface.area!="room:tavern" or g.player.distance_to(Vector2(365,470))>85 or d.favor or id not in ["root_hotpot","fish_chowder"] or int(d.best_comfort)<3:return false
  if not g.state.pay({id:1}):return false
  d.favor=true;g.state.money+=25;g.state.tech.hearthkeeping=true;g.state.add("barley_seed",3)
- g.notify("Hedrik: A home with a warm table! These old pantry plans are yours. · 25 crowns, Hearthkeeping and barley seed.");g.save_game();return true
+ g.notify("Hedrik: A home with a warm table! These old pantry plans are yours. · 25 crowns, Home comforts and barley seed.");g.save_game();return true
 func panel():
  saved(g.state)
  if HoldCalendar.pending(g.state)>0 or not HoldCalendar.holiday(HoldCalendar.data(g.state).day).is_empty():g.button(g.panel_body,"Celebrations · share a feast & toast",func():g.open_panel("festivals"))
@@ -129,7 +129,7 @@ func panel():
   g.label(g.panel_body,"Hedrik's welcoming table",23)
   g.label(g.panel_body,"Serve a meal at your own home with at least three comforts, then bring Hedrik either root hotpot or fish chowder. Bought ingredients and meals are welcome. No deadline.",15)
   var d=saved(g.state)
-  g.label(g.panel_body,"Reward: 25 crowns, three barley seeds and Hearthkeeping plans. You may research these plans yourself instead.",15)
+  g.label(g.panel_body,"Reward: 25 crowns, three barley seeds and Home comforts plans. You may research these plans yourself instead.",15)
   if d.favor:g.label(g.panel_body,"Hedrik has toasted your new hearth. The favor is complete.",16)
   else:
    g.label(g.panel_body,"Best supper comfort: %d / 3" % int(d.best_comfort),16)

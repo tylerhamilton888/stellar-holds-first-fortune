@@ -5,11 +5,11 @@ extends RefCounted
 const FLOORS=preload("res://assets/architecture87/floors.png")
 const ATLAS=preload("res://assets/architecture87/collections.png")
 const FAMILIES={
- "hearth":{"title":"Hearthstone","mood":"A warm hearth, stout oak and welcoming windows.","roof":"slate","trim":"oak","floor":"oak","accent":Color("cda36a")},
- "forge":{"title":"Forgehold","mood":"Dark basalt, copper bindings and room for honest work.","roof":"iron","trim":"copper","floor":"slate","accent":Color("c98b5d")},
- "oath":{"title":"Oathhall","mood":"Pale carved stone, teal roofs and ancestral brass.","roof":"teal","trim":"brass","floor":"inlaid","accent":Color("77b5ae")}
+ "hearth":{"title":"Stone & oak","mood":"Stone walls, blue slate roofing and oak trim. Appearance only; no production bonus.","roof":"slate","trim":"oak","floor":"oak","accent":Color("cda36a")},
+ "forge":{"title":"Dark stone & copper","mood":"Dark stone, iron roofing and copper trim. Appearance only; no production bonus.","roof":"iron","trim":"copper","floor":"slate","accent":Color("c98b5d")},
+ "oath":{"title":"Pale stone & brass","mood":"Pale stone, teal roofing and brass trim. Appearance only; no production bonus.","roof":"teal","trim":"brass","floor":"inlaid","accent":Color("77b5ae")}
 }
-const OPTIONS={"wall":{"hearth":"Hearthstone","forge":"Forgehold","oath":"Oathhall"},"roof":{"slate":"Blue slate","iron":"Iron slate","teal":"Teal slate"},"trim":{"oak":"Bound oak","copper":"Copper","brass":"Carved brass"},"floor":{"oak":"Warm oak","slate":"Hewn slate","inlaid":"Oathstone inlay"}}
+const OPTIONS={"wall":{"hearth":"Stone & oak","forge":"Dark stone & copper","oath":"Pale stone & brass"},"roof":{"slate":"Blue slate","iron":"Iron slate","teal":"Teal slate"},"trim":{"oak":"Oak beams","copper":"Copper","brass":"Carved brass"},"floor":{"oak":"Warm oak","slate":"Hewn slate","inlaid":"Inlaid stone"}}
 const WALLS=[Rect2(80,23,305,299),Rect2(79,356,307,300),Rect2(79,689,308,308)]
 const WINDOWS=[Rect2(449,24,307,298),Rect2(449,357,309,299),Rect2(449,689,308,308)]
 const POSTS=[Rect2(879,11,110,317),Rect2(874,346,119,315),Rect2(879,680,118,326)]

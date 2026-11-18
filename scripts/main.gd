@@ -1366,7 +1366,7 @@ func open_panel(id:String,remember:bool=true):
   "ship":ship_panel()
   "pause":
    var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",12);panel_body.add_child(grid)
-   for entry in [["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Disciplines · Y",func():open_panel("disciplines")],["Sound & comfort",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
+   for entry in [["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Skills · Y",func():open_panel("disciplines")],["Settings",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
     var b=button(grid,entry[0],entry[1]);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
    if dev.active():button(panel_body,"Dev Testing · F9",func():open_panel("dev_testing"))
    label(panel_body,"The world is paused. Take your time. Switching away from the game also pauses it; return when ready.",16,Color("b4c9c4"))
@@ -1497,13 +1497,13 @@ func forge_panel():
    notify("Queued %d jobs." % done);refresh_panel())
   bulk.disabled=b.disabled
  if forge_tab==2 and state.tech.has("extraction") and not state.steel:
-  var b=button(panel_body,"Forge steel pick - 5 iron + 2 timber",func():purchase({"iron":5,"wood":2},0,func():state.steel=true;notify("Tempered steel pick forged! Faster impacts; basalt is now breakable.")))
+  var b=button(panel_body,"Forge steel pick - 5 iron + 2 timber",func():purchase({"iron":5,"wood":2},0,func():state.steel=true;notify("Steel tools pick forged! Faster impacts; basalt is now breakable.")))
   b.disabled=not state.afford({"iron":5,"wood":2})
  if forge_tab==2 and state.tech.has("automation") and not state.automaton:
   var b=button(panel_body,"Build MOTE-1 automaton - 6 parts + 2 copper + 60 crowns",func():purchase({"parts":6,"copper":2},60,func():state.automaton=true;spawn_agents();notify("MOTE-1 is alive! Supply coal and assign seams with M.")))
   b.disabled=not state.afford({"parts":6,"copper":2},60)
  if forge_tab==2:
-  label(panel_body,"Steel pick: "+("Owned" if state.steel else ("Ready to forge" if state.tech.has("extraction") else "Research Tempered steel"))+"\nMOTE-1: "+("Built" if state.automaton else ("Ready to build" if state.tech.has("automation") else "Research Clockwork industry")),16)
+  label(panel_body,"Steel pick: "+("Owned" if state.steel else ("Ready to forge" if state.tech.has("extraction") else "Research Steel tools"))+"\nMOTE-1: "+("Built" if state.automaton else ("Ready to build" if state.tech.has("automation") else "Research Powered machinery")),16)
  label(panel_body,"Timber feeds provisions and construction. Water fills canteens and cools your future drive.",14,Color("9ac4ba"))
 func research_panel():
  small_button(panel_body,"Personal disciplines · Y",func():open_panel("disciplines"))

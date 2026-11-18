@@ -14,6 +14,20 @@ func run():
  for item in HoldData.ITEMS:g.state.inventory[item]=10000
  for id in HoldData.RESEARCH:g.state.tech[id]=true
  g.surface.enter("claim",Vector2(2200,1760));settle();var a=g.surface.architecture
+ var researched=g.state.tech.duplicate(true);g.state.tech.clear()
+ check(HoldBuildingPlans.unlocked(g.state,"cottage") and not HoldBuildingPlans.unlocked(g.state,"workshop"),"Basic home remains available while workshop requires research")
+ check(not HoldBuildingPlans.unlocked(g.state,"archive") and not HoldBuildingPlans.unlocked(g.state,"frontier_lodge"),"Halls and multi-storey homes require their construction research")
+ g.open_panel("architecture");await process_frame
+ var names=g.panel.find_children("*","Label",true,false).map(func(n):return n.text)
+ check("Cottage" in names and "Workshop" not in names,"Catalogue hides unresearched plans without hiding known homes")
+ var stock=g.state.inventory.duplicate(true);a.selected="workshop"
+ a.select_plan("workshop");check(g.panel_id=="architecture","Stale plan callbacks cannot open unresearched plans")
+ a.start("workshop");check(g.surface.placing=="","Unresearched plan cannot start placement")
+ check(not a.place(Vector2(2200,1700)) and g.state.inventory==stock,"Commit-time research guard prevents construction and spending")
+ g.state.tech.metallurgy=true;check(HoldBuildingPlans.unlocked(g.state,"workshop"),"Workshop research reveals its plan")
+ g.state.tech=researched;a.selected="cottage"
+ check("workstations" in HoldBuildingPlans.purpose("workshop").to_lower() or "equipment" in HoldBuildingPlans.purpose("workshop").to_lower(),"Workshop purpose describes actual equipment use")
+ check(HoldBuildingPlans.contents_summary(g.surface.world,"cottage")!="","Building details enumerate actual optional furnishings")
  g.open_panel("architecture");await snap("01-building-collections");panel_fits("Building collections")
  for family in HoldArchitectureStyles.FAMILIES:
   button(HoldArchitectureStyles.FAMILIES[family].title);await process_frame
@@ -41,7 +55,7 @@ func run():
  var apply_button=g.panel.find_children("*","Button",true,false).filter(func(btn):return btn.text=="Apply finishes")[0]
  check(g.menu_scroll.get_global_rect().encloses(apply_button.get_global_rect()),"Material confirmation is visible without scrolling")
  check(g.menu_paused and g.panel_id=="architecture_style","Materials menu pauses play")
- button("Forgehold");await snap("04-forgehold-study")
+ button("Dark stone & copper");await snap("04-forgehold-study")
  check(g.state.inventory==inventory and HoldArchitectureStyles.resolve(b).wall=="hearth","Browsing a finish never spends resources or alters the building")
  var quoted=a.style_cost(b);button("Apply finishes");await process_frame
  for item in quoted:check(g.state.count(item)==int(inventory[item])-int(quoted[item]),"Finish transaction charges quoted "+item)
@@ -49,7 +63,7 @@ func run():
  check(not a.apply_style() and g.state.inventory==paid,"Applying the same finish twice is a free no-op")
  check(g.state.surface.decor==contents and g.state.surface.chests==chests,"Refinishing preserves furnishings and chest contents")
  g.close_panel();await reveal("05-forgehold-cottage")
- a.open_style();button("Oathhall");await snap("06-oathhall-study");button("Apply finishes");g.close_panel();await reveal("07-oathhall-cottage")
+ a.open_style();button("Pale stone & brass");await snap("06-oathhall-study");button("Apply finishes");g.close_panel();await reveal("07-oathhall-cottage")
  a.open_style()
  var picker=g.panel.find_child("Style_roof",true,false);picker.item_selected.emit(0);await process_frame
  var trim=g.panel.find_child("Style_trim",true,false);trim.item_selected.emit(1);await process_frame
@@ -85,7 +99,7 @@ func run():
  a.leave();settle();at(Vector2(2200,1760))
  for i in 3:check(a.add_floor(),"Add later storey "+str(i+3)+" with the mixed material system")
  g.open_panel("architecture");await snap("15-five-storey-building");panel_fits("Five-storey renovation")
- g.open_panel("house_build");button("Forgehold");await snap("14-free-building-collection");panel_fits("Free construction cards")
+ g.open_panel("house_build");button("Dark stone & copper");await snap("14-free-building-collection");panel_fits("Free construction cards")
  check(HoldArchitectureStyles.room("claim").wall=="forge","Freeform construction also exposes the compatible collections")
  g.close_panel();g.save_game();g.start_game(true);settle()
  check(HoldArchitectureStyles.room("claim").wall=="forge","Freeform collection survives save/reload")

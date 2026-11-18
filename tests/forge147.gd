@@ -42,7 +42,7 @@ func run():
  at(anvil.p);key(KEY_E);check(g.get_meta("forge147_station","")=="anvil","The anvil opens metalwork");g.close_panel()
  at(benches[0].p);key(KEY_E);check(g.get_meta("forge147_station","")=="bench","A workbench opens metalwork");g.close_panel()
  at(anvil.p);key(KEY_E);s.tech.extraction=true;g.refresh_panel()
- check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("First research Tempered steel")),"Learned steel research is not presented as an unmet requirement")
+ check(not g.panel.find_children("*","Label",true,false).any(func(l):return l.text.contains("First research Steel tools")),"Learned steel research is not presented as an unmet requirement")
  await snap("learned-steel");g.close_panel()
  at(Vector2(230,560));check(not HoldFrontier103.transact(g,"craft","iron"),"The forge cannot be used remotely")
  check(s.surface.decor==contents,"Workshop fixtures do not overwrite saved furniture")
