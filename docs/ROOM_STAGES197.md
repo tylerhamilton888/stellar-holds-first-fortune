@@ -8,8 +8,8 @@ Dragging a room rectangle now renders its completed architecture in translucent
 light green, using the same floor, wall, doorway and pitched-roof painters as
 the real house. Invalid previews turn red and explain the obstruction. Preview
 validation and placement share the existing eligibility and access checks.
-The roof checkbox switches between exterior and cutaway. No furniture or new
-windows are invented; optional finishes follow the selected room appearance.
+The roof checkbox switches between exterior and cutaway. The ghost shows the same exterior detailing as the completed house. Furniture
+and editable window tiles come only from the actual construction model.
 
 Releasing the drag saves stakes and foundation marking without payment. Work
 uses the existing paid Hearthcraft transactions, completing the floor before
@@ -34,3 +34,20 @@ Verified: 210 distinct native assertions across the five affected cases; 42 Pyth
 
 User visual approval and final publication remain pending. Do not treat these
 development captures as a release or as approval of the missing 0.125 menus.
+
+
+## Stonewright cottage frontage
+
+The editable house now uses a measured entrance bay from the painted Stonebridge
+cottage. Its oak door, stone arch and threshold are drawn together at the real
+front door cell. The ordinary starter doorway shows about 64 world units of oak
+between the jambs. The porch extends over the neighboring masonry. Close-set
+openings use a narrower surround. Interior cutaways retain a clear threshold.
+
+The actual roof tiles carry smaller slate courses, projecting eaves, segmented
+ridge caps, a chimney and a roofed door gable. Corner piers and porch lamps use
+the existing surface and household atlases. A built upper doorway without an
+exterior floor landing gets a guarded street elevation. These facade details
+are visual and grant no light, furniture, extra floor, or traversable balcony.
+The room preview uses the same painters. The paid tile layout, reach checks,
+entrance position and save data continue to determine how the building works.

@@ -1,4 +1,4 @@
-Room stages197 (acceptance candidate): light-green completed-room preview, free foundation marking and construction phases derived from paid tiles. See ROOM_STAGES197.md. Visual review pending; no Windows release.
+Review the revised cottage door beside the Dwarf, the upper gallery, the green room preview and paid construction stages. See ROOM_STAGES197.md. Windows remains 0.124.0.
 
 Clarity196 (isolated 0.124-based patch): clearer player-facing names, functional building details and research-filtered plans/recipes. The missing 0.125 visual source still requires recovery and integration. See CLARITY196.md; not released.
 

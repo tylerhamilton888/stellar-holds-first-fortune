@@ -1,5 +1,7 @@
 # Session handoff — room construction acceptance
 
+The latest visual revision is the cottage frontage on the same review branch. Review native cottage189 (door clearance, expanded exterior and upper storey) and room_stages197 (planner and paid construction) before interpreting older screenshots.
+
 User requested a light-green finished-room preview, foundation marking on placement, progressive construction phases, and acceptance images. Branch feature/room-stages197 starts from master 328c0ca. Read ROOM_STAGES197.md and CURRENT_STATUS.md.
 
 The ghost uses the real house architecture renderer through read-only tile snapshots. Same rectangle and placement validation feed preview and commit. New plans remain free markings; work uses original Hearthcraft payment/locality checks with floor, walls/doors, then roof barriers. Progress is derived from saved physical tiles. Existing partial structures remain; no new saved stage or inventory ownership. Roof framing is drawn below installed tiles; temporary supports vanish on completion. Map controls expose exterior/cutaway and stage counts.

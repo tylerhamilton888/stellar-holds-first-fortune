@@ -1,5 +1,7 @@
 # Current status — room stages197 acceptance candidate
 
+The owner requested a wider cottage doorway and a frontage that matches the established buildings. The working review includes an arched oak entrance, projecting gable, eaves, chimney and an upper gallery. See ROOM_STAGES197.md.
+
 Public Windows release remains 0.124.0. This branch is based on master 328c0ca (clarity196 merged). No new Windows release or final visual acceptance is claimed.
 
 Room plans now show a translucent light-green finished-room preview while dragging, red blocked previews, and an exterior/cutaway switch. Placement marks the foundation without payment. Building progresses through paid floor, walls/doorways, roofing and finishing. Actual tiles determine progress and partial save/load; costs, belongings and save formats remain unchanged. Temporary supports/roof framing disappear on completion. See ROOM_STAGES197.md.

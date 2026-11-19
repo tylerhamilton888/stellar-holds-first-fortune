@@ -76,7 +76,7 @@ static func site(canvas,p,r:Dictionary,projected:bool=false):
  if stage=="Complete":return
  var bounds=Rect2(Vector2(r.x,r.y)*40,Vector2(r.w,r.h)*40)
  var floor_box=bounds
- if projected:floor_box=Rect2(Vector2(bounds.position.x,bounds.end.y-bounds.size.y*.6),Vector2(bounds.size.x,bounds.size.y*.6))
+ if projected:floor_box=Rect2(Vector2(bounds.position.x,bounds.end.y-bounds.size.y*HoldHouseArt189.DEPTH_SCALE),Vector2(bounds.size.x,bounds.size.y*HoldHouseArt189.DEPTH_SCALE))
  if stage=="Marked out":
   canvas.draw_rect(floor_box,Color(.28,.23,.14,.24))
   canvas.draw_rect(floor_box.grow(-5),Color("b6a27b"),false,2)
