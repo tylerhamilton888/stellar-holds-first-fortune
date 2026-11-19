@@ -1,3 +1,7 @@
+Cottage frontage (review candidate): broadened the editable cottage entrance and added painted Stonebridge architectural details to the actual house and planned exterior.
+
+Room stages197 (acceptance candidate): light-green completed-room preview, free foundation marking and construction phases derived from paid tiles. See ROOM_STAGES197.md. Visual review pending; no Windows release.
+
 Clarity196 (isolated 0.124-based patch): clearer player-facing names, functional building details and research-filtered plans/recipes. The missing 0.125 visual source still requires recovery and integration. See CLARITY196.md; not released.
 
 # 0.124.0 — Under your own roof

@@ -1,3 +1,5 @@
+Review the revised cottage door beside the Dwarf, the upper gallery, the green room preview and paid construction stages. See ROOM_STAGES197.md. Windows remains 0.124.0.
+
 Clarity196 (isolated 0.124-based patch): clearer player-facing names, functional building details and research-filtered plans/recipes. The missing 0.125 visual source still requires recovery and integration. See CLARITY196.md; not released.
 
 # Current backlog — 2026-11-16
@@ -18,11 +20,9 @@ Revisit completed favors and projects, restored forges, learned research and rel
 
 Continue through the Thane homecoming when testing campaign pacing. Record confusing next steps, repetitive trips and resource bottlenecks before expanding systems. Windows performance, input feel and audio still need ordinary playtesting.
 
-## Maintain delivery safeguards
+## Delivery
 
-Follow [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md) for release preparation and post-publication documentation. Keep gameplay and package gates intact. Documentation-only corrections do not require a new game version or Windows rebuild.
-
-Keep detailed evidence in files, bound conversational output, and preserve original assets and previous builds. Repository safeguards reduce known hazards; they do not guarantee ChatGPT backend reliability.
+Follow [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md). Preserve validation gates, original assets, evidence and previous builds. Keep conversational output bounded.
 
 [Earlier backlog](history/BACKLOG-before-doc-consolidation-2026-11-10.md) preserves superseded version-specific playtest headings. Use current status and live release metadata for delivery state.
 

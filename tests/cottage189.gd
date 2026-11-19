@@ -13,6 +13,7 @@ func run():
  g.surface.architecture.room_blueprints.data() # Initialize existing lazy planning metadata before the preservation snapshot.
  var tiles=h.data().duplicate(true);var belongings=g.state.surface.chests.duplicate(true);var furniture=g.state.surface.decor.duplicate(true)
  await snap("01-exterior")
+ at(h.center(Vector2i(56,28)));await snap("01b-door-clearance");at(outside)
  check(g.surface.nearest().get("action","")=="house:"+door,"Exterior door is the nearby interaction")
  key(KEY_E)
  check(h.view.inside() and g.player==landing,"E enters the real cottage interior")
@@ -35,6 +36,7 @@ func run():
   h.tiles()[h.key(Vector2i(60,y))].wall="wall" if y in [22,27] else ""
   h.tiles()[h.key(Vector2i(61,y))]={"floor":"stone_floor","roof":true,"wall":"wall"}
  check(h.view.groups()[0].bounds.size.x==320,"Expansion changes the same exterior and interior footprint")
+ await snap("03a-expanded-exterior")
  h.toggle(door);settle();await snap("03-expanded-interior")
  check(h.view.inside() and h.view.current().body.has("60,25"),"New room floor belongs to the live interior")
  # A partition door joins rooms; no additional zoning between connected rooms.
