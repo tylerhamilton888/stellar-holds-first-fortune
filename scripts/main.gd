@@ -217,7 +217,7 @@ func setup_ui():
  footer=Label.new();footer.position=Vector2(24,507);footer.size.x=912;footer.clip_text=true;footer.add_theme_font_size_override("font_size",14);ui.add_child(footer)
  menu_shade=ColorRect.new();menu_shade.color=Color(.025,.04,.045,.45);menu_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);menu_shade.z_index=9;menu_shade.mouse_filter=Control.MOUSE_FILTER_STOP;menu_shade.visible=false;ui.add_child(menu_shade)
  panel=PanelContainer.new();panel.z_index=10;panel.position=Vector2(60,44);panel.size=Vector2(840,452);panel.visible=false;ui.add_child(panel)
- transition_shade=ColorRect.new();transition_shade.color=Color("0b1721");transition_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);transition_shade.z_index=90;transition_shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;transition_shade.visible=false;ui.add_child(transition_shade)
+ transition_shade=ColorRect.new();transition_shade.color=Color("0b1721");transition_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);transition_shade.z_index=8;transition_shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;transition_shade.visible=false;ui.add_child(transition_shade)
  transition_label=Label.new();transition_label.position=Vector2(100,240);transition_label.size=Vector2(760,60);transition_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;transition_label.add_theme_font_size_override("font_size",25);transition_label.modulate=Color("edc98a");transition_shade.add_child(transition_label)
 
 var first_visit_pending=false

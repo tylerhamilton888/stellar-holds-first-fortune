@@ -37,6 +37,7 @@ static func clear_children(container:Control):
  for child in container.get_children():container.remove_child(child);child.queue_free()
 
 static func inventory(g):
+ g.panel_body.add_theme_constant_override("separation",7)
  var bar=g.row(g.panel_body)
  var ownership=OptionButton.new();ownership.name="PackScope";ownership.add_item("Carried items");ownership.add_item("Item catalogue");bar.add_child(ownership)
  ownership.select(0 if g.inventory_owned_only else 1)
