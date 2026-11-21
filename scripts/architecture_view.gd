@@ -59,6 +59,7 @@ static func action(g,parent:Node,title:String,fn:Callable,enabled:bool=true):
 static func book(a):
  if a.room_planning:HoldRoomBlueprintView.show(a);return
  var g=a.g;var b=a.nearby()
+ HoldTimberWing.menu(g)
  action(g,g.panel_body,"Plan Your Holding",func():a.room_planning=true;g.refresh_panel())
  if not b.is_empty() and (not a.browse_only or a.interior()):
   renovation(a,b);return

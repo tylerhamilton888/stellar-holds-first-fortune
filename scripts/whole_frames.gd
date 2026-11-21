@@ -1,6 +1,7 @@
 class_name HoldWholeFrames
 extends RefCounted
 # A single whole painted figure per key, including head, limbs and gripping hands.
+const Hands=preload("res://hands/empty_hands.gd")
 const HEIGHT=62.0
 const CYCLE=.52
 # Bump only when whole-frame artwork, crops or palette conversion change.
@@ -55,9 +56,11 @@ static func data():
    var parts=key.split(":")
    metadata[parts[0]][int(parts[1])].height=scales[key]
   HoldStoryWorld105.register(metadata)
+  Hands.register(metadata,pigment)
 static func identity(p:Dictionary)->String:return ("female" if p.gender else "male")+str(int(p.sculpt))
 static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
  data()
+ if not walking and action in ["","town_walk"]:return Hands.descriptor(p,d,time,action,phase)
  if HoldStoryWorld105.has_profile(p,action):return HoldStoryWorld105.descriptor(p,d,walking,time,action,phase,metadata)
  var view=HoldDirectional.view(d);var key=posmod(int(time/CYCLE*4),4)
  var sheet=identity(p)+"-core";var index=view
@@ -117,6 +120,7 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  var rect=Rect2(r[0],r[1],r[2],r[3]);var root=Vector2(m.root[0],m.root[1]);var scale=HEIGHT/maxf(1,float(m.height))
  return {"sheet":sheet,"index":index,"view":view,"frame":key,"rect":rect,"root":root,"scale":scale,"shape":Vector2.ONE*scale,"action":action,"phase":phase,"walking":walking,"destination":Rect2((rect.position-root)*scale,rect.size*scale)}
 static func source(sheet:String)->Image:
+ if sheet.begins_with("res://hands/poses/"):return Hands.raw(sheet)
  if not sources.has(sheet):
   var path=sheet if sheet.begins_with("res://") else "res://assets/whole-v58/"+sheet+".png"
   var img=(load(path) as Texture2D).get_image()
@@ -127,7 +131,9 @@ static func cache_key(p:Dictionary,sheet:String,index:int,full:bool=false)->Stri
  if sheet.begins_with(HoldStoryWorld105.PREFIX):return "story105-world24:"+sheet+":"+str(index)+":"+str(full)
  return sheet+":"+str(index)+":"+str(p.skin)+":"+HoldAppearance.hair(p).to_html()+":"+str(p.cloth_color)+":"+str(p.jewelry)+":"+str(full)
 static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Texture2D:
- data();var key=cache_key(p,sheet,index,full)
+ data()
+ if sheet.begins_with(Hands.FIXED):return Hands.fixed_frame(sheet.trim_prefix(Hands.FIXED),index)
+ var key=cache_key(p,sheet,index,full)
  if cache.has(key):return cache[key]
  if not full:
   var path=disk_path(key)
@@ -177,7 +183,8 @@ static func remember(key:String,tex:Texture2D):
  cache[key]=tex;order.append(key)
  while order.size()>3072:cache.erase(order.pop_front())
 static func paint(n:Node2D,at:Vector2,p:Dictionary,d:Vector2,walking:bool,time:float,zoom:float,reset:Vector2,action:String="",phase:float=0):
- var a=descriptor(p,d,walking,time,action,phase)
+ var sample_time=float(n.get("clock")) if not walking and action in ["","town_walk"] and "clock" in n else time
+ var a=descriptor(p,d,walking,sample_time,action,phase)
  n.draw_set_transform(at,0,Vector2(-1 if d.x<-.3 else 1,1)*zoom)
  var figure=texture(p,a.sheet,a.index,zoom>2)
  n.draw_texture_rect(figure,a.destination,false)

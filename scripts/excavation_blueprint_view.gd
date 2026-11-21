@@ -49,7 +49,7 @@ class Map extends Control:
    draw_rect(rect,Color(color,.13));draw_rect(rect,color,false,7)
    if str(r.id)==planner.selected:draw_rect(rect.grow(10),Color("f3dfa1"),false,4)
   for s in planner.data().stairs:
-   if w.depth() not in [int(s.depth),int(s.depth)+1]:continue
+   if w.depth() not in [int(s.depth),w.below(int(s.depth))]:continue
    var p=Vector2(s.x,s.y)*40
    for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:draw_rect(Rect2(p+Vector2(d)*40,Vector2(40,40)),Color("b99e6b"),false,3)
    for i in 4:draw_line(p+Vector2(3+i*3,5+i*9),p+Vector2(37-i*3,5+i*9),Color("e2c385"),4)

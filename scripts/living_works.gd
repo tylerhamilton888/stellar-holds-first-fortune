@@ -79,8 +79,9 @@ func place(c:Vector2i,kind:String,occupied:Array=[])->String:
  if HoldMineworks143.reserved(w,c,w.depth()):return "Keep the mineworks adits and freight landings clear."
  if w.landmark_solid(Deepworks.center(c),-1,Vector2(20,20)):return "Keep the landmark base clear."
  if not unlocked(def):return "Research "+HoldData.RESEARCH[def.tech].name+" first."
+ if w.equipment_solid(Deepworks.center(c)):return "Move the existing workshop equipment first."
  if data.furniture.has(key) or w.layer().fixtures.has(Deepworks.key(c)):return "There is already a furnishing or work lamp here."
- if w.can_descend(c,w.depth()) or (w.depth()>0 and w.can_descend(c,w.depth()-1)):return "Keep stair landings clear."
+ if w.can_descend(c,w.depth()) or (w.depth()>0 and w.can_descend(c,Deepworks.above(w.depth()))):return "Keep stair landings clear."
  var cart=w.data.get("haulage",{}).get("cart",{})
  if not cart.is_empty() and int(cart.depth)==w.depth() and Deepworks.cell(Vector2(cart.x,cart.y))==c:return "Move the wheelbarrow before furnishing this floor."
  if c in occupied:return "Leave room for the Dwarf standing here."

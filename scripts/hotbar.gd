@@ -4,6 +4,7 @@ extends Control
 const DEFAULTS=["tool:0","tool:1","tool:2","tool:3","slagcaster","wood","stone","food","water","crystal"]
 var g
 var item=""
+var stowed=false
 var blocked=false
 func _ready():
  mouse_filter=Control.MOUSE_FILTER_IGNORE
@@ -13,7 +14,11 @@ func data()->Dictionary:
  var d=g.state.surface.hotbar
  if not d.get("slots",[]) is Array or d.slots.size()!=10:d.slots=DEFAULTS.duplicate()
  return d
-func restore():select(clampi(int(data().get("selected",0)),0,9),false)
+func restore():
+ var saved=data();var was_stowed=bool(saved.get("stowed",false))
+ stowed=false
+ select(clampi(int(saved.get("selected",0)),0,9),false)
+ if was_stowed:stow(false)
 func available()->bool:return not HoldFolk.warming() and g.playing and g.panel_id=="" and not is_instance_valid(g.creator) and not is_instance_valid(g.opening_scene) and not is_instance_valid(g.anniversary_scene)
 func bar_y()->float:
  # Lift the compact bar only when it would cover the player's feet.
@@ -22,19 +27,20 @@ func bar_y()->float:
  return 112.0 if feet.y>428 and feet.x>200 and feet.x<760 else 436.0
 func slot_rect(i:int)->Rect2:return Rect2(258+i*44,bar_y()+18,40,38)
 func over()->bool:return available() and not g.depth_nav.explore.captured and Rect2(250,bar_y(),460,60).has_point(g.get_global_mouse_position())
-func blocked_work()->bool:return item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!="" or g.fieldwork.placing or g.fieldwork.action!="" or not g.handworks.setting_down.is_empty()
+func blocked_work()->bool:return (stowed and not g.combat.armed) or item!="" or blocked or over() or not g.handworks.data().carry.is_empty() or g.handworks.working or g.handworks.placing!="" or g.handworks.workshop.mode!="" or g.fieldwork.placing or g.fieldwork.action!="" or not g.handworks.setting_down.is_empty()
 func title(id:String)->String:
  if id.begins_with("tool:"):return g.TOOL_NAMES[clampi(int(id.get_slice(":",1)),0,3)]
  if id=="slagcaster":return "Slagcaster"
  return str(HoldData.ITEMS.get(id,{"name":"Empty"}).name)
 func selected()->int:
- if item!="":return int(data().selected)
+ if item!="" or stowed:return int(data().selected)
  return 4 if g.mining_gun.selected else clampi(g.tool,0,3)
 func select(i:int,announce:bool=true):
  var id=str(data().slots[i])
  if id=="slagcaster" and not g.state.outpost.get("mining_gun",false):
   if announce:g.notify("Slagcaster locked · fabricate one at a powered forge.")
   return
+ stowed=false;data().stowed=false
  item="";g.mining_gun.selected=false;g.combat.armed=false;g.combat.reset_actions();g.construction.selected="";g.surface.placing="";g.surface.cut_target=-1;g.surface.cut_clock=0
  g.swing=0;g.mining_buffer=0;g.impact_pause=0
  if g.deep.world!=null:g.deep.strike_left=0;g.deep.works.cancel()
@@ -43,16 +49,30 @@ func select(i:int,announce:bool=true):
  else:item=id
  data().selected=i
  queue_redraw()
+func stow(announce:bool=true):
+ if not stowed:data().selected=selected()
+ stowed=true;data().stowed=true;item=""
+ g.mining_gun.selected=false;g.combat.armed=false;g.combat.reset_actions()
+ g.surface.cut_target=-1;g.surface.cut_clock=0;g.swing=0;g.mining_buffer=0
+ if g.deep.world!=null:g.deep.strike_left=0
+ if announce:g.notify("Tool stowed. Select a slot to equip it.")
+ queue_redraw()
+func toggle_hands():
+ if stowed and not g.combat.armed:select(clampi(int(data().selected),0,9))
+ else:stow()
+func hands_button()->Rect2:return Rect2(604,bar_y()-1,100,19)
 func handle(e:InputEvent)->bool:
  if not available():return false
  if e is InputEventKey and e.pressed and not e.echo:
   var keys=[KEY_1,KEY_2,KEY_3,KEY_4,KEY_5,KEY_6,KEY_7,KEY_8,KEY_9,KEY_0]
   var k=e.physical_keycode if e.physical_keycode!=0 else e.keycode
+  if k==KEY_QUOTELEFT:toggle_hands();return true
   if k in keys:select(keys.find(k));return true
  if e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT:
   if not e.pressed:blocked=false;return false
   if over():
    blocked=true
+   if hands_button().has_point(g.get_global_mouse_position()):toggle_hands();return true
    for i in 10:
     if slot_rect(i).has_point(g.get_global_mouse_position()):select(i)
    return true
@@ -61,7 +81,7 @@ func handle(e:InputEvent)->bool:
  return false
 func assign(id:String,i:int):
  data().slots[i]=id
- if int(data().selected)==i:select(i,false)
+ if int(data().selected)==i and not stowed:select(i,false)
  g.save_game();g.notify(title(id)+" assigned to "+str((i+1)%10)+".")
 func _process(_dt):
  if not is_instance_valid(g):return
@@ -76,12 +96,17 @@ func _draw():
  if g.combat.armed and g.state.combat.weapon=="gun":text+=" · %d cartridges" % g.state.count("ammo")
  elif not g.combat.armed and id=="slagcaster":text+=" · %d charge" % int(g.state.outpost.get("gun_charge",0))
  elif not g.combat.armed and not id.begins_with("tool:"):text+=" · %d in pack" % g.state.count(id)
+ if stowed and not g.combat.armed:text="Empty hands"
  var held=g.handworks.held_label()
  if held!="":text=held
  if g.fieldwork.action!="":text=g.fieldwork.held_label()
- draw_string(ThemeDB.fallback_font,Vector2(260,bar_y()+13),text,HORIZONTAL_ALIGNMENT_LEFT,440,11,Color("ead6ab"))
+ draw_string(ThemeDB.fallback_font,Vector2(260,bar_y()+13),text,HORIZONTAL_ALIGNMENT_LEFT,335,11,Color("ead6ab"))
+ var button=hands_button()
+ box.bg_color=Color("30443e");box.border_color=Color("8f8060")
+ draw_style_box(box,button)
+ draw_string(ThemeDB.fallback_font,button.position+Vector2(4,14),"Equip  [`]" if stowed and not g.combat.armed else "Stow  [`]",HORIZONTAL_ALIGNMENT_CENTER,92,11,Color("efe1bf"))
  for i in 10:
-  var r=slot_rect(i);var key=str(d.slots[i]);var chosen=i==current and not g.combat.armed
+  var r=slot_rect(i);var key=str(d.slots[i]);var chosen=i==current and not g.combat.armed and not stowed
   var locked=key=="slagcaster" and not g.state.outpost.get("mining_gun",false)
   var resource=not key.begins_with("tool:") and key!="slagcaster"
   var empty=resource and g.state.count(key)==0
@@ -93,7 +118,7 @@ func _draw():
   var count="·" if locked else (str(g.state.count(key)) if resource else "")
   draw_string(ThemeDB.fallback_font,r.position+Vector2(2,35),count,HORIZONTAL_ALIGNMENT_RIGHT,35,10,Color("cdded4"))
 func pose()->String:
- if g.handworks.busy_hands() or g.fieldwork.action!="":return ""
+ if stowed or g.handworks.busy_hands() or g.fieldwork.action!="":return ""
  if g.mining_gun.selected:return "hold_rifle"
  if item!="":return "hold_supply" if g.state.count(item)>0 else ""
  return "hold_"+["pick","shovel","axe","hammer"][clampi(g.tool,0,3)]

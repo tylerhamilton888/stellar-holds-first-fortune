@@ -133,8 +133,11 @@ func plan_stair(c:Vector2i)->bool:
  if not available():return false
  if data().stairs.size()>=128:message="This mine already has 128 stair guides; existing connections are preserved.";return false
  var z=w.depth()
- if z>=Deepworks.DEPTHS-1:message="These lateral worksites connect through existing adits; no lower level is supported here.";return false
- for level in [z,z+1]:
+ message=w.descent_note(z)
+ if message!="":return false
+ var lower=w.prepare_below(z)
+ if lower<0:message=w.descent_note(z);return false
+ for level in [z,lower]:
   for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
    var n=c+d
    if w.at(n,level)==8 or HoldMineworks143.reserved(w,n,level) or w.landmark_solid(Deepworks.center(n),level,Vector2(20,20)):
@@ -151,7 +154,9 @@ func fit_stair()->bool:
  if not available() or stair_here().is_empty():message="Stand on a planned upper landing.";return false
  var c=Deepworks.cell(g.player);var z=w.depth()
  if w.can_descend(c,z) and w.data.links[w.link_key(c,z)].get("kind","stair")=="stair":message="The stairs are already connected. E down; Shift+E up.";return false
- for level in [z,z+1]:
+ var lower=w.prepare_below(z)
+ if lower<0:message=w.descent_note(z);return false
+ for level in [z,lower]:
   for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
    var n=c+d
    if not w.walkable(n,level) or HoldMineworks143.reserved(w,n,level):message="Mine both five-tile landings and move obstructions before fitting stairs. Use existing access to reach below.";return false
@@ -179,7 +184,7 @@ func draw():
    if c.x==int(r.x+r.w)-1:g.draw_line(p+Vector2(40,0),p+Vector2(40,40),col,2)
    if c.y==int(r.y+r.h)-1:g.draw_line(p+Vector2(0,40),p+Vector2(40,40),col,2)
  for s in data().stairs:
-  if w.depth() not in [int(s.depth),int(s.depth)+1]:continue
+  if w.depth() not in [int(s.depth),w.below(int(s.depth))]:continue
   var p=Vector2(s.x,s.y)*40
   for d in [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
    if w.layer().seen.has(Deepworks.key(Vector2i(s.x,s.y)+d)):g.draw_rect(Rect2(p+Vector2(d)*40,Vector2(40,40)),Color("b99e6b"),false,1.5)

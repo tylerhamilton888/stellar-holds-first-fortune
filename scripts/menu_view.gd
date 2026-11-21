@@ -18,7 +18,7 @@ static func small_button(parent:Node,text:String,fn:Callable)->Button:
  return b
 
 static func section(parent:Node,title:String)->VBoxContainer:
- var box=PanelContainer.new();var style=StyleBoxFlat.new();style.bg_color=Color("e9d8b6") if folio(parent) else Color("1d3540");style.set_content_margin_all(12);style.set_corner_radius_all(4)
+ var box=PanelContainer.new();var style=StyleBoxFlat.new();style.bg_color=Color("eddfc3") if folio(parent) else Color("1d3540");style.set_content_margin_all(12);style.set_corner_radius_all(4)
  if folio(parent):style.border_color=Color("cbb184");style.set_border_width_all(1)
  box.add_theme_stylebox_override("panel",style);parent.add_child(box)
  var body=VBoxContainer.new();body.add_theme_constant_override("separation",7);box.add_child(body)
@@ -69,11 +69,11 @@ static func paper_style(fill:String,border:String="a47b43",width:int=1)->StyleBo
  var s=StyleBoxFlat.new();s.bg_color=Color(fill);s.border_color=Color(border);s.set_border_width_all(width);s.set_corner_radius_all(3);s.set_content_margin_all(10);return s
 static func book_theme()->Theme:
  var t=make_theme();t.default_font_size=16
- var frame=paper_style("f3e4c5","765034",3);frame.set_content_margin_all(16);frame.shadow_color=Color(0,0,0,.48);frame.shadow_size=12;t.set_stylebox("panel","PanelContainer",frame)
+ var frame=paper_style("f6ecd5","674b35",2);frame.set_content_margin_all(14);frame.shadow_color=Color(0,0,0,.48);frame.shadow_size=12;t.set_stylebox("panel","PanelContainer",frame)
  for type in ["Button","OptionButton","CheckButton","CheckBox"]:
-  t.set_stylebox("normal",type,paper_style("ead5ad","ae8955"))
+  t.set_stylebox("normal",type,paper_style("f8efd9","b99d71"))
   t.set_stylebox("hover",type,paper_style("fff1ce","9b713b",2))
-  t.set_stylebox("pressed",type,paper_style("b8cebd","416b5c",2))
+  t.set_stylebox("pressed",type,paper_style("bed2c2","37685b",2))
   t.set_stylebox("disabled",type,paper_style("ded2b9","b6a58a"))
   for key in ["font_color","font_hover_color","font_pressed_color","font_focus_color"]:t.set_color(key,type,Color("382d24"))
   t.set_color("font_disabled_color",type,Color("7b705f"))
@@ -88,6 +88,10 @@ static func book_theme()->Theme:
  var scroll_thumb=paper_style("9d8056","806440");scroll_thumb.set_content_margin_all(4)
  t.set_stylebox("scroll","VScrollBar",scroll_track);t.set_stylebox("grabber","VScrollBar",scroll_thumb)
  t.set_stylebox("grabber_highlight","VScrollBar",paper_style("bd975f","806440"));t.set_stylebox("grabber_pressed","VScrollBar",paper_style("806440","654b30"))
+ var rail=paper_style("d4c2a2","aa956e");rail.set_content_margin_all(2)
+ var progress=paper_style("487564","335b4e");progress.set_content_margin_all(2)
+ t.set_stylebox("slider","HSlider",rail);t.set_stylebox("grabber_area","HSlider",progress);t.set_stylebox("grabber_area_highlight","HSlider",progress)
+ t.set_stylebox("focus","LineEdit",paper_style("fff6e4","37665c",2))
  return t
 static func tab_id(id:String)->String:
  return {"work132":"commission","energy":"inventory","guidance":"commission","commissions_detail":"commission","festivals":"calendar","help":"settings","pause":"settings"}.get(id,id)
@@ -130,18 +134,32 @@ static func build_shell(g,id:String):
  for child in g.panel.get_children():g.panel.remove_child(child);child.queue_free()
  g.panel.size=Vector2(840,342) if dialogue else Vector2(880,492)
  var outer=VBoxContainer.new();outer.add_theme_constant_override("separation",10);g.panel.add_child(outer)
- var top=row(outer);top.visible=not dialogue
+ var binding=PanelContainer.new();binding.visible=not dialogue;outer.add_child(binding)
+ var leather=paper_style("23443e","967844");leather.set_content_margin_all(5);leather.content_margin_left=12
+ leather.border_width_bottom=3;binding.add_theme_stylebox_override("panel",leather)
+ var top=row(binding);top.add_theme_constant_override("separation",10)
+ var emblems={"inventory":"water","recipes":"iron","commission":"hearthknot","architecture":"shaped_haft","settings":"parts","pause":"water"}
+ if id=="equipment":top.add_child(HoldEquipment93.weapon_art("shield",30))
+ elif id=="great_claim102":
+  var seal=TextureRect.new();seal.texture=HoldFurnishings.CIVIC_LEDGER;seal.custom_minimum_size=Vector2(34,30)
+  seal.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;seal.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;top.add_child(seal)
+ elif emblems.has(id):HoldItemArt.icon(top,emblems[id])
+
  if not g.menu_history.is_empty():small_button(top,"‹ Back",g.back_panel)
  var names={"collections141":"Town collections","restoration139":"The North Crossing","campaign138":"Town contributions","work132":"Work & contributions · Stonebridge","friend130":"Friendship stories","invasion131":"The King returns","traditions126":"The shift remembers","hearth126":"Family memory","eight126":"The Eight and the ancestors","frontier_archive103":"Stonebridge archive","frontier103":"Stonebridge town","great_claim102":"Hold’s Ledger","lodge_talk":"A word by the hearth","camera_controls":"Exploration · camera & controls","depth_map":"The mine · floors & routes","recipes":"Crafting recipes","inventory":"Your pack","equipment":"Weapons & armor","disciplines":"Skills & research","roster":"People of the hold","commission":"Quest journal","commissions_detail":"Ivar’s commissions","guidance":"Your first season","wayfinding":"Maps & directions","calendar":"Calendar","energy":"Meals, ale & rest","settings":"Settings","pause":"Paused","conversation":"Conversation","forge":"Forge & crafting","market":"Market","research":"Research","architecture":"The building book","dev_testing":"Dev Testing · Separate save"}
  var names_legacy={"architecture":"THE HOLD’S BUILDING BOOK","architecture_details":"FURNITURE & ARCHITECTURE","architecture_plan":"CHOOSE YOUR BUILDING","architecture_style":"MATERIALS & FINISHES","dev_testing":"DEV TESTING · SEPARATE SAVE","hearth":"HEARTH & HOMESTEAD","fieldwork":"RIVER & ROOT","handworks":"HANDS OF THE DWARF","wayfinding":"PATHS & DOORWAYS","storage":"YOUR STORAGE CHEST","house_build":"BUILD YOUR HEARTH","homestead":"YOUR HOMESTEAD","living":"THE LIVING WORKS","haulage":"MATERIALS & HAULAGE","projects":"PROJECT LEDGER","deepworks":"THE DEEPWORKS","pinewood":"THE WOODCUTTER'S FIELD BOARD","build_status":"BUILD STATUS · WIP","guidance":"YOUR FIRST SEASON","lesson":"WORK & KNOWLEDGE","throne":"THE KING'S HALL","training":"BORIN'S PRACTICE BAY","conversation":"CONVERSATION","anniversary":"A QUIET WORD","social":"AROUND THE HOLD","ivar_welcome":"IVAR • YOUR FIRST SHIFT","settings":"SOUND & COMFORT","equipment":"WEAPONS & ARMOR","construction":"BUILD YOUR RETURN ROUTE","rescue":"EMERGENCY EXTRACTION","briefing":"BENEATH THE CROWN OF STONE","commission":"QUEST JOURNAL","charters":"A MOUNTAIN OF YOUR OWN","world_map":"THE KELDRATH BASIN","gate":"THE KELDRATH BASIN","camp":"YOUR FOUNDING CHARTER","home":"YOUR QUARTERS","tavern":"THE COPPER KETTLE","market":"ORLA'S EXCHANGE","forge":"BORIN'S FORGE","research":"THE SURVEY OFFICE","inventory":"YOUR PROSPECTOR'S PACK","manage":"YOUR OUTPOST & CREW","ship":"THE FIRST FORTUNE","pause":"TAKE A BREATH","field_notes":"FIELD NOTEBOOK","help":"A PROSPECTOR'S HANDBOOK","victory":"FROM PROSPECTOR TO CAPTAIN","save_slots":"YOUR FORTUNES • THREE SAVE SLOTS","new_confirm":"BEGIN ANOTHER FORTUNE?","roster":"FACES OF KELDRATH","visitor":"A FAMILIAR FACE"}
  for key in names_legacy:
   if not names.has(key):names[key]=names_legacy[key].capitalize()
- label(top,names.get(id,id.replace("_"," ").capitalize()),21,Color("edc98a"))
- var close=small_button(top,"×",g.close_panel);close.tooltip_text="Close menu · Esc";close.custom_minimum_size.x=34
+ var title=label(top,names.get(id,id.replace("_"," ").capitalize()),22)
+ title.add_theme_color_override("font_color",Color("fff1ce"))
+ var close=small_button(top,"×",g.close_panel);close.tooltip_text="Close menu · Esc";close.custom_minimum_size=Vector2(36,32);close.alignment=HORIZONTAL_ALIGNMENT_CENTER
  if g.playing and has_tabs(id):
   var nav=row(outer);nav.name="BookTabs";nav.add_theme_constant_override("separation",4)
   for entry in TABS:
    var tab=small_button(nav,entry[1],func():g.menu_history.clear();g.open_panel(entry[0],false));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=tab_id(id)==entry[0];tab.alignment=HORIZONTAL_ALIGNMENT_CENTER
+   var active=paper_style("375c50","785f33");active.set_content_margin_all(5);active.border_width_bottom=3
+   tab.add_theme_stylebox_override("pressed",active);tab.add_theme_stylebox_override("hover_pressed",active)
+   tab.add_theme_color_override("font_pressed_color",Color("fff6dc"));tab.add_theme_color_override("font_hover_pressed_color",Color("fff6dc"))
    tab.tooltip_text=entry[1]+(" · "+entry[2] if entry[2]!="" else "")+" · Page Up / Page Down switches tabs"
  var scroll=ScrollContainer.new();scroll.follow_focus=true;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;outer.add_child(scroll);g.menu_scroll=scroll
  g.panel_body=VBoxContainer.new();g.panel_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;g.panel_body.add_theme_constant_override("separation",10);scroll.add_child(g.panel_body)

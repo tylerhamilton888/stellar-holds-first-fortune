@@ -46,7 +46,7 @@ static func props(g)->Array:
   if not solids.any(func(r):return r.grow(8).intersects(base)):
    props.append({"kind":"forge148_bellows","p":bellows});solids.append(base)
  var exit=HoldRoomLayout.exit_point(g.surface.area)
- var dressing=DECOR if HoldBuildingPlans.template(g.surface.area)!="room:communal148" else [["crate",Vector2(870,720),"iron"],["barrel",Vector2(240,565),""]]
+ var dressing=DECOR if HoldBuildingPlans.template(g.surface.area)!="room:communal148" else [["crate",Vector2(870,HoldRoomLayout.floor_rect(g.surface.area).end.y-60),"iron"],["barrel",Vector2(240,565),""]]
  for spec in dressing:
   var p:Vector2=spec[1];var rect=HoldFurnishings.footprint(spec[0],p);var free=not rect.grow(32).has_point(exit) and HoldRoomLayout.floor_rect(g.surface.area).encloses(rect)
   for other in solids:

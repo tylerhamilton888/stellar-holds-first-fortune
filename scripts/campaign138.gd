@@ -82,7 +82,7 @@ static func panel(g):
  HoldMenuView.illustrated_text(g.panel_body,"wood",title(s),"Build a life in Stonebridge and help your neighbours prepare. Your recorded work already counts. Home improvements and profession lessons are optional; the rescue still needs safe underground preparation.")
  if data(s).get("legacy_rescue",false):g.label(g.panel_body,"Your previously earned rescue invitation is preserved. New projects remain optional for this established fortune.",15)
  var box=HoldMenuView.section(g.panel_body,"The Winter Stores · "+("Open" if data(s).winter_ready else "Stock the shelves" if HoldFrontier103.data(s).get("storehouse",false) else "Raise the shell" if HoldLedger137.remaining(s,"storehouse").is_empty() else "Inspect and supply"))
- g.label(box,"Eastern site: south of the bridge, in front of the storehouse foundations. Inspect here, deliver materials at the great book outside, east of the bunkhouse, then return to raise the shell. Twelve provisions finish the stores. Gather, make or buy what the crews need; no profession lesson is required.",15)
+ g.label(box,"Eastern site: south of the bridge, in front of the storehouse foundations. Inspect here, deliver materials at the Ledger Shrine off the Pinewood path, then return to raise the shell. Twelve provisions finish the stores. Gather, make or buy what the crews need; no profession lesson is required.",15)
  if not data(s).inspected and not HoldFrontier103.data(s).get("storehouse",false):
   var b=g.button(box,"Inspect the eastern foundations",func():inspect(g);g.refresh_panel());b.disabled=not near_site(g)
  elif not HoldFrontier103.data(s).get("storehouse",false):

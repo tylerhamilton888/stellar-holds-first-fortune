@@ -1,48 +1,101 @@
 class_name HoldPlayerBook
 extends RefCounted
 # Presentation over existing pack, hotbar and people records. No parallel inventory.
+const GROUPS={
+ "Seeds":["barley_seed","carrot_seed","hearthcap_seed","turnip_seed"],
+ "Provisions":["food","water","hold_ale","barley","carrot","hearthcap","turnip","pond_perch","river_fish","silver_char","root_hotpot","barley_bread","fish_chowder","char_plate"],
+ "Stone & timber":["stone","rough_block","dressed_stone","basalt_block","dressed_basalt","wood"],
+ "Ore & metal":["iron_ore","copper_ore","coal","iron","copper","iron_slag","copper_slag","scrap","shell","crystal"],
+ "Workshop goods":["energy_cell","ammo","parts","assembly","shaped_haft","forged_pickhead","tool_fittings","hearthknot"]}
+const USES={
+ "energy_cell":"Fuel for powered workshop machinery.","ammo":"Cartridges for the slagcaster.",
+ "stone":"Use loose stone for building or work it into dressed stone.","rough_block":"A roughly squared block from the stonebreaker.",
+ "dressed_stone":"Cut masonry for public works and stone construction.","wood":"Building timber for structures, furnishings and tool handles.",
+ "iron_ore":"Smelt it with coal to make iron ingots.","copper_ore":"Smelt it with coal to make copper ingots.",
+ "coal":"Fuel for smelting. Borin’s cold forge also needs a supply.","iron":"Stock for smithing tools and machine parts.","copper":"Stock for tool fittings, machinery and inlay.",
+ "basalt_block":"A block cut from the deeper basalt beds.","dressed_basalt":"Finished dark masonry from a basalt block.",
+ "shell":"Smelt carapace with coal to recover iron.","scrap":"Refine it with coal to reclaim iron and copper.",
+ "iron_slag":"Iron-bearing residue from metalwork.","copper_slag":"Copper-bearing residue from metalwork.",
+ "shaped_haft":"The wooden handle for a reinforced pick.","forged_pickhead":"The working head for a reinforced pick.","tool_fittings":"The hardware that joins a reinforced pickhead to its haft.",
+ "crystal":"Aether crystal used in machinery and energy cells.","parts":"Precision components for machinery.","assembly":"A finished drive for ship construction.",
+ "hold_ale":"Drink to reduce work energy costs by 5% for five minutes.","water":"Used in cooking, brewing and stonework.",
+ "hearthcap":"An edible mushroom used in stews.","river_fish":"A catch from freshwater fishing.","pond_perch":"A golden freshwater fish.","silver_char":"A fish used in char with roasted roots.",
+ "barley":"Grain for baking and brewing.","carrot":"A sweet root used in the kitchen.","turnip":"A root vegetable for hotpot and other meals."}
+
+static func item_group(id:String)->String:
+ for group in GROUPS:
+  if id in GROUPS[group]:return group
+ return "Other"
+
+static func item_use(id:String)->String:
+ if HoldData.ITEMS[id].has("desc"):return HoldData.ITEMS[id].desc
+ if id.ends_with("_seed"):return "Plant in a prepared bed and water it to grow "+HoldData.ITEMS[id.trim_suffix("_seed")].name.to_lower()+"."
+ if id in HoldWorkEnergy.MEALS:return "Eat to recover work energy. Meals are available from the energy menu."
+ return USES.get(id,HoldData.ITEMS[id].name)
+
+static func clear_children(container:Control):
+ for child in container.get_children():container.remove_child(child);child.queue_free()
+
 static func inventory(g):
  var bar=g.row(g.panel_body)
- g.label(bar,"Carried supplies",19)
- var search=LineEdit.new();search.name="PackSearch";search.placeholder_text="Find an item…";search.clear_button_enabled=true;search.custom_minimum_size=Vector2(205,32);bar.add_child(search)
- var filter=g.small_button(bar,"All materials" if g.inventory_owned_only else "Carried only",func():g.inventory_owned_only=not g.inventory_owned_only;g.refresh_panel())
- filter.tooltip_text="Include materials you do not currently carry" if g.inventory_owned_only else "Show only items in your pack"
- var layout=g.row(g.panel_body);layout.add_theme_constant_override("separation",18)
- var left=VBoxContainer.new();left.size_flags_horizontal=Control.SIZE_EXPAND_FILL;layout.add_child(left)
- var pack_scroll=ScrollContainer.new();pack_scroll.name="PackScroll";pack_scroll.custom_minimum_size.y=204;pack_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;left.add_child(pack_scroll)
- var grid=GridContainer.new();grid.name="PackGrid";grid.columns=10;grid.add_theme_constant_override("h_separation",5);grid.add_theme_constant_override("v_separation",5);pack_scroll.add_child(grid)
- var details=g.section(layout,"");details.get_parent().custom_minimum_size.x=235;details.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ var ownership=OptionButton.new();ownership.name="PackScope";ownership.add_item("Carried items");ownership.add_item("Item catalogue");bar.add_child(ownership)
+ ownership.select(0 if g.inventory_owned_only else 1)
+ var category=OptionButton.new();category.name="PackCategory";category.add_item("All categories")
+ for group in GROUPS:category.add_item(group)
+ category.select(int(g.get_meta("pack_category",0)));bar.add_child(category)
+ var search=LineEdit.new();search.name="PackSearch";search.placeholder_text="Search items…";search.clear_button_enabled=true
+ search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;search.text=str(g.get_meta("pack_query",""));bar.add_child(search)
+ var layout=g.row(g.panel_body);layout.add_theme_constant_override("separation",14)
+ var left=VBoxContainer.new();left.custom_minimum_size.x=465;layout.add_child(left)
+ var pack_scroll=ScrollContainer.new();pack_scroll.name="PackScroll";pack_scroll.follow_focus=true;pack_scroll.custom_minimum_size.y=183
+ pack_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;left.add_child(pack_scroll)
+ var grid=GridContainer.new();grid.name="PackGrid";grid.columns=8;grid.add_theme_constant_override("h_separation",4);grid.add_theme_constant_override("v_separation",4);pack_scroll.add_child(grid)
+ var empty=g.label(left,"",15)
+ var details=g.section(layout,"");details.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var cards=[]
  var show_item=func(id:String):
-  g.pack_selection=id
-  for child in details.get_children():details.remove_child(child);child.queue_free()
-  var head=g.row(details);HoldItemArt.icon(head,id);g.label(head,HoldData.ITEMS[id].name,20)
-  g.label(details,"%d in your pack" % g.state.count(id),18)
-  if HoldData.ITEMS[id].has("desc"):g.label(details,HoldData.ITEMS[id].desc,15)
-  g.label(details,"Pin to quick bar",16)
-  var pins=g.row(details)
+  g.pack_selection=id;clear_children(details)
+  for card in cards:card.node.button_pressed=card.id==id
+  if id=="":
+   g.label(details,"Item details",19);g.label(details,"Choose a visible item to inspect it.",15);return
+  var head=g.row(details);HoldItemArt.icon(head,id);head.get_child(0).custom_minimum_size=Vector2(48,48)
+  var words=VBoxContainer.new();words.size_flags_horizontal=Control.SIZE_EXPAND_FILL;head.add_child(words)
+  g.label(words,HoldData.ITEMS[id].name,19);g.label(words,"%s  ·  %d carried" % [item_group(id),g.state.count(id)],14)
+  g.label(details,item_use(id),15)
+  var pins=g.row(details);g.label(pins,"Quick bar",14)
   for slot in range(5,10):
-   var pin=g.small_button(pins,str((slot+1)%10),func():g.hotbar.assign(id,slot));pin.tooltip_text="Pin "+HoldData.ITEMS[id].name+" to slot "+str((slot+1)%10)
-  g.small_button(details,"Meals, ale & rest",func():g.open_panel("energy"))
-  for card in cards:
-   card.node.button_pressed=card.id==id
-   if card.id==id:pack_scroll.call_deferred("ensure_control_visible",card.node)
- for id in HoldData.ITEMS:
-  if g.inventory_owned_only and g.state.count(id)==0:continue
-  var b=Button.new();b.name="Item_"+id;b.custom_minimum_size=Vector2(46,46);b.toggle_mode=true;b.tooltip_text=HoldData.ITEMS[id].name+" · "+str(g.state.count(id))+" carried";b.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND;grid.add_child(b)
-  HoldItemArt.icon(b,id);var icon=b.get_child(0);icon.position=Vector2(8,3);icon.size=Vector2(30,30);icon.mouse_filter=Control.MOUSE_FILTER_IGNORE
-  var amount=Label.new();amount.text=str(g.state.count(id));amount.add_theme_font_size_override("font_size",13);amount.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;amount.position=Vector2(2,28);amount.size=Vector2(40,17);amount.mouse_filter=Control.MOUSE_FILTER_IGNORE;b.add_child(amount)
-  cards.append({"node":b,"id":id,"name":str(HoldData.ITEMS[id].name).to_lower()})
+   var pin=g.small_button(pins,str((slot+1)%10),func():g.hotbar.assign(id,slot))
+   pin.tooltip_text="Assign %s to slot %d" % [HoldData.ITEMS[id].name,(slot+1)%10]
+  if id in HoldWorkEnergy.MEALS or id=="hold_ale":g.small_button(details,"Meals & energy",func():g.open_panel("energy"))
+  var selected=grid.get_node_or_null("Item_"+id)
+  if selected!=null:pack_scroll.call_deferred("ensure_control_visible",selected)
+ var ids=HoldData.ITEMS.keys()
+ ids.sort_custom(func(a,b):return str(HoldData.ITEMS[a].name).naturalnocasecmp_to(HoldData.ITEMS[b].name)<0)
+ for id in ids:
+  var count=g.state.count(id);var b=Button.new();b.name="Item_"+id;b.custom_minimum_size=Vector2(52,48);b.toggle_mode=true
+  b.tooltip_text=HoldData.ITEMS[id].name+" · "+str(count)+" carried";b.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND;grid.add_child(b)
+  for spec in [["normal","30443f","53675b"],["hover","496255","d0ad70"],["pressed","536e59","d9ab55"],["hover_pressed","536e59","e8c17a"]]:
+   var style=HoldMenuView.paper_style(spec[1],spec[2],2 if spec[0] in ["pressed","hover_pressed"] else 1);style.set_content_margin_all(0);b.add_theme_stylebox_override(spec[0],style)
+  HoldItemArt.icon(b,id);var icon=b.get_child(0);icon.position=Vector2(6,3);icon.size=Vector2(37,37);icon.mouse_filter=Control.MOUSE_FILTER_IGNORE
+  var amount=Label.new();amount.text=str(count);amount.add_theme_font_size_override("font_size",13);amount.add_theme_color_override("font_color",Color("fff6dc"));amount.add_theme_color_override("font_outline_color",Color("182622"));amount.add_theme_constant_override("outline_size",4)
+  amount.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;amount.position=Vector2(0,27);amount.size=Vector2(48,18);amount.mouse_filter=Control.MOUSE_FILTER_IGNORE;b.add_child(amount)
+  if count==0:icon.modulate.a=.66
+  cards.append({"node":b,"id":id,"title":str(HoldData.ITEMS[id].name).to_lower(),"group":item_group(id),"count":count})
   b.pressed.connect(func():show_item.call(id))
- var empty=g.label(left,"Your pack is empty. Gather materials or withdraw supplies from storage.",16);empty.visible=cards.is_empty()
- search.text_changed.connect(func(query):
-  var visible_count=0
+ var apply=func():
+  var match_id="";var keep=false;var query=search.text.strip_edges().to_lower()
+  g.set_meta("pack_query",search.text);g.set_meta("pack_category",category.selected)
   for card in cards:
-   card.node.visible=query.strip_edges().to_lower() in card.name
-   if card.node.visible:visible_count+=1
-  empty.text="No matching items.";empty.visible=visible_count==0)
- if not cards.is_empty():show_item.call(g.pack_selection if cards.any(func(c):return c.id==g.pack_selection) else cards[0].id)
- else:g.label(details,"Select an item to inspect it or pin it to your quick bar.",16)
+   card.node.visible=(not g.inventory_owned_only or card.count>0) and (category.selected==0 or category.get_item_text(category.selected)==card.group) and (query.is_empty() or card.title.contains(query))
+   if card.node.visible:
+    if match_id=="":match_id=card.id
+    if card.id==g.pack_selection:keep=true
+  pack_scroll.visible=match_id!="";empty.visible=match_id=="";empty.text="No items match. Try another category or clear the search." if query!="" or category.selected>0 else "Your pack is empty. Switch to the item catalogue to browse supplies."
+  show_item.call(g.pack_selection if keep else match_id)
+ search.text_changed.connect(func(_query):apply.call())
+ category.item_selected.connect(func(_index):apply.call())
+ ownership.item_selected.connect(func(index):g.inventory_owned_only=index==0;apply.call())
+ apply.call()
  var rule=HSeparator.new();g.panel_body.add_child(rule)
  var summary=g.row(g.panel_body)
  var portrait=HoldPortrait.new();portrait.profile=g.state.appearance;portrait.custom_minimum_size=Vector2(48,48);summary.add_child(portrait)
@@ -94,9 +147,10 @@ static func people(g):
   for row in rows:row.node.visible=query.strip_edges().to_lower() in row.name)
 
 static func recipes(g):
- g.label(g.panel_body,"Select a recipe. Make it at a forge or kitchen.",16)
+
  var layout=g.row(g.panel_body);layout.add_theme_constant_override("separation",18)
- var grid=GridContainer.new();grid.columns=7;grid.add_theme_constant_override("h_separation",6);grid.add_theme_constant_override("v_separation",6);layout.add_child(grid)
+ var scroller=ScrollContainer.new();scroller.name="RecipeList";scroller.custom_minimum_size=Vector2(350,231);scroller.follow_focus=true;scroller.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;layout.add_child(scroller)
+ var grid=VBoxContainer.new();grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroller.add_child(grid)
  var detail=g.section(layout,"");detail.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL;detail.get_parent().custom_minimum_size.x=300
  var buttons={}
  var select=func(id:String):
@@ -107,7 +161,7 @@ static func recipes(g):
   g.label(detail,"Makes "+HoldData.cost_text(recipe.out),15)
   if id in HoldForge147.COMPONENTS:g.label(detail,"Reinforced-pick component · make at the communal workshop or buy at the market.",14)
   for item in recipe.cost:
-   var row=g.row(detail);HoldItemArt.icon(row,item);g.label(row,"%s · %d / %d" % [HoldData.ITEMS[item].name,g.state.count(item),recipe.cost[item]],14)
+   var row=g.row(detail);HoldItemArt.icon(row,item);g.label(row,"%s · %d / %d%s" % [HoldData.ITEMS[item].name,g.state.count(item),recipe.cost[item]," · need %d more" % (recipe.cost[item]-g.state.count(item)) if g.state.count(item)<recipe.cost[item] else ""],14)
   var locked_reason=HoldCollections141.recipe_reason(g.state,id)
   var unlocked=locked_reason==""
   g.label(detail,("Materials ready" if g.state.afford(recipe.cost) else "Gather the missing materials") if unlocked else locked_reason,15)
@@ -115,10 +169,8 @@ static func recipes(g):
   for key in buttons:buttons[key].button_pressed=key==id
  for id in HoldData.RECIPES:
   if HoldCollections141.recipe_reason(g.state,id)!="":continue
-  var recipe=HoldData.RECIPES[id];var b=Button.new();b.custom_minimum_size=Vector2(58,58);b.toggle_mode=true;b.tooltip_text=recipe.name;grid.add_child(b);buttons[id]=b
-  HoldItemArt.icon(b,recipe.out.keys()[0]);var icon=b.get_child(0);icon.position=Vector2(10,7);icon.size=Vector2(38,38);icon.mouse_filter=Control.MOUSE_FILTER_IGNORE
-  if HoldCollections141.recipe_reason(g.state,id)!="":icon.modulate.a=.45;b.tooltip_text+=" · "+HoldCollections141.recipe_reason(g.state,id)
-  b.pressed.connect(func():select.call(id))
+  var recipe=HoldData.RECIPES[id];var b=g.small_button(grid,recipe.name,func():select.call(id));b.toggle_mode=true;b.tooltip_text=recipe.name;buttons[id]=b
+  HoldItemArt.icon(b,recipe.out.keys()[0]);var art=b.get_child(0);b.icon=art.texture;b.expand_icon=true;b.add_theme_constant_override("icon_max_width",27);b.custom_minimum_size.y=36;b.remove_child(art);art.queue_free()
  if not buttons.is_empty():select.call(g.recipe_selection if buttons.has(g.recipe_selection) else buttons.keys()[0])
  else:g.label(detail,"Learn a recipe through research or town collections.",16)
  if g.room_id=="forge":g.button(g.panel_body,"Use this forge",func():g.open_panel("forge"))

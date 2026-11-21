@@ -23,9 +23,9 @@ func _ready():
  var insights=HoldMountain104.data(game.state).insights
  match mode:
   "rise":
-   lines=[["IVAR DEEPMEASURE","Your parents chose sound ground. The agent called it an established masonry yard. Well, it has certainly been here a while. Come along; I'll show you."],
-    ["IVAR DEEPMEASURE","There she is. A roof and a place to begin—that is what your parents wanted for you. The quarry has slept for years, but the stone hasn't gone anywhere. The place is yours, paid in full."],
-    ["IVAR DEEPMEASURE","The masonry lane runs along the yard; these old stones lead to your door. I'll leave you to look around. Come by the bunkhouse when you want company—or work. There's no need to decide everything today."]]
+   lines=[["IVAR DEEPMEASURE","East across the bridge. See those flat stones past the turn? The masons used to back their carts up to them. That’s your yard."],
+    ["IVAR DEEPMEASURE","There’s the cottage. Your father climbed up to check those slates and your mother counted out the last crown at my desk. Whatever happens at the judging, that door is yours."],
+    ["IVAR DEEPMEASURE","I’ll leave you the yard. When you’re ready, take this road back to town. Borin’s at the communal forge, and the Ledger will tell you what else needs doing."]]
    if not HoldFrontier103.data(game.state).get("home169",{}).get("seeded",false):
     lines[1][1]="The holding and everything you have put into it remain yours. Two contributions record your household in the town book; they are not a price for your own ground."
     lines[2][1]="I'll leave you to look around. Come by the bunkhouse when you want company—or work. There's no need to decide everything today."
@@ -163,7 +163,7 @@ func finish():
  game.opening_scene=null;game.velocity=Vector2.ZERO;game.walking_pose=false;game.swing=0;game.mining_buffer=0;game.jump_buffer=0
  game.surface.roads.portal_cooldown=1.0;game.camera=game.surface.camera_target()
  for n in [game.hud,game.status,game.objectives,game.footer]:n.visible=true
- game.notify({"rise":"Old Stonewright’s Rise is open. Follow the east road to your holding; O opens building plans.","trial":"The public lift trial is ready. E at each marked fitting; J keeps the instructions.","verdict":"Claim won. Skarrin refused Master of Works. The western road to Keldrath is open.","journey":"Welcome to Keldrath. Explore all three wards, then present your invitation in the royal hall.","reception":"Royal reception complete. Explore at your pace; King's Gate leads home."}[mode])
+ game.notify({"rise":"Old Stonewright’s Rise · O opens building plans · J tracks work in Stonebridge.","trial":"The public lift trial is ready. E at each marked fitting; J keeps the instructions.","verdict":"Claim won. Skarrin refused Master of Works. The western road to Keldrath is open.","journey":"Welcome to Keldrath. Explore all three wards, then present your invitation in the royal hall.","reception":"Royal reception complete. Explore at your pace; King's Gate leads home."}[mode])
  game.save_game();game.update_hud();game.queue_redraw();layer.queue_free()
 func objects()->Array:
  var out=[]

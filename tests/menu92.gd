@@ -11,7 +11,7 @@ func run():
  var inventory=g.state.inventory.duplicate(true)
  key(KEY_I);await snap("inventory");fits("Inventory")
  check(g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"Inventory shell keeps the full-pack character summary visible")
- check(g.panel.find_child("PackGrid",true,false).columns==10,"Inventory presents a ten-column slot grid")
+ check(g.panel.find_child("PackGrid",true,false).columns==8,"Inventory presents an eight-column slot grid with readable painted art")
  g.panel.find_child("Item_basalt_block",true,false).pressed.emit();await snap("basalt-inventory")
  check(g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"Basalt selection preserves visible full pack and character summary")
  for component in HoldForge147.COMPONENTS:

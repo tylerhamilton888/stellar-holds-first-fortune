@@ -2,6 +2,7 @@ class_name HoldRoads
 extends RefCounted
 # Physical countryside connections and local livelihoods. Existing inventories,
 # gardens, workstations and whole-character art remain their respective owners.
+const Pinewood=preload("res://scripts/pinewood_layout.gd")
 const OUTDOORS=["trail","pinewood","greenfields","claim"]
 const ROOMS={"room:wayfarer":"The Wayfarer's Hearth","room:greenhearth":"Greenhearth farmhouse"}
 const BED=Vector2(290,420)
@@ -15,7 +16,7 @@ const FOLK=[
  {"area":"pinewood","name":"Torvik","role":"Timber worker","a":Vector2(470,765),"b":Vector2(700,765),"gender":0,"line":"Fell your trees, shoulder the logs, then use the loan saw and rack. Our board pays for finished timber; it does not take raw logs."},
  {"area":"greenfields","name":"Ragnhild","role":"Smallholder","a":Vector2(630,500),"b":Vector2(820,500),"gender":1,"line":"Lease the four beds by the farmhouse once. Bring your own seeds and water. No rent timer, and no crop withers while you are away."},
  {"area":"greenfields","name":"Ketil","role":"Field hand","a":Vector2(1110,790),"b":Vector2(1530,790),"gender":0,"line":"These fields feed the hold. We keep the cart lane clear; you can carry your harvest all the way to the Kettle's order board."},
- {"area":"trail","name":"Sten","role":"Mine porter","a":Vector2(760,400),"b":Vector2(865,400),"gender":0,"line":"The northern arch leads straight into Old Workings. The rack and breaker outside are on loan. Bring your own stone; the crew's supplies remain theirs."},
+ {"area":"trail","name":"Sten","role":"Mine porter","a":Vector2(760,400),"b":Vector2(865,400),"gender":0,"line":"The timbered opening to the north leads straight into Old Workings. The rack and breaker outside are on loan. Bring your own stone; the crew's supplies remain theirs."},
  {"area":"pinewood","name":"Brynja","role":"Metalworker & toolwright","a":Vector2(760,790),"b":Vector2(850,790),"gender":1,"line":"Brynja sets a small brass hinge beside her tools. 'A good fitting should still close cleanly when our grandchildren are old. Come, tell me what you are making.'"},
  {"area":"trail","name":"Hakon","role":"Road guard","a":Vector2(1320,700),"b":Vector2(1430,700),"gender":0,"line":"Hakon rests his hand on his belt. 'Road is clear for now. If you are going into the hills, tell someone which path. I'll be here when you return.'"},
  {"area":"trail","name":"Skarrin","role":"Survey foreman & leading claimant","a":Vector2(970,630),"b":Vector2(1090,630),"gender":0,"line":"Those retaining walls are mine. So are the best survey figures. But naturally the old families will want their share of the credit."},
@@ -37,6 +38,9 @@ func ensure():
  if data().get("loans_initialized",false):return
  # Idempotent loans never replace player equipment or raw/cargo records.
  for spec in [["trail","breaker",720,355],["trail","stone_pile",610,355],["pinewood","saw",570,850],["pinewood","timber_pile",700,850]]:
+  var plan=g.state.forestry.get("pinewood_plan",{})
+  if spec[0]=="pinewood" and not plan.is_empty():
+   var planned=Pinewood.point(plan,spec[1]);spec[2]=planned.x;spec[3]=planned.y
   var id="roads75:"+spec[0]+":"+spec[1];var exists=false
   for f in g.handworks.data().facilities:
    if str(f.id)==id:exists=true;break
@@ -63,6 +67,8 @@ func connection(p:Vector2,normal:Vector2,target:String,landing:Vector2,title:Str
 func links(area:String)->Array:
  if HoldBuildingPlans.owned_room(area):return s.architecture.connections(area)
  return authored_links(area)+s.architecture.connections(area)
+func inn_door()->Vector2:
+ return HoldFrontier103.INN_DOOR if HoldFrontier103.active(g.state) else Vector2(510,520)
 func authored_links(area:String)->Array:
  if HoldFrontier103.active(g.state) and area=="claim":return [connection(Vector2(100,790),Vector2.LEFT,"trail",Vector2(1730,700),"Stonebridge town"),connection(HoldMineEntrance.position("claim")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Household workings")]
  if HoldWorldZones.ward(area):
@@ -72,11 +78,11 @@ func authored_links(area:String)->Array:
   if area=="hearthward":result.append(connection(HoldWorldZones.GATE+Vector2(0,3),Vector2.UP,"trail",Vector2(220,735),"High Trail"))
   return result
  match area:
-  "trail":return [connection(Vector2(100,690) if HoldFrontier103.active(g.state) else Vector2(220,690),Vector2.LEFT if HoldFrontier103.active(g.state) else Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Road to Keldrath"),connection(HoldMineEntrance.position("trail")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(Vector2(470,925),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(Vector2(510,520),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
-  "pinewood":return [connection(Vector2(100,650),Vector2.LEFT,"trail",Vector2(470,870),"High Trail")]
+  "trail":return [connection(Vector2(100,690) if HoldFrontier103.active(g.state) else Vector2(220,690),Vector2.LEFT if HoldFrontier103.active(g.state) else Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Road to Keldrath"),connection(HoldMineEntrance.position("trail")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(Vector2(470,925),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(inn_door(),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
+  "pinewood":return [connection(Pinewood.GATE,Vector2.LEFT,"trail",Vector2(470,870),"High Trail")]
   "greenfields":return [connection(Vector2(940,235),Vector2.UP,"trail",Vector2(1540,870),"Stonebridge"),connection(Vector2(550,450),Vector2.UP,"room:greenhearth",Vector2(480,565),"Farmhouse")]
   "claim":return [connection(Vector2(100,790),Vector2.LEFT,"trail",Vector2(1730,700),"Stonebridge"),connection(HoldMineEntrance.position("claim")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Your Deepworks"),connection(Vector2(500,440),Vector2.UP,"home:"+g.state.claim_id,Vector2(480,565),"Your hearth")]
- if area in ROOMS:return [connection(Vector2(480,595),Vector2.DOWN,"trail" if area=="room:wayfarer" else "greenfields",Vector2(510,565) if area=="room:wayfarer" else Vector2(550,495),"Outside")]
+ if area in ROOMS:return [connection(Vector2(480,595),Vector2.DOWN,"trail" if area=="room:wayfarer" else "greenfields",inn_door()+Vector2(0,45) if area=="room:wayfarer" else Vector2(550,495),"Outside")]
  if (area.begins_with("room:") or area.begins_with("home:")) and HoldCivicArt.has_exit(area):
   var back=s.return_area;var landing=Vector2.INF
   if HoldNeighborhood.is_home(area):
@@ -105,6 +111,7 @@ func moved(before:Vector2,dt:float)->bool:
  poll_input()
  if not return_hold.is_empty() and (s.area!=return_hold.area or g.player.distance_to(return_hold.origin)>100):return_hold.clear()
  if g.player==before or (s.area=="claim" and s.house.level()>0):return false
+ if preload("res://settlement/indoor_grade.gd").moved(s,before):return true
  var link=crossing(before,g.player)
  # Opposing views can put the arrival's return door ahead of held movement.
  # Latch that doorway until the input changes, including with slower wagons.
@@ -123,20 +130,23 @@ func moved(before:Vector2,dt:float)->bool:
   if s.area!=link.target:
    g.player=before;portal_cooldown=.5;return false
   hold_return(from)
+  HoldFrontier103.cross_home_road(g,from,s.area)
  g.gait_clock=gait
  # A short zone dissolve keeps one active scene; held movement resumes naturally.
  g.transition_left=.18;portal_cooldown=.35
  data().visits[link.target]=true
  return true
 func roads(area:String)->Array:
- if HoldFrontier103.active(g.state) and area=="trail":return [[Vector2(100,690),Vector2(1780,700)],[Vector2(190,690),Vector2(190,430)],[Vector2(510,690),Vector2(510,520)],[Vector2(690,690),Vector2(690,460),Vector2(950,300)],[Vector2(880,690),Vector2(880,570)],[Vector2(1450,700),Vector2(1480,450)],[Vector2(1540,700),Vector2(1510,915),Vector2(1660,915),Vector2(1660,870)],[Vector2(470,690),Vector2(470,925)],[Vector2(1540,700),Vector2(1540,925)],[Vector2(880,690),Vector2(880,940),Vector2(1020,940),Vector2(1020,900)]]
+ var plan=g.state.forestry.get("pinewood_plan",{})
+ if area=="pinewood" and not plan.is_empty():return Pinewood.paths(plan)
+ if HoldFrontier103.active(g.state) and area=="trail":return [[Vector2(100,690),Vector2(1780,700)],[Vector2(HoldFrontier103.LODGE_DOOR.x,690),HoldFrontier103.LODGE_DOOR],[Vector2(inn_door().x,690),inn_door()],[Vector2(735,690),Vector2(735,473),Vector2(950,300)],[Vector2(880,690),Vector2(880,570)],[Vector2(1450,700),Vector2(1480,450)],[Vector2(1540,700),Vector2(1510,915),Vector2(1660,915),Vector2(1660,870)],[Vector2(470,690),Vector2(470,925)],[Vector2(1540,700),Vector2(1540,925)],[Vector2(880,690),Vector2(880,940),Vector2(1020,940),Vector2(1020,900)]]
  match area:
   "trail":return [[Vector2(220,690),Vector2(700,690),Vector2(1880,700)],[Vector2(700,690),Vector2(950,300)],[Vector2(700,690),Vector2(470,980)],[Vector2(1430,700),Vector2(1540,980)],[Vector2(510,690),Vector2(510,520)],[Vector2(790,520),Vector2(650,420),Vector2(610,400)]]
   "pinewood":return [[Vector2(0,650),Vector2(300,650),Vector2(550,730),Vector2(800,730),Vector2(1100,600),Vector2(1560,760)],[Vector2(300,650),Vector2(300,790),Vector2(570,790),Vector2(700,790)]]
   "greenfields":return [[Vector2(940,180),Vector2(940,650),Vector2(1540,650)],[Vector2(940,500),Vector2(550,500),Vector2(550,450)],[Vector2(940,650),Vector2(700,650),Vector2(700,870)],[Vector2(700,720),Vector2(350,720)]]
  return []
 func buildings(area:String)->Array:
- if area=="trail":return [HoldBuildingPlans.instance("wayfarer",Vector2(510,520))]
+ if area=="trail":return [HoldBuildingPlans.instance("wayfarer",inn_door())]
  if area=="greenfields":return [HoldBuildingPlans.instance("farmhouse",Vector2(550,450))]
  return []
 func furnishings(area:String)->Array:
@@ -148,14 +158,23 @@ func furnishings(area:String)->Array:
  if area in OUTDOORS:
   for link in links(area):
    if link.target=="mine" or link.target.begins_with("room:") or link.target.begins_with("home:"):continue
-   var p:Vector2=link.p+Vector2(-link.normal.y,link.normal.x)*62
+   var side=-1 if area=="trail" and link.target=="pinewood" and HoldFrontier103.active(g.state) and HoldGreatClaim102.active(g.state) else 1
+   var p:Vector2=link.p+Vector2(-link.normal.y,link.normal.x)*62*side
    result.append(s.world.furn("signpost",p.x,p.y))
  return result
 func settlement_furnishings(area:String)->Array:
  var w=s.world
+ var frontier=HoldFrontier103.active(g.state)
+ var waystone=Vector2(319,616) if HoldGreatClaim102.active(g.state) and HoldFrontier103.active(g.state) else Vector2(355,770)
  match area:
-  "trail":return [w.furn("runestone",355,770),w.furn("barrel",420,585),w.furn("crate",465,600),w.furn("desk",760,568),w.furn("road_lantern",590,540),w.furn("tea_table",610,610),w.furn("chair",560,625),w.furn("chair",660,625),w.furn("lamp",840,330),w.furn("worktable",780,342)]
-  "pinewood":return [w.furn("lamp",330,740),w.furn("worktable",400,850)]
+  "trail":return [w.furn("runestone",waystone.x,waystone.y),w.furn("barrel",437 if frontier else 420,552 if frontier else 585),w.furn("crate",471 if frontier else 465,596 if frontier else 600),w.furn("desk",760,568),w.furn("road_lantern",671 if frontier else 590,604 if frontier else 540),w.furn("tea_table",463 if frontier else 610,635 if frontier else 610),w.furn("chair",419 if frontier else 560,646 if frontier else 625),w.furn("chair",508 if frontier else 660,646 if frontier else 625),w.furn("lamp",840,330),w.furn("worktable",780,342)]
+  "pinewood":
+   var plan=g.state.forestry.get("pinewood_plan",{})
+   if plan.is_empty():return [w.furn("lamp",330,740),w.furn("worktable",400,850)]
+   var result=[]
+   for kind in ["lamp","worktable"]:
+    var at=Pinewood.point(plan,kind);result.append(w.furn(kind,at.x,at.y))
+   return result
   "greenfields":return [w.furn("desk",760,458),w.furn("lamp",690,465),w.furn("tea_table",450,520),w.furn("chair",400,535),w.furn("worktable",1440,510)]
   "room:wayfarer":return [w.furn("bed",BED.x,BED.y),w.furn("hearth",440,335),w.furn("tea_table",650,450),w.furn("chair",600,465),w.furn("chair",700,465),w.furn("bookcase",700,335),w.furn("bookcase",630,335),w.furn("lamp",350,395),w.furn("counter",400,500),w.furn("desk",245,550),w.furn("chair",245,585)]
   "room:greenhearth":return [w.furn("hearth",330,335),w.furn("tea_table",550,450),w.furn("chair",500,465),w.furn("chair",600,465),w.furn("worktable",700,350),w.furn("bookcase",250,335),w.furn("bookcase",630,335),w.furn("counter",350,450),w.furn("bed",250,550),w.furn("lamp",300,520),w.furn("chair",550,400)]
@@ -169,11 +188,16 @@ func obstacles(area:String)->Array:
   for y in [585,735]:
    for x in [1140,1320,1500]:result.append(Rect2(Vector2(x,y)-Vector2(35,25),Vector2(70,28)))
  return result
+static func skarrin_profile(state)->Dictionary:
+ return HoldRoadCharacters.appearance(state,"road_folk:8",HoldAppearance.random_profile(state.seed_value+7508,FOLK[8].gender))
 func people(area:String,time:float=-1)->Array:
  if time<0:time=g.state.elapsed
  var result=[]
  for i in FOLK.size():
   var f=FOLK[i]
+  var at_lodge=i==8 and is_instance_valid(g.opening_scene) and g.opening_scene.mode=="frontier_arrival" and g.opening_scene.step>=2
+  if at_lodge:
+   f=f.duplicate();f.area=HoldFrontier103.lodge(g.state);f.a=Vector2(547,490);f.b=f.a
   if i==10 and HoldRidgePair124.paired(g.state):
    f=f.duplicate(true);f.area="room:wayfarer";f.a=Vector2(535,510);f.b=Vector2(625,510)
   if HoldClaim127.absent(g.state,"road_folk:"+str(i)):continue
@@ -181,11 +205,21 @@ func people(area:String,time:float=-1)->Array:
   var key=str(g.state.seed_value)+":"+str(i)
   if not profiles.has(key):profiles[key]=HoldAppearance.random_profile(g.state.seed_value+7500+i,f.gender)
   var profile=HoldRoadCharacters.appearance(g.state,"road_folk:"+str(i),profiles[key])
+  var plan=g.state.forestry.get("pinewood_plan",{})
+  if area=="pinewood" and i==2 and not plan.is_empty():
+   var yard=Pinewood.point(plan,"yard")
+   f=f.duplicate();f.a=yard+Vector2(-115,0);f.b=yard+Vector2(115,0)
   var duration=f.a.distance_to(f.b)/38.0;var phase=fposmod(time+i*9,(duration+7)*2)
   var start:Vector2=f.a;var end:Vector2=f.b
   if phase>duration+7:phase-=duration+7;start=f.b;end=f.a
   var walking=phase<duration;var at=start.lerp(end,minf(1,phase/duration))
   var actor={"kind":"citizen","p":at,"profile":profile,"aim":(end-start).normalized(),"walking":walking,"gait":HoldDrawnLocomotion.time_for_distance(phase*38),"name":f.name+" "+profile.family_name,"role":f.role,"index":i,"interaction":"road_folk:"+str(i)}
+  if at_lodge:
+   actor.aim=Vector2.DOWN;actor.walking=false
+   if g.opening_scene.step==7:
+    var distance=minf(g.opening_scene.age*55,120)
+    actor.p+=Vector2.DOWN*distance
+    actor.walking=distance<120;actor.gait=HoldDrawnLocomotion.time_for_distance(distance)
   # A brief whole-painted sip during Dagna's existing seven-second pause.
   # Positions, walking speed and the saved-clock route remain unchanged.
   var resting=phase-duration
@@ -199,7 +233,7 @@ func points()->Array:
  if s.area in ORDERS:
   var order=ORDERS[s.area]
   result.append({"p":order.p,"name":"Local work board","action":"road_order"})
- if s.area=="trail":result.append(s.spot(510,545,"Wayfarer's Hearth","room:wayfarer"));result.append(s.spot(1540,920,"Greenhearth fields","greenfields"))
+ if s.area=="trail":result.append(s.spot(inn_door().x,inn_door().y+25,"Wayfarer's Hearth","room:wayfarer"));result.append(s.spot(1540,920,"Greenhearth fields","greenfields"))
  if s.area=="greenfields":result.append(s.spot(940,250,"High Trail · Stonebridge","trail"));result.append(s.spot(550,475,"Greenhearth farmhouse","room:greenhearth"))
  if s.area=="room:wayfarer":result.append({"p":HoldFurnishings.bedside(BED),"name":"Wayfarer's bunk · rest and save","action":"rest","bed":BED})
  if s.area in ROOMS:result.append(s.spot(400 if s.area=="room:wayfarer" else 350,525 if s.area=="room:wayfarer" else 475,"Hearth kitchen · cook provisions","road_kitchen"))

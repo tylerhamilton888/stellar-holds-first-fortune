@@ -2,8 +2,15 @@ class_name HoldGreatClaim102
 extends RefCounted
 # Additive foundation. Only newly begun fortunes join the civic ledger.
 const DESK=Vector2(670,400)
-const TOWN_LEDGER=Vector2(365,650)
+const TOWN_LEDGER=Vector2(278,888)
 const TOWN_ACCESS=TOWN_LEDGER+Vector2(0,26)
+const SHRINE_BACK=TOWN_LEDGER+Vector2(0,-48)
+const SHRINE_BRAZIER=Vector2(115,5)
+const SHRINE_COURT=Rect2(TOWN_LEDGER-Vector2(162,62),Vector2(324,134))
+# Both processional paths meet the flush threshold above the southern escarpment.
+const SHRINE_THRESHOLD=TOWN_LEDGER+Vector2(0,63)
+const WEST_WALK=[Vector2(151,690),Vector2(118,756),Vector2(100,813),Vector2(103,871),Vector2(135,915),Vector2(178,938),SHRINE_THRESHOLD]
+const EAST_WALK=[Vector2(470,855),Vector2(445,886),Vector2(437,908),Vector2(416,925),Vector2(378,937),SHRINE_THRESHOLD]
 const PROJECTS={
  "watch":{"title":"Lights for the night watch","cost":{"wood":6,"iron":2},"points":40,"detail":"Hakon can see the bridge approaches after dusk. Two lamps are erected on the High Trail."},
  "rest":{"title":"A table for the work crews","cost":{"wood":8,"stone":4},"points":45,"detail":"A shared table and seats give the crews a place to eat beside the eastern road."},
@@ -24,7 +31,7 @@ static func near(g)->bool:
  # Retain the original indoor records desk for existing fortunes and visits.
  return g.surface.area==HoldFrontier103.lodge(g.state) and g.player.distance_to(DESK)<85 and g.surface.clear_interaction(g.player,DESK)
 static func directions(s)->String:
- return "the great book outside, east of the bunkhouse" if HoldFrontier103.active(s) else "the ledger in the miners’ lodge"
+ return "the Ledger Shrine south of the main street, off the Pinewood path" if HoldFrontier103.active(s) else "the ledger in the miners’ lodge"
 static func complete(s,id:String)->bool:return active(s) and bool(data(s).projects.get(id,false))
 static func contribute(g,id:String)->bool:
  if not near(g) or not PROJECTS.has(id) or complete(g.state,id):return false
@@ -43,8 +50,9 @@ static func furnishings(w,area:String)->Array:
  if area==HoldWorkerLodge100.ROOM and not HoldFrontier103.active(s):result.append(w.furn("desk",DESK.x,DESK.y))
  if area=="trail":
   if HoldFrontier103.active(s):
+   result.append(w.furn("ledger_memorial",SHRINE_BACK.x,SHRINE_BACK.y))
    result.append(w.furn("civic_ledger",TOWN_LEDGER.x,TOWN_LEDGER.y))
-   for x in [TOWN_LEDGER.x-110,TOWN_LEDGER.x+110]:result.append(w.furn("royal_brazier",x,TOWN_LEDGER.y))
+   for side in [-1,1]:result.append(w.furn("royal_brazier",TOWN_LEDGER.x+side*SHRINE_BRAZIER.x,TOWN_LEDGER.y+SHRINE_BRAZIER.y))
   if complete(s,"watch"):
    result.append(w.furn("road_lantern",1110,610));result.append(w.furn("road_lantern",1370,610))
   if complete(s,"rest"):

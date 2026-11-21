@@ -63,8 +63,12 @@ func wait_at(plan:Dictionary,area:String,p:Vector2,seconds:float,activity:String
  plan.steps.append({"area":area,"a":p,"b":p,"start":plan.duration,"duration":seconds,"distance":plan.distance,"activity":activity,"pose":pose,"aim":aim})
  plan.duration+=seconds
 func household_stair(plan:Dictionary,from:String,to:String,activity:String):
- walk(plan,from,[Vector2(700,580),Vector2(700,496)],activity)
- walk(plan,to,[Vector2(700,496),Vector2(700,580)],activity)
+ var anchor=HoldNeighborhood.STAIR
+ var high=anchor+Vector2(0,-108);var low=anchor+Vector2(0,30)
+ var crossing=anchor+Vector2(0,preload("res://settlement/indoor_grade.gd").SEAM)
+ var rising=HoldNeighborhood.parts(from)[2]=="0"
+ walk(plan,from,[low if rising else high,crossing],activity)
+ walk(plan,to,[crossing,high if rising else low],activity)
 func between(plan:Dictionary,from:String,to:String,a:Vector2,b:Vector2,activity:String):
  var area=from;var point=a
  while area!=to:
@@ -95,7 +99,7 @@ func ensure():
    var workpoint=([Vector2(905,530),Vector2(905,735),Vector2(615,735)][floor_index] if index==0 else Vector2(365+floor_index*130,590) if index==1 else Vector2(350+floor_index*130,500))
    var plan={"person":person,"ward":ward,"index":index,"steps":[],"duration":0.0,"distance":0.0,"offset":floor_index*83+index*37}
    wait_at(plan,upstairs,Vector2(540,470),30+index*6,"At home")
-   go(plan,upstairs,Vector2(540,470),Vector2(700,580),"Leaving for "+job)
+   go(plan,upstairs,Vector2(540,470),Vector2(700,442),"Leaving for "+job)
    # The door and household stair are explicit portals, never random locations.
    household_stair(plan,upstairs,home,"Taking the household stair")
    go(plan,home,Vector2(700,580),HoldRoomLayout.exit_point(home),"Leaving for "+job)
@@ -113,7 +117,7 @@ func ensure():
    wait_at(plan,home,Vector2(450,560),75,"Home by the hearth")
    go(plan,home,Vector2(450,560),Vector2(700,580),"Turning in")
    household_stair(plan,home,upstairs,"Taking the household stair")
-   go(plan,upstairs,Vector2(700,580),Vector2(540,470),"Turning in")
+   go(plan,upstairs,Vector2(700,442),Vector2(540,470),"Turning in")
    plans.append(plan)
  build_ms=Time.get_ticks_msec()-began;compiled_paths=path_cache.size()
  # Only the small compiled itineraries survive. Navigation grids are build-time

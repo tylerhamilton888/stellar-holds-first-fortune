@@ -20,15 +20,25 @@ static func entrance(w)->Vector2i:
  for y in range(4,16):
   for x in range(4,16):
    if Vector2i(x,y).distance_to(Deepworks.ENTRY)>=3:candidates.append(Vector2i(x,y))
+ var exit_cell = Deepworks.cell(HoldMineEntrance.inside_position(w))
+ var floor_sites = []
  for c in candidates:
-  if not w.walkable(c,0) or w.layer(0).fixtures.has(Deepworks.key(c)):continue
-  if w.data.links.has(w.link_key(c,0)) or w.data.get("living",{}).get("furniture",{}).has(w.link_key(c,0)):continue
+  if not w.walkable(c, 0) or HoldMineEntrance.reserved(w, c, 0): continue
+  if w.layer(0).fixtures.has(Deepworks.key(c)) or w.data.links.has(w.link_key(c, 0)) or w.data.get("living", {}).get("furniture", {}).has(w.link_key(c, 0)): continue
   var near_equipment=false
   for f in w.state.hauling.get("hands",{}).get("facilities",[]):
    if f.area=="mine:"+w.state.active_site+":0" and Deepworks.center(c).distance_to(Vector2(f.x,f.y))<115:near_equipment=true;break
-  if near_equipment or w.route(Deepworks.ENTRY,0,"",c).is_empty():continue
-  q.entrance=[c.x,c.y];return c
+  if near_equipment: continue
+  if is_wall_site(w, c, 0) and c.distance_to(exit_cell) >= 4 and not w.route(Deepworks.ENTRY, 0, "", c).is_empty():
+   q.entrance = [c.x, c.y];return c
+  floor_sites.append(c)
+ for c in floor_sites:
+  if not w.route(Deepworks.ENTRY, 0, "", c).is_empty():
+   q.entrance = [c.x, c.y];return c
  return Vector2i(-1,-1)
+static func is_wall_site(w, c: Vector2i, z: int) -> bool:
+ if w.at(c + Vector2i.UP, z) == 0: return false
+ return w.terrain_walkable(c + Vector2i.DOWN, z) and not w.equipment_solid(Deepworks.center(c + Vector2i.DOWN), z)
 static func prepare(w):
  if w.data.layers.size()>FIRST:return
  for z in range(FIRST,FIRST+3):
@@ -193,7 +203,7 @@ static func panel(g):
 static func props(w)->Array:
  var out=[]
  for p in portals(w,w.depth()):
-  if w.layer().seen.has(Deepworks.key(p.c)):out.append({"p":Deepworks.center(p.c),"kind":"adit","open":p.open,"name":"OLD WORKINGS" if p.to==0 else "PASSAGE","side":p.id in ["seal","farbank"]})
+  if w.layer().seen.has(Deepworks.key(p.c)): out.append({"p": Deepworks.center(p.c), "kind": "adit", "floor_stair": p.id in ["entry", "return"] and w.at(p.c + Vector2i.UP) == 0, "open": p.open, "name": "OLD WORKINGS" if p.to == 0 else "PASSAGE", "side": p.id in ["seal", "farbank"]})
  return out
 static func draw_prop(n,o:Dictionary):
  HoldMineEntrance.draw_inside(n,o)

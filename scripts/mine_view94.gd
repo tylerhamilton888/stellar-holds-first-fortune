@@ -199,7 +199,7 @@ func apply_sprite(s:Sprite3D,texture:Texture2D,rect:Rect2,p:Vector2,flip:bool=fa
  s.scale=Vector3(rect.size.x/texture.get_width(),rect.size.y/texture.get_height(),1)
  var center=rect.get_center();s.position=point(p)+camera.global_basis.x*center.x*.025*(-1 if flip else 1)-camera.global_basis.y*center.y*.025
 func person(s:Sprite3D,p:Vector2,profile:Dictionary,direction:Vector2,walking:bool,time:float,action:String="",phase:float=0):
- var d=direction.rotated(heading());var frame=HoldWholeFrames.descriptor(profile,d,walking,time,action,phase)
+ var d=direction.rotated(heading());var frame=HoldWholeFrames.descriptor(profile,d,walking,g.clock if not walking and action in ["","town_walk"] else time,action,phase)
  apply_sprite(s,HoldWholeFrames.texture(profile,frame.sheet,frame.index),frame.destination,p,d.x<-.3)
 func update_actors():
  for s in sprite_pool.values():s.visible=false

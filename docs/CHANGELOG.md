@@ -1,3 +1,11 @@
+## 0.125.0 · Stonebridge
+
+Integrated the contest-led campaign and current homestead, settlement and underground work. Redesigned pack browsing, recipe selection, equipment presentation and common menu navigation. Added sixteen painted supply icons used in the pack and quick bar. Existing inventory, equipment, recipe locks and hotbar saves retain their identifiers.
+
+Cottage grounds playtest adds player-edited paths and vegetation and time-limited saw wear. The dedicated preview starts beside a stocked bench.
+
+Timber wing prototype adds two authored roof joins, an optional sawbench position and free sawbench relocation on the seeded family claim.
+
 Cottage frontage (review candidate): broadened the editable cottage entrance and added painted Stonebridge architectural details to the actual house and planned exterior.
 
 Room stages197 (acceptance candidate): light-green completed-room preview, free foundation marking and construction phases derived from paid tiles. See ROOM_STAGES197.md. Visual review pending; no Windows release.

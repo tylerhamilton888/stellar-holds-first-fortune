@@ -99,6 +99,11 @@ static func roof(h,c:Vector2i,cells:Dictionary,offset:float=88.0,z:int=-1,bounds
    g.draw_polyline(line,Color("a68a64"),2)
 static func exterior(h,group:Dictionary,construction:Callable=Callable()):
  var g=h.g;var bounds:Rect2=group.bounds
+ if not construction.is_valid() and h is HoldHearthcraft and HoldTimberWing.matches_shell(g,group):
+  var side=HoldTimberWing.side(g)
+  if HoldTimberWing.SIDES.has(side):HoldTimberWing.draw(g,HoldTimberWing.THRESHOLD,side)
+  else:g.draw_texture(HoldTimberWing.REPAIRED if HoldTimberWing.house(g).has("timber_wing") else HoldTimberWing.STARTER,HoldTimberWing.THRESHOLD-Vector2(256,480))
+  return
  var depth=bounds.size.y*DEPTH_SCALE
  g.draw_rect(Rect2(Vector2(bounds.position.x+6,bounds.end.y-depth+4),Vector2(bounds.size.x,depth)),Color(0,0,0,.15))
  for k in group.cells:

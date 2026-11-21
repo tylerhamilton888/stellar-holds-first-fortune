@@ -51,7 +51,7 @@ func update(dt:float):
  var visible=sync_visibility()
  if visible:
   if site!=g.state.active_site:site=g.state.active_site;goal=Vector3i(-1,-1,-1);path.clear()
-  map_button.text="Worksite map · Z" if g.deep.world.depth()>=5 else "Depth %d · Map [Z]" % (g.deep.world.depth()+1)
+  map_button.text="Worksite map · Z" if not Deepworks.Strata.number(g.deep.world.depth()) else "Depth %d · Map [Z]" % (Deepworks.Strata.number(g.deep.world.depth()))
   view_button.text="3D after building · F6" if explore.enabled and not explore.active() else "Overhead view · F6" if explore.enabled else "Explore in 3D · F6"
  explore.sync(dt)
 func known(c:Vector2i,z:int)->bool:
@@ -77,21 +77,25 @@ func route_to(c:Vector2i,z:int):
  goal=target;var at=target
  while at!=origin:path.push_front(at);at=parents[at]
  path.push_front(origin)
- message="Route marked to depth %d. Follow the gold trail; stairs change floors." % (z+1)
+ message="Route marked to %s. Follow the gold trail." % Deepworks.floor_tag(z)
 func hint()->String:
  if goal.z<0:return "Z: depth map · F6: change view"
  var w=g.deep.world;var c=Deepworks.cell(g.player)
  if Vector3i(c.x,c.y,w.depth())==goal:return "Destination reached · Z selects another route"
  for i in range(path.size()-1):
   if path[i].z==w.depth() and path[i+1].z!=w.depth():
-   if path[i].z>=5 or path[i+1].z>=5:return "E at the marked adit · "+Deepworks.NAMES[goal.z]
-   return "Destination D%d · %s at the gold stair marker" % [goal.z+1,"E down" if path[i+1].z>w.depth() else "Shift+E up"]
- return "Destination D%d · follow the gold trail · Z replans" % (goal.z+1)
+   if not Deepworks.Strata.number(path[i].z) or not Deepworks.Strata.number(path[i+1].z):return "E at the marked adit · "+Deepworks.NAMES[goal.z]
+   return "Destination %s · %s at the gold stair marker" % [Deepworks.floor_tag(goal.z),"E down" if path[i+1].z>w.depth() else "Shift+E up"]
+ return "Destination %s · follow the gold trail · Z replans" % (Deepworks.floor_tag(goal.z))
 func panel():
  var w=g.deep.world
  var row=g.row(g.panel_body)
+ var floors=OptionButton.new()
+ row.add_child(floors)
  for z in w.data.layers.size():
-  var b=g.small_button(row,("D%d" % (z+1) if z<5 else ["Delve","Reach","Farbank"][z-5])+(" · YOU" if z==w.depth() else ""),func():viewed=z;g.refresh_panel());b.toggle_mode=true;b.button_pressed=z==viewed;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  floors.add_item(HoldMineworks143.label(z),z)
+ floors.select(viewed)
+ floors.item_selected.connect(func(index):viewed=floors.get_item_id(index);g.refresh_panel())
  g.label(g.panel_body,"Viewing "+HoldMineworks143.label(viewed),17)
  var split=g.row(g.panel_body)
  var map=FloorMap.new();map.nav=self;map.name="DepthFloorMap";map.custom_minimum_size=Vector2(510,250);split.add_child(map)
@@ -107,8 +111,8 @@ class FloorMap extends Control:
  var bounds=Rect2i(0,0,Deepworks.W,Deepworks.H)
  func fit():
   var found=false
-  for z in [nav.viewed-1,nav.viewed,nav.viewed+1]:
-   if z<0 or z>=nav.g.deep.world.data.layers.size() or (z!=nav.viewed and (not nav.ghost or nav.viewed>=5 or z>=5)):continue
+  for z in [Deepworks.above(nav.viewed),nav.viewed,nav.g.deep.world.below(nav.viewed)]:
+   if z<0 or z>=nav.g.deep.world.data.layers.size() or (z!=nav.viewed and not nav.ghost):continue
    for key in nav.g.deep.world.layer(z).seen:
     var xy=key.split(",");var c=Vector2i(int(xy[0]),int(xy[1]))
     if not found:bounds=Rect2i(c,Vector2i.ONE);found=true
@@ -124,9 +128,9 @@ class FloorMap extends Control:
   for y in Deepworks.H:
    for x in Deepworks.W:
     var c=Vector2i(x,y);var p=offset+Vector2(c)*scale_map
-    if nav.ghost and nav.viewed<5:
-     for z in [nav.viewed-1,nav.viewed+1]:
-      if z>=0 and z<Deepworks.DEPTHS and nav.known(c,z) and w.at(c,z)==0:draw_rect(Rect2(p,Vector2.ONE*scale_map),Color("314449"))
+    if nav.ghost:
+     for z in [Deepworks.above(nav.viewed),w.below(nav.viewed)]:
+      if z>=0 and z<w.data.layers.size() and nav.known(c,z) and w.at(c,z)==0:draw_rect(Rect2(p,Vector2.ONE*scale_map),Color("314449"))
     if not nav.known(c,nav.viewed):continue
     var k=w.at(c,nav.viewed);draw_rect(Rect2(p,Vector2.ONE*scale_map),Color("a4a591") if k==0 else nav.g.deep.ore_color(k).darkened(.4) if k in [3,4,5,6] else Color("58646a"))
   for step in nav.path:

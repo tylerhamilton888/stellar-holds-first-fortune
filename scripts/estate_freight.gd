@@ -141,7 +141,7 @@ static func panel(p):
   material.select(maxi(0,items.find("stone")))
   row=g.row(g.panel_body);var source=OptionButton.new();row.add_child(source)
   for id in piles:
-   var e=g.deep.haul.data.piles[id];source.add_item("Stockpile · depth %d (%d, %d)" % [int(e.depth)+1,e.x,e.y])
+   var e=g.deep.haul.data.piles[id];source.add_item("Stockpile · %s (%d, %d)" % [Deepworks.floor_tag(int(e.depth)),e.x,e.y])
   var dest=OptionButton.new();row.add_child(dest)
   for id in chests:
    var e=g.state.surface.chests[id];dest.add_item("Chest (%d, %d)" % [int(e.x/40),int(e.y/40)])

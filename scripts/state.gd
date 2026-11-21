@@ -1,5 +1,7 @@
 class_name HoldState
 extends RefCounted
+const CartBank = preload("res://scripts/claim_cart_bank.gd")
+const Headworks = preload("res://scripts/pinewood_headworks.gd")
 const SAVE="user://first_fortune_v1.json"
 var save_slot:int=1
 # Runtime-only routing; normal slot numbers never represent developer saves.
@@ -82,6 +84,10 @@ func reset(seed_number:int):
  appearance=HoldAppearance.defaults();npc_appearances={};dynasty={}
  opening=0;claim_id="";camp_stage=0;active_site="hold";worlds={};road_trees=[8,8,8,8,8]
  surface={}
+ forestry.cart_bank = CartBank.fresh()
+ var pinewood = preload("res://scripts/pinewood_layout.gd").generate(seed_number)
+ if not pinewood.is_empty():
+  forestry.pinewood_plan = pinewood;forestry.headworks = Headworks.create(seed_number)
  inventory={"wood":8,"food":6,"water":6}
  money=45
  tech={};queue=[];market={};steel=false;worker=false;automaton=false

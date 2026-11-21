@@ -76,7 +76,9 @@ static func tick(g):
  if not active(g.state):return
  var q=data(g.state);var changed=false;var f=HoldFirstShift.data(g).facts
  if lodge_intro(g.state) and not q.get("work_started",false):
-  if g.zone=="mine":mine_entered(g);changed=true
+  if g.zone == "mine":
+   if g.deep.world.data.get("headworks_arrival", false) and g.player.distance_to(Deepworks.center(Deepworks.ENTRY)) > 240: return
+   mine_entered(g);changed = true
   else:return
  var origin=Vector2(q.origin[0],q.origin[1])
  var checks=[g.zone!="mine" or g.player.distance_to(origin)>80,q.get("pack_seen",false),f.get("lift",false),f.get("stock",false),f.get("collect",false)]

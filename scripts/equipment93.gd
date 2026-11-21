@@ -84,6 +84,13 @@ static func comparison(c:Dictionary,item:Dictionary)->String:
  var key=slot(item.kind);var value=stats(item);var current=stats(equipped(c,key))
  if key=="weapon":return "%d damage (%+d) · %.2fs attack · %d reach" % [value.damage,int(value.damage)-int(current.damage),value.time,value.reach]
  return "%d%% protection (%+d points)" % [roundi(value.reduction*100),roundi((value.reduction-current.reduction)*100)]
+static func weapon_art(kind:String,size:int)->TextureRect:
+ var regions={"axe":Rect2(115,5,491,630),"hammer":Rect2(701,5,482,627),"gun":Rect2(4,770,715,324),"shield":Rect2(707,655,543,590)}
+ var view=TextureRect.new();var texture=AtlasTexture.new();texture.atlas=HoldCombat.EQUIPMENT;texture.region=regions[kind];texture.filter_clip=true
+ view.texture=texture;view.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;view.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+ view.custom_minimum_size=Vector2(size,size);view.mouse_filter=Control.MOUSE_FILTER_IGNORE
+ return view
+
 static func panel(g):
  var c=g.state.combat;var d=ensure(c)
  if g.gear_tab!="forge":g.label(g.panel_body,"%d owned pieces · Compared with equipped gear · Combat costs no energy" % d.items.size(),14)
@@ -96,8 +103,12 @@ static func panel(g):
  for item in d.items:
   if slot(item.kind)!=g.gear_tab:continue
   var selected=d.equipped[g.gear_tab]==item.id
-  var body=card(g,grid,title(item));body.get_parent().custom_minimum_size.x=390;body.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  g.label(body,MATERIALS[item.kind]+" · "+("Tempered" if item.grade==1 else "Standard")+(" · Borin’s collection gift" if item.id=="collection_smith141" else " · #"+item.id.trim_prefix("gear_").trim_prefix("legacy_")),14)
+  var panel=g.section(grid,"");panel.get_parent().custom_minimum_size.x=392;panel.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  var line=g.row(panel)
+  if item.kind in HoldCombat.WEAPONS:line.add_child(weapon_art(item.kind,76))
+  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(body)
+  g.label(body,title(item),18)
+  g.label(body,MATERIALS[item.kind]+" · "+("Tempered" if item.grade==1 else "Standard")+(" · Borin’s collection gift" if item.id=="collection_smith141" else " · No. "+item.id.trim_prefix("gear_") if item.id.begins_with("gear_") else ""),14)
   g.label(body,comparison(c,item),15)
   var b=g.small_button(body,"Equipped" if selected else "Equip "+title(item),func():if equip(g,item.id):g.refresh_panel())
   b.disabled=selected;b.tooltip_text=spec(item.kind).get("desc","Protects against unblocked damage. No movement penalty.")

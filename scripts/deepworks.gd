@@ -1,13 +1,52 @@
 class_name Deepworks
 extends RefCounted
+const Headworks=preload("res://scripts/pinewood_headworks.gd")
 # Additive save model. Legacy Geology remains intact for rollback and old structures.
+const Quarry=preload("res://quarry/buried_quarry.gd")
 const W=80
 const H=64
 const TILE=40
-const DEPTHS=5
+const Strata=preload("res://scripts/claim_strata.gd")
+const INITIAL_DEPTHS=5
 const ENTRY=Vector2i(8,8)
 const DIRS=[Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]
-const NAMES=["Lamplight Galleries","Copperfold","The Rootless Sea","King's Forgotten Works","The Aether Heart","Stonewright Delve","Blackvein Reach","Farbank Works"]
+static var NAMES:Array=depth_names()
+static func depth_names()->Array:
+ var names=["Lamplight Galleries","Copperfold","The Rootless Sea","King's Forgotten Works","The Aether Heart","Stonewright Delve","Blackvein Reach","Farbank Works"]
+ for n in range(6,Strata.BOTTOM+1):
+  names.append("Depth %d · %s" % [n,Strata.BANDS[Strata.band(n)]])
+ return names
+
+static func floor_tag(z:int)->String:
+ var n=Strata.number(z)
+ return "D%d" % n if n>0 else str(NAMES[z])
+
+static func above(z:int)->int:
+ var n=Strata.number(z)
+ return Strata.slot(n-1) if n>1 else -1
+
+func below(z:int)->int:
+ var n=Strata.number(z)
+ if n==0 or (state.active_site!="claim" and n>=INITIAL_DEPTHS):return -1
+ return Strata.slot(n+1)
+
+func descent_note(z:int)->String:
+ var lower=below(z)
+ if lower<0:
+  if Strata.number(z)==0:return "Follow the marked adits between lateral worksites."
+  return "You have reached the bedrock beneath this mine."
+ return Strata.gate(self,Strata.number(lower))
+
+func prepare_below(z:int)->int:
+ if descent_note(z)!="":return -1
+ var lower=below(z)
+ if lower<data.layers.size():return lower
+ if lower==8:HoldMineworks143.prepare(self)
+ if lower!=data.layers.size():return -1
+ data.layers.append(Strata.make_layer(int(data.seed),Strata.number(lower)))
+ add_landmarks(lower)
+ return lower
+
 var data:Dictionary
 var state
 var landmark_cache:Array=[]
@@ -16,8 +55,11 @@ func _init(s):
  state=s
  if not s.deepworks.has(s.active_site):
   s.deepworks[s.active_site]=generate(s.seed_value+(7919 if s.active_site=="claim" else 0))
-  if s.active_site=="hold":HoldWorkplace98.seed(s.deepworks[s.active_site])
+  if s.active_site=="claim":Quarry.plan(s.deepworks.claim)
+  if s.active_site=="hold":
+   HoldWorkplace98.seed(s.deepworks[s.active_site]);Headworks.carve(s.deepworks.hold,Headworks.saved(s))
  data=s.deepworks[s.active_site]
+ if s.active_site=="claim":Quarry.restore_passage(data)
  rebuild_landmarks()
 static func key(c:Vector2i)->String:return "%d,%d" % [c.x,c.y]
 static func cell(p:Vector2)->Vector2i:return Vector2i(floor(p.x/TILE),floor(p.y/TILE))
@@ -26,7 +68,7 @@ static func generate(seed_number:int)->Dictionary:
  var rng=RandomNumberGenerator.new();rng.seed=seed_number
  var offset=rng.randf_range(-2,2)
  var layers:Array=[]
- for z in DEPTHS:
+ for z in INITIAL_DEPTHS:
   var cells:Array=[];var strata:Array=[]
   for y in H:
    for x in W:
@@ -71,6 +113,12 @@ func at(c:Vector2i,z:int=-1)->int:
  return int(layer(z).cells[c.y*W+c.x])
 func set_cell(c:Vector2i,kind:int,z:int=-1):
  if c.x<1 or c.y<1 or c.x>=W-1 or c.y>=H-1:return
+ if kind==0 and at(c,z)!=0:
+  var area="mine:"+state.active_site+":"+str(depth() if z<0 else z)
+  var workroom=state.hauling.get("hands",{}).get("workshops",{}).get(area,{})
+  workroom.get("facing",{}).erase(key(c))
+  var marks=workroom.get("wear",{})
+  if marks.has(key(c)):marks[key(c)].erase("soot")
  layer(z).cells[c.y*W+c.x]=kind
 # Landmark type, drawn anchor and physical base share one definition. JSON numbers
 # are floats after loading; never use raw Variant membership to select artwork.
@@ -78,44 +126,73 @@ static func landmark_type(f:Dictionary)->int:return int(f.get("type",0))
 func rebuild_landmarks():
  landmark_cache.clear()
  for z in data.layers.size():
-  var parts:Array=[]
-  for f in layer(z).features:
-   f.type=landmark_type(f)
-   var origin=center(Vector2i(int(f.x),int(f.y)))
-   var anchors:Array=f.get("anchors",[])
-   var count=3 if f.type==2 else 1
-   for j in count:
-    var p=origin+(Vector2((j-1)*55,(j%2)*25) if f.type==2 else Vector2(0,20))
-    if anchors.size()==count:p=Vector2(anchors[j][0],anchors[j][1])
-    var width=48.0 if f.type==2 else 110.0 if f.type==1 else 78.0
-    var height=70.0 if f.type==2 else width*411.0/424.0
-    parts.append({"kind":"landmark","p":p,"art":4 if f.type==2 else 3,"width":width,"height":height,"feature":f,
-     "base":p-Vector2(0,height*.17),"radius":Vector2(width*.44,height*.16)})
-  # Preserve construction in old saves: shift an overlapping landmark as a whole
-  # to nearby open cavern floor, then save its anchors. Never move player property.
-  var reserved:Array=[]
-  for link in data.links.values():
-   if z in [int(link.upper),int(link.lower)]:reserved.append({"p":center(Vector2i(int(link.x),int(link.y))),"half":Vector2(30,30)})
-  for f in data.get("living",{}).get("furniture",{}).values():
-   if int(f.depth)==z:reserved.append({"p":center(Vector2i(int(f.x),int(f.y))),"half":Vector2(23,23)})
-  for f in state.hauling.get("hands",{}).get("facilities",[]):
-   if f.get("area","")=="mine:"+state.active_site+":"+str(z):reserved.append({"p":Vector2(f.x,f.y),"half":Vector2(55,42)})
-  for f in layer(z).features:
-   var group:Array=[]
-   for part in parts:
-    if is_same(part.feature,f):group.append(part)
-   if not landmark_conflict(group,Vector2.ZERO,reserved,z):continue
-   var shift=Vector2.ZERO
-   for radius in range(20,321,20):
-    for i in 32:
-     var offset=Vector2.from_angle(i*TAU/32.0)*radius
-     if not landmark_conflict(group,offset,reserved,z):shift=offset;break
-    if shift!=Vector2.ZERO:break
-   if shift!=Vector2.ZERO:
-    f.anchors=[]
-    for part in group:
-     part.p+=shift;part.base+=shift;f.anchors.append([part.p.x,part.p.y])
-  landmark_cache.append(parts)
+  add_landmarks(z)
+func add_landmarks(z:int):
+ var parts:Array=[]
+ for f in layer(z).features:
+  if Strata.number(z)==36 and f.get("prop","")=="pressure_manifold":
+   Strata.Court.Regulator.install(layer(z),f)
+   continue
+  if Strata.number(z)==50 and f.get("prop","")=="royal_throne":
+   Strata.Court.install(layer(z),f)
+   continue
+  f.type=landmark_type(f)
+  var origin=center(Vector2i(int(f.x),int(f.y)))
+  var anchors:Array=f.get("anchors",[])
+  var count=3 if f.type==2 else 1
+  var arrangement:Array=[]
+  if f.has("prop"):
+   arrangement=[[f.prop,0,0]]
+   arrangement.append_array(Strata.DRESSING.get(Strata.number(z),[]))
+   count=arrangement.size()
+  for j in count:
+   var p=origin+(Vector2((j-1)*55,(j%2)*25) if f.type==2 else Vector2(0,20))
+   if not arrangement.is_empty():p=origin+Vector2(arrangement[j][1],arrangement[j][2])
+   if anchors.size()==count:p=Vector2(anchors[j][0],anchors[j][1])
+   var width=48.0 if f.type==2 else 110.0 if f.type==1 else 78.0
+   var height=70.0 if f.type==2 else width*411.0/424.0
+   if f.has("prop"):
+    var prop=arrangement[j][0]
+    var footprint=HoldFurnishings.footprint(prop,p)
+    parts.append({"kind":"landmark","prop":prop,"p":p,"art":0,"width":footprint.size.x,"height":footprint.size.y,"feature":f,"base":footprint.get_center(),"radius":footprint.size*.5})
+    continue
+   parts.append({"kind":"landmark","p":p,"art":4 if f.type==2 else 3,"width":width,"height":height,"feature":f,
+    "base":p-Vector2(0,height*.17),"radius":Vector2(width*.44,height*.16)})
+ # Preserve construction in old saves: shift an overlapping landmark as a whole
+ # to nearby open cavern floor, then save its anchors. Never move player property.
+ var reserved:Array=[]
+ for link in data.links.values():
+  if z in [int(link.upper),int(link.lower)]:reserved.append({"p":center(Vector2i(int(link.x),int(link.y))),"half":Vector2(30,30)})
+ for f in data.get("living",{}).get("furniture",{}).values():
+  if int(f.depth)==z:reserved.append({"p":center(Vector2i(int(f.x),int(f.y))),"half":Vector2(23,23)})
+ for f in state.hauling.get("hands",{}).get("facilities",[]):
+  if f.get("area","")=="mine:"+state.active_site+":"+str(z):reserved.append({"p":Vector2(f.x,f.y),"half":Vector2(55,42)})
+ if Strata.number(z) in [36,50]:
+  for k in layer(z).fixtures:
+   var xy=k.split(",")
+   reserved.append({"p":center(Vector2i(int(xy[0]),int(xy[1]))),"half":Vector2(20,20)})
+  for room in data.get("living",{}).get("rooms",{}).values():
+   if int(room.depth)==z:
+    var r=Rect2(room.x*40,room.y*40,room.w*40,room.h*40)
+    reserved.append({"p":r.get_center(),"half":r.size*.5})
+ for f in layer(z).features:
+  if f.has("court_plan") or f.has("regulator_plan"):
+   parts.append_array(Strata.Court.furniture(self,z,f,reserved));continue
+  var group:Array=[]
+  for part in parts:
+   if is_same(part.feature,f):group.append(part)
+  if not landmark_conflict(group,Vector2.ZERO,reserved,z):continue
+  var shift=Vector2.ZERO
+  for radius in range(20,321,20):
+   for i in 32:
+    var offset=Vector2.from_angle(i*TAU/32.0)*radius
+    if not landmark_conflict(group,offset,reserved,z):shift=offset;break
+   if shift!=Vector2.ZERO:break
+  if shift!=Vector2.ZERO:
+   f.anchors=[]
+   for part in group:
+    part.p+=shift;part.base+=shift;f.anchors.append([part.p.x,part.p.y])
+ landmark_cache.append(parts)
 func landmark_conflict(parts:Array,offset:Vector2,reserved:Array,z:int)->bool:
  for part in parts:
   var moved=part.duplicate();moved.base+=offset
@@ -135,23 +212,34 @@ func landmark_solid(p:Vector2,z:int=-1,half:Vector2=FEET)->bool:
  for part in landmarks(z):
   if base_overlaps(part,p,half):return true
  return false
+func headworks_blocks(p:Vector2,z:int)->bool:
+ var d=Headworks.saved(state)
+ return not d.is_empty() and state.active_site=="hold" and (z==0 or (z==-1 and depth()==0)) and Headworks.obstacle(d,p)
 func terrain_walkable(c:Vector2i,z:int=-1)->bool:
  if at(c,z)!=0:return false
  var f=data.get("living",{}).get("furniture",{}).get(link_key(c,depth() if z<0 else z),{})
  return not f.get("solid",false)
 func walkable(c:Vector2i,z:int=-1)->bool:
- return terrain_walkable(c,z) and not landmark_solid(center(c),z) and not equipment_solid(center(c),z) and not HoldMineEntrance.blocks(self,center(c),depth() if z<0 else z)
+ return terrain_walkable(c,z) and not headworks_blocks(center(c),z) and not landmark_solid(center(c),z) and not equipment_solid(center(c),z) and not HoldMineEntrance.blocks(self,center(c),depth() if z<0 else z)
 func terrain_solid(p:Vector2,z:int=-1)->bool:
  for d in [Vector2(-10,-8),Vector2(10,-8),Vector2(-10,8),Vector2(10,8)]:
   if not terrain_walkable(cell(p+d),z):return true
  return false
 func equipment_solid(p:Vector2,z:int=-1)->bool:
  var context="mine:"+state.active_site+":"+str(depth() if z<0 else z)
+ var workshop=state.hauling.get("hands",{}).get("workshops",{}).get(context,{})
+ if not workshop.is_empty():
+  var layout=preload("res://workshop/layout.gd")
+  var here=cell(p)
+  for y in range(here.y-1,here.y+2):
+   for x in range(here.x-1,here.x+2):
+    var obj=layout.on_cell(workshop,Vector2i(x,y))
+    if not obj.is_empty() and layout.foot(obj).grow(8).has_point(p):return true
  for f in state.hauling.get("hands",{}).get("facilities",[]):
   if f.get("area","")!=context or f.get("hitched",false):continue
   if HoldHandworks.footprint(f).grow(10).has_point(p):return true
  return false
-func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or landmark_solid(p,z) or equipment_solid(p,z) or HoldMineEntrance.blocks(self,p,depth() if z<0 else z)
+func solid(p:Vector2,z:int=-1)->bool:return terrain_solid(p,z) or headworks_blocks(p,z) or landmark_solid(p,z) or equipment_solid(p,z) or HoldMineEntrance.blocks(self,p,depth() if z<0 else z)
 func clear_step(a:Vector2,b:Vector2,z:int=-1)->bool:
  for i in range(1,9):
   if solid(a.lerp(b,i/8.0),z):return false
@@ -203,7 +291,8 @@ func formation(c:Vector2i,z:int=-1,kind:int=-1)->Dictionary:
  var best=-1;var distance=7.0
  for v in 5:
   if [5,3,4,3,6][v]!=k:continue
-  var delta=absf(c.x-(13+v*13+sin(c.y*.12+v+offset)*3+level*1.2))
+  var axis=Strata.seam_axis(v,c.y,Strata.number(level),offset) if Strata.number(level)>0 else 13+v*13+sin(c.y*.12+v+offset)*3+level*1.2
+  var delta=absf(c.x-axis)
   if delta<distance:distance=delta;best=v
  var id=str(k)+":"+("seam"+str(best) if best>=0 else "pocket"+str(c.x/8)+":"+str(c.y/8))
  return {"id":id,"name":{3:"Anvil iron",4:"Copperfold",5:"Blackribbon coal",6:"Prismatic root"}[k]+(" · seam "+str(best+1) if best>=0 else " · pocket"),"kind":k}
@@ -223,7 +312,9 @@ func grade(c:Vector2i,z:int=-1)->int:
  var value=sin(c.y*.17+phase+level*.21)+cos(c.x*.22-level*.19)
  return 2 if value>.55 else (0 if value<-.65 else 1)
 func yield_count(c:Vector2i,z:int=-1)->int:
- return [3,5,8][grade(c,z)] if at(c,z) in [3,4,5] else 4 if at(c,z) in [2,7] else 3 if at(c,z)==6 else 1
+ var n=Strata.number(depth() if z<0 else z)
+ var premium=1+Strata.band(n) if n>=6 else 0
+ return premium+[3,5,8][grade(c,z)] if at(c,z) in [3,4,5] else 4 if at(c,z) in [2,7] else 3+premium if at(c,z)==6 else 1
 func grade_label(c:Vector2i,z:int=-1)->String:
  return ["LEAN", "BANDED", "RICH"][grade(c,z)] if at(c,z) in [3,4,5] else ""
 func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:String="pick",work:Dictionary={})->Dictionary:
@@ -252,6 +343,9 @@ func strike(c:Vector2i,z:int=-1,thermal:bool=false,deliver:bool=true,method:Stri
  if thermal:
   if k in [3,4]:item="iron_slag" if k==3 else "copper_slag"
   if k==5:count=0
+ if (depth() if z<0 else z)==0 and Quarry.is_slab(data.get("quarry",{}),c):
+  data.quarry["taken_"+str(c.x-Quarry.slab(data.quarry).x)]=true
+  item="dressed_stone";count=2
  if deliver:state.add(item,count)
  state.mined+=1
  if not thermal:record_lode(c,z,k,count)
@@ -266,10 +360,17 @@ func survey(p:Vector2)->Array:
  for f in l.features:
   if f.found:continue
   var revealed=false
-  for part in landmarks():
-   if is_same(part.feature,f) and p.distance_to(part.base)<350 and visible(p,part.base,-1,false):revealed=true;break
+  if f.has("court_plan"):
+   var seat=center(Strata.Court.site_cell(f))
+   revealed=p.distance_to(seat)<140 and visible(p,seat,-1,false)
+  else:
+   for part in landmarks():
+    if is_same(part.feature,f) and p.distance_to(part.base)<350 and visible(p,part.base,-1,false):revealed=true;break
   if revealed:
    f.found=true;data.discoveries.append(f.name);found.append(f.name)
+   if f.has("salvage"):
+    for item in f.salvage:state.add(item,int(f.salvage[item]))
+    found[-1]+=" · "+HoldData.cost_text(f.salvage)
    if f.get("rare",false):state.add("crystal",3);state.add("scrap",4)
  return found
 func link_key(c:Vector2i,z:int)->String:return str(z)+":"+key(c)
@@ -279,33 +380,38 @@ func carve_stairs(c:Vector2i,kind:String="stair")->String:
   if HoldEstateCellar.reserved(state,c+d,depth()):return "Keep the home cellar landing separate from deeper stairs."
  var z=depth()
  if kind not in ["stair","ladder"]:return "Choose stairs or a timber ladder."
- if z>=DEPTHS-1:return "The surveyed frontier ends here. Lateral mineworks connect through their marked adits."
+ var note=descent_note(z)
+ if note!="":return note
  if HoldMineworks143.reserved(self,c,z):return "Keep the mineworks freight landing clear."
  if not walkable(c):return "Stand on clear excavated ground."
- if at(c,z+1)==8:return "The lower landing lies beyond the surveyed boundary."
- if at(c,z+1)==0 and not walkable(c,z+1):return "A landmark or furnishing blocks the landing below. Choose clear ground."
+ var lower=prepare_below(z)
+ if lower<0:return "No lower landing is available."
+ if at(c,lower)==8:return "The lower landing lies beyond the surveyed boundary."
+ if at(c,lower)==0 and not walkable(c,lower):return "A landmark or furnishing blocks the landing below. Choose clear ground."
  var previous=data.links.get(link_key(c,z),{})
+ if previous.get("kind","")=="ramp":return "This grade already connects the two floors."
  if not previous.is_empty() and (previous.get("kind","stair")==kind or kind=="ladder"):
   return "A passage already connects these levels. E down; Shift+E up."
- if at(c,z+1)==7 and not state.steel:return "Basalt below: forge a steel pick before opening this passage."
+ if at(c,lower)==7 and not state.steel:return "Basalt below: forge a steel pick before opening this passage."
  if kind=="ladder" and not state.pay({"wood":2}):return "A timber ladder needs 2 delivered timber."
  # Ladder shafts clear one landing; stairs clear a wider crew/cart landing. No mining rewards.
  var clearance=[Vector2i.ZERO] if kind=="ladder" else [Vector2i.ZERO,Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]
  for d in clearance:
-  if at(c+d,z+1)!=8:set_cell(c+d,0,z+1)
+  if at(c+d,lower)!=8:set_cell(c+d,0,lower)
  var link=previous.duplicate(true)
- link.merge({"x":c.x,"y":c.y,"upper":z,"lower":z+1,"kind":kind},true)
+ link.merge({"x":c.x,"y":c.y,"upper":z,"lower":lower,"kind":kind},true)
  data.links[link_key(c,z)]=link
- return ("Timber ladder fitted" if kind=="ladder" else "Stair carved")+" to "+NAMES[z+1]+". E down; Shift+E up."
+ return ("Timber ladder fitted" if kind=="ladder" else "Stair carved")+" to "+NAMES[lower]+". E down; Shift+E up."
 func traverse(c:Vector2i,up:bool)->bool:
- var z=depth();var upper=z-1 if up else z
- if upper<0 or upper>=DEPTHS-1 or not can_descend(c,upper):return false
+ var z=depth();var upper=above(z) if up else z
+ if upper<0 or not can_descend(c,upper):return false
  var link=data.links[link_key(c,upper)]
- if not walkable(c,z-1 if up else z+1):return false
+ var target=int(link.upper if up else link.lower)
+ if target<0 or target>=data.layers.size() or not walkable(c,target):return false
  if not up:link.descended=true
  elif link.get("descended",false) and not link.get("return_tested",false):
   link.return_tested=true;HoldOnboarding.fact(state,"route_tested")
- data.depth=z-1 if up else z+1;data.position=[center(c).x,center(c).y];return true
+ data.depth=target;data.position=[center(c).x,center(c).y];return true
 func entrance(p:Vector2)->bool:return depth()==0 and (cell(p).distance_to(ENTRY)<2.2 or HoldMineEntrance.inside_near(self,p))
 # Flood-fill only excavated ground. Returns a physically walkable route to a face or stair.
 func route(start:Vector2i,z:int,priority:String,destination:Vector2i=Vector2i(-1,-1))->Dictionary:

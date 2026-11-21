@@ -3,35 +3,60 @@ extends RefCounted
 # The visible mouth, feet collision and crossing plane share these dimensions.
 const HALF_OPENING=72.0
 const CROSSING_HALF=58.0
+const HILLSIDE = preload("res://assets/mine_thresholds/hillside.webp")
+const DAYLIGHT = preload("res://assets/mine_thresholds/daylight.webp")
+const DRIFT = preload("res://assets/mine_thresholds/drift.webp")
+static func paint(n, p: Vector2, texture: Texture2D, width: float, threshold: Vector2):
+ var size = texture.get_size() * (width / texture.get_width())
+ n.draw_texture_rect(texture, Rect2(p - size * threshold, size), false)
+static func connect_approach(paths: Array, p: Vector2) -> Array:
+ var result = []
+ for path in paths:
+  if path.size() < 2 or Vector2(path[-1]).distance_to(p) > 1:
+   result.append(path)
+   continue
+  var approach = PackedVector2Array(path)
+  approach.resize(approach.size() - 1)
+  approach.append(p + Vector2(0, 55))
+  approach.append(p)
+  result.append(approach)
+ return result
 static func position(area:String)->Vector2:
  return Vector2(950,300) if area=="trail" else Vector2(1280,345)
-static func obstacles(p:Vector2)->Array:
- return [Rect2(p+Vector2(-130,-110),Vector2(58,120)),Rect2(p+Vector2(72,-110),Vector2(58,120))]
-static func ground(g,p:Vector2):
- # Worn track bed leads through the threshold, rather than into the piers.
- g.draw_colored_polygon(PackedVector2Array([p+Vector2(-69,-25),p+Vector2(69,-25),p+Vector2(89,90),p+Vector2(-89,90)]),Color("776f57"))
- for y in range(-12,83,15):
-  g.draw_line(p+Vector2(-45,y),p+Vector2(45,y),Color("4a4c43"),6)
- for x in [-30,30]:
-  g.draw_line(p+Vector2(x,-30),p+Vector2(x,92),Color("293e40"),5)
-  g.draw_line(p+Vector2(x-1,-30),p+Vector2(x-1,92),Color("b2aaa0"),2)
- g.draw_line(p+Vector2(-68,7),p+Vector2(68,7),Color("c6ad74"),3)
+static func shoulder_span(p: Vector2, bounds: Rect2, exclusions: Array) -> Vector2:
+ var reach = Vector2(minf(375, p.x - bounds.position.x), minf(385, bounds.end.x - p.x))
+ for occupied: Rect2 in exclusions:
+  if occupied.end.y < p.y - 130 or occupied.position.y > p.y + 12: continue
+  if occupied.end.x < p.x: reach.x = minf(reach.x, p.x - occupied.end.x - 8)
+  elif occupied.position.x > p.x: reach.y = minf(reach.y, occupied.position.x - p.x - 8)
+ return reach.clamp(Vector2(105, 105), Vector2(375, 385))
+static func site_span(area: String, p: Vector2, g = null) -> Vector2:
+ var exclusions = [HoldWorldZones.TRAIL_RIVER_BANK] if area == "trail" else []
+ if g != null:
+  for item in g.state.surface.chests.values():
+   if g.surface.house.local(item): exclusions.append(HoldFurnishings.footprint("chest", Vector2(item.x, item.y)))
+  for item in g.state.surface.decor:
+   if g.surface.house.local(item): exclusions.append(HoldFurnishings.footprint(item.kind, Vector2(item.x, item.y)))
+  for item in g.state.hauling.get("hands", {}).get("facilities", []):
+   if item.get("area", "") == "surface:" + area + ":0" and not item.get("hitched", false): exclusions.append(HoldHandworks.footprint(item))
+ return shoulder_span(p, Rect2(Vector2.ZERO, HoldSurface.SIZE), exclusions)
+static func obstacles(p: Vector2, area: String, g = null) -> Array:
+ var span = site_span(area, p, g)
+ return [Rect2(p + Vector2( - span.x * 0.78, -98), Vector2(span.x * 0.78 - HALF_OPENING, 100)),
+  Rect2(p + Vector2(HALF_OPENING, -98), Vector2(span.y * 0.78 - HALF_OPENING, 100))]
 static func draw(g,p:Vector2):
  # Painted hold masonry frames a deep, visibly open tunnel.
- var fade=.35 if g.player.y<p.y-8 and absf(g.player.x-p.x)<140 else 1.0
- g.draw_colored_polygon(PackedVector2Array([p+Vector2(-72,0),p+Vector2(-72,-100),p+Vector2(-48,-126),p+Vector2(48,-126),p+Vector2(72,-100),p+Vector2(72,0)]),Color(.035,.065,.07,fade))
- for side in [-1,1]:
-  HoldMasonryArt.pillar(g,p+Vector2(side*98,10),132,Color(1,1,1,fade))
-  g.draw_line(p+Vector2(side*64,-18),p+Vector2(side*64,-93),Color(.28,.32,.29,fade),8)
- HoldMasonryArt.wall(g,Rect2(p+Vector2(-126,-153),Vector2(252,40)))
- var sign=Rect2(p+Vector2(-65,-151),Vector2(130,24))
- g.draw_rect(sign,Color("273f40"));g.draw_rect(sign,Color("c1a575"),false,1)
- HoldSurface.A.text(g,p+Vector2(-53,-134),"OLD WORKINGS" if g.surface.area=="trail" else "DEEPWORKS",12,Color("eed5a0"))
- for side in [-1,1]:
-  var lamp=p+Vector2(side*97,-73)
-  g.draw_circle(lamp,12,Color(1,.67,.25,.09));g.draw_rect(Rect2(lamp-Vector2(4,7),Vector2(8,14)),Color("e8bb69"))
- if g.player.distance_to(p)<170:
-  HoldSurface.A.text(g,p+Vector2(-64,111),"WALK IN  /  E ENTER",12,Color("edd4a2"))
+ var span = site_span(g.surface.area, p, g)
+ var texture_size = HILLSIDE.get_size()
+ var height = texture_size.y * 760 / texture_size.x
+ var left = p.x - span.x
+ var top = p.y - height * 0.925
+ var start = 0.0
+ for part in [[0.355, p.x - 105], [0.631, p.x + 105], [1.0, p.x + span.y]]:
+  var destination = Rect2(left, top, part[1] - left, height)
+  var source = Rect2(start * texture_size.x, 0, (part[0] - start) * texture_size.x, texture_size.y)
+  g.draw_texture_rect_region(HILLSIDE, destination, source)
+  start = part[0];left = part[1]
 
 # Interior doors sit in the northern wall of the arrival bay, not the freight floor.
 # The saved choice only moves a doorway; terrain, furniture and cargo stay untouched.
@@ -62,10 +87,10 @@ static func blocks(w,p:Vector2,z:int)->bool:
  var doors=[]
  if z==0:doors.append({"p":inside_position(w),"side":false})
  var q=w.data.get("mineworks143",{})
- if z==0 and q.has("entrance"):
+ if z == 0 and q.has("entrance") and w.at(Vector2i(int(q.entrance[0]), int(q.entrance[1])) + Vector2i.UP, 0) != 0:
   doors.append({"p":Deepworks.center(Vector2i(int(q.entrance[0]),int(q.entrance[1]))),"side":false})
  var back=q.get("returns144",{}).get(str(z),[])
- if back.size()==2:doors.append({"p":Deepworks.center(Vector2i(int(back[0]),int(back[1]))),"side":false})
+ if back.size() == 2 and w.at(Vector2i(int(back[0]), int(back[1])) + Vector2i.UP, z) != 0: doors.append({"p": Deepworks.center(Vector2i(int(back[0]), int(back[1]))), "side": false})
  if z==5:doors.append({"p":Deepworks.center(Vector2i(23,10)),"side":true})
  if z==6:doors.append({"p":Deepworks.center(Vector2i(33,12)),"side":true})
  for door in doors:
@@ -79,6 +104,14 @@ static func inside_prop(w)->Dictionary:
 static func draw_inside(n,o:Dictionary):
  var p:Vector2=o.p
  # Side headings use an oblique wall face; the posts stay upright in both views.
+ if not o.get("side", false) and o.open:
+  if o.get("floor_stair", false):
+   HoldMasonryArt.stairs(n, p - Vector2(0, 24), p + Vector2(0, 22))
+  elif o.kind == "entryway144":
+   paint(n, p, DAYLIGHT, 180, Vector2(0.5, 0.91))
+  else:
+   paint(n, p, DRIFT, 174, Vector2(0.51, 0.91))
+  return
  var edge=Vector2(.44,.9) if o.get("side",false) else Vector2.RIGHT
  var inward=Vector2.LEFT if o.get("side",false) else Vector2.DOWN
  var left=p-edge*56;var right=p+edge*56;var height=Vector2(0,94)

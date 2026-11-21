@@ -105,6 +105,10 @@ func validate(r:Dictionary,ignore:String="")->bool:
     if not edge(r,Vector2i(x,y)) or not edge(other,Vector2i(x,y)):message="Rooms may share walls, but their usable spaces cannot overlap.";return false
  if HoldUpperBlueprints.crosses_stair(self,r):message="Keep stair landings inside rooms or corridors, clear of walls.";return false
  if level()>0:return HoldUpperBlueprints.validate(self,r)
+ var site=preload("res://settlement/building_site.gd")
+ var foundation=Rect2(Vector2(b.position)*h.CELL,Vector2(b.size)*h.CELL)
+ if not site.level_claim_ground(a.g,foundation.grow(site.MARGIN)):
+  message="Keep the entire room foundation on level ground inside the edge.";return false
  var solids=a.s.base_obstacles(0)+a.obstacles("claim")
  for y in range(b.position.y,b.end.y):
   for x in range(b.position.x,b.end.x):
