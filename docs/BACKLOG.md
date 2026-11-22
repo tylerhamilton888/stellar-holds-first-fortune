@@ -7,3 +7,5 @@ Use the [published Windows 0.125.0 build](https://github.com/tylerhamilton888/st
 - Test the house route, moving a workshop, and the progression from a first trench to a multi-level excavation from a normal campaign save.
 
 Previous work and unresolved playtest ideas are preserved in archive/BEFORE_STONEBRIDGE_MENUS.md.
+
+On 0.125.1, approach the town Ledger via each path, then deliberately take the southeast fork to Pinewood. Compare empty-handed and pick-equipped footfalls along the street and use the Ledger tab to return to the same project from the journal.

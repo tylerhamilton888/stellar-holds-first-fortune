@@ -107,12 +107,13 @@ static func forge_panel(g):
  g.button(g.panel_body,"Review the Hold’s Ledger",func():g.open_panel("great_claim102"))
 static func panel(g):
  var s=g.state
- if HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_ledger_open",false)):
+ if HoldFirstVisit99.first_morning(s) and not HoldGreatClaim102.near(g) and not bool(g.get_meta("early_ledger_open",false)):
   HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Names and careful columns fill the pages: stone for a wall, lamps for the road, meals for the crews. This is where Stonebridge records work done for the town.")
-  g.label(g.panel_body,"Ivar can explain the work when you are ready. Contributions are made at the Ledger Shrine off the Pinewood path or at the records desk in the bunkhouse. Press M to read it from anywhere.",16)
+  g.label(g.panel_body,"Press M to read the Ledger anywhere. To deliver supplies, bring them to this book in town or to the bunkhouse records desk.",16)
   g.small_button(g.panel_body,"Browse the projects",func():g.set_meta("early_ledger_open",true);g.refresh_panel())
   return
- g.label(g.panel_body,"Review contributions from anywhere. To deliver supplies, visit the Ledger Shrine south of the main street, off the Pinewood path.",16)
+ var at_desk=HoldGreatClaim102.near(g)
+ g.label(g.panel_body,"Deliver supplies from your pack here." if at_desk else "Reading from afar · Deliver supplies at the town Ledger or the bunkhouse records desk.",16)
  var first_project=not complete(s,"forge")
  if first_project:g.label(g.panel_body,forge_lead(s).hint,16)
  else:
@@ -141,8 +142,13 @@ static func panel(g):
    var row=g.row(box);HoldItemArt.icon(row,item)
    g.label(row,"%s · %d / %d" % [HoldData.ITEMS[item].name,paid(s,id,item),p.cost[item]],15)
    var amount=mini(s.count(item),int(remaining(s,id).get(item,0)))
-   var b=g.small_button(row,"Contribute %d" % amount,func():contribute(g,id,item,amount);g.refresh_panel())
-   b.disabled=amount<=0 or not unlocked(s,id) or not HoldGreatClaim102.near(g)
+   var outstanding=int(remaining(s,id).get(item,0))
+   var caption="Contribute %d" % amount
+   if outstanding==0:caption="Delivered"
+   elif amount==0:caption="None in pack"
+   elif not at_desk:caption="In pack: %d" % s.count(item)
+   var b=g.small_button(row,caption,func():contribute(g,id,item,amount);g.refresh_panel())
+   b.disabled=amount<=0 or not unlocked(s,id) or not at_desk
   if id=="north_bridge":
    g.button(box,"Bridge stages and specialist work orders",func():g.open_panel("restoration139"))
   elif id in ["storehouse","winter"]:

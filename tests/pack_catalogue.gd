@@ -11,7 +11,8 @@ func run():
  check(g.pack_selection=="wood","Search selects the first visible result")
  search.text="no match";search.text_changed.emit(search.text)
  check(g.pack_selection=="" and not g.panel.find_child("PackScroll",true,false).visible,"No results clears the inspector")
- search.text="";search.text_changed.emit(search.text);scope.select(1);scope.item_selected.emit(1);category.select(1);category.item_selected.emit(1)
+ button("Clear filters");check(search.text.is_empty() and category.selected==0 and g.pack_selection!="","Clear filters restores carried items without changing the view")
+ scope.select(1);scope.item_selected.emit(1);category.select(1);category.item_selected.emit(1)
  var grid=g.panel.find_child("PackGrid",true,false)
  check(grid.get_children().filter(func(b):return b.visible).size()==4,"Seed catalogue contains all four seed kinds")
  var icons={}

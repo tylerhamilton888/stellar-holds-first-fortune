@@ -64,7 +64,7 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
  if HoldStoryWorld105.has_profile(p,action):return HoldStoryWorld105.descriptor(p,d,walking,time,action,phase,metadata)
  var view=HoldDirectional.view(d);var key=posmod(int(time/CYCLE*4),4)
  var sheet=identity(p)+"-core";var index=view
- if walking:index=4+view*4+([0,1,2,1][key] if view==2 else key)
+ if walking:index=4+view*4+key
  if walking and action in ["","town_walk"] and view==1:sheet=identity(p)+"-town"
  if action in ["pick","axe","hammer"]:
   index={"pick":20,"axe":24,"hammer":28}[action]+contact_frame(phase);view=1
@@ -129,7 +129,50 @@ static func source(sheet:String)->Image:
  return sources[sheet]
 static func cache_key(p:Dictionary,sheet:String,index:int,full:bool=false)->String:
  if sheet.begins_with(HoldStoryWorld105.PREFIX):return "story105-world24:"+sheet+":"+str(index)+":"+str(full)
- return sheet+":"+str(index)+":"+str(p.skin)+":"+HoldAppearance.hair(p).to_html()+":"+str(p.cloth_color)+":"+str(p.jewelry)+":"+str(full)
+ return sheet+(":stride3:" if stride_contact(sheet,index) or opposite_step(sheet,index) else ":")+str(index)+":"+str(p.skin)+":"+HoldAppearance.hair(p).to_html()+":"+str(p.cloth_color)+":"+str(p.jewelry)+":"+str(full)
+# In the two oblique views the painted contacts have almost identical boot
+# silhouettes. Register the far boot a few pixels higher on alternate contacts.
+# This is baked once into the cached figure, before resizing and palette display.
+static func stride_contact(sheet:String,index:int)->bool:
+ if index%4 not in [0,2]:return false
+ if sheet.ends_with("-motion"):return index%4==2 and index<96 and int(index/4)%4 in [1,2]
+ return (sheet.ends_with("-core") or sheet.ends_with("-town")) and index in [8,10,12,14]
+
+# The empty-handed front and back paintings lead with the same boot in
+# both half-cycles. Reflect the boots around the registered stance center
+# on the return pair. Hair, hands, belt and costume keep their handedness.
+static func opposite_step(sheet:String,index:int)->bool:
+ return sheet.ends_with("-core") and index in [6,7,18,19]
+
+static func alternate_feet(img:Image,frame:Dictionary):
+ var h=float(frame.height)
+ var hip=clampi(roundi(frame.root[1]-frame.rect[1]-.28*h),0,img.get_height()-1)
+ var legs=img.get_region(Rect2i(0,hip,img.get_width(),img.get_height()-hip))
+ var bounds=legs.get_used_rect()
+ if not bounds.has_area():return
+ var mirror=int(bounds.position.x+bounds.end.x-1)
+ for y in legs.get_height():
+  var blend=smoothstep(0.,.045*h,float(y))
+  for x in range(bounds.position.x,bounds.end.x):
+   img.set_pixel(x,hip+y,legs.get_pixel(x,y).lerp(legs.get_pixel(mirror-x,y),blend))
+
+static func register_boot_contact(img:Image,frame:Dictionary,index:int):
+ var h=float(frame.height)
+ var center=float(frame.root[0])-float(frame.rect[0])
+ var sole=float(frame.root[1])-float(frame.rect[1])
+ var ankle=clampi(roundi(sole-.23*h),0,img.get_height()-1)
+ var original=img.get_region(Rect2i(0,ankle,img.get_width(),img.get_height()-ankle))
+ var trailing_side=-1.0 if index%4==0 else 1.0
+ for x in range(maxi(0,floori(center-.47*h)),mini(img.get_width(),ceili(center+.47*h))):
+  var lift=h*.072*smoothstep(.005,.13,(x-center)*trailing_side/h)
+  if lift<.5:continue
+  var ratio=(sole-ankle)/maxf(1.,sole-ankle-lift)
+  for y in original.get_height():
+   var source_y=roundi(y*ratio)
+   var ink=original.get_pixel(x,source_y) if source_y<original.get_height() else Color.TRANSPARENT
+   ink=ink.darkened(.18*lift/(h*.072)*smoothstep(0.,.10*h,float(y)))
+   img.set_pixel(x,ankle+y,ink)
+
 static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Texture2D:
  data()
  if sheet.begins_with(Hands.FIXED):return Hands.fixed_frame(sheet.trim_prefix(Hands.FIXED),index)
@@ -174,6 +217,8 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
    elif c.h>.015 and c.h<.10 and c.v>.62 and c.s>.15 and c.s<.64:c=HoldCharacterArt.recolor(c,skin,Color("f3d6bc"))
    elif p.jewelry>0 and c.h>.105 and c.h<.17 and c.s>.45 and c.v>.4:c=HoldCharacterArt.recolor(c,Color(["d8a651","c3cfd2","d59742","746f60"][p.jewelry]),Color("d8a651"))
    img.set_pixel(x,y,c)
+ if opposite_step(sheet,index):alternate_feet(img,m)
+ elif stride_contact(sheet,index):register_boot_contact(img,m,index)
  # Keep palette resolution ahead of the filter for both portrait and game sizes.
  if ratio<1:img.resize(maxi(1,int(img.get_width()*ratio)),maxi(1,int(img.get_height()*ratio)),Image.INTERPOLATE_LANCZOS)
  if not full:img.save_png(disk_path(key))

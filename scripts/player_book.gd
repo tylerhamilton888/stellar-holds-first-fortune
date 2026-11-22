@@ -52,6 +52,9 @@ static func inventory(g):
  pack_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;left.add_child(pack_scroll)
  var grid=GridContainer.new();grid.name="PackGrid";grid.columns=8;grid.add_theme_constant_override("h_separation",4);grid.add_theme_constant_override("v_separation",4);pack_scroll.add_child(grid)
  var empty=g.label(left,"",15)
+ var reset=g.small_button(left,"Clear filters",func():
+  search.text="";category.select(0);search.text_changed.emit(""))
+ reset.tooltip_text="Show all items in the selected view"
  var details=g.section(layout,"");details.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
  var cards=[]
  var show_item=func(id:String):
@@ -92,6 +95,7 @@ static func inventory(g):
     if match_id=="":match_id=card.id
     if card.id==g.pack_selection:keep=true
   pack_scroll.visible=match_id!="";empty.visible=match_id=="";empty.text="No items match. Try another category or clear the search." if query!="" or category.selected>0 else "Your pack is empty. Switch to the item catalogue to browse supplies."
+  reset.visible=match_id=="" and (query!="" or category.selected!=0)
   show_item.call(g.pack_selection if keep else match_id)
  search.text_changed.connect(func(_query):apply.call())
  category.item_selected.connect(func(_index):apply.call())
