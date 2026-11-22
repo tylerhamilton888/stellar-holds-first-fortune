@@ -207,7 +207,8 @@ func people(area:String,time:float=-1)->Array:
   var profile=HoldRoadCharacters.appearance(g.state,"road_folk:"+str(i),profiles[key])
   var plan=g.state.forestry.get("pinewood_plan",{})
   if area=="pinewood" and i==2 and not plan.is_empty():
-   var yard=Pinewood.point(plan,"yard")
+   # Walk along the front of the yard so both rack layouts leave room to talk.
+   var yard=Pinewood.point(plan,"yard")+Vector2(0,26)
    f=f.duplicate();f.a=yard+Vector2(-115,0);f.b=yard+Vector2(115,0)
   var duration=f.a.distance_to(f.b)/38.0;var phase=fposmod(time+i*9,(duration+7)*2)
   var start:Vector2=f.a;var end:Vector2=f.b

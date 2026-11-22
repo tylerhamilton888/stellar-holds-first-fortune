@@ -29,7 +29,7 @@ func run():
   check(HoldWholeFrames.descriptor(p,Vector2.RIGHT,false,0,action,.6)==HoldWholeFrames.descriptor(generic,Vector2.RIGHT,false,0,action,.6),"Unsupported future action retains its functional renderer: "+action)
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player keeps existing character artwork")
  var yard=HoldRoads.Pinewood.point(g.state.forestry.pinewood_plan,"yard")
- var west=yard+Vector2(-115,0);var east=yard+Vector2(115,0)
+ var west=yard+Vector2(-115,26);var east=yard+Vector2(115,26)
  var duration=230.0/38.0;var cycle=2*(duration+7);var beginning=3*cycle-18
  var visited={}
  for step in 108:
@@ -65,5 +65,11 @@ func run():
   var survivor=HoldMountain104.profile(g,index)
   check(survivor.cast_id=="torvik" and HoldWholeFrames.descriptor(survivor,Vector2.UP,true,.26,"town_walk",0).sheet==sheet,"Rescue reuses the same whole-character bundle")
  check(torvik_at(g.state.elapsed).is_empty(),"Trapped Torvik is absent from the pinewood route")
+ # Opposite seed parities place the timber rack on different sides of the work area.
+ for seed_value in [104,105]:
+  g.state.reset(seed_value);g.state.opening=4;g.surface.enter("pinewood");settle()
+  for t in 28:
+   var actor=torvik_at(float(t))
+   check(g.surface.walkable(actor.p) and g.surface.walkable(actor.p+Vector2(0,22)),"Torvik and the conversation approach clear the timber rack: %d/%d" % [seed_value,t])
  print("STORYWORLD117: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
