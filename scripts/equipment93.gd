@@ -115,6 +115,7 @@ static func panel(g):
   g.label(body,MATERIALS[item.kind]+" · "+("Tempered" if item.grade==1 else "Standard")+(" · Borin’s collection gift" if item.id=="collection_smith141" else " · No. "+item.id.trim_prefix("gear_") if item.id.begins_with("gear_") else ""),14)
   g.label(body,comparison(c,item),15)
   var b=g.small_button(body,"Equipped" if selected else "Equip "+title(item),func():if equip(g,item.id):g.refresh_panel())
+  b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
   b.disabled=selected;b.tooltip_text=spec(item.kind).get("desc","Protects against unblocked damage. No movement penalty.")
 static func forge_panel(g):
  var pick=g.row(g.panel_body)
