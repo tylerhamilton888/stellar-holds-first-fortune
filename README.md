@@ -16,7 +16,7 @@ Choose **New Game** and an empty fortune slot for the current opening, or **Load
 
 ## Current chapter
 
-Version 0.125.0 opens in Stonebridge for the contest for Thane. Meet Skarrin and Ivar, visit your holding or help relight the communal forge. The pack, equipment book and workshop menus show what you carry, what you can make and which materials you need.
+The campaign opens in Stonebridge for the contest for Thane. Meet Skarrin and Ivar, then take on your first town project at the communal forge. Ivar can also show you the way to your holding. The pack, equipment book and workshop menus show what you carry, what you can make and which materials you need.
 
 Version 0.124.0 gives editable cottages coherent stone-and-slate architecture and explicit **E** entry into their actual connected rooms. Existing layouts, belongings, stairs and crew routes are preserved. See [cottage review](docs/COTTAGE189.md) and [verified delivery](docs/CURRENT_STATUS.md).
 

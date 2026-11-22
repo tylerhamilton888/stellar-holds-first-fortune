@@ -1,25 +1,23 @@
-# Stonebridge · 0.125.1
+# Stonebridge · 0.125.3
 
-[Download Windows 0.125.1](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.1). Extract the complete ZIP and run FirstFortune.exe. Open main.tscn in Godot 4.4.1 to play from source.
+[Download Windows 0.125.3](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.3). Extract the complete ZIP, then run FirstFortune.exe alongside FirstFortune.pck.
 
-## Playtest fixes
+## Your first quest
 
-The town Ledger and Pinewood share the first stretch of road south of the main street. The western fork leads to the reading court. The southeastern fork leads out of town. The camera stays inside the outdoor map. The northern treeline uses full-size firs.
+Skarrin is your rival in the contest for Thane. Ivar gives you a first town project, **A hearth gone cold**. When the welcome ends, walk out the bunkhouse’s south door, follow the main street east to the communal forge and inspect Borin’s hearth. The journal updates to show how much coal the forge needs. The same guidance appears after skipping the scene or loading an unfinished quest. Ivar can show you Old Stonewright’s Rise whenever you choose.
 
-The player's front and back strides alternate boots. The side and rear-quarter contacts distinguish the supporting foot. The Ledger joins the player book tabs. At the town book or bunkhouse desk, E opens projects directly. The pack offers a filter reset when a search has no matches.
+[First playable moment](stonebridge-playtest/quest-exit.webp) · [Playtest guide](PLAYTEST_GUIDE.md)
 
-[Ledger forecourt](stonebridge-playtest/court.webp) · [Northern treeline](stonebridge-playtest/trees.webp) · [Walking poses](stonebridge-playtest/walk.webp) · [Ledger page](stonebridge-playtest/ledger.webp)
+Walk north up stairs or south to descend. Approach the Ledger via the west fork south of the main street. Pinewood is down the southeast branch. [Ledger court](stonebridge-playtest/court.webp) · [Northern treeline](stonebridge-playtest/trees.webp) · [Walking poses](stonebridge-playtest/walk.webp) · [Ledger page](stonebridge-playtest/ledger.webp)
 
-## Verification
+## Windows verification
 
-[Source PR #196](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/196) · [PR checks](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/45051529033) · [Verified Windows release](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/45051565185)
+[Source PR](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/200) · [Release checks](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/45066066938)
 
-Exported game · 79 cases and 14,966 assertions. Published ZIP · 998,179,994 bytes.
+Source commit · `fad4b16d72c585beae43313754a3c24793d20474`
 
-Source · `32c0c42fee0d99f17ea8c8625fc5e48bfb367b03`
+Exported game · 79 cases and 14,970 assertions. Published ZIP · 998,238,110 bytes.
 
-ZIP SHA-256 · `8a998b4fdafb4585f2ba49be1eaa5767883df6dfb9fa95f5234ca5de2cde3d62`
+ZIP SHA-256 · `d9dfdff04188f34bb52347dc28eb347c13aeb4ab37a4ce864dab10cb9b9e3edf`
 
-PCK SHA-256 · `bc78a17b06fe50fbcbe6a7899a9f816f7c564307cde6c946035805d7fe7ef687`
-
-The normal campaign starts with Skarrin and the contest for Thane. Existing Stonebridge Campaign saves use the same directory. See [the playtest guide](PLAYTEST_GUIDE.md).
+PCK SHA-256 · `0da28540955644cd5cbc2bfb9bdd62ba1405f06546c859492f97dd45792f8a93`
