@@ -65,7 +65,7 @@ func _ready():
    ["IVAR DEEPMEASURE", "‘Skarrin leads the contest. You can read every entry in the Ledger across the street. When you finish a town project or earn a trade seal, I’ll enter your work there too.’"],
    ["RURIK STONEHAND", "‘I’m in that book. Hauled the stone for his wall.’ Rurik shifts the pot off the coals. ‘If you’re looking for a first entry, Borin could use a hand. His forge is cold.’"],
    ["SIGRID EMBERBRAID", "‘Old Stonewright’s Rise? I know your place. Follow the east road across the bridge. When you see the old loading stones, you’re nearly at your door.’"],
-   ["IVAR DEEPMEASURE", "‘I witnessed your deed. Your folks paid in full. I can walk you over, or you can call on Borin first. Come back for supper either way, %s.’" % name]]
+   ["IVAR DEEPMEASURE", "‘Start with Borin, %s. Out the south door, then east along the street to the forge. Have a look at his hearth. Get it burning again and I’ll put your name in the Ledger.’" % name]]
   step=clampi(int(HoldFirstVisit99.data(game.state).get("intro_beat",0)),0,lines.size()-1)
   game.transition_left=0;game.transition_shade.visible=false
   game.camera=game.surface.camera_target();game.surface.direction=Vector2.UP
@@ -105,7 +105,7 @@ func show_line():
    else:foreman_portrait.apply_profile(HoldWorkerLodge100.profile(game,1 if lines[step][0]=="RURIK STONEHAND" else 2 if lines[step][0]=="SIGRID EMBERBRAID" else 0))
   speaker.position.x=125 if step>=3 else 28
   caption.position.x=125 if step>=3 else 28;caption.size.x=635 if step>=3 else 735
- next_button.text=("Begin" if mode=="frontier_arrival" else "Enter the hold" if mode=="arrival" else "Return to work") if step==lines.size()-1 else "Continue"
+ next_button.text=("Find the forge" if mode=="frontier_arrival" else "Enter the hold" if mode=="arrival" else "Return to work") if step==lines.size()-1 else "Continue"
 func advance():
  if age<.25 or (mode=="audience" and not staging_ready()):return
  if step==lines.size()-1:finish();return
@@ -120,7 +120,7 @@ func finish():
   game.velocity=Vector2.ZERO;game.walking_pose=false;game.opening_scene=null
   for control in [game.hud,game.status,game.objectives,game.footer]:control.show()
   game.update_hud()
-  game.notify("Contest for Thane · J for leads · Ivar knows the east road to your home.")
+  game.notify(HoldFirstVisit99.FORGE_BRIEF)
   game.save_game();layer.queue_free();return
  game.state.resident_visits.erase("ivar")
  if mode=="arrival":

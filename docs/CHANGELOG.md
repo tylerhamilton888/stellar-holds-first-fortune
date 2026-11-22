@@ -1,3 +1,7 @@
+## 0.125.3 · Your first town quest
+
+Ivar sends you to inspect Borin’s cold hearth for your first contest entry. The journal and on-screen directions guide you from the bunkhouse to the forge. Inspect the hearth to learn what it needs.
+
 ## 0.125.2 · Walkable stairs
 
 Walk north to climb stairs and south to descend in rooms, service passages, homesteads, cellars and carved mines. Both landings use the painted stone flight. Ladders retain their climb controls.

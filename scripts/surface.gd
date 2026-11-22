@@ -927,6 +927,16 @@ func draw():
   var r=Rect2(near.p+offset,Vector2(20,20))
   g.draw_style_box(world.stone_style(Color("19383c")),r)
   A.text(g,r.position+Vector2(6,15),"E",12,Color("ead4a0"))
+ if g.ui.visible and g.panel_id=="" and placing=="":
+  var marker=HoldFirstVisit99.forge_marker(g)
+  if not marker.is_empty():
+   var target:Vector2=marker.p
+   var anchor=(target-Vector2(0,marker.get("lift",40))).clamp(cam+Vector2(80,136),cam+Vector2(880,456))
+   var direction=anchor.direction_to(target)
+   var tip=anchor+direction*18
+   var side=direction.orthogonal()*5
+   A.poly(g,[tip+direction*7,tip+side,tip-side],A.GOLD)
+   plaque(anchor,marker.label)
  house.preview()
  architecture.preview()
  if placing.begins_with("bank:"):
