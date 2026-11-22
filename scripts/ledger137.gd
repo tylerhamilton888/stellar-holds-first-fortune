@@ -84,7 +84,7 @@ static func skarrin_options(g):
    g.refresh_panel())
 static func forge_lead(s)->Dictionary:
  if complete(s,"forge"):return {"title":"The forge is alight","art":"coal","hint":"Borin's hearth is working again. Smelting and crafting are available at the communal forge.","goal":"The forge is alight · visit Borin for smelting and crafting"}
- if not data(s).inspected:return {"title":"A hearth gone cold","art":"coal","hint":"Borin's forge stands north of the town square. Visit the communal forge and inspect the cold hearth before gathering its fuel.","goal":"Visit the communal forge · inspect the cold hearth · J"}
+ if not data(s).inspected:return {"title":"A hearth gone cold","art":"coal","hint":"Leave the bunkhouse by the south door. Follow the main street east to the communal forge, north of the square. Walk inside and press E at the hearth to inspect it. Relighting the forge earns an entry in the contest for Thane.","goal":"Visit the communal forge · inspect the cold hearth · J"}
  if not HoldFrontier103.opportunities(s):return {"title":"A first shift to finish","art":"stone","hint":"Ivar has a place for you at the western rack and stonebreaker in Old Workings. Finish your first shift before contributing to the forge.","goal":"Finish your first shift at Old Workings · J"}
  var need=int(remaining(s,"forge").get("coal",0))
  if need>0:
@@ -94,11 +94,11 @@ static func forge_lead(s)->Dictionary:
 static func forge_panel(g):
  if not active(g.state) or complete(g.state,"forge"):return
  var lead=forge_lead(g.state)
+ HoldMenuView.illustrated_text(g.panel_body,"coal","The Cold Forge","Borin brushes the ash from the hearth. 'Sound stonework. It only wants a good fire in it.'" if not data(g.state).inspected else "Borin has set the bellows in order. The hearth is ready for its first fire.")
+ g.label(g.panel_body,lead.title,18,Color("edc98a"));g.label(g.panel_body,lead.hint if data(g.state).inspected else "Examine the firebox to see what Borin needs.",16)
+ var b=g.button(g.panel_body,"Inspect the cold hearth",func():inspect(g);g.refresh_panel());b.disabled=data(g.state).inspected or not HoldFrontier103.near(g,"forge")
  if not g.state.surface.get("quest_scene181",{}).get("seen",{}).get("borin",false):
   var meet=g.button(g.panel_body,"Meet Borin · a word at the anvil",func():HoldQuestScene181.play(g,"borin"));meet.disabled=not HoldFrontier103.near(g,"forge")
- HoldMenuView.illustrated_text(g.panel_body,"coal","The Cold Forge","Borin brushes the ash from the hearth. 'Sound stonework. It only wants a good fire in it.'" if not data(g.state).inspected else "Borin has set the bellows in order. The hearth is ready for its first fire.")
- g.label(g.panel_body,lead.title,18,Color("edc98a"));g.label(g.panel_body,lead.hint,16)
- var b=g.button(g.panel_body,"Inspect the cold hearth",func():inspect(g);g.refresh_panel());b.disabled=data(g.state).inspected or not HoldFrontier103.near(g,"forge")
  g.label(g.panel_body,"Coal delivered: %d / 8 · Gathered or purchased fuel is welcome." % paid(g.state,"forge","coal"),15)
  g.label(g.panel_body,"First firing: 65 crowns · opens smelting and crafting. Partial deliveries are kept.",14,Color("a7dfcb"))
  b=g.button(g.panel_body,"Relight the communal forge",func():

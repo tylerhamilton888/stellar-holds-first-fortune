@@ -4,7 +4,16 @@ func run():
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
  HoldFirstVisit99.begin(g);settle();HoldFirstVisit99.data(g.state).rewarded=true
  var s=g.state;var room=HoldFrontier103.room(s,"forge")
- g.surface.enter(room);settle()
+ var exit_marker=HoldFirstVisit99.forge_marker(g)
+ at(exit_marker.p+Vector2(0,2))
+ check(g.surface.roads.moved(exit_marker.p-Vector2(0,2),1.0) and g.surface.area=="trail","Walk through the marked bunkhouse exit")
+ settle()
+ var forge_door=g.surface.architecture.connections("trail").filter(func(c):return c.target==room)[0]
+ check(HoldFirstVisit99.forge_marker(g).p==forge_door.p and HoldFirstVisit99.goal(g).contains("main street"),"Town guidance points to the real forge door")
+ at(forge_door.p+Vector2(0,70));await snap("first-quest-forge")
+ at(forge_door.p+Vector2(0,-2))
+ check(g.surface.roads.moved(forge_door.p+Vector2(0,2),1.0) and g.surface.area==room,"Walk through the marked forge door")
+ settle()
  check(HoldForge147.active(g),"The public forge has its own workshop")
  var contents=s.surface.decor.duplicate(true);var chest_id=""
  for id in s.surface.chests:
@@ -29,8 +38,9 @@ func run():
  for p in points:
   var target=Vector2i(roundi((p.p.x-100)/20),roundi((p.p.y-100)/20))
   check(g.surface.walkable(p.p) and not grid.get_id_path(start,target).is_empty(),"Workshop interaction reachable: "+p.name)
- at(forge.p);key(KEY_E);check(g.panel_id=="frontier103","The cold hearth opens its restoration panel")
- button("Inspect the cold hearth");check(HoldLedger137.data(s).inspected,"The hearth inspection records real progress");g.close_panel()
+ check(HoldFirstVisit99.forge_marker(g).p==forge.p and HoldFirstVisit99.goal(g).contains("Press E"),"Forge guidance points to the usable hearth")
+ at(forge.p);await snap("first-quest-hearth");key(KEY_E);check(g.panel_id=="frontier103","The cold hearth opens its restoration panel")
+ button("Inspect the cold hearth");check(HoldLedger137.data(s).inspected and HoldFirstVisit99.forge_marker(g).is_empty() and HoldFirstVisit99.goal(g).to_lower().contains("coal"),"Inspection advances guidance to coal and clears the marker");g.close_panel()
  at(borin.p);key(KEY_E);check(g.talk_id=="borin" and g.panel_id!="","Borin can be spoken to in his workshop");g.close_panel()
  HoldWork132.produced(s,"coal",1,"cut");s.add("coal",8)
  g.surface.enter(HoldFrontier103.lodge(s));settle();at(Vector2(670,425));check(HoldLedger137.contribute(g,"forge","coal",8),"Fuel is contributed at the ledger")

@@ -1,6 +1,7 @@
 class_name HoldFirstVisit99
 extends RefCounted
 # Optional opening; all work, stock and larger milestones remain in their existing owners.
+const FORGE_BRIEF="First quest · A hearth gone cold     WASD to walk · J for your journal"
 const TASKS=[
  ["Find your feet","Walk around the entrance bay with WASD or the arrow keys. The north stairs lead back to the High Trail."],
  ["Check your pack","Press I to see your tools and supplies. Close it with Escape. Menus pause the world."],
@@ -34,7 +35,7 @@ static func begin(g):
  s.add("wood",6)
  HoldFirstShift.data(g).accepted=true;HoldFirstShift.data(g).kit=true;HoldFirstShift.data(g).guided=true
  g.surface.enter(HoldFrontier103.lodge(s),Vector2(480,490))
- g.notify("The miners' lodge · E speaks with Ivar · J opens your journal.")
+ g.notify(FORGE_BRIEF)
  g.save_game()
 static func meet_ivar(g):
  if not lodge_intro(g.state):return
@@ -273,7 +274,16 @@ static func frontier_journal(g):
 
 static func family_lead(g)->Dictionary:
  var s=g.state;var q=data(s);var home=HoldFrontier103.data(s).home169
- if q.focus=="forge":return HoldLedger137.forge_lead(s)
+ if q.focus=="forge":
+  var lead=HoldLedger137.forge_lead(s)
+  if not HoldLedger137.data(s).inspected and not HoldLedger137.complete(s,"forge") and g.zone!="mine":
+   if g.surface.area==HoldFrontier103.lodge(s):
+    lead.goal="A hearth gone cold · Walk out the south door of the bunkhouse"
+   elif g.surface.area=="trail":
+    lead.goal="A hearth gone cold · Follow the main street to the communal forge"
+   elif HoldForge147.active(g):
+    lead.goal="A hearth gone cold · Press E at the hearth and choose Inspect the cold hearth"
+  return lead
  if q.focus=="basics" and not q.rewarded:
   var n=mini(step(s),4)
   return {"title":"Paid work · "+TASKS[n][0],"art":"stone","hint":TASKS[n][1]+" The first completed load earns 20 crowns and building supplies. Your holding is already yours.","goal":"Optional first shift · northern Old Workings · J: work steps" if g.zone!="mine" else TASKS[n][0]+" · J: help"}
@@ -281,6 +291,22 @@ static func family_lead(g)->Dictionary:
   return {"title":"Old Stonewright's Rise","art":"wood","hint":"Your parents bought the old holding for you. Ivar can show you around, or leave the bunkhouse and follow the eastern road across the bridge. The cottage stands farther east, beside the masonry yard.","goal":"Your own holding · ask Ivar for directions or follow the east road · J"}
  if not home.seeded:return {"title":"Your own holding","art":"wood","hint":"Your ground, buildings and belongings remain yours. O opens building plans. Improve or furnish at your own pace; a finished home with a bed and light can be registered with Ivar after two civic contributions.","goal":"Your own holding · O: build and furnish · J: choose an ambition"}
  return {"title":"A place to make your own","art":"wood","hint":"The cottage is yours. There is room for a lamp by the bed, a table, or whatever you want to make first. O opens your building plans. The road back to Stonebridge is there whenever you want company or paid work.","goal":"Old Stonewright's Rise · O: building plans · J: choose an ambition"}
+static func forge_marker(g)->Dictionary:
+ var s=g.state
+ if g.zone=="mine" or not HoldFrontier103.family(s):return {}
+ var q=data(s)
+ if not q.guided or q.focus!="forge" or s.opening>=2 or HoldLedger137.data(s).inspected or not opening_route(g):return {}
+ var area=g.surface.area
+ if area==HoldFrontier103.lodge(s):
+  return {"p":HoldRoomLayout.exit_point(area),"label":"Bunkhouse exit"}
+ if area=="trail":
+  var forge=g.surface.architecture.record(str(HoldFrontier103.data(s).buildings.forge))
+  if not forge.is_empty():return {"p":Vector2(forge.x,forge.y),"label":"Communal forge"}
+ if HoldForge147.active(g):
+  var hearth=HoldForge147.forge_position(g)
+  if hearth!=Vector2.INF:return {"p":hearth+Vector2(0,35),"label":"Cold hearth"}
+ return {}
+
 static func family_card(g):
  var q=data(g.state);var lead=family_lead(g)
  HoldMenuView.illustrated_text(g.panel_body,lead.art,lead.title,lead.hint)

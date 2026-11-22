@@ -294,7 +294,8 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
  if is_instance_valid(title_ui):title_ui.queue_free()
  for n in [hud,status,objectives,footer]:n.visible=true
  state.load_audio_settings();apply_audio_settings();sound.set_context(zone);spawn_agents()
- notify("Welcome to Keldrath. Your first wages begin at the foreman's office.")
+ if load_saved and HoldFrontier103.active(state):notice_time=0
+ else:notify("Welcome to Keldrath. Your first wages begin at the foreman's office.")
  if state.deepworks_migrated:notify("Deepworks ready. Your original save was backed up; old terrain and structures remain archived. All supplies and progress are retained.")
  state.region_travel.active=false;state.hold_travel.active=false
  hotbar.restore()

@@ -29,6 +29,11 @@ func run():
  check(g.opening_scene.foreman_portrait.profile.name.contains("Sigrid"),"Sigrid's introduction uses her own portrait")
  g.opening_scene.finish();await process_frame
  check(not is_instance_valid(g.opening_scene) and not HoldFirstVisit99.data(g.state).intro_pending and g.surface.area==HoldFrontier103.lodge(g.state),"Skipping returns control in the lodge")
+ g.update_hud()
+ check(g.objectives.text.contains("south door") and g.notice==HoldFirstVisit99.FORGE_BRIEF,"Skipping gives the first quest at the real bunkhouse exit")
+ await snap("first-quest-exit")
+ g.save_game();g.start_game(true);g.update_hud()
+ check(g.objectives.visible and g.objectives.text.contains("south door") and g.notice_time<=0,"Reload keeps the route without a fresh quest announcement")
  g.open_panel("commission")
  check(has_label("A hearth gone cold") and not has_label("campaign foundations"),"First journal leads with one immediate task")
  await snap("02-first-journal");g.close_panel()
