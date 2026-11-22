@@ -28,6 +28,8 @@ func run():
  for action in ["drink","pick","hammer","carry_stone","combat_axe"]:
   check(HoldWholeFrames.descriptor(p,Vector2.RIGHT,false,0,action,.6)==HoldWholeFrames.descriptor(generic,Vector2.RIGHT,false,0,action,.6),"Unsupported future action retains its functional renderer: "+action)
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player keeps existing character artwork")
+ var yard=HoldRoads.Pinewood.point(g.state.forestry.pinewood_plan,"yard")
+ var west=yard+Vector2(-115,0);var east=yard+Vector2(115,0)
  var duration=230.0/38.0;var cycle=2*(duration+7);var beginning=3*cycle-18
  var visited={}
  for step in 108:
@@ -35,14 +37,14 @@ func run():
   check(not actor.is_empty() and actor.profile.cast_id=="torvik","Route retains named identity "+str(step))
   var local=fposmod(time+18,cycle);var forward=local<=duration+7
   if not forward:local-=duration+7
-  var expected=Vector2(470,765).lerp(Vector2(700,765),minf(1,local/duration)) if forward else Vector2(700,765).lerp(Vector2(470,765),minf(1,local/duration))
+  var expected=west.lerp(east,minf(1,local/duration)) if forward else east.lerp(west,minf(1,local/duration))
   check(actor.p.distance_to(expected)<.01 and actor.walking==(local<duration),"World art preserves route position and movement timing "+str(step))
   var pose=actor.get("pose","town_walk");visited[pose]=true
   var a=HoldWholeFrames.descriptor(actor.profile,actor.aim,actor.walking,actor.gait,pose,actor.get("phase",0.0))
   check((a.sheet==sheet if actor.walking or pose!="town_walk" else named_idle(a,p.cast_id,HoldDirectional.view(actor.aim))),"Live route never swaps to generic art "+str(step))
  check(not visited.has("drink") and visited.has("town_walk"),"Route retains existing walking and rest without invented activities")
  for sample in [["walk",.8],["rest",duration+.5],["resume",duration+7.5]]:
-  g.state.elapsed=beginning+sample[1];at(Vector2(610,830));await snap("torvik-"+sample[0])
+  g.state.elapsed=beginning+sample[1];at(yard+Vector2(0,65));await snap("torvik-"+sample[0])
  at(torvik_at(g.state.elapsed).p+Vector2(0,45));g.surface.action("road_folk:2")
  check(g.panel_id=="conversation" and g.talk_id=="road_folk:2","Torvik conversation remains reachable with authored world art")
  await snap("torvik-conversation");g.close_panel()
