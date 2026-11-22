@@ -1,8 +1,8 @@
 # The Stellar Holds: The First Fortune
 
-**Stonebridge · 0.125.0.** Stand for Thane, meet Skarrin and make Old Stonewright’s Rise your home. Open the project in Godot 4.4.1 and run the main scene for the campaign. Open the pack with **I** or the journal with **J**.
+**Stonebridge · 0.125.1.** Stand for Thane, meet Skarrin and make Old Stonewright’s Rise your home. Open the project in Godot 4.4.1 and run the main scene for the campaign. Open the pack with **I** or the journal with **J**.
 
-[Inventory](docs/stonebridge-menus/pack.jpg) · [Crafting recipes](docs/stonebridge-menus/recipes.jpg) · [Campaign and menu changes](docs/CURRENT_STATUS.md)
+[Inventory](docs/stonebridge-menus/pack.jpg) · [Crafting recipes](docs/stonebridge-menus/recipes.jpg) · [Walking poses](docs/stonebridge-playtest/walk.webp) · [Ledger and treeline changes](docs/CURRENT_STATUS.md)
 
 A Godot 4.4.1 game about Dwarven work, exploration and building a home beneath the mountain.
 

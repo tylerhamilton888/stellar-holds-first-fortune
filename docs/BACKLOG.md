@@ -1,6 +1,6 @@
 # Stonebridge playtest
 
-Use the [published Windows 0.125.0 build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.0) for these sessions.
+Use the [published Windows 0.125.1 build](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.1) for these sessions.
 
 - Give a first-time player an uninterrupted stretch from New Game through a first entry in the Ledger. Record where they lose sight of Skarrin or the reason for helping Borin.
 - Watch a new player find an ingredient, tell a missing item from a carried one, and pin a supply without prompting.
