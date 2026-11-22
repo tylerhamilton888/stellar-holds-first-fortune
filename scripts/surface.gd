@@ -34,7 +34,6 @@ var rest_nap=false
 var rest_time=0.0
 var rest_elapsed=0.0
 var rest_approach=Vector2.INF
-var stair_trip:Dictionary={}
 var rest_bed=Vector2.ZERO
 var route_hint=""
 var ground_cache={}
@@ -95,7 +94,7 @@ func remember():
  g.state.surface.area=area;g.state.surface.return_area=return_area
  g.state.surface.positions[area]=[g.player.x,g.player.y]
 func restore():
- rest_time=0;rest_elapsed=0;rest_approach=Vector2.INF;stair_trip.clear()
+ rest_time=0;rest_elapsed=0;rest_approach=Vector2.INF
  ensure()
  if g.zone=="mine":return
  var desired=str(g.state.surface.get("area","hearthward"))
@@ -288,32 +287,14 @@ func use():
  if p.action.begins_with("household_note:"):world.speech=HoldHouseholds.note(p.action.trim_prefix("household_note:"));world.speech_until=g.clock+18;g.notify(world.speech);return
  if p.action.begins_with("ward_notice:"):g.notify(HoldWardDesign.notice(p.action.trim_prefix("ward_notice:")));world.speech=HoldWardDesign.notice(p.action.trim_prefix("ward_notice:"));world.speech_until=g.clock+18;return
  if p.action.begins_with("terrace:"):g.notify("Walk along the Great Stair · movement stays in your hands.");return
- if is_stair_point(p):begin_stair(p);return
+ if walk_stair(p):return
  action(p.action)
+func walk_stair(p:Dictionary)->bool:
+ return is_stair_point(p) or p.action in ["architecture_up","architecture_down"] or str(p.action).begins_with("terrace:")
 func is_stair_point(p:Dictionary)->bool:
  if area=="room:tavern" and p.action==HoldHouseholds.LOFT:return true
  if area==HoldHouseholds.LOFT and p.action=="room:tavern":return true
  return p.action.begins_with("hold_stair:") or (HoldWorldZones.ward(area) and p.action in HoldWorldZones.WARDS) or (HoldNeighborhood.is_home(area) and HoldNeighborhood.is_home(p.action))
-func begin_stair(p:Dictionary):
- if not stair_trip.is_empty() or g.handworks.busy_hands():g.notify("Park your load at the landing before taking these town stairs.");return
- stair_trip={"point":p.duplicate(),"age":0.0,"start":g.player,"changed":false}
- g.walking_pose=false;g.velocity=Vector2.ZERO
-func tick_stair(dt:float):
- var trip=stair_trip;trip.age+=dt
- var anchor:Vector2=trip.point.p;var old=g.player
- if trip.age<.2:g.player=trip.start.lerp(anchor+Vector2(0,18),trip.age/.2)
- elif trip.age<.85:g.player=(anchor+Vector2(0,18)).lerp(anchor+Vector2(0,-54),(trip.age-.2)/.65)
- elif not trip.changed:
-  var target=str(trip.point.action)
-  if target.begins_with("hold_stair:"):target=target.split(":")[1]
-  enter(target,anchor+Vector2(0,-54));g.player=anchor+Vector2(0,-54)
-  g.transition_left=0;g.transition_shade.visible=false;trip.changed=true;stair_trip=trip
- else:g.player=(anchor+Vector2(0,-54)).lerp(anchor+Vector2(0,30),clampf((trip.age-.85)/.65,0,1))
- var distance=old.distance_to(g.player)
- g.walking_pose=distance>.01;direction=(g.player-old).normalized() if distance>.01 else direction
- if distance<25:HoldDrawnLocomotion.advance(g,distance,"stone")
- if trip.age>=1.5:
-  g.player=anchor+Vector2(0,30);stair_trip.clear();g.walking_pose=false;remember();g.save_game()
 func start_rest(point:Dictionary,nap:bool=false)->bool:
  if point.is_empty() or point.action not in ["rest","house_rest"]:return false
  if g.player.distance_to(point.p)>60:return false
@@ -361,8 +342,8 @@ func action(id:String):
   var link=id.split(":");enter(link[1],Vector2(180 if link[2]=="west" else 1700,1600))
  elif id=="mine":
   remember();g.state.surface.mine_return=area;g.change_zone("mine")
- elif id=="house_up":house.use_stairs(true)
- elif id=="house_down":house.use_stairs(false)
+ elif id=="house_up":house.use_stairs(true,"ladder")
+ elif id=="house_down":house.use_stairs(false,"ladder")
  elif id.begins_with("house:"):house.toggle(id.trim_prefix("house:"))
  elif id in ["rest","house_rest"]:
   var point=nearest()
@@ -472,7 +453,6 @@ func tick_bank_work(dt: float) -> bool:
  return true
 func move(dt:float):
  if tick_bank_work(dt): return
- if not stair_trip.is_empty():tick_stair(dt);return
  if g.handworks.approaching or g.fieldwork.moving:return
  var input=Input.get_vector("left","right","up","down")
  if input!=Vector2.ZERO and not (g.fight.enabled() and g.combat.armed):direction=input
@@ -510,7 +490,9 @@ func move(dt:float):
  if g.walking_pose:
   if not (g.fight.enabled() and g.combat.armed):direction=(g.player-before).normalized()
   HoldDrawnLocomotion.advance(g,g.player.distance_to(before),"wood" if room() else "stone")
+ if area=="claim" and (HoldEstateCellar.moved(g,before) or house.walk_stair(before)):return
  if HoldWorldZones.ward(area):
+  if world.service_stair(before):return
   var crossing=HoldTerraces.crossing(area,g.player)
   if not crossing.is_empty():
    # Same world coordinate, camera and gait: no scene load, fade or input lock.
@@ -525,7 +507,6 @@ func move(dt:float):
  house.update(dt)
 func input(e:InputEvent)->bool:
  if not active() or g.panel_id!="":return false
- if not stair_trip.is_empty():return true
  if e is InputEventMouseButton and e.pressed and CartBank.active(g):
   if e.button_index == MOUSE_BUTTON_LEFT and placing == "" and g.tool == 2 and not g.combat.armed and (g.world_mouse() - CartBank.TREE + Vector2(0, 37)).length() < 62 and int(CartBank.data(g).get("alder", 3)) > 0:
    start_bank_work("alder", -1);return true
@@ -536,8 +517,7 @@ func input(e:InputEvent)->bool:
     start_bank_work(placing.trim_prefix("bank:") if placing != "" else "grade", index);return true
  if e is InputEventKey and e.pressed and not e.echo:
   if e.keycode==KEY_E:
-   if e.shift_pressed and architecture.interior():architecture.stairs(false)
-   elif e.shift_pressed and area=="claim":house.use_stairs(false)
+   if e.shift_pressed and area=="claim":house.use_stairs(false,"ladder")
    else:use()
    return true
   if e.keycode==KEY_G:g.open_panel("wayfinding");return true
@@ -719,8 +699,8 @@ func lift_panel():
   g.button(g.panel_body,NAMES[id],func():enter(id,HoldWorldZones.LIFT+Vector2(0,30)))
 func guide_panel():
  g.label(g.panel_body,"FOLLOW THE PATHS",22,Color("edc98a"))
- g.label(g.panel_body,"Walk with WASD or arrows, including along the Great Stair. Walk through the outdoor arches, paths and farmhouse thresholds to travel. Doorways also open as you walk into them. E uses household stairs, people and workstations. You are here: "+label()+".",16)
- for text in ["Hearthward: the miners' lodge and your room on the northwestern street, the Copper Kettle, exchange and Ivar’s office.","Crownward (Z +1): take the Great Stair at Hearthward’s northwest wall to the royal gallery.","Forgeward (Z -1): cross Hearthward’s southern gallery bridge, turn east past the family homes, and walk down the Great Stair. Borin’s workshop is on Forgeward’s north street.","The enclosed Royal/Forge service stairs and the hold lift remain useful shortcuts.","King’s Gate opens onto Stonebridge: a wayside hearth, paid bridge orders, fishing and a northern mine staging yard. Follow the south path into Pinewood, or cross the bridge for Greenhearth and your claim.","Greenhearth: lease four permanent garden plots at the farm board; bring your field tools, seed and water. Local boards pay for real deliveries once each workday.","Neighbors leave their family hearths for work and the Copper Kettle. You can follow them through doors and between wards.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. E climbs, Shift+E descends at your built landings."]:
+ g.label(g.panel_body,"Walk with WASD or arrows, including along the Great Stair. Walk through the outdoor arches, paths and farmhouse thresholds to travel. Doorways also open as you walk into them. Walk north to climb stairs and south to descend. Press E to talk or use a workstation. You are here: "+label()+".",16)
+ for text in ["Hearthward: the miners' lodge and your room on the northwestern street, the Copper Kettle, exchange and Ivar’s office.","Crownward (Z +1): take the Great Stair at Hearthward’s northwest wall to the royal gallery.","Forgeward (Z -1): cross Hearthward’s southern gallery bridge, turn east past the family homes, and walk down the Great Stair. Borin’s workshop is on Forgeward’s north street.","The enclosed Royal/Forge service stairs and the hold lift remain useful shortcuts.","King’s Gate opens onto Stonebridge: a wayside hearth, paid bridge orders, fishing and a northern mine staging yard. Follow the south path into Pinewood, or cross the bridge for Greenhearth and your claim.","Greenhearth: lease four permanent garden plots at the farm board; bring your field tools, seed and water. Local boards pay for real deliveries once each workday.","Neighbors leave their family hearths for work and the Copper Kettle. You can follow them through doors and between wards.","Your claim: home beside the mine, founding stones, workshop and launchyard. O builds your house; roofs and upper floors use real Z-levels. Walk along built stairs. On ladders, E climbs and Shift+E descends."]:
   g.label(g.panel_body,text,16)
  g.label(g.panel_body,"G is a guide, not a travel screen. Every doorway takes you to a connected local area. J keeps your existing quests.",14)
 func chop(dt:float):
@@ -766,7 +746,7 @@ func hud():
  g.hud.text=("THANE · " if HoldInvasion131.eligible(g.state) and HoldInvasion131.data(g.state).thane else "")+label().to_upper()+"   %d CROWNS" % g.state.money
  if g.panel_id=="":
   var p=nearest()
-  g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
+  g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk · " if walk_stair(p) else "Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
   if p.is_empty() and placing=="" and area=="trail" and HoldFrontier103.active(g.state) and g.player.distance_to(HoldGreatClaim102.EAST_WALK[0])<64:
    g.footer.text="West path · Town Ledger      Southeast path · Pinewood"
   if placing == "" and CartBank.active(g) and CartBank.AREA.grow(42).has_point(g.player) and g.tool == 1: g.footer.text = "Shovel · Click nearby turf to cut the bank · O cottage grounds"
@@ -929,7 +909,7 @@ func draw():
    if roads.is_link(point.action) or point.action.begins_with("road_folk:") or point.action in ["road_order","great_claim102"]:continue
    if point.action.begins_with("chest:") or point.action.begins_with("talk:") or point.action.begins_with("house:") or point.action in ["house_rest","house_up","house_down"]:continue
    signpost(point.p,point.name)
- if g.panel_id=="" and not near.is_empty() and not roads.is_link(near.action) and not near.action.begins_with("road_folk:") and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not str(near.action).begins_with("terrace:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
+ if g.panel_id=="" and not near.is_empty() and not walk_stair(near) and not roads.is_link(near.action) and not near.action.begins_with("road_folk:") and not str(near.action).begins_with("talk:") and not str(near.action).begins_with("citizen:") and not str(near.action).begins_with("resident:") and not str(near.action).begins_with("terrace:") and not g.handworks.busy_hands() and g.handworks.facility().is_empty():
   # One small object-local keycap replaces the ground-radius interaction ring.
   var offset=Vector2(-94,-25) if near.action=="leave" else Vector2(28,-28)
   var r=Rect2(near.p+offset,Vector2(20,20))
@@ -989,7 +969,7 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
  if is_player and bank_time > 0:
   animation = "axe" if bank_job == "alder" else "hammer" if bank_job == "dress" else "shovel";action = 1 - bank_time / 0.66;aim = direction
  if animation in ["plant","tend"]:animation="hoe"
- if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not is_instance_valid(g.opening_scene):animation=g.hotbar.pose()
+ if is_player and animation=="" and action<0 and rest_time<=0 and not is_instance_valid(g.opening_scene):animation=g.hotbar.pose()
  if animation == "push" and CartBank.active(g):
   var cart = g.handworks.attached()
   if cart.get("kind", "") == "cart":

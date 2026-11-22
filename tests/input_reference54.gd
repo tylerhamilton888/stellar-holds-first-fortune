@@ -19,10 +19,10 @@ func run():
  g.surface.enter("room:commission");settle();at(Vector2(480,590));key(KEY_E);settle()
  check(g.room_id=="" and g.surface.area=="hearthward","Interior threshold returns to its original district")
  g.state.opening=4;HoldOnboarding.ensure(g.state).fresh=false
- at(Vector2(180,880));key(KEY_E);settle();check(g.surface.area=="crownward","Royal stairs connect to Crownward")
+ walk_landing(true,HoldWorldZones.ROYAL-Vector2(0,42));settle();check(g.surface.area=="crownward","Royal stairs connect to Crownward")
  at(Vector2(960,500));key(KEY_E);settle();await snap("03-enthroned-lord")
  check(g.room_id=="throne","Lord's existing audience stays accessible")
- g.surface.enter("hearthward",Vector2(1700,880));settle();key(KEY_E);settle();check(g.surface.area=="forgeward" and g.surface.walkable(g.player),"Forge stairs arrive on clear, walkable ground")
+ g.surface.enter("hearthward",Vector2(1700,880));settle();walk_landing(false,HoldWorldZones.FORGE-Vector2(0,42));settle();check(g.surface.area=="forgeward" and g.surface.walkable(g.player),"Forge stairs arrive on clear, walkable ground")
  at(Vector2(580,490));key(KEY_E);settle();await snap("04-forge")
  at(Vector2(620,405));key(KEY_E);check(g.panel_id=="conversation" and g.talk_id=="borin","Borin's crafting service remains reachable");g.close_panel()
  g.surface.enter("forgeward",Vector2(1700,580));settle();key(KEY_E);button("Keldrath · Hearthward");settle()

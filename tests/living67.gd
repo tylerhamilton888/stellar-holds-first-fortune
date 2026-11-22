@@ -44,7 +44,7 @@ func run():
   for i in 240:s.move(1.0/60)
   Input.action_release("down")
   check(s.area==link.lower and g.player.y>260,"Walk continuously down to "+link.lower)
-  check(g.transition_left==0 and s.stair_trip.is_empty() and g.gait_clock>before,"Great Stair preserves gait and never locks controls")
+  check(g.transition_left==0 and g.gait_clock>before,"Great Stair preserves gait and never locks controls")
   at(Vector2(link.x,120));await snap(link.lower+"-stair")
   var saved=g.player;g.save_game();g.start_game(true);settle()
   check(s.area==link.lower and g.player.distance_to(saved)<.1,"Save restores the same stair position")

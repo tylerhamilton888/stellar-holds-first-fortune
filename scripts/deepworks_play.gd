@@ -68,7 +68,7 @@ func input(e:InputEvent)->bool:
  if g.zone!="mine" or g.panel_id!="" or not e is InputEventKey or not e.pressed or e.echo:return false
  match e.keycode:
   KEY_E:
-   use_stairs(e.shift_pressed);return true
+   use_stairs(e.shift_pressed,true);return true
   KEY_V:
    g.open_panel("deepworks");return true
   KEY_X,KEY_TAB,KEY_K:
@@ -98,8 +98,7 @@ func input(e:InputEvent)->bool:
   KEY_R:
    g.open_panel("rescue");return true
  return false
-func use_stairs(up:bool):
- if up and HoldEstateCellar.travel(g):return
+func use_stairs(up:bool,from_key:bool=false):
  if not up and HoldMineworks143.interact(g):return
  if not up and HoldAncestralClaim.interact(g):return
  ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
@@ -115,6 +114,7 @@ func use_stairs(up:bool):
  var travelling_cart=g.handworks.attached()
  var link=world.data.links.get(world.link_key(c,Deepworks.above(old_depth) if up else old_depth),{})
  if link.get("kind","")=="ramp":return
+ if from_key and not link.is_empty() and link.get("kind","stair")=="stair":return
  if link.get("kind","stair")=="ladder" and (not travelling_cart.is_empty() or (not haul.cart().is_empty() and haul.cart().get("hitched",false))):
   g.notify("Park the wheelbarrow [C], or widen this ladder into stairs from its upper landing [V].");return
  if world.traverse(c,up):
@@ -127,14 +127,14 @@ func use_stairs(up:bool):
   unload();haul.park()
   if g.state.active_site=="hold":g.surface.enter("trail",Vector2(950,345))
   else:g.change_zone("claim")
- else:g.notify("Stand at a hatch or stair. E descends and Shift+E climbs back up.")
+ else:g.notify("Walk north up stairs or south down them. On mine ladders, E descends and Shift+E climbs.")
 func panel():
  ensure();g.label(g.panel_body,HoldMineworks143.label(world.depth()).to_upper(),20)
  g.button(g.panel_body,"Mineworks & districts · adits, bridge and district plans",func():works.page="Districts";g.open_panel("living"))
  g.label(g.panel_body,"Hold LMB at an exposed face: four planted pick contacts free ordinary rock. Opening a second face improves leverage. Pick [1] scores the joints; hammer [4] splits a face once it is 40% fractured. Moving cancels the stroke immediately.",16)
  g.label(g.panel_body,"Rock and minerals become substantial physical loads. E lifts; Q sets down. Hold Shift+E away from equipment to dress a small batch in the field. Shift+B crafts stockpiles, carts and stonebreakers for larger operations.",16)
  g.label(g.panel_body,"A lamp within 180 units improves clean contacts and careful recovery [Shift+LMB]. Existing masonry pillars [O] brace work within 160 units: stronger joint fractures, and a tempered pick or master Miner can split a second exposed, weakened face with the hammer. No cave-ins or upkeep chores.",15)
- g.label(g.panel_body,"Survey [X] shows the ground immediately beneath your feet. Stairs connect the exact same location on both levels and stay open permanently. E goes down, Shift+E goes up.",16)
+ g.label(g.panel_body,"Survey [X] shows the ground immediately beneath your feet. Stairs connect the exact same location on both levels and stay open permanently. Walk south to descend and north to climb. On mine ladders, E descends and Shift+E climbs.",16)
  var why=world.descent_note(world.depth())
  if why!="":g.label(g.panel_body,why,16,Color("e8bf86"))
  if world.depth()>=8:
@@ -178,6 +178,18 @@ func crew_entry(agent:Dictionary)->Dictionary:
  return world.data.crew[agent.id]
 func poll_arrival_input():
  if not Input.is_action_pressed("up"):arrival_up_held=false
+func walk_stair(before:Vector2,after:Vector2)->bool:
+ var c=world.cell(after);var up=after.y<before.y;var z=world.depth()
+ if not preload("res://stair/flight.gd").crossed(before,after,Deepworks.center(c),14):return false
+ var link=world.data.links.get(world.link_key(c,Deepworks.above(z) if up else z),{})
+ if link.is_empty() or link.get("kind","stair")!="stair":return false
+ var dest=int(link.upper if up else link.lower)
+ if world.solid(after,dest) or not world.traverse(c,up):return true
+ var cart=g.handworks.attached()
+ g.player=after;works.cancel();haul.stairs(after,z);g.handworks.arrive(cart)
+ strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear();pulse=0
+ world.survey(after);remember();g.autosave=maxf(g.autosave,42.)
+ return true
 func move(dt:float):
  if world!=null and site=="claim" and Quarry.notice(world,world.cell(g.player)):
   g.notify("Old stone quarry · recorded in discoveries");g.save_game()
@@ -207,7 +219,10 @@ func move(dt:float):
    world.survey(next);world.data.position=[next.x,next.y];g.autosave=maxf(g.autosave,42.)
   else:g.player=next
   next=g.player+Vector2(0,step.y)
-  if not world.solid(next) and not Slope.face_blocks(world,g.player,next,slope_anchor):g.player=next
+  if not world.solid(next) and not Slope.face_blocks(world,g.player,next,slope_anchor):
+   var from=g.player
+   if not walk_stair(from,next):g.player=next
+   if HoldEstateCellar.moved(g,from):return
  # The cave's north exit faces the same input as its outdoor arch. Continuing
  # that entry key must not immediately undo the crossing; release to return.
  if arrival_up_held and world.depth()==0 and absf(g.player.x-HoldMineEntrance.inside_position(world).x)<34:g.player.y=maxf(HoldMineEntrance.inside_position(world).y+40,g.player.y)
@@ -574,9 +589,7 @@ func draw():
    var center=Deepworks.center(c)
    if z==int(link.upper):ladder_art.floor_hatch(g,center)
    else:standing_ladders.append({"kind":"standing_ladder","p":center+Vector2(0,-9)})
-  elif z==int(link.lower):
-   common_stair.paint(g,world,p+Vector2(20,37),53,false)
-  else:g.surface.world.detail(5,p+Vector2(20,39),40,38)
+  else:preload("res://stair/flight.gd").draw(g,Rect2(p+Vector2(-3,1),Vector2(46,38)),1. if z==int(link.upper) else 0.)
   # Passage names and keys are shown in the contextual HUD, never over actors.
  HoldEstateCellar.draw(g)
  HoldMineworks143.draw_floor(g)

@@ -13,9 +13,16 @@ func named_idle(pose:Dictionary,id:String,view:int)->bool:
  return pose.sheet==HoldWholeFrames.Hands.FIXED+id and pose.view==view and pose.index>=view*keys and pose.index<(view+1)*keys
 
 func settle():
- while not g.surface.stair_trip.is_empty():g.surface.tick_stair(.05)
  while HoldFolk.warming():HoldFolk.warm_step()
  g.transition_left=0;g.transition_shade.visible=false;g.close_panel();g.notice_time=0
+func walk_landing(up:bool,anchor:Vector2=Vector2.INF):
+ var seam=anchor if anchor!=Vector2.INF else Deepworks.center(Deepworks.cell(g.player))
+ g.player=seam+Vector2(0,1 if up else -1)
+ var axis="up" if up else "down"
+ Input.action_press(axis)
+ if g.zone=="mine":g.deep.move(.035)
+ else:g.surface.move(.035)
+ Input.action_release(axis)
 func key(k:int):
  var e=InputEventKey.new();e.keycode=k;e.physical_keycode=k;e.pressed=true;g._unhandled_input(e)
 func frames(n:int):

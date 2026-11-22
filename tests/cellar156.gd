@@ -4,8 +4,6 @@ func normal(v):return JSON.parse_string(JSON.stringify(v))
 func stand(c:Vector2i):
  g.player=Deepworks.center(c);g.transition_left=0
  if g.zone=="mine":g.deep.world.survey(g.player)
-func shift_e():
- var e=InputEventKey.new();e.keycode=KEY_E;e.physical_keycode=KEY_E;e.pressed=true;e.shift_pressed=true;g._unhandled_input(e)
 func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
@@ -76,13 +74,13 @@ func run():
  stand(LANDING)
  check(g.handworks.build("cart",Deepworks.center(LANDING+Vector2i(2,2))),"Build a real cart beside the surface stair")
  var cart=g.handworks.data().facilities.back();cart.hitched=true
- shift_e();check(g.zone=="claim" and cart.area=="surface:claim:0","Hitched cart cannot silently cross cellar boundary")
+ walk_landing(g.zone=="mine");check(g.zone=="claim" and cart.area=="surface:claim:0","Hitched cart cannot silently cross cellar boundary")
  cart.hitched=false;g.notice_time=0;await snap("01-home-stair")
  g.surface.architecture.room_planning=true;g.open_panel("architecture");await process_frame
  for scroll in g.panel.find_children("*","ScrollContainer",true,false):scroll.scroll_vertical=10000
  await snap("03-cellar-controls");g.close_panel()
- var carried=normal(g.state.inventory);shift_e();settle()
- check(g.zone=="mine" and g.state.active_site=="claim" and g.deep.world.depth()==0,"Shift+E travels from home into its actual claim mine")
+ var carried=normal(g.state.inventory);walk_landing(g.zone=="mine");settle()
+ check(g.zone=="mine" and g.state.active_site=="claim" and g.deep.world.depth()==0,"Walking south travels from home into its actual claim mine")
  check(Deepworks.cell(g.player)==LANDING,"Surface and cellar landing coordinates align")
  check(normal(g.state.inventory)==carried,"Carried resources survive descent unchanged")
  check(g.deep.world.carve_stairs(LANDING).contains("home cellar landing"),"Deeper stairs cannot overwrite cellar landing")
@@ -100,12 +98,12 @@ func run():
  check(g.handworks.prompt().contains("return home"),"Stair prompt matches Shift+E priority over loose cargo")
  var old_floor=HoldEstateCellar.home(g).building.tiles["54,34"].duplicate(true)
  HoldEstateCellar.home(g).building.tiles["54,34"].wall="wall"
- shift_e();check(g.zone=="mine","Blocked destination prevents travel instead of moving player elsewhere")
+ walk_landing(g.zone=="mine");check(g.zone=="mine","Blocked destination prevents travel instead of moving player elsewhere")
  HoldEstateCellar.home(g).building.tiles["54,34"]=old_floor
- shift_e();settle();check(g.surface.active() and g.surface.area=="claim" and Deepworks.cell(g.player)==LANDING,"Shift+E returns to exact home landing after reload")
+ walk_landing(g.zone=="mine");settle();check(g.surface.active() and g.surface.area=="claim" and Deepworks.cell(g.player)==LANDING,"Walking north returns to exact home landing after reload")
  check(g.state.surface.decor.any(func(d):return d.kind=="bed" and d.area=="claim"),"Surface furnishing survives cellar trip and reload")
  g.save_game();g.start_game(true);settle();check(g.zone=="claim","Surface save reload stays in the home")
- stand(LANDING);shift_e();settle();check(g.zone=="mine","Surface reload retains usable cellar connection")
- stand(LANDING+Vector2i(2,0));shift_e();check(g.zone=="mine","Stair cannot be used remotely")
+ stand(LANDING);walk_landing(g.zone=="mine");settle();check(g.zone=="mine","Surface reload retains usable cellar connection")
+ stand(LANDING+Vector2i(2,0));walk_landing(g.zone=="mine");check(g.zone=="mine","Stair cannot be used remotely")
  g.state.switch_site("hold",g.geo);g.deep.ensure();check(not HoldEstateCellar.travel(g),"Other mine cannot use household stairs")
  print("CELLAR156: %d passed / %d failed" % [passed,failed]);g.queue_free();await process_frame;quit(1 if failed else 0)

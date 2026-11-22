@@ -8,13 +8,15 @@ func check(passed,label):
 func _initialize():call_deferred("run")
 func stairs_to(target):
  var p=load("res://scripts/building_plans.gd").stair_position(g.surface.area)
- g.player=p+Vector2(0,30);g.transition_left=0;g.close_panel()
- check(g.surface.walkable(g.player),"Accessible foot of stair in "+g.surface.area)
- g.surface.use()
- if g.surface.stair_trip.is_empty() and g.surface.area!=target:
-  check(false,"Stair interaction at "+str(p)+" in "+g.surface.area);return
- for i in 32:
-  if not g.surface.stair_trip.is_empty():g.surface.tick_stair(.05)
+ var up=load("res://scripts/building_plans.gd").floor_number(target)>load("res://scripts/building_plans.gd").floor_number(g.surface.area)
+ g.player=p+Vector2(0,30 if up else -105);g.transition_left=0;g.close_panel()
+ check(g.surface.walkable(g.player),"Accessible landing in "+g.surface.area)
+ var axis="up" if up else "down"
+ Input.action_press(axis)
+ for i in 55:
+  g.surface.move(.025)
+  if g.surface.area==target:break
+ Input.action_release(axis)
  check(g.surface.area==target and g.surface.walkable(g.player),"Reach "+target+" with usable landing")
 func run():
  var host=load("res://furrow/start.tscn").instantiate();root.add_child(host);g=host.get_child(0).get_child(0)

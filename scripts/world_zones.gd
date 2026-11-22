@@ -67,6 +67,28 @@ func obstacles(area_id:String="")->Array:
  result.append_array(HoldTerraces.rails(area_id))
  collision_cache[area_id]=result
  return result.duplicate()
+func service_stair(before:Vector2)->bool:
+ for route in [[ROYAL,"hearthward","crownward"],[FORGE,"forgeward","hearthward"]]:
+  var up=g.player.y<before.y
+  if s.area!=route[1 if up else 2]:continue
+  if not preload("res://stair/flight.gd").crossed(before,g.player,route[0]-Vector2(0,42),38):continue
+  if g.handworks.busy_hands():
+   g.player=before
+   if s.roads.portal_cooldown<=0:g.notify("Park your load before using the service stairs.");s.roads.portal_cooldown=.8
+   return true
+  var target=route[2 if up else 1];var next=g.player
+  var origin=s.area
+  s.area=target
+  var clear=s.walkable(next)
+  s.area=origin
+  if not clear:g.player=before;return true
+  var gait=g.gait_clock;var velocity=g.velocity
+  s.enter(target,next)
+  if s.area!=target:g.player=before;return true
+  g.gait_clock=gait;g.velocity=velocity;g.walking_pose=true
+  g.transition_left=0;g.transition_shade.hide()
+  return true
+ return false
 func points()->Array:
  var result=[]
  for i in HoldDistrictMap.DOORS:

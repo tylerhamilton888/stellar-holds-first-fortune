@@ -85,7 +85,7 @@ func hint()->String:
  for i in range(path.size()-1):
   if path[i].z==w.depth() and path[i+1].z!=w.depth():
    if not Deepworks.Strata.number(path[i].z) or not Deepworks.Strata.number(path[i+1].z):return "E at the marked adit · "+Deepworks.NAMES[goal.z]
-   return "Destination %s · %s at the gold stair marker" % [Deepworks.floor_tag(goal.z),"E down" if path[i+1].z>w.depth() else "Shift+E up"]
+   return "Destination %s · %s at the gold stair marker" % [Deepworks.floor_tag(goal.z),"follow the passage down" if Deepworks.Strata.number(path[i+1].z)>Deepworks.Strata.number(w.depth()) else "follow the passage up"]
  return "Destination %s · follow the gold trail · Z replans" % (Deepworks.floor_tag(goal.z))
 func panel():
  var w=g.deep.world

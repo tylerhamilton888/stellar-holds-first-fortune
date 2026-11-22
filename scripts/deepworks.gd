@@ -391,7 +391,7 @@ func carve_stairs(c:Vector2i,kind:String="stair")->String:
  var previous=data.links.get(link_key(c,z),{})
  if previous.get("kind","")=="ramp":return "This grade already connects the two floors."
  if not previous.is_empty() and (previous.get("kind","stair")==kind or kind=="ladder"):
-  return "A passage already connects these levels. E down; Shift+E up."
+  return "A passage already connects these levels."
  if at(c,lower)==7 and not state.steel:return "Basalt below: forge a steel pick before opening this passage."
  if kind=="ladder" and not state.pay({"wood":2}):return "A timber ladder needs 2 delivered timber."
  # Ladder shafts clear one landing; stairs clear a wider crew/cart landing. No mining rewards.
@@ -401,7 +401,7 @@ func carve_stairs(c:Vector2i,kind:String="stair")->String:
  var link=previous.duplicate(true)
  link.merge({"x":c.x,"y":c.y,"upper":z,"lower":lower,"kind":kind},true)
  data.links[link_key(c,z)]=link
- return ("Timber ladder fitted" if kind=="ladder" else "Stair carved")+" to "+NAMES[lower]+". E down; Shift+E up."
+ return ("Timber ladder fitted" if kind=="ladder" else "Stair carved")+" to "+NAMES[lower]+(". E descends and Shift+E climbs." if kind=="ladder" else ". Walk south to descend and north to climb.")
 func traverse(c:Vector2i,up:bool)->bool:
  var z=depth();var upper=above(z) if up else z
  if upper<0 or not can_descend(c,upper):return false
