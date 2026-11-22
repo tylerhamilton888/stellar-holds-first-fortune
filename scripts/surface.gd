@@ -9,7 +9,6 @@ const PROPS=preload("res://assets/surface-v46/props.png")
 const ROYAL=preload("res://assets/surface-v46/audience-room.png")
 const INTERIORS=preload("res://assets/surface-v46/interiors.png")
 const MEADOW=preload("res://assets/overworld-v26/meadow.png")
-const ATLAS=preload("res://assets/overworld-v26/scenery.png")
 const SIZE=Vector2(1880,1080)
 const ROOM_SIZE=Vector2(960,720)
 const FIR=preload("res://assets/pinewood-v40/silver-fir.png")
@@ -177,14 +176,14 @@ func camera_target()->Vector2:
   return HoldRoomLayout.camera(area,g.player,welcome)
  if HoldWorldZones.ward(area):return HoldTerraces.camera(area,g.player-Vector2(0,55 if g.fight.giant_near() else 0))
  var focus=house.view.outdoor_focus(g.player) if area=="claim" else g.player
- return (focus-Vector2(480,300)).clamp(Vector2(0,-65),Vector2(maxf(0,size().x-960),maxf(-65,size().y-480)))
+ return (focus-Vector2(480,300)).clamp(Vector2.ZERO,(size()-Vector2(960,540)).max(Vector2.ZERO))
 func level()->int:return 0 if area=="crownward" else 2 if area=="forgeward" else 1
 func points()->Array:
  var result=[]
  if area in ["hearthward","crownward","forgeward"]:
   result=world.points()
  elif area=="trail":
-  result=[spot(220,690,"Keldrath's gate","hearthward"),spot(950,300,"Old Workings · enter mine","mine"),spot(470,920,"Pinewood trail","pinewood"),spot(1650,700,"Your claim" if g.state.claim_id!="" else "Unclaimed mountain · charter required","claim")]
+  result=[spot(220,690,"Keldrath's gate","hearthward"),spot(950,300,"Old Workings · enter mine","mine"),spot(roads.pinewood_exit().x,roads.pinewood_exit().y-5,"Pinewood trail","pinewood"),spot(1650,700,"Your claim" if g.state.claim_id!="" else "Unclaimed mountain · charter required","claim")]
  elif area=="claim":
   result=[spot(180,790,"High Trail · Keldrath","trail"),spot(500,440,"Your home","home:"+g.state.claim_id),spot(1280,345,"Your Deepworks","mine"),spot(970,690,"Founding stones","camp"),spot(1370,760,"Workshop","room:forge"),spot(1650,840,"Launchyard","ship"),spot(740,780,"Homestead workbench","homestead")]
  elif area=="pinewood":result=[spot(180,650,"High Trail","trail")]
@@ -768,6 +767,8 @@ func hud():
  if g.panel_id=="":
   var p=nearest()
   g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
+  if p.is_empty() and placing=="" and area=="trail" and HoldFrontier103.active(g.state) and g.player.distance_to(HoldGreatClaim102.EAST_WALK[0])<64:
+   g.footer.text="West path · Town Ledger      Southeast path · Pinewood"
   if placing == "" and CartBank.active(g) and CartBank.AREA.grow(42).has_point(g.player) and g.tool == 1: g.footer.text = "Shovel · Click nearby turf to cut the bank · O cottage grounds"
   if placing.begins_with("bank:"): g.footer.text = CartBank.JOBS[placing.trim_prefix("bank:")] + " · Click a nearby shoulder · Right click to finish"
   if placing.begins_with("yard:"):g.footer.text=HoldClaimYard.LABELS[placing.trim_prefix("yard:")]+" · LMB apply · Right click to finish"
@@ -1058,7 +1059,7 @@ func draw_outdoors():
   else:
    world.tile(0,Rect2(1780,560,800,80),100,Color("b8b29a"))
    world.tile(0,Rect2(2480,560,80,1370),100,Color("b8b29a"))
- for i in 8:scenery(Vector2(120+i*245,245+sin(i)*30),1,330)
+ draw_forest_edge()
  if area=="claim" and not HoldFrontier103.active(g.state):
   var upgraded=int(g.state.surface.homes[g.state.claim_id].level)>0
 
@@ -1071,17 +1072,25 @@ func draw_outdoors():
     g.draw_texture_rect(HoldRoads.Pinewood.DUFF, Rect2(i * 246 - 40, y - 37, 300, 97), false, Color(0.69, 0.76, 0.61, 0.86))
    HoldRoads.Pinewood.draw_ground(g, pinewood)
    Headworks.watercourse(g)
-  for i in 9:
-   var p=Vector2(170+i*190,250+sin(i)*30);g.draw_texture_rect(FIR,Rect2(p-Vector2(90,210),Vector2(180,230)),false,Color("8ca291"))
 
  g.hearth.draw_water()
  HoldClaimYard.shore(g)
  roads.ground()
 
-func scenery(p:Vector2,index:int,width:float):
- var cell=Vector2(ATLAS.get_width()/4.0,ATLAS.get_height()/2.0)
- var source=Rect2(Vector2(index%4,index/4)*cell,cell)
- g.draw_texture_rect_region(ATLAS,Rect2(p-Vector2(width*.5,width*.91),Vector2(width,width)),source)
+func draw_forest_edge():
+ # Tree roots stay beyond the northern walk limit (y=210). The nearer row
+ # uses the same silver fir and proportions as the harvestable forest.
+ var visible=Rect2(g.camera.round(),Vector2(960,540)).grow(8)
+ for row in 2:
+  var spacing=112 if row==0 else 155
+  for i in range(floori((visible.position.x-100)/spacing),ceili((visible.end.x+100)/spacing)+1):
+   var variation=posmod(hash(Vector2i(i,row)),31)
+   var foot=Vector2(i*spacing+variation,126+row*64+variation*.42)
+   var height=157+row*62+variation
+   var tree=Rect2(foot-Vector2(height*.40,height*.94),Vector2(height*.80,height))
+   if visible.intersects(tree):
+    g.draw_texture_rect(FIR,tree,false,Color("859c93") if row==0 else Color("b2c1a7"))
+
 func mine_arch(p:Vector2):
  g.draw_rect(Rect2(p-Vector2(100,120),Vector2(200,125)),Color("64716d"))
  g.draw_rect(Rect2(p-Vector2(65,90),Vector2(130,90)),Color("172b31"))

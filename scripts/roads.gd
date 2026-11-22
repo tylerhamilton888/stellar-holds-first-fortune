@@ -67,6 +67,9 @@ func connection(p:Vector2,normal:Vector2,target:String,landing:Vector2,title:Str
 func links(area:String)->Array:
  if HoldBuildingPlans.owned_room(area):return s.architecture.connections(area)
  return authored_links(area)+s.architecture.connections(area)
+func pinewood_exit()->Vector2:
+ return Vector2(572,950) if HoldFrontier103.active(g.state) else Vector2(470,925)
+
 func inn_door()->Vector2:
  return HoldFrontier103.INN_DOOR if HoldFrontier103.active(g.state) else Vector2(510,520)
 func authored_links(area:String)->Array:
@@ -78,8 +81,8 @@ func authored_links(area:String)->Array:
   if area=="hearthward":result.append(connection(HoldWorldZones.GATE+Vector2(0,3),Vector2.UP,"trail",Vector2(220,735),"High Trail"))
   return result
  match area:
-  "trail":return [connection(Vector2(100,690) if HoldFrontier103.active(g.state) else Vector2(220,690),Vector2.LEFT if HoldFrontier103.active(g.state) else Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Road to Keldrath"),connection(HoldMineEntrance.position("trail")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(Vector2(470,925),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(inn_door(),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
-  "pinewood":return [connection(Pinewood.GATE,Vector2.LEFT,"trail",Vector2(470,870),"High Trail")]
+  "trail":return [connection(Vector2(100,690) if HoldFrontier103.active(g.state) else Vector2(220,690),Vector2.LEFT if HoldFrontier103.active(g.state) else Vector2.UP,"hearthward",HoldWorldZones.GATE+Vector2(0,45),"Road to Keldrath"),connection(HoldMineEntrance.position("trail")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Old Workings"),connection(pinewood_exit(),Vector2.DOWN,"pinewood",Vector2(150,650),"Pinewood"),connection(Vector2(1780,700),Vector2.RIGHT,"claim",Vector2(150,790),"Your claim"),connection(Vector2(1540,925),Vector2.DOWN,"greenfields",Vector2(940,285),"Greenhearth"),connection(inn_door(),Vector2.UP,"room:wayfarer",Vector2(480,565),"Wayfarer's Hearth")]
+  "pinewood":return [connection(Pinewood.GATE,Vector2.LEFT,"trail",pinewood_exit()-Vector2(0,55),"High Trail")]
   "greenfields":return [connection(Vector2(940,235),Vector2.UP,"trail",Vector2(1540,870),"Stonebridge"),connection(Vector2(550,450),Vector2.UP,"room:greenhearth",Vector2(480,565),"Farmhouse")]
   "claim":return [connection(Vector2(100,790),Vector2.LEFT,"trail",Vector2(1730,700),"Stonebridge"),connection(HoldMineEntrance.position("claim")+Vector2(0,5),Vector2.UP,"mine",Vector2.ZERO,"Your Deepworks"),connection(Vector2(500,440),Vector2.UP,"home:"+g.state.claim_id,Vector2(480,565),"Your hearth")]
  if area in ROOMS:return [connection(Vector2(480,595),Vector2.DOWN,"trail" if area=="room:wayfarer" else "greenfields",inn_door()+Vector2(0,45) if area=="room:wayfarer" else Vector2(550,495),"Outside")]
@@ -139,7 +142,7 @@ func moved(before:Vector2,dt:float)->bool:
 func roads(area:String)->Array:
  var plan=g.state.forestry.get("pinewood_plan",{})
  if area=="pinewood" and not plan.is_empty():return Pinewood.paths(plan)
- if HoldFrontier103.active(g.state) and area=="trail":return [[Vector2(100,690),Vector2(1780,700)],[Vector2(HoldFrontier103.LODGE_DOOR.x,690),HoldFrontier103.LODGE_DOOR],[Vector2(inn_door().x,690),inn_door()],[Vector2(735,690),Vector2(735,473),Vector2(950,300)],[Vector2(880,690),Vector2(880,570)],[Vector2(1450,700),Vector2(1480,450)],[Vector2(1540,700),Vector2(1510,915),Vector2(1660,915),Vector2(1660,870)],[Vector2(470,690),Vector2(470,925)],[Vector2(1540,700),Vector2(1540,925)],[Vector2(880,690),Vector2(880,940),Vector2(1020,940),Vector2(1020,900)]]
+ if HoldFrontier103.active(g.state) and area=="trail":return [[Vector2(100,690),Vector2(1780,700)],[Vector2(HoldFrontier103.LODGE_DOOR.x,690),HoldFrontier103.LODGE_DOOR],[Vector2(inn_door().x,690),inn_door()],[Vector2(735,690),Vector2(735,473),Vector2(950,300)],[Vector2(880,690),Vector2(880,570)],[Vector2(1450,700),Vector2(1480,450)],[Vector2(1540,700),Vector2(1510,915),Vector2(1660,915),Vector2(1660,870)],[Vector2(470,690),HoldGreatClaim102.EAST_WALK[0],Vector2(540,875),pinewood_exit()-Vector2(0,32),pinewood_exit()],[Vector2(1540,700),Vector2(1540,925)],[Vector2(880,690),Vector2(880,940),Vector2(1020,940),Vector2(1020,900)]]
  match area:
   "trail":return [[Vector2(220,690),Vector2(700,690),Vector2(1880,700)],[Vector2(700,690),Vector2(950,300)],[Vector2(700,690),Vector2(470,980)],[Vector2(1430,700),Vector2(1540,980)],[Vector2(510,690),Vector2(510,520)],[Vector2(790,520),Vector2(650,420),Vector2(610,400)]]
   "pinewood":return [[Vector2(0,650),Vector2(300,650),Vector2(550,730),Vector2(800,730),Vector2(1100,600),Vector2(1560,760)],[Vector2(300,650),Vector2(300,790),Vector2(570,790),Vector2(700,790)]]

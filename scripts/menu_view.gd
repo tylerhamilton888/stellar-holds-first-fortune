@@ -54,7 +54,7 @@ static func make_theme()->Theme:
  theme.set_color("font_color","Label",Color("e6e8e2"));theme.set_constant("line_spacing","Label",4)
  return theme
 
-const TABS=[["inventory","Pack","I"],["equipment","Gear","B"],["disciplines","Skills","Y"],["roster","People","N"],["recipes","Craft",""],["commission","Journal","J"],["wayfinding","Map","G"],["calendar","Calendar",""],["settings","Options",""]]
+const TABS=[["inventory","Pack","I"],["equipment","Gear","B"],["disciplines","Skills","Y"],["roster","People","N"],["recipes","Craft",""],["commission","Journal","J"],["great_claim102","Ledger","M"],["wayfinding","Map","G"],["calendar","Calendar",""],["settings","Options",""]]
 static func folio(node:Node)->bool:
  while node!=null:
   if node.has_meta("folio"):return true
@@ -96,11 +96,12 @@ static func book_theme()->Theme:
 static func tab_id(id:String)->String:
  return {"work132":"commission","energy":"inventory","guidance":"commission","commissions_detail":"commission","festivals":"calendar","help":"settings","pause":"settings"}.get(id,id)
 static func has_tabs(id:String)->bool:
- return id in ["work132","inventory","equipment","disciplines","roster","recipes","commission","commissions_detail","guidance","wayfinding","calendar","festivals","energy","settings","pause","help"]
+ return id in ["great_claim102","work132","inventory","equipment","disciplines","roster","recipes","commission","commissions_detail","guidance","wayfinding","calendar","festivals","energy","settings","pause","help"]
 static func cycle_tab(g,direction:int):
  if not has_tabs(g.panel_id):return
  var ids=[]
- for entry in TABS:ids.append(entry[0])
+ for entry in TABS:
+  if entry[0]!="great_claim102" or HoldFrontier103.active(g.state):ids.append(entry[0])
  var index=ids.find(tab_id(g.panel_id));g.menu_history.clear();g.open_panel(ids[posmod(index+direction,ids.size())],false)
 static func conversation_shell(g):
  # The speaker stays in view while speech and choices scroll independently.
@@ -152,10 +153,11 @@ static func build_shell(g,id:String):
   if not names.has(key):names[key]=names_legacy[key].capitalize()
  var title=label(top,names.get(id,id.replace("_"," ").capitalize()),22)
  title.add_theme_color_override("font_color",Color("fff1ce"))
- var close=small_button(top,"×",g.close_panel);close.tooltip_text="Close menu · Esc";close.custom_minimum_size=Vector2(36,32);close.alignment=HORIZONTAL_ALIGNMENT_CENTER
+ var close=small_button(top,"Close",g.close_panel);close.tooltip_text="Return to play" if g.playing else "Close menu";close.custom_minimum_size=Vector2(62,32);close.alignment=HORIZONTAL_ALIGNMENT_CENTER
  if g.playing and has_tabs(id):
   var nav=row(outer);nav.name="BookTabs";nav.add_theme_constant_override("separation",4)
   for entry in TABS:
+   if entry[0]=="great_claim102" and not HoldFrontier103.active(g.state):continue
    var tab=small_button(nav,entry[1],func():g.menu_history.clear();g.open_panel(entry[0],false));tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tab.toggle_mode=true;tab.button_pressed=tab_id(id)==entry[0];tab.alignment=HORIZONTAL_ALIGNMENT_CENTER
    var active=paper_style("375c50","785f33");active.set_content_margin_all(5);active.border_width_bottom=3
    tab.add_theme_stylebox_override("pressed",active);tab.add_theme_stylebox_override("hover_pressed",active)

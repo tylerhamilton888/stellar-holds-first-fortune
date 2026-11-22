@@ -1,3 +1,7 @@
+## 0.125.1 · Stonebridge playtest fixes
+
+Separated the Pinewood travel lane from the Ledger approach, bounded the outdoor camera, replaced miniature mountain groves with full-size firs, revised player walk contacts, and added direct book navigation and clearer delivery and inventory controls.
+
 ## 0.125.0 · Stonebridge
 
 Integrated the contest-led campaign and current homestead, settlement and underground work. Redesigned pack browsing, recipe selection, equipment presentation and common menu navigation. Added sixteen painted supply icons used in the pack and quick bar. Existing inventory, equipment, recipe locks and hotbar saves retain their identifiers.
