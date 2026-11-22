@@ -20,7 +20,8 @@ func run():
  while HoldFolk.warming():HoldFolk.warm_step()
  check(is_instance_valid(g.opening_scene) and g.opening_scene.mode=="frontier_arrival" and g.opening_scene.step==1,"Reload resumes an unfinished introduction")
  g.opening_scene.age=1.0;g.opening_scene.advance();g.opening_scene.age=1.0;g.opening_scene.advance()
- await snap("01b-ivar-welcome")
+ check(g.opening_scene.speaker.text=="SKARRIN" and g.opening_scene.foreman_portrait.visible,"Skarrin introduces the contest in person")
+ await snap("01b-skarrin-welcome")
  for who in ["IVAR DEEPMEASURE","RURIK STONEHAND","SIGRID EMBERBRAID"]:
   g.opening_scene.age=1;g.opening_scene.advance()
   check(g.opening_scene.speaker.text==who,"Opening names the person currently speaking: "+who)
@@ -29,7 +30,7 @@ func run():
  g.opening_scene.finish();await process_frame
  check(not is_instance_valid(g.opening_scene) and not HoldFirstVisit99.data(g.state).intro_pending and g.surface.area==HoldFrontier103.lodge(g.state),"Skipping returns control in the lodge")
  g.open_panel("commission")
- check(has_label("Old Stonewright's Rise") and not has_label("campaign foundations"),"First journal leads with one immediate task")
+ check(has_label("A hearth gone cold") and not has_label("campaign foundations"),"First journal leads with one immediate task")
  await snap("02-first-journal");g.close_panel()
  g.open_panel("great_claim102")
  check(has_label("where Stonebridge records work") and not has_label("The North Crossing"),"The ledger begins with a short explanation")
@@ -48,6 +49,8 @@ func run():
  g.opening_scene.age=4;g.opening_scene.advance();await snap("polish179-introduction-farewell")
  g.opening_scene.finish();await process_frame;settle()
  check(g.surface.area=="claim" and g.surface.walkable(g.player) and not HoldFirstVisit99.data(g.state).rewarded,"Skipping leaves the player at their usable holding without mining credit")
+ at(g.surface.house.center(Vector2i(57,28)));key(KEY_E);settle()
+ check(g.surface.house.view.inside(),"The cottage door admits the player before using the bed and chest")
  at(HoldFurnishings.bedside(HoldFrontier103.HOME_BED))
  check(g.surface.walkable(g.player) and g.surface.nearest().get("action","")=="house_rest","The starter bed has a clear usable bedside")
  key(KEY_E)

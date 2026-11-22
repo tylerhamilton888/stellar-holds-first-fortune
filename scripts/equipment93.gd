@@ -99,14 +99,18 @@ static func panel(g):
   b.tooltip_text="Compare owned gear with your equipped piece" if key!="forge" else "View materials and forge equipment"
   b.toggle_mode=true;b.button_pressed=g.gear_tab==key;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  if g.gear_tab=="forge":forge_panel(g);return
- var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",10);g.panel_body.add_child(grid)
+ var weapons=g.gear_tab=="weapon"
+ var grid=GridContainer.new();grid.columns=3 if weapons else 2
+ grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",10)
+ g.panel_body.add_child(grid)
  for item in d.items:
   if slot(item.kind)!=g.gear_tab:continue
   var selected=d.equipped[g.gear_tab]==item.id
-  var panel=g.section(grid,"");panel.get_parent().custom_minimum_size.x=392;panel.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
-  var line=g.row(panel)
-  if item.kind in HoldCombat.WEAPONS:line.add_child(weapon_art(item.kind,76))
-  var body=VBoxContainer.new();body.add_theme_constant_override("separation",2);body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(body)
+  var body=g.section(grid,"")
+  body.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
+  body.get_parent().custom_minimum_size.x=255 if weapons else 392
+  if weapons:body.add_child(weapon_art(item.kind,76))
   g.label(body,title(item),18)
   g.label(body,MATERIALS[item.kind]+" · "+("Tempered" if item.grade==1 else "Standard")+(" · Borin’s collection gift" if item.id=="collection_smith141" else " · No. "+item.id.trim_prefix("gear_") if item.id.begins_with("gear_") else ""),14)
   g.label(body,comparison(c,item),15)
