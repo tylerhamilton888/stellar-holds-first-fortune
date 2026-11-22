@@ -1,9 +1,9 @@
-# Stonebridge · 0.125.1
+# Stonebridge · 0.125.3
 
-[Windows 0.125.1](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.1) is published from `32c0c42fee0d`. [PR #196](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/196) brings the playtest fixes into master. CURRENT_STATUS.md records package verification and the native visual captures.
+[Windows 0.125.3](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.3) is published from `fad4b16d72c5`. [Source PR](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/200) · [Release verification](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/45066066938) · [Published hashes and screenshot](CURRENT_STATUS.md)
 
-Try both walks to the Ledger, overshoot its eastern approach, and take the southeast fork to Pinewood. Walk in all directions with a stowed and a drawn pick. Approach the trees north of town. At the Ledger, check contributing at the book and reading remotely through the shared Ledger tab. Search the pack for a missing item and clear its filters.
+A fresh fortune follows Skarrin’s welcome with Ivar’s job to inspect Borin’s hearth. The objective and marker track the door, forge and firebox, then give way to the existing coal and delivery project. Switching to the home lead removes the forge marker.
 
-The CLI uses Godot 4.4.1. The local civic145, menu92, menu_quality100, menus, ledger137, opening146, appearance, and greatclaim102 cases passed. The pack catalogue passed 63 checks. The stonebridge settlement walkthrough passed 61 checks. [The release workflow](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/45051565185) verifies the packaged game independently.
+The four focused native gameplay cases passed 218 assertions. The title-screen run covered character creation, the complete introduction and the optional trip to the Rise. A second run resumed at Skarrin’s saved scene and skipped to the tracked quest. The Windows package passed 79 cases and 14,970 assertions.
 
-See BACKLOG.md for the next first-time player session.
+Next playtest: give a new player the controls and watch which door they take after the welcome. Follow them through inspection, fuel delivery and their first contest entry. See [the backlog](BACKLOG.md).
