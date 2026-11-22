@@ -91,6 +91,6 @@ func run():
  stand(Vector2i(55,35));check(g.handworks.build("store",Deepworks.center(Vector2i(56,36))),"Build a separate cellar storage pallet")
  var store=g.handworks.data().facilities.back();check(g.handworks.deposit(store)>0,"Deposit carried supplies in cellar storage")
  stand(Vector2i(54,34));walk_landing(g.zone=="mine");settle();check(g.surface.area=="claim" and h.level()==0,"Return from cellar to ground floor")
- stand(Vector2i(52,32));key(KEY_E);settle();check(h.level()==1,"Reach upper bedroom again after cellar trip")
+ stand(Vector2i(52,32));walk_landing(true);settle();check(h.level()==1,"Reach upper bedroom again after cellar trip")
  check(normal(g.state.surface.chests)==chests,"Three-level travel preserves upstairs storage contents")
  print("UPPER158: %d passed / %d failed" % [passed,failed]);g.queue_free();await process_frame;quit(1 if failed else 0)

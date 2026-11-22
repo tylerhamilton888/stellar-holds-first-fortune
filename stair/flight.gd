@@ -15,17 +15,46 @@ static func crossed(before:Vector2,after:Vector2,seam:Vector2,half_width:float)-
  var x=lerpf(before.x,after.x,(seam.y-before.y)/(after.y-before.y))
  return absf(x-seam.x)<=half_width
 
+# Sample the painted grain of the original timber landing and the chipped edge
+# of a stone tread. UV coordinates are normalized within each source image.
+static func board(g,outline:PackedVector2Array,wood:Texture2D,tint:Color):
+ var uv=PackedVector2Array([Vector2(.20,.032),Vector2(.80,.032),Vector2(.80,.111),Vector2(.20,.111)])
+ g.draw_polygon(outline,PackedColorArray([tint]),uv,wood)
+
+static func quad(a:Vector2,b:Vector2,c:Vector2,d:Vector2)->PackedVector2Array:
+ return PackedVector2Array([a,b,c,d])
+
 static func draw(g,box:Rect2,depth:float):
- var top=box.position
- var size=box.size
- var landing=Rect2(top+size*Vector2(.12,0),size*Vector2(.76,.13))
- g.draw_rect(landing,Color("897c66"))
- g.draw_texture_rect(treads(),Rect2(top+Vector2(0,landing.size.y*.75),size-Vector2(0,landing.size.y*.75)),false)
- # At the upper landing the flight falls away under the near floor edge.
- if depth>0:
-  var points=PackedVector2Array([top+size*Vector2(.22,.13),top+size*Vector2(.76,.13),top+size*Vector2(.92,.96),top+size*Vector2(.08,.96)])
-  var shade=Color(.065,.076,.078,.82*depth)
-  g.draw_polygon(points,PackedColorArray([Color.TRANSPARENT,Color.TRANSPARENT,shade,shade]))
-  var lip=Rect2(top+size*Vector2(.04,.94),size*Vector2(.92,.06))
-  g.draw_rect(lip,Color(.42,.38,.31,depth))
-  g.draw_line(lip.position,Vector2(lip.end.x,lip.position.y),Color(.72,.65,.49,depth),maxf(1,size.y*.017))
+ var stone=treads()
+ var wood=preload("res://settlement/ground.gd").texture("ramp_head")
+ var x=box.position.x;var y=box.position.y
+ var w=box.size.x;var h=box.size.y
+ if depth<1:
+  var light=Color(.99,.94,.85,1.-depth)
+  board(g,quad(Vector2(x+.22*w,y+.06*h),Vector2(x+.78*w,y+.06*h),Vector2(x+.81*w,y+.22*h),Vector2(x+.18*w,y+.22*h)),wood,light)
+  g.draw_texture_rect(stone,Rect2(x,y+h*.07,w,h*.93),false,light)
+ if depth<=0:return
+ var top_left=Vector2(x+w*.15,y+h*.10)
+ var top_right=Vector2(x+w*.85,y+h*.10)
+ var bottom_left=Vector2(x+w*.05,y+h*.93)
+ var bottom_right=Vector2(x+w*.95,y+h*.93)
+ var opening=quad(top_left,top_right,bottom_right,bottom_left)
+ g.draw_colored_polygon(opening,Color(.105,.085,.068,depth))
+ # The tread edges retreat inside the floor opening. The visible masonry ends
+ # beneath the near sill, while the cut timber sides remain at floor level.
+ var stone_uv=quad(Vector2(.22,.40),Vector2(.76,.40),Vector2(.76,.53),Vector2(.22,.53))
+ var inner_left=bottom_left+Vector2(w*.21,0)
+ var inner_right=bottom_right-Vector2(w*.21,0)
+ for i in 6:
+  var start=1.-pow(1.-i/6.,1.45)
+  var end=1.-pow(1.-(i+1)/6.,1.45)
+  var course=quad(top_left.lerp(inner_left,start),top_right.lerp(inner_right,start),top_right.lerp(inner_right,end),top_left.lerp(inner_left,end))
+  var light=lerpf(.96,.23,end)
+  g.draw_polygon(course,PackedColorArray([Color(light,light*.97,light*.91,depth)]),stone_uv,stone)
+ var timber=Color(.84,.79,.66,depth)
+ var edge=w*.055
+ board(g,quad(top_left-Vector2(edge,0),bottom_left-Vector2(edge,0),bottom_left,top_left),wood,timber)
+ board(g,quad(top_right,bottom_right,bottom_right+Vector2(edge,0),top_right+Vector2(edge,0)),wood,timber)
+ var sill=Color(.95,.89,.74,depth)
+ board(g,quad(top_left-Vector2(edge,h*.055),top_right+Vector2(edge,-h*.055),top_right+Vector2(edge,0),top_left-Vector2(edge,0)),wood,sill)
+ board(g,quad(bottom_left-Vector2(edge,0),bottom_right+Vector2(edge,0),bottom_right+Vector2(edge,h*.065),bottom_left+Vector2(-edge,h*.065)),wood,sill)

@@ -126,7 +126,7 @@ static func draw(g):
   var c=cell(r);var p=Deepworks.center(c)
   if g.zone!="mine" and not g.surface.house.view.visible(p):continue
   if g.zone=="mine" and not g.deep.world.layer(0).seen.has(Deepworks.key(c)):continue
-  if r.built:preload("res://stair/flight.gd").draw(g,Rect2(p-Vector2(20,19),Vector2(40,38)),0. if g.zone=="mine" else 1.)
+  if r.built:preload("res://stair/flight.gd").draw(g,Rect2(p-Vector2(31,30),Vector2(62,60)),0. if g.zone=="mine" else 1.)
   else:
    for d in CROSS:g.draw_rect(Rect2(Vector2(c+d)*40,Vector2(40,40)).grow(-3),Color("d4bd79"),false,2)
 static func prompt(g)->String:

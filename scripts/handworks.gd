@@ -581,5 +581,19 @@ func prompt() -> String:
 	if not f.is_empty() and f.get("owner", "") == "hold": text = "Hold crew · reserved stock and work order"
 	if placing.begins_with("move_saw/"): text = "Moving sawbench · LMB place · Right click cancel"
 	elif placing != "": text = "Placing " + SPECS[placing].name + " · LMB build · Right click cancel"
+	if text == "" and (g.zone == "mine" or (g.surface.active() and g.surface.area == "claim")):
+		var c = Deepworks.cell(g.player)
+		var up = false
+		var down = false
+		if g.zone == "mine" and g.deep.world != null:
+			var w = g.deep.world
+			up = w.data.links.get(w.link_key(c, Deepworks.above(w.depth())), {}).get("kind", "") == "stair"
+			down = w.data.links.get(w.link_key(c, w.depth()), {}).get("kind", "") == "stair"
+		elif g.surface.area == "claim":
+			var h = g.surface.house
+			var links = h.data().get("links", {})
+			up = links.get(h.link_key(c, h.level()), {}).get("kind", "") == "stairs"
+			down = links.get(h.link_key(c, h.level()-1), {}).get("kind", "") == "stairs"
+		if up or down: text = "Stairs · " + ("Walk north to climb or south to descend" if up and down else "Walk north to climb" if up else "Walk south to descend")
 	if text == "": text = HoldFirstShift.context_hint(g)
 	return text

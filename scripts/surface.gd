@@ -257,6 +257,14 @@ func points()->Array:
  if area=="claim":result=result.filter(func(point):return house.view.visible(point.p))
  return result
 func spot(x:float,y:float,title:String,action:String)->Dictionary:return {"p":Vector2(x,y),"name":title,"action":action}
+func stair_ascends(p:Dictionary)->bool:
+ if p.action in ["architecture_up","architecture_down"]:return p.action=="architecture_up"
+ if p.has("link"):return area==p.link.lower
+ if HoldWorldZones.ward(area):return HoldWorldZones.WARDS.find(p.action)<level()
+ return HoldBuildingPlans.floor_number(area)==0
+func stair_hint(p:Dictionary)->String:
+ var heading="Walk north up" if stair_ascends(p) else "Walk south down"
+ return heading+" the stairs · "+str(p.name).get_slice(" · ",1) if " · " in str(p.name) else heading+" the stairs"
 func nearest()->Dictionary:
  var found={};var distance=78.0
  for p in points():
@@ -264,9 +272,13 @@ func nearest()->Dictionary:
   if p.action in ["rest","house_rest"] and (d>46 or absf(g.player.y-p.p.y)>25):continue
   if p.action=="letter" and (d>48 or g.player.y<p.p.y-8):continue
   if p.action.begins_with("citizen:") or p.action.begins_with("resident:") or p.action.begins_with("road_folk:"):d+=38 # Doors retain priority.
-  if (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
-  if is_stair_point(p):
-   if not HoldNeighborhood.stair_access(g.player,p.p,96 if room() else 140):continue
+  if not walk_stair(p) and (p.action.begins_with("room:") or p.action.begins_with("home:") or p.action=="private") and (absf(g.player.x-p.p.x)>34 or g.player.y<p.p.y-8):continue
+  if walk_stair(p) and not p.has("link"):
+   var start:Vector2=p.p if stair_ascends(p) else p.p-Vector2(0,92)
+   if absf(g.player.x-start.x)>38:continue
+   d=g.player.distance_to(start)
+   if d<distance:distance=d;found=p
+   continue
   if p.action=="leave" and absf(g.player.x-p.p.x)>34:continue
   if d>=distance:continue
   if not clear_interaction(g.player,p.p):continue
@@ -287,7 +299,7 @@ func use():
  if p.action.begins_with("household_note:"):world.speech=HoldHouseholds.note(p.action.trim_prefix("household_note:"));world.speech_until=g.clock+18;g.notify(world.speech);return
  if p.action.begins_with("ward_notice:"):g.notify(HoldWardDesign.notice(p.action.trim_prefix("ward_notice:")));world.speech=HoldWardDesign.notice(p.action.trim_prefix("ward_notice:"));world.speech_until=g.clock+18;return
  if p.action.begins_with("terrace:"):g.notify("Walk along the Great Stair · movement stays in your hands.");return
- if walk_stair(p):return
+ if walk_stair(p):g.notify(stair_hint(p));return
  action(p.action)
 func walk_stair(p:Dictionary)->bool:
  return is_stair_point(p) or p.action in ["architecture_up","architecture_down"] or str(p.action).begins_with("terrace:")
@@ -746,7 +758,7 @@ func hud():
  g.hud.text=("THANE · " if HoldInvasion131.eligible(g.state) and HoldInvasion131.data(g.state).thane else "")+label().to_upper()+"   %d CROWNS" % g.state.money
  if g.panel_id=="":
   var p=nearest()
-  g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk · " if walk_stair(p) else "Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
+  g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else ((stair_hint(p) if walk_stair(p) else ("Walk through · " if roads.is_link(p.action) else "E · ")+p.name) if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
   if p.is_empty() and placing=="" and area=="trail" and HoldFrontier103.active(g.state) and g.player.distance_to(HoldGreatClaim102.EAST_WALK[0])<64:
    g.footer.text="West path · Town Ledger      Southeast path · Pinewood"
   if placing == "" and CartBank.active(g) and CartBank.AREA.grow(42).has_point(g.player) and g.tool == 1: g.footer.text = "Shovel · Click nearby turf to cut the bank · O cottage grounds"

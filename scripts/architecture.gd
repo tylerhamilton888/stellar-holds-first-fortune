@@ -64,8 +64,12 @@ func points()->Array:
   var b=inside();var z=current_floor();var r=HoldRoomLayout.exit_point(s.area)
   if z==0:result.append(s.spot(r.x,r.y,"Leave · "+b.name,"architecture_leave"))
   var stair=HoldBuildingPlans.stair_position(s.area)
-  if z+1<b.rooms.size():result.append(s.spot(stair.x,stair.y,"Stairs · upper floor","architecture_up"))
-  if z>0:result.append(s.spot(stair.x,stair.y,"Stairs · lower floor","architecture_down"))
+  if z+1<b.rooms.size():
+   var to="Your quarters" if s.area==HoldFrontier103.lodge(g.state) else "Records loft" if b.rooms[z+1]=="room:records_loft" else "Floor "+str(z+2)
+   result.append(s.spot(stair.x,stair.y,"Stairs · "+to,"architecture_up"))
+  if z>0:
+   var to=b.name if z==1 else "Floor "+str(z)
+   result.append(s.spot(stair.x,stair.y,"Stairs · "+to,"architecture_down"))
  else:
   for b in data().instances:
    if b.area==s.area:result.append(s.spot(b.x,b.y,b.name,HoldBuildingPlans.room_id(str(b.id))))
