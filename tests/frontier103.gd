@@ -54,7 +54,7 @@ func run():
  var before=s.count("food");check(HoldFrontier103.transact(g,"trade","food",true) and s.count("food")==before+1,"Watch stores sell real supplies")
  desk("survey");await snap("survey-office")
  g.surface.architecture.stairs(true);settle();await snap("upper-archive")
- at(Vector2(690,575));key(KEY_E);check(g.panel_id=="frontier_archive103" and g.menu_paused,"Upper archive has readable town records and charter law");await snap("archive-text");g.close_panel()
+ at(HoldFrontier103.archive_access(g));key(KEY_E);check(g.panel_id=="frontier_archive103" and g.menu_paused,"Upper archive has readable town records and charter law");await snap("archive-text");g.close_panel()
  g.surface.enter("trail");settle();at(Vector2(520,680));await snap("town-west")
  at(Vector2(1480,680));await snap("town-east")
  for day in 15:

@@ -19,7 +19,7 @@ static func people(g)->Array:
  if HoldFirstVisit99.lodge_intro(g.state) and (HoldFrontier103.active(g.state) or not HoldFirstVisit99.data(g.state).get("ivar_departed",false)):
   result.append({"p":Vector2(510,380),"kind":"citizen","profile":profile(g,0),"aim":Vector2.DOWN,"walking":false,"name":"Ivar Deepmeasure","role":"Foreman","time":g.clock,"gait":0.0,"interaction":"lodge_folk:0"})
  var t=float(g.state.elapsed);var phase=fposmod(t,28.0)
- var x=lerpf(250.0,350.0,clampf((phase-4.0)/6.0,0,1)) if phase<14 else lerpf(350.0,250.0,clampf((phase-18.0)/6.0,0,1))
+ var x=lerpf(335.0,400.0,clampf((phase-4.0)/6.0,0,1)) if phase<14 else lerpf(400.0,335.0,clampf((phase-18.0)/6.0,0,1))
  var walking=(phase>=4 and phase<10) or (phase>=18 and phase<24)
  result.append({"p":Vector2(x,490),"kind":"citizen","profile":profile(g,1),"aim":Vector2.RIGHT if phase<14 else Vector2.LEFT,"walking":walking,"name":MINERS[0],"role":"Stone hauler","time":t,"gait":t,"interaction":"lodge_folk:1"})
  var sigrid=HoldTraditions126.sigrid(g,t)

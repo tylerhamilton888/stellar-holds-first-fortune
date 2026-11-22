@@ -85,17 +85,17 @@ static func room_floor(w,area:String):
  if area=="room:home" and not HoldFirstVisit99.lodge_intro(g.state):HoldWorkerLodge100.draw_private_door(w,560)
  var floor_area=plan.floor
  var room="home" if source.begins_with("home:") else source.trim_prefix("room:")
- HoldRoomLayout.dressing(w,source);HoldHouseholds.dressing(w,source)
+ HoldRoomLayout.dressing(w,source)
  if HoldBuildingPlans.has_stairs(area):
   var p=HoldBuildingPlans.stair_position(area);var up=HoldBuildingPlans.floor_number(area)==0
-  HoldNeighborhood.draw_stairs(w,p,up,96)
+  preload("res://settlement/rooms.gd").indoor_stairs(g,p,up)
   if not up:
    var coping=Rect2(floor_area.position.x,floor_area.end.y-30,floor_area.size.x,30)
    HoldArchitectureStyles.wall(g,coping,HoldArchitectureStyles.room(area),false)
    g.draw_line(coping.position,Vector2(coping.end.x,coping.position.y),Color("c0ae8a"),2)
  HoldCivicArt.exit_floor(g,area)
- if room=="training":
-  w.s.house.material(0,Rect2(305,345,330,185));g.draw_rect(Rect2(315,355,310,165),Color("bda673"),false,3)
+ if room in ["training","practice"]:
+  preload("res://settlement/rooms.gd").practice_floor(w,source)
  if area.begins_with("home:") and not HoldBuildingPlans.owned_room(area) and int(g.state.surface.homes.get(g.state.claim_id,{}).get("level",0))>0:
   g.draw_style_box(w.stone_style(Color("3f777a")),Rect2(365,420,230,115));g.draw_rect(Rect2(373,428,214,99),Color("c9ac6e"),false,3)
   for x in range(390,580,35):g.draw_polyline(PackedVector2Array([Vector2(x,439),Vector2(x+9,448),Vector2(x,457),Vector2(x-9,448),Vector2(x,439)]),Color("cab785"),2)

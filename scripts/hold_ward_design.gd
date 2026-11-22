@@ -40,25 +40,7 @@ static func shaft(w,rect:Rect2):
  var source=Rect2(140,260,1260,540) if w.current_area()!="forgeward" else Rect2(600,260,900,650)
  HoldGrounding.cover(w.g,DEPTH,rect,source,Color(.65,.72,.77))
 static func plaza(g,r:Rect2,color:Color,trim:Color):
- var a=r.position;var b=r.end;var c=24.0
- var polygon=PackedVector2Array([a+Vector2(c,0),Vector2(b.x-c,a.y),Vector2(b.x,a.y+c),b-Vector2(0,c),b-Vector2(c,0),Vector2(a.x+c,b.y),Vector2(a.x,b.y-c),a+Vector2(0,c)])
- var key=str(r)+str(color)
- if not paving.has(key):
-  var vertices=[];var colors=[];var indices=[];var uv=PackedVector2Array()
-  for y in range(int(a.y),int(b.y)+1,30):
-   for x in range(int(a.x)-25,int(b.x)+1,50):
-    var left=x+(15 if posmod(y-int(a.y),60)==0 else 0)
-    var cell=PackedVector2Array([Vector2(left+1,y+1),Vector2(left+49,y+1),Vector2(left+49,y+29),Vector2(left+1,y+29)])
-    for clip in Geometry2D.intersect_polygons(cell,polygon):
-     var base=vertices.size();var shade=color.lightened(float(posmod(x*17+y*31,13))/160.0)
-     for v in clip:
-      vertices.append(Vector3(v.x,v.y,0));colors.append(shade);uv.append(v/800.0)
-     for index in Geometry2D.triangulate_polygon(clip):indices.append(base+index)
-  var arrays=[];arrays.resize(Mesh.ARRAY_MAX);arrays[Mesh.ARRAY_VERTEX]=PackedVector3Array(vertices);arrays[Mesh.ARRAY_COLOR]=PackedColorArray(colors);arrays[Mesh.ARRAY_TEX_UV]=uv;arrays[Mesh.ARRAY_INDEX]=PackedInt32Array(indices)
-  var mesh=ArrayMesh.new();mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays);paving[key]=mesh
- g.draw_colored_polygon(polygon,color.darkened(.24))
- g.draw_mesh(paving[key],HoldFloorPattern.texture())
- var outline=polygon.duplicate();outline.append(polygon[0]);g.draw_polyline(outline,trim.darkened(.12),1.5,true)
+ preload("res://settlement/ground.gd").plaza(g,r,color,trim)
 static func ground(w):
  var g=w.g;var area=w.current_area()
  if area=="crownward":

@@ -286,8 +286,9 @@ func draw_furnishing(o:Dictionary):
    g.handworks.raw_sprite({"kind":"stone"},stance+impact+Vector2(0,7),22)
 
 func draw_room_floor():HoldBuildingArt.room_floor(self,s.area)
+const TRAIL_RIVER_BANK = Rect2(1155, 200, 160, 800)
 func draw_river():
- g.draw_rect(Rect2(1155,200,160,800),Color("465950"))
+ g.draw_rect(TRAIL_RIVER_BANK, Color("465950"))
  tile(4,Rect2(1170,200,130,800),160)
  for y in range(220,990,34):
   var phase=sin(g.clock*.8+y)*8

@@ -14,8 +14,8 @@ func run():
  for view in 4:
   var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][view]
   var idle=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)
-  check(idle.sheet==sheet and idle.index==view,"Rurik resting view "+str(view))
-  check(is_equal_approx(idle.scale*float(HoldWholeFrames.metadata[sheet][view].height),62.0),"Rurik preserves 62px world stature")
+  check(named_idle(idle,p.cast_id,view),"Rurik resting view "+str(view))
+  check(is_equal_approx(idle.scale*float(HoldWholeFrames.metadata[idle.sheet][idle.index].height),62.0),"Rurik preserves 62px world stature")
   for key in 4:
    var a=HoldWholeFrames.descriptor(p,d,true,key*.13+.001,"town_walk",0)
    check(a.sheet==sheet and a.index==4+view*4+key,"Rurik whole gait key "+str(view)+":"+str(key))
@@ -25,11 +25,12 @@ func run():
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player artwork unchanged")
  for step in 113:
   var t=step*.25;g.state.elapsed=t;var actor=rurik_actor();var phase=fposmod(t,28.0)
-  var x=lerpf(250,350,clampf((phase-4)/6,0,1)) if phase<14 else lerpf(350,250,clampf((phase-18)/6,0,1))
+  var x=lerpf(335,400,clampf((phase-4)/6,0,1)) if phase<14 else lerpf(400,335,clampf((phase-18)/6,0,1))
   var walking=(phase>=4 and phase<10) or (phase>=18 and phase<24)
   check(not actor.is_empty() and actor.profile.cast_id=="rurik","Lodge route retains identity "+str(step))
   check(actor.p.distance_to(Vector2(x,490))<.01 and actor.walking==walking,"Lodge route and pauses preserved "+str(step))
-  check(HoldWholeFrames.descriptor(actor.profile,actor.aim,actor.walking,actor.gait,actor.get("pose","town_walk"),0).sheet==sheet,"Live lodge route keeps authored art "+str(step))
+  var displayed=HoldWholeFrames.descriptor(actor.profile,actor.aim,actor.walking,actor.gait,actor.get("pose","town_walk"),0)
+  check((displayed.sheet==sheet if actor.walking else named_idle(displayed,"rurik",HoldDirectional.view(actor.aim))),"Live lodge route keeps authored art "+str(step))
  for sample in [["walk",7.0],["rest",12.0],["return",21.0]]:
   g.state.elapsed=sample[1];at(Vector2(410,550));await snap("rurik-"+sample[0])
  HoldWorkerLodge100.speak(g,1)

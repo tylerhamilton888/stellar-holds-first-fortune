@@ -79,7 +79,9 @@ func walls(map:Dictionary)->Array:
  return result
 func obstacles()->Array:
  var result=walls(tiles()) if s.area=="claim" or s.architecture.interior() else []
- if s.area=="claim":result.append_array(view.boundary_obstacles())
+ if s.area=="claim":
+  result.append_array(view.boundary_obstacles())
+  result.append_array(HoldTimberWing.obstacles(g))
  return result
 func occupied(c:Vector2i)->bool:
  if g.fieldwork:
@@ -126,6 +128,10 @@ func valid(c:Vector2i,kind:String,check_routes:bool=true)->bool:
  var p=center(c)
  if g.player.distance_to(p)>170:reason="Move within reach of your work.";return false
  if not s.claim_ground(p) or p.y<320:reason="Keep to the clear homestead building grounds.";return false
+ if level()==0 and kind.ends_with("floor") and not tile(c).has("floor"):
+  var site=preload("res://settlement/building_site.gd")
+  if not site.level_claim_ground(g,Rect2(Vector2(c)*CELL,Vector2.ONE*CELL).grow(site.MARGIN)):
+   reason="Keep the whole floor tile on level ground inside the edge.";return false
  if level()==0 and kind in ["remove","wall","window","door","stairs","ladder"] and HoldEstateCellar.protected(g,c):reason="Keep the built cellar landing intact and clear.";return false
  var t=tile(c)
  if kind=="remove":

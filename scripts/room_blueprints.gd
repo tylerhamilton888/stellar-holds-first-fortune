@@ -12,6 +12,7 @@ var purpose="Undesignated"
 var floor_kind="stone_floor"
 var style_family=""
 var zoom=1.0
+var preview_roof=true
 var map_center=Vector2(1800,1100)
 var message="Drag a rectangle. Adjacent rooms can share a boundary."
 func _init(owner):owner_ref=weakref(owner)
@@ -91,7 +92,7 @@ func progress(r:Dictionary)->Dictionary:
  if int(r.get("z",0))>0:
   if HoldUpperBlueprints.missing_supports(self,r)>0:state="Needs supports"
   elif not HoldUpperBlueprints.access(self,r):state="Needs stairs"
- return {"state":state,"built":count-left,"total":count}
+ return {"state":state,"stage":HoldRoomConstruction197.phase(self,r),"built":count-left,"total":count}
 func validate(r:Dictionary,ignore:String="")->bool:
  if not available():message="Plan on your chartered holding, below the roof deck.";return false
  var b=bounds(r);var h=a.s.house
@@ -104,6 +105,10 @@ func validate(r:Dictionary,ignore:String="")->bool:
     if not edge(r,Vector2i(x,y)) or not edge(other,Vector2i(x,y)):message="Rooms may share walls, but their usable spaces cannot overlap.";return false
  if HoldUpperBlueprints.crosses_stair(self,r):message="Keep stair landings inside rooms or corridors, clear of walls.";return false
  if level()>0:return HoldUpperBlueprints.validate(self,r)
+ var site=preload("res://settlement/building_site.gd")
+ var foundation=Rect2(Vector2(b.position)*h.CELL,Vector2(b.size)*h.CELL)
+ if not site.level_claim_ground(a.g,foundation.grow(site.MARGIN)):
+  message="Keep the entire room foundation on level ground inside the edge.";return false
  var solids=a.s.base_obstacles(0)+a.obstacles("claim")
  for y in range(b.position.y,b.end.y):
   for x in range(b.position.x,b.end.x):
@@ -119,17 +124,19 @@ func validate(r:Dictionary,ignore:String="")->bool:
  if level()==h.level() and not h.routes_open(draft):message="Leave a route to the holding and existing services.";return false
  if not planned_access(r,ignore,solids):message="Every planned room needs a connected doorway to the holding.";return false
  return true
+func rectangle(start:Vector2i,finish:Vector2i)->Dictionary:
+ var low=Vector2i(mini(start.x,finish.x),mini(start.y,finish.y));var high=Vector2i(maxi(start.x,finish.x),maxi(start.y,finish.y))
+ return {"z":level(),"id":selected,"x":low.x,"y":low.y,"w":high.x-low.x+1,"h":high.y-low.y+1,"purpose":purpose,"floor":floor_kind,"doors":[a.s.house.key(Vector2i((low.x+high.x)/2,high.y))],"started":false,"style_family":style_family}
 func save_rectangle(start:Vector2i,finish:Vector2i)->bool:
  var old=chosen()
  if old.is_empty() and data().rooms.size()>=MAX_PLANS:message="This holding supports 64 saved room plans. Existing construction is always retained.";return false
  if not old.is_empty() and old.get("started",false):message="Work has begun. Alter built structure in fine construction.";return false
- var low=Vector2i(mini(start.x,finish.x),mini(start.y,finish.y));var high=Vector2i(maxi(start.x,finish.x),maxi(start.y,finish.y))
- var r={"z":level(),"id":selected,"x":low.x,"y":low.y,"w":high.x-low.x+1,"h":high.y-low.y+1,"purpose":purpose,"floor":floor_kind,"doors":[a.s.house.key(Vector2i((low.x+high.x)/2,high.y))],"started":false,"style_family":style_family}
+ var r=rectangle(start,finish)
  if not validate(r,selected):return false
  if old.is_empty():r.id=str(int(data().next));data().next=int(data().next)+1;data().rooms.append(r)
  else:
   for k in r:old[k]=r[k]
- selected=r.id;map_center=Vector2(bounds(r).get_center())*40;zoom=3;a.g.save_game();message="Plan saved. Materials are spent only when work is built.";return true
+ selected=r.id;map_center=Vector2(bounds(r).get_center())*40;zoom=5;a.g.save_game();message="Foundation marked. Materials are spent only when work is built.";return true
 func doorway(c:Vector2i,remove:bool=false)->bool:
  var r=chosen()
  if r.is_empty() or not edge(r,c) or not bounds(r).has_point(c):message="Choose a boundary of the selected room.";return false
@@ -154,10 +161,15 @@ func work()->int:
  if r.is_empty() or not validate(r,selected):return 0
  if level()>0 and (HoldUpperBlueprints.missing_supports(self,r)>0 or not HoldUpperBlueprints.access(self,r)):message="Complete the supporting floor and an accessible stair before building this room.";return 0
  var count=0;var h=a.s.house
- for p in remaining(r):
+ var pending=remaining(r)
+ var foundation=pending.any(func(part):return part.kind.ends_with("floor"))
+ var structure=pending.any(func(part):return part.kind in ["wall","door"])
+ for p in pending:
+  if foundation and not p.kind.ends_with("floor"):continue
+  if not foundation and structure and p.kind not in ["wall","door"]:continue
   if count>=32:break
   if h.ready_to_build(p.cell,p.kind) and h.build(h.center(p.cell),p.kind,false):r.started=true;count+=1
- if count<32:count+=HoldBlueprintFinishes.work(self,r,32-count)
+ if count<32 and remaining(r).is_empty():count+=HoldBlueprintFinishes.work(self,r,32-count)
  message="Completed %d building steps within reach. Walk along the plan to continue." % count if count>0 else "No work in reach. Check supplies, approach the plan or clear an obstruction."
  if remaining(r).is_empty() and HoldBlueprintFinishes.cost(self,r).is_empty():r.complete=true;message="Room complete. Furnish it as you wish."
  a.g.save_game()
@@ -174,8 +186,7 @@ func draw_guides():
  for r in rooms(a.s.house.level()):
   if r.get("complete",false):continue
   var rect=Rect2(bounds(r));rect.position*=40;rect.size*=40
-  var color=Color("9bb9b0") if r.get("started",false) else Color("72b9c1")
-  a.g.draw_rect(rect,color,false,2)
+  if not a.s.house.view.groups().any(func(group):return group.bounds.encloses(rect)):HoldRoomConstruction197.site(a.g,self,r,false)
   for k in r.doors:
    var c=a.s.house.coords(k)
    a.g.draw_rect(Rect2(Vector2(c)*40+Vector2(5,5),Vector2(30,30)),Color("87ce94"),false,2)
@@ -207,7 +218,7 @@ func select_room(id:String):
  selected=id
  var r=chosen()
  if r.is_empty():return
- purpose=r.purpose;floor_kind=r.floor;style_family=r.get("style_family","");map_center=Vector2(bounds(r).get_center())*40;zoom=3
+ purpose=r.purpose;floor_kind=r.floor;style_family=r.get("style_family","");map_center=Vector2(bounds(r).get_center())*40;zoom=5
 func assessment(r:Dictionary)->String:
  if level()!=a.s.house.level():return "Visit this floor to inspect furnishings and work within reach."
  var furniture=a.g.hearth.furniture();var counts={};var comfort=0;var heritage=0;var usable=0

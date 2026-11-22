@@ -24,6 +24,7 @@ static func obstacles()->Array:
  result.append_array([Rect2(110,1028,760,94),Rect2(1050,1028,720,94)])
  return result
 static func stair_rails(p:Vector2,width:float=140)->Array:
+ if is_equal_approx(width,96):return preload("res://settlement/indoor_grade.gd").rails(p)
  var scale=width/96
  return [Rect2(p+Vector2(-48,-72)*scale,Vector2(14,92)*scale),Rect2(p+Vector2(34,-72)*scale,Vector2(14,92)*scale),Rect2(p+Vector2(-34,-80)*scale,Vector2(68,10)*scale)]
 static func stair_access(player:Vector2,p:Vector2,width:float=140)->bool:return absf(player.x-p.x)<=width*.5-24 and player.y>=p.y-30 and player.y<=p.y+52

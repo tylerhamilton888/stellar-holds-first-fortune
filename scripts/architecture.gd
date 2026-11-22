@@ -30,6 +30,10 @@ func _init(surface):
 static func current():return active_owner.get_ref() if active_owner!=null else null
 func data()->Dictionary:
  if not g.state.surface.has("architecture86"):g.state.surface.architecture86={"version":1,"next":1,"instances":[]}
+ HoldFrontier103.migrate_frontage(g.state,g.state.surface.architecture86.instances)
+ preload("res://settlement/wall_storage.gd").upgrade_public(g.state,g.state.surface.architecture86.instances)
+ preload("res://settlement/room_proportions.gd").upgrade_public(g.state,g.state.surface.architecture86.instances)
+ preload("res://settlement/indoor_grade.gd").fit_public(g.state,g.state.surface.architecture86.instances)
  return g.state.surface.architecture86
 func record(id:String)->Dictionary:
  for b in data().instances:
@@ -60,8 +64,8 @@ func points()->Array:
   var b=inside();var z=current_floor();var r=HoldRoomLayout.exit_point(s.area)
   if z==0:result.append(s.spot(r.x,r.y,"Leave · "+b.name,"architecture_leave"))
   var stair=HoldBuildingPlans.stair_position(s.area)
-  if z+1<b.rooms.size():result.append(s.spot(stair.x,stair.y,"Stairs · upper floor","architecture_up"))
-  if z>0:result.append(s.spot(stair.x,stair.y,"Stairs · lower floor","architecture_down"))
+  if z+1<b.rooms.size():result.append(s.spot(stair.x,stair.y,"Ramp · upper floor","architecture_up"))
+  if z>0:result.append(s.spot(stair.x,stair.y,"Ramp · lower floor","architecture_down"))
  else:
   for b in data().instances:
    if b.area==s.area:result.append(s.spot(b.x,b.y,b.name,HoldBuildingPlans.room_id(str(b.id))))
@@ -118,8 +122,11 @@ func valid(o:Dictionary,ignore:String="")->bool:
  if s.area!="claim" or s.house.level()!=0 or g.state.claim_id=="":reason="Build on your chartered ground at ground level.";return false
  var r=HoldBuildingArt.footprint(o)
  if g.player.distance_to(o.p)>230:reason="Walk near the intended doorway.";return false
- for p in [r.position,r.end,Vector2(r.end.x,r.position.y),Vector2(r.position.x,r.end.y),o.p+Vector2(0,45)]:
-  if not s.claim_ground(p):reason="Keep the complete building on usable ground.";return false
+ var site=preload("res://settlement/building_site.gd")
+ if not site.fits(o,s.CLAIM_GROUNDS):
+  reason="Keep the full foundation and entrance back from the edge.";return false
+ if not site.level_claim_ground(g,site.foundation(o)):
+  reason="Place the foundation on level ground beside the cart bank.";return false
  if r.grow(18).has_point(g.player):reason="Stand outside the foundation.";return false
  # Existing world buildings and player buildings use the same ground footprints.
  var solids=s.base_obstacles()+obstacles(s.area,ignore)+s.house.obstacles()+g.handworks.surface_obstacles()+g.fieldwork.obstacles()
@@ -188,14 +195,14 @@ func place(p:Vector2)->bool:
   b.x=p.x;b.y=p.y;moving="";s.cancel_placement();g.save_game();return true
  if not g.state.pay(cost(selected)):g.notify("Bring "+HoldData.cost_text(cost(selected))+" in your pack.");return false
  var d=data();var id=str(int(d.next));d.next=int(d.next)+1
- b={"id":id,"plan":selected,"name":HoldBuildingPlans.plan(selected).name,"area":s.area,"x":p.x,"y":p.y,"extend_x":0,"extend_y":0,"rooms":HoldBuildingPlans.plan(selected).rooms.duplicate(),"construction":{},"shell_paid":HoldBuildingPlans.shell_cost(selected)}
+ b={"fitted_rooms":true,"id":id,"plan":selected,"name":HoldBuildingPlans.plan(selected).name,"area":s.area,"x":p.x,"y":p.y,"extend_x":0,"extend_y":0,"rooms":HoldBuildingPlans.plan(selected).rooms.duplicate(),"construction":{},"shell_paid":HoldBuildingPlans.shell_cost(selected)}
  b.style87=HoldArchitectureStyles.resolve(o)
  d.instances.append(b)
  for z in b.rooms.size():seed_room(b,z,furnish_plan)
  s.cancel_placement();g.sound.effect("build");g.save_game();g.notify(b.name+" built. Walk through its door; O opens renovation and furnishing plans.");return true
 func seed_room(b:Dictionary,z:int,furnished:bool=true):
  var area=HoldBuildingPlans.room_id(str(b.id),z)
- var list=HoldBuildingPlans.contents(s.world,b.rooms[z]) if furnished else []
+ var list=HoldBuildingPlans.contents(s.world,b.rooms[z],b.get("fitted_rooms",false)) if furnished else []
  for f in list:
   if f.furnishing=="chest":
    var id="architecture86:"+str(b.id)+":"+str(z)+":"+str(g.state.surface.chests.size())
@@ -235,9 +242,10 @@ func add_floor()->bool:
  var candidates=[HoldBuildingPlans.stair_position(HoldBuildingPlans.room_id(str(b.id)))] if b.rooms.size()>1 else [Vector2(700,550),Vector2(600,550),Vector2(600,600),Vector2(350,550)]
  var landing=Vector2.INF
  for candidate in candidates:
-  var clear=true;var rails=HoldNeighborhood.stair_rails(candidate,96)+[Rect2(candidate-Vector2(30,20),Vector2(60,80))]
+  var clear=true;var rails=HoldNeighborhood.stair_rails(candidate,96)+[Rect2(candidate-Vector2(30,106),Vector2(60,154))]
   for z in b.rooms.size():
    var area=HoldBuildingPlans.room_id(str(b.id),z)
+   if not HoldRoomLayout.bounds(area).encloses(rails.back()):clear=false
    for d in g.state.surface.decor+g.state.surface.chests.values():
     if d.area!=area:continue
     var footprint=HoldFurnishings.footprint(d.get("kind","chest"),Vector2(d.x,d.y))

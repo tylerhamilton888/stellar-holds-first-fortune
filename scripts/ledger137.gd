@@ -68,6 +68,8 @@ static func phase(s)->int:
 static func skarrin(s)->String:
  var lines=["A new face! Skarrin. Welcome to Stonebridge. I've some spare timber if that room of yours needs a chair.","I saw your name in the ledger. Not bad for a first entry. My crew brought in a load this morning too; the ink was barely dry when Ivar found more work for us.","Ivar has entered your household in the records, I hear. Good. My crew has kept him supplied with entries for years; you will soon learn how much ink a town can use.","They're still talking about the rescue at supper. Quite right, too. My crew had the supports ready by dawn; I don't suppose anyone mentioned that part.","Ivar showed me the seal. If it proves what they say, the old families may yet have their say in all this. I wonder what the crews will make of it."]
  var line=lines[phase(s)]
+ if phase(s)==0 and HoldFirstVisit99.data(s).get("met_skarrin_at_lodge",false):
+  line="Good to see you again. I’m off to look at the west abutment. There are four lengths of timber left from the job. Want them for the Rise?" if not data(s).get("gift",false) else "I hope those offcuts serve you well. Come find me when you’ve put your first entry in the book."
  if HoldRestoration139.complete(s) and phase(s)<4:line="An excellent crossing. I am pleased my old abutments could give your achievement somewhere to stand. Ivar seems determined to read your name at every gathering."
  if data(s).get("gift",false) and phase(s)>=1:line+=" How did that timber work out, by the way?"
  return line
@@ -87,7 +89,7 @@ static func forge_lead(s)->Dictionary:
  var need=int(remaining(s,"forge").get("coal",0))
  if need>0:
   if s.count("coal")<need:return {"title":"Fuel for the first firing","art":"coal","hint":"The Ledger still needs %d coal; you carry %d. Process coal at the borrowed stonebreaker in Old Workings or buy it at the town stores. You can deliver what you have now and bring the rest later." % [need,s.count("coal")],"goal":"Coal for the forge · %d still needed, %d in your pack · J" % [need,s.count("coal")]}
-  return {"title":"An entry in the Ledger","art":"coal","hint":"You have the remaining %d coal. Take it to the great open book between the braziers, east of the bunkhouse. Press E and contribute to The Cold Forge. M lets you review the page, but supplies must be delivered at the book or indoor records desk." % need,"goal":"Bring %d coal to the great Ledger east of the bunkhouse · J" % need}
+  return {"title":"An entry in the Ledger","art":"coal","hint":"You have the remaining %d coal. Take it to the Ledger Shrine south of the main street, off the Pinewood path. Press E and contribute to The Cold Forge. M lets you review the page, but supplies must be delivered at the book or indoor records desk." % need,"goal":"Bring %d coal to the Ledger Shrine off the Pinewood path · J" % need}
  return {"title":"The first firing","art":"coal","hint":"The coal is recorded and the hearth is ready. Return to the communal forge and relight it. Borin will pay 65 crowns, and the forge will open for smelting and crafting.","goal":"Return to the communal forge · relight the hearth · J"}
 static func forge_panel(g):
  if not active(g.state) or complete(g.state,"forge"):return
@@ -107,10 +109,10 @@ static func panel(g):
  var s=g.state
  if HoldFirstVisit99.first_morning(s) and not bool(g.get_meta("early_ledger_open",false)):
   HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Names and careful columns fill the pages: stone for a wall, lamps for the road, meals for the crews. This is where Stonebridge records work done for the town.")
-  g.label(g.panel_body,"Ivar can explain the work when you are ready. Contributions are made here at the great book outside or at the records desk in the bunkhouse. Press M to read it from anywhere.",16)
+  g.label(g.panel_body,"Ivar can explain the work when you are ready. Contributions are made at the Ledger Shrine off the Pinewood path or at the records desk in the bunkhouse. Press M to read it from anywhere.",16)
   g.small_button(g.panel_body,"Browse the projects",func():g.set_meta("early_ledger_open",true);g.refresh_panel())
   return
- HoldMenuView.illustrated_text(g.panel_body,"dressed_stone","THE HOLD’S LEDGER","Build a place in Stonebridge. Contributions stay recorded; there are no deadlines. M reviews this ledger anywhere. Deliver carried supplies at the great book outside, east of the bunkhouse.")
+ g.label(g.panel_body,"Review contributions from anywhere. To deliver supplies, visit the Ledger Shrine south of the main street, off the Pinewood path.",16)
  var first_project=not complete(s,"forge")
  if first_project:g.label(g.panel_body,forge_lead(s).hint,16)
  else:

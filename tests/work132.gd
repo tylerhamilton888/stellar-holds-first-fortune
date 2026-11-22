@@ -41,7 +41,7 @@ func run():
  W.produced(g.state,"stone",99,"cut")
  check(not g.state.surface.has("work132"),"Legacy fortunes receive no new work ledger")
  HoldFirstVisit99.begin(g);settle();g.open_panel("commission")
- check(g.panel_body.find_children("*","Label",true,false).any(func(l):return "Old Stonewright's Rise" in l.text),"The new journal begins with the owned homestead")
+ check(g.panel_body.find_children("*","Label",true,false).any(func(l):return "A hearth gone cold" in l.text),"The new journal begins with Borin’s communal forge lead")
  await snap("first-step");g.close_panel()
  var s=g.state;s.money=1000;s.add("stone",24)
  check(not W.can_deliver(s,"quarry","stone") and W.unlocked(s,"ore"),"Optional work is available without granting purchased-stock proof")

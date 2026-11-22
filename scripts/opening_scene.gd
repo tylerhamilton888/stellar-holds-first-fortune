@@ -54,16 +54,18 @@ func _ready():
    ["YOUR FIRST MORNING","No one here knows "+name+" "+game.state.appearance.family_name+" yet. You have forty-five crowns, a borrowed room, and a place to ask for work."],
    ["THE GATE STEWARD","'New for the lower shift? Ivar is waiting inside the gate. He'll show you to your room before you start. Welcome to Keldrath.'"]]
  elif mode=="frontier_arrival":
+  for control in [game.hud,game.status,game.objectives,game.footer]:control.hide()
+  game.sync_hud_controls()
   # The frontier opening happens in the actual lodge, with the player's chosen dwarf.
   lines=[
-   ["THE ROAD EAST", "The lamps of home faded behind you days ago. At the end of the road lies Stonebridge—and the little holding your parents bought after years of saving."],
-   ["A LETTER FROM HOME", "The deed and your parents' letter share an inner pocket. 'Sound mountain foundations! Traditional stone dwelling!' Your father has underlined 'room for improvement'."],
-   ["STONEBRIDGE · THE NEXT MORNING", "You arrived after dark. Now the bunkhouse hearth is lit, and the first shift is already stirring."],
-   ["IVAR DEEPMEASURE", "'You're awake. Good. I'm Ivar. Your parents wrote ahead about Old Stonewright's Rise. The papers are all in order.'"],
-   ["IVAR DEEPMEASURE", "'Your place is east across the bridge. Come over when you're ready; I'll show you. Paid work can wait until you've seen your own hearth.'"],
-   ["RURIK STONEHAND", "Rurik nods toward the table. 'Rurik. I haul the stone Ivar measures twice. If he says the job will take an afternoon, bring supper.'"],
-   ["SIGRID EMBERBRAID", "Sigrid gives Rurik a sidelong look. 'Sigrid. Ignore his estimates too. There's always a seat here when you come back from the Rise.'"],
-   ["IVAR DEEPMEASURE", "Ivar smiles into his cup. 'You know where to find us, then. Go and see your place. Stonebridge will still be here when you get back.'"]]
+   ["THE ROAD EAST", "Stonebridge is choosing its next Thane. You have come to stand for the title. By dusk you cross a stone bridge with a fresh mason’s mark cut into the parapet."],
+   ["THE DEED", "Your parents saved for years to buy the old masonry yard east of town. Tucked into the deed is a note in your father’s square hand. ‘The roof is sound. I went up there myself.’"],
+   ["STONEBRIDGE · THE NEXT MORNING", "At the bunkhouse, a foreman sets his wet boots by the hearth. There’s the mark from the bridge again, stamped into the head of his hammer."],
+   ["SKARRIN", "‘Skarrin. My crew set the west abutment. Took us two springs to get that bank to hold. I hear you’ve come for the same chair I have. Sit down. There’s tea enough for both of us.’"],
+   ["IVAR DEEPMEASURE", "‘Skarrin leads the contest. You can read every entry in the Ledger across the street. When you finish a town project or earn a trade seal, I’ll enter your work there too.’"],
+   ["RURIK STONEHAND", "‘I’m in that book. Hauled the stone for his wall.’ Rurik shifts the pot off the coals. ‘If you’re looking for a first entry, Borin could use a hand. His forge is cold.’"],
+   ["SIGRID EMBERBRAID", "‘Old Stonewright’s Rise? I know your place. Follow the east road across the bridge. When you see the old loading stones, you’re nearly at your door.’"],
+   ["IVAR DEEPMEASURE", "‘I witnessed your deed. Your folks paid in full. I can walk you over, or you can call on Borin first. Come back for supper either way, %s.’" % name]]
   step=clampi(int(HoldFirstVisit99.data(game.state).get("intro_beat",0)),0,lines.size()-1)
   game.transition_left=0;game.transition_shade.visible=false
   game.camera=game.surface.camera_target();game.surface.direction=Vector2.UP
@@ -97,7 +99,10 @@ func show_line():
  if mode=="frontier_arrival":
   foreman_portrait.visible=step>=3
   if step>=3:
-   foreman_portrait.apply_profile(HoldWorkerLodge100.profile(game,1 if lines[step][0]=="RURIK STONEHAND" else 2 if lines[step][0]=="SIGRID EMBERBRAID" else 0))
+   if lines[step][0]=="SKARRIN":
+    foreman_portrait.apply_profile(HoldRoads.skarrin_profile(game.state))
+    HoldFirstVisit99.data(game.state).met_skarrin_at_lodge=true
+   else:foreman_portrait.apply_profile(HoldWorkerLodge100.profile(game,1 if lines[step][0]=="RURIK STONEHAND" else 2 if lines[step][0]=="SIGRID EMBERBRAID" else 0))
   speaker.position.x=125 if step>=3 else 28
   caption.position.x=125 if step>=3 else 28;caption.size.x=635 if step>=3 else 735
  next_button.text=("Begin" if mode=="frontier_arrival" else "Enter the hold" if mode=="arrival" else "Return to work") if step==lines.size()-1 else "Continue"
@@ -113,7 +118,9 @@ func finish():
  if mode=="frontier_arrival":
   HoldFirstVisit99.data(game.state).intro_pending=false
   game.velocity=Vector2.ZERO;game.walking_pose=false;game.opening_scene=null
-  game.notify("Speak with Ivar by the hearth · E")
+  for control in [game.hud,game.status,game.objectives,game.footer]:control.show()
+  game.update_hud()
+  game.notify("Contest for Thane · J for leads · Ivar knows the east road to your home.")
   game.save_game();layer.queue_free();return
  game.state.resident_visits.erase("ivar")
  if mode=="arrival":

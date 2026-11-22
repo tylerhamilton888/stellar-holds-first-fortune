@@ -4,7 +4,12 @@ extends RefCounted
 const HOME_DOOR=Vector2(2300,1180)
 const HOME_BED=Vector2(2230,1020)
 const HOME_CHEST=Vector2(2380,940)
-const BUILDINGS={"lodge":["frontier_lodge",190,430],"forge":["frontier_forge",880,570],"survey":["frontier_office",1480,450],"watch":["frontier_watch",1660,870]}
+const Proportions=preload("res://settlement/room_proportions.gd")
+const Site=preload("res://settlement/building_site.gd")
+const LODGE_DOOR=Vector2(264,484)
+const INN_DOOR=Vector2(581,589)
+const STORES_DOOR=Vector2(1020,900)
+const BUILDINGS={"lodge":["frontier_lodge",LODGE_DOOR.x,LODGE_DOOR.y],"forge":["frontier_forge",880,570],"survey":["frontier_office",1480,450],"watch":["frontier_watch",1660,870]}
 static func active(s)->bool:return s.surface.has("frontier103")
 static func data(s)->Dictionary:return s.surface.get("frontier103",{})
 static func room(s,key:String,z:int=0)->String:
@@ -13,14 +18,29 @@ static func lodge(s)->String:return room(s,"lodge") if active(s) else HoldWorker
 static func quarters(s)->String:return room(s,"lodge",1) if active(s) else "room:home"
 static func public_building(b:Dictionary)->bool:return bool(b.get("public103",false))
 static func private_room(g)->bool:return active(g.state) and g.surface.area==quarters(g.state)
+static func migrate_frontage(s,instances:Array):
+ if not active(s):return
+ var town=data(s)
+ if town.get("frontage_revision",0)>=1:return
+ var id=str(town.buildings.get("lodge",""))
+ for building in instances:
+  if str(building.id)!=id or building.plan!="frontier_lodge" or not public_building(building):continue
+  if Vector2(building.x,building.y)==Vector2(190,430):
+   building.x=LODGE_DOOR.x;building.y=LODGE_DOOR.y
+  town.frontage_revision=1
+  return
+
 static func begin(g):
  if active(g.state):return
- var s=g.state;s.surface.frontier103={"version":1,"buildings":{},"permit":false,"home_reward":false,"storehouse":false,"keldrath_open":false}
+ for spec in BUILDINGS.values():
+  if not Site.town(spec[0],Vector2(spec[1],spec[2])):push_error("Unsupported Stonebridge site: "+spec[0]);return
+ if not Site.town("wayfarer",INN_DOOR):push_error("Unsupported Stonebridge inn site");return
+ var s=g.state;s.surface.frontier103={"version":1,"frontage_revision":1,"buildings":{},"permit":false,"home_reward":false,"storehouse":false,"keldrath_open":false}
  var a=g.surface.architecture;var d=a.data()
  for key in BUILDINGS:
   var spec=BUILDINGS[key];var id=str(int(d.next));d.next=int(d.next)+1
   var plan=HoldBuildingPlans.plan(spec[0])
-  var b={"id":id,"plan":spec[0],"name":plan.name,"area":"trail","x":spec[1],"y":spec[2],"extend_x":0,"extend_y":0,"rooms":plan.rooms.duplicate(),"construction":{},"shell_paid":{},"public103":true}
+  var b={"fitted_rooms":true,"id":id,"plan":spec[0],"name":plan.name,"area":"trail","x":spec[1],"y":spec[2],"extend_x":0,"extend_y":0,"rooms":plan.rooms.duplicate(),"construction":{},"shell_paid":{},"public103":true}
   if key=="forge":b.name="Stonebridge communal forge"
   d.instances.append(b);data(s).buildings[key]=id
   for z in b.rooms.size():a.seed_room(b,z,true)
@@ -37,13 +57,16 @@ static func begin(g):
 static func near(g,key:String)->bool:
  if key=="forge":return HoldForge147.near(g)
  return active(g.state) and g.zone!="mine" and g.surface.area==room(g.state,key) and g.player.distance_to(Vector2(480,500))<110
+static func archive_access(g)->Vector2:
+ if HoldBuildingPlans.template(g.surface.area)==Proportions.RECORDS:return HoldFurnishings.desk_access(Proportions.RECORD_DESK)
+ return Vector2(690,575)
 static func points(g)->Array:
  if not active(g.state):return []
  var s=g.state;var out=[]
  if g.surface.area=="trail" and HoldGreatClaim102.active(s):
   var p=HoldGreatClaim102.TOWN_ACCESS
-  out.append(g.surface.spot(p.x,p.y,"Hold’s Ledger · contributions and town projects","great_claim102"))
- if g.surface.area==room(s,"survey",1):out.append(g.surface.spot(690,575,"Archive · charter law and town records","frontier_archive103"))
+  out.append(g.surface.spot(p.x,p.y,"Ledger Shrine · contributions and town projects","great_claim102"))
+ if g.surface.area==room(s,"survey",1):out.append({"p":archive_access(g),"name":"Archive · charter law and town records","action":"frontier_archive103"})
  if g.surface.area==lodge(s):
   out.append(g.surface.spot(670,425,"Hold’s Ledger","great_claim102"))
   out.append(g.surface.spot(480,500,"Ivar's shift book · work and household records","frontier103"))
@@ -81,15 +104,31 @@ static func settle_home(g,fresh:bool=false):
  s.surface.decor.append({"area":"claim","kind":"bed","x":HOME_BED.x,"y":HOME_BED.y,"z":0})
  s.surface.chests["home169:chest"]={"area":"claim","x":HOME_CHEST.x,"y":HOME_CHEST.y,"z":0,"items":{}}
  data(s).home169.seeded=true
- if fresh:HoldFirstVisit99.data(s).focus="homestead"
+ if fresh:
+  data(s).home169.homeward="first_visit"
+  HoldFirstVisit99.data(s).focus="forge"
+
+static func cross_home_road(g,from:String,to:String):
+ if not family(g.state):return
+ var home=data(g.state).home169
+ if from=="claim" and to=="trail" and home.get("homeward","")=="first_visit":
+  home.homeward="away"
+ elif from=="trail" and to=="claim" and home.get("homeward","")=="away":
+  home.homeward="returned"
+  var line="Your feet find the turn at the old loading stones. Beyond the yard is your own front door."
+  if HoldLedger137.complete(g.state,"forge"):line="There’s coal dust on your cuffs from Borin’s forge. You turn in at the loading stones. Home."
+  elif HoldLedger137.data(g.state).get("gift",false):line="At the loading stones you remember Skarrin’s offcuts. There’s room for a bench here."
+  g.notify(line)
+ else:return
+ g.save_game()
 static func letter(g):
  if not family(g.state) or g.state.claim_id!="copper_ridge":return
  var box=HoldMenuView.disclosure(g,g.panel_body,"Read your parents' letter","home169_letter")
  if box!=null:
   g.label(box,"Our dear one,",18,Color("edc98a"))
   g.label(box,"The papers are in the inner pocket. Old Stonewright's Rise is yours, paid in full. We have put a little aside for years; this is what it was for.",16)
-  g.label(box,"The agent called it an established masonry yard with a traditional stone dwelling. Your father says that means the stones have had plenty of time to settle. There is a bed and a sound roof. Take a lamp; we forgot to ask about a lamp.",16)
-  g.label(box,"It is a modest beginning, with room for a bigger table and whatever work you find worth doing. Make it yours a little at a time. Eat properly. Write when you arrive. We love you. — Mum and Dad",16)
+  g.label(box,"Your father went up on the roof while the agent was trying to sell me the view. He came down with a split slate in his pocket and made the fellow replace it before we signed. You can sleep dry at the Rise.",16)
+  g.label(box,"We hope they choose you. We wanted you to have a home there whatever the book says in the end. Write when you arrive. Your father would like to know what you make in the old yard first. — Mum",16)
  for note in home_letters(g.state):
   var page=HoldMenuView.disclosure(g,g.panel_body,note.title,note.id)
   if page!=null:g.label(page,note.body,16)
@@ -242,9 +281,10 @@ static func panel(g):
 
 static func build_storehouse(g)->bool:
  if not HoldCampaign138.near_site(g) or not HoldLedger137.ready(g.state,"storehouse") or data(g.state).get("storehouse",false):return false
+ if not Site.town("frontier_watch",STORES_DOOR):return false
  if not g.state.pay(HoldLedger137.remaining(g.state,"storehouse")):return false
  var a=g.surface.architecture;var d=a.data();var id=str(int(d.next));d.next=int(d.next)+1
- var b={"id":id,"plan":"frontier_watch","name":"Stonebridge community storehouse","area":"trail","x":1020,"y":900,"extend_x":0,"extend_y":0,"rooms":["room:market"],"construction":{},"shell_paid":{},"public103":true}
+ var b={"fitted_rooms":true,"id":id,"plan":"frontier_watch","name":"Stonebridge community storehouse","area":"trail","x":STORES_DOOR.x,"y":STORES_DOOR.y,"extend_x":0,"extend_y":0,"rooms":["room:market"],"construction":{},"shell_paid":{},"public103":true}
  d.instances.append(b);a.seed_room(b,0,true)
  for f in g.state.surface.decor:
   if f.area==HoldBuildingPlans.room_id(id):f.fixed=true
@@ -258,10 +298,7 @@ static func works(g,area:String)->Array:
 
 static func draw_ground(g):
  if not active(g.state) or g.surface.area!="trail":return
- if HoldGreatClaim102.active(g.state):
-  var p=HoldGreatClaim102.TOWN_LEDGER
-  for y in range(int(p.y)-60,int(p.y)+60,30):
-   for x in range(int(p.x)-135,int(p.x)+135,30):HoldArchitectureStyles.floor_draw(g,Rect2(x,y,30,30),"slate")
+ preload("res://settlement/ground.gd").town(g)
  if data(g.state).get("storehouse",false):return
  for y in range(750,870,40):
   for x in range(920,1120,40):HoldArchitectureStyles.floor_draw(g,Rect2(x,y,40,40),"slate")
@@ -278,7 +315,7 @@ static func home_panel(g):
  g.label(g.panel_body,"Home milestone: a roofed, enclosed home with a bed and nearby lamp or hearth. Existing construction counts; the starter cottage only needs a light. After two civic contributions, record your household with Ivar and register the improved home for 60 marks. The design stays yours to change.",16)
 
 static func archive_panel(g):
- if not active(g.state) or g.surface.area!=room(g.state,"survey",1) or g.player.distance_to(Vector2(690,575))>90:return
+ if not active(g.state) or g.surface.area!=room(g.state,"survey",1) or g.player.distance_to(archive_access(g))>90:return
  HoldMountain104.panel(g)
  g.label(g.panel_body,"THE STONEBRIDGE REGISTER",22,Color("edc98a"))
  g.label(g.panel_body,"The first leaves record the bridge survey, retaining walls and drainage cut. Skarrin's name appears often, alongside Bram's road crew and Sten's haulers. Ivar has kept the workers' names beside their foreman's.",16)

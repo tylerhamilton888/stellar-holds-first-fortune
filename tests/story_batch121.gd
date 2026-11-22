@@ -28,8 +28,8 @@ func run():
   for f in HoldWholeFrames.metadata[sheet]:check(f.has("source") and ResourceLoader.exists(f.source),"Existing explicit atlas source "+id)
   for v in 4:
    var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][v];var a=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)
-   check(a.sheet==sheet and a.index==v,"Idle view "+id+str(v))
-   check(is_equal_approx(a.scale*float(HoldWholeFrames.metadata[sheet][v].height),float(HoldStoryWorld105.HEIGHTS.get(id,62))),"Preserved individual height "+id)
+   check(named_idle(a,id,v),"Idle view "+id+str(v))
+   check(is_equal_approx(a.scale*float(HoldWholeFrames.metadata[a.sheet][a.index].height),float(HoldStoryWorld105.HEIGHTS.get(id,62))),"Preserved individual height "+id)
    for k in 4:
     a=HoldWholeFrames.descriptor(p,d,true,k*.13+.001,"town_walk",0)
     check(a.sheet==sheet and a.index==4+v*4+k,"Ordered whole walking key "+id+str(v)+str(k))
@@ -51,7 +51,8 @@ func run():
    var expected=f.a.lerp(f.b,minf(1,local/duration)) if forward else f.b.lerp(f.a,minf(1,local/duration))
    check(a.p.distance_to(expected)<.01 and a.walking==(local<duration),"Route position/pause unchanged "+id+str(step))
    var pose=HoldWholeFrames.descriptor(a.profile,a.aim,a.walking,a.gait,"town_walk",0)
-   check(pose.sheet.ends_with("/"+profiles["sten" if idx==5 else "skarrin"].cast_id+".webp"),"Live route keeps identity "+id)
+   var cast_id=profiles["sten" if idx==5 else "skarrin"].cast_id
+   check((pose.sheet==HoldStoryWorld105.PREFIX+cast_id+".webp" if a.walking else named_idle(pose,cast_id,HoldDirectional.view(a.aim))),"Live route keeps identity "+id)
   g.state.elapsed=cycle*4-idx*9+.8;at(f.a+Vector2(0,95));await snap(f.name.to_lower()+"-walk")
   g.state.elapsed=cycle*4-idx*9+duration+.5;await snap(f.name.to_lower()+"-rest")
   approach_road(id);g.surface.action(id);check(g.panel_id=="conversation" and g.talk_id==id,"Normal road conversation "+id);await snap(f.name.to_lower()+"-conversation");g.close_panel()

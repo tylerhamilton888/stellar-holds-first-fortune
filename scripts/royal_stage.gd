@@ -65,21 +65,18 @@ static func floor_draw(w,area:String="room:throne"):
  for x in [185,865]:
   w.tile(0,Rect2(x,320,245,700),110,Color("79898b"))
   g.draw_rect(Rect2(x,320,245,700),Color("a88e59"),false,3)
- # Small gallery rugs group the clerk's desk and instruments without moving
- # furniture, changing collision or obstructing the royal procession.
- for mat in [Rect2(190,550,115,150),Rect2(985,565,110,90),Rect2(975,785,135,125)]:
-  HoldRoomLayout.rug(w,mat,Color("486c6b"))
+ HoldRoomLayout.dressing(w,"room:throne")
  for step in 4:
   var r=Rect2(495+step*10,342-step*14,310-step*20,120)
   g.draw_style_box(w.stone_style(Color("77898c").lightened(step*.06)),r)
   g.draw_line(r.position+Vector2(0,r.size.y),r.end,Color("c6b585"),2)
- HoldRoomLayout.rug(w,Rect2(562,455,176,565),Color("486c6b"))
- for x in [568,732]:g.draw_line(Vector2(x,465),Vector2(x,1015),Color("cba960"),3)
+ HoldRoomLayout.rug(w,Rect2(562,455,176,geometry.exit.y-35-455),Color("486c6b"))
+ for x in [568,732]:g.draw_line(Vector2(x,465),Vector2(x,geometry.exit.y-40),Color("cba960"),3)
  # An oath-star inlaid in stone at the threshold, repeated in the royal banners.
- var center=Vector2(650,1030)
+ var center=geometry.exit-Vector2(0,25)
  for i in 8:
   var angle=i*TAU/8;g.draw_line(center,center+Vector2.from_angle(angle)*30,Color("d0ae65"),3)
- if HoldBuildingPlans.has_stairs(area):HoldNeighborhood.draw_stairs(w,HoldBuildingPlans.stair_position(area),HoldBuildingPlans.floor_number(area)==0,96)
+ if HoldBuildingPlans.has_stairs(area):preload("res://settlement/rooms.gd").indoor_stairs(g,HoldBuildingPlans.stair_position(area),HoldBuildingPlans.floor_number(area)==0)
  HoldCivicArt.exit_floor(g,area)
 static func draw_prop(g,o:Dictionary,t:float,tint:Color=Color.WHITE):
  prop(g,o.art,o.p,o.width,tint)

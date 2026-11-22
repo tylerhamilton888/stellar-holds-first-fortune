@@ -17,8 +17,8 @@ func run():
  for view in 4:
   var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][view]
   var idle=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)
-  check(idle.sheet==sheet and idle.index==view,"Authored resting view "+str(view))
-  check(is_equal_approx(idle.scale*float(HoldWholeFrames.metadata[sheet][view].height),58.0),"Brynja retains her distinct short 58px stature")
+  check(named_idle(idle,p.cast_id,view),"Authored resting view "+str(view))
+  check(is_equal_approx(idle.scale*float(HoldWholeFrames.metadata[idle.sheet][idle.index].height),58.0),"Brynja retains her distinct short 58px stature")
   for key in 4:
    var a=HoldWholeFrames.descriptor(p,d,true,key*.13+.001,"town_walk",0)
    check(a.sheet==sheet and a.index==4+view*4+key,"Production uses four distinct whole gait keys "+str(view)+":"+str(key))
@@ -37,7 +37,7 @@ func run():
   check(actor.p.distance_to(expected)<.01 and actor.walking==(local<duration),"World art preserves route position and movement timing "+str(step))
   var pose=actor.get("pose","town_walk");visited[pose]=true
   var a=HoldWholeFrames.descriptor(actor.profile,actor.aim,actor.walking,actor.gait,pose,actor.get("phase",0.0))
-  check(a.sheet==sheet,"Live route never swaps to generic art "+str(step))
+  check((a.sheet==sheet if actor.walking or pose!="town_walk" else named_idle(a,p.cast_id,HoldDirectional.view(actor.aim))),"Live route never swaps to generic art "+str(step))
  check(not visited.has("drink") and visited.has("town_walk"),"Route retains existing walking and rest without invented activities")
  for sample in [["walk",.8],["rest",duration+.5],["resume",duration+7.5]]:
   g.state.elapsed=beginning+sample[1];at(Vector2(800,850));await snap("brynja-"+sample[0])

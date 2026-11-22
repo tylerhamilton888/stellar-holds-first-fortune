@@ -1,6 +1,8 @@
 class_name HoldSurface
 extends RefCounted
 # Walkable local scenes share the real game state. No map avatar or second inventory.
+const CartBank = preload("res://scripts/claim_cart_bank.gd")
+const Headworks = preload("res://scripts/pinewood_headworks.gd")
 const A=preload("res://scripts/art.gd")
 const BED=preload("res://assets/directional-v47/bed.png")
 const PROPS=preload("res://assets/surface-v46/props.png")
@@ -12,7 +14,7 @@ const SIZE=Vector2(1880,1080)
 const ROOM_SIZE=Vector2(960,720)
 const FIR=preload("res://assets/pinewood-v40/silver-fir.png")
 const NAMES={"hearthward":"Keldrath · Hearthward · Z 0","crownward":"Keldrath · Crownward · Z +1","forgeward":"Keldrath · Forgeward · Z -1","trail":"The High Trail · Stonebridge","pinewood":"Pinewood","greenfields":"Greenhearth","claim":"Your mountain homestead"}
-const TREES=[Vector2(430,430),Vector2(690,610),Vector2(930,370),Vector2(1190,620),Vector2(1430,420),Vector2(1630,690),Vector2(1550,860)]
+const TREES = [HoldRoads.Pinewood.FIRST_TREE, Vector2(690, 610), Vector2(930, 370), Vector2(1190, 620), Vector2(1430, 420), Vector2(1630, 690), Vector2(1550, 860)]
 var g
 var area="hearthward"
 var return_area="hearthward"
@@ -45,6 +47,9 @@ var architecture
 
 func _init(game):
  g=game;house=HoldHearthcraft.new(self);world=HoldWorldZones.new(self);roads=HoldRoads.new(self);architecture=HoldArchitecture.new(self)
+func tree_site(index: int) -> Vector2:
+ var plan = g.state.forestry.get("pinewood_plan", {})
+ return TREES[index] if plan.is_empty() else HoldRoads.Pinewood.point(plan, "tree" + str(index))
 func active()->bool:return g.playing and g.zone!="mine"
 func ensure():
  HoldForestry.ensure(g.state)
@@ -114,6 +119,7 @@ func spawn(id:String)->Vector2:
  if id.begins_with("room:") or id.begins_with("home:"):return Vector2(480,550)
  return {"hearthward":Vector2(1100,570),"crownward":Vector2(180,880),"forgeward":Vector2(1700,880),"trail":Vector2(245,690),"pinewood":Vector2(260,650),"greenfields":Vector2(940,285),"claim":Vector2(300,760)}.get(id,Vector2(480,600))
 func enter(id:String,at:Vector2=Vector2.INF):
+ bank_time = 0;bank_job = ""
  g.invasion_work131=false
  HoldClaim127.cancel(g)
  if HoldClaim127.eligible(g.state) and HoldClaim127.stage(g.state)>=3 and not HoldClaim127.data(g.state).arrived and HoldWorldZones.ward(id) and not is_instance_valid(g.opening_scene):
@@ -385,19 +391,25 @@ func base_obstacles(z:int=-1)->Array:
  if area=="trail":
   for pair in ([] if HoldFrontier103.active(g.state) else [[Vector2(220,690),330.0]]):
    for side in [-1,1]:list.append(Rect2(pair[0]+Vector2(side*pair[1]*.32-pair[1]*.14,-pair[1]*.34),Vector2(pair[1]*.28,pair[1]*.42)))
-  list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
+  list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area), area, g))
   list.append_array([Rect2(1134,643,202,12),Rect2(1134,745,202,12)])
   list.append_array(HoldRestoration139.rails(g.state))
  elif area=="claim":
   for b in world.exterior_objects():
    if b.kind=="building":list.append(HoldBuildingArt.footprint(b))
-  list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area)))
+  list.append_array(HoldMineEntrance.obstacles(HoldMineEntrance.position(area), area, g))
  elif area=="pinewood":
   for i in TREES.size():
-   if g.state.road_trees[i]>0:list.append(Rect2(TREES[i]-Vector2(17,24),Vector2(34,30)))
+   if g.state.road_trees[i] > 0: list.append(Rect2(tree_site(i) - Vector2(17, 24), Vector2(34, 30)))
  return list
 func obstacles(ignore:Dictionary={})->Array:
  var list=base_obstacles()
+ list.append_array(CartBank.obstacles(g))
+ if area == "pinewood" and not Headworks.data(g).is_empty():
+  for id in ["spring", "freight"]:
+   var width = 198 if id == "spring" else 176
+   list.append(Rect2(Headworks.surface_point(g, id) - Vector2(width * 0.5, 32), Vector2(width, 33)))
+ list.append_array(HoldClaimYard.obstacles(g))
  if area=="trail" and HoldClaim127.eligible(g.state) and HoldClaim127.stage(g.state)>0:list.append_array([Rect2(498,780,104,20),Rect2(728,780,104,20)])
  if not room():
   list.append_array(roads.obstacles(area))
@@ -405,7 +417,7 @@ func obstacles(ignore:Dictionary={})->Array:
  if area in ["claim","pinewood"] and house.level()==0:list.append(HoldFurnishings.footprint("desk",Vector2(740,780) if area=="claim" else Vector2(300,790)))
  list.append_array(house.obstacles())
  list.append_array(HoldForge147.obstacles(g))
- if g.handworks:list.append_array(g.handworks.surface_obstacles())
+ if g.handworks:list.append_array(g.handworks.surface_obstacles(ignore))
  if g.fieldwork:list.append_array(g.fieldwork.obstacles())
  for c in g.state.surface.chests.values():
   if house.local(c) and (ignore.is_empty() or c!=ignore):list.append(HoldFurnishings.footprint("chest",Vector2(c.x,c.y)))
@@ -428,7 +440,39 @@ func walkable(p:Vector2,ignore:Dictionary={})->bool:
  for r in obstacles(ignore):
   if r.grow(FOOT_RADIUS).has_point(p):return false
  return true
+var bank_job = ""
+var bank_strip = -1
+var bank_time = 0.0
+var bank_contact = false
+var bank_fall = 0.0
+func start_bank_work(job: String, i: int) -> bool:
+ if bank_time > 0: return false
+ var reason = CartBank.reason(g, i, job)
+ if reason != "": g.notify(reason);return false
+ bank_job = job;bank_strip = i;bank_time = 0.66;bank_contact = false
+ var contact = CartBank.TREE if job == "alder" else CartBank.center(i)
+ direction = (contact - g.player).normalized();g.walking_pose = false
+ g.sound.effect("swing", -19);return true
+func tick_bank_work(dt: float) -> bool:
+ bank_fall = maxf(0, bank_fall - dt)
+ if bank_time <= 0: return false
+ if not bank_contact:
+  var target_point = CartBank.TREE if bank_job == "alder" else CartBank.center(bank_strip)
+  var reach = 34 if bank_job == "alder" else 36
+  if g.player.distance_to(target_point) > reach + 1:
+   var stance = target_point + (g.player - target_point).normalized() * reach
+   var next = g.player.move_toward(stance, 155 * dt)
+   if not walkable(next):
+    bank_time = 0;g.notify("Approach the cut from a clear side.");return true
+   g.walking_pose = true;g.player = next;g.gait_clock += dt;return true
+ g.walking_pose = false
+ bank_time = maxf(0, bank_time - dt)
+ if not bank_contact and bank_time <= 0.27:
+  bank_contact = true
+  if CartBank.apply(g, bank_strip, bank_job) and bank_job == "alder" and int(CartBank.data(g).alder) == 0: bank_fall = 0.82
+ return true
 func move(dt:float):
+ if tick_bank_work(dt): return
  if not stair_trip.is_empty():tick_stair(dt);return
  if g.handworks.approaching or g.fieldwork.moving:return
  var input=Input.get_vector("left","right","up","down")
@@ -451,10 +495,17 @@ func move(dt:float):
    return
  var delta=g.fight.movement(input)*dt
  var before=g.player
+ var bank_cart = g.handworks.attached() if CartBank.active(g) else {}
+ var bank_heading = CartBank.heading(bank_cart)
  var steps=maxi(1,ceili(delta.length()/6.0))
  for i in steps:
   for axis in [Vector2(delta.x,0)/steps,Vector2(0,delta.y)/steps]:
-   if walkable(g.player+axis):g.player+=axis
+   if axis == Vector2.ZERO or not walkable(g.player + axis): continue
+   if not bank_cart.is_empty():
+    var turn = CartBank.steer(bank_heading, input, axis.length())
+    if not CartBank.can_roll(g, g.player + axis, turn, bank_cart): continue
+    bank_heading = turn;bank_cart.bank_facing = CartBank.pair(turn)
+   g.player += axis
  g.velocity=(g.player-before)/maxf(dt,.001);g.grounded=true;g.walking_pose=g.velocity.length()>1
  if absf(input.x)>.1:g.face=1 if input.x>0 else -1
  if g.walking_pose:
@@ -476,6 +527,14 @@ func move(dt:float):
 func input(e:InputEvent)->bool:
  if not active() or g.panel_id!="":return false
  if not stair_trip.is_empty():return true
+ if e is InputEventMouseButton and e.pressed and CartBank.active(g):
+  if e.button_index == MOUSE_BUTTON_LEFT and placing == "" and g.tool == 2 and not g.combat.armed and (g.world_mouse() - CartBank.TREE + Vector2(0, 37)).length() < 62 and int(CartBank.data(g).get("alder", 3)) > 0:
+   start_bank_work("alder", -1);return true
+  if e.button_index == MOUSE_BUTTON_RIGHT and placing.begins_with("bank:"): cancel_placement();return true
+  if e.button_index == MOUSE_BUTTON_LEFT and (placing.begins_with("bank:") or (placing == "" and g.tool == 1 and not g.combat.armed)):
+   var index = CartBank.target(g.world_mouse())
+   if index >= 0 or placing.begins_with("bank:"):
+    start_bank_work(placing.trim_prefix("bank:") if placing != "" else "grade", index);return true
  if e is InputEventKey and e.pressed and not e.echo:
   if e.keycode==KEY_E:
    if e.shift_pressed and architecture.interior():architecture.stairs(false)
@@ -491,13 +550,15 @@ func input(e:InputEvent)->bool:
  if e is InputEventMouseButton and e.pressed:
   if e.button_index==MOUSE_BUTTON_RIGHT:cancel_placement();return true
   if e.button_index==MOUSE_BUTTON_LEFT and placing!="":
-   if placing.begins_with("blueprint:"):architecture.place(g.get_global_mouse_position()+g.camera)
+   if placing.begins_with("yard:"):HoldClaimYard.apply(g,placing.trim_prefix("yard:"),g.world_mouse())
+   elif placing.begins_with("blueprint:"):architecture.place(g.get_global_mouse_position()+g.camera)
    elif placing.begins_with("house:"):house.build(g.get_global_mouse_position()+g.camera,placing.trim_prefix("house:"));house.timer=.18
    else:place(g.get_global_mouse_position()+g.camera)
    return true
  return false
 static func snap_furnishing(p:Vector2)->Vector2:return (p/FURNITURE_GRID).round()*FURNITURE_GRID
 func cancel_placement():
+ bank_time = 0;bank_job = ""
  placing="";moving_furnishing={}
 func start_placement(kind:String):
  if not HoldCollections141.furnishing_unlocked(g.state,kind):g.notify("Complete the Hearthkeeper’s collection for this plan.");return
@@ -627,6 +688,7 @@ func chest_panel():
   g.small_button(line,"Store 10",func():transfer(key,10,true);g.open_panel("storage",false))
   g.small_button(line,"Take 10",func():transfer(key,10,false);g.open_panel("storage",false))
 func home_panel():
+ Headworks.bench(g)
  if HoldFrontier103.active(g.state):HoldFrontier103.home_panel(g);return
  g.button(g.panel_body,"Building book · recreate Keldrath and countryside architecture",func():g.open_panel("architecture"))
  g.button(g.panel_body,"Furniture & architectural details",func():g.open_panel("architecture_details"))
@@ -669,12 +731,12 @@ func chop(dt:float):
  var aim=g.get_global_mouse_position()+g.camera;var best=-1;var dist=80.0
  for i in TREES.size():
   if g.state.road_trees[i]<=0 and HoldForestry.logs(g.state,i)<=0:continue
-  var d=aim.distance_to(TREES[i]-Vector2(0,25))
-  if d<dist and g.player.distance_to(TREES[i])<105:dist=d;best=i
+  var d = aim.distance_to(tree_site(i) - Vector2(0, 25))
+  if d < dist and g.player.distance_to(tree_site(i)) < 105: dist = d;best = i
  if best<0:cut_clock=0;return
  if best!=cut_target:cut_clock=0;cut_target=best;cut_struck=false
- g.face=1 if TREES[best].x>g.player.x else -1
- var stance=TREES[best]+Vector2(-g.face*32,-6)
+ g.face = 1 if tree_site(best).x > g.player.x else -1
+ var stance = tree_site(best) + Vector2( - g.face * 32, -6)
  if Input.get_vector("left","right","up","down")==Vector2.ZERO and g.player.distance_to(stance)>3:
   var step=g.player.move_toward(stance,150*dt)
   if walkable(step):
@@ -692,7 +754,7 @@ func chop(dt:float):
   g.state.road_trees[best]-=1
   if g.state.road_trees[best]==0:
    g.state.forestry.logs[str(best)]=3;g.state.forestry.fell_at[str(best)]=g.state.elapsed;g.state.forestry.direction[str(best)]=g.face
- if is_log or g.state.road_trees[best]==0:g.handworks.spawn("log",TREES[best]+Vector2(24,24),2,"pine:"+str(best));g.handworks.award("forester")
+ if is_log or g.state.road_trees[best] == 0: g.handworks.spawn("log", tree_site(best) + Vector2(24, 24), 2, "pine:" + str(best));g.handworks.award("forester")
  else:g.state.add("wood",2)
  HoldWorkEnergy.spend(g.state,.12)
  HoldOnboarding.fact(g.state,"woodcut",2);g.sound.effect("wood",-14)
@@ -706,6 +768,9 @@ func hud():
  if g.panel_id=="":
   var p=nearest()
   g.footer.text=("LMB move " if not moving_furnishing.is_empty() else "LMB place ")+placing+" · Right click cancel" if placing!="" else (("Walk through · " if roads.is_link(p.action) else "E · ")+p.name if not p.is_empty() else "WASD walk   E interact   I pack   G directions   J journal")
+  if placing == "" and CartBank.active(g) and CartBank.AREA.grow(42).has_point(g.player) and g.tool == 1: g.footer.text = "Shovel · Click nearby turf to cut the bank · O cottage grounds"
+  if placing.begins_with("bank:"): g.footer.text = CartBank.JOBS[placing.trim_prefix("bank:")] + " · Click a nearby shoulder · Right click to finish"
+  if placing.begins_with("yard:"):g.footer.text=HoldClaimYard.LABELS[placing.trim_prefix("yard:")]+" · LMB apply · Right click to finish"
   if g.fieldwork.prompt()!="" and placing=="":g.footer.text=g.fieldwork.prompt()
   if g.handworks.prompt()!="" and placing=="":g.footer.text=g.handworks.prompt()
   if g.notice_time>0:g.footer.text=g.notice
@@ -734,7 +799,7 @@ func draw():
  if room():objects.append_array(world.routines.people(area,g.state.elapsed))
  if area in ["claim","pinewood"] and house.level()==0:objects.append(world.furn("desk",740 if area=="claim" else 300,780 if area=="claim" else 790))
  if area in ["claim","trail"] and not house.view.inside():
-  g.draw_set_transform(-cam);HoldMineEntrance.ground(g,HoldMineEntrance.position(area))
+  g.draw_set_transform( - cam)
   objects.append_array(world.exterior_objects())
  if area=="claim" or architecture.interior():
   for k in house.tiles():
@@ -761,15 +826,18 @@ func draw():
  if area=="hearthward" and HoldAnniversary.ensure(g.state).complete:
   g.draw_set_transform(-cam);HoldAnniversary.station(g,HoldWorldZones.door(10),g.clock)
  if area=="pinewood":
-  for i in TREES.size():objects.append({"p":TREES[i],"kind":"tree","i":i})
+  for i in TREES.size(): objects.append({"p": tree_site(i), "kind": "tree", "i": i})
  objects.append_array(roads.buildings(area))
  if house.level()==0:objects.append_array(architecture.objects(area))
  if not room():objects.append_array(roads.furnishings(area))
+ objects.append_array(Headworks.objects(g))
  objects.append_array(roads.people(area))
  objects.append_array(HoldEstateWorkers.objects(g))
  objects.append_array(g.fight.objects())
  objects.append_array(HoldInvasion131.objects(g))
  if HoldInvasion131.active(g.state) and HoldWorldZones.ward(area):objects=objects.filter(func(o):return o.kind!="citizen")
+ objects.append_array(HoldClaimYard.sprites(g))
+ objects.append_array(CartBank.extra_objects(g))
  objects.append_array(g.handworks.objects())
  objects.append_array(g.fieldwork.objects())
  if g.opening_scene is HoldArrivalEscort:objects.append({"p":g.opening_scene.guide,"kind":"escort"})
@@ -793,7 +861,8 @@ func draw():
  var restored_pick=HoldForge147.display_position(g)
  for o in objects:
   g.draw_set_transform(-cam)
-  if o.kind=="building":world.draw_building(o)
+  if o.kind == "headworks": Headworks.paint(g, o)
+  elif o.kind == "building": world.draw_building(o)
   elif o.kind=="mine_entrance":HoldMineEntrance.draw(g,o.p)
   elif o.kind=="landmark":world.draw_landmark(o)
   elif o.kind=="furnishing":
@@ -816,6 +885,12 @@ func draw():
   elif o.kind=="thane_troll131":HoldEnemyRoster.draw(g,g.opening_scene.foes[o.index])
   elif o.kind in ["claim_actor127","friend_actor130","thane_actor131"]:g.opening_scene.draw_actor(o.index)
   elif o.kind=="friend_prop130":g.opening_scene.draw_prop()
+  elif o.kind == "bank_face":
+   CartBank.bank_face(g)
+   if bank_contact: CartBank.chips(g, bank_strip, bank_job, bank_time)
+  elif o.kind == "rolling_cart": CartBank.cart_art(g, o.facility, g.player)
+  elif o.kind == "bank_alder": CartBank.draw_alder(g, bank_fall, bank_time if bank_job == "alder" else 0.0)
+  elif o.kind=="yard_landmark":HoldClaimYard.sprite(g,o.texture,o.p,o.width)
   elif o.kind=="garden":g.fieldwork.draw_bed(o.bed)
   elif o.kind=="handwork":g.handworks.draw_object(o)
   elif o.kind=="player":actor(o.p,g.state.appearance,g.walking_pose,g.face,g.gait_clock)
@@ -861,13 +936,18 @@ func draw():
   A.text(g,r.position+Vector2(6,15),"E",12,Color("ead4a0"))
  house.preview()
  architecture.preview()
- if placing!="" and not placing.begins_with("house:") and not placing.begins_with("blueprint:"):
+ if placing.begins_with("bank:"):
+  var i = CartBank.target(g.world_mouse())
+  if i >= 0: HoldBuildPreview.outline(g, Rect2(CartBank.center(i) - Vector2(16, 28), Vector2(32, 54)), CartBank.reason(g, i, placing.trim_prefix("bank:")) == "")
+ elif placing.begins_with("yard:"): HoldClaimYard.preview(g, placing.trim_prefix("yard:"))
+ elif placing!="" and not placing.begins_with("house:") and not placing.begins_with("blueprint:"):
   var p=snap_furnishing(g.get_global_mouse_position()+g.camera)
   if can_furnish():HoldBuildPreview.world_grid(self,FURNITURE_GRID,p)
   var ok=furniture_ready(p,placing);var tint=HoldBuildPreview.color(ok)
   HoldFurnishings.draw(g,p,placing,Color(tint,.65))
   HoldBuildPreview.outline(g,HoldFurnishings.footprint(placing,p),ok)
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
+ if not g.ui.visible: return
  g.draw_rect(Rect2(0,0,960,48),Color(.06,.14,.18,.94));g.draw_line(Vector2(20,47),Vector2(940,47),Color("6e796b"))
  g.draw_rect(Rect2(0,498,960,42),Color("10232d"))
  world.speech_overlay()
@@ -884,12 +964,13 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
  if is_player and g.fight.enabled() and g.combat.armed:
   g.fight.draw_player(p,.85,-g.camera.round());return
  if is_player:p=g.handworks.work_pose()
+ if CartBank.active(g): p.y -= CartBank.elevation(CartBank.data(g), p)
  var cam=g.camera.round()
  g.draw_set_transform(p-cam,0,Vector2(1,.3));g.draw_circle(Vector2.ZERO,19,Color(0,0,0,.3))
  var look=profile.duplicate();look.air_pose=0
  var aim=direction if is_player else Vector2(face,.45)
  var action=-1.0
- if is_player and cut_target>=0 and not cut_approach:aim=(TREES[cut_target]-p).normalized();action=clampf(cut_clock/.64,0,1)
+ if is_player and cut_target >= 0 and not cut_approach: aim = (tree_site(cut_target) - p).normalized();action = clampf(cut_clock / 0.64, 0, 1)
  elif is_player and house.impact>0:aim=(house.contact-p).normalized();action=1-house.impact/.24
  if is_player and g.handworks.working:
   var station=g.handworks.facility()
@@ -904,14 +985,23 @@ func actor(p:Vector2,profile:Dictionary,walking:bool,face:int,time:float):
   elif g.handworks.pushing():animation="push"
  if is_player and g.fieldwork.action!="":animation="" if g.fieldwork.moving else g.fieldwork.action;action=g.fieldwork.animation_phase();aim=direction
  if is_player and g.claim_work127>=0 and Input.is_action_pressed("interact"):animation="hammer";action=fmod(g.claim_time127,.42)/.42;aim=Vector2.UP
+ if is_player and bank_time > 0:
+  animation = "axe" if bank_job == "alder" else "hammer" if bank_job == "dress" else "shovel";action = 1 - bank_time / 0.66;aim = direction
  if animation in ["plant","tend"]:animation="hoe"
  if is_player and animation=="" and action<0 and rest_time<=0 and stair_trip.is_empty() and not is_instance_valid(g.opening_scene):animation=g.hotbar.pose()
+ if animation == "push" and CartBank.active(g):
+  var cart = g.handworks.attached()
+  if cart.get("kind", "") == "cart":
+   aim = CartBank.heading(cart)
+   if absf(aim.y) > 0.52:
+    aim = Vector2.DOWN if aim.y > 0 else Vector2.UP
+    animation = "";p += aim * 2
  HoldDrawnAnimation.paint(g,p-cam,look,aim,walking,time,.85,-cam,animation,maxf(0,action))
  g.draw_set_transform(-cam)
  if is_player:
   g.handworks.carried(p)
   if cut_flash>0 and cut_target>=0:
-   var target=TREES[cut_target]-Vector2(0,18)
+   var target = tree_site(cut_target) - Vector2(0, 18)
    for i in 7:g.draw_circle(target+Vector2.from_angle(i*.9)*(8+(.16-cut_flash)*90),2,Color("d7b079"))
 func plaque(p:Vector2,text:String):
  var width=ThemeDB.fallback_font.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+18
@@ -928,6 +1018,7 @@ func furniture(p:Vector2,kind:String):
 func draw_outdoors():
  world.tile(2,Rect2(Vector2.ZERO,size()),200,Color("adb99e"))
  for edge in [Rect2(0,0,1880,200),Rect2(0,200,80,880),Rect2(1800,200,80,880),Rect2(0,970,1880,110)]:
+  if area == "pinewood" and edge.position.y == 970 and g.state.forestry.has("pinewood_plan"): continue
   if area=="greenfields" and edge.position.y==0:continue
   if area in ["pinewood","claim"] and edge.position==Vector2(0,200):continue
   if area in ["trail","claim"] and edge.position.x==1800:continue
@@ -936,7 +1027,11 @@ func draw_outdoors():
   # Natural edges follow the expanded L-shaped grounds, including the river bend.
   for edge in [Rect2(1880,0,1720,200),Rect2(3490,200,110,2000),Rect2(1900,2060,1590,140),Rect2(0,1080,1900,1120)]:world.tile(3,edge,180,Color("bac1ae"))
  var paths=[PackedVector2Array([Vector2(0,790),Vector2(500,690),Vector2(960,690),Vector2(1650,790)]),PackedVector2Array([Vector2(500,690),Vector2(500,440)]),PackedVector2Array([Vector2(960,690),Vector2(1280,345)])] if area=="claim" else [PackedVector2Array([Vector2(180,650),Vector2(700,690),Vector2(1100,700),Vector2(1650,700)]),PackedVector2Array([Vector2(700,690),Vector2(950,300)]),PackedVector2Array([Vector2(700,690),Vector2(470,920)])]
- if not roads.roads(area).is_empty():paths=roads.roads(area)
+ var authored_paths = roads.roads(area)
+ if not authored_paths.is_empty(): paths = authored_paths
+ if area in ["claim", "trail"]: paths = HoldMineEntrance.connect_approach(paths, HoldMineEntrance.position(area))
+ var pinewood = g.state.forestry.get("pinewood_plan", {})
+ if area == "pinewood" and not pinewood.is_empty() and not ground_cache.has(area): ground_cache[area] = HoldRoads.Pinewood.road_texture(pinewood)
  if not ground_cache.has(area):
   var img=Image.create(940,540,false,Image.FORMAT_RGBA8)
   var noise=FastNoiseLite.new();noise.seed=g.state.seed_value;noise.frequency=.023
@@ -956,12 +1051,13 @@ func draw_outdoors():
  HoldRestoration139.draw(g)
  HoldFrontier103.draw_ground(g)
  if area=="claim":
-  world.tile(0,Rect2(1780,560,800,80),100,Color("b8b29a"))
-  world.tile(0,Rect2(2480,560,80,1370),100,Color("b8b29a"))
-  if HoldFrontier103.family(g.state) and HoldFrontier103.data(g.state).home169.seeded:
-   # Ground treatment only: keep the original cottage and every player alteration intact.
-   world.tile(0,Rect2(2260,1140,260,80),100,Color("aaa48a"))
-   world.tile(0,Rect2(2260,1100,80,80),100,Color("aaa48a"))
+  if HoldTimberWing.seeded(g):
+   HoldClaimYard.ground(g,world.view_camera())
+   CartBank.ground(g)
+   preload("res://assets/timber_wing/claim_path.gd").draw(g,world.view_camera())
+  else:
+   world.tile(0,Rect2(1780,560,800,80),100,Color("b8b29a"))
+   world.tile(0,Rect2(2480,560,80,1370),100,Color("b8b29a"))
  for i in 8:scenery(Vector2(120+i*245,245+sin(i)*30),1,330)
  if area=="claim" and not HoldFrontier103.active(g.state):
   var upgraded=int(g.state.surface.homes[g.state.claim_id].level)>0
@@ -969,10 +1065,17 @@ func draw_outdoors():
   prop(Vector2(395,560),4,120);prop(Vector2(595,560),4,120)
   for i in 4:prop(Vector2(880+i*42,695),5,40)
  elif area=="pinewood":
+  if not pinewood.is_empty():
+   for i in 8:
+    var y = 1016 + sin(i * 2.6 + int(pinewood.seed) % 9) * 16
+    g.draw_texture_rect(HoldRoads.Pinewood.DUFF, Rect2(i * 246 - 40, y - 37, 300, 97), false, Color(0.69, 0.76, 0.61, 0.86))
+   HoldRoads.Pinewood.draw_ground(g, pinewood)
+   Headworks.watercourse(g)
   for i in 9:
    var p=Vector2(170+i*190,250+sin(i)*30);g.draw_texture_rect(FIR,Rect2(p-Vector2(90,210),Vector2(180,230)),false,Color("8ca291"))
 
  g.hearth.draw_water()
+ HoldClaimYard.shore(g)
  roads.ground()
 
 func scenery(p:Vector2,index:int,width:float):
@@ -987,16 +1090,23 @@ func mine_arch(p:Vector2):
  g.draw_line(p+Vector2(-95,-120),p+Vector2(95,-120),Color("ac9667"),15)
  for x in [-32,32]:g.draw_line(p+Vector2(x,10),p+Vector2(x,70),Color("829391"),3)
 func draw_fir(p:Vector2,i:int):
+ var scale_factor = 1.0
+ if g.state.forestry.has("pinewood_plan"):
+  scale_factor = 0.87 + posmod(i * 67 + int(p.x) * 7 + int(p.y), 27) * 0.01
+ var tree_rect = Rect2(Vector2(-95, -220) * scale_factor, Vector2(190, 235) * scale_factor)
  if g.state.road_trees[i]>0:
   var fade=.35 if g.player.y<p.y and absf(g.player.x-p.x)<80 and p.y-g.player.y<190 else 1.0
-  g.draw_texture_rect(FIR,Rect2(p-Vector2(95,220),Vector2(190,235)),false,Color(1,1,1,fade))
+  var sway = 0.006 * sin(g.clock * 1.2 + i * 1.77) if g.state.forestry.has("pinewood_plan") else 0.0
+  g.draw_set_transform(p - g.camera.round(), sway)
+  g.draw_texture_rect(FIR, tree_rect, false, Color(1, 1, 1, fade))
+  g.draw_set_transform( - g.camera.round())
   g.draw_line(p-Vector2(12,25),p+Vector2(12,-25),Color("e9c583"),3)
  else:
   var age=HoldForestry.fall_age(g.state,i)
   if age<HoldForestry.FALL_TIME:
    var angle=pow(clampf(age/HoldForestry.FALL_TIME,0,1),1.8)*PI*.48*HoldForestry.direction(g.state,i)
    g.draw_set_transform(p-g.camera.round(),angle)
-   g.draw_texture_rect(FIR,Rect2(Vector2(-95,-220),Vector2(190,235)),false)
+   g.draw_texture_rect(FIR, tree_rect, false)
    g.draw_set_transform(-g.camera.round())
   # Keep the actual fir bark at its rooted position after the crown falls.
   g.draw_texture_rect_region(FIR,Rect2(p+Vector2(-16,-8),Vector2(32,17)),Rect2(340,1360,370,140))

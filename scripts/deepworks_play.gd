@@ -1,5 +1,15 @@
 class_name DeepworksPlay
 extends RefCounted
+const Headworks=preload("res://scripts/pinewood_headworks.gd")
+const CavernFloor=preload("res://scripts/cavern_floor.gd")
+const Quarry=preload("res://quarry/buried_quarry.gd")
+var quarry_art=Quarry.new()
+const TunnelSkin=preload("res://tunnel/tunnel_skin.gd")
+var tunnel_skin=TunnelSkin.new()
+const Slope=preload("res://quarry/quarry_slope.gd")
+var slope_art=Slope.new()
+var ladder_art=preload("res://quarry/ladder_art.gd").new()
+var common_stair=preload("res://stair/common_stair.gd").new()
 const STONE=preload("res://assets/animation-v51/geology.png")
 const A=preload("res://scripts/art.gd")
 var g
@@ -30,11 +40,16 @@ func _init(game):g=game
 func ensure():
  if world==null or site!=g.state.active_site or not is_same(world.data,g.state.deepworks.get(g.state.active_site,{})):
   site=g.state.active_site;world=Deepworks.new(g.state);haul=DeepHaul.new(g.state,world);works=LivingPlay.new(g,world)
-func enter(resume:bool=false):
+  if site=="claim":Quarry.furnish(g,world)
+func enter(resume:bool=false,landing:Vector2=Vector2.INF):
  ensure()
  arrival_up_held=not resume and Input.is_action_pressed("up")
  if not resume:
-  haul.park();world.data.depth=0;var arrival=HoldMineEntrance.inside_arrival(world);world.data.position=[arrival.x,arrival.y]
+  haul.park();world.data.depth=0
+  var arrival=HoldMineEntrance.inside_arrival(world) if landing==Vector2.INF else landing
+  world.data.position=[arrival.x,arrival.y]
+  if landing==Vector2.INF:world.data.erase("headworks_arrival")
+  else:world.data.headworks_arrival=true
  works.cancel()
  g.player=Vector2(world.data.position[0],world.data.position[1]);g.grounded=true
  g.player=world.safe_position(g.player)
@@ -58,7 +73,7 @@ func input(e:InputEvent)->bool:
    g.open_panel("deepworks");return true
   KEY_X,KEY_TAB,KEY_K:
    survey_open=not survey_open
-   if survey_open and world.depth()<Deepworks.DEPTHS-1 and not world.data.get("survey_recorded",false):
+   if survey_open and world.prepare_below(world.depth())>=0 and not world.data.get("survey_recorded",false):
     world.data.survey_recorded=true;HoldOnboarding.fact(g.state,"sample");g.save_game()
    return true
   KEY_O:
@@ -89,21 +104,30 @@ func use_stairs(up:bool):
  if not up and HoldAncestralClaim.interact(g):return
  ensure();var c=Deepworks.cell(g.player);var old_depth=world.depth()
  if not up and not world.can_descend(c,world.depth()) and works.interact():return
+ if not up and not world.can_descend(c,old_depth):
+  var record=Deepworks.Strata.Court.near_record(world,g.player)
+  if record in ["west_lit","east_lit"]:
+   world.layer().features[0][record]=true
+   g.notify("The old coals catch. Warm light climbs the carved stone.")
+   g.sound.effect("build",-15);g.save_game();return
+  if record!="":
+   g.notify(Deepworks.Strata.Court.note(record));return
  var travelling_cart=g.handworks.attached()
- var link=world.data.links.get(world.link_key(c,old_depth-1 if up else old_depth),{})
+ var link=world.data.links.get(world.link_key(c,Deepworks.above(old_depth) if up else old_depth),{})
+ if link.get("kind","")=="ramp":return
  if link.get("kind","stair")=="ladder" and (not travelling_cart.is_empty() or (not haul.cart().is_empty() and haul.cart().get("hitched",false))):
   g.notify("Park the wheelbarrow [C], or widen this ladder into stairs from its upper landing [V].");return
  if world.traverse(c,up):
   works.cancel()
   haul.stairs(Deepworks.center(c),old_depth)
   g.player=Deepworks.center(c);g.handworks.arrive(travelling_cart);g.velocity=Vector2.ZERO;strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear();pulse=0
-  g.begin_transition("DEPTH %d · %s" % [world.depth()+1,Deepworks.NAMES[world.depth()].to_upper()]);g.sound.effect("door",-16)
+  g.begin_transition(HoldMineworks143.label(world.depth()).to_upper());g.sound.effect("door",-16)
   world.survey(g.player);g.save_game();return
  if HoldMineEntrance.inside_near(world,g.player):
   unload();haul.park()
   if g.state.active_site=="hold":g.surface.enter("trail",Vector2(950,345))
   else:g.change_zone("claim")
- else:g.notify("Stand on stairs: E down / Shift+E up. V carves stairs beneath your feet.")
+ else:g.notify("Stand at a hatch or stair. E descends and Shift+E climbs back up.")
 func panel():
  ensure();g.label(g.panel_body,HoldMineworks143.label(world.depth()).to_upper(),20)
  g.button(g.panel_body,"Mineworks & districts · adits, bridge and district plans",func():works.page="Districts";g.open_panel("living"))
@@ -111,6 +135,14 @@ func panel():
  g.label(g.panel_body,"Rock and minerals become substantial physical loads. E lifts; Q sets down. Hold Shift+E away from equipment to dress a small batch in the field. Shift+B crafts stockpiles, carts and stonebreakers for larger operations.",16)
  g.label(g.panel_body,"A lamp within 180 units improves clean contacts and careful recovery [Shift+LMB]. Existing masonry pillars [O] brace work within 160 units: stronger joint fractures, and a tempered pick or master Miner can split a second exposed, weakened face with the hammer. No cave-ins or upkeep chores.",15)
  g.label(g.panel_body,"Survey [X] shows the ground immediately beneath your feet. Stairs connect the exact same location on both levels and stay open permanently. E goes down, Shift+E goes up.",16)
+ var why=world.descent_note(world.depth())
+ if why!="":g.label(g.panel_body,why,16,Color("e8bf86"))
+ if world.depth()>=8:
+  var f=world.layer().features
+  if not f.is_empty():
+   var site=f[0];var section=("west" if site.x<40 else "east")
+   var side=("north" if site.y<32 else "south")
+   g.label(g.panel_body,("Recorded · " if site.found else "Survey traces in the "+side+section+" chamber · ")+str(site.name),15)
  g.button(g.panel_body,"Carve descending stair · free · hold still for 1.2 seconds",func():
   g.close_panel();passage_kind="stair";stair_work=1.2;g.notify("Carving a safe stair landing… stay still."))
  g.button(g.panel_body,"Fit timber ladder shaft · 2 timber · personal cargo and Dwarfs only",func():
@@ -139,7 +171,7 @@ func assign_crew():
  if g.agents.is_empty():g.notify("Recruit and assign miners at your claimed mountain first. M opens your crew ledger.");return
  for agent in g.agents:
   var entry=crew_entry(agent);entry.assigned=world.depth();agent.path=[];agent.target=Vector2i(-1,-1)
- g.notify("Crew assigned to depth %d. They will follow your excavated tunnels and stairs." % (world.depth()+1));g.save_game()
+ g.notify("Crew assigned to %s. They will follow your excavated tunnels and stairs." % Deepworks.floor_tag(world.depth()));g.save_game()
 func crew_entry(agent:Dictionary)->Dictionary:
  ensure()
  if not world.data.crew.has(agent.id):world.data.crew[agent.id]={"depth":0,"assigned":0,"x":Deepworks.center(Deepworks.ENTRY).x,"y":Deepworks.center(Deepworks.ENTRY).y}
@@ -147,18 +179,35 @@ func crew_entry(agent:Dictionary)->Dictionary:
 func poll_arrival_input():
  if not Input.is_action_pressed("up"):arrival_up_held=false
 func move(dt:float):
+ if world!=null and site=="claim" and Quarry.notice(world,world.cell(g.player)):
+  g.notify("Old stone quarry · recorded in discoveries");g.save_game()
  if g.handworks.approaching:return
  ensure();var axis=g.depth_nav.explore.movement(Input.get_vector("left","right","up","down"))
  if not Input.is_action_pressed("up") or g.player.distance_to(HoldMineEntrance.inside_position(world))>140:arrival_up_held=false
  if axis!=Vector2.ZERO and strike_left>0 and works.pending.is_empty():strike_left=0;contact_hold=0
  if axis!=Vector2.ZERO and not g.combat.armed:g.surface.direction=axis
  g.velocity=Vector2.ZERO if strike_left>0 and not g.combat.armed else g.fight.movement(axis);var old=g.player
+ var slope_anchor=Slope.anchor(world)
+ if Slope.on_grade(g.player,slope_anchor) and (world.depth()==0 or g.player.x>=slope_anchor.x):
+  g.velocity*=lerpf(1.,.80 if g.velocity.x<0 else .94,absf(axis.x))
  for i in maxi(1,int(ceil(dt*120))):
   var step=g.velocity*dt/maxi(1,int(ceil(dt*120)))
   var next=g.player+Vector2(step.x,0)
-  if not world.solid(next):g.player=next
+  if Slope.on_grade(g.player,slope_anchor) and (world.depth()==0 or g.player.x>=slope_anchor.x):
+   next.y+=Slope.road_y(next.x,slope_anchor)-Slope.road_y(g.player.x,slope_anchor)
+  if world.solid(next) or Slope.face_blocks(world,g.player,next,slope_anchor):next=g.player
+  if Slope.crossing(g.player,next,slope_anchor,world.depth()):
+   var old_depth=world.depth()
+   if world.solid(next,1-old_depth):continue
+   var cart=g.handworks.attached()
+   if not world.traverse(world.cell(slope_anchor),old_depth==1):continue
+   g.player=next
+   works.cancel();haul.stairs(next,old_depth);g.handworks.arrive(cart)
+   strike_left=0;contact_hold=0;rubble.clear();sparks.clear();messages.clear()
+   world.survey(next);world.data.position=[next.x,next.y];g.autosave=maxf(g.autosave,42.)
+  else:g.player=next
   next=g.player+Vector2(0,step.y)
-  if not world.solid(next):g.player=next
+  if not world.solid(next) and not Slope.face_blocks(world,g.player,next,slope_anchor):g.player=next
  # The cave's north exit faces the same input as its outdoor arch. Continuing
  # that entry key must not immediately undo the crossing; release to return.
  if arrival_up_held and world.depth()==0 and absf(g.player.x-HoldMineEntrance.inside_position(world).x)<34:g.player.y=maxf(HoldMineEntrance.inside_position(world).y+40,g.player.y)
@@ -180,6 +229,7 @@ func move(dt:float):
  reveal_clock-=dt
  if reveal_clock<=0:
   reveal_clock=.13
+  Slope.peek(world,g.player,slope_anchor)
   for name in world.survey(g.player):g.notify("DISCOVERY · "+name);g.sound.effect("crystal",-12)
  haul.follow(g.player)
  haul.scavenge(g.player)
@@ -301,7 +351,7 @@ func agents(dt:float):
    if world.solid(next,z):a.path=[];a.target=Vector2i(-1,-1)
    else:
     a.facing=(next-a.p).normalized();a.gait=float(a.get("gait",0))+next.distance_to(a.p)/150.0
-    a.p=next;saved.x=next.x;saved.y=next.y;a.status="Walking depth "+str(z+1)
+    a.p=next;saved.x=next.x;saved.y=next.y;a.status="Walking "+Deepworks.floor_tag(z)
     if next.distance_to(a.path[0])<1:a.path.pop_front()
    continue
   var c=Deepworks.cell(a.p)
@@ -346,7 +396,7 @@ func agents(dt:float):
    if route.is_empty():a.status="Open a tunnel to more deposits";a.cool=1.5;continue
    a.target=route.target;a.path=route.path;continue
   if a.p.distance_to(Deepworks.center(a.target))>65:a.target=Vector2i(-1,-1);continue
-  a.work=true;a.facing=(Deepworks.center(a.target)-a.p).normalized();a.status="Mining depth %d" % (z+1)
+  a.work=true;a.facing=(Deepworks.center(a.target)-a.p).normalized();a.status="Mining "+Deepworks.floor_tag(z)
   if a.cool<=0:
    a.cool=.6 if a.type=="worker" else .4
    if a.type=="worker":a.cool/=1.0+HoldClaimStories.trust(g.state,a.id)+works.model.morale_bonus(a.id)
@@ -404,14 +454,29 @@ func draw():
  var offset=-g.camera.round()
  if g.state.shake and pulse>0:offset+=Vector2(sin(g.clock*85),cos(g.clock*63))*pulse*12
  A.draw_offset=offset;g.draw_set_transform(offset)
+ var waterworks=Headworks.data(g) if Headworks.in_mine(g) else {}
+ var cave_bounds=Rect2i(Headworks.origin(waterworks)-Vector2i(10,7),Vector2i(20,13)) if not waterworks.is_empty() else Rect2i()
  var room_lamps=works.lamps()
  var z=world.depth();var l=world.layer();var start=Deepworks.cell(g.camera)-Vector2i.ONE
  var aim=Vector2i(-1,-1) if g.opening_scene is HoldQuestScene181 else world.target(g.player,g.world_mouse(),180 if g.mining_gun.selected else 52)
+ var claim_tunnel=g.state.active_site=="claim" and (z>=8 or z==0 or (z==1 and world.data.has("quarry"))) and cave_bounds.size==Vector2i.ZERO
+ if claim_tunnel:
+  var light_sources=room_lamps.duplicate()
+  for fixture in l.fixtures:
+   var xy=fixture.split(",")
+   light_sources.append(Deepworks.center(Vector2i(int(xy[0]),int(xy[1]))))
+  tunnel_skin.ground(g,world,start,light_sources)
  for y in range(maxi(0,start.y),mini(Deepworks.H,start.y+17)):
   for x in range(maxi(0,start.x),mini(Deepworks.W,start.x+27)):
    var c=Vector2i(x,y);var id=Deepworks.key(c)
    var explored=l.seen.has(id)
    var k=world.at(c) if explored else int(l.strata[c.y*Deepworks.W+c.x]);var p=Vector2(c)*Deepworks.TILE;var r=Rect2(p,Vector2.ONE*Deepworks.TILE)
+   if claim_tunnel:
+    if explored:
+     var a=Slope.anchor(world)
+     var weight=Slope.lower_weight(world.center(c),a,Slope.joined_view(g.player,a,z),z)
+     if z>=8 or (z==0 and weight<.15) or (z==1 and weight>.85):tunnel_skin.marks(g,world,c,k,aim,ore_color(k))
+    continue
    var h=posmod(x*731+y*337+int(world.data.seed),997)
    var light=clampf(1.14-Deepworks.center(c).distance_to(g.player)/500,.35,1.0)
    for lamp_key in l.fixtures:
@@ -427,22 +492,26 @@ func draw():
     continue
    if k==0:
     g.draw_texture_rect_region(STONE,r,Rect2(texture_rect.position+Vector2(0,627),texture_rect.size),Color(.48,.54,.56,1).darkened(1-light))
-    if world.at(c+Vector2i.UP)!=0:g.draw_rect(Rect2(p,Vector2(40,8)),Color(0,0,0,.22))
-    if world.at(c+Vector2i.LEFT)!=0:g.draw_rect(Rect2(p,Vector2(5,40)),Color(0,0,0,.15))
+    if cave_bounds.has_point(c):
+     g.draw_texture_rect_region(STONE,r,texture_rect,Color(.16,.20,.24,1))
+    else:
+     if world.at(c+Vector2i.UP)!=0:g.draw_rect(Rect2(p,Vector2(40,8)),Color(0,0,0,.22))
+     if world.at(c+Vector2i.LEFT)!=0:g.draw_rect(Rect2(p,Vector2(5,40)),Color(0,0,0,.15))
    else:
     var damage=clampf(float(l.damage.get(id,0))/world.resistance(k),0,.99)
     # World-space strata are contiguous across solid cells. Only exposed boundaries
     # receive a cut edge; an unexcavated mountain never becomes a field of boulders.
     var source=texture_rect
     if z>=3:source.position+=Vector2(627,627)
-    g.draw_texture_rect_region(STONE,r,source,Color(.64,.74,.79,1).darkened(1-light))
-    if world.at(c+Vector2i.DOWN)==0:
+    var wall_tint=Color(.16,.20,.24,1) if cave_bounds.has_point(c) else Color(.64,.74,.79,1).darkened(1-light)
+    g.draw_texture_rect_region(STONE,r,source,wall_tint)
+    if not cave_bounds.has_point(c) and world.at(c+Vector2i.DOWN)==0:
      var edge=Rect2(p+Vector2(0,22),Vector2(40,18))
      g.draw_texture_rect_region(STONE,edge,Rect2(Vector2(627+posmod(x*40,600),posmod(y*18,600)),Vector2(40,18)),Color(.59,.65,.68,1).darkened(1-light))
      g.draw_line(p+Vector2(0,22),p+Vector2(40,22),base.lightened(.27),1.5)
      g.draw_line(p+Vector2(0,40),p+Vector2(40,40),Color("131e25"),2)
     for side in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP]:
-     if world.at(c+side)==0:
+     if not cave_bounds.has_point(c) and world.at(c+side)==0:
       var a=p+Vector2(40 if side==Vector2i.RIGHT else 0,0)
       var b=a+(Vector2(40,0) if side==Vector2i.UP else Vector2(0,40))
       g.draw_line(a,b,base.lightened(.22),2)
@@ -468,6 +537,18 @@ func draw():
       var edge_a=p+Vector2(40 if side==Vector2i.RIGHT else 0,40 if side==Vector2i.DOWN else 0)
       var edge_b=edge_a+(Vector2(40,0) if side.y!=0 else Vector2(0,40))
       g.draw_line(edge_a,edge_b,Color("efd395"),2)
+ if z==52:Deepworks.Strata.Court.draw_floor(g,world)
+ if z==38 and not l.features.is_empty() and l.features[0].has("regulator_plan"):
+  Deepworks.Strata.Court.Regulator.paint(g,world,l.features[0],Deepworks.Strata.Court.image_art("pavement"))
+ if cave_bounds.has_area():CavernFloor.paint(g,world,cave_bounds,Headworks.LIMESTONE)
+ var slope_anchor=Slope.anchor(world)
+ var shared=Slope.joined_view(g.player,slope_anchor,z)
+ var quarry=world.data.get("quarry",{})
+ var upper_alpha=1. if z==0 else 0.
+ if shared>0:
+  upper_alpha=1.-Slope.lower_weight(world.center(Quarry.bench(quarry)),slope_anchor,shared,z)
+ quarry_art.grooves(g,world,quarry,upper_alpha)
+ if slope_anchor!=Vector2.INF:slope_art.paint(g,world,slope_anchor)
  # Large angular fragments briefly keep the broken face's volume before settling.
  for rock in rubble:
   var progress=1.0-rock.life/.42
@@ -483,28 +564,46 @@ func draw():
    for part in world.landmarks():
     if is_same(part.feature,f):x+=part.p.x;y=maxf(y,part.p.y);count+=1
    if count>0:A.text(g,Vector2(x/count-60,y+30),"THE OATH STILL HOLDS",10,Color("b9b4a0"))
+ var standing_ladders:Array=[]
  for link in world.data.links.values():
-  if z not in [int(link.upper),int(link.lower)]:continue
+  if link.get("kind","")=="ramp" or z not in [int(link.upper),int(link.lower)]:continue
   var c=Vector2i(link.x,link.y)
   if not l.seen.has(Deepworks.key(c)):continue
   var p=Vector2(c)*40
-  g.surface.world.detail(5,p+Vector2(20,39),40,38)
+  if link.get("kind","stair")=="ladder":
+   var center=Deepworks.center(c)
+   if z==int(link.upper):ladder_art.floor_hatch(g,center)
+   else:standing_ladders.append({"kind":"standing_ladder","p":center+Vector2(0,-9)})
+  elif z==int(link.lower):
+   common_stair.paint(g,world,p+Vector2(20,37),53,false)
+  else:g.surface.world.detail(5,p+Vector2(20,39),40,38)
   # Passage names and keys are shown in the contextual HUD, never over actors.
  HoldEstateCellar.draw(g)
  HoldMineworks143.draw_floor(g)
  for prop in HoldMineworks143.props(world):HoldMineworks143.draw_prop(g,prop)
  for id in l.fixtures:
   var xy=id.split(",");lamp(Deepworks.center(Vector2i(int(xy[0]),int(xy[1]))))
- if z==0:HoldMineEntrance.draw_inside(g,HoldMineEntrance.inside_prop(world))
+ if z==0:
+  if g.state.active_site=="claim":
+   common_stair.paint(g,world,HoldMineEntrance.inside_position(world)+Vector2(0,39),118,true)
+  else:HoldMineEntrance.draw_inside(g,HoldMineEntrance.inside_prop(world))
  works.draw()
+ g.handworks.workshop.ground()
  for prop in HoldWorkplace98.props(g):HoldWorkplace98.draw_prop(g,prop)
  draw_haulage()
- var actors:Array=[]
+ var actors:Array=standing_ladders
  for part in world.landmarks():
-  if part.feature.found:
+  if part.feature.found or part.feature.has("court_plan") or part.feature.has("regulator_plan"):
+   if (part.feature.has("court_plan") or part.feature.has("regulator_plan")) and not l.seen.has(world.key(world.cell(part.base))):continue
    var actor=part.duplicate();actor.p=part.base;actor.anchor=part.p;actors.append(actor)
  for a in g.agents:
   if crew_entry(a).get("estate_area160","mine")=="mine" and int(crew_entry(a).depth)==z:actors.append({"p":a.p,"agent":a})
+ quarry_art.add_slab(actors,world,quarry,upper_alpha)
+ if z==1 and upper_alpha>0 and not quarry.is_empty() and world.layer(0).seen.has(world.key(Quarry.bench(quarry))):
+  for f in g.handworks.data().facilities:
+   if f.get("quarry_bench",false):
+    actors.append({"kind":"handwork","p":Vector2(f.x,f.y),"facility":f});break
+ actors.append_array(Headworks.objects(g))
  actors.append_array(g.fight.objects())
  actors.append_array(g.handworks.objects())
  actors.append_array(HoldFirstShift.actors(g))
@@ -514,18 +613,45 @@ func draw():
  for actor in actors:
   var p:Vector2=actor.p
   g.draw_set_transform(offset)
+  if actor.get("kind","")=="standing_ladder":ladder_art.lower_ladder(g,p);continue
+  if actor.get("kind","")=="quarry_slab":quarry_art.paint_slab(g,actor);continue
+  if actor.get("kind","")=="handwork" and actor.get("facility",{}).get("quarry_bench",false):
+   quarry_art.paint_bench(g,p,upper_alpha)
+   var f=actor.facility
+   if not f.job.is_empty():g.handworks.raw_sprite(f.job.raw,p+Vector2(10,-19),20)
+   elif not f.raw.is_empty():g.handworks.raw_sprite(f.raw[0],p+Vector2(12,-16),15)
+   continue
+  if actor.get("kind","")=="headworks":Headworks.paint(g,actor);continue
   if actor.get("kind","")=="landmark":
+   if actor.feature.has("court_plan") or actor.feature.has("regulator_plan"):
+    Deepworks.Strata.Court.draw_prop(g,actor);continue
+   if actor.feature.has("prop"):
+    var prop=str(actor.prop)
+    HoldFurnishings.draw(g,actor.anchor,prop,Color(1,1,1,HoldFurnishings.foreground_alpha(prop,actor.anchor,g.player)))
+    continue
    g.surface.world.detail(int(actor.art),actor.anchor,float(actor.width),float(actor.height));continue
-  g.draw_circle(p+Vector2(0,3),17,Color(0,0,0,.23))
+  if claim_tunnel and actor.get("kind","")=="handwork" and actor.has("raw") and actor.raw.kind=="stone":
+   if z==1 and shared>.7 and slope_anchor!=Vector2.INF and p.x<slope_anchor.x:
+    var toe=Slope.road_y(slope_anchor.x+Slope.RUN,slope_anchor)+Slope.FRONT
+    if p.y<toe-40.:continue
+   var size=16.5+posmod(int(actor.raw.id)*11,5)
+   var foot=p+Vector2(posmod(int(actor.raw.id)*11,15)-7,6+posmod(int(actor.raw.id)*17,8))
+   g.draw_set_transform(offset+foot,0,Vector2(1,.37))
+   g.draw_circle(Vector2.ZERO,size*.51,Color(0,0,0,.35))
+   g.draw_set_transform(offset)
+   g.handworks.raw_sprite(actor.raw,foot,size)
+   continue
+  var elevation=0.0
+  if not actor.has("work_piece") and not actor.has("work_seam"):g.draw_circle(p+Vector2(0,3+elevation),17,Color(0,0,0,.23))
   if actor.get("kind","")=="firstshift":HoldFirstShift.draw(g,actor,offset)
   elif actor.get("kind","")=="workplace98":HoldWorkplace98.draw_person(g,actor,offset)
   elif actor.get("kind","")=="rescue_crew":HoldAncestralClaim.draw(g,actor,offset)
   elif actor.get("kind","")=="fighter":g.fight.draw_enemy(actor.enemy)
   elif actor.get("kind","")=="handwork":g.handworks.draw_object(actor)
   elif actor.has("player"):
-   if g.combat.armed:g.fight.draw_player(p+Vector2(0,12),1.0,offset);continue
+   if g.combat.armed:g.fight.draw_player(p+Vector2(0,12+elevation),1.0,offset);continue
    var profile=g.state.appearance.duplicate();profile.air_pose=0;profile.gait_time=g.gait_clock
-   var pose=g.handworks.work_pose()+Vector2(0,12)
+   var pose=g.handworks.work_pose()+Vector2(0,12+elevation)
    var facing_dir=(contact-p).normalized() if strike_left>0 else g.surface.direction
    var action=1-strike_left/swing_duration if strike_left>0 else 0.0
    var animation=["pick","shovel","axe","hammer"][g.tool] if strike_left>0 else ""
@@ -571,11 +697,12 @@ func draw():
  for m in messages:A.text(g,m.p,m.text,13,Color(1,.88,.62,minf(1,m.life)))
  if pulse>0:g.draw_arc(contact,4+(1-pulse/.14)*17,0,TAU,12,Color(1,.9,.7,pulse*5),2)
  g.draw_set_transform(Vector2.ZERO);A.draw_offset=Vector2.ZERO
- if g.opening_scene is HoldQuestScene181:return
+ if not g.ui.visible or g.opening_scene is HoldQuestScene181:return
  g.draw_rect(Rect2(0,0,960,74),Color("0e202c"));g.draw_line(Vector2(24,73),Vector2(936,73),Color("63756c"))
  g.draw_rect(Rect2(0,462,960,36),Color(.04,.09,.12,.9));g.draw_rect(Rect2(0,498,960,42),Color("0e202c"))
  var district=HoldMineworks143.district_at(world,Deepworks.cell(g.player))
  var place=HoldMineworks143.label(z) if district.is_empty() else str(district.name)
+ if cave_bounds.has_point(Deepworks.cell(g.player)):place=Headworks.JOURNAL
  # The quick bar starts at x=250; keep even wide custom names in this margin.
  var short_place=place
  while ThemeDB.fallback_font.get_string_size(short_place,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x>218:
@@ -587,9 +714,17 @@ func draw():
   var stage="solid" if d<=0 else "scored" if d/world.resistance(k)<.4 else "split-ready" if d/world.resistance(k)<.65 else "deeply fractured"
   A.text(g,Vector2(720,480),(name.left(20)+"…" if name.length()>21 else name),11,ore_color(k))
 
- if g.panel_id=="" and HoldMineworks143.prompt(g)=="" and g.handworks.facility().is_empty() and g.handworks.closest(g.handworks.data().loose,65).is_empty() and g.handworks.data().carry.is_empty() and g.handworks.placing=="":
+ var headworks_target=Headworks.target(g)
+ var court_record=Deepworks.Strata.Court.near_record(world,g.player)
+ if g.panel_id=="" and court_record!="":
+  g.draw_style_box(works.chip(),Rect2(20,82,242,25))
+  A.text(g,Vector2(30,99),"E · Kindle the brazier" if court_record in ["west_lit","east_lit"] else "E · Inspect the gauge" if court_record=="pressure" else "E · Read the watch roll" if court_record=="desk" else "E · Inspect the supper tally",14,Color("f0d89f"))
+ elif g.panel_id=="" and headworks_target!="":
+  g.draw_style_box(works.chip(),Rect2(20,82,274,25))
+  A.text(g,Vector2(30,99),Headworks.hint(g,headworks_target),14,Color("f0d89f"))
+ elif g.panel_id=="" and HoldMineworks143.prompt(g)=="" and g.handworks.facility().is_empty() and g.handworks.closest(g.handworks.data().loose,65).is_empty() and g.handworks.data().carry.is_empty() and g.handworks.placing=="":
   g.draw_style_box(works.chip(),Rect2(20,82,470 if not haul.cart().is_empty() else 235,25))
-  A.text(g,Vector2(30,99),"H · Cargo %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked D%d" % (int(haul.cart().depth)+1)] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
+  A.text(g,Vector2(30,99),"H · Cargo %d / %d%s" % [DeepHaul.amount(haul.bucket()),DeepHaul.BUCKET,"   Cart %d / %d · %s" % [DeepHaul.amount(haul.cart().cargo),DeepHaul.CART,"in hand" if haul.cart().hitched else "parked "+Deepworks.floor_tag(int(haul.cart().depth))] if not haul.cart().is_empty() else ""],12,Color("e3c993"))
  if stair_work>0:A.text(g,Vector2(360,400),"CARVING STAIRS… %d%%" % int((1-stair_work/1.2)*100),16,Color("ebcd8e"))
  if survey_open and g.panel_id=="":draw_survey()
  if not g.depth_nav.path.is_empty() and g.panel_id=="":
@@ -607,18 +742,30 @@ func draw_survey(canvas:Node2D=null):
  var z=world.depth();var c=Deepworks.cell(g.player)
  canvas.draw_rect(Rect2(708,112,228,270),Color("142934"));canvas.draw_rect(Rect2(708,112,228,270),Color("a58c5e"),false,1)
  A.text(canvas,Vector2(720,135),"SURVEY · LAYER BELOW",13,Color("edcc8c"))
- if z>=Deepworks.DEPTHS-1:A.text(canvas,Vector2(720,162),"FOLLOW THE MINEWORKS ADITS" if z>=5 else "UNSURVEYED FRONTIER",11);return
+ var lower=world.below(z)
+ var why=world.descent_note(z)
+ if why!="" or lower<0 or lower>=world.data.layers.size():
+  var text=why if why!="" else "Close and reopen the survey to sound the next floor."
+  canvas.draw_multiline_string(ThemeDB.fallback_font,Vector2(720,169),text,HORIZONTAL_ALIGNMENT_LEFT,198,14)
+  return
  for y in range(-5,6):
   for x in range(-6,7):
-   var k=world.at(c+Vector2i(x,y),z+1)
-   canvas.draw_rect(Rect2(720+(x+6)*16,150+(y+5)*16,15,15),ore_color(k) if k in [3,4,5,6] else color(k,z+1))
+   var k=world.at(c+Vector2i(x,y),lower)
+   canvas.draw_rect(Rect2(720+(x+6)*16,150+(y+5)*16,15,15),ore_color(k) if k in [3,4,5,6] else color(k,lower))
  canvas.draw_rect(Rect2(720+6*16,150+5*16,15,15),Color("ffffff"),false,2)
  A.text(canvas,Vector2(720,347),"WHITE: YOUR X / Y",11,Color("c3d5c9"))
  A.text(canvas,Vector2(720,365),"V: CARVE   X: CLOSE",11,Color("c3d5c9"))
 
 func camera_target()->Vector2:
  var near_wall=world!=null and world.depth()==0 and g.player.y<320
- return Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-(355 if near_wall or g.fight.giant_near() else 290),-200 if near_wall else 0,Deepworks.H*40-540))
+ var target=Vector2(clampf(g.player.x-480,0,Deepworks.W*40-960),clampf(g.player.y-(355 if near_wall or g.fight.giant_near() else 290),-200 if near_wall else 0,Deepworks.H*40-540))
+ if world==null:return target
+ var shared=Slope.joined_view(g.player,Slope.anchor(world),world.depth())
+ if shared>0:
+  var a=Slope.anchor(world)
+  target.x=lerpf(target.x,clampf(a.x-480,0,Deepworks.W*40-960),shared*.93)
+  target.y=lerpf(target.y,clampf(a.y-245,-200,Deepworks.H*40-540),shared*.93)
+ return target
 
 func unload():
  if g.zone!="mine":g.notify("Deliver cargo at the mine entrance.");return
@@ -646,13 +793,13 @@ func haulage_panel():
    g.open_panel("haulage",false))
  else:
   var cart=haul.cart()
-  g.label(g.panel_body,"WHEELBARROW · %d / %d · depth %d · (%d, %d)" % [DeepHaul.amount(cart.cargo),DeepHaul.CART,int(cart.depth)+1,cart.x/40,cart.y/40],20)
+  g.label(g.panel_body,"WHEELBARROW · %d / %d · %s · (%d, %d)" % [DeepHaul.amount(cart.cargo),DeepHaul.CART,Deepworks.floor_tag(int(cart.depth)),cart.x/40,cart.y/40],20)
   g.label(g.panel_body,DeepHaul.contents(cart.cargo),16)
   g.button(g.panel_body,"Take / park wheelbarrow [C]",func():g.notify(haul.toggle_cart(g.player));g.save_game();g.close_panel())
   g.button(g.panel_body,"Tip nearby wheelbarrow into local stockpile",func():g.notify("Cached %d units." % haul.cache_cart(g.player));g.save_game();g.open_panel("haulage",false))
  g.button(g.panel_body,"Load nearby stockpiles into cart / personal cargo",func():g.notify("Loaded %d units." % haul.load_pile(g.player));g.save_game();g.open_panel("haulage",false))
  for a in haul.data.piles.values():
-  if DeepHaul.amount(a.cargo)>0:g.label(g.panel_body,"Pile · D%d (%d, %d) · %s" % [int(a.depth)+1,a.x,a.y,DeepHaul.contents(a.cargo)],14)
+  if DeepHaul.amount(a.cargo)>0:g.label(g.panel_body,"Pile · %s (%d, %d) · %s" % [Deepworks.floor_tag(int(a.depth)),a.x,a.y,DeepHaul.contents(a.cargo)],14)
  g.label(g.panel_body,"Stores use the existing inventory and recipes. Entrance deliveries are available to forge, construction and trade. Returning home unloads your personal cargo and a nearby cart. Crews retain their provisioned delivery service. Parked equipment stays at its recorded location.",16)
  g.button(g.panel_body,"Living Works [O] · rooms / finishing / furnishings",func():g.open_panel("living"))
  g.button(g.panel_body,"Project ledger [L]",func():g.open_panel("projects"))

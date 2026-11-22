@@ -14,7 +14,9 @@ func run():
  var rack=station("stone_pile",Vector2(840,600));var timber=station("timber_pile",Vector2(1160,480));var pallet=station("store",Vector2(1040,600))
  at(Vector2(940,680));await snap("01-empty-workshop")
  for i in 5:
-  var tex=h.texture(i);check(tex.get_width()>100 and tex.get_height()>100,"Upright station texture loads: "+str(i))
+  var tex=h.texture(i)
+  if i==3:check(tex.get_size()==Vector2(164,89),"The painted log cradle retains its low, wide silhouette")
+  else:check(tex.get_width()>100 and tex.get_height()>100,"Upright station texture loads: "+str(i))
  pallet.cargo={"stone":7,"wood":9};var original_store=pallet.cargo.duplicate()
  breaker.cargo={"stone":6,"iron_ore":3};breaker.job={"raw":raw("stone",4),"progress":.6}
  var stone=g.state.count("stone");var ore=g.state.count("iron_ore")

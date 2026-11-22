@@ -11,6 +11,7 @@ func run():
  g.state.save_slot=2;g.start_game(false);settle()
  check(HoldFirstVisit99.active(g.state) and not g.state.test_session and g.state.save_slot==2,"First visit creates a normal resumable fortune in the chosen slot")
  check(g.surface.area==HoldFrontier103.lodge(g.state) and g.state.opening==1 and g.state.claim_id=="copper_ridge","First visit starts with the family holding already owned")
+ key(KEY_J);button("+ Choose what to do next");button("Follow the paid first shift");g.close_panel()
  g.surface.enter(HoldFrontier103.quarters(g.state));settle()
  check(HoldFirstVisit99.data(g.state).room_seen,"Visiting the existing private quarters records the first morning")
  g.surface.enter("trail",Vector2(950,345));settle();g.surface.action("mine");settle()

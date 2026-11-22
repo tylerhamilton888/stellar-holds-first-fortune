@@ -123,7 +123,11 @@ func camera()->Vector2:
 func exterior_objects()->Array:
  if h.s.area!="claim" or inside():return []
  var result=[]
- for group in groups():result.append({"kind":"house_exterior189","p":group.bounds.end,"group":group})
+ for group in groups():
+  var item={"kind":"house_exterior189","p":group.bounds.end,"group":group}
+  if HoldTimberWing.SIDES.has(HoldTimberWing.side(g)) and HoldTimberWing.matches_shell(g,group):
+   item.sort_y=HoldTimberWing.THRESHOLD.y-52
+  result.append(item)
  return result
 func outdoor_focus(p:Vector2)->Vector2:
  for group in groups():

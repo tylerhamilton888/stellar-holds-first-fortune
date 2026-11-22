@@ -75,7 +75,7 @@ static func roof(g,r:Rect2,style:Dictionary,tint:Color=Color.WHITE):
  g.draw_line(r.position,r.position+Vector2(r.size.x,0),edge,3)
  g.draw_line(r.position+Vector2(0,r.size.y),r.end,edge.darkened(.25),5)
 static func floor_draw(g,r:Rect2,finish:String,tint:Color=Color.WHITE):
- var column=maxi(0,["oak","slate","inlaid"].find(finish));var unit=Vector2(176,352)
+ var column=maxi(0,["oak","slate","inlaid"].find(finish));var unit=Vector2(153,239) if finish=="oak" else Vector2(130,222)
  var tint_floor=(Color("c6beb0") if finish=="oak" else Color("c1cbc7"))*tint
  # World-aligned sampling keeps hand-laid replacement tiles continuous.
  for y in range(floori(r.position.y/unit.y),ceili(r.end.y/unit.y)):
@@ -85,7 +85,7 @@ static func floor_draw(g,r:Rect2,finish:String,tint:Color=Color.WHITE):
    g.draw_texture_rect_region(FLOORS,part,source,tint_floor)
 static func room_shell(w,area:String):
  var geom=HoldBuildingPlans.geometry(area);var r:Rect2=geom.floor;var g=w.g;var style=room(area)
- g.draw_rect(Rect2(Vector2.ZERO,geom.size),Color("14272d"))
+ g.draw_rect(Rect2(Vector2.ZERO,geom.size).merge(Rect2(g.camera.floor()-Vector2.ONE,Vector2(962,542))),Color("14272d"))
  var wood=style.floor=="oak"
  floor_draw(g,r,style.floor)
  # Perimeter courses make even an unfurnished room an intentional room.
@@ -108,6 +108,10 @@ static func room_shell(w,area:String):
   patch(g,Rect2(x,r.position.y+20,16,r.size.y-20),WALLS[index(style.wall)],Vector2(88,86),Color("b9c2bd"))
   g.draw_line(Vector2(x+3,r.position.y+20),Vector2(x+3,r.end.y),FAMILIES[style.wall].accent,2)
  var exit_x=geom.exit.x
- for front in [Rect2(r.position.x,r.end.y-10,exit_x-r.position.x-40,18),Rect2(exit_x+40,r.end.y-10,r.end.x-exit_x-40,18)]:
+ var frontage=[Rect2(r.position.x,r.end.y-10,r.size.x,18)]
+ if HoldCivicArt.has_exit(area):frontage=[Rect2(r.position.x,r.end.y-10,exit_x-r.position.x-40,18),Rect2(exit_x+40,r.end.y-10,r.end.x-exit_x-40,18)]
+ for front in frontage:
   patch(g,front,WALLS[index(style.wall)],Vector2(88,86))
   g.draw_line(front.position,Vector2(front.end.x,front.position.y),FAMILIES[style.wall].accent,2)
+
+ preload("res://settlement/rooms.gd").shell(g,area,geom)

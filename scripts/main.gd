@@ -1,5 +1,6 @@
 extends Node2D
 
+const Headworks = preload("res://scripts/pinewood_headworks.gd")
 const A=preload("res://scripts/art.gd")
 const SCENERY=preload("res://scripts/scenery.gd")
 const HALL=preload("res://assets/scenery/keldrath-hall.png")
@@ -141,7 +142,7 @@ func _ready():
  forest_view=preload("res://scripts/forestry_view.gd").new();forest_view.host=self;forest_view.z_index=-5;add_child(forest_view)
  sprite_atlas=HoldSpriteAtlas.new();add_child(sprite_atlas)
  fight=HoldSkirmish.new(self);combat=HoldCombat.new(self);construction=HoldConstruction.new(self);mining_gun=HoldMiningGun.new(self)
- deep=DeepworksPlay.new(self);surface=HoldSurface.new(self);handworks=HoldHandworks.new(self);fieldwork=HoldHomesteadLife.new(self);hearth=HoldHearth.new(self)
+ deep=DeepworksPlay.new(self);surface=HoldSurface.new(self);handworks=HoldHandworks.new(self);fieldwork=preload("res://furrow/field.gd").new(self);hearth=HoldHearth.new(self)
  setup_inputs()
  sound=HoldSound.new();add_child(sound)
  setup_ui()
@@ -216,7 +217,7 @@ func setup_ui():
  footer=Label.new();footer.position=Vector2(24,507);footer.size.x=912;footer.clip_text=true;footer.add_theme_font_size_override("font_size",14);ui.add_child(footer)
  menu_shade=ColorRect.new();menu_shade.color=Color(.025,.04,.045,.45);menu_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);menu_shade.z_index=9;menu_shade.mouse_filter=Control.MOUSE_FILTER_STOP;menu_shade.visible=false;ui.add_child(menu_shade)
  panel=PanelContainer.new();panel.z_index=10;panel.position=Vector2(60,44);panel.size=Vector2(840,452);panel.visible=false;ui.add_child(panel)
- transition_shade=ColorRect.new();transition_shade.color=Color("0b1721");transition_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);transition_shade.z_index=90;transition_shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;transition_shade.visible=false;ui.add_child(transition_shade)
+ transition_shade=ColorRect.new();transition_shade.color=Color("0b1721");transition_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);transition_shade.z_index=8;transition_shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;transition_shade.visible=false;ui.add_child(transition_shade)
  transition_label=Label.new();transition_label.position=Vector2(100,240);transition_label.size=Vector2(760,60);transition_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;transition_label.add_theme_font_size_override("font_size",25);transition_label.modulate=Color("edc98a");transition_shade.add_child(transition_label)
 
 var first_visit_pending=false
@@ -235,20 +236,20 @@ func show_title():
  title_ui=Control.new();ui.add_child(title_ui)
  var title=Label.new();title.text="THE STELLAR\nHOLDS";title.add_theme_font_override("font",load("res://assets/HoldRunic.ttf"));title.position=Vector2(65,94);title.add_theme_font_size_override("font_size",48);title.add_theme_color_override("font_color",Color("f0d49b"));title_ui.add_child(title)
  var sub=Label.new();sub.text="THE FIRST FORTUNE";sub.position=Vector2(69,218);sub.add_theme_font_size_override("font_size",19);sub.modulate=Color("85c9bc");title_ui.add_child(sub)
- var description=Label.new();description.text="Earn your mountain. Found your house.";description.position=Vector2(69,254);description.add_theme_font_size_override("font_size",14);title_ui.add_child(description)
+ var description = Label.new();description.text = "Stand for Thane of Stonebridge.";description.position = Vector2(69, 254);description.add_theme_font_size_override("font_size", 14);title_ui.add_child(description)
  var box=VBoxContainer.new();box.position=Vector2(69,288);box.size=Vector2(288,150);box.add_theme_constant_override("separation",6);title_ui.add_child(box)
  button(box,"Load Game",func():first_visit_pending=false;open_panel("save_slots"))
  button(box,"New Game",func():first_visit_pending=true;open_panel("save_slots"))
  button(box,"Settings & sound",func():open_panel("settings"))
- if HoldBuild.DEV_TESTING:button(box,"Dev Testing",func():open_panel("dev_testing"))
+ if HoldBuild.DEV_TESTING and (OS.has_feature("editor") or OS.get_cmdline_user_args().has("dev-testing")):button(box,"Dev Testing",func():open_panel("dev_testing"))
  button(box,"Quit",shutdown)
  for b in box.get_children():
   b.custom_minimum_size.y=34 if HoldBuild.DEV_TESTING else 42
   b.add_theme_font_size_override("font_size",16 if HoldBuild.DEV_TESTING else 18)
   for key in ["normal","hover","pressed","disabled"]:
    var style=b.get_theme_stylebox(key).duplicate();style.content_margin_top=6 if HoldBuild.DEV_TESTING else 8;style.content_margin_bottom=6 if HoldBuild.DEV_TESTING else 8;b.add_theme_stylebox_override(key,style)
- var chapter=Label.new();chapter.text="KELDRATH  /  THE LOWER WORKS";chapter.position=Vector2(69,65);chapter.add_theme_font_size_override("font_size",12);chapter.modulate=Color("91c6bd");title_ui.add_child(chapter)
- var vista=Label.new();vista.text="BENEATH THE OLD KINGS\nThe mountain still remembers.";vista.position=Vector2(548,459);vista.add_theme_font_size_override("font_size",16);vista.modulate=Color("f0d49b");title_ui.add_child(vista)
+ var chapter = Label.new();chapter.text = "STONEBRIDGE  /  THE EAST ROAD";chapter.position = Vector2(69, 65);chapter.add_theme_font_size_override("font_size", 12);chapter.modulate = Color("91c6bd");title_ui.add_child(chapter)
+ var vista = Label.new();vista.text = "THE CONTEST FOR THANE\nThe first names are already in the Ledger.";vista.position = Vector2(548, 459);vista.add_theme_font_size_override("font_size", 16);vista.modulate = Color("f0d49b");title_ui.add_child(vista)
  var credit=Label.new();credit.text="Version "+HoldBuild.VERSION;credit.position=Vector2(69,501);credit.add_theme_font_size_override("font_size",12);title_ui.add_child(credit)
 
 func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=false):
@@ -274,6 +275,7 @@ func start_game(load_saved:bool,custom_appearance:Dictionary={},testing:bool=fal
   zone=d.zone;player=d.pos
  else:
   state.reset(randi_range(10000,99999));geo.generate_region(state.seed_value,0,Vector2i.ZERO);zone="hub";player=Vector2(150,HUB_FLOOR)
+ surface.ground_cache.clear()
  deep.world=null;deep.haul=null
  if not custom_appearance.is_empty():state.appearance=HoldAppearance.normalized(custom_appearance)
  if load_saved and zone=="mine":deep.enter(not state.deepworks_migrated)
@@ -440,6 +442,8 @@ func _unhandled_input(e):
   else:open_panel("dev_testing")
   get_viewport().set_input_as_handled();return
  if not playing or transition_left>0:return
+ if panel_id == "" and e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_E and not e.shift_pressed and Headworks.act(self, Headworks.target(self)):
+  get_viewport().set_input_as_handled();return
  if depth_nav.input(e):get_viewport().set_input_as_handled();return
  if panel_id!="" and e is InputEventKey and e.pressed and not e.echo and e.keycode in [KEY_PAGEUP,KEY_PAGEDOWN]:
   HoldMenuView.cycle_tab(self,-1 if e.keycode==KEY_PAGEUP else 1);get_viewport().set_input_as_handled();return
@@ -493,7 +497,7 @@ func move_player(dt:float):
  if not held and jump_was_held and velocity.y< -140:velocity.y=-140
  jump_was_held=held
  movement_remainder+=minf(dt,.1)
- while movement_remainder>=1.0/120.0-.000001:
+ while movement_remainder >= 1.0 / 120.0 - 1e-06:
   movement_remainder-=1.0/120.0
   move_player_step(1.0/120.0)
 
@@ -833,7 +837,7 @@ func save_game():
  for d in drops:state.add(d.item,d.count)
  drops.clear()
  if not state.save_world(geo,zone,exterior_position if room_id!="" else player):notify("Save failed. Check disk permissions.")
-func change_zone(z:String):
+func change_zone(z: String, mine_landing: Vector2 = Vector2.INF):
  if z!="mine" and surface:
   surface.enter("claim" if z=="claim" or state.active_site=="claim" else "hearthward");return
  if zone=="mine" and z!="mine":deep.depart()
@@ -843,13 +847,16 @@ func change_zone(z:String):
  drops.clear();particles.clear();popups.clear();close_panel();zone=z;velocity=Vector2.ZERO
  player=Vector2(150,370) if z=="mine" else Vector2(1465,HUB_FLOOR)
  camera=Vector2.ZERO if z=="mine" else Vector2(985,0)
- if z=="mine":deep.enter();HoldFirstVisit99.mine_entered(self)
+ if z == "mine":
+  deep.enter(false, mine_landing)
+  if mine_landing == Vector2.INF: HoldFirstVisit99.mine_entered(self)
  handworks.arrive(travelling_cart)
- begin_transition("THE LOWER WORKINGS" if z=="mine" else "BACK TO THE HOLD");sound.set_context(z)
+ begin_transition("PINEWOOD HEADWORKS" if mine_landing != Vector2.INF else "THE LOWER WORKINGS" if z == "mine" else "BACK TO THE HOLD");sound.set_context(z)
  notify("DEEPWORKS: WASD move · Hold LMB dig · V carve stairs · E down / Shift+E up · X survey below." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
  save_game()
- HoldStory183.arrive(self)
+ if mine_landing == Vector2.INF: HoldStory183.arrive(self)
 func interact():
+ if Headworks.act(self, Headworks.target(self)): return
  if surface.active():surface.use();return
  if zone=="mine":deep.use_stairs(Input.is_key_pressed(KEY_SHIFT));return
  if zone=="road" and room_id=="":
@@ -983,6 +990,9 @@ func update_hud():
   footer.text="E  "+nearest.name.to_upper()+"    |    A/D MOVE   I PACK   M CREW   F1 HELP" if absf(nearest.x-player.x)<95 else "A/D MOVE   E INTERACT   C CHARACTER   I PACK   M CREW   F1 HELP"
 
  if surface and surface.active():surface.hud()
+ if notice_time <= 0 and panel_id == "":
+  var headworks_target = Headworks.target(self)
+  if headworks_target != "": footer.text = Headworks.hint(self, headworks_target)
  objectives.size.x=clampf(objectives.get_theme_font("font").get_string_size(objectives.text,HORIZONTAL_ALIGNMENT_LEFT,-1,14).x+24,220,900)
  objectives.tooltip_text=objectives.text
  status.visible=false
@@ -1263,7 +1273,7 @@ func open_panel(id:String,remember:bool=true):
   menu_history.append({"id":panel_id,"scroll":menu_scroll.scroll_vertical if is_instance_valid(menu_scroll) else 0})
  if panel_id=="ivar_welcome" and id not in ["ivar_welcome","pause","settings"]:sound.stop_voice()
  menu_paused=id=="work132" or id=="invasion131" or id=="commissions_detail" or id=="depth_map" or id=="recipes" or id in ["calendar","festivals","energy","dev_testing","architecture","architecture_details","architecture_plan","architecture_style"] or id in ["guidance","hearth","inventory","equipment","roster","help","disciplines","letter","fieldwork","handworks","house_build","wayfinding","homestead","storage","pause","settings","build_status","ivar_welcome","world_map","basin_map","gate","conversation","anniversary","lesson","social","commission","claim_stories","field_notes","pinewood","road_order","road_kitchen"]
- if id=="camera_controls":menu_paused=true
+ if id in ["camera_controls","cottage_grounds"]:menu_paused=true
  if id in ["collections141","restoration139","campaign138","lodge_talk","great_claim102","frontier103","frontier_archive103","traditions126","hearth126","eight126","claim127","friend130"]:menu_paused=true
  panel_id=id;panel.visible=true;menu_shade.color=Color(.025,.04,.045,.18 if id=="conversation" else .45);menu_shade.visible=true
  sync_hud_controls()
@@ -1277,6 +1287,8 @@ func open_panel(id:String,remember:bool=true):
   "disciplines":HoldDisciplineView.panel(self)
   "conversation":HoldConversation.panel(self)
   "field_notes":
+   var headworks_note = Headworks.journal(self)
+   if headworks_note != "": label(panel_body, headworks_note, 16)
    if zone=="mine":deep.panel()
    else:HoldFieldSurvey.panel(self)
   "equipment":combat.panel()
@@ -1327,6 +1339,7 @@ func open_panel(id:String,remember:bool=true):
   "storage":surface.chest_panel()
   "fieldwork":fieldwork.panel()
   "handworks":handworks.panel()
+  "cottage_grounds":HoldClaimYard.menu(self)
   "homestead":surface.home_panel()
   "letter":HoldLetters.panel(self)
   "house_build":surface.house.panel()
@@ -1367,6 +1380,7 @@ func open_panel(id:String,remember:bool=true):
   "pause":
    var grid=GridContainer.new();grid.columns=2;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",12);panel_body.add_child(grid)
    for entry in [["Resume adventure",resume_adventure],["Save game",func():save_game();notify("Hold saved.")],["Skills · Y",func():open_panel("disciplines")],["Settings",func():open_panel("settings")],["Controls & field guide",func():open_panel("help")],["Build status · WIP",func():open_panel("build_status")],["Save and return to title",func():save_game();show_title()],["Save and quit",func():save_game();shutdown()]]:
+    if entry[0]=="Build status · WIP" and not dev.active():continue
     var b=button(grid,entry[0],entry[1]);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
    if dev.active():button(panel_body,"Dev Testing · F9",func():open_panel("dev_testing"))
    label(panel_body,"The world is paused. Take your time. Switching away from the game also pauses it; return when ready.",16,Color("b4c9c4"))
@@ -1566,9 +1580,9 @@ func help_panel():
   b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
   if i==help_tab:b.modulate=Color("a7e2ce")
  var topics=[
-  [["Your first shift","Meet Ivar and introduce yourself to Borin, Orla and Hedrik. Leave Hearthward through the King’s Gate, follow the High Trail to Old Workings, and press E at the entrance. Mine 8 coal. Return to Ivar's office for 65 crowns; keep your surplus."],["Move & explore","WASD or arrows: walk in eight directions  •  E: interact
+  [["Your first shift", "Meet Ivar and introduce yourself to Borin, Orla and Hedrik. Leave Hearthward through the King’s Gate, follow the High Trail to Old Workings, and press E at the entrance. Mine 8 coal. Return to Ivar's office for 65 crowns; keep your surplus."], ["Move & explore", """WASD or arrows: walk in eight directions  •  E: interact
 J: work journal  •  N: people and location tracking
-I: resources  •  B: weapons and armor"],["What comes next?","Your first coal delivery earns an audience with the Lord. Return to Ivar for the lift commission and new lessons. Finish all three commissions to earn a reference, buy a mountain charter, and hire a founding crew as you build your workshop and freight beacon."]],
+I: resources  •  B: weapons and armor"""], ["What comes next?", "Your first coal delivery earns an audience with the Lord. Return to Ivar for the lift commission and new lessons. Finish all three commissions to earn a reference, buy a mountain charter, and hire a founding crew as you build your workshop and freight beacon."]],
   [["Dig comfortably","WASD / arrows move in eight directions underground. Hold LMB with pick [1] for rock or shovel [2] for dirt. Hammer [4] exploits existing cracks; Shift + pick extracts ore selectively. Axe [3] is for Pinewood timber."],["Connect the depths","V opens stairs, timber ladder shafts and lamps. Build on clear floor; E descends, Shift + E ascends at that same location. Ladders carry Dwarfs and buckets; stairs also carry carts and machines. X surveys the layer below. T assigns crew depth. Return through the entrance to deliver cargo and leave."],["Build your hold","O opens Rooms, Furnish, Finishes and Folk. Designate excavated floor, then place furniture or apply finishes with LMB. Right mouse cancels. H manages hauling; C takes/parks the cart, U unloads and Shift + U loads piles. L opens the project ledger. Delivered supplies fund crafting and construction."]],
   [["Draw your weapon","F switches between your weapon and tools. Left mouse attacks; hold right mouse to guard. Press guard just before an impact to parry, then counterattack. Space dodges. There is no stamina."],["Prepare for an expedition","B opens gear. Borin introduces the starter axe and shield in his safe practice bay after the lift repair and return-route lesson. Hostile encounters unlock when you report your training. Forge upgrades at Borin's workbench; equipped armor improves your protection. Guns consume cartridges."],["Choose your fights","Cleared encounters stay cleared. Enemies drop useful salvage. Rest outside the mine to heal. Defeat triggers paid rescue, so prepare an escape route."]],
   [["Craft, trade, grow","The forge reserves materials when you queue a job; completed items enter your pack automatically. Production continues while browsing ordinary menus. Sell surplus at Orla's exchange; contracts or tavern hospitality unlock bargaining."],["Save & pause","F5 saves. Escape opens pause or goes back through menus. Losing window focus pauses the world until you resume. Auto-save runs every 45 seconds and on major purchases or travel. Three separate save slots; a new fortune asks before replacing the selected slot."],["Comfort & controls","Use Sound & comfort from the pause menu for music, ambience, effects and camera shake. Tab moves focus; Enter activates a button. Given and family names are separate. There is no hunger timer: provisions fuel your worker."]]
@@ -1630,7 +1644,7 @@ func character_card(parent:Node,key:String,quote:String):
  var status=HoldQuestMarkers.status(state,key)
  if status!="":label(details,HoldQuestMarkers.caption(status),14,Color("edc98a"))
  label(details,HoldOutpost.describe(state,key) if HoldOutpost.has_member(state,key) else HoldAppearance.NPC_ROLES.get(key,"A dwarf of Keldrath"),13,Color("93c8b8"))
- if panel_id!="roster":label(details,'"'+(HoldOutpost.line(state,key) if HoldOutpost.has_member(state,key) or HoldOutpost.TOWN.has(key) else quote)+'"',15)
+ if panel_id != "roster": label(details, "\"" + (HoldOutpost.line(state, key) if HoldOutpost.has_member(state, key) or HoldOutpost.TOWN.has(key) else quote) + "\"", 15)
  if HoldConversation.local(self,key):button(details,"Talk",func():HoldConversation.start(self,key))
  var r2=row(details)
  var preview:Control
@@ -2006,7 +2020,7 @@ func arrive_region(destination:String):
 
 
 func save_slots_panel():
- if first_visit_pending:label(panel_body,"NEW GAME · Meet the miners, make a room your own and earn your first wages. Choose a slot and create your Dwarf. Existing fortunes keep their progress.",17)
+ if first_visit_pending: label(panel_body, "NEW GAME · Stand for Thane of Stonebridge. Skarrin leads the contest. Choose a slot and create your dwarf.", 17)
  label(panel_body,"Separate characters, mountains and progress. Autosave stays in the slot you choose.",16)
  for slot in range(1,4):
   var summary=HoldState.slot_summary(slot)

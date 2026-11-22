@@ -25,7 +25,8 @@ func run():
  check(empty<300,"Large district worksite leaves over 4,800 cells for player excavation")
  check(w.carve_stairs(Deepworks.cell(g.player)).contains("adits"),"Lateral worksite cannot be reached or escaped with a vertical shortcut")
  w.data.depth=4
- check(w.carve_stairs(Vector2i(8,8)).contains("frontier"),"Original deepest level cannot carve into an annex")
+ var links_before=w.data.links.duplicate(true)
+ check(w.carve_stairs(Vector2i(8,8)).contains("bedrock") and w.below(4)==-1 and w.data.links==links_before,"Bedrock prevents a vertical link from the public mine into a lateral annex")
  w.data.depth=5
  var cells=w.layer().cells.duplicate();var inv=g.state.inventory.duplicate(true)
  check(HoldMineworks143.designate(w,Vector2i(14,18),Vector2i(25,29),"Hammer Row","craft").begins_with("District planned"),"Player can reserve unexcavated rock as a named craft district")

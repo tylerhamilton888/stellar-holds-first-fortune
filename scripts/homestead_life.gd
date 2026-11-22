@@ -60,9 +60,11 @@ func build(p:Vector2)->bool:
  p=(p/20).round()*20
  if not g.handworks.can_place(p):g.notify("Choose clear claim ground within reach, away from paths and buildings.");return false
  for b in data().beds:
-  if local(b) and pos(b).distance_to(p)<100:return false
+  if local(b) and pos(b).distance_to(p) < 100:
+   if not HoldClaimYard.here(g) or pos(b).y != p.y or absf(pos(b).x - p.x) != 80: return false
  if not g.state.pay({"wood":3,"stone":1}):g.notify("Bring 3 timber and 1 stone for a garden bed.");return false
  data().beds.append({"id":int(data().next),"claim":g.state.claim_id,"x":p.x,"y":p.y,"planted":false,"watered":false,"at":0.0});data().next=int(data().next)+1
+ HoldClaimYard.prepare_bed(g,p)
  data().facts.bed=true;placing=false;g.sound.effect("build");g.save_game();return true
 func start(kind:String,b:Dictionary={}):
  action=kind;elapsed=0;origin=g.player;cast_area=g.surface.area;bed_id=int(b.get("id",-1));completed_contact=false
@@ -70,8 +72,13 @@ func start(kind:String,b:Dictionary={}):
  waypoints.clear();moving=false
  if not b.is_empty():
   var side=-1 if g.player.x<=b.x else 1
-  if g.player.y>b.y-5:waypoints.append(pos(b)+Vector2(side*65,40))
-  waypoints.append(pos(b)+Vector2(side*65,-18))
+  if joined(b, -1) or joined(b, 1):
+   var front = 28 if g.player.y >= b.y - 12 else -46
+   waypoints.append(Vector2(g.player.x, b.y + front))
+   waypoints.append(pos(b) + Vector2(0, front))
+  else:
+   if g.player.y > b.y - 5: waypoints.append(pos(b) + Vector2(side * 65, 40))
+   waypoints.append(pos(b) + Vector2(side * 65, -18))
  g.surface.direction=(spot().float-g.player).normalized() if b.is_empty() and kind=="fish" else (pos(b)-g.player).normalized() if not b.is_empty() else Vector2.RIGHT
 func cancel():action="";elapsed=0;bed_id=-1;moving=false;waypoints.clear()
 func input(e:InputEvent)->bool:
@@ -110,7 +117,7 @@ func update(dt:float):
   return
  if bed_id>=0:
   var current=bed()
-  if not current.is_empty():g.surface.direction=Vector2(1 if g.player.x<current.x else -1,0)
+  if not current.is_empty(): g.surface.direction = (pos(current) - g.player).normalized()
  if action!="fish":HoldWorkEnergy.spend(g.state,dt*.025)
  elapsed+=dt if action=="fish" else dt*HoldWorkEnergy.speed(g.state)
  if action=="fish":
@@ -175,8 +182,23 @@ func obstacles()->Array:
 func sprite(index:int,p:Vector2,width:float,alpha:float=1):
  var r=HoldDrawnAnimation.bounds("homestead-props",index);var h=width*r.size.y/r.size.x
  g.draw_texture_rect_region(PROPS,Rect2(p-Vector2(width/2,h),Vector2(width,h)),Rect2(r),Color(1,1,1,alpha))
+func joined(b: Dictionary, side: int) -> bool:
+ if not HoldClaimYard.here(g) or not local(b): return false
+ var next = pos(b) + Vector2(side * 80, 0)
+ for other in data().beds:
+  if local(other) and pos(other) == next: return true
+ return false
 func draw_bed(b:Dictionary):
- sprite(3,pos(b),86)
+ var left = joined(b, -1); var right = joined(b, 1)
+ if left or right:
+  var r = Rect2(HoldDrawnAnimation.bounds("homestead-props", 3))
+  var h = 86 * r.size.y / r.size.x
+  var origin = pos(b) - Vector2(40, h)
+  var start = 15.0 if left else 0.0
+  var end = 65.0 if right else 80.0
+  var section = Rect2(r.position + Vector2(r.size.x * start / 80, 0), Vector2(r.size.x * (end - start) / 80, r.size.y))
+  g.draw_texture_rect_region(PROPS, Rect2(origin, Vector2(80, h)), section)
+ else: sprite(3, pos(b), 86)
  var p=pos(b)
  if b.get("prepared",false):
   for i in 4:g.draw_line(p+Vector2(-27,-12-i*5),p+Vector2(25,-12-i*5),Color("473b2e"),2)
@@ -194,7 +216,7 @@ func draw_bed(b:Dictionary):
 func draw():
  if not g.surface.active():return
  var cam=g.camera.round();g.draw_set_transform(-cam)
- if placing:sprite(3,g.get_global_mouse_position()+g.camera,86,.5)
+ if placing: sprite(3, (g.get_global_mouse_position() + g.camera).snapped(Vector2(20, 20)), 86, 0.5)
  var place=spot()
  if not place.is_empty():
   var float_at:Vector2=place.float
@@ -225,10 +247,11 @@ func panel():
   g.label(g.panel_body,"Field tools ready · E equips the right tool when you stand beside a garden bed or the river fishing spot.",15)
   g.button(g.panel_body,"Craft & place garden bed · 3 timber + 1 stone",func():
    if g.surface.area!="claim" or g.surface.house.level()!=0:g.notify("Build garden beds on the ground of your own claim.");return
-   placing=true;g.close_panel();g.notify("Choose clear claim ground nearby. LMB places; right click cancels."))
+   g.surface.cancel_placement();g.handworks.placing="";placing=true;g.close_panel();g.notify("Choose clear claim ground nearby. LMB places; right click cancels."))
  var tools_row=g.row(g.panel_body)
  for i in [1,2,3]:
   var icon=TextureRect.new();var tex=AtlasTexture.new();tex.atlas=TOOLS;tex.region=Rect2(HoldDrawnAnimation.bounds("field-tools",i));icon.texture=tex;icon.custom_minimum_size=Vector2(50,44);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;tools_row.add_child(icon)
+ if HoldClaimYard.here(g): g.label(g.panel_body, "Place beds side by side, four small grid spaces apart, to share a border.", 14)
  g.label(g.panel_body,"Choose your next crop",20)
  for id in HoldHearth.CROPS:
   var c=HoldHearth.CROPS[id]

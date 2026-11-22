@@ -2,6 +2,7 @@ class_name HoldBuildingPlans
 extends RefCounted
 # The same plans describe authored addresses and player-owned buildings.
 # Artwork remains an architectural component, never a second building type.
+const Proportions=preload("res://settlement/room_proportions.gd")
 static var catalogue_cache:Dictionary={}
 static func catalogue()->Dictionary:
  if not catalogue_cache.is_empty():return catalogue_cache
@@ -20,7 +21,7 @@ static func catalogue()->Dictionary:
  for item in [["cottage","Cottage","Hearths","home:blueprint",0,350.0],["wayfarer","Travel lodge","Hearths","room:wayfarer",1,290.0],["farmhouse","Farmhouse","Hearths","room:greenhearth",0,320.0],["workshop","Workshop","Industry","room:forge",4,260.0]]:
   out[item[0]]={"name":item[1],"category":item[2],"rooms":[item[3]],"ward":false,"art":item[4],"id":-3,"width":item[5]}
  out.frontier_lodge={"name":"Stonebridge bunkhouse","category":"Hearths","rooms":["room:lodge","room:home"],"ward":false,"art":0,"id":-3,"width":300.0}
- out.frontier_office={"name":"Survey hall and archive","category":"Civic","rooms":["room:research","room:research"],"stair":[550,550],"ward":false,"art":2,"id":-3,"width":260.0}
+ out.frontier_office={"name":"Survey hall and archive","category":"Civic","rooms":["room:research",Proportions.RECORDS],"stair":[550,550],"ward":false,"art":2,"id":-3,"width":260.0}
  out.frontier_watch={"name":"Watch house and stores","category":"Civic","rooms":["room:market"],"ward":false,"art":0,"id":-3,"width":240.0}
  for id in out:out[id].key=id
  out.workshop.rooms=["room:workshop148"]
@@ -84,17 +85,18 @@ static func template(area:String)->String:
  var parts=room_parts(area);var b=owner.record(parts[0])
  if b.is_empty():return "room:home"
  # Pre-layout saves without explicit rooms retain the old workshop footprint.
- var rooms=b.get("rooms",["room:forge"] if b.plan=="workshop" else plan(b.plan).rooms)
+ var rooms=b.get("rooms",["room:forge"] if b.plan=="workshop" else ["room:research","room:research"] if b.plan=="frontier_office" else plan(b.plan).rooms)
  return rooms[clampi(int(parts[1]),0,rooms.size()-1)]
 static func geometry(area:String)->Dictionary:
  var source=template(area)
- var floor_area=HoldRoyalStage.FLOOR if source=="room:throne" else Rect2(160,260,1020,650) if source=="room:forge" else Rect2(160,260,640,385)
- var size=Vector2(1300,1180) if source=="room:throne" else Vector2(1340,1010) if source=="room:forge" else Vector2(960,720)
- if source=="room:communal148":floor_area=Rect2(160,260,820,520);size=Vector2(1140,880)
+ var fitted=true;var extra=Vector2.ZERO
  if owned_room(area):
   var owner=HoldArchitecture.current();var b=owner.record(room_parts(area)[0]) if owner!=null else {}
-  var extra=Vector2(float(b.get("extend_x",0))*80,float(b.get("extend_y",0))*80)
-  floor_area.size+=extra;size+=extra
+  fitted=b.get("fitted_rooms",false)
+  extra=Vector2(float(b.get("extend_x",0))*80,float(b.get("extend_y",0))*80)
+ var floor_area=Proportions.floor_rect(source,fitted);floor_area.size+=extra
+ var size=Vector2(1300,1180) if source=="room:throne" else Vector2(1340,1010) if source=="room:forge" else Vector2(1140,880) if source=="room:communal148" else Vector2(960,720)
+ size+=extra
  var exit_point=Vector2(650,floor_area.end.y-25) if source=="room:throne" else Vector2(480,floor_area.end.y-25)
  return {"template":source,"floor":floor_area,"size":size,"exit":exit_point,"bounds":Rect2(floor_area.position+Vector2(15,30),floor_area.size-Vector2(30,40))}
 static func floor_number(area:String)->int:
@@ -104,6 +106,9 @@ static func floor_number(area:String)->int:
 static func stair_position(area:String)->Vector2:
  if owned_room(area):
   var b=HoldArchitecture.current().record(room_parts(area)[0]);var p=b.get("stair",plan(b.get("plan","")).get("stair",[]))
+  var z=floor_number(area);var landings=b.get("grade_anchors",[])
+  if not b.has("stair") and z<landings.size():return Vector2(landings[z][0],landings[z][1])
+  if not b.has("stair") and b.get("rooms",[]).has(Proportions.RECORDS):return Proportions.OFFICE_STAIR
   if p.size()==2:return Vector2(p[0],p[1])
  return HoldHouseholds.KETTLE_STAIR if template(area) in ["room:tavern",HoldHouseholds.LOFT] else HoldNeighborhood.STAIR
 static func has_stairs(area:String)->bool:
@@ -117,10 +122,11 @@ static func shell_cost(id:String)->Dictionary:
  return {"stone":floor_count+perimeter*2,"wood":floor_count+perimeter,"iron":8 if p.category=="Industry" else 2}
 static func add_cost(total:Dictionary,cost:Dictionary):
  for key in cost:total[key]=int(total.get(key,0))+int(cost[key])
-static func contents(w,area:String)->Array:
+static func contents(w,area:String,fitted:bool=true)->Array:
  # Authored placement data is compiled once through the same furnishing catalogue.
- var source=template(area);var list=w.definition_objects(source)
- if source in ["room:communal148","room:workshop148"]:return HoldLivingForges148.contents(w,source)
+ var source=template(area);var list=Proportions.records() if source==Proportions.RECORDS else w.definition_objects(source)
+ if fitted and HoldNeighborhood.is_home(source) and floor_number(source)==1:Proportions.fit_loft(list)
+ if source in ["room:communal148","room:workshop148"]:list=HoldLivingForges148.contents(w,source)
  if source in ["room:home","home:blueprint","room:wayfarer","room:greenhearth"] or source.begins_with("home:"):
   var storage=Vector2(700,550) if source in ["room:wayfarer","room:greenhearth"] else Vector2(650,420 if source=="room:home" else 380)
   list.append(w.furn("chest",storage.x,storage.y))
@@ -133,4 +139,5 @@ static func contents(w,area:String)->Array:
    var f=w.furn(kind,o.p.x,o.p.y)
    if o.has("sort_y"):f.sort_y=o.sort_y
    list.append(f)
+ preload("res://settlement/wall_storage.gd").arrange(source,list,Proportions.floor_rect(source,fitted))
  return list

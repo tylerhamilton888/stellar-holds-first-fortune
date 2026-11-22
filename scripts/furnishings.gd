@@ -9,7 +9,8 @@ const ATLAS=preload("res://assets/furnishings-v56/interior.png")
 const CROPS=[Rect2(40,83,316,237),Rect2(424,22,308,300),Rect2(805,57,326,271),Rect2(1250,36,210,289),Rect2(15,429,407,224),Rect2(442,397,320,258),Rect2(805,376,325,282),Rect2(1180,328,323,340),Rect2(54,661,288,342),Rect2(491,668,188,334),Rect2(853,751,257,226),Rect2(1204,698,280,291)]
 # size is the visible silhouette; base is its ground-plane occupied rectangle.
 const ITEMS={
- "civic_ledger":{"title":"Hold’s Ledger","size":Vector2(180,180),"base":Rect2(-76,-43,152,43),"cost":{}},
+ "ledger_memorial":{"title":"Ledger Shrine memorial","size":Vector2(307,93),"base":Rect2(-149,-21,298,22),"cost":{}},
+ "civic_ledger":{"title":"Hold’s Ledger","size":Vector2(144,144),"base":Rect2(-63,-35,126,35),"cost":{}},
  "hearthkeeper_table":{"title":"Shared-meal table","base_kind":"table","cost":{"wood":6,"stone":2},"dressing":[["kettle",Vector2(0,-30)],["mug",Vector2(-17,-29)],["mug",Vector2(17,-29)],["mug",Vector2(0,-17)]]},
  "ancestral_shrine":{"title":"Ancestor memorial","base_kind":"plinth","cost":{"dressed_stone":4,"wood":2}},
  "runestone":{"title":"Roadside rune-stone","size":Vector2(54,70.53),"base":Rect2(-23,-16,46,16),"cost":{"dressed_stone":6,"crystal":1}},
@@ -67,6 +68,7 @@ static func foreground_alpha(kind:String,p:Vector2,player:Vector2)->float:
 static func draw(n:CanvasItem,p:Vector2,kind:String,tint:Color=Color.WHITE):
  var item=geometry(kind)
  if kind=="civic_ledger":n.draw_texture_rect(CIVIC_LEDGER,silhouette(kind,p),false,tint)
+ elif kind=="ledger_memorial":draw_memorial(n,silhouette(kind,p),tint)
  elif kind=="ancestral_shrine":HoldLooseProps.draw(n,silhouette(kind,p),"plinth",tint)
  elif kind.begins_with("royal_"):
   var index=["royal_throne","royal_pillar","royal_arch","royal_brazier"].find(kind)
@@ -81,6 +83,22 @@ static func draw(n:CanvasItem,p:Vector2,kind:String,tint:Color=Color.WHITE):
   HoldAmbientProps.hearth(n,p,float(clock) if clock!=null else 0.0,tint)
  else:n.draw_texture_rect_region(ATLAS,silhouette(kind,p),CROPS[item.art],tint)
  for detail in ITEMS.get(kind,ITEMS.table).get("dressing",[]):draw(n,p+detail[1],detail[0],tint)
+# Only the stone directly in front of a passing dwarf becomes translucent.
+static func draw_memorial(n:CanvasItem,rect:Rect2,tint:Color):
+ var texture=preload("res://settlement/ground.gd").texture("memorial")
+ if tint.a>=1.0:
+  n.draw_texture_rect(texture,rect,false,tint)
+  return
+ var actor=Rect2(n.player-Vector2(12,52),Vector2(24,48))
+ var edges=[0.,.25,.75,1.]
+ for i in 3:
+  var portion=Rect2(edges[i],0,edges[i+1]-edges[i],1)
+  var dest=Rect2(rect.position+portion.position*rect.size,portion.size*rect.size)
+  var solid=dest.grow(-4)
+  if i==1:solid=Rect2(solid.position+Vector2(0,rect.size.y*.38),solid.size-Vector2(0,rect.size.y*.38))
+  var shade=tint
+  if not solid.intersects(actor):shade.a=1.
+  n.draw_texture_rect_region(texture,dest,Rect2(portion.position*texture.get_size(),portion.size*texture.get_size()),shade)
 static func draw_anvil(n:CanvasItem,r:Rect2,tint:Color=Color.WHITE):n.draw_texture_rect(ANVIL,r,false,tint)
 # Service anchors are on the usable side of the physical prop.
 static func bedside(p:Vector2,side:int=1,kind:String="bed")->Vector2:return p+Vector2(side*(geometry(kind).base.size.x*.5+16),-32)

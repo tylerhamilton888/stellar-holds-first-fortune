@@ -9,6 +9,24 @@ static func exit_point(area:String)->Vector2:return HoldBuildingPlans.geometry(a
 static func camera(area:String,p:Vector2,welcome:bool=false)->Vector2:
  var plan=HoldBuildingPlans.geometry(area);var r=plan.floor;var max_y=r.end.y-375
  if plan.template=="room:throne":return (p-Vector2(480,280)).clamp(Vector2(170,100),Vector2(maxf(170,plan.size.x-960),maxf(705,plan.size.y-475)))
+ if HoldBuildingPlans.has_stairs(area) and r.size.y<=385 and r.size.x<=800:
+  # Keep the room and both approaches in shot. Only a short follow is needed here.
+  var center=r.get_center()
+  var vertical=center.y-280.+clampf((p.y-center.y)*.12,-16.,16.)
+  # Reserve the hotbar band for the entire doorway as the player approaches it.
+  var doorway_view=plan.exit.y+40.-432.
+  vertical=lerpf(vertical,maxf(vertical,doorway_view),smoothstep(0.,75.,p.y-center.y))
+  if welcome:
+   var north_view=r.position.y-184.
+   vertical=lerpf(vertical,minf(vertical,north_view),smoothstep(12.,66.,center.y-p.y))
+  var horizontal=clampf(p.x-480.,0.,maxf(0,plan.size.x-960.))
+  if HoldBuildingPlans.owned_room(area):
+   var b=HoldArchitecture.current().record(HoldBuildingPlans.room_parts(area)[0])
+   var anchors=b.get("grade_anchors",[])
+   if not b.has("stair") and anchors.size()==2:
+    # Different-sized rooms put the same physical wall at different local x positions.
+    horizontal+=HoldBuildingPlans.stair_position(area).x-minf(anchors[0][0],anchors[1][0])
+  return Vector2(horizontal,vertical)
  # Leave the north wall and tall furnishings below the 112px HUD band.
  # Follow the player through large rooms instead of cropping their northern bays.
  var top=65.0
@@ -38,22 +56,4 @@ static func rug(w,r:Rect2,tint:Color):
  var index=3 if tint.r>tint.g else 2
  w.g.draw_texture_rect_region(HoldMasonryArt.SURFACES,r,HoldMasonryArt.surface_region(index))
 static func dressing(w,area:String):
- # Rugs group ordinary furniture into useful domestic/work areas; no collision.
- if area in ["room:wayfarer","room:greenhearth"]:
-  rug(w,Rect2(210,345,140,220),Color("486c6b"))
-  rug(w,Rect2(470,387,274,122),Color("756344"))
-  rug(w,Rect2(455,540,50,75),Color("526f62"))
- elif area=="room:lodge":
-  rug(w,Rect2(200,305,210,95),Color("486c6b"))
-  rug(w,Rect2(405,405,150,115),Color("756344"))
- elif area=="room:home":
-  rug(w,Rect2(247,342,95,143),Color("486c6b"))
-  rug(w,Rect2(373,368,186,112),Color("58756c"))
-  rug(w,Rect2(594,476,174,93),Color("636f64"))
- elif area=="room:tavern":
-  rug(w,Rect2(205,467,475,105),Color("756344"))
-  rug(w,Rect2(211,371,120,79),Color("526f62"))
- elif area in ["room:commission","room:research"]:
-  rug(w,Rect2(232,476,155,98),Color("526c69"))
-  rug(w,Rect2(565,336,120,105),Color("626c58"))
- elif area=="room:market":rug(w,Rect2(648,483,120,92),Color("746346"))
+ preload("res://settlement/rooms.gd").furnish_floor(w,area)

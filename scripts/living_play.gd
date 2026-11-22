@@ -130,7 +130,7 @@ func rooms_panel():
   var selector=OptionButton.new();selector.custom_minimum_size.y=36;g.panel_body.add_child(selector)
   var ids=model.data.rooms.keys()
   for id in ids:
-   var r=model.data.rooms[id];selector.add_item("%s · Depth %d · Quality %d" % [r.name,int(r.depth)+1,r.metrics.score])
+   var r=model.data.rooms[id];selector.add_item("%s · %s · Quality %d" % [r.name,Deepworks.floor_tag(int(r.depth)),r.metrics.score])
   selector.selected=ids.find(selected_room)
   selector.item_selected.connect(func(index):selected_room=ids[index];g.open_panel("living",false))
  if model.data.rooms.has(selected_room):

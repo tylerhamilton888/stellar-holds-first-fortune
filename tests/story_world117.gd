@@ -19,8 +19,8 @@ func run():
  for view in 4:
   var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][view]
   var idle=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)
-  check(idle.sheet==sheet and idle.index==view,"Authored resting view "+str(view))
-  check(is_equal_approx(idle.scale*float(HoldWholeFrames.metadata[sheet][view].height),62.0),"Torvik retains her distinct broad 62px stature")
+  check(named_idle(idle,p.cast_id,view),"Authored resting view "+str(view))
+  check(is_equal_approx(idle.scale*float(HoldWholeFrames.metadata[idle.sheet][idle.index].height),62.0),"Torvik retains her distinct broad 62px stature")
   for key in 4:
    var a=HoldWholeFrames.descriptor(p,d,true,key*.13+.001,"town_walk",0)
    check(a.sheet==sheet and a.index==4+view*4+key,"Production uses four distinct whole gait keys "+str(view)+":"+str(key))
@@ -28,6 +28,8 @@ func run():
  for action in ["drink","pick","hammer","carry_stone","combat_axe"]:
   check(HoldWholeFrames.descriptor(p,Vector2.RIGHT,false,0,action,.6)==HoldWholeFrames.descriptor(generic,Vector2.RIGHT,false,0,action,.6),"Unsupported future action retains its functional renderer: "+action)
  check(not HoldStoryWorld105.has_profile(g.state.appearance),"Player keeps existing character artwork")
+ var yard=HoldRoads.Pinewood.point(g.state.forestry.pinewood_plan,"yard")
+ var west=yard+Vector2(-115,26);var east=yard+Vector2(115,26)
  var duration=230.0/38.0;var cycle=2*(duration+7);var beginning=3*cycle-18
  var visited={}
  for step in 108:
@@ -35,14 +37,14 @@ func run():
   check(not actor.is_empty() and actor.profile.cast_id=="torvik","Route retains named identity "+str(step))
   var local=fposmod(time+18,cycle);var forward=local<=duration+7
   if not forward:local-=duration+7
-  var expected=Vector2(470,765).lerp(Vector2(700,765),minf(1,local/duration)) if forward else Vector2(700,765).lerp(Vector2(470,765),minf(1,local/duration))
+  var expected=west.lerp(east,minf(1,local/duration)) if forward else east.lerp(west,minf(1,local/duration))
   check(actor.p.distance_to(expected)<.01 and actor.walking==(local<duration),"World art preserves route position and movement timing "+str(step))
   var pose=actor.get("pose","town_walk");visited[pose]=true
   var a=HoldWholeFrames.descriptor(actor.profile,actor.aim,actor.walking,actor.gait,pose,actor.get("phase",0.0))
-  check(a.sheet==sheet,"Live route never swaps to generic art "+str(step))
+  check((a.sheet==sheet if actor.walking or pose!="town_walk" else named_idle(a,p.cast_id,HoldDirectional.view(actor.aim))),"Live route never swaps to generic art "+str(step))
  check(not visited.has("drink") and visited.has("town_walk"),"Route retains existing walking and rest without invented activities")
  for sample in [["walk",.8],["rest",duration+.5],["resume",duration+7.5]]:
-  g.state.elapsed=beginning+sample[1];at(Vector2(610,830));await snap("torvik-"+sample[0])
+  g.state.elapsed=beginning+sample[1];at(yard+Vector2(0,65));await snap("torvik-"+sample[0])
  at(torvik_at(g.state.elapsed).p+Vector2(0,45));g.surface.action("road_folk:2")
  check(g.panel_id=="conversation" and g.talk_id=="road_folk:2","Torvik conversation remains reachable with authored world art")
  await snap("torvik-conversation");g.close_panel()
@@ -63,5 +65,11 @@ func run():
   var survivor=HoldMountain104.profile(g,index)
   check(survivor.cast_id=="torvik" and HoldWholeFrames.descriptor(survivor,Vector2.UP,true,.26,"town_walk",0).sheet==sheet,"Rescue reuses the same whole-character bundle")
  check(torvik_at(g.state.elapsed).is_empty(),"Trapped Torvik is absent from the pinewood route")
+ # Opposite seed parities place the timber rack on different sides of the work area.
+ for seed_value in [104,105]:
+  g.state.reset(seed_value);g.state.opening=4;g.surface.enter("pinewood");settle()
+  for t in 28:
+   var actor=torvik_at(float(t))
+   check(g.surface.walkable(actor.p) and g.surface.walkable(actor.p+Vector2(0,22)),"Torvik and the conversation approach clear the timber rack: %d/%d" % [seed_value,t])
  print("STORYWORLD117: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.playing=false;g.queue_free();await process_frame;quit(1 if failed else 0)
