@@ -282,7 +282,7 @@ static func family_lead(g)->Dictionary:
    elif g.surface.area=="trail":
     lead.goal="A hearth gone cold · Follow the main street to the communal forge"
    elif HoldForge147.active(g):
-    lead.goal="A hearth gone cold · Press E at the hearth and choose Inspect the cold hearth"
+    lead.goal="A hearth gone cold · Press E at the hearth to inspect it"
   return lead
  if q.focus=="basics" and not q.rewarded:
   var n=mini(step(s),4)
@@ -304,7 +304,7 @@ static func forge_marker(g)->Dictionary:
   if not forge.is_empty():return {"p":Vector2(forge.x,forge.y),"label":"Communal forge"}
  if HoldForge147.active(g):
   var hearth=HoldForge147.forge_position(g)
-  if hearth!=Vector2.INF:return {"p":hearth+Vector2(0,35),"label":"Cold hearth"}
+  if hearth!=Vector2.INF:return {"p":hearth+Vector2(0,35),"label":"Cold hearth","lift":105}
  return {}
 
 static func family_card(g):

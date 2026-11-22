@@ -931,7 +931,7 @@ func draw():
   var marker=HoldFirstVisit99.forge_marker(g)
   if not marker.is_empty():
    var target:Vector2=marker.p
-   var anchor=(target-Vector2(0,40)).clamp(cam+Vector2(80,136),cam+Vector2(880,456))
+   var anchor=(target-Vector2(0,marker.get("lift",40))).clamp(cam+Vector2(80,136),cam+Vector2(880,456))
    var direction=anchor.direction_to(target)
    var tip=anchor+direction*18
    var side=direction.orthogonal()*5
