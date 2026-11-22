@@ -2,15 +2,9 @@
 
 Integrated the contest-led campaign and current homestead, settlement and underground work. Redesigned pack browsing, recipe selection, equipment presentation and common menu navigation. Added sixteen painted supply icons used in the pack and quick bar. Existing inventory, equipment, recipe locks and hotbar saves retain their identifiers.
 
-Cottage grounds playtest adds player-edited paths and vegetation and time-limited saw wear. The dedicated preview starts beside a stocked bench.
+The family cottage has a wider entrance, painted roof joins and space for a movable sawbench. Players can lay paths, edit vegetation, preview completed rooms and supply materials as construction progresses.
 
-Timber wing prototype adds two authored roof joins, an optional sawbench position and free sawbench relocation on the seeded family claim.
-
-Cottage frontage (review candidate): broadened the editable cottage entrance and added painted Stonebridge architectural details to the actual house and planned exterior.
-
-Room stages197 (acceptance candidate): light-green completed-room preview, free foundation marking and construction phases derived from paid tiles. See ROOM_STAGES197.md. Visual review pending; no Windows release.
-
-Clarity196 (isolated 0.124-based patch): clearer player-facing names, functional building details and research-filtered plans/recipes. The missing 0.125 visual source still requires recovery and integration. See CLARITY196.md; not released.
+The equipment book fits upgraded weapon names. The communal forge shows tool-component costs and crafting actions together. Torvik walks clear of the timber rack in both generated Pinewood yard layouts.
 
 # 0.124.0 — Under your own roof
 
