@@ -116,13 +116,14 @@ static func draw_stock(g,o:Dictionary):
 static func panel(g):
  var s=g.state;var station=str(g.get_meta("forge147_station","all"))
  var header="Tool components" if station=="components" else "Smelting hearth" if station=="smelt" else "Anvil & metalwork" if station in ["anvil","bench"] else "The communal forge"
- g.label(g.panel_body,header,21,Color("edc98a"))
- g.label(g.panel_body,"Shape the haft at the workbench; forge the head and fittings at the anvil. Components are also sold at the market." if station=="components" else "Use ore and coal here to make ingots." if station=="smelt" else "Shape metal into tools, equipment and useful fittings." if station in ["anvil","bench"] else "Smelt ore at the hearth, then use the anvil or workbenches for tools and fittings.",16)
+ if station!="components":g.label(g.panel_body,header,21,Color("edc98a"))
+ g.label(g.panel_body,"Shape the haft at the bench and forge the metal parts at the anvil. The market also sells components." if station=="components" else "Use ore and coal here to make ingots." if station=="smelt" else "Shape metal into tools, equipment and useful fittings." if station in ["anvil","bench"] else "Smelt ore at the hearth, then use the anvil or workbenches for tools and fittings.",16)
  if s.opening<2:g.label(g.panel_body,"The hearth is cold. The great book records what is needed to relight it.",16)
  var nav=g.row(g.panel_body)
  g.small_button(nav,"Smelting",func():g.set_meta("forge147_station","smelt");g.refresh_panel())
- g.small_button(nav,"Metalwork",func():g.set_meta("forge147_station","anvil");g.refresh_panel())
- g.small_button(nav,"Tool components",func():g.set_meta("forge147_station","components");g.refresh_panel())
+ g.small_button(nav,"Assemble at the anvil" if station=="components" else "Metalwork",func():g.set_meta("forge147_station","anvil");g.refresh_panel())
+ var components_tab=g.small_button(nav,"Tool components",func():g.set_meta("forge147_station","components");g.refresh_panel())
+ components_tab.toggle_mode=true;components_tab.button_pressed=station=="components"
  g.small_button(nav,"All workshop recipes",func():g.set_meta("forge147_station","all");g.refresh_panel())
  if s.tech.has("automation"):g.small_button(nav,"Industry",func():g.set_meta("forge147_station","industry");g.refresh_panel())
  if station=="industry":HoldIndustry.panel(g);return
@@ -137,15 +138,21 @@ static func panel(g):
   g.small_button(g.panel_body,"Make or buy the components",func():g.set_meta("forge147_station","components");g.refresh_panel())
   g.label(g.panel_body,"Reinforced picks make stronger contacts. Careful basalt work [Shift+LMB] yields blocks; ordinary strikes still yield stone.",14)
   g.button(g.panel_body,"Forge weapons and armor",func():g.gear_tab="forge";g.open_panel("equipment"))
- if station=="components":g.small_button(g.panel_body,"Assemble at the anvil",func():g.set_meta("forge147_station","anvil");g.refresh_panel())
+ var recipe_row=g.row(g.panel_body) if station=="components" else null
  for id in HoldData.RECIPES:
   if station=="components" and id not in COMPONENTS:continue
   if station=="smelt" and id not in SMELTING:continue
   if station in ["anvil","bench"] and id in SMELTING:continue
   var r=HoldData.RECIPES[id]
   var recipe_title=r.name+" · "+HoldData.cost_text(r.cost)
-  if station=="components":recipe_title+=" → "+HoldData.cost_text(r.out)+" · "+("Woodworking" if id=="shaped_haft" else "Smithing")
-  var b=g.button(g.panel_body,recipe_title,func():
+  var parent=g.panel_body
+  if recipe_row!=null:
+   parent=g.section(recipe_row,"")
+   parent.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
+   g.label(parent,HoldData.cost_text(r.out)+" · "+("Woodworking" if id=="shaped_haft" else "Smithing"),15)
+   g.label(parent,"Requires "+HoldData.cost_text(r.cost),14)
+   recipe_title=r.name
+  var b=g.button(parent,recipe_title,func():
    if HoldFrontier103.transact(g,"craft",id):g.save_game();g.refresh_panel())
   b.disabled=s.opening<2 or not s.afford(r.cost) or HoldCollections141.recipe_reason(s,id)!="" or s.queue.size()>=12
   if HoldCollections141.recipe_reason(s,id)!="":b.tooltip_text=HoldCollections141.recipe_reason(s,id)
