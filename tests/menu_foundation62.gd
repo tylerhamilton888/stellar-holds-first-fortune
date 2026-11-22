@@ -12,7 +12,7 @@ func run():
  check(g.panel_id=="equipment" and g.menu_history.is_empty(),"Peer tabs switch panels without building a back stack")
  button("Pack")
  check(g.panel_id=="inventory","Pack tab returns directly to inventory")
- button("×")
+ button("Close")
  check(not g.panel.visible and g.menu_history.is_empty(),"Close clears visible panel and navigation history")
  g.open_panel("settings");await snap("settings")
  check(g.menu_paused,"Settings retain pause behavior")
