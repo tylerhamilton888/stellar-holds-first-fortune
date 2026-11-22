@@ -13,6 +13,12 @@ static func camera(area:String,p:Vector2,welcome:bool=false)->Vector2:
   # Keep the room and both approaches in shot. Only a short follow is needed here.
   var center=r.get_center()
   var vertical=center.y-280.+clampf((p.y-center.y)*.12,-16.,16.)
+  # Reserve the hotbar band for the entire doorway as the player approaches it.
+  var doorway_view=plan.exit.y+40.-432.
+  vertical=lerpf(vertical,maxf(vertical,doorway_view),smoothstep(0.,75.,p.y-center.y))
+  if welcome:
+   var north_view=r.position.y-184.
+   vertical=lerpf(vertical,minf(vertical,north_view),smoothstep(12.,66.,center.y-p.y))
   var horizontal=clampf(p.x-480.,0.,maxf(0,plan.size.x-960.))
   if HoldBuildingPlans.owned_room(area):
    var b=HoldArchitecture.current().record(HoldBuildingPlans.room_parts(area)[0])
