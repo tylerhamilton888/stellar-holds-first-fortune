@@ -95,7 +95,7 @@ func run():
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(true);settle()
  check(g.zone=="mine" and Deepworks.cell(g.player)==LANDING,"Reload resumes inside cellar at persistent landing")
  check(normal(g.handworks.data().facilities)==facilities and normal(g.deep.works.model.data.furniture)==furniture,"Reload preserves cellar storage contents and furnishings")
- check(g.handworks.prompt().contains("return home"),"Stair prompt matches Shift+E priority over loose cargo")
+ check(g.handworks.prompt().contains("return home"),"Cellar stair prompt gives the walking direction when a load is at the landing")
  var old_floor=HoldEstateCellar.home(g).building.tiles["54,34"].duplicate(true)
  HoldEstateCellar.home(g).building.tiles["54,34"].wall="wall"
  walk_landing(g.zone=="mine");check(g.zone=="mine","Blocked destination prevents travel instead of moving player elsewhere")
