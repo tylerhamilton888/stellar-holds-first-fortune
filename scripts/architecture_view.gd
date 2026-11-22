@@ -120,7 +120,7 @@ static func renovation(a,b:Dictionary):
   action(g,extend,"Relocate building",a.move_building)
   var recover=action(g,extend,"Dismantle building",a.recover,a.empty_for_recovery(b));recover.tooltip_text="Empty all floors first. Returns the materials paid for the shell and finishes."
   action(g,g.panel_body,"Browse more building plans",func():a.browse_only=true;g.refresh_panel())
- else:g.label(g.panel_body,"Step outside to extend or relocate this building. E climbs; Shift+E descends.",14,Color("b8c5bc"))
+ else:g.label(g.panel_body,"Step outside to extend or relocate this building. Walk north up stairs or south down them.",14,Color("b8c5bc"))
 static func choices(a,parent:Node,draft:Dictionary):
  var g=a.g
  for key in HoldArchitectureStyles.OPTIONS:
@@ -207,5 +207,5 @@ static func structure(a):
  action(g,actions,"Building book",func():a.browse_only=false;g.open_panel("architecture"))
  if a.interior():g.label(g.panel_body,"Partitions and doors use this building’s finishes. Keep entrances, stair landings and workspaces clear.",14,Color("a8b9b6"))
  else:
-  g.label(g.panel_body,"Z+%d · Walls + door + roof make a sheltered room. E climbs; Shift+E descends." % house.level(),14,Color("a8b9b6"))
+  g.label(g.panel_body,"Z+%d · Walls + door + roof make a sheltered room. Walk north up stairs or south down them." % house.level(),14,Color("a8b9b6"))
   house.lesson()

@@ -16,7 +16,7 @@ func run():
  await snap("depth-map")
  check(g.panel.get_global_rect().end.y<=540 and g.menu_scroll.get_v_scroll_bar().max_value<=g.menu_scroll.size.y+1,"Floor selector, map and controls fit the book")
  nav.route_to(Vector2i(25,18),1);g.refresh_panel();await snap("route-map")
- check(not nav.path.is_empty() and nav.path.any(func(p):return p.z==1) and nav.hint().contains("E down"),"Cross-floor route follows actual stair connections")
+ check(not nav.path.is_empty() and nav.path.any(func(p):return p.z==1) and nav.hint().contains("Walk south down the stairs"),"Cross-floor route follows actual stair connections")
  check(w.data==save_before and g.state.inventory==items,"Map and route inspection do not alter exploration, supplies or stair state")
  nav.route_to(Vector2i(60,50),1);check(nav.path.is_empty(),"Unexplored destination cannot reveal a route")
  nav.route_to(Vector2i(25,18),1);key(KEY_Z)

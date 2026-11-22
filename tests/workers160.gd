@@ -40,7 +40,7 @@ func run():
   for x in range(51,58):w.set_cell(Vector2i(x,y),0,0)
  stand(LANDING);check(HoldEstateCellar.plan(g) and HoldEstateCellar.fit(g),"Fit existing cellar stairs normally")
  stand(Vector2i(52,32));check(HoldUpperBlueprints.plan(p) and HoldUpperBlueprints.build(p),"Fit paid upper-floor stairs")
- key(KEY_E);settle();p.choose_level(1)
+ walk_landing(true);settle();p.choose_level(1)
  check(h.level()==1 and p.save_rectangle(Vector2i(50,30),Vector2i(58,38)),"Plan upstairs bedroom")
  build_room(p);stand(Vector2i(54,36));g.surface.start_placement("bed")
  check(g.surface.place(Deepworks.center(Vector2i(52,36))),"Place actual upstairs bed")

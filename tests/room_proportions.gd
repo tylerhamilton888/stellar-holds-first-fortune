@@ -85,9 +85,12 @@ func test_workrooms():
  g.surface.enter(office);build_grid()
  var landing=Plans.stair_position(office)+Vector2(0,30)
  check(reachable(Plans.geometry(office).exit,landing),"Survey entry to archive stair")
- g.player=landing;g.transition_left=0;g.close_panel();g.surface.use()
- for i in 32:
-  if not g.surface.stair_trip.is_empty():g.surface.tick_stair(.05)
+ g.player=landing;g.transition_left=0;g.close_panel()
+ Input.action_press("up")
+ for i in 55:
+  g.surface.move(.025)
+  if g.surface.area==records:break
+ Input.action_release("up")
  check(g.surface.area==records and g.surface.walkable(g.player),"Arrive at records landing")
  build_grid()
  var desk=Town.archive_access(g)

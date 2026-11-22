@@ -8,8 +8,6 @@ func build_room(p):
    stand(c);p.work()
   if p.remaining(r).is_empty():break
  check(p.remaining(r).is_empty(),"Build floor-specific room using existing paid construction")
-func shift_e():
- var e=InputEventKey.new();e.keycode=KEY_E;e.physical_keycode=KEY_E;e.pressed=true;e.shift_pressed=true;g._unhandled_input(e)
 func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  g=load("res://main.tscn").instantiate();root.add_child(g);g.set_process(false);g.skip_arrival=true;g.start_game(false);settle()
@@ -47,7 +45,7 @@ func run():
  check(normal(g.state.inventory)==carried,"Repeated stair action preserves materials")
  p.choose_level(1);p.select_room(upper);check(HoldUpperBlueprints.access(p,p.chosen()),"Built stair connects the upper plan")
  var quote=p.cost(p.chosen());carried=normal(g.state.inventory)
- g.close_panel();key(KEY_E);settle();check(h.level()==1 and Deepworks.cell(g.player)==Vector2i(52,32),"Actual input climbs aligned stairs")
+ g.close_panel();walk_landing(true);settle();check(h.level()==1 and Deepworks.cell(g.player)==Vector2i(52,32),"Actual input climbs aligned stairs")
  build_room(p)
  for item in quote:check(g.state.count(item)==int(carried[item])-int(quote[item]),"Upper-room spending matches quote for "+item)
  check(normal(h.tiles(0))==ground_tiles,"Upper construction preserves the entire ground-floor shell")
@@ -77,7 +75,7 @@ func run():
  p.choose_level(2);check(p.save_rectangle(Vector2i(59,30),Vector2i(63,34)),"Future unsupported expansion can be saved without construction")
  check(p.progress(p.chosen()).state=="Needs supports" and p.work()==0,"Future floor stays visibly unsupported and cannot build remotely")
  p.choose_level(1);p.select_room(upper);p.forget();check(normal(h.tiles(1))==upper_tiles and normal(g.state.surface.chests)==chests,"Removing upper plan preserves physical room and possessions")
- stand(Vector2i(52,32));shift_e();settle();check(h.level()==0,"Return to ground floor through the same stair")
+ stand(Vector2i(52,32));walk_landing(g.zone=="mine");settle();check(h.level()==0,"Return to ground floor through the same stair")
  stand(Vector2i(52,35));check(not h.build(Deepworks.center(Vector2i(52,36)),"remove"),"Cannot recover the ceiling supporting the upstairs bed")
  # Existing-save fixture: a previously excavated claim cellar and its access.
  g.deep.ensure();var w=g.deep.world
@@ -86,13 +84,13 @@ func run():
  for y in range(31,38):
   for x in range(51,58):w.set_cell(Vector2i(x,y),0,0)
  stand(Vector2i(54,34));check(HoldEstateCellar.plan(g) and HoldEstateCellar.fit(g),"Existing cellar connection fits below the same three-level home")
- shift_e();settle();check(g.zone=="mine" and Deepworks.cell(g.player)==Vector2i(54,34),"Travel from ground floor into cellar")
+ walk_landing(g.zone=="mine");settle();check(g.zone=="mine" and Deepworks.cell(g.player)==Vector2i(54,34),"Travel from ground floor into cellar")
  var ep=g.deep.works.blueprints
  check(ep.save_rectangle(Vector2i(51,31),Vector2i(57,37)) and ep.prepare_room(),"Prepare the existing excavated cellar as a furnishing space")
  check(g.deep.works.model.place(Vector2i(52,32),"bench").ends_with("installed."),"Fit cellar workshop equipment through existing paid furniture model")
  stand(Vector2i(55,35));check(g.handworks.build("store",Deepworks.center(Vector2i(56,36))),"Build a separate cellar storage pallet")
  var store=g.handworks.data().facilities.back();check(g.handworks.deposit(store)>0,"Deposit carried supplies in cellar storage")
- stand(Vector2i(54,34));shift_e();settle();check(g.surface.area=="claim" and h.level()==0,"Return from cellar to ground floor")
- stand(Vector2i(52,32));key(KEY_E);settle();check(h.level()==1,"Reach upper bedroom again after cellar trip")
+ stand(Vector2i(54,34));walk_landing(g.zone=="mine");settle();check(g.surface.area=="claim" and h.level()==0,"Return from cellar to ground floor")
+ stand(Vector2i(52,32));walk_landing(true);settle();check(h.level()==1,"Reach upper bedroom again after cellar trip")
  check(normal(g.state.surface.chests)==chests,"Three-level travel preserves upstairs storage contents")
  print("UPPER158: %d passed / %d failed" % [passed,failed]);g.queue_free();await process_frame;quit(1 if failed else 0)

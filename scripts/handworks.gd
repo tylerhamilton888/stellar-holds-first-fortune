@@ -263,10 +263,9 @@ func input(e: InputEvent) -> bool:
 					if clear_line(g.player, parked): f.x = parked.x;f.y = parked.y
 				g.save_game();return true
 		if e.keycode == KEY_E:
-			if e.shift_pressed and HoldEstateCellar.here(g) and HoldEstateCellar.at_cell(g, Deepworks.cell(g.player)).get("built", false): return false
 			if g.zone == "mine":
 				var world = g.deep.world; var upper = Deepworks.above(world.depth()) if e.shift_pressed else world.depth()
-				if upper >= 0 and world.can_descend(Deepworks.cell(g.player), upper): return false
+				if upper >= 0 and world.data.links.get(world.link_key(Deepworks.cell(g.player), upper), {}).get("kind", "") == "ladder": return false
 			var f = facility(); var raw = closest(data().loose, 65)
 			if e.shift_pressed and g.zone == "mine" and f.is_empty() and ( not raw.is_empty() or not data().carry.is_empty()): return true
 			if not raw.is_empty() and not e.shift_pressed and data().carry.size() < capacity() and (f.is_empty() or g.player.distance_to(pos(raw)) + 15 < g.player.distance_to(pos(f))):
@@ -574,7 +573,7 @@ func prompt() -> String:
 	var mineworks_hint = HoldMineworks143.prompt(g)
 	if mineworks_hint != "": return mineworks_hint
 	var f = facility(); var raw = closest(data().loose, 65); var text = ""
-	if not f.is_empty(): text = SPECS[f.kind].name + " · %d / %d raw · %d output · %s" % [f.raw.size(), load_capacity(f), DeepHaul.amount(f.cargo), "C park · E doorway / stairs" if vehicle(f) and f.hitched else "Hold E work · output to pack" if f.kind in ["breaker", "saw"] else "E deposit · Shift+E take"]
+	if not f.is_empty(): text = SPECS[f.kind].name + " · %d / %d raw · %d output · %s" % [f.raw.size(), load_capacity(f), DeepHaul.amount(f.cargo), "C park · walk along stairs" if vehicle(f) and f.hitched else "Hold E work · output to pack" if f.kind in ["breaker", "saw"] else "E deposit · Shift+E take"]
 	if not f.is_empty() and f.kind == "store": text = "Materials pallet · %d / 200 materials · E deposit · Shift+E take" % DeepHaul.amount(f.cargo)
 	elif f.is_empty() and not raw.is_empty(): text = "E · Lift " + raw_name(raw) + " · %d units" % int(raw.units) + (" · Hold Shift+E dress" if g.zone == "mine" and raw.kind == "stone" else "")
 	elif not data().carry.is_empty(): text = "Carrying %d / %d · Q put down · E deliver" % [data().carry.size(), capacity()]
@@ -582,5 +581,19 @@ func prompt() -> String:
 	if not f.is_empty() and f.get("owner", "") == "hold": text = "Hold crew · reserved stock and work order"
 	if placing.begins_with("move_saw/"): text = "Moving sawbench · LMB place · Right click cancel"
 	elif placing != "": text = "Placing " + SPECS[placing].name + " · LMB build · Right click cancel"
+	if text == "" and (g.zone == "mine" or (g.surface.active() and g.surface.area == "claim")):
+		var c = Deepworks.cell(g.player)
+		var up = false
+		var down = false
+		if g.zone == "mine" and g.deep.world != null:
+			var w = g.deep.world
+			up = w.data.links.get(w.link_key(c, Deepworks.above(w.depth())), {}).get("kind", "") == "stair"
+			down = w.data.links.get(w.link_key(c, w.depth()), {}).get("kind", "") == "stair"
+		elif g.surface.area == "claim":
+			var h = g.surface.house
+			var links = h.data().get("links", {})
+			up = links.get(h.link_key(c, h.level()), {}).get("kind", "") == "stairs"
+			down = links.get(h.link_key(c, h.level()-1), {}).get("kind", "") == "stairs"
+		if up or down: text = "Stairs · " + ("Walk north to climb or south to descend" if up and down else "Walk north to climb" if up else "Walk south to descend")
 	if text == "": text = HoldFirstShift.context_hint(g)
 	return text

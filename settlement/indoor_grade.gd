@@ -5,7 +5,6 @@ const HEAD=-92.0
 const FOOT=20.0
 const SEAM=-36.0
 const HALF_LANE=24.0
-const Ground=preload("res://settlement/ground.gd")
 
 static func rails(anchor:Vector2)->Array:
  return [Rect2(anchor+Vector2(-48,HEAD),Vector2(14,FOOT-HEAD)),Rect2(anchor+Vector2(34,HEAD),Vector2(14,FOOT-HEAD))]
@@ -84,18 +83,7 @@ static func draw(g,anchor:Vector2,lower:bool):
  var relative=g.player-anchor
  if absf(relative.x)<=HALF_LANE+1 and absf(relative.y-SEAM)<34:
   weight=1.-smoothstep(SEAM-34,SEAM+34,relative.y)
- g.draw_texture_rect(Ground.texture("ramp_foot"),box,false)
- if weight>0:
-  g.draw_texture_rect(Ground.texture("ramp_head"),box,false,Color(1,1,1,weight))
-  # Looking down from the loft, the low boards pass underneath its floor edge.
-  var toe=anchor.y+FOOT
-  var shadow=PackedVector2Array([anchor+Vector2(-29,SEAM-17),anchor+Vector2(29,SEAM-17),Vector2(anchor.x+32,toe-3),Vector2(anchor.x-32,toe-3)])
-  var dark=Color(.10,.065,.047,.69*weight)
-  g.draw_polygon(shadow,PackedColorArray([Color.TRANSPARENT,Color.TRANSPARENT,dark,dark]))
-  var lip=Rect2(anchor.x-44,toe-4,88,8)
-  var finish=HoldArchitectureStyles.room(area).floor
-  HoldArchitectureStyles.floor_draw(g,lip,finish,Color(1,1,1,weight))
-  g.draw_line(lip.position,Vector2(lip.end.x,lip.position.y),Color(.17,.13,.09,.9*weight),2)
+ preload("res://stair/flight.gd").draw(g,box,weight)
 
 static func blend_rooms(g):
  if DisplayServer.get_name()=="headless":return

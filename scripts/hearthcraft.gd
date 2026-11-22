@@ -46,24 +46,33 @@ func occupied_at(c:Vector2i,z:int)->bool:
   for o in list:
    if o.area=="claim" and int(o.get("z",0))==z and HoldFurnishings.footprint(o.get("kind","chest"),Vector2(o.x,o.y)).intersects(Rect2(Vector2(c)*CELL,Vector2.ONE*CELL).grow(5)):return true
  return s.area=="claim" and level()==z and center(c).distance_to(g.player)<30
-func use_stairs(up:bool)->bool:
- if not up and HoldEstateCellar.travel(g):return true
+func walk_stair(before:Vector2)->bool:
+ var c=cell(g.player);var up=g.player.y<before.y
+ var lower=level() if up else level()-1
+ if data().get("links",{}).get(link_key(c,lower),{}).get("kind","")!="stairs":return false
+ if not preload("res://stair/flight.gd").crossed(before,g.player,center(c),14):return false
+ var after=g.player
+ if use_stairs(up,"stairs",after):return true
+ g.player=before
+ return true
+func use_stairs(up:bool,kind:String="",landing:Vector2=Vector2.INF)->bool:
  var z=level();var lower=z if up else z-1
  if s.area!="claim" or lower<0:return false
  var found=Vector2i(-1,-1);var best=55.0
  for k in data().links:
   if not k.begins_with(str(lower)+"/"):continue
+  if kind!="" and data().links[k].kind!=kind:continue
   var c=coords(k.get_slice("/",1));var distance=g.player.distance_to(center(c))
   if distance<best:best=distance;found=c
- if found.x<0:g.notify("Stand at a stair or ladder landing. E up; Shift+E down.");return false
+ if found.x<0:return false
  var dest=z+1 if up else z-1
  var t=tiles(dest).get(key(found),{})
  if t.is_empty() or t.get("wall","")!="" or occupied_at(found,dest):g.notify("Clear the landing before climbing.");return false
  var travelling_cart=g.handworks.attached()
  if not travelling_cart.is_empty():g.notify("Park the cart [C] before using a house stair. Outdoor and mine freight routes stay available.");return false
- data().z=dest;g.player=center(found);s.cancel_placement();impact=0;g.velocity=Vector2.ZERO;g.walking_pose=false
+ data().z=dest;g.player=center(found) if landing==Vector2.INF else landing;s.cancel_placement();impact=0;g.velocity=Vector2.ZERO;g.walking_pose=false
  data().facts["ascend" if up else "descend"]=true
- g.camera=s.camera_target();g.sound.effect("wood",-17);g.save_game();g.notify("Homestead Z+%d · E up / Shift+E down at landings" % dest);return true
+ g.camera=s.camera_target();g.sound.effect("wood",-17);g.save_game();g.notify("Homestead Z+%d" % dest);return true
 
 func cell(p:Vector2)->Vector2i:return Vector2i((p/CELL).floor())
 func center(c:Vector2i)->Vector2:return Vector2(c)*CELL+Vector2.ONE*CELL/2
@@ -277,8 +286,9 @@ func points()->Array:
   if t.get("wall","")=="door":list.append({"p":center(coords(k)),"name":("Leave home" if view.inside() else "Enter home") if not view.portal(k).is_empty() else "Close door" if t.get("open",false) else "Open door","action":"house:"+k})
  for k in data().links:
   var z=int(k.get_slice("/",0));var c=coords(k.get_slice("/",1))
-  if z==level():list.append({"p":center(c),"name":"Climb to Z+%d · E" % (z+1),"action":"house_up"})
-  elif z+1==level():list.append({"p":center(c),"name":"Descend to Z+%d · Shift+E" % z,"action":"house_down"})
+  if data().links[k].kind!="ladder":continue
+  if z==level():list.append({"p":center(c),"name":"Ladder up to Z+%d" % (z+1),"action":"house_up"})
+  elif z+1==level():list.append({"p":center(c),"name":"Ladder down to Z+%d · Shift+E" % z,"action":"house_down"})
  list.sort_custom(func(a,b):return a.action=="house_up" and b.action!="house_up")
  return list
 func toggle(k:String)->bool:
@@ -339,7 +349,11 @@ func floor_draw():
  for k in data().links:
   var z=int(k.get_slice("/",0));var c=coords(k.get_slice("/",1))
   if (z!=level() and z+1!=level()) or not view.visible_cell(c):continue
-  var p=center(c);g.draw_rect(Rect2(p-Vector2(15,18),Vector2(30,36)),Color("20383a"))
+  var p=center(c)
+  if data().links[k].kind!="ladder":
+   preload("res://stair/flight.gd").draw(g,Rect2(p-Vector2(20,19),Vector2(40,38)),1. if z+1==level() else 0.)
+   continue
+  g.draw_rect(Rect2(p-Vector2(15,18),Vector2(30,36)),Color("20383a"))
   var ladder=data().links[k].kind=="ladder"
   for i in 5:
    var y=p.y-14+i*7;g.draw_line(Vector2(p.x-12,y),Vector2(p.x+12,y),Color("b99864") if ladder else Color("b4b3a0"),3 if ladder else 5)

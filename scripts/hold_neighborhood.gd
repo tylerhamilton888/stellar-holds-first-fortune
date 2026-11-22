@@ -26,12 +26,9 @@ static func obstacles()->Array:
 static func stair_rails(p:Vector2,width:float=140)->Array:
  if is_equal_approx(width,96):return preload("res://settlement/indoor_grade.gd").rails(p)
  var scale=width/96
- return [Rect2(p+Vector2(-48,-72)*scale,Vector2(14,92)*scale),Rect2(p+Vector2(34,-72)*scale,Vector2(14,92)*scale),Rect2(p+Vector2(-34,-80)*scale,Vector2(68,10)*scale)]
-static func stair_access(player:Vector2,p:Vector2,width:float=140)->bool:return absf(player.x-p.x)<=width*.5-24 and player.y>=p.y-30 and player.y<=p.y+52
+ return [Rect2(p+Vector2(-48,-72)*scale,Vector2(14,92)*scale),Rect2(p+Vector2(34,-72)*scale,Vector2(14,92)*scale)]
 static func draw_stairs(w,p:Vector2,up:bool,width:float=140):
- # Original painted staircase, fitted to the same 96x100 envelope as its rails.
- var source=w.LAND_RECTS[1 if up else 2]
- w.g.draw_texture_rect_region(w.LANDMARKS,Rect2(p-Vector2(48,80)*width/96,Vector2(96,100)*width/96),source)
+ preload("res://stair/flight.gd").draw(w.g,Rect2(p-Vector2(48,80)*width/96,Vector2(96,100)*width/96),0. if up else 1.)
 static func draw_gallery(w):
  var g=w.g
  w.tile(0,Rect2(80,1000,1720,640),100,Color("b8c5bc") if w.current_area()=="crownward" else Color("bca78c") if w.current_area()=="forgeward" else Color("cfbea0"))

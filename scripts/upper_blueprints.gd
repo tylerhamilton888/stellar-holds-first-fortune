@@ -62,8 +62,8 @@ static func build(p)->bool:
  var h=p.a.s.house;var c=h.cell(p.a.g.player)
  for s in stairs(p):
   if int(s.z)!=p.level() or Vector2i(s.x,s.y)!=c:continue
-  if h.link_at(c,p.level()):p.message="This flight is already built. E climbs; Shift+E descends.";return false
-  if h.build(h.center(c),"stairs"):p.message="Stair flight built. E climbs; Shift+E descends.";return true
+  if h.link_at(c,p.level()):p.message="This flight is already built. Walk north up stairs or south down them.";return false
+  if h.build(h.center(c),"stairs"):p.message="Stair flight built. Walk north up stairs or south down them.";return true
   p.message=h.reason;return false
  p.message="Stand on the lower landing of a saved stair guide.";return false
 static func forget(p)->bool:
@@ -80,7 +80,7 @@ static func panel(p):
  HoldArchitectureView.action(g,row,"Plan upward stair at my X/Y",func():plan(p);g.refresh_panel())
  HoldArchitectureView.action(g,row,"Build stair here · 4 timber / 2 stone",func():build(p);g.refresh_panel(),p.level()==h.level())
  HoldArchitectureView.action(g,row,"Remove unbuilt stair guide",func():forget(p);g.refresh_panel())
- g.label(g.panel_body,"Stairs connect matching X/Y positions. Plan on any displayed floor; build from its lower landing. E up; Shift+E down. Carts remain parked.",14)
+ g.label(g.panel_body,"Stairs connect matching X/Y positions. Plan on any displayed floor; build from its lower landing. Walk north to climb or south to descend. Carts remain parked.",14)
  for s in stairs(p):
   if p.level() not in [int(s.z),int(s.z)+1]:continue
   g.label(g.panel_body,"(%d, %d) · Floor %d to %d · %s" % [s.x,s.y,s.z,int(s.z)+1,"Built" if h.link_at(Vector2i(s.x,s.y),int(s.z)) else "Planned"],14)

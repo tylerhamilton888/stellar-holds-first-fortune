@@ -76,14 +76,22 @@ static func fit(g)->bool:
  if reason=="":reason=mine_problem(g,cell(r))
  if reason!="":g.notify(reason);return false
  if not g.state.afford(COST):g.notify("Cellar stairs need "+HoldData.cost_text(COST)+" in your pack.");return false
- g.state.pay(COST);r.built=true;g.save_game();g.sound.effect("build");g.notify("Cellar stairs fitted. Shift+E descends from home; Shift+E returns from below.");return true
+ g.state.pay(COST);r.built=true;g.save_game();g.sound.effect("build");g.notify("Cellar stairs fitted. Walk south to descend or north to return.");return true
 static func forget(g)->bool:
  if not here(g):return false
  var r=at_cell(g,Deepworks.cell(g.player))
  if r.is_empty():return false
  if r.built:g.notify("Built cellar stairs stay in place to preserve access. Their guide cannot be removed.");return false
  plans(g).erase(r);g.save_game();g.notify("Unbuilt stair guide removed; all excavation and possessions remain.");return true
-static func travel(g)->bool:
+static func moved(g,before:Vector2)->bool:
+ if not here(g) or (g.player.y<before.y)!=(g.zone=="mine"):return false
+ var c=Deepworks.cell(g.player)
+ if not at_cell(g,c).get("built",false) or not preload("res://stair/flight.gd").crossed(before,g.player,Deepworks.center(c),14):return false
+ var origin=g.zone
+ travel(g,g.player)
+ if g.zone==origin:g.player=before
+ return true
+static func travel(g,landing:Vector2=Vector2.INF)->bool:
  if not here(g):return false
  var r=at_cell(g,Deepworks.cell(g.player))
  if r.is_empty() or not r.built:return false
@@ -94,7 +102,7 @@ static func travel(g)->bool:
  var reason=surface_problem(g,cell(r))
  if reason=="":reason=mine_problem(g,cell(r))
  if reason!="":g.notify(reason);return true
- var p=Deepworks.center(cell(r))
+ var p=Deepworks.center(cell(r)) if landing==Vector2.INF else landing
  if g.zone=="mine":
   g.deep.remember();g.surface.enter("claim",p)
  else:
@@ -111,18 +119,18 @@ static func panel(g):
  for r in plans(g):
   var label="Connected" if r.built else "Planned"
   g.label(g.panel_body,"(%d, %d) · Ground ↔ cellar · %s" % [r.x,r.y,label],15)
- g.label(g.panel_body,"Shift+E at either landing travels between home and cellar. Carried supplies retain their owner; storage stays where you place it. Assign crew beds in this book to connect household rest with mine work. Carts and automated freight do not cross this stair.",14)
+ g.label(g.panel_body,"Walk south down the cellar stairs or north to return home. Carried supplies retain their owner; storage stays where you place it. Assign crew beds in this book to connect household rest with mine work. Carts and automated freight do not cross this stair.",14)
 static func draw(g):
  if not here(g):return
  for r in plans(g):
   var c=cell(r);var p=Deepworks.center(c)
   if g.zone!="mine" and not g.surface.house.view.visible(p):continue
   if g.zone=="mine" and not g.deep.world.layer(0).seen.has(Deepworks.key(c)):continue
-  if r.built:g.surface.world.detail(5,p+Vector2(0,19),40,38)
+  if r.built:preload("res://stair/flight.gd").draw(g,Rect2(p-Vector2(31,30),Vector2(62,60)),0. if g.zone=="mine" else 1.)
   else:
    for d in CROSS:g.draw_rect(Rect2(Vector2(c+d)*40,Vector2(40,40)).grow(-3),Color("d4bd79"),false,2)
 static func prompt(g)->String:
- if here(g) and at_cell(g,Deepworks.cell(g.player)).get("built",false):return "Cellar stair · Shift+E "+("return home" if g.zone=="mine" else "descend")
+ if here(g) and at_cell(g,Deepworks.cell(g.player)).get("built",false):return "Cellar stairs · walk "+("north to return home" if g.zone=="mine" else "south to descend")
  return ""
 static func draw_map(canvas,g):
  if not here(g):return

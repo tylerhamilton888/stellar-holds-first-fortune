@@ -1,3 +1,7 @@
+## 0.125.2 · Walkable stairs
+
+Walk north to climb stairs and south to descend in rooms, service passages, homesteads, cellars and carved mines. Both landings use the painted stone flight. Ladders retain their climb controls.
+
 ## 0.125.1 · Stonebridge playtest fixes
 
 Separated the Pinewood travel lane from the Ledger approach, bounded the outdoor camera, replaced miniature mountain groves with full-size firs, revised player walk contacts, and added direct book navigation and clearer delivery and inventory controls.

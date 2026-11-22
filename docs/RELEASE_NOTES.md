@@ -1,4 +1,10 @@
-# 0.125.1 · Stonebridge playtest fixes
+# 0.125.2 · Walkable stairs
+
+Walk north up the stone treads or south to descend. You can stop partway and turn around. The lodge, household stairs, Keldrath service stairs and carved mine stairs all use movement. A darkened stairwell and a stone sill mark the view from above.
+
+Ladders still use their existing climb keys.
+
+## 0.125.1 · Stonebridge playtest fixes
 
 From the main street, follow the south path to the fork. Turn west to read the town Ledger or take the eastern branch to Pinewood. At the Ledger, press **E** to open the projects. The **Ledger** tab lets you check them from elsewhere.
 

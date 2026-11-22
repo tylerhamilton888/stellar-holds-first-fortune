@@ -852,13 +852,13 @@ func change_zone(z: String, mine_landing: Vector2 = Vector2.INF):
   if mine_landing == Vector2.INF: HoldFirstVisit99.mine_entered(self)
  handworks.arrive(travelling_cart)
  begin_transition("PINEWOOD HEADWORKS" if mine_landing != Vector2.INF else "THE LOWER WORKINGS" if z == "mine" else "BACK TO THE HOLD");sound.set_context(z)
- notify("DEEPWORKS: WASD move · Hold LMB dig · V carve stairs · E down / Shift+E up · X survey below." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
+ notify("DEEPWORKS: WASD move · Hold LMB dig · V carve stairs · walk south down stairs or north up them · X survey below." if z=="mine" else "Welcome home. Your forge and crew keep working while you explore.")
  save_game()
  if mine_landing == Vector2.INF: HoldStory183.arrive(self)
 func interact():
  if Headworks.act(self, Headworks.target(self)): return
  if surface.active():surface.use();return
- if zone=="mine":deep.use_stairs(Input.is_key_pressed(KEY_SHIFT));return
+ if zone=="mine":deep.use_stairs(Input.is_key_pressed(KEY_SHIFT),true);return
  if zone=="road" and room_id=="":
   HoldForestry.interact(self);return
  if zone=="hub" and room_id=="" and state.active_site=="hold" and player.x<125:
@@ -1573,7 +1573,7 @@ func begin_launch():
 func help_panel():
  button(panel_body,"Craft workstations & stockpiles · Shift+B",func():open_panel("handworks"))
  small_button(panel_body,"Build status · WIP areas & planned systems",func():open_panel("build_status"))
- label(panel_body,"WASD / arrows walk through local zones. E enters doors, uses stairs and opens nearby chests. The King’s Gate connects Hearthward to the High Trail, Old Workings, Pinewood and your claim. G lists directions; I opens your pack. Your charter includes a cottage and chest. O on your claim opens home improvements.",16)
+ label(panel_body,"WASD / arrows walk through local zones. Walk north up stairs or south down them. Press E to open a nearby chest. The King’s Gate connects Hearthward to the High Trail, Old Workings, Pinewood and your claim. G lists directions; I opens your pack. Your charter includes a cottage and chest. O on your claim opens home improvements.",16)
  var tabs=row(panel_body)
  for i in 4:
   var b=small_button(tabs,["First steps","Mining & building","Combat","Hold & saving"][i],func():help_tab=i;open_panel("help",false))
@@ -1583,7 +1583,7 @@ func help_panel():
   [["Your first shift", "Meet Ivar and introduce yourself to Borin, Orla and Hedrik. Leave Hearthward through the King’s Gate, follow the High Trail to Old Workings, and press E at the entrance. Mine 8 coal. Return to Ivar's office for 65 crowns; keep your surplus."], ["Move & explore", """WASD or arrows: walk in eight directions  •  E: interact
 J: work journal  •  N: people and location tracking
 I: resources  •  B: weapons and armor"""], ["What comes next?", "Your first coal delivery earns an audience with the Lord. Return to Ivar for the lift commission and new lessons. Finish all three commissions to earn a reference, buy a mountain charter, and hire a founding crew as you build your workshop and freight beacon."]],
-  [["Dig comfortably","WASD / arrows move in eight directions underground. Hold LMB with pick [1] for rock or shovel [2] for dirt. Hammer [4] exploits existing cracks; Shift + pick extracts ore selectively. Axe [3] is for Pinewood timber."],["Connect the depths","V opens stairs, timber ladder shafts and lamps. Build on clear floor; E descends, Shift + E ascends at that same location. Ladders carry Dwarfs and buckets; stairs also carry carts and machines. X surveys the layer below. T assigns crew depth. Return through the entrance to deliver cargo and leave."],["Build your hold","O opens Rooms, Furnish, Finishes and Folk. Designate excavated floor, then place furniture or apply finishes with LMB. Right mouse cancels. H manages hauling; C takes/parks the cart, U unloads and Shift + U loads piles. L opens the project ledger. Delivered supplies fund crafting and construction."]],
+  [["Dig comfortably","WASD / arrows move in eight directions underground. Hold LMB with pick [1] for rock or shovel [2] for dirt. Hammer [4] exploits existing cracks; Shift + pick extracts ore selectively. Axe [3] is for Pinewood timber."],["Connect the depths","V opens stairs, timber ladder shafts and lamps. Build on clear floor. Walk south down stairs or north back up. On ladders, E descends and Shift+E climbs. Ladders carry Dwarfs and buckets; stairs also carry carts and machines. X surveys the layer below. T assigns crew depth. Return through the entrance to deliver cargo and leave."],["Build your hold","O opens Rooms, Furnish, Finishes and Folk. Designate excavated floor, then place furniture or apply finishes with LMB. Right mouse cancels. H manages hauling; C takes/parks the cart, U unloads and Shift + U loads piles. L opens the project ledger. Delivered supplies fund crafting and construction."]],
   [["Draw your weapon","F switches between your weapon and tools. Left mouse attacks; hold right mouse to guard. Press guard just before an impact to parry, then counterattack. Space dodges. There is no stamina."],["Prepare for an expedition","B opens gear. Borin introduces the starter axe and shield in his safe practice bay after the lift repair and return-route lesson. Hostile encounters unlock when you report your training. Forge upgrades at Borin's workbench; equipped armor improves your protection. Guns consume cartridges."],["Choose your fights","Cleared encounters stay cleared. Enemies drop useful salvage. Rest outside the mine to heal. Defeat triggers paid rescue, so prepare an escape route."]],
   [["Craft, trade, grow","The forge reserves materials when you queue a job; completed items enter your pack automatically. Production continues while browsing ordinary menus. Sell surplus at Orla's exchange; contracts or tavern hospitality unlock bargaining."],["Save & pause","F5 saves. Escape opens pause or goes back through menus. Losing window focus pauses the world until you resume. Auto-save runs every 45 seconds and on major purchases or travel. Three separate save slots; a new fortune asks before replacing the selected slot."],["Comfort & controls","Use Sound & comfort from the pause menu for music, ambience, effects and camera shake. Tab moves focus; Enter activates a button. Given and family names are separate. There is no hunger timer: provisions fuel your worker."]]
  ]
@@ -1981,7 +1981,7 @@ func can_region_travel()->bool:
 func region_travel_hint()->String:
  if state.opening==0:return "Finish your introductions to Borin, Orla and Hedrik first. J lists who remains."
  if room_id!="":return "Leave the building by its left exit, then press G outside to set out."
- if zone=="mine":return "Follow stairs up (Shift+E) to the Lamplight entrance before travelling. V carves connected stairs."
+ if zone=="mine":return "Follow stairs north to the Lamplight entrance before travelling. V carves connected stairs."
  if not grounded:return "Land on solid ground before setting out."
  return "Step onto the surface to begin regional travel."
 func enter_hold_destination(id:String):
@@ -2015,7 +2015,7 @@ func arrive_region(destination:String):
  ensure_mine_mouth();camera=Vector2(player.x-480,player.y-360) if continuous_journey() else Vector2(clampf(player.x-480,0,1040),0)
  if zone=="mine":deep.enter()
  close_panel();sound.set_context(zone);particles.clear();popups.clear();spawn_agents();save_game()
- var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: trail directions.","workings":"DEEPWORKS: WASD move. Hold LMB to dig. V carves stairs; E down / Shift+E up. X surveys below. E at the entrance returns home.","hold":"KELDRATH: Walk the galleries; E uses stairs, lift and doors. G lists directions. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: Walk north to Old Workings, south to Pinewood or east to your claim. E uses each entrance; G lists directions."}
+ var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: trail directions.","workings":"DEEPWORKS: WASD move. Hold LMB to dig. V carves stairs; walk south down stairs or north up them. X surveys below. E at the entrance returns home.","hold":"KELDRATH: Walk through doors and along stairs. Press E to use the lift. G lists directions. J shows your work; N tracks people.","trail":"HIGH TRAIL: Walk north to Old Workings, south to Pinewood or east to your claim. E uses each entrance; G lists directions."}
  notify(arrival_hints.get(destination,"G lists directions; walk to a doorway and press E."))
 
 

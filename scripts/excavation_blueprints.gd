@@ -153,7 +153,7 @@ func stair_here()->Dictionary:
 func fit_stair()->bool:
  if not available() or stair_here().is_empty():message="Stand on a planned upper landing.";return false
  var c=Deepworks.cell(g.player);var z=w.depth()
- if w.can_descend(c,z) and w.data.links[w.link_key(c,z)].get("kind","stair")=="stair":message="The stairs are already connected. E down; Shift+E up.";return false
+ if w.can_descend(c,z) and w.data.links[w.link_key(c,z)].get("kind","stair")=="stair":message="The stairs are already connected. Walk south to descend and north to climb.";return false
  var lower=w.prepare_below(z)
  if lower<0:message=w.descent_note(z);return false
  for level in [z,lower]:

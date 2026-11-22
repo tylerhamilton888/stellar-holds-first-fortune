@@ -112,9 +112,9 @@ func run():
  check(exact and same(g.state.inventory,old.inventory),"Upgrade preserves exact prior save bytes and non-mining inventory")
  # A loose chunk on a real landing must not steal passage interaction.
  g.player=Deepworks.center(Deepworks.ENTRY+Vector2i.DOWN*2);w=g.deep.world;h=g.handworks;w.carve_stairs(Deepworks.cell(g.player));h.spawn("stone",g.player,4,"landing")
- key(KEY_E);settle();check(w.depth()==1,"Real E uses stairs even when a loose load occupies the upper landing")
- var up=InputEventKey.new();up.keycode=KEY_E;up.pressed=true;up.shift_pressed=true;g._unhandled_input(up);settle()
- check(w.depth()==0,"Real Shift+E returns through the exact passage")
+ walk_landing(false);settle();check(w.depth()==1,"Walk down stairs with a loose load on the upper landing")
+ walk_landing(true);settle()
+ check(w.depth()==0,"Walking north returns through the exact passage")
  check(h.closest(h.data().loose,20).get("source","")=="landing","Passage priority leaves the uncollected load safely on its original level")
  print("MINING55: ",passed," passed / ",failed," failed")
  g.sound.stop_all();g.queue_free();await process_frame;quit(1 if failed else 0)

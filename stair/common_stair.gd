@@ -6,8 +6,7 @@ var treads:Texture2D
 var spill:Texture2D
 func _init():
  var image=Image.new()
- if image.load_webp_from_buffer(FileAccess.get_file_as_bytes("res://stair/treads.webp"))==OK:
-  treads=ImageTexture.create_from_image(image)
+ treads=preload("res://stair/flight.gd").treads()
  if image.load_webp_from_buffer(FileAccess.get_file_as_bytes("res://stair/landing.webp"))==OK:
   hatch=ImageTexture.create_from_image(image)
  var glow=Image.create(112,80,false,Image.FORMAT_RGBA8)

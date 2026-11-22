@@ -33,7 +33,7 @@ func trip(from:String,to:String,up:bool,x=0.):
    flips+=1;landed=true
    check(absf(g.surface.camera_target().x-camera_x-(b.x-a.x))<1,"Ramp stays aligned on screen "+from)
    check((g.player-before-(b-a)).length()<11,"Stride continuity "+from)
-   check(g.transition_left<=0 and g.gait_clock>=gait and g.surface.stair_trip.is_empty(),"Continuous floor change "+from)
+   check(g.transition_left<=0 and g.gait_clock>=gait,"Continuous floor change "+from)
   if landed and ((up and g.player.y<b.y-106) or (not up and g.player.y>b.y+30)):break
   if before==g.player and previous==g.surface.area:break
  check(flips==1 and g.surface.area==to and g.surface.walkable(g.player),"Cross once to "+to+" at "+str(g.player))
@@ -48,6 +48,9 @@ func run():
  var anchor=plans.stair_position(office)
  g.surface.enter(office,anchor+Vector2(0,19));g.transition_left=0;g.close_panel();step("up");var stopped=g.player
  for i in 6:g.surface.move(.03)
+ var key=InputEventKey.new();key.keycode=KEY_E;key.pressed=true
+ g.surface.input(key);key.shift_pressed=true;g.surface.input(key)
+ check(g.surface.area==office and g.player==stopped,"E and Shift+E leave the player on the stair")
  check(g.player==stopped and g.surface.area==office,"Release stops on incline")
  step("down");check(g.player.y>stopped.y and g.surface.area==office,"Reverse before crossing")
  trip(office,records,true);trip(records,office,false)

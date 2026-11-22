@@ -114,6 +114,6 @@ static func show(p):
  action(g,links,"Fit stairs here",func():p.fit_stair();g.refresh_panel())
  action(g,links,"Remove stair guide",func():p.forget_stair();g.refresh_panel())
  action(g,links,"Workstations / storage",func():g.open_panel("handworks"))
- g.label(g.panel_body,"Stair crosses mark both landings. Mine their five tiles through existing access, then fit from above. The five original depths support stairs; lateral worksites keep their adits. E down · Shift+E up.",13)
+ g.label(g.panel_body,"Stair crosses mark both landings. Mine their five tiles through existing access, then fit from above. The five original depths support stairs; lateral worksites keep their adits. Walk south down stairs or north back up.",13)
 
  HoldEstateCellar.panel(g)

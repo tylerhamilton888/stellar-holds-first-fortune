@@ -84,8 +84,16 @@ func hint()->String:
  if Vector3i(c.x,c.y,w.depth())==goal:return "Destination reached · Z selects another route"
  for i in range(path.size()-1):
   if path[i].z==w.depth() and path[i+1].z!=w.depth():
-   if not Deepworks.Strata.number(path[i].z) or not Deepworks.Strata.number(path[i+1].z):return "E at the marked adit · "+Deepworks.NAMES[goal.z]
-   return "Destination %s · %s at the gold stair marker" % [Deepworks.floor_tag(goal.z),"E down" if path[i+1].z>w.depth() else "Shift+E up"]
+   var next=path[i+1]
+   for link in w.connections(w.depth()):
+    if link.c!=Vector2i(path[i].x,path[i].y) or link.to!=next.z or link.target!=Vector2i(next.x,next.y):continue
+    var down=Deepworks.Strata.number(next.z)>Deepworks.Strata.number(w.depth())
+    var action="Walk south down the stairs" if down else "Walk north up the stairs"
+    match link.kind:
+     "ladder":action="E to descend the ladder" if down else "Shift+E to climb the ladder"
+     "ramp":action="Walk east down the quarry ramp" if down else "Walk west up the quarry ramp"
+     "adit":action="Press E at the marked adit"
+    return "Destination %s · %s" % [Deepworks.floor_tag(goal.z),action]
  return "Destination %s · follow the gold trail · Z replans" % (Deepworks.floor_tag(goal.z))
 func panel():
  var w=g.deep.world
