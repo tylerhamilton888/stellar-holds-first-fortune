@@ -5,3 +5,5 @@ The integrated source starts from the room stages and Cottage Grounds changes. I
 Menu work lives in scripts/player_book.gd, menu_view.gd, item_art.gd and equipment93.gd. Stable item and hotbar identifiers are shared with the existing game. The new atlas is assets/stonebridge_ui/goods.webp. The first sixteen painted goods have distinct atlas cells.
 
 Use Godot 4.4.1. The menu92, menu_quality100 and pack_catalogue tests cover navigation, inspection, filters, recipe locks and save integrity. For the campaign use tests/contest_opening.gd from a fresh profile and run tests/contest_resume.gd against its saved midpoint. See the release workflow for Windows packaging and native verification.
+
+PR #194 recovery reconciles the equipment catalogue with the book viewport and tests the selected forge, home and paid-work leads through the journal. Named idle tests check the twelve-frame directional rows. Lodge arrival, the cottage doorway, the compact communal forge and lateral mineworks have targeted checks. The release/0.125.0 branch runs source and exported-package validation before publication.

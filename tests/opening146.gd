@@ -61,7 +61,7 @@ func run():
  check(g.panel_id=="storage","The starter chest opens through normal interaction");g.close_panel()
  check(g.state.surface.chests["home169:chest"].items.is_empty(),"The cottage does not provide free industrial stock")
  g.open_panel("commission");button("+ Read your parents");await snap("home169-parent-letter")
- check(has_label("paid in full") and has_label("Mum and Dad"),"The warm initial letter remains readable in the journal")
+ check(has_label("paid in full") and has_label("— Mum"),"The warm initial letter remains readable in the journal")
  g.menu_scroll.scroll_vertical=10000;await snap("home169-parent-letter-scrolled")
  g.close_panel();g.save_game();g.start_game(true);settle()
  check(not is_instance_valid(g.opening_scene),"A completed introduction does not replay on reload")
