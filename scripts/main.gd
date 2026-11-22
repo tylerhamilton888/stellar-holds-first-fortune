@@ -2015,7 +2015,7 @@ func arrive_region(destination:String):
  ensure_mine_mouth();camera=Vector2(player.x-480,player.y-360) if continuous_journey() else Vector2(clampf(player.x-480,0,1040),0)
  if zone=="mine":deep.enter()
  close_panel();sound.set_context(zone);particles.clear();popups.clear();spawn_agents();save_game()
- var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: trail directions.","workings":"DEEPWORKS: WASD move. Hold LMB to dig. V carves stairs; walk south down stairs or north up them. X surveys below. E at the entrance returns home.","hold":"KELDRATH: Walk the galleries; E uses stairs, lift and doors. G lists directions. E enters doors. J shows your work; N tracks people.","trail":"HIGH TRAIL: Walk north to Old Workings, south to Pinewood or east to your claim. E uses each entrance; G lists directions."}
+ var arrival_hints={"forest":"PINEWOOD: E at the field board explains cutting and timber. 3: axe. G: trail directions.","workings":"DEEPWORKS: WASD move. Hold LMB to dig. V carves stairs; walk south down stairs or north up them. X surveys below. E at the entrance returns home.","hold":"KELDRATH: Walk through doors and along stairs. Press E to use the lift. G lists directions. J shows your work; N tracks people.","trail":"HIGH TRAIL: Walk north to Old Workings, south to Pinewood or east to your claim. E uses each entrance; G lists directions."}
  notify(arrival_hints.get(destination,"G lists directions; walk to a doorway and press E."))
 
 
