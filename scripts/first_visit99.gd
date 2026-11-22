@@ -33,7 +33,7 @@ static func begin(g):
  q.fresh=false;q.stage=3;q.arrival_seen=true;q.escort_pending=false;q.settle_required=false;q.combat=true
  s.add("wood",6)
  HoldFirstShift.data(g).accepted=true;HoldFirstShift.data(g).kit=true;HoldFirstShift.data(g).guided=true
- g.surface.enter(HoldFrontier103.lodge(s),Vector2(480,555))
+ g.surface.enter(HoldFrontier103.lodge(s),Vector2(480,490))
  g.notify("The miners' lodge · E speaks with Ivar · J opens your journal.")
  g.save_game()
 static func meet_ivar(g):

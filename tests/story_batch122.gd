@@ -16,7 +16,7 @@ func run():
   for v in 4:
    var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][v]
    var rest=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)
-   check(rest.sheet==sheet and rest.index==v,"Rest keeps view "+id+str(v))
+   check(named_idle(rest,id,v),"Rest keeps view "+id+str(v))
    var keys={}
    for k in 4:
     var a=HoldWholeFrames.descriptor(p,d,true,k*.13+.001,"town_walk",0)

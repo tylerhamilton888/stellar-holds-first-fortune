@@ -7,6 +7,11 @@ func _initialize():call_deferred("run")
 func check(ok:bool,label:String):
  if ok:passed+=1;print("PASS ",label)
  else:failed+=1;push_error(label)
+# Named idle art has twelve frames in each directional row.
+func named_idle(pose:Dictionary,id:String,view:int)->bool:
+ var keys=HoldWholeFrames.Hands.KEYS
+ return pose.sheet==HoldWholeFrames.Hands.FIXED+id and pose.view==view and pose.index>=view*keys and pose.index<(view+1)*keys
+
 func settle():
  while not g.surface.stair_trip.is_empty():g.surface.tick_stair(.05)
  while HoldFolk.warming():HoldFolk.warm_step()

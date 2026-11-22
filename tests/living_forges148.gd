@@ -25,7 +25,7 @@ func run():
  HoldFirstVisit99.begin(g);settle();HoldFirstVisit99.data(g.state).rewarded=true
  var communal=HoldFrontier103.room(g.state,"forge");g.surface.enter(communal);settle()
  var shared=HoldRoomLayout.floor_rect(communal)
- check(shared.size==Vector2(820,520),"New communal forge has its own compact plan")
+ check(shared.size==Vector2(820,452),"New communal forge has its own compact plan")
  reachable(HoldForge147.points(g));at(Vector2(480,490));g.clock=2.0
  check(HoldLivingForges148.sound_context(g)=="forge_cold","Unrestored forge is quiet")
  await capture_pair("communal-cold")

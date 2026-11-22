@@ -12,7 +12,7 @@ func verify_bundle(id:String,p:Dictionary):
  for v in 4:
   var d=[Vector2.DOWN,Vector2.RIGHT,Vector2(1,-1),Vector2.UP][v]
   var rest=HoldWholeFrames.descriptor(p,d,false,0,"town_walk",0)
-  check(rest.sheet==sheet and rest.index==v,"Resting view "+id+str(v))
+  check(named_idle(rest,id,v),"Resting view "+id+str(v))
   for k in 4:
    var a=HoldWholeFrames.descriptor(p,d,true,k*.13+.001,"town_walk",0)
    check(a.sheet==sheet and a.index==4+v*4+k,"Ordered physical walking key "+id+str(v)+str(k))

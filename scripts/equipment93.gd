@@ -93,10 +93,10 @@ static func weapon_art(kind:String,size:int)->TextureRect:
 
 static func panel(g):
  var c=g.state.combat;var d=ensure(c)
- if g.gear_tab!="forge":g.label(g.panel_body,"%d owned pieces · Compared with equipped gear · Combat costs no energy" % d.items.size(),14)
  var tabs=g.row(g.panel_body)
  for key in ["weapon","armor","forge"]:
   var b=g.small_button(tabs,{"weapon":"Weapons","armor":"Armor","forge":"Forge gear"}[key],func():g.gear_tab=key;g.open_panel("equipment",false))
+  b.tooltip_text="Compare owned gear with your equipped piece" if key!="forge" else "View materials and forge equipment"
   b.toggle_mode=true;b.button_pressed=g.gear_tab==key;b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  if g.gear_tab=="forge":forge_panel(g);return
  var grid=GridContainer.new();grid.columns=2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",10);g.panel_body.add_child(grid)
@@ -106,7 +106,7 @@ static func panel(g):
   var panel=g.section(grid,"");panel.get_parent().custom_minimum_size.x=392;panel.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
   var line=g.row(panel)
   if item.kind in HoldCombat.WEAPONS:line.add_child(weapon_art(item.kind,76))
-  var body=VBoxContainer.new();body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(body)
+  var body=VBoxContainer.new();body.add_theme_constant_override("separation",2);body.size_flags_horizontal=Control.SIZE_EXPAND_FILL;line.add_child(body)
   g.label(body,title(item),18)
   g.label(body,MATERIALS[item.kind]+" · "+("Tempered" if item.grade==1 else "Standard")+(" · Borin’s collection gift" if item.id=="collection_smith141" else " · No. "+item.id.trim_prefix("gear_") if item.id.begins_with("gear_") else ""),14)
   g.label(body,comparison(c,item),15)
