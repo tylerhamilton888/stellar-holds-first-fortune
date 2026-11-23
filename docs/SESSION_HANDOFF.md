@@ -1,9 +1,7 @@
-# Stonebridge · 0.125.3
+# Stonebridge · 0.125.4
 
-[Windows 0.125.3](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.3) is published from `fad4b16d72c5`. [Source PR](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/200) · [Release verification](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/45066066938) · [Published hashes and screenshot](CURRENT_STATUS.md)
+[Windows 0.125.4](https://github.com/tylerhamilton888/stellar-holds-first-fortune/releases/tag/v0.125.4) is published from `d996e81623a3`. [Source PR](https://github.com/tylerhamilton888/stellar-holds-first-fortune/pull/202) · [Release verification](https://github.com/tylerhamilton888/stellar-holds-first-fortune/actions/runs/45088282778) · [Published hashes](CURRENT_STATUS.md)
 
-A fresh fortune follows Skarrin’s welcome with Ivar’s job to inspect Borin’s hearth. The objective and marker track the door, forge and firebox, then give way to the existing coal and delivery project. Switching to the home lead removes the forge marker.
+The walking animation uses eight distance-driven poses for the player’s empty hands and six equipped tool states. The existing costume, beard and hand grips come from each character’s registered upper painting. Check the actual soles in tests/appearance74.gd. The [side-by-side recording](stonebridge-playtest/walk-0.125.4.mp4) shows keyboard travel with the starting pick equipped and stowed. Carrying stone or timber and dedicated story-character drawings have their own animations.
 
-The four focused native gameplay cases passed 218 assertions. The title-screen run covered character creation, the complete introduction and the optional trip to the Rise. A second run resumed at Skarrin’s saved scene and skipped to the tracked quest. The Windows package passed 79 cases and 14,970 assertions.
-
-Next playtest: give a new player the controls and watch which door they take after the welcome. Follow them through inspection, fuel delivery and their first contest entry. See [the backlog](BACKLOG.md).
+New games still open with Skarrin’s challenge and Ivar’s first job to inspect Borin’s cold hearth. Follow the south door and then the forge marker. See the [playtest guide](PLAYTEST_GUIDE.md) and [backlog](BACKLOG.md).

@@ -1,6 +1,6 @@
 # The Stellar Holds: The First Fortune
 
-**Stonebridge · 0.125.3.** Stand for Thane and meet Skarrin. Your first quest takes you out of the bunkhouse to inspect Borin’s cold hearth. Old Stonewright’s Rise is yours to visit along the east road. Open the project in Godot 4.4.1 and run the main scene for the campaign. Open the pack with **I** or the journal with **J**.
+**Stonebridge · 0.125.4.** Stand for Thane and meet Skarrin. Your first quest takes you out of the bunkhouse to inspect Borin’s cold hearth. Old Stonewright’s Rise is yours to visit along the east road. Open the project in Godot 4.4.1 and run the main scene for the campaign. Open the pack with **I** or the journal with **J**.
 
 [Inventory](docs/stonebridge-menus/pack.jpg) · [Crafting recipes](docs/stonebridge-menus/recipes.jpg) · [Walking poses](docs/stonebridge-playtest/walk.webp) · [Ledger and treeline changes](docs/CURRENT_STATUS.md)
 

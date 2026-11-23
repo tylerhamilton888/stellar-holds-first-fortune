@@ -8,4 +8,4 @@ Use the [latest published Windows build](https://github.com/tylerhamilton888/ste
 
 Previous work and unresolved playtest ideas are preserved in archive/BEFORE_STONEBRIDGE_MENUS.md.
 
-Approach the town Ledger via each path, then deliberately take the southeast fork to Pinewood. Compare empty-handed and pick-equipped footfalls along the street and use the Ledger tab to return to the same project from the journal.
+Approach the town Ledger via each path, then deliberately take the southeast fork to Pinewood. Use the Ledger tab to return to the same project from the journal. During an unprompted playtest, watch whether the two footfalls read clearly at the player’s usual window size.
