@@ -1,3 +1,7 @@
+## 0.125.4 · Player walking animation
+
+Both boots now take a turn planting, pushing off and swinging through. The eight-pose walk follows distance traveled with empty hands or a selected tool, including the starting pick.
+
 ## 0.125.3 · Your first town quest
 
 Ivar sends you to inspect Borin’s cold hearth for your first contest entry. The journal and on-screen directions guide you from the bunkhouse to the forge. Inspect the hearth to learn what it needs.

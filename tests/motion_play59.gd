@@ -15,11 +15,12 @@ func run():
    for action in ACTIONS:
     for d in DIRECTIONS:
      var seen={}
-     for k in 4:
-      var a=HoldWholeFrames.descriptor(g.state.appearance,d,true,(k+.1)*HoldWholeFrames.CYCLE/4,action,0)
-      complete=complete and a.sheet==sheet;seen[a.index]=true
+     var steps=8 if action.begins_with("hold_") else 4
+     for k in steps:
+      var a=HoldWholeFrames.descriptor(g.state.appearance,d,true,(k+.1)*HoldWholeFrames.CYCLE/steps,action,0)
+      complete=complete and a.sheet==(id+"-stride" if steps==8 else sheet);seen[a.index]=true
       HoldWholeFrames.texture(g.state.appearance,a.sheet,a.index)
-     complete=complete and seen.size()==4
+     complete=complete and seen.size()==steps
      var stopped=HoldWholeFrames.descriptor(g.state.appearance,d,false,.41,action,0)
      complete=complete and stopped.sheet==sheet and stopped.index%4==0
    check(complete and HoldWholeFrames.cache.size()==count,id+" turns/stops in the same complete artwork with every gait key prewarmed")

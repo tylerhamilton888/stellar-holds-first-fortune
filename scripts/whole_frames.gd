@@ -2,6 +2,7 @@ class_name HoldWholeFrames
 extends RefCounted
 # A single whole painted figure per key, including head, limbs and gripping hands.
 const Hands=preload("res://hands/empty_hands.gd")
+const Stride=preload("res://assets/player-stride/stride.gd")
 const HEIGHT=62.0
 const CYCLE=.52
 # Bump only when whole-frame artwork, crops or palette conversion change.
@@ -57,6 +58,7 @@ static func data():
    metadata[parts[0]][int(parts[1])].height=scales[key]
   HoldStoryWorld105.register(metadata)
   Hands.register(metadata,pigment)
+  Stride.register(metadata,pigment)
 static func identity(p:Dictionary)->String:return ("female" if p.gender else "male")+str(int(p.sculpt))
 static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:String,phase:float)->Dictionary:
  data()
@@ -116,6 +118,9 @@ static func descriptor(p:Dictionary,d:Vector2,walking:bool,time:float,action:Str
   elif action=="guard_axe":index=[32,33,38,39][view]
   elif action=="parry_axe":index=36+view
   if int(p.gender)==0 and int(p.sculpt) in [3,4] and view==2 and action in ["guard_axe","parry_axe"]:index=39
+ if walking and Stride.GROUPS.has(action):
+  view=HoldDirectional.view(d);key=posmod(floori(time/CYCLE*8),8)
+  sheet=identity(p)+"-stride";index=(Stride.GROUPS[action]*4+view)*8+key
  var m=metadata[sheet][index];var r=m.rect
  var rect=Rect2(r[0],r[1],r[2],r[3]);var root=Vector2(m.root[0],m.root[1]);var scale=HEIGHT/maxf(1,float(m.height))
  return {"sheet":sheet,"index":index,"view":view,"frame":key,"rect":rect,"root":root,"scale":scale,"shape":Vector2.ONE*scale,"action":action,"phase":phase,"walking":walking,"destination":Rect2((rect.position-root)*scale,rect.size*scale)}
@@ -187,10 +192,15 @@ static func texture(p:Dictionary,sheet:String,index:int,full:bool=false)->Textur
    if ready.load(cached_path)==OK and not ready.is_empty():
     if cached_path!=path:DirAccess.copy_absolute(cached_path,path)
     var saved=ImageTexture.create_from_image(ready);remember(key,saved);disk_hits+=1;return saved
- var m=metadata[sheet][index];var r=m.rect;var img=source(m.get("source",sheet)).get_region(Rect2i(r[0],r[1],r[2],r[3]))
+ var m=metadata[sheet][index]
+ var stride=sheet.ends_with("-stride")
+ var original:Dictionary=metadata[m.sheet][m.index] if stride else m
+ var r=original.rect
+ var img=source(original.get("source",m.sheet if stride else sheet)).get_region(Rect2i(r[0],r[1],r[2],r[3]))
  # Atlas extraction removes neighboring figures' disconnected fragments, never
  # constructs the character from separate body parts.
- for span in m.get("omit",[]):img.fill_rect(Rect2i(span[0],span[1],span[2],1),Color.TRANSPARENT)
+ for span in original.get("omit",[]):img.fill_rect(Rect2i(span[0],span[1],span[2],1),Color.TRANSPARENT)
+ if stride:img=Stride.compose(m,img)
  var ratio=1.0 if full else minf(1,HEIGHT/maxf(1,float(m.height))*2.6)
  var hair=HoldAppearance.hair(p);var cloth=HoldAppearance.cloth(p);var skin=HoldAppearance.skin(p)
  # Preserve shading inside each painting, but use the same hair material when
@@ -287,12 +297,14 @@ static func prepare(g:Node):
   if HoldStoryWorld105.has_profile(p):
    queue_story_profile(p,queued)
    continue
-  for kind in (["core","town","utility","handling","equipped","motion","shield88"] if entry.player else ["core","utility","town"]):
+  for kind in (["core","utility","handling","equipped","motion","shield88","stride"] if entry.player else ["core","utility","stride"]):
    var sheet=identity(p)+"-"+kind
    if not metadata.has(sheet):continue
    if kind=="equipped" and metadata.has(identity(p)+"-motion"):continue
    for index in metadata[sheet].size():
-    if kind=="town" and index not in range(8,12):continue
+    if kind=="stride" and not entry.player and index>=32:break
+    if kind=="core" and index>=4 and index<20:continue
+    if kind=="motion" and index<96 and index%4!=0:continue
     if entry.get("walk_only",false) and kind=="core" and index>=20:continue
     if kind=="handling" and metadata.has(identity(p)+"-motion") and index<40 and index not in range(8,16):continue
     if not entry.player and kind=="utility" and ((entry.get("walk_only",false) and not entry.get("drink",false)) or index not in range(8,12)):continue
@@ -306,9 +318,9 @@ static func prepare_profile(profile:Dictionary):
  for job in warm_jobs:queued[cache_key(job[0],job[1],job[2])]=true
  if HoldStoryWorld105.has_profile(p):
   queue_story_profile(p,queued);warm_total=warm_jobs.size();return
- for kind in ["core","town"]:
+ for kind in ["core","stride"]:
   var sheet=identity(p)+"-"+kind
-  for index in (range(20) if kind=="core" else range(8,12)):
+  for index in (range(4) if kind=="core" else range(32)):
    var key=cache_key(p,sheet,index)
    if not cache.has(key) and not queued.has(key):warm_jobs.append([p,sheet,index])
  warm_total=warm_jobs.size()

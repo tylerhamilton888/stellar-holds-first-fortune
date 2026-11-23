@@ -11,6 +11,30 @@ class IdentityBoard extends Node2D:
 func capture_board(name:String):
  await process_frame;await process_frame;await RenderingServer.frame_post_draw
  root.get_texture().get_image().save_png(output+"/"+name+".png")
+# Count visible pixels in a foot-sized region relative to the world-space root.
+# Use the final dyed game-size texture so repeated contacts with different
+# frame numbers cannot pass, including on a warmed animation cache.
+func boot_ink(profile:Dictionary,direction:Vector2,action:String,key:int,area:Rect2i)->int:
+ var pose=HoldWholeFrames.descriptor(profile,direction,true,(key+.1)*HoldWholeFrames.CYCLE/8.,action,0)
+ var image=HoldWholeFrames.texture(profile,pose.sheet,pose.index).get_image()
+ var origin=Vector2i(pose.root)
+ var ink=0
+ for y in range(area.position.y,area.end.y):
+  for x in range(area.position.x,area.end.x):
+   var sample=origin+Vector2i(x,y)
+   if Rect2i(Vector2i.ZERO,image.get_size()).has_point(sample) and image.get_pixelv(sample).a>.5:ink+=1
+ return ink
+
+func check_boot_contacts(profile:Dictionary,action:String):
+ var left=Rect2i(-23,0,18,11);var right=Rect2i(5,0,18,11)
+ var first=boot_ink(profile,Vector2.DOWN,action,0,left)-boot_ink(profile,Vector2.DOWN,action,0,right)
+ var second=boot_ink(profile,Vector2.DOWN,action,4,right)-boot_ink(profile,Vector2.DOWN,action,4,left)
+ check(first>40 and second>40,"Left and right soles take distinct front contacts "+action)
+ var heel=Rect2i(-29,-6,17,8);var toe=Rect2i(6,-2,18,9)
+ var heel_change=boot_ink(profile,Vector2.RIGHT,action,3,heel)-boot_ink(profile,Vector2.RIGHT,action,7,heel)
+ var toe_change=boot_ink(profile,Vector2.RIGHT,action,0,toe)-boot_ink(profile,Vector2.RIGHT,action,4,toe)
+ check(heel_change>40 and toe_change>40,"Side-view heel and toe change support on the next half-cycle "+action)
+
 func run():
  output=OS.get_cmdline_user_args()[0];DirAccess.make_dir_recursive_absolute(output)
  HoldWholeFrames.data()
@@ -20,6 +44,8 @@ func run():
  DirAccess.make_dir_recursive_absolute(old.get_base_dir())
  var poison=Image.create(1,1,false,Image.FORMAT_RGBA8);poison.fill(Color.MAGENTA);poison.save_png(old)
  check(HoldWholeFrames.texture(p,a.sheet,a.index).get_width()>1,"Obsolete disk frames cannot replace the corrected artwork")
+ for action in ["","hold_pick","hold_axe","hold_hammer","hold_shovel","hold_supply","hold_rifle"]:
+  check_boot_contacts(p,action)
  var greatbeard=HoldAppearance.normalized({"gender":0,"sculpt":2})
  for f in 4:
   var drinking=HoldWholeFrames.descriptor(greatbeard,Vector2.RIGHT,false,0,"drink",f)

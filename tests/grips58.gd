@@ -11,8 +11,11 @@ func run():
   var start=g.player;Input.action_press("right");await frames(12);Input.action_release("right")
   check(g.hotbar.pose()==pose and g.player.x>start.x+25,"Number key changes the drawn held tool without slowing movement: "+pose)
   var a=HoldFolk.descriptor(g.state.appearance,Vector2.RIGHT,true,g.gait_clock,g.hotbar.pose(),0)
-  var expected=HoldWholeFrames.identity(g.state.appearance)+("-motion" if HoldWholeFrames.metadata.has(HoldWholeFrames.identity(g.state.appearance)+"-motion") else "-equipped")
-  check(a.sheet==expected and a.action==pose,"Walking uses the integrated gripping-hands drawing: "+pose)
+  var id=HoldWholeFrames.identity(g.state.appearance)
+  var cell=HoldWholeFrames.metadata[a.sheet][a.index]
+  var tool_group=["hold_pick","hold_axe","hold_hammer","hold_shovel"].find(pose)
+  check(a.sheet==id+"-stride" and a.action==pose and cell.get("sheet","")==id+"-motion"
+   and int(cell.get("index",-16)/16)==tool_group,"Walk keeps the selected tool and its gripping hands: "+pose)
   await snap("tool-"+str(i))
  var stone=g.state.count("stone");key(KEY_7)
  check(g.hotbar.pose()==("hold_supply" if stone>0 else ""),"An empty selected stack does not fabricate a visible load")
